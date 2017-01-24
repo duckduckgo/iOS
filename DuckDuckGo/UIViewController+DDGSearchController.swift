@@ -10,18 +10,6 @@ import UIKit
 
 extension UIViewController {
   
-  func searchDDG() -> DDGSearchController? {
-    var viewController:UIViewController? = self
-    while viewController != nil {
-      if let duckController = viewController as? DDGSearchController {
-        return duckController
-      } else {
-        viewController = viewController?.parent
-      }
-    }
-    return nil
-  }
-  
   func searchBackButtonIconDDG() -> UIImage? {
     return nil
   }

@@ -17,19 +17,13 @@
 		84E341CA1E2F805300BDBA6F /* DDGAddressBarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */; };
 		84E341CB1E2F805300BDBA6F /* UIViewController+DDGSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */; };
 		84E341CC1E2F805300BDBA6F /* DDGSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */; };
-		84E341CD1E2F805300BDBA6F /* DDGSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C61E2F805300BDBA6F /* DDGSearchController.swift */; };
-		84E341CE1E2F805300BDBA6F /* DDGDuckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C71E2F805300BDBA6F /* DDGDuckViewController.swift */; };
 		84E341CF1E2F805300BDBA6F /* DDGProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */; };
 		84E341D01E2F805300BDBA6F /* DDGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C91E2F805300BDBA6F /* DDGColor.swift */; };
-		84E341D41E2F805D00BDBA6F /* DDGURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341D21E2F805D00BDBA6F /* DDGURLProtocol.swift */; };
-		84E341D71E2F839600BDBA6F /* DDGUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341D61E2F839600BDBA6F /* DDGUtility.swift */; };
 		84E341D91E2FAFBD00BDBA6F /* DDGSearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */; };
-		84E341DF1E2FB29600BDBA6F /* DDGPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341DE1E2FB29600BDBA6F /* DDGPopoverViewController.swift */; };
 		84E341E21E2FC0CD00BDBA6F /* DDGSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */; };
 		84E341E51E2FD06300BDBA6F /* DDGAutocompletionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */; };
 		84E341E71E300BD200BDBA6F /* DDGFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341E61E300BD200BDBA6F /* DDGFont.swift */; };
 		8BB5B258E2E89F3728CB2280 /* DDGAutocompleteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */; };
-		8BB5BE12D6E212611F50652F /* DDGSearchSuggestionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5BE4B05E31FA2FA929F20 /* DDGSearchSuggestionsProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,19 +60,13 @@
 		84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAddressBarTextField.swift; sourceTree = "<group>"; };
 		84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DDGSearchController.swift"; sourceTree = "<group>"; };
 		84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchBar.swift; sourceTree = "<group>"; };
-		84E341C61E2F805300BDBA6F /* DDGSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchController.swift; sourceTree = "<group>"; };
-		84E341C71E2F805300BDBA6F /* DDGDuckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGDuckViewController.swift; sourceTree = "<group>"; };
 		84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGProgressBar.swift; sourceTree = "<group>"; };
 		84E341C91E2F805300BDBA6F /* DDGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGColor.swift; sourceTree = "<group>"; };
-		84E341D21E2F805D00BDBA6F /* DDGURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGURLProtocol.swift; sourceTree = "<group>"; };
-		84E341D61E2F839600BDBA6F /* DDGUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGUtility.swift; sourceTree = "<group>"; };
 		84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchHandler.swift; sourceTree = "<group>"; };
-		84E341DE1E2FB29600BDBA6F /* DDGPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGPopoverViewController.swift; sourceTree = "<group>"; };
 		84E341E11E2FC0CD00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DDGSearchController.xib; sourceTree = "<group>"; };
 		84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompletionCell.swift; sourceTree = "<group>"; };
 		84E341E61E300BD200BDBA6F /* DDGFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGFont.swift; sourceTree = "<group>"; };
 		8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompleteHeaderView.swift; sourceTree = "<group>"; };
-		8BB5BE4B05E31FA2FA929F20 /* DDGSearchSuggestionsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchSuggestionsProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,24 +117,12 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				84E341DE1E2FB29600BDBA6F /* DDGPopoverViewController.swift */,
-				84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */,
-				84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */,
-				84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */,
-				84E341C61E2F805300BDBA6F /* DDGSearchController.swift */,
-				84E341C71E2F805300BDBA6F /* DDGDuckViewController.swift */,
-				84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */,
-				84E341C91E2F805300BDBA6F /* DDGColor.swift */,
-				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
-				84E341971E2F7EFB00BDBA6F /* ViewController.swift */,
-				84E341D11E2F805D00BDBA6F /* Util */,
+				F1C5ECF31E37812900C599A4 /* Application */,
+				F1C5ECF21E3780CA00C599A4 /* Widgets */,
+				F1C5ECF11E37809E00C599A4 /* Theme */,
 				84E341E31E2FC0E400BDBA6F /* UI Resources */,
+				84E341971E2F7EFB00BDBA6F /* ViewController.swift */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
-				84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */,
-				84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */,
-				84E341E61E300BD200BDBA6F /* DDGFont.swift */,
-				8BB5BE4B05E31FA2FA929F20 /* DDGSearchSuggestionsProvider.swift */,
-				8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */,
 			);
 			path = DuckDuckGo;
 			sourceTree = "<group>";
@@ -169,24 +145,46 @@
 			path = DuckDuckGoUITests;
 			sourceTree = "<group>";
 		};
-		84E341D11E2F805D00BDBA6F /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				84E341D21E2F805D00BDBA6F /* DDGURLProtocol.swift */,
-				84E341D61E2F839600BDBA6F /* DDGUtility.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
 		84E341E31E2FC0E400BDBA6F /* UI Resources */ = {
 			isa = PBXGroup;
 			children = (
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
-				84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */,
-				84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
+				84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */,
+				84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */,
+				84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */,
 			);
 			name = "UI Resources";
+			sourceTree = "<group>";
+		};
+		F1C5ECF11E37809E00C599A4 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				84E341C91E2F805300BDBA6F /* DDGColor.swift */,
+				84E341E61E300BD200BDBA6F /* DDGFont.swift */,
+			);
+			name = Theme;
+			sourceTree = "<group>";
+		};
+		F1C5ECF21E3780CA00C599A4 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */,
+				84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */,
+				8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */,
+				84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */,
+				84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */,
+				84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */,
+			);
+			name = Widgets;
+			sourceTree = "<group>";
+		};
+		F1C5ECF31E37812900C599A4 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
+			);
+			name = Application;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,14 +333,8 @@
 				84E341CA1E2F805300BDBA6F /* DDGAddressBarTextField.swift in Sources */,
 				84E341CB1E2F805300BDBA6F /* UIViewController+DDGSearchController.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
-				84E341CE1E2F805300BDBA6F /* DDGDuckViewController.swift in Sources */,
-				84E341CD1E2F805300BDBA6F /* DDGSearchController.swift in Sources */,
 				84E341D01E2F805300BDBA6F /* DDGColor.swift in Sources */,
-				84E341D71E2F839600BDBA6F /* DDGUtility.swift in Sources */,
 				84E341E71E300BD200BDBA6F /* DDGFont.swift in Sources */,
-				84E341DF1E2FB29600BDBA6F /* DDGPopoverViewController.swift in Sources */,
-				84E341D41E2F805D00BDBA6F /* DDGURLProtocol.swift in Sources */,
-				8BB5BE12D6E212611F50652F /* DDGSearchSuggestionsProvider.swift in Sources */,
 				8BB5B258E2E89F3728CB2280 /* DDGAutocompleteHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

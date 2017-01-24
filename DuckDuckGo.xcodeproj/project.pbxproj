@@ -148,11 +148,11 @@
 		84E341E31E2FC0E400BDBA6F /* UI Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
-				84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */,
 				84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */,
-				84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */,
+				84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */,
 			);
 			name = "UI Resources";
 			sourceTree = "<group>";

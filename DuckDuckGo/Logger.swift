@@ -6,8 +6,6 @@
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
-
-
 public struct Logger {
 
 public static func log(text: String) {

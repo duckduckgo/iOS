@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ExtensionsResearch
+//  DuckDuckGo
 //
 //  Created by Mia Alexiou on 18/01/2017.
 //  Copyright © 2017 DuckDuckGo. All rights reserved.

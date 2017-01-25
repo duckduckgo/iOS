@@ -72,20 +72,21 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
     }
     
     @IBAction func onDeleteEverything(_ sender: UIBarButtonItem) {
-        resetWebView()
         clearCache()
-    }
-    
-    private func resetWebView() {
-        webView.removeFromSuperview()
-        configureWebView()
+        resetWebView()
     }
     
     private func clearCache() {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
         let distandPast = Date.distantPast
-        WKWebsiteDataStore.default().removeData(ofTypes: allData, modifiedSince: distandPast) {
+        let dataStore = webView.configuration.websiteDataStore
+        dataStore.removeData(ofTypes: allData, modifiedSince: distandPast) {
             Logger.log(text: "Cache cleared")
         }
+    }
+    
+    private func resetWebView() {
+        webView.removeFromSuperview()
+        configureWebView()
     }
 }

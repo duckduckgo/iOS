@@ -9,6 +9,5 @@
 import Foundation
 
 struct Urls {
-    static let home = "https://www.duckduckgo.com"
-    static let duckduckGoSearch = "https://www.duckduckgo.com"
+    static let home = "https://www.duckduckgo.com?ko=-1"
 }

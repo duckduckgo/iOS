@@ -21,9 +21,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
     }
     
     private func configureWebView() {
-        webView = WKWebView(frame: view.bounds)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        webView = WKWebView.createPrivateBrowser(frame: view.bounds)
         webView.allowsBackForwardNavigationGestures = true
         webView.navigationDelegate = self
         loadHomepage()
@@ -77,12 +75,9 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
     }
     
     private func clearCache() {
-        let allData = WKWebsiteDataStore.allWebsiteDataTypes()
-        let distandPast = Date.distantPast
-        let dataStore = webView.configuration.websiteDataStore
-        dataStore.removeData(ofTypes: allData, modifiedSince: distandPast) {
+        webView.clearCache {
             Logger.log(text: "Cache cleared")
-        }
+        }        
     }
     
     private func resetWebView() {

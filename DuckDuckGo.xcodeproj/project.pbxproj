@@ -12,16 +12,6 @@
 		84E3419D1E2F7EFB00BDBA6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
 		84E341B61E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341B51E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift */; };
-		84E341CA1E2F805300BDBA6F /* DDGAddressBarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */; };
-		84E341CB1E2F805300BDBA6F /* UIViewController+DDGSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */; };
-		84E341CC1E2F805300BDBA6F /* DDGSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */; };
-		84E341CF1E2F805300BDBA6F /* DDGProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */; };
-		84E341D01E2F805300BDBA6F /* DDGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341C91E2F805300BDBA6F /* DDGColor.swift */; };
-		84E341D91E2FAFBD00BDBA6F /* DDGSearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */; };
-		84E341E21E2FC0CD00BDBA6F /* DDGSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */; };
-		84E341E51E2FD06300BDBA6F /* DDGAutocompletionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */; };
-		84E341E71E300BD200BDBA6F /* DDGFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341E61E300BD200BDBA6F /* DDGFont.swift */; };
-		8BB5B258E2E89F3728CB2280 /* DDGAutocompleteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */; };
 		F14E491B1E38D58800DC037C /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491A1E38D58800DC037C /* WKWebView.swift */; };
 		F14E491F1E391CE900DC037C /* URLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491E1E391CE900DC037C /* URLTests.swift */; };
 		F198D7871E396B8C0088DA8A /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7861E396B8C0088DA8A /* URL.swift */; };
@@ -66,16 +56,6 @@
 		84E341B11E2F7EFC00BDBA6F /* DuckDuckGoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuckDuckGoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341B51E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoUITests.swift; sourceTree = "<group>"; };
 		84E341B71E2F7EFC00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAddressBarTextField.swift; sourceTree = "<group>"; };
-		84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DDGSearchController.swift"; sourceTree = "<group>"; };
-		84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchBar.swift; sourceTree = "<group>"; };
-		84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGProgressBar.swift; sourceTree = "<group>"; };
-		84E341C91E2F805300BDBA6F /* DDGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGColor.swift; sourceTree = "<group>"; };
-		84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchHandler.swift; sourceTree = "<group>"; };
-		84E341E11E2FC0CD00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DDGSearchController.xib; sourceTree = "<group>"; };
-		84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompletionCell.swift; sourceTree = "<group>"; };
-		84E341E61E300BD200BDBA6F /* DDGFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGFont.swift; sourceTree = "<group>"; };
-		8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompleteHeaderView.swift; sourceTree = "<group>"; };
 		F14E491A1E38D58800DC037C /* WKWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebView.swift; sourceTree = "<group>"; };
 		F14E491E1E391CE900DC037C /* URLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLTests.swift; sourceTree = "<group>"; };
 		F198D7861E396B8C0088DA8A /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
@@ -142,7 +122,6 @@
 				F19942641E38239100CE0C8B /* UserInterface */,
 				F1C5ECFA1E37B15B00C599A4 /* Browser */,
 				84E341E31E2FC0E400BDBA6F /* UI Resources */,
-				F1C5ECF21E3780CA00C599A4 /* Legacy */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 			);
 			path = DuckDuckGo;
@@ -193,23 +172,6 @@
 				F19942651E3825A300CE0C8B /* UIViewController.swift */,
 			);
 			name = UserInterface;
-			sourceTree = "<group>";
-		};
-		F1C5ECF21E3780CA00C599A4 /* Legacy */ = {
-			isa = PBXGroup;
-			children = (
-				84E341C91E2F805300BDBA6F /* DDGColor.swift */,
-				84E341E61E300BD200BDBA6F /* DDGFont.swift */,
-				84E341D81E2FAFBD00BDBA6F /* DDGSearchHandler.swift */,
-				84E341E41E2FD06300BDBA6F /* DDGAutocompletionCell.swift */,
-				8BB5BC81B2856DD327E4D970 /* DDGAutocompleteHeaderView.swift */,
-				84E341C31E2F805300BDBA6F /* DDGAddressBarTextField.swift */,
-				84E341C51E2F805300BDBA6F /* DDGSearchBar.swift */,
-				84E341C81E2F805300BDBA6F /* DDGProgressBar.swift */,
-				84E341C41E2F805300BDBA6F /* UIViewController+DDGSearchController.swift */,
-				84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */,
-			);
-			name = Legacy;
 			sourceTree = "<group>";
 		};
 		F1C5ECF31E37812900C599A4 /* Application */ = {
@@ -352,7 +314,6 @@
 			files = (
 				F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
-				84E341E21E2FC0CD00BDBA6F /* DDGSearchController.xib in Resources */,
 				84E3419D1E2F7EFB00BDBA6F /* Assets.xcassets in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 			);
@@ -380,22 +341,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F14E491B1E38D58800DC037C /* WKWebView.swift in Sources */,
-				84E341D91E2FAFBD00BDBA6F /* DDGSearchHandler.swift in Sources */,
 				F1C5ECF91E37B14A00C599A4 /* BrowserViewController.swift in Sources */,
-				84E341CF1E2F805300BDBA6F /* DDGProgressBar.swift in Sources */,
-				84E341CC1E2F805300BDBA6F /* DDGSearchBar.swift in Sources */,
-				84E341E51E2FD06300BDBA6F /* DDGAutocompletionCell.swift in Sources */,
-				84E341CA1E2F805300BDBA6F /* DDGAddressBarTextField.swift in Sources */,
 				F198D7871E396B8C0088DA8A /* URL.swift in Sources */,
-				84E341CB1E2F805300BDBA6F /* UIViewController+DDGSearchController.swift in Sources */,
 				F1C5ECFF1E37B90000C599A4 /* Logger.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
-				84E341D01E2F805300BDBA6F /* DDGColor.swift in Sources */,
 				F198D78C1E3975C60088DA8A /* String.swift in Sources */,
 				F1C5ED011E37CC4600C599A4 /* AppUrls.swift in Sources */,
 				F1C5ED031E37CF2600C599A4 /* UserStrings.swift in Sources */,
-				84E341E71E300BD200BDBA6F /* DDGFont.swift in Sources */,
-				8BB5B258E2E89F3728CB2280 /* DDGAutocompleteHeaderView.swift in Sources */,
 				F19942661E3825A300CE0C8B /* UIViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,14 +401,6 @@
 				84E3419F1E2F7EFB00BDBA6F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		84E341E01E2FC0CD00BDBA6F /* DDGSearchController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84E341E11E2FC0CD00BDBA6F /* Base */,
-			);
-			name = DDGSearchController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

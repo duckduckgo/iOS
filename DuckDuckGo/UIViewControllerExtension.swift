@@ -1,5 +1,5 @@
 //
-//  UIViewController.swift
+//  UIViewControllerExtension.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 25/01/2017.

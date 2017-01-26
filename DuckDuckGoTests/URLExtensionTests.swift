@@ -1,17 +1,14 @@
 //
-//  URLTests.swift
+//  URLExtensionTests.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 25/01/2017.
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
-import Foundation
-
 import XCTest
 
-
-class UrlsTests: XCTestCase {
+class URLExtensionTests: XCTestCase {
     
     func testIsWebUrlWithValidStringReturnsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com"))
@@ -61,5 +58,12 @@ class UrlsTests: XCTestCase {
         let result = URL.webUrl(fromText: "test.com")
         XCTAssertNotNil(result)
         XCTAssertEqual("http://test.com", result?.absoluteString)
+    }
+    
+    func testEncodeUrlEncodesText() {
+        let input = "test \"%-.<>\\^_`{|~"
+        let expected = "test%20%22%25-.%3C%3E%5C%5E_%60%7B%7C~"
+        let actual = URL.encode(queryText: input)
+        XCTAssertEqual(expected, actual)
     }
 }

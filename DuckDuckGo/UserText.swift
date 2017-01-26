@@ -9,5 +9,5 @@
 import Foundation
 
 struct UserText {
-    static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search DuckDuckGo")
+    static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search bar hint")
 }

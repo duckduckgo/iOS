@@ -1,5 +1,5 @@
 //
-//  String.swift
+//  StringExtension.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 26/01/2017.

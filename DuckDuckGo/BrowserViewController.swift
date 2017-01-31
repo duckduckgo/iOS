@@ -129,6 +129,12 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
         webView.goForward()
     }
     
+    @IBAction func onOpenInSafari(_ sender: UIBarButtonItem) {
+        if let url = webView.url {
+            UIApplication.shared.openURL(url)
+        }
+    }
+    
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = webView.url {
             presentShareSheetFromButton(activityItems: [url], buttonItem: sender)

@@ -21,26 +21,42 @@
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xY-xh-cZI">
+                                <rect key="frame" x="0.0" y="-20" width="414" height="20"/>
+                                <color key="backgroundColor" red="0.85490196078431369" green="0.35686274509803922" blue="0.25098039215686274" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="AYl-2H-v95"/>
+                                </constraints>
+                            </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="U2u-m6-xLg">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="1xY-xh-cZI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YCF-sL-08q"/>
+                            <constraint firstAttribute="trailing" secondItem="1xY-xh-cZI" secondAttribute="trailing" id="b1e-YC-bMw"/>
                             <constraint firstAttribute="trailing" secondItem="U2u-m6-xLg" secondAttribute="trailing" id="jAP-vC-c2J"/>
+                            <constraint firstItem="U2u-m6-xLg" firstAttribute="top" secondItem="1xY-xh-cZI" secondAttribute="bottom" id="p7f-QL-gvd"/>
                             <constraint firstItem="U2u-m6-xLg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="rXp-zC-3lJ"/>
-                            <constraint firstItem="U2u-m6-xLg" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="weX-Jd-nYu"/>
+                            <constraint firstItem="1xY-xh-cZI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="sfj-oM-xSc"/>
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ksN-ga-bCX"/>
+                        <barButtonItem image="Home" id="Jsx-JA-uHA">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onHomePressed:" destination="BYZ-38-t0r" id="7A3-Kx-Dgp"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="lec-FV-Qfv"/>
                         <barButtonItem image="BrowseBack" id="I2l-8p-8FW">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onBackPressed:" destination="BYZ-38-t0r" id="a9t-Lm-7rO"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="lec-FV-Qfv"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JgL-JA-esJ"/>
                         <barButtonItem image="BrosweForward" id="nKh-Td-FbN">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -48,32 +64,31 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="w5i-XV-hAd"/>
+                        <barButtonItem image="OpenInBrowser" id="mpt-fw-vpE">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onOpenInSafari:" destination="BYZ-38-t0r" id="K5F-s0-DKz"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="NlQ-qK-mjv"/>
                         <barButtonItem image="Share" id="4oK-1N-O5O">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onSharePressed:" destination="BYZ-38-t0r" id="g2S-3N-1nx"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N8h-59-zIV"/>
-                        <barButtonItem image="DeleteForever" id="Cba-s8-cVa">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="onDeleteEverything:" destination="BYZ-38-t0r" id="6BI-Q2-UsZ"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="SJf-Fi-ZaR"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="4ID-JO-kUn">
-                        <barButtonItem key="leftBarButtonItem" image="Home" id="Jsx-JA-uHA">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="onHomePressed:" destination="BYZ-38-t0r" id="7A3-Kx-Dgp"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="CQj-Mv-x5k">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="CQj-Mv-x5k">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onRefreshPressed:" destination="BYZ-38-t0r" id="Cv7-j3-AYs"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="DeleteForever" id="Cba-s8-cVa">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="onDeleteEverything:" destination="BYZ-38-t0r" id="6BI-Q2-UsZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -90,11 +105,12 @@
         <!--Navigation Controller-->
         <scene sceneID="JCh-0r-CNM">
             <objects>
-                <navigationController toolbarHidden="NO" id="Xba-Bh-f6n" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" hidesBarsOnSwipe="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="jmT-gh-cHl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.85544079542160034" green="0.35845720767974854" blue="0.24958023428916931" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -119,6 +135,7 @@
         <image name="BrowseBack" width="24" height="24"/>
         <image name="DeleteForever" width="24" height="24"/>
         <image name="Home" width="22" height="22"/>
+        <image name="OpenInBrowser" width="24" height="24"/>
         <image name="Share" width="24" height="24"/>
     </resources>
 </document>

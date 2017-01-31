@@ -102,24 +102,6 @@
             </objects>
             <point key="canvasLocation" x="839.13043478260875" y="57.065217391304351"/>
         </scene>
-        <!--Settings View Controller-->
-        <scene sceneID="bzc-kC-Lgf">
-            <objects>
-                <viewController id="o1b-np-MKk" customClass="SettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0qa-CB-Ceg"/>
-                        <viewControllerLayoutGuide type="bottom" id="Hbp-US-j6D"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kZZ-U7-Qh6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L4P-ap-qdC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1554" y="58"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="JCh-0r-CNM">
             <objects>

@@ -64,8 +64,6 @@ class DDGSearchSuggestionsProvider {
       if let suggestionURL = URL(string: urlString) {
         session.dataTask(with: suggestionURL, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
                   if error == nil, let data = data {
-                    let dataStr = String(data:data, encoding:.utf8)!
-                    print("received autocompletion response: \(dataStr)")
                     do {
                       if let jsonDict = try JSONSerialization.jsonObject(with: data) as? Array<Dictionary<String,String>> {
                         print("downloaded json: \(jsonDict)")

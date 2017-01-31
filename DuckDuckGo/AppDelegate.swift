@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       self.duckController?.pushContentViewController(DDGDuckViewController(searchController:self.duckController!), animated: false)
       
       self.window = UIWindow(frame:UIScreen.main.bounds)
-      self.window?.backgroundColor = UIColor.green //duckSearchBarBackground
+      self.window?.backgroundColor = UIColor.duckSearchBarBackground
       self.window?.rootViewController = self.duckController
       self.window?.makeKeyAndVisible()
       

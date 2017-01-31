@@ -53,7 +53,7 @@ class DDGAddressBarTextField: UITextField, UITextFieldDelegate {
   func updatePlaceholder(animated: Bool) {
     let text = self.text ?? ""
     let fieldIsActive = self.isFirstResponder
-    let emptyText = text.characters.count > 0
+    let emptyText = text.characters.count <= 0
     if !emptyText {
       // if the text is non-empty then hide the placeholder immediately
       self.placeholderView?.alpha = 0

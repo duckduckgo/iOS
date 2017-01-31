@@ -119,8 +119,7 @@ class DDGSearchController:
   func updateSearchBarLeftButton() {
     var image: UIImage? = nil
     if self.navController.viewControllers.count > 1 {
-      var incomingViewController = self.rootViewInNavigator()
-      image = incomingViewController.searchBackButtonIconDDG()
+      image = self.rootViewInNavigator().searchBackButtonIconDDG()
     }
     if image == nil {
       image = UIImage(named: "Home")!.withRenderingMode(.alwaysOriginal)
@@ -130,8 +129,8 @@ class DDGSearchController:
   
   
   func pushContentViewController(_ contentController: UIViewController, animated: Bool) {
-    self.loadViewIfNeeded()
-    var topController = self.navController.viewControllers.count == 0
+    //self.loadViewIfNeeded()
+    //var topController = self.navController.viewControllers.count == 0
     if self.transitioningViewControllers {
       return
     }
@@ -140,7 +139,7 @@ class DDGSearchController:
     }
     self.loadViewIfNeeded()  // ensure the view is loaded
     
-    contentController.view.frame = self.navController.view.frame
+    //contentController.view.frame = self.navController.fview.frame
     self.navController.pushViewController(contentController, animated: animated)
     self.updateToolbars(false)
   }
@@ -290,7 +289,8 @@ class DDGSearchController:
     keyboardDidHideObserver = center.addObserver(forName: NSNotification.Name.UIKeyboardDidHide, object: nil, queue: queue, using: { (_ note: Notification) -> Void in
       weakSelf?.keyboardDidHide(note)
     })
-    var navController = UINavigationController()
+    let navController = UINavigationController()
+    self.navController = navController
     navController.isNavigationBarHidden = true
     navController.view.backgroundColor = UIColor.duckSearchBarBackground
     navController.interactivePopGestureRecognizer?.isEnabled = true
@@ -303,7 +303,6 @@ class DDGSearchController:
     DDGConstraintHelper.pinView(navController.view, toEdgeOf: self.searchBarWrapper, inViewContainer: self.view)
     DDGConstraintHelper.pinView(navController.view, toBottomOf: self.view, inViewController: self.view)
     navController.didMove(toParentViewController: self)
-    self.navController = navController
     
     self.background.accessibilityIdentifier = "Background view"
     self.navController = navController
@@ -477,7 +476,7 @@ class DDGSearchController:
     self.searchBar?.searchField?.resignFirstResponder()
     if let navController = self.navController, let duckController = navController.visibleViewController as? DDGSearchController ?? self.searchDDG() {
       if navController.viewControllers.count > 1 {
-        self.navController?.popToViewController(duckController, animated: true)
+        navController.popToViewController(duckController, animated: true)
       }
       duckController.searchControllerLeftButtonPressed()
     }
@@ -511,10 +510,14 @@ class DDGSearchController:
   
   func performSearch(_ query: String) {
     weak var weakSelf = self
-    self.dismissKeyboard({(_ completed: Bool) -> Void in
-      weakSelf?.loadQueryOrURL(query)
-      weakSelf?.dismissAutocomplete()
-    })
+    loadQueryOrURL(query)
+    dismissAutocomplete()
+    self.dismissKeyboard { (_ completed:Bool) in
+    }
+//    self.dismissKeyboard({(_ completed: Bool) -> Void in
+//      weakSelf?.loadQueryOrURL(query)
+//      weakSelf?.dismissAutocomplete()
+//    })
     oldSearchText = query
   }
   
@@ -827,7 +830,6 @@ func dismissAutocomplete() {
     }
     
     currentWordRange = NSMakeRange(wordBeginning, wordEnd - wordBeginning)
-    print("current word range: \(currentWordRange)")
     return true
   }
   
@@ -888,7 +890,7 @@ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
       if !autocompleteOpen {
         return
       }
-      var showBackButton = (viewController != navigationController.viewControllers[0])
+      let showBackButton = (viewController != navigationController.viewControllers[0])
       self.searchBar?.showLeftButton(show: showBackButton, animated: true)
     } else if self.navController == navigationController {
       self.autocompletePopover?.dimmedBackgroundView = viewController.dimmableContentView()

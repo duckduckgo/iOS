@@ -12,7 +12,6 @@
 		843014331E3FBED70085417E /* DDGImageActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014301E3FBED70085417E /* DDGImageActivityItemProvider.swift */; };
 		843014351E3FBEEE0085417E /* DDGConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014341E3FBEEE0085417E /* DDGConstraintHelper.swift */; };
 		843014381E3FBF080085417E /* DDGSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843014361E3FBF080085417E /* DDGSearchController.xib */; };
-		843014391E3FBF080085417E /* DDGWebToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843014371E3FBF080085417E /* DDGWebToolbar.xib */; };
 		8430143B1E3FBF980085417E /* DDGSearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143A1E3FBF980085417E /* DDGSearchHandler.swift */; };
 		8430143D1E3FBFB00085417E /* DDGBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143C1E3FBFB00085417E /* DDGBrowserController.swift */; };
 		843014411E3FBFD60085417E /* DDGAutocompletionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143E1E3FBFD60085417E /* DDGAutocompletionCell.swift */; };
@@ -76,7 +75,6 @@
 		843014301E3FBED70085417E /* DDGImageActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGImageActivityItemProvider.swift; sourceTree = "<group>"; };
 		843014341E3FBEEE0085417E /* DDGConstraintHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGConstraintHelper.swift; sourceTree = "<group>"; };
 		843014361E3FBF080085417E /* DDGSearchController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DDGSearchController.xib; sourceTree = "<group>"; };
-		843014371E3FBF080085417E /* DDGWebToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DDGWebToolbar.xib; sourceTree = "<group>"; };
 		8430143A1E3FBF980085417E /* DDGSearchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchHandler.swift; sourceTree = "<group>"; };
 		8430143C1E3FBFB00085417E /* DDGBrowserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGBrowserController.swift; sourceTree = "<group>"; };
 		8430143E1E3FBFD60085417E /* DDGAutocompletionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompletionCell.swift; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 				F1C5ED041E37D14C00C599A4 /* Localizable.strings */,
 				84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */,
 				843014361E3FBF080085417E /* DDGSearchController.xib */,
-				843014371E3FBF080085417E /* DDGWebToolbar.xib */,
 				843014481E3FF20C0085417E /* DDGBrowserController.xib */,
 			);
 			name = UserInterfaceResources;
@@ -398,7 +395,6 @@
 			files = (
 				F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
-				843014391E3FBF080085417E /* DDGWebToolbar.xib in Resources */,
 				843014381E3FBF080085417E /* DDGSearchController.xib in Resources */,
 				84E3419D1E2F7EFB00BDBA6F /* Assets.xcassets in Resources */,
 				843014491E3FF20C0085417E /* DDGBrowserController.xib in Resources */,

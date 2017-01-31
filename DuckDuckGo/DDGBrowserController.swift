@@ -18,7 +18,6 @@ class DDGBrowserController: UIViewController,
         DDGToolbarAndNavigationBarAutohiderDelegate, 
         MFMailComposeViewControllerDelegate
 {
-  @IBOutlet var toolnar:UIView?
   @IBOutlet var backButton:UIButton?
   @IBOutlet var forwardButton:UIButton?
   @IBOutlet var favButton:UIButton?
@@ -69,14 +68,16 @@ class DDGBrowserController: UIViewController,
       self.autohider = DDGToolbarAndNavigationBarAutohider(containerView: webview,
                                                            scrollView: webview.scrollView,
                                                            delegate: self)
-      webview.addGestureRecognizer(self.tapGestureRecognizer!)
     }
     
     self.updateButtons()
     self.tabBarTopBorderConstraint?.constant = 0.5
     let searchMenuItem = UIMenuItem(title: NSLocalizedString("Search", comment: "Search menu item name"), action: #selector(self.search))
     UIMenuController.shared.menuItems = [ searchMenuItem ]
-    self.tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(handleTap))
+    
+    let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(handleTap))
+    self.webview?.addGestureRecognizer(tapGestureRecognizer)
+    self.tapGestureRecognizer = tapGestureRecognizer
   }
   
   override func didReceiveMemoryWarning() {
@@ -108,6 +109,7 @@ class DDGBrowserController: UIViewController,
 
 
   func loadWebView(with url: URL) {
+
     self.webview?.load(DDGUtility.request(with: url))
     self.searchDDG()?.updateBar(with: url)
     self.webViewURL = url
@@ -311,10 +313,9 @@ class DDGBrowserController: UIViewController,
     lastUpwardsScrollDistance = 0;
   }
   
-  override func willRotate(to orientation:UIInterfaceOrientation, duration:TimeInterval) {
-    self.searchDDG()?.willRotate(to: orientation, duration: duration)
+  override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    self.searchDDG()?.willTransition(to: newCollection, with: coordinator)
   }
-  
   
   // MARK - long-press gesture handling
   
@@ -437,7 +438,7 @@ class DDGBrowserController: UIViewController,
   
   
   func setHideToolbarAndNavigationBar(_ shouldHide: Bool, forScrollview scrollView: UIScrollView) {
-    let newConstant = CGFloat(shouldHide ? 50.0 : 0.0)
+    let newConstant = CGFloat(shouldHide ? 0.0 : 50.0)
     if (shouldHide) {
       self.searchDDG()?.compactNavigationBar()
     } else {
@@ -530,8 +531,7 @@ class DDGBrowserController: UIViewController,
   }
 
   func loadQueryOrURL(queryOrURLString:String) {
-    //self.loadViewIfNeeded()
-    
+    self.loadViewIfNeeded()
     
     if let urlString = DDGUtility.validURLString(from: queryOrURLString), let url = URL(string:urlString) {
       self.loadWebView(with: url)
@@ -579,11 +579,15 @@ class DDGBrowserController: UIViewController,
 
 
 
-
-
 class DDGWebView: WKWebView {
   var webController:DDGBrowserController?
   let blackHoleView = UIView(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(1), height: CGFloat(1)))
+  
+  required init?(coder: NSCoder) {
+    let configuration = WKWebViewConfiguration()
+    configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+    super.init(frame: CGRect(), configuration: configuration)
+  }
   
   func stringByEvaluatingJavaScript(fromString script: String) -> String? {
     var resultURLString: String? = nil
@@ -606,8 +610,9 @@ class DDGWebView: WKWebView {
   }
   
   
-  
-  // this method was added to swallow any taps on the bottom toolbar area if the toolbars were collapsed so that the bottom toolbar could be shown without passing through any taps
+  // this method was added to swallow any taps on the bottom toolbar area if the 
+  // toolbars are collapsed so that the bottom toolbar could be shown without passing
+  // through any taps
   override func hitTest(_ tapPoint: CGPoint, with event: UIEvent?) -> UIView? {
     // if someone taps the bottom toolbar area, swallow the tap and show the toolbar
     if let controller = self.webController {

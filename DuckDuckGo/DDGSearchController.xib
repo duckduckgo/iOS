@@ -32,25 +32,28 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VVG-ik-zzG" userLabel="barwrapper">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67" customClass="DDGSearchBar" customModule="DuckDuckGo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHATS UP PEOPLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-gk-XkD">
-                                    <rect key="frame" x="20" y="0.0" width="280" height="38"/>
+                                    <rect key="frame" x="20" y="33" width="280" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18" id="x8y-qe-OeD"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6AA-to-t96" userLabel="Compacted Button">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                     <connections>
                                         <action selector="goBackToExpandedState:" destination="67" eventType="touchUpInside" id="XGi-Xw-JXE"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69" userLabel="Left Button">
-                                    <rect key="frame" x="-30" y="1" width="30" height="40"/>
+                                    <rect key="frame" x="-30" y="21" width="30" height="40"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration" label="Left Button"/>
                                     <constraints>
@@ -64,7 +67,7 @@
                                     </connections>
                                 </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="70" customClass="DDGAddressBarTextField" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="8" y="7" width="304" height="29"/>
+                                    <rect key="frame" x="8" y="27" width="304" height="29"/>
                                     <color key="backgroundColor" red="0.78342908620834351" green="0.26384711265563965" blue="0.16263183951377869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration" label="Search DuckDuckGo"/>
@@ -83,7 +86,7 @@
                                     </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83" userLabel="Bang Button">
-                                    <rect key="frame" x="8" y="1" width="29" height="40"/>
+                                    <rect key="frame" x="8" y="21" width="29" height="40"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration" label="Bang"/>
                                     <constraints>
@@ -99,7 +102,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72" userLabel="Cancel Button">
-                                    <rect key="frame" x="324" y="-1" width="48" height="44"/>
+                                    <rect key="frame" x="324" y="19" width="48" height="44"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration" label="Cancel"/>
                                     <constraints>
@@ -114,7 +117,7 @@
                                     </connections>
                                 </button>
                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IlG-e8-l4A" userLabel="placeholder container">
-                                    <rect key="frame" x="10" y="7" width="300" height="29"/>
+                                    <rect key="frame" x="10" y="27" width="300" height="29"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchBar-Search" translatesAutoresizingMaskIntoConstraints="NO" id="Ong-Rn-OOF">
                                             <rect key="frame" x="73.5" y="8" width="13" height="13"/>
@@ -160,8 +163,6 @@
                                 <constraint firstItem="IlG-e8-l4A" firstAttribute="trailing" secondItem="67" secondAttribute="trailing" constant="-10" id="Hdy-3v-FII" userLabel="placeholder right alignment"/>
                                 <constraint firstItem="72" firstAttribute="leading" secondItem="4Tp-gk-XkD" secondAttribute="trailing" id="J0a-uu-JZN"/>
                                 <constraint firstAttribute="bottom" secondItem="6AA-to-t96" secondAttribute="bottom" id="Kdc-OJ-3zB"/>
-                                <constraint firstItem="4Tp-gk-XkD" firstAttribute="top" secondItem="67" secondAttribute="top" id="NBP-0W-8ES"/>
-                                <constraint firstAttribute="bottom" secondItem="4Tp-gk-XkD" secondAttribute="bottom" constant="6" id="Nll-cn-1fE"/>
                                 <constraint firstItem="IlG-e8-l4A" firstAttribute="centerY" secondItem="70" secondAttribute="centerY" id="QgQ-JD-KGf" userLabel="placeholder vertical center"/>
                                 <constraint firstItem="6AA-to-t96" firstAttribute="top" secondItem="67" secondAttribute="top" id="VoT-9t-M0R"/>
                                 <constraint firstItem="4Tp-gk-XkD" firstAttribute="leading" secondItem="69" secondAttribute="trailing" id="Vx6-oT-pzk"/>
@@ -178,6 +179,7 @@
                                 <constraint firstItem="72" firstAttribute="centerY" secondItem="70" secondAttribute="centerY" id="ouo-Tj-78m" userLabel="cancel button vertical center"/>
                                 <constraint firstItem="4Tp-gk-XkD" firstAttribute="leading" secondItem="67" secondAttribute="leading" constant="20" id="pba-qj-Sm1"/>
                                 <constraint firstItem="72" firstAttribute="leading" secondItem="67" secondAttribute="trailing" constant="4" id="uUF-hP-mDv" userLabel="cancel button right alignment"/>
+                                <constraint firstItem="4Tp-gk-XkD" firstAttribute="centerY" secondItem="67" secondAttribute="centerY" constant="10" id="vOq-MZ-RcV"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
@@ -199,7 +201,7 @@
                             </connections>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8B2-xM-tuN" userLabel="progressView" customClass="DDGProgressBar" customModule="DuckDuckGo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="42" width="320" height="2"/>
+                            <rect key="frame" x="0.0" y="62" width="320" height="2"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="2" id="sxQ-UV-Sis"/>
@@ -219,7 +221,7 @@
                         <constraint firstItem="8B2-xM-tuN" firstAttribute="leading" secondItem="VVG-ik-zzG" secondAttribute="leading" id="oDh-vP-VDs"/>
                         <constraint firstItem="67" firstAttribute="leading" secondItem="VVG-ik-zzG" secondAttribute="leading" constant="10" id="rPE-Hw-gmH"/>
                         <constraint firstAttribute="bottom" secondItem="8B2-xM-tuN" secondAttribute="bottom" id="xrV-f8-pAI"/>
-                        <constraint firstAttribute="height" constant="44" id="zDm-26-nXY"/>
+                        <constraint firstAttribute="height" constant="64" id="zDm-26-nXY"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -229,7 +231,7 @@
                     </variation>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="content">
-                    <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                     <color key="backgroundColor" red="0.89730262756347656" green="0.89727580547332764" blue="0.89729094505310059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
             </subviews>

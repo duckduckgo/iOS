@@ -38,7 +38,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
     private func configureSearchBar() {
         searchBar = UISearchBar()
         searchBar.placeholder = UserText.searchDuckDuckGo
-        searchBar.textColor = Color.darkGrey
+        searchBar.textColor = UIColor.darkGrey
         searchBar.autocapitalizationType = .none
         searchBar.delegate = self
         self.navigationItem.titleView = searchBar

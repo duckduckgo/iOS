@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDGSearchController" customModule="DuckDuckGo" customModuleProvider="target">
+            <connections>
+                <outlet property="background" destination="21" id="23"/>
+                <outlet property="backgroundTopWrapperConstraint" destination="m7j-Nc-Vga" id="AQi-ae-5iX"/>
+                <outlet property="barWrapperHeightConstraint" destination="zDm-26-nXY" id="CXA-0j-yVb"/>
+                <outlet property="contentBottomConstraint" destination="DsX-Il-jIf" id="Str-dT-kEd"/>
+                <outlet property="searchBar" destination="67" id="UX6-q6-09A"/>
+                <outlet property="searchBarMaxWidthConstraint" destination="WQk-4I-V9H" id="YXt-LN-zdh"/>
+                <outlet property="searchBarWrapper" destination="VVG-ik-zzG" id="AJJ-pc-3bS"/>
+                <outlet property="view" destination="8" id="12"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="8" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VVG-ik-zzG" userLabel="barwrapper">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67" customClass="DDGSearchBar" customModule="DuckDuckGo" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHATS UP PEOPLE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-gk-XkD">
+                                    <rect key="frame" x="20" y="33" width="280" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18" id="x8y-qe-OeD"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6AA-to-t96" userLabel="Compacted Button">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                    <connections>
+                                        <action selector="goBackToExpandedState:" destination="67" eventType="touchUpInside" id="XGi-Xw-JXE"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69" userLabel="Left Button">
+                                    <rect key="frame" x="-30" y="21" width="30" height="40"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <accessibility key="accessibilityConfiguration" label="Left Button"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="Hse-88-xjo"/>
+                                        <constraint firstAttribute="height" constant="40" id="Px0-vi-5wZ"/>
+                                    </constraints>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" image="Home"/>
+                                    <connections>
+                                        <action selector="orangeButtonPressed:" destination="-1" eventType="touchUpInside" id="88"/>
+                                    </connections>
+                                </button>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="70" customClass="DDGAddressBarTextField" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <rect key="frame" x="8" y="27" width="304" height="29"/>
+                                    <color key="backgroundColor" red="0.78342908620834351" green="0.26384711265563965" blue="0.16263183951377869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <accessibility key="accessibilityConfiguration" label="Search DuckDuckGo"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="29" id="af5-Fq-VI3"/>
+                                    </constraints>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="webSearch" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="76"/>
+                                        <outlet property="placeholderIconView" destination="Ong-Rn-OOF" id="mhK-Ed-ASP"/>
+                                        <outlet property="placeholderTextCenter" destination="Ktn-LB-dY1" id="dr3-bd-WAO"/>
+                                        <outlet property="placeholderTextLeft" destination="PVH-H0-057" id="LC0-q6-Gfs"/>
+                                        <outlet property="placeholderView" destination="IlG-e8-l4A" id="aBa-FD-JDZ"/>
+                                    </connections>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83" userLabel="Bang Button">
+                                    <rect key="frame" x="8" y="21" width="29" height="40"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <accessibility key="accessibilityConfiguration" label="Bang"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="29" id="59a-Ow-lad"/>
+                                        <constraint firstAttribute="height" constant="40" id="Z18-3M-Gg7"/>
+                                    </constraints>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" image="SearchBar-Bang">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="bangButtonPressed:" destination="-1" eventType="touchUpInside" id="87"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72" userLabel="Cancel Button">
+                                    <rect key="frame" x="324" y="19" width="48" height="44"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <accessibility key="accessibilityConfiguration" label="Cancel"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="Bab-Fe-7YO"/>
+                                        <constraint firstAttribute="width" constant="48" id="PhO-df-xfa"/>
+                                    </constraints>
+                                    <state key="normal" title="Cancel">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="73"/>
+                                    </connections>
+                                </button>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IlG-e8-l4A" userLabel="placeholder container">
+                                    <rect key="frame" x="10" y="27" width="300" height="29"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchBar-Search" translatesAutoresizingMaskIntoConstraints="NO" id="Ong-Rn-OOF">
+                                            <rect key="frame" x="73.5" y="8" width="13" height="13"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search DuckDuckGo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCO-Zc-2cb">
+                                            <rect key="frame" x="96.5" y="6" width="131.5" height="16.5"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="SCO-Zc-2cb" firstAttribute="top" secondItem="IlG-e8-l4A" secondAttribute="top" id="7ma-RW-cef"/>
+                                        <constraint firstAttribute="bottom" secondItem="SCO-Zc-2cb" secondAttribute="bottom" id="B5r-45-Woj"/>
+                                        <constraint firstItem="SCO-Zc-2cb" firstAttribute="leading" secondItem="IlG-e8-l4A" secondAttribute="leading" id="EZq-gC-LqP"/>
+                                        <constraint firstItem="SCO-Zc-2cb" firstAttribute="centerX" secondItem="IlG-e8-l4A" secondAttribute="centerX" constant="12" id="Ktn-LB-dY1" userLabel="placeholder text center"/>
+                                        <constraint firstAttribute="height" constant="29" id="LP8-Rg-Lrb"/>
+                                        <constraint firstAttribute="trailing" secondItem="SCO-Zc-2cb" secondAttribute="trailing" id="N9H-4k-zVI"/>
+                                        <constraint firstItem="SCO-Zc-2cb" firstAttribute="leading" secondItem="IlG-e8-l4A" secondAttribute="leading" priority="1" constant="38" id="PVH-H0-057" userLabel="placeholder text left"/>
+                                        <constraint firstAttribute="centerY" secondItem="SCO-Zc-2cb" secondAttribute="centerY" id="Qpg-8n-cUQ"/>
+                                        <constraint firstItem="Ong-Rn-OOF" firstAttribute="trailing" secondItem="SCO-Zc-2cb" secondAttribute="leading" constant="-10" id="VFq-7a-Gxr"/>
+                                        <constraint firstItem="Ong-Rn-OOF" firstAttribute="centerY" secondItem="SCO-Zc-2cb" secondAttribute="centerY" id="cug-vp-Rrc"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="7ma-RW-cef"/>
+                                            <exclude reference="B5r-45-Woj"/>
+                                            <exclude reference="EZq-gC-LqP"/>
+                                            <exclude reference="N9H-4k-zVI"/>
+                                        </mask>
+                                    </variation>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="69" firstAttribute="trailing" secondItem="67" secondAttribute="leading" id="1Rg-Zp-ybP" userLabel="left button left alignment"/>
+                                <constraint firstItem="6AA-to-t96" firstAttribute="leading" secondItem="67" secondAttribute="leading" id="6Y2-OC-8wN"/>
+                                <constraint firstItem="83" firstAttribute="leading" secondItem="70" secondAttribute="leading" id="Dct-Gh-JLG" userLabel="bang button left alignment"/>
+                                <constraint firstItem="70" firstAttribute="bottom" secondItem="67" secondAttribute="bottom" constant="-8" id="GQ1-Ic-Qcx" userLabel="address field bottom alignment"/>
+                                <constraint firstItem="IlG-e8-l4A" firstAttribute="trailing" secondItem="67" secondAttribute="trailing" constant="-10" id="Hdy-3v-FII" userLabel="placeholder right alignment"/>
+                                <constraint firstItem="72" firstAttribute="leading" secondItem="4Tp-gk-XkD" secondAttribute="trailing" id="J0a-uu-JZN"/>
+                                <constraint firstAttribute="bottom" secondItem="6AA-to-t96" secondAttribute="bottom" id="Kdc-OJ-3zB"/>
+                                <constraint firstItem="IlG-e8-l4A" firstAttribute="centerY" secondItem="70" secondAttribute="centerY" id="QgQ-JD-KGf" userLabel="placeholder vertical center"/>
+                                <constraint firstItem="6AA-to-t96" firstAttribute="top" secondItem="67" secondAttribute="top" id="VoT-9t-M0R"/>
+                                <constraint firstItem="4Tp-gk-XkD" firstAttribute="leading" secondItem="69" secondAttribute="trailing" id="Vx6-oT-pzk"/>
+                                <constraint firstAttribute="height" constant="44" id="WGv-23-cEv" userLabel="search bar height"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="414" id="WQk-4I-V9H"/>
+                                <constraint firstItem="83" firstAttribute="centerY" secondItem="70" secondAttribute="centerY" id="aGc-Ts-A3A" userLabel="bang button vertical center"/>
+                                <constraint firstAttribute="trailing" secondItem="6AA-to-t96" secondAttribute="trailing" id="aWZ-xo-gRG"/>
+                                <constraint firstItem="IlG-e8-l4A" firstAttribute="leading" secondItem="67" secondAttribute="leading" constant="10" id="ceA-DN-h4L"/>
+                                <constraint firstAttribute="trailing" secondItem="4Tp-gk-XkD" secondAttribute="trailing" constant="20" id="d4F-LX-oeG"/>
+                                <constraint firstItem="72" firstAttribute="leading" secondItem="70" secondAttribute="trailing" constant="12" id="do7-vC-DfC" userLabel="address X to cancel button"/>
+                                <constraint firstItem="69" firstAttribute="centerY" secondItem="70" secondAttribute="centerY" id="h2C-Sq-7w2" userLabel="left button vertical center"/>
+                                <constraint firstItem="4Tp-gk-XkD" firstAttribute="leading" secondItem="83" secondAttribute="trailing" id="h7c-Xj-ftJ"/>
+                                <constraint firstItem="70" firstAttribute="leading" secondItem="69" secondAttribute="trailing" constant="8" id="hru-Nf-Ie2" userLabel="address X to left button"/>
+                                <constraint firstItem="72" firstAttribute="centerY" secondItem="70" secondAttribute="centerY" id="ouo-Tj-78m" userLabel="cancel button vertical center"/>
+                                <constraint firstItem="4Tp-gk-XkD" firstAttribute="leading" secondItem="67" secondAttribute="leading" constant="20" id="pba-qj-Sm1"/>
+                                <constraint firstItem="72" firstAttribute="leading" secondItem="67" secondAttribute="trailing" constant="4" id="uUF-hP-mDv" userLabel="cancel button right alignment"/>
+                                <constraint firstItem="4Tp-gk-XkD" firstAttribute="centerY" secondItem="67" secondAttribute="centerY" constant="10" id="vOq-MZ-RcV"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="WGv-23-cEv"/>
+                                    <exclude reference="Vx6-oT-pzk"/>
+                                    <exclude reference="h7c-Xj-ftJ"/>
+                                    <exclude reference="J0a-uu-JZN"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <outlet property="bangButton" destination="83" id="FsY-Im-uvF"/>
+                                <outlet property="cancelButtonXConstraint" destination="uUF-hP-mDv" id="UIp-eC-Pbo"/>
+                                <outlet property="compactedLabel" destination="4Tp-gk-XkD" id="D0t-MO-NuC"/>
+                                <outlet property="goBackToExpandedStateButton" destination="6AA-to-t96" id="EwL-jZ-AD0"/>
+                                <outlet property="leftButton" destination="69" id="JB1-QD-CuU"/>
+                                <outlet property="leftButtonXConstraint" destination="1Rg-Zp-ybP" id="DX1-BI-50c"/>
+                                <outlet property="progressView" destination="8B2-xM-tuN" id="Tyx-Fu-Nur"/>
+                                <outlet property="searchField" destination="70" id="78"/>
+                            </connections>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8B2-xM-tuN" userLabel="progressView" customClass="DDGProgressBar" customModule="DuckDuckGo" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="62" width="320" height="2"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="sxQ-UV-Sis"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.82975888252258301" green="0.25774171948432922" blue="0.15375584363937378" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="67" secondAttribute="width" priority="900" id="4Qq-jo-Sx2"/>
+                        <constraint firstAttribute="trailing" secondItem="67" secondAttribute="trailing" constant="10" id="6Zt-Pr-xzR"/>
+                        <constraint firstAttribute="trailing" secondItem="8B2-xM-tuN" secondAttribute="trailing" id="8YN-eE-QQc"/>
+                        <constraint firstItem="67" firstAttribute="top" secondItem="VVG-ik-zzG" secondAttribute="top" id="JOt-fq-1aI"/>
+                        <constraint firstAttribute="bottom" secondItem="67" secondAttribute="bottom" id="ZQD-Q5-lll"/>
+                        <constraint firstAttribute="centerX" secondItem="67" secondAttribute="centerX" id="aeC-fq-LgS"/>
+                        <constraint firstItem="67" firstAttribute="top" secondItem="VVG-ik-zzG" secondAttribute="top" id="eEr-vZ-cL8"/>
+                        <constraint firstItem="8B2-xM-tuN" firstAttribute="leading" secondItem="VVG-ik-zzG" secondAttribute="leading" id="oDh-vP-VDs"/>
+                        <constraint firstItem="67" firstAttribute="leading" secondItem="VVG-ik-zzG" secondAttribute="leading" constant="10" id="rPE-Hw-gmH"/>
+                        <constraint firstAttribute="bottom" secondItem="8B2-xM-tuN" secondAttribute="bottom" id="xrV-f8-pAI"/>
+                        <constraint firstAttribute="height" constant="64" id="zDm-26-nXY"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6Zt-Pr-xzR"/>
+                            <exclude reference="rPE-Hw-gmH"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21" userLabel="content">
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                    <color key="backgroundColor" red="0.89730262756347656" green="0.89727580547332764" blue="0.89729094505310059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="VVG-ik-zzG" firstAttribute="leading" secondItem="8" secondAttribute="leading" id="02n-y5-IJY"/>
+                <constraint firstItem="VVG-ik-zzG" firstAttribute="leading" secondItem="8" secondAttribute="leading" id="B4g-Oq-Lij"/>
+                <constraint firstAttribute="centerX" secondItem="VVG-ik-zzG" secondAttribute="centerX" id="CrL-im-4cU"/>
+                <constraint firstAttribute="trailing" secondItem="VVG-ik-zzG" secondAttribute="trailing" id="DVA-P0-34P"/>
+                <constraint firstItem="21" firstAttribute="bottom" secondItem="8" secondAttribute="bottom" id="DsX-Il-jIf"/>
+                <constraint firstItem="VVG-ik-zzG" firstAttribute="leading" secondItem="8" secondAttribute="leading" id="QNW-hn-PkA"/>
+                <constraint firstItem="21" firstAttribute="top" secondItem="VVG-ik-zzG" secondAttribute="bottom" id="RD6-Jb-pP2"/>
+                <constraint firstAttribute="centerX" secondItem="VVG-ik-zzG" secondAttribute="centerX" id="REi-M6-nqR"/>
+                <constraint firstItem="21" firstAttribute="trailing" secondItem="8" secondAttribute="trailing" id="TH5-OW-Ojl"/>
+                <constraint firstItem="21" firstAttribute="leading" secondItem="8" secondAttribute="leading" id="erU-2B-h6t"/>
+                <constraint firstItem="VVG-ik-zzG" firstAttribute="top" secondItem="8" secondAttribute="top" id="gbq-2m-wIC"/>
+                <constraint firstItem="VVG-ik-zzG" firstAttribute="top" secondItem="21" secondAttribute="top" constant="-44" id="k2D-3Y-7P3"/>
+                <constraint firstAttribute="trailing" secondItem="VVG-ik-zzG" secondAttribute="trailing" id="m7j-Nc-Vga"/>
+                <constraint firstAttribute="trailing" secondItem="VVG-ik-zzG" secondAttribute="trailing" id="zXt-8P-ZY1"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="02n-y5-IJY"/>
+                    <exclude reference="B4g-Oq-Lij"/>
+                    <exclude reference="DVA-P0-34P"/>
+                    <exclude reference="REi-M6-nqR"/>
+                    <exclude reference="k2D-3Y-7P3"/>
+                    <exclude reference="zXt-8P-ZY1"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="142" y="592"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Home" width="22" height="22"/>
+        <image name="SearchBar-Bang" width="19" height="19"/>
+        <image name="SearchBar-Search" width="13" height="13"/>
+    </resources>
+</document>

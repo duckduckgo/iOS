@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DDGBrowserController" customModule="DuckDuckGo" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="D1U-79-qbz" id="qho-at-F08"/>
+                <outlet property="favButton" destination="rdb-X1-aus" id="5IU-e0-NKm"/>
+                <outlet property="forwardButton" destination="9s9-Ft-ueK" id="LiL-Uf-S8f"/>
+                <outlet property="shareButton" destination="bTS-Cl-kXM" id="LEs-Vq-9Q8"/>
+                <outlet property="tabsButton" destination="ZIq-Fa-jkb" id="yMH-Ni-QeF"/>
+                <outlet property="webToolbar" destination="YM8-Zt-olG" id="xwQ-Pa-2B7"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YM8-Zt-olG" userLabel="web toolbar">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zwS-Vk-Io3" userLabel="border">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.14999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="VEt-Pp-yiv"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71n-NZ-5pv" userLabel="background">
+                    <rect key="frame" x="0.0" y="1" width="600" height="49"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1U-79-qbz" userLabel="back">
+                    <rect key="frame" x="51" y="1" width="48" height="48"/>
+                    <accessibility key="accessibilityConfiguration" label="Back"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="jhN-q4-xcJ"/>
+                        <constraint firstAttribute="width" constant="48" id="vUf-7n-E0u"/>
+                    </constraints>
+                    <color key="tintColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="webbar-back">
+                        <color key="titleColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="backButtonPressed:" destination="-1" eventType="touchUpInside" id="bTK-0a-Pk7"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9s9-Ft-ueK" userLabel="forward">
+                    <rect key="frame" x="201" y="1" width="48" height="48"/>
+                    <accessibility key="accessibilityConfiguration" label="Forward"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="04R-3d-8w5"/>
+                        <constraint firstAttribute="width" constant="48" id="AUf-g3-oFx"/>
+                    </constraints>
+                    <color key="tintColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="webbar-forward">
+                        <color key="titleColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="forwardButtonPressed:" destination="-1" eventType="touchUpInside" id="YVI-D5-Xut"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdb-X1-aus" userLabel="fav">
+                    <rect key="frame" x="351" y="1" width="48" height="48"/>
+                    <accessibility key="accessibilityConfiguration" label="Favorite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="MuV-wr-TwW"/>
+                        <constraint firstAttribute="width" constant="48" id="RKQ-yD-q6V"/>
+                    </constraints>
+                    <color key="tintColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="webbar-fav">
+                        <color key="titleColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="favButtonPressed:" destination="-1" eventType="touchUpInside" id="RgN-Y2-KAS"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTS-Cl-kXM" userLabel="share">
+                    <rect key="frame" x="501" y="1" width="48" height="48"/>
+                    <accessibility key="accessibilityConfiguration" label="Share"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="APA-Yi-MzD"/>
+                        <constraint firstAttribute="height" constant="48" id="xsk-ct-sba"/>
+                    </constraints>
+                    <color key="tintColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="webbar-share">
+                        <color key="titleColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="shareButtonPressed:" destination="-1" eventType="touchUpInside" id="rvs-FX-X3J"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZIq-Fa-jkb" userLabel="tabs">
+                    <rect key="frame" x="516" y="1" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="Eop-WJ-KLX"/>
+                        <constraint firstAttribute="height" constant="48" id="gac-3Y-xWd"/>
+                    </constraints>
+                    <color key="tintColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="webbar-tabs">
+                        <color key="titleColor" red="0.67807614803314209" green="0.67805588245391846" blue="0.67806732654571533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="tabsButtonPressed:" destination="-1" eventType="touchUpInside" id="q4f-Z0-4sr"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="71n-NZ-5pv" secondAttribute="trailing" id="06G-nQ-m6o"/>
+                <constraint firstItem="D1U-79-qbz" firstAttribute="centerX" secondItem="YM8-Zt-olG" secondAttribute="trailing" multiplier="0.125" id="2jt-Ou-7Wi" userLabel="back left align"/>
+                <constraint firstItem="bTS-Cl-kXM" firstAttribute="centerX" secondItem="YM8-Zt-olG" secondAttribute="trailing" multiplier="0.875" id="BDe-t8-qAU" userLabel="share left align"/>
+                <constraint firstAttribute="centerY" secondItem="bTS-Cl-kXM" secondAttribute="centerY" id="FGP-9C-4Vv" userLabel="share vertical center"/>
+                <constraint firstItem="ZIq-Fa-jkb" firstAttribute="centerX" secondItem="YM8-Zt-olG" secondAttribute="trailing" multiplier="0.9" id="H0r-C1-kJ5" userLabel="tabs left align"/>
+                <constraint firstItem="D1U-79-qbz" firstAttribute="centerY" secondItem="YM8-Zt-olG" secondAttribute="centerY" id="Jvf-WO-QAE" userLabel="back vertical center"/>
+                <constraint firstItem="9s9-Ft-ueK" firstAttribute="centerX" secondItem="YM8-Zt-olG" secondAttribute="trailing" multiplier="0.375" id="S35-Ut-ILi" userLabel="forward left align"/>
+                <constraint firstItem="zwS-Vk-Io3" firstAttribute="leading" secondItem="YM8-Zt-olG" secondAttribute="leading" id="WPN-cW-jTl"/>
+                <constraint firstItem="71n-NZ-5pv" firstAttribute="top" secondItem="YM8-Zt-olG" secondAttribute="top" constant="1" id="WWr-K4-an6"/>
+                <constraint firstItem="rdb-X1-aus" firstAttribute="centerX" secondItem="YM8-Zt-olG" secondAttribute="trailing" multiplier="0.625" id="XII-bx-aDK" userLabel="fav left align"/>
+                <constraint firstAttribute="bottom" secondItem="71n-NZ-5pv" secondAttribute="bottom" id="Y8l-7k-HrS"/>
+                <constraint firstItem="71n-NZ-5pv" firstAttribute="leading" secondItem="YM8-Zt-olG" secondAttribute="leading" id="YVj-Nf-Bcq"/>
+                <constraint firstAttribute="height" constant="50" id="dLj-kG-hTS" userLabel="tab bar height"/>
+                <constraint firstAttribute="trailing" secondItem="zwS-Vk-Io3" secondAttribute="trailing" id="fkt-8J-HNk"/>
+                <constraint firstAttribute="centerY" secondItem="rdb-X1-aus" secondAttribute="centerY" id="fqC-tD-d3f" userLabel="fav vertical center"/>
+                <constraint firstItem="zwS-Vk-Io3" firstAttribute="top" secondItem="YM8-Zt-olG" secondAttribute="top" id="jrR-0q-xNy"/>
+                <constraint firstItem="ZIq-Fa-jkb" firstAttribute="centerY" secondItem="YM8-Zt-olG" secondAttribute="centerY" id="mBV-3Z-s4y" userLabel="tabs vertical center"/>
+                <constraint firstAttribute="centerY" secondItem="9s9-Ft-ueK" secondAttribute="centerY" id="xiW-hY-JW9" userLabel="forward vertical center"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="38" y="-203"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="webbar-back" width="24" height="24"/>
+        <image name="webbar-fav" width="24" height="24"/>
+        <image name="webbar-forward" width="24" height="24"/>
+        <image name="webbar-share" width="24" height="24"/>
+        <image name="webbar-tabs" width="24" height="24"/>
+    </resources>
+</document>

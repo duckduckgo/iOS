@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843014311E3FBED70085417E /* DDGURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430142E1E3FBED70085417E /* DDGURLProtocol.swift */; };
+		843014321E3FBED70085417E /* DDGUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430142F1E3FBED70085417E /* DDGUtility.swift */; };
+		843014331E3FBED70085417E /* DDGImageActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014301E3FBED70085417E /* DDGImageActivityItemProvider.swift */; };
+		843014351E3FBEEE0085417E /* DDGConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014341E3FBEEE0085417E /* DDGConstraintHelper.swift */; };
+		843014381E3FBF080085417E /* DDGSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843014361E3FBF080085417E /* DDGSearchController.xib */; };
+		843014391E3FBF080085417E /* DDGWebToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843014371E3FBF080085417E /* DDGWebToolbar.xib */; };
+		8430143B1E3FBF980085417E /* DDGSearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143A1E3FBF980085417E /* DDGSearchHandler.swift */; };
+		8430143D1E3FBFB00085417E /* DDGBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143C1E3FBFB00085417E /* DDGBrowserController.swift */; };
+		843014411E3FBFD60085417E /* DDGAutocompletionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143E1E3FBFD60085417E /* DDGAutocompletionCell.swift */; };
+		843014421E3FBFD60085417E /* DDGSearchSuggestionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430143F1E3FBFD60085417E /* DDGSearchSuggestionsProvider.swift */; };
+		843014431E3FBFD60085417E /* DDGAutocompleteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014401E3FBFD60085417E /* DDGAutocompleteHeaderView.swift */; };
+		843014451E3FC1A30085417E /* DDGFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014441E3FC1A30085417E /* DDGFont.swift */; };
+		843014471E3FF03A0085417E /* DDGToolbarAndNavigationBarAutohiderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843014461E3FF03A0085417E /* DDGToolbarAndNavigationBarAutohiderDelegate.swift */; };
+		843014491E3FF20C0085417E /* DDGBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843014481E3FF20C0085417E /* DDGBrowserController.xib */; };
+		8430144B1E3FF6E60085417E /* DDGRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8430144A1E3FF6E60085417E /* DDGRange.swift */; };
+		847641781E3FBC5700C7154C /* DDGPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641711E3FBC5700C7154C /* DDGPopoverViewController.swift */; };
+		847641791E3FBC5700C7154C /* DDGAddressBarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641721E3FBC5700C7154C /* DDGAddressBarTextField.swift */; };
+		8476417A1E3FBC5700C7154C /* UIViewController+DDGSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641731E3FBC5700C7154C /* UIViewController+DDGSearchController.swift */; };
+		8476417B1E3FBC5700C7154C /* DDGSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641741E3FBC5700C7154C /* DDGSearchBar.swift */; };
+		8476417C1E3FBC5700C7154C /* DDGSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641751E3FBC5700C7154C /* DDGSearchController.swift */; };
+		8476417D1E3FBC5700C7154C /* DDGDuckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641761E3FBC5700C7154C /* DDGDuckViewController.swift */; };
+		8476417E1E3FBC5700C7154C /* DDGProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847641771E3FBC5700C7154C /* DDGProgressBar.swift */; };
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E3419D1E2F7EFB00BDBA6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */; };
@@ -49,6 +71,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8430142E1E3FBED70085417E /* DDGURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGURLProtocol.swift; sourceTree = "<group>"; };
+		8430142F1E3FBED70085417E /* DDGUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGUtility.swift; sourceTree = "<group>"; };
+		843014301E3FBED70085417E /* DDGImageActivityItemProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGImageActivityItemProvider.swift; sourceTree = "<group>"; };
+		843014341E3FBEEE0085417E /* DDGConstraintHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGConstraintHelper.swift; sourceTree = "<group>"; };
+		843014361E3FBF080085417E /* DDGSearchController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DDGSearchController.xib; sourceTree = "<group>"; };
+		843014371E3FBF080085417E /* DDGWebToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DDGWebToolbar.xib; sourceTree = "<group>"; };
+		8430143A1E3FBF980085417E /* DDGSearchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchHandler.swift; sourceTree = "<group>"; };
+		8430143C1E3FBFB00085417E /* DDGBrowserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGBrowserController.swift; sourceTree = "<group>"; };
+		8430143E1E3FBFD60085417E /* DDGAutocompletionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompletionCell.swift; sourceTree = "<group>"; };
+		8430143F1E3FBFD60085417E /* DDGSearchSuggestionsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchSuggestionsProvider.swift; sourceTree = "<group>"; };
+		843014401E3FBFD60085417E /* DDGAutocompleteHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAutocompleteHeaderView.swift; sourceTree = "<group>"; };
+		843014441E3FC1A30085417E /* DDGFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGFont.swift; sourceTree = "<group>"; };
+		843014461E3FF03A0085417E /* DDGToolbarAndNavigationBarAutohiderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGToolbarAndNavigationBarAutohiderDelegate.swift; sourceTree = "<group>"; };
+		843014481E3FF20C0085417E /* DDGBrowserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DDGBrowserController.xib; sourceTree = "<group>"; };
+		8430144A1E3FF6E60085417E /* DDGRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGRange.swift; sourceTree = "<group>"; };
+		847641711E3FBC5700C7154C /* DDGPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGPopoverViewController.swift; sourceTree = "<group>"; };
+		847641721E3FBC5700C7154C /* DDGAddressBarTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGAddressBarTextField.swift; sourceTree = "<group>"; };
+		847641731E3FBC5700C7154C /* UIViewController+DDGSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DDGSearchController.swift"; sourceTree = "<group>"; };
+		847641741E3FBC5700C7154C /* DDGSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchBar.swift; sourceTree = "<group>"; };
+		847641751E3FBC5700C7154C /* DDGSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGSearchController.swift; sourceTree = "<group>"; };
+		847641761E3FBC5700C7154C /* DDGDuckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGDuckViewController.swift; sourceTree = "<group>"; };
+		847641771E3FBC5700C7154C /* DDGProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DDGProgressBar.swift; sourceTree = "<group>"; };
 		84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckDuckGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E3419A1E2F7EFB00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -160,6 +204,9 @@
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F1C5ED041E37D14C00C599A4 /* Localizable.strings */,
 				84E3419C1E2F7EFB00BDBA6F /* Assets.xcassets */,
+				843014361E3FBF080085417E /* DDGSearchController.xib */,
+				843014371E3FBF080085417E /* DDGWebToolbar.xib */,
+				843014481E3FF20C0085417E /* DDGBrowserController.xib */,
 			);
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
@@ -185,9 +232,23 @@
 			isa = PBXGroup;
 			children = (
 				F198D7911E3A32710088DA8A /* Colour.swift */,
+				843014441E3FC1A30085417E /* DDGFont.swift */,
 				F1C5ED021E37CF2600C599A4 /* UserText.swift */,
 				F19942651E3825A300CE0C8B /* UIViewControllerExtension.swift */,
 				F198D7941E3A3CB30088DA8A /* SearchBarExtension.swift */,
+				847641711E3FBC5700C7154C /* DDGPopoverViewController.swift */,
+				847641721E3FBC5700C7154C /* DDGAddressBarTextField.swift */,
+				847641731E3FBC5700C7154C /* UIViewController+DDGSearchController.swift */,
+				847641741E3FBC5700C7154C /* DDGSearchBar.swift */,
+				847641751E3FBC5700C7154C /* DDGSearchController.swift */,
+				847641761E3FBC5700C7154C /* DDGDuckViewController.swift */,
+				847641771E3FBC5700C7154C /* DDGProgressBar.swift */,
+				843014341E3FBEEE0085417E /* DDGConstraintHelper.swift */,
+				8430143A1E3FBF980085417E /* DDGSearchHandler.swift */,
+				8430143E1E3FBFD60085417E /* DDGAutocompletionCell.swift */,
+				8430143F1E3FBFD60085417E /* DDGSearchSuggestionsProvider.swift */,
+				843014401E3FBFD60085417E /* DDGAutocompleteHeaderView.swift */,
+				843014461E3FF03A0085417E /* DDGToolbarAndNavigationBarAutohiderDelegate.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -206,6 +267,7 @@
 			children = (
 				F1C5ECF81E37B14A00C599A4 /* BrowserViewController.swift */,
 				F14E491A1E38D58800DC037C /* WKWebViewExtension.swift */,
+				8430143C1E3FBFB00085417E /* DDGBrowserController.swift */,
 			);
 			name = Browser;
 			sourceTree = "<group>";
@@ -216,6 +278,10 @@
 				F1C5ECFE1E37B90000C599A4 /* Logger.swift */,
 				F198D7861E396B8C0088DA8A /* URLExtension.swift */,
 				F198D78B1E3975C60088DA8A /* StringExtension.swift */,
+				8430142E1E3FBED70085417E /* DDGURLProtocol.swift */,
+				8430142F1E3FBED70085417E /* DDGUtility.swift */,
+				843014301E3FBED70085417E /* DDGImageActivityItemProvider.swift */,
+				8430144A1E3FF6E60085417E /* DDGRange.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -332,7 +398,10 @@
 			files = (
 				F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
+				843014391E3FBF080085417E /* DDGWebToolbar.xib in Resources */,
+				843014381E3FBF080085417E /* DDGSearchController.xib in Resources */,
 				84E3419D1E2F7EFB00BDBA6F /* Assets.xcassets in Resources */,
+				843014491E3FF20C0085417E /* DDGBrowserController.xib in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,15 +428,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				F14E491B1E38D58800DC037C /* WKWebViewExtension.swift in Sources */,
+				843014311E3FBED70085417E /* DDGURLProtocol.swift in Sources */,
+				843014431E3FBFD60085417E /* DDGAutocompleteHeaderView.swift in Sources */,
+				843014421E3FBFD60085417E /* DDGSearchSuggestionsProvider.swift in Sources */,
+				843014471E3FF03A0085417E /* DDGToolbarAndNavigationBarAutohiderDelegate.swift in Sources */,
 				F198D7921E3A32710088DA8A /* Colour.swift in Sources */,
+				847641781E3FBC5700C7154C /* DDGPopoverViewController.swift in Sources */,
 				F1C5ECF91E37B14A00C599A4 /* BrowserViewController.swift in Sources */,
 				F198D7871E396B8C0088DA8A /* URLExtension.swift in Sources */,
 				F1C5ECFF1E37B90000C599A4 /* Logger.swift in Sources */,
+				8476417D1E3FBC5700C7154C /* DDGDuckViewController.swift in Sources */,
+				843014331E3FBED70085417E /* DDGImageActivityItemProvider.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				F198D78C1E3975C60088DA8A /* StringExtension.swift in Sources */,
+				843014411E3FBFD60085417E /* DDGAutocompletionCell.swift in Sources */,
+				843014321E3FBED70085417E /* DDGUtility.swift in Sources */,
+				8430143D1E3FBFB00085417E /* DDGBrowserController.swift in Sources */,
 				F198D7951E3A3CB30088DA8A /* SearchBarExtension.swift in Sources */,
 				F1C5ED011E37CC4600C599A4 /* AppUrls.swift in Sources */,
+				8430144B1E3FF6E60085417E /* DDGRange.swift in Sources */,
+				847641791E3FBC5700C7154C /* DDGAddressBarTextField.swift in Sources */,
+				8476417B1E3FBC5700C7154C /* DDGSearchBar.swift in Sources */,
 				F1C5ED031E37CF2600C599A4 /* UserText.swift in Sources */,
+				8430143B1E3FBF980085417E /* DDGSearchHandler.swift in Sources */,
+				8476417C1E3FBC5700C7154C /* DDGSearchController.swift in Sources */,
+				8476417A1E3FBC5700C7154C /* UIViewController+DDGSearchController.swift in Sources */,
+				8476417E1E3FBC5700C7154C /* DDGProgressBar.swift in Sources */,
+				843014351E3FBEEE0085417E /* DDGConstraintHelper.swift in Sources */,
+				843014451E3FC1A30085417E /* DDGFont.swift in Sources */,
 				F19942661E3825A300CE0C8B /* UIViewControllerExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -29,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="ddgBrowser" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-HS-RwI" userLabel="DDGBrowser" customClass="DDGWebView" customModule="DuckDuckGo" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="28" width="375" height="639"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </view>
                 <view contentMode="scaleToFill" restorationIdentifier="webtoolbar" translatesAutoresizingMaskIntoConstraints="NO" id="CQM-5G-K9u" userLabel="web toolbar">
                     <rect key="frame" x="0.0" y="617" width="375" height="50"/>
@@ -56,6 +56,9 @@
                             <state key="normal" image="webbar-back">
                                 <color key="titleColor" red="0.67807614800000005" green="0.67805588250000004" blue="0.67806732650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="backButtonPressed:" destination="-1" eventType="touchUpInside" id="SyJ-Wq-uFU"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETr-7m-fSM" userLabel="forward">
                             <rect key="frame" x="117" y="1" width="48" height="48"/>
@@ -68,6 +71,9 @@
                             <state key="normal" image="webbar-forward">
                                 <color key="titleColor" red="0.67807614800000005" green="0.67805588250000004" blue="0.67806732650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="forwardButtonPressed:" destination="-1" eventType="touchUpInside" id="gaQ-w4-lLb"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FhQ-me-t1V" userLabel="fav">
                             <rect key="frame" x="211" y="1" width="48" height="48"/>
@@ -92,6 +98,9 @@
                             <state key="normal" image="webbar-share">
                                 <color key="titleColor" red="0.67807614800000005" green="0.67805588250000004" blue="0.67806732650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="searchControllerActionButtonPressed:" destination="-1" eventType="touchUpInside" id="bh5-xC-dKp"/>
+                            </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOn-Ah-5rp" userLabel="tabs">
                             <rect key="frame" x="314" y="1" width="48" height="48"/>
@@ -132,7 +141,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="CQM-5G-K9u" secondAttribute="trailing" id="7AD-Mh-nvN"/>
                 <constraint firstItem="CQM-5G-K9u" firstAttribute="leading" secondItem="dtX-Qi-r32" secondAttribute="leading" id="DwB-3W-JKM"/>
-                <constraint firstItem="OIc-HS-RwI" firstAttribute="top" secondItem="dtX-Qi-r32" secondAttribute="top" constant="28" id="SJD-Dz-un0"/>
+                <constraint firstItem="OIc-HS-RwI" firstAttribute="top" secondItem="dtX-Qi-r32" secondAttribute="top" id="SJD-Dz-un0"/>
                 <constraint firstAttribute="bottom" secondItem="OIc-HS-RwI" secondAttribute="bottom" id="ZLb-xD-gdy"/>
                 <constraint firstAttribute="trailing" secondItem="OIc-HS-RwI" secondAttribute="trailing" id="ma8-13-wrn"/>
                 <constraint firstAttribute="bottom" secondItem="CQM-5G-K9u" secondAttribute="top" constant="50" id="n1F-Rq-Pu2"/>

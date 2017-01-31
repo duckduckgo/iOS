@@ -66,7 +66,6 @@ class DDGSearchSuggestionsProvider {
                   if error == nil, let data = data {
                     do {
                       if let jsonDict = try JSONSerialization.jsonObject(with: data) as? Array<Dictionary<String,String>> {
-                        print("downloaded json: \(jsonDict)")
                         weakSelf?.suggestionsCache[searchText] = jsonDict
                         success()
                       } else {

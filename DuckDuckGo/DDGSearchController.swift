@@ -277,8 +277,8 @@ class DDGSearchController:
       searchField.delegate = self
     }
     
-    var center = NotificationCenter.default
-    var queue = OperationQueue.main
+    let center = NotificationCenter.default
+    let queue = OperationQueue.main
     weak var weakSelf = self
     keyboardDidShowObserver = center.addObserver(forName: NSNotification.Name.UIKeyboardDidShow, object: nil, queue: queue, using:{ (_ note: Notification) -> Void in
       weakSelf?.keyboardDidShow(note)
@@ -436,17 +436,17 @@ class DDGSearchController:
   
   func keyboardIsShowing(_ show: Bool, notification: Notification) {
     // Updated calculation which will just update the content inset of the table view and take the FINAL height of the keyboard
-    var info = notification.userInfo!
+//    var info = notification.userInfo!
 //    if let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? String).cgRect().size.height
 //    self.autocompleteController?.setBottomPaddingBy(keyboardHeight)
   }
   
-  func dismissKeyboard(_ completion: @escaping (_ completed: Bool) -> Void) {
+  func dismissKeyboard(_ completion: ((_ completed: Bool) -> Void)? = nil) {
     if let searchField = self.searchBar?.searchField, searchField.isFirstResponder {
       self.keyboardDidHideBlock = completion
       searchField.resignFirstResponder()
-    } else {
-      completion(true)
+    } else if completion != nil {
+      completion!(true)
     }
   }
   
@@ -476,9 +476,10 @@ class DDGSearchController:
     self.searchBar?.searchField?.resignFirstResponder()
     if let navController = self.navController, let duckController = navController.visibleViewController as? DDGSearchController ?? self.searchDDG() {
       if navController.viewControllers.count > 1 {
-        navController.popToViewController(duckController, animated: true)
+        navController.popViewController(animated: true)
+      } else {
+        duckController.searchControllerLeftButtonPressed()
       }
-      duckController.searchControllerLeftButtonPressed()
     }
   }
   

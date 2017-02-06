@@ -6,4 +6,6 @@
   Copyright © 2017 DuckDuckGo. All rights reserved.
 */
 
+"app.info" = "%@ %@";
+"app.infoWithBuild" = "%@ %@ (%@)";
 "search.hint.duckduckgo" = "Search DuckDuckGo";

@@ -26,14 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
       NSSetUncaughtExceptionHandler { exception in print("CRASH: \(exception)") }
       
-      self.duckController = DDGSearchController()
-      self.duckController?.pushContentViewController(DDGDuckViewController(searchController:self.duckController!), animated: false)
-      
-      self.window = UIWindow(frame:UIScreen.main.bounds)
-      self.window?.backgroundColor = UIColor.duckSearchBarBackground
-      self.window?.rootViewController = self.duckController
-      self.window?.makeKeyAndVisible()
-      
       self.updateShortcuts()
       
       if let shortcutItem = launchOptions?[.shortcutItem] {

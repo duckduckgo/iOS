@@ -25,6 +25,11 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
         configureSearchBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavigationBar()
+    }
+    
     private func configureWebView() {
         webView = WKWebView.createPrivateBrowser(frame: view.bounds)
         webView.allowsBackForwardNavigationGestures = true
@@ -42,6 +47,11 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WKNavigation
         searchBar.autocapitalizationType = .none
         searchBar.delegate = self
         self.navigationItem.titleView = searchBar
+    }
+    
+    private func configureNavigationBar() {
+        navigationController?.hidesBarsOnSwipe = true
+        navigationController?.isToolbarHidden = false
     }
     
     private func loadHomepage() {

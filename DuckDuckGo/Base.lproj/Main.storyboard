@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,18 +18,18 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xY-xh-cZI">
-                                <rect key="frame" x="0.0" y="-20" width="414" height="20"/>
+                                <rect key="frame" x="0.0" y="-20" width="375" height="20"/>
                                 <color key="backgroundColor" red="0.85490196078431369" green="0.35686274509803922" blue="0.25098039215686274" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="AYl-2H-v95"/>
                                 </constraints>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="U2u-m6-xLg">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="2"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                         </subviews>
@@ -77,6 +77,13 @@
                                 <action selector="onSharePressed:" destination="BYZ-38-t0r" id="g2S-3N-1nx"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N8h-59-zIV"/>
+                        <barButtonItem image="More" id="Awa-eZ-xOS">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <segue destination="MzK-2g-91A" kind="show" id="Km6-0e-WsQ"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="4ID-JO-kUn">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="CQj-Mv-x5k">
@@ -117,7 +124,7 @@
                         </textAttributes>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="a8m-qV-BIW">
-                        <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.85544079542160034" green="0.35845720767974854" blue="0.24958023428916931" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </toolbar>
@@ -129,12 +136,21 @@
             </objects>
             <point key="canvasLocation" x="130" y="58"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="DvK-Po-UbE">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Settings" id="MzK-2g-91A" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L9a-Og-n5f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1420" y="58"/>
+        </scene>
     </scenes>
     <resources>
         <image name="BrosweForward" width="24" height="24"/>
         <image name="BrowseBack" width="24" height="24"/>
         <image name="DeleteForever" width="24" height="24"/>
         <image name="Home" width="22" height="22"/>
+        <image name="More" width="24" height="24"/>
         <image name="OpenInBrowser" width="24" height="24"/>
         <image name="Share" width="24" height="24"/>
     </resources>

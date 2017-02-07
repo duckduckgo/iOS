@@ -8,8 +8,9 @@
 
 import UIKit
 
+
+
 extension UIColor {
-  static let darkGrey = UIColor.darkGray
 
   static func colorWithRedValue(redValue: CGFloat, greenValue: CGFloat, blueValue: CGFloat, alpha: CGFloat) -> UIColor {
     return UIColor(red: redValue/255.0, green: greenValue/255.0, blue: blueValue/255.0, alpha: alpha)

@@ -1,5 +1,4 @@
 language: objective-c
 osx_image: xcode8.2
-xcode_project: DuckDuckGo.xcodeproj
-xcode_scheme: DuckDuckGo
-xcode_sdk: iphonesimulator10.2
+script:
+  - ./run_tests.sh

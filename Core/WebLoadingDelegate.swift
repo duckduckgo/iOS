@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WebLoadingDelegate: class {
+public protocol WebLoadingDelegate: class {
     
     func webpageDidStartLoading()
     

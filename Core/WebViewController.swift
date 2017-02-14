@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController, WKNavigationDelegate {
+public class WebViewController: UIViewController, WKNavigationDelegate {
     
     private static let estimatedProgressKeyPath = "estimatedProgress"
     
@@ -17,30 +17,42 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     private var webView: WKWebView!
     
-    var loadingDelegate: WebLoadingDelegate?
+    public var loadingDelegate: WebLoadingDelegate?
     
-    var url: URL? {
-        get {
-            return webView.url
-        }
+    public var initialQuery: String?
+    
+    public var url: URL? {
+        return webView.url
     }
     
-    var canGoBack: Bool {
-        get {
-            return webView.canGoBack
+    public var link: Link? {
+        if let url = webView.url, let title = webView.title {
+            return Link(title: title, url: url)
         }
+        return nil
     }
     
-    var canGoForward: Bool {
-        get {
-            return webView.canGoForward
-        }
+    public var canGoBack: Bool {
+        return webView.canGoBack
     }
     
-    override func viewDidLoad() {
+    public var canGoForward: Bool {
+        return webView.canGoForward
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         configureWebView()
-        loadHomepage()
+        loadStartPage()
+    }
+    
+    private func loadStartPage() {
+        if let query = initialQuery {
+            load(query: query)
+            initialQuery = nil
+        } else {
+           loadHomepage()
+        }
     }
     
     private func configureWebView() {
@@ -51,34 +63,34 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         view.insertSubview(webView, at: 0)
     }
     
-    func loadHomepage() {
+    public func loadHomepage() {
         load(url: URL(string: AppUrls.home)!)
     }
     
-    func load(url: URL) {
+    public func load(url: URL) {
         webView.load(URLRequest(url: url))
     }
     
-    func load(text: String) {
-        if let url = URL.webUrl(fromText: text) {
+    public func load(query: String) {
+        if let url = URL.webUrl(fromText: query) {
             load(url: url)
-        } else if let searchUrl = AppUrls.search(text: text) {
+        } else if let searchUrl = AppUrls.search(text: query) {
             load(url: searchUrl)
         }
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == WebViewController.estimatedProgressKeyPath {
             progressBar.progress = Float(webView.estimatedProgress)
         }
     }
     
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         showProgressIndicator()
         loadingDelegate?.webpageDidStartLoading()
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
         loadingDelegate?.webpageDidFinishLoading()
     }
@@ -93,19 +105,19 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
-    func reload() {
+    public func reload() {
         webView.reload()
     }
     
-    func goBack() {
+    public func goBack() {
         webView.goBack()
     }
     
-    func goForward() {
+    public func goForward() {
         webView.goForward()
     }
     
-    func reset() {
+    public func reset() {
         clearCache()
         resetWebView()
         loadHomepage()
@@ -115,6 +127,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         webView.clearCache {
             Logger.log(text: "Cache cleared")
         }
+        view.makeToast(UserText.webSessionCleared)
     }
     
     private func resetWebView() {

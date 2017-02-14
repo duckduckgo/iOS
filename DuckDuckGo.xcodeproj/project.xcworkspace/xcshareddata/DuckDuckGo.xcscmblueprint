@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "53612C08C5421ECACF401AB384C8A608425DD07E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "53612C08C5421ECACF401AB384C8A608425DD07E" : 9223372036854775807,
+    "1AE4A4A0564E38992EFB0E8F9258432F89681A15" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2EB3A609-2EDA-41B7-A39E-160DB53E8D7F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "53612C08C5421ECACF401AB384C8A608425DD07E" : "ddg-tik-ios\/",
+    "1AE4A4A0564E38992EFB0E8F9258432F89681A15" : "ddg-tik-ios\/Submodule\/Toast-Swift\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DuckDuckGo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DuckDuckGo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/scalessec\/Toast-Swift",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1AE4A4A0564E38992EFB0E8F9258432F89681A15"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TheInfiniteKind\/duckduckgo-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "53612C08C5421ECACF401AB384C8A608425DD07E"
+    }
+  ]
+}

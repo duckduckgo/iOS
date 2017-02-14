@@ -20,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="daE-6e-yZg" customClass="RoundedRectangleView" customModule="DuckDuckGo">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="daE-6e-yZg" customClass="RoundedRectangleView" customModule="Core">
                                 <rect key="frame" x="12" y="28" width="351" height="631"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z4b-vq-qqV">
@@ -31,6 +31,7 @@
                                     </containerView>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXM-0U-9WL">
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
+                                        <color key="backgroundColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <items>
                                             <barButtonItem systemItem="stop" id="GTZ-gD-KxN">
                                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -53,6 +54,7 @@
                                     </toolbar>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YhW-NW-sx4">
                                         <rect key="frame" x="0.0" y="587" width="351" height="44"/>
+                                        <color key="backgroundColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <items>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="XMF-v5-7bR"/>
                                             <barButtonItem systemItem="refresh" id="Tre-Fa-53p">
@@ -76,6 +78,13 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="FP0-9O-Ep1"/>
+                                            <barButtonItem image="Add" id="vz8-Wi-a1x">
+                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <action selector="onSaveQuickLink:" destination="j1y-V4-xli" id="bBw-zz-vGB"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="TrS-Xh-fuc"/>
                                         </items>
                                         <color key="barTintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                     </toolbar>
@@ -127,12 +136,12 @@
                     <color key="tintColor" red="0.70358673094952784" green="0.97917258006125452" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="296.80000000000001" y="-115.59220389805098"/>
+            <point key="canvasLocation" x="418" y="-244"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="FjH-Gg-hJt">
             <objects>
-                <viewController id="7rU-9z-4hz" customClass="WebViewController" customModule="ShareExtension" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7rU-9z-4hz" customClass="WebViewController" customModule="Core" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a2X-vf-Kp5"/>
                         <viewControllerLayoutGuide type="bottom" id="H14-lq-o54"/>
@@ -168,6 +177,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Add" width="16" height="16"/>
         <image name="AppButton" width="24" height="24"/>
         <image name="BrosweForward" width="24" height="24"/>
         <image name="BrowseBack" width="24" height="24"/>

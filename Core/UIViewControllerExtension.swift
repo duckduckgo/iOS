@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
 
-    func presentShareSheetFromButton(activityItems: [Any], buttonItem: UIBarButtonItem) {
+    public func presentShareSheetFromButton(activityItems: [Any], buttonItem: UIBarButtonItem) {
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         if let popover = shareController.popoverPresentationController {
             popover.barButtonItem = buttonItem
@@ -18,7 +18,7 @@ extension UIViewController {
         present(shareController, animated: true, completion: nil)
     }
 
-    func presentShareSheetFromView(activityItems: [Any], sourceView: UIView) {
+    public func presentShareSheetFromView(activityItems: [Any], sourceView: UIView) {
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         if let popover = shareController.popoverPresentationController {
             popover.sourceView = sourceView

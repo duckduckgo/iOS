@@ -8,15 +8,17 @@
 
 import UIKit
 import WebKit
-
+import Core
 
 class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDelegate {
     
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     
+    private let groupData = GroupData()
     private var searchBar: UISearchBar!
     private weak var webController: WebViewController?
+    private var initialQuery: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +70,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         guard let text = searchBar.text?.trimWhitespace() else {
             return
         }
-        webController?.load(text: text)
+        webController?.load(query: text)
     }
     
     func webpageDidStartLoading() {
@@ -83,6 +85,14 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     private func refreshNavigationButtons() {
         backButton.isEnabled = webController?.canGoBack ?? false
         forwardButton.isEnabled = webController?.canGoForward ?? false
+    }
+    
+    func load(query: String) {
+        if let webController = webController {
+            webController.load(query: query)
+        } else {
+            initialQuery = query
+        }
     }
     
     @IBAction func onHomePressed(_ sender: UIBarButtonItem) {
@@ -101,15 +111,16 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         webController?.goForward()
     }
     
-    @IBAction func onOpenInSafari(_ sender: UIBarButtonItem) {
-        if let url = webController?.url {
-            UIApplication.shared.openURL(url)
-        }
-    }
-    
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = webController?.url {
             presentShareSheetFromButton(activityItems: [url], buttonItem: sender)
+        }
+    }
+    
+    @IBAction func onSaveQuickLink(_ sender: UIBarButtonItem) {
+        if let link = webController?.link {
+            groupData.addQuickLink(link: link)
+            view.makeToast(UserText.webSaveLinkDone)
         }
     }
     
@@ -118,9 +129,12 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? WebViewController {
-            controller.loadingDelegate = self
-            webController = controller
+        guard let controller = segue.destination as? WebViewController else {
+            return
         }
+        webController = controller
+        controller.loadingDelegate = self
+        controller.initialQuery = initialQuery
+        initialQuery = nil
     }
 }

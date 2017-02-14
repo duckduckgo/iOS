@@ -7,70 +7,75 @@
 //
 
 import UIKit
-
-let DDGSettingRegion = "region"
-let DDGSettingAutocomplete = "autocomplete"
-let DDGSettingSuppressBangTooltip = "suppress_bang_tooltip"
-let DDGSettingStoriesReadabilityMode = "readability_mode"
-
+import Core
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    private struct ShortcutKey {
+        static let search = "com.duckduckgo.mobile.ios.newsearch"
+        static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+    }
+    
     var window: UIWindow?
-    var duckController: DDGSearchController?
-
-  
+    
+    private var groupData = GroupData()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-      application.statusBarStyle = .lightContent
-      
-      NSSetUncaughtExceptionHandler { exception in print("CRASH: \(exception)") }
-      
-      self.updateShortcuts()
-      
-      if let shortcutItem = launchOptions?[.shortcutItem] {
-        self.handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
-      }
-      
-      return true
+        if let shortcutItem = launchOptions?[.shortcutItem] {
+            handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
+        }
+        return true
     }
-  
-  
-  func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
-    print("handleShortCutItem: \(shortcutItem.type)")
-    switch shortcutItem.type {
-    case "com.duckduckgo.mobile.ios.search":
-      self.duckController?.loadQueryOrURL(shortcutItem.localizedTitle)
-    case "com.duckduckgo.mobile.ios.searchclipboard":
-      if let pasteboardString = UIPasteboard.general.string {
-        self.duckController?.loadQueryOrURL(pasteboardString)
-      } else {
-        self.duckController?.clearAddressBar()
-      }
-    case "com.duckduckgo.mobile.ios.newSearch":
-      self.duckController?.clearAddressBar()
-    default:
-      break
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        handleShortCutItem(shortcutItem)
     }
-  }
-  
-
-  // update the 3D/force-touch home screen shortcuts
-  func updateShortcuts() {
-    let app = UIApplication.shared
-    var shortcuts:[UIApplicationShortcutItem] = []
     
-    let searchIcon = UIApplicationShortcutIcon.init(templateImageName: "Tab-Search")
-    //let faveIcon = UIApplicationShortcutIcon.init(templateImageName: "Tab-Favorites")
+    private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
+        Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
+        if shortcutItem.type ==  ShortcutKey.search {
+            clearNavigationStack()
+        }
+        if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
+            browserViewController()?.load(query: query)
+        }
+    }
     
-    shortcuts.append(UIApplicationShortcutItem(type: "com.duckduckgo.mobile.ios.searchclipboard",
-                                               localizedTitle: "Open Clipboard",
-                                               localizedSubtitle: "Open URL or search DuckDuckGo for the contents of your clipboard",
-                                               icon: searchIcon,
-                                               userInfo: nil))
-    app.shortcutItems = shortcuts
-  }
-  
-
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        Logger.log(text: "App launched with url \(url.absoluteString)")
+        clearNavigationStack()
+        if AppUrls.isLaunch(url: url) {
+            return true
+        }
+        if AppUrls.isQuickLink(url: url), let link = quickLink(from: url) {
+            loadQuickLink(link: link)
+        }
+        return true
+    }
+    
+    private func quickLink(from url: URL) -> Link? {
+        guard let links = groupData.quickLinks,
+            let host = url.host,
+            let index = Int(host),
+            index < links.count else {
+                return nil
+        }
+        return links[index]
+    }
+    
+    private func loadQuickLink(link: Link) {
+        browserViewController()?.load(query: link.url.absoluteString)
+    }
+    
+    private func browserViewController() -> BrowserViewController? {
+        return UIApplication.shared.keyWindow?.rootViewController?.childViewControllers.first as? BrowserViewController
+    }
+    
+    private func clearNavigationStack() {
+        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
+            navigationController.popToRootViewController(animated: false)
+        }
+    }
 }
 

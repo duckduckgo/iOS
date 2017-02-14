@@ -8,6 +8,7 @@
 
 import UIKit
 import Social
+import Core
 
 class ShareViewController: UIViewController, WebLoadingDelegate {
     
@@ -18,7 +19,7 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     
     private var webController: WebViewController?
-    private var sharedText: String?
+    private var groupData = GroupData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +29,11 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let urlProvider = getItemProvider(identifier: urlIdentifier) {
-            loadUrl(urlProvider: urlProvider);
+            loadUrl(urlProvider: urlProvider)
             return
         }
         if let textProvider = getItemProvider(identifier: textIdentifier) {
-            loadText(textProvider: textProvider);
+            loadText(textProvider: textProvider)
             return
         }
     }
@@ -61,7 +62,7 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     private func loadText(textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: textIdentifier, options: nil, completionHandler: { [weak self] (item, error) in
             if let text = item as? String {
-                self?.webController?.load(text: text)
+                self?.webController?.load(query: text)
             }
         })
     }
@@ -88,6 +89,13 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     
     @IBAction func onForwardPressed(_ sender: UIBarButtonItem) {
         webController?.goForward()
+    }
+    
+    @IBAction func onSaveQuickLink(_ sender: UIBarButtonItem) {
+        if let link = webController?.link {
+            groupData.addQuickLink(link: link)
+            webController?.view.makeToast(UserText.webSaveLinkDone)
+        }
     }
     
     @IBAction func onClose(_ sender: UIBarButtonItem) {

@@ -12,7 +12,7 @@ extension URL {
 
     private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"
     
-    static func webUrl(fromText text: String) -> URL? {
+    public static func webUrl(fromText text: String) -> URL? {
         guard isWebUrl(text: text) else {
             return nil
         }
@@ -20,7 +20,7 @@ extension URL {
         return URL(string: urlText)
     }
     
-    static func isWebUrl(text: String) -> Bool {
+    public static func isWebUrl(text: String) -> Bool {
         let pattern = webUrlRegex
         let webRegex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let matches = webRegex.matches(in: text, options: .anchored, range:NSMakeRange(0, text.characters.count))
@@ -31,7 +31,7 @@ extension URL {
         return "http://\(path)"
     }
 
-    static func encode(queryText: String) -> String? {
+    public static func encode(queryText: String) -> String? {
         return queryText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
     }
 }

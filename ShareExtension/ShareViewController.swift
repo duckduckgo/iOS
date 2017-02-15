@@ -61,8 +61,8 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     
     private func loadText(textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: textIdentifier, options: nil, completionHandler: { [weak self] (item, error) in
-            if let text = item as? String {
-                self?.webController?.load(query: text)
+            if let text = item as? String, let queryUrl = AppUrls.url(forQuery: text) {
+                self?.webController?.load(url: queryUrl)
             }
         })
     }

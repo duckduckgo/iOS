@@ -18,7 +18,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     private let groupData = GroupData()
     private var searchBar: UISearchBar!
     private weak var webController: WebViewController?
-    private var initialQuery: String?
+    private var initialUrl: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         searchBar = UISearchBar()
         searchBar.placeholder = UserText.searchDuckDuckGo
         searchBar.textColor = UIColor.darkGray
+        searchBar.tintColor = UIColor.accent
         searchBar.autocapitalizationType = .none
         searchBar.delegate = self
         navigationItem.titleView = searchBar
@@ -45,15 +46,22 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         navigationController?.isToolbarHidden = false
     }
     
-    private func refreshSearchText() {
+    private func refreshSearchBarText() {
         guard let url = webController?.url else {
             searchBar.text = nil
             return
         }
-        guard !AppUrls.isDuckDuckGo(url: url) else {
+        
+        if let query = AppUrls.searchQuery(fromUrl: url) {
+            searchBar.text = query
+            return
+        }
+
+        if AppUrls.isDuckDuckGo(url: url) {
             searchBar.text = nil
             return
         }
+ 
         searchBar.text = url.absoluteString
     }
     
@@ -70,7 +78,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         guard let text = searchBar.text?.trimWhitespace() else {
             return
         }
-        webController?.load(query: text)
+        load(query: text)
     }
     
     func webpageDidStartLoading() {
@@ -78,8 +86,9 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     }
     
     func webpageDidFinishLoading() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         refreshNavigationButtons()
+        refreshSearchBarText()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     private func refreshNavigationButtons() {
@@ -88,10 +97,17 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     }
     
     func load(query: String) {
+        guard let url = AppUrls.url(forQuery: query) else {
+            return
+        }
+        load(url: url)
+    }
+    
+    func load(url: URL) {
         if let webController = webController {
-            webController.load(query: query)
+            webController.load(url: url)
         } else {
-            initialQuery = query
+            initialUrl = url
         }
     }
     
@@ -134,7 +150,7 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         }
         webController = controller
         controller.loadingDelegate = self
-        controller.initialQuery = initialQuery
-        initialQuery = nil
+        controller.initialUrl = initialUrl
+        initialUrl = nil
     }
 }

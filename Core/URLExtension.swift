@@ -12,6 +12,13 @@ extension URL {
 
     private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"
     
+    public func get(param: String) -> String? {
+        if let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false), let queryItems = (urlComponents.queryItems) {
+            return queryItems.filter({ (item) in item.name == param }).first?.value
+        }
+        return nil
+    }
+    
     public static func webUrl(fromText text: String) -> URL? {
         guard isWebUrl(text: text) else {
             return nil

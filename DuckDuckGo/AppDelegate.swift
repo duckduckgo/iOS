@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func loadQuickLink(link: Link) {
-        browserViewController()?.load(query: link.url.absoluteString)
+        browserViewController()?.load(url: link.url)
     }
     
     private func browserViewController() -> BrowserViewController? {

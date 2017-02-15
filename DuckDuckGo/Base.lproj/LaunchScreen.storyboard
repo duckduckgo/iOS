@@ -34,7 +34,7 @@
                                 </variation>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.85429012775421143" green="0.35609588027000427" blue="0.25184115767478943" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="UHM-6q-8Cp" secondAttribute="centerY" id="650-xC-0jZ"/>
                             <constraint firstAttribute="centerX" secondItem="UHM-6q-8Cp" secondAttribute="centerX" id="Y2A-ko-GCq"/>

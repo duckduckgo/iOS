@@ -9,22 +9,16 @@
 import Foundation
 
 public struct AppUrls {
-
+    
     public static let launch = "ddgLaunch://"
     
     public static let quickLink = "ddgQuickLink://"
-
-    static let duckDuckGoBase = "duckduckgo.com"
-
-    static let home = "https://www.duckduckgo.com?ko=-1&kl=wt-wt"
     
-    static func search(text: String) -> URL? {
-        guard let encodedQuery = URL.encode(queryText: text) else {
-            return nil
-        }
-        let url = "\(home)&q=\(encodedQuery)"
-        return URL(string: url)
-    }
+    public static let base = "duckduckgo.com"
+    
+    public static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
+    
+    private static let searchParam = "q"
     
     public static func isLaunch(url: URL) -> Bool {
         if let scheme = url.scheme {
@@ -41,6 +35,31 @@ public struct AppUrls {
     }
     
     public static func isDuckDuckGo(url: URL) -> Bool {
-        return url.absoluteString.contains(duckDuckGoBase)
+        return url.absoluteString.contains(base)
+    }
+    
+    public static func searchQuery(fromUrl url: URL) -> String? {
+        if !isDuckDuckGo(url: url) {
+            return nil
+        }
+        return url.get(param: searchParam)
+    }
+    
+    public static func url(forQuery query: String) -> URL? {
+        if let url = URL.webUrl(fromText: query) {
+            return url
+        }
+        if let searchUrl = AppUrls.searchUrl(text: query) {
+            return searchUrl
+        }
+        return nil
+    }
+    
+    private static func searchUrl(text: String) -> URL? {
+        guard let encodedQuery = URL.encode(queryText: text) else {
+            return nil
+        }
+        let url = "\(home)&\(searchParam)=\(encodedQuery)"
+        return URL(string: url)
     }
 }

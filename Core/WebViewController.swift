@@ -19,7 +19,7 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     public var loadingDelegate: WebLoadingDelegate?
     
-    public var initialQuery: String?
+    public var initialUrl: URL?
     
     public var url: URL? {
         return webView.url
@@ -47,9 +47,9 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     private func loadStartPage() {
-        if let query = initialQuery {
-            load(query: query)
-            initialQuery = nil
+        if let url = initialUrl {
+            load(url: url)
+            initialUrl = nil
         } else {
            loadHomepage()
         }
@@ -69,14 +69,6 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     public func load(url: URL) {
         webView.load(URLRequest(url: url))
-    }
-    
-    public func load(query: String) {
-        if let url = URL.webUrl(fromText: query) {
-            load(url: url)
-        } else if let searchUrl = AppUrls.search(text: query) {
-            load(url: searchUrl)
-        }
     }
     
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

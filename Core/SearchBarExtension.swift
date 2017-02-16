@@ -10,7 +10,7 @@ import UIKit
 
 extension UISearchBar {
     
-    var textColor: UIColor? {
+    public var textColor: UIColor? {
         get {
             return textField()?.textColor
         }

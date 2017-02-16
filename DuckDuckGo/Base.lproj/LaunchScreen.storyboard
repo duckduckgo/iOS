@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
+                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLaunch" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
                                 <rect key="frame" x="128" y="274" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="170" id="a7x-eG-u4v"/>
@@ -35,7 +34,7 @@
                                 </variation>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.85429012775421143" green="0.35609588027000427" blue="0.25184115767478943" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="UHM-6q-8Cp" secondAttribute="centerY" id="650-xC-0jZ"/>
                             <constraint firstAttribute="centerX" secondItem="UHM-6q-8Cp" secondAttribute="centerX" id="Y2A-ko-GCq"/>
@@ -49,6 +48,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Launch" width="120" height="120"/>
+        <image name="AppLaunch" width="120" height="120"/>
     </resources>
 </document>

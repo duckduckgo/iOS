@@ -19,5 +19,4 @@ public struct Logger {
             debugPrint(items, separator: " ", terminator: "\n")
         #endif
     }
-
 }

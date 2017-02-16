@@ -10,15 +10,15 @@ import WebKit
 
 extension WKWebView {
     
-    static func createPrivateBrowser(frame: CGRect) -> WKWebView {
+    public static func createPrivateBrowser(frame: CGRect) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
-        let webView = WKWebView.init(frame: frame, configuration: configuration)
+        let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
     }
     
-    func clearCache(completionHandler: @escaping () -> Swift.Void) {
+    public func clearCache(completionHandler: @escaping () -> Swift.Void) {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
         let distantPast = Date.distantPast
         let dataStore = configuration.websiteDataStore

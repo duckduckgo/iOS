@@ -8,4 +8,8 @@
 
 "app.info" = "%@ %@";
 "app.infoWithBuild" = "%@ %@ (%@)";
+
 "search.hint.duckduckgo" = "Search DuckDuckGo";
+
+"web.session.clear" = "Session cleared";
+"web.url.save.done" = "Quick link saved to Today widget";

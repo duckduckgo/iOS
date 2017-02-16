@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import Core
 
 public struct Version {
     
-    public struct Keys {
+    struct Keys {
         static let name = kCFBundleNameKey as String
         static let buildNumber = kCFBundleVersionKey as String
         static let versionNumber = "CFBundleShortVersionString"

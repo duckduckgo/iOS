@@ -1,0 +1,4 @@
+[submodule "Submodule/Toast-Swift"]
+	path = Submodule/Toast-Swift
+	url = https://github.com/TheInfiniteKind/Toast-Swift
+	branch = feature/swift-3.0

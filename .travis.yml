@@ -1,0 +1,4 @@
+language: objective-c
+osx_image: xcode8.2
+script:
+  - ./run_tests.sh

@@ -8,8 +8,20 @@
 
 import Foundation
 
-extension UIColor {    
+extension UIColor {
     public static var accent: UIColor {
+        return UIColor.orange
+    }
+    
+    public static var primary: UIColor {
+        return UIColor.tungsten
+    }
+    
+    private static var orange: UIColor {
+        return UIColor.tungsten
+    }
+    
+    private static var tungsten: UIColor {
         return UIColor(red:0.85, green:0.36, blue:0.25, alpha:1.0)
     }
 }

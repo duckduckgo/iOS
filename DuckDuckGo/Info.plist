@@ -75,5 +75,7 @@
 			<string>com.duckduckgo.mobile.ios.clipboard</string>
 		</dict>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

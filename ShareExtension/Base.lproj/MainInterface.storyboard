@@ -24,83 +24,108 @@
                                 <rect key="frame" x="12" y="28" width="351" height="631"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z4b-vq-qqV">
-                                        <rect key="frame" x="0.0" y="44" width="351" height="543"/>
+                                        <rect key="frame" x="0.0" y="46" width="351" height="539"/>
                                         <connections>
                                             <segue destination="7rU-9z-4hz" kind="embed" id="1Gy-8Y-pkC"/>
                                         </connections>
                                     </containerView>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXM-0U-9WL">
-                                        <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cVC-Jy-zIt">
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="46"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="SFp-pC-fOV">
+                                                <rect key="frame" x="32" y="11" width="287" height="24"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yp-br-SN3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                        <state key="normal" image="Close"/>
+                                                        <connections>
+                                                            <action selector="onClose:" destination="j1y-V4-xli" eventType="touchUpInside" id="ruK-wt-d0t"/>
+                                                        </connections>
+                                                    </button>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppButton" translatesAutoresizingMaskIntoConstraints="NO" id="D7J-aq-9ik">
+                                                        <rect key="frame" x="131.5" y="0.0" width="24" height="24"/>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chY-SO-aI0">
+                                                        <rect key="frame" x="263" y="0.0" width="24" height="24"/>
+                                                        <state key="normal" image="DeleteForever"/>
+                                                        <connections>
+                                                            <action selector="onDeleteEverything:" destination="j1y-V4-xli" eventType="touchUpInside" id="owH-fI-UDC"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <items>
-                                            <barButtonItem systemItem="stop" id="GTZ-gD-KxN">
-                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <connections>
-                                                    <action selector="onClose:" destination="j1y-V4-xli" id="ZPD-7w-vYp"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="iNb-sf-lag"/>
-                                            <barButtonItem image="AppButton" id="buf-t3-3ot"/>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="CKQ-i7-Qre"/>
-                                            <barButtonItem image="DeleteForever" id="sdR-Jp-7LH">
-                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <connections>
-                                                    <action selector="onDeleteEverything:" destination="j1y-V4-xli" id="AAe-V7-9xc"/>
-                                                </connections>
-                                            </barButtonItem>
-                                        </items>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="barTintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </toolbar>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YhW-NW-sx4">
-                                        <rect key="frame" x="0.0" y="587" width="351" height="44"/>
+                                        <constraints>
+                                            <constraint firstItem="SFp-pC-fOV" firstAttribute="centerY" secondItem="cVC-Jy-zIt" secondAttribute="centerY" id="32E-4E-PEn"/>
+                                            <constraint firstAttribute="trailing" secondItem="SFp-pC-fOV" secondAttribute="trailing" constant="32" id="egE-sw-vxL"/>
+                                            <constraint firstItem="SFp-pC-fOV" firstAttribute="leading" secondItem="cVC-Jy-zIt" secondAttribute="leading" constant="32" id="k4S-aJ-jeJ"/>
+                                            <constraint firstAttribute="height" constant="46" id="sww-XD-Uw7"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uXC-FZ-FCZ">
+                                        <rect key="frame" x="0.0" y="585" width="351" height="46"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gv0-nD-0OB">
+                                                <rect key="frame" x="32" y="11" width="287" height="24"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opb-VJ-xNQ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                        <state key="normal" image="Refresh"/>
+                                                        <connections>
+                                                            <action selector="onRefreshPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="3IV-dB-feh"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4I-fM-C5y">
+                                                        <rect key="frame" x="87.5" y="0.0" width="24" height="24"/>
+                                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" image="BrowseBack"/>
+                                                        <connections>
+                                                            <action selector="onBackPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="urM-qv-dTz"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sr-dj-QDL">
+                                                        <rect key="frame" x="175.5" y="0.0" width="24" height="24"/>
+                                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" image="BrosweForward"/>
+                                                        <connections>
+                                                            <action selector="onForwardPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="aL7-9n-P5W"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUv-sN-6NX">
+                                                        <rect key="frame" x="263" y="0.0" width="24" height="24"/>
+                                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" image="Add"/>
+                                                        <connections>
+                                                            <action selector="onSaveQuickLink:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <items>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="XMF-v5-7bR"/>
-                                            <barButtonItem systemItem="refresh" id="Tre-Fa-53p">
-                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <connections>
-                                                    <action selector="onRefreshPressed:" destination="j1y-V4-xli" id="b2K-rb-aOJ"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="c7p-hY-EBB"/>
-                                            <barButtonItem image="BrowseBack" id="aN9-pf-KfI">
-                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <connections>
-                                                    <action selector="onBackPressed:" destination="j1y-V4-xli" id="fPM-Zu-35y"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="QEi-RF-pCf"/>
-                                            <barButtonItem image="BrosweForward" id="oFf-mH-wFD">
-                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <connections>
-                                                    <action selector="onForwardPressed:" destination="j1y-V4-xli" id="Tnz-6y-xAx"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="FP0-9O-Ep1"/>
-                                            <barButtonItem image="Add" id="vz8-Wi-a1x">
-                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <connections>
-                                                    <action selector="onSaveQuickLink:" destination="j1y-V4-xli" id="bBw-zz-vGB"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="TrS-Xh-fuc"/>
-                                        </items>
-                                        <color key="barTintColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </toolbar>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Gv0-nD-0OB" firstAttribute="centerY" secondItem="uXC-FZ-FCZ" secondAttribute="centerY" id="8EL-Y1-HJn"/>
+                                            <constraint firstAttribute="trailing" secondItem="Gv0-nD-0OB" secondAttribute="trailing" constant="32" id="Bdr-0k-hQR"/>
+                                            <constraint firstAttribute="height" constant="46" id="Xak-Hm-g5e"/>
+                                            <constraint firstItem="Gv0-nD-0OB" firstAttribute="leading" secondItem="uXC-FZ-FCZ" secondAttribute="leading" constant="32" id="ql7-v1-xKy"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="gXM-0U-9WL" firstAttribute="top" secondItem="daE-6e-yZg" secondAttribute="top" id="CIp-Iz-abp"/>
-                                    <constraint firstItem="gXM-0U-9WL" firstAttribute="leading" secondItem="daE-6e-yZg" secondAttribute="leading" id="DdR-zA-rDI"/>
+                                    <constraint firstItem="uXC-FZ-FCZ" firstAttribute="leading" secondItem="daE-6e-yZg" secondAttribute="leading" id="46C-cC-EaM"/>
+                                    <constraint firstAttribute="trailing" secondItem="cVC-Jy-zIt" secondAttribute="trailing" id="BiJ-Pl-Ybk"/>
                                     <constraint firstAttribute="trailing" secondItem="z4b-vq-qqV" secondAttribute="trailing" id="FJK-jY-ZNS"/>
-                                    <constraint firstAttribute="trailing" secondItem="YhW-NW-sx4" secondAttribute="trailing" id="GlF-yn-95h"/>
-                                    <constraint firstAttribute="trailing" secondItem="gXM-0U-9WL" secondAttribute="trailing" id="Ik5-Jy-O1o"/>
-                                    <constraint firstAttribute="bottom" secondItem="YhW-NW-sx4" secondAttribute="bottom" id="NPQ-lS-Yx7"/>
-                                    <constraint firstItem="z4b-vq-qqV" firstAttribute="top" secondItem="gXM-0U-9WL" secondAttribute="bottom" id="Pdx-BF-5I8"/>
-                                    <constraint firstItem="YhW-NW-sx4" firstAttribute="leading" secondItem="daE-6e-yZg" secondAttribute="leading" id="bvY-aT-WS7"/>
+                                    <constraint firstAttribute="trailing" secondItem="uXC-FZ-FCZ" secondAttribute="trailing" id="N2N-b2-xTL"/>
+                                    <constraint firstAttribute="bottom" secondItem="uXC-FZ-FCZ" secondAttribute="bottom" id="RgH-62-Vkp"/>
+                                    <constraint firstItem="uXC-FZ-FCZ" firstAttribute="top" secondItem="z4b-vq-qqV" secondAttribute="bottom" id="clF-Ag-xyt"/>
                                     <constraint firstItem="z4b-vq-qqV" firstAttribute="leading" secondItem="daE-6e-yZg" secondAttribute="leading" id="f2I-8n-EvK"/>
-                                    <constraint firstItem="YhW-NW-sx4" firstAttribute="top" secondItem="z4b-vq-qqV" secondAttribute="bottom" id="sjy-9o-d1n"/>
+                                    <constraint firstItem="cVC-Jy-zIt" firstAttribute="leading" secondItem="daE-6e-yZg" secondAttribute="leading" id="ibs-bn-orW"/>
+                                    <constraint firstItem="z4b-vq-qqV" firstAttribute="top" secondItem="cVC-Jy-zIt" secondAttribute="bottom" id="y2f-ql-Fuh"/>
+                                    <constraint firstItem="cVC-Jy-zIt" firstAttribute="top" secondItem="daE-6e-yZg" secondAttribute="top" id="z17-vb-7C4"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -127,8 +152,8 @@
                     <navigationItem key="navigationItem" title="DuckDuckGo" id="cAp-7b-cuP"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="backButton" destination="aN9-pf-KfI" id="3Ti-SB-vnh"/>
-                        <outlet property="forwardButton" destination="oFf-mH-wFD" id="yKD-DH-tzU"/>
+                        <outlet property="backButton" destination="P4I-fM-C5y" id="lcW-TO-zmf"/>
+                        <outlet property="forwardButton" destination="8Sr-dj-QDL" id="8y9-oA-oZX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEy-Cv-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -136,7 +161,7 @@
                     <color key="tintColor" red="0.70358673094952784" green="0.97917258006125452" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="418" y="-244"/>
+            <point key="canvasLocation" x="416.80000000000001" y="-244.22788605697153"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="FjH-Gg-hJt">
@@ -181,6 +206,8 @@
         <image name="AppButton" width="24" height="24"/>
         <image name="BrosweForward" width="24" height="24"/>
         <image name="BrowseBack" width="24" height="24"/>
+        <image name="Close" width="24" height="24"/>
         <image name="DeleteForever" width="24" height="24"/>
+        <image name="Refresh" width="24" height="24"/>
     </resources>
 </document>

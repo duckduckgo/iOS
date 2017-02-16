@@ -15,8 +15,8 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     private let urlIdentifier = "public.url"
     private let textIdentifier = "public.plain-text"
     
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var forwardButton: UIButton!
     
     private var webController: WebViewController?
     private var groupData = GroupData()
@@ -79,30 +79,30 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
         forwardButton.isEnabled = webController?.canGoForward ?? false
     }
     
-    @IBAction func onRefreshPressed(_ sender: UIBarButtonItem) {
+    @IBAction func onRefreshPressed(_ sender: UIButton) {
         webController?.reload()
     }
     
-    @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
+    @IBAction func onBackPressed(_ sender: UIButton) {
         webController?.goBack()
     }
     
-    @IBAction func onForwardPressed(_ sender: UIBarButtonItem) {
+    @IBAction func onForwardPressed(_ sender: UIButton) {
         webController?.goForward()
     }
     
-    @IBAction func onSaveQuickLink(_ sender: UIBarButtonItem) {
+    @IBAction func onSaveQuickLink(_ sender: UIButton) {
         if let link = webController?.link {
             groupData.addQuickLink(link: link)
             webController?.view.makeToast(UserText.webSaveLinkDone)
         }
     }
     
-    @IBAction func onClose(_ sender: UIBarButtonItem) {
+    @IBAction func onClose(_ sender: UIButton) {
         extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
     }
     
-    @IBAction func onDeleteEverything(_ sender: UIBarButtonItem) {
+    @IBAction func onDeleteEverything(_ sender: UIButton) {
         webController?.reset()
     }
     

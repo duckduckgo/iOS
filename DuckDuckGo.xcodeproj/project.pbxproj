@@ -10,7 +10,6 @@
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
-		84E341B61E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341B51E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift */; };
 		F143C2A61E48F2E400CFDE3A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1C5ED041E37D14C00C599A4 /* Localizable.strings */; };
 		F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		F143C2B31E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
@@ -59,13 +58,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		84E341A71E2F7EFB00BDBA6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
-			remoteInfo = DuckDuckGo;
-		};
-		84E341B21E2F7EFC00BDBA6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
 			proxyType = 1;
@@ -129,9 +121,6 @@
 		84E341A11E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuckDuckGoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84E341B11E2F7EFC00BDBA6F /* DuckDuckGoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuckDuckGoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		84E341B51E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuckDuckGoUITests.swift; sourceTree = "<group>"; };
-		84E341B71E2F7EFC00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F143C2B11E49D78C00CFDE3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F143C2C41E4A08C400CFDE3A /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DuckDuckGo.entitlements; sourceTree = "<group>"; };
@@ -192,13 +181,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84E341AE1E2F7EFC00BDBA6F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F143C2E01E4A4CD400CFDE3A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -234,7 +216,6 @@
 				F1AA54621E48D90700223211 /* TodayExtension */,
 				F15A8B751E43A428008B8C6F /* ShareExtension */,
 				84E341A91E2F7EFB00BDBA6F /* DuckDuckGoTests */,
-				84E341B41E2F7EFC00BDBA6F /* DuckDuckGoUITests */,
 				F1AA54531E48C9C100223211 /* 3rd Party */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
@@ -246,7 +227,6 @@
 			children = (
 				84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */,
 				84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */,
-				84E341B11E2F7EFC00BDBA6F /* DuckDuckGoUITests.xctest */,
 				F15A8B741E43A428008B8C6F /* ShareExtension.appex */,
 				F1AA545E1E48D90700223211 /* TodayExtension.appex */,
 				F143C2E41E4A4CD400CFDE3A /* Core.framework */,
@@ -277,15 +257,6 @@
 				84E341AC1E2F7EFB00BDBA6F /* Info.plist */,
 			);
 			path = DuckDuckGoTests;
-			sourceTree = "<group>";
-		};
-		84E341B41E2F7EFC00BDBA6F /* DuckDuckGoUITests */ = {
-			isa = PBXGroup;
-			children = (
-				84E341B51E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift */,
-				84E341B71E2F7EFC00BDBA6F /* Info.plist */,
-			);
-			path = DuckDuckGoUITests;
 			sourceTree = "<group>";
 		};
 		84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */ = {
@@ -514,24 +485,6 @@
 			productReference = 84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		84E341B01E2F7EFC00BDBA6F /* DuckDuckGoUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 84E341C01E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGoUITests" */;
-			buildPhases = (
-				84E341AD1E2F7EFC00BDBA6F /* Sources */,
-				84E341AE1E2F7EFC00BDBA6F /* Frameworks */,
-				84E341AF1E2F7EFC00BDBA6F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				84E341B31E2F7EFC00BDBA6F /* PBXTargetDependency */,
-			);
-			name = DuckDuckGoUITests;
-			productName = DuckDuckGoUITests;
-			productReference = 84E341B11E2F7EFC00BDBA6F /* DuckDuckGoUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		F143C2E31E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F143C2ED1E4A4CD400CFDE3A /* Build configuration list for PBXNativeTarget "Core" */;
@@ -610,12 +563,6 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
-					84E341B01E2F7EFC00BDBA6F = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HKE973VLUW;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 84E341911E2F7EFB00BDBA6F;
-					};
 					F143C2E31E4A4CD400CFDE3A = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = HKE973VLUW;
@@ -660,7 +607,6 @@
 				84E341911E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E31E4A4CD400CFDE3A /* Core */,
 				84E341A51E2F7EFB00BDBA6F /* DuckDuckGoTests */,
-				84E341B01E2F7EFC00BDBA6F /* DuckDuckGoUITests */,
 				F15A8B731E43A428008B8C6F /* ShareExtension */,
 				F1AA545D1E48D90700223211 /* TodayExtension */,
 			);
@@ -681,13 +627,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		84E341A41E2F7EFB00BDBA6F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		84E341AF1E2F7EFC00BDBA6F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -749,14 +688,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		84E341AD1E2F7EFC00BDBA6F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				84E341B61E2F7EFC00BDBA6F /* DuckDuckGoUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F143C2DF1E4A4CD400CFDE3A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -802,11 +733,6 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 84E341A71E2F7EFB00BDBA6F /* PBXContainerItemProxy */;
-		};
-		84E341B31E2F7EFC00BDBA6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
-			targetProxy = 84E341B21E2F7EFC00BDBA6F /* PBXContainerItemProxy */;
 		};
 		F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1024,34 +950,6 @@
 			};
 			name = Release;
 		};
-		84E341C11E2F7EFC00BDBA6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = HKE973VLUW;
-				INFOPLIST_FILE = DuckDuckGoUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.DuckDuckGoUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = DuckDuckGo;
-			};
-			name = Debug;
-		};
-		84E341C21E2F7EFC00BDBA6F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = HKE973VLUW;
-				INFOPLIST_FILE = DuckDuckGoUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.DuckDuckGoUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = DuckDuckGo;
-			};
-			name = Release;
-		};
 		F143C2EE1E4A4CD400CFDE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1189,15 +1087,6 @@
 			buildConfigurations = (
 				84E341BE1E2F7EFC00BDBA6F /* Debug */,
 				84E341BF1E2F7EFC00BDBA6F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		84E341C01E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGoUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				84E341C11E2F7EFC00BDBA6F /* Debug */,
-				84E341C21E2F7EFC00BDBA6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

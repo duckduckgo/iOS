@@ -13,3 +13,4 @@
 
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Quick link saved to Today widget";
+"web.url.open.newtab" = "Opened in new tab";

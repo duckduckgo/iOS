@@ -10,6 +10,8 @@
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
+		F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F130D7391E5776C500C45811 /* OmniBarDelegate.swift */; };
+		F130D73C1E577C3000C45811 /* WebViewCreationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F130D73B1E577C3000C45811 /* WebViewCreationDelegate.swift */; };
 		F143C2A61E48F2E400CFDE3A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1C5ED041E37D14C00C599A4 /* Localizable.strings */; };
 		F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		F143C2B31E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
@@ -38,6 +40,9 @@
 		F15A8B771E43A428008B8C6F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15A8B761E43A428008B8C6F /* ShareViewController.swift */; };
 		F15A8B7A1E43A428008B8C6F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15A8B781E43A428008B8C6F /* MainInterface.storyboard */; };
 		F15A8B7E1E43A428008B8C6F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F15A8B741E43A428008B8C6F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F1617C131E572E0300DEDCAF /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabViewController.swift */; };
+		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
+		F1617C191E573EA800DEDCAF /* TabViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabViewControllerDelegate.swift */; };
 		F176699A1E3FA5EE003D3222 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669991E3FA5EE003D3222 /* Version.swift */; };
 		F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F176699D1E40BC86003D3222 /* Settings.storyboard */; };
 		F17669A31E411DB8003D3222 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669991E3FA5EE003D3222 /* Version.swift */; };
@@ -45,6 +50,7 @@
 		F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669AC1E413E5F003D3222 /* InfoBundle.swift */; };
 		F17669B01E413F7F003D3222 /* InfoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669AC1E413E5F003D3222 /* InfoBundle.swift */; };
 		F17669D71E43401C003D3222 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669D61E43401C003D3222 /* BrowserViewController.swift */; };
+		F18608DD1E5E588400361C30 /* TabIconMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18608DC1E5E588400361C30 /* TabIconMaker.swift */; };
 		F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */; };
 		F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */; };
 		F1AA54611E48D90700223211 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1AA54601E48D90700223211 /* NotificationCenter.framework */; };
@@ -53,7 +59,11 @@
 		F1AA546B1E48D90700223211 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1AA545E1E48D90700223211 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */; };
 		F1B745221E549D550072547E /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
+		F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4A70D1E57725800A6CA1B /* OmniBar.swift */; };
 		F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1C5ED041E37D14C00C599A4 /* Localizable.strings */; };
+		F1DE78561E5CA0CD0058895A /* Fonts-Licensed in Resources */ = {isa = PBXBuildFile; fileRef = F1DE78551E5CA0CD0058895A /* Fonts-Licensed */; };
+		F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewCell.swift */; };
+		F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78591E5CD2A70058895A /* UIViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +131,8 @@
 		84E341A11E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuckDuckGoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
+		F130D73B1E577C3000C45811 /* WebViewCreationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewCreationDelegate.swift; sourceTree = "<group>"; };
 		F143C2B11E49D78C00CFDE3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F143C2C41E4A08C400CFDE3A /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DuckDuckGo.entitlements; sourceTree = "<group>"; };
@@ -147,11 +159,15 @@
 		F15A8B761E43A428008B8C6F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F15A8B791E43A428008B8C6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		F15A8B7B1E43A428008B8C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1617C121E572E0300DEDCAF /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		F1617C141E57336D00DEDCAF /* TabManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
+		F1617C181E573EA800DEDCAF /* TabViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewControllerDelegate.swift; sourceTree = "<group>"; };
 		F17669991E3FA5EE003D3222 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F176699E1E40BC86003D3222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		F17669A71E412A12003D3222 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
 		F17669AC1E413E5F003D3222 /* InfoBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBundle.swift; sourceTree = "<group>"; };
 		F17669D61E43401C003D3222 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
+		F18608DC1E5E588400361C30 /* TabIconMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabIconMaker.swift; sourceTree = "<group>"; };
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtensionTests.swift; sourceTree = "<group>"; };
 		F1AA54571E48CA0E00223211 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Toast.swift; path = "Submodule/Toast-Swift/Toast/Toast.swift"; sourceTree = "<group>"; };
@@ -162,7 +178,11 @@
 		F1AA54681E48D90700223211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F1B745211E549D550072547E /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		F1C4A70D1E57725800A6CA1B /* OmniBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBar.swift; sourceTree = "<group>"; };
 		F1C5ED041E37D14C00C599A4 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		F1DE78551E5CA0CD0058895A /* Fonts-Licensed */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Fonts-Licensed"; sourceTree = "<group>"; };
+		F1DE78571E5CAE350058895A /* TabViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
+		F1DE78591E5CD2A70058895A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +260,7 @@
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F1C5ECFA1E37B15B00C599A4 /* Browser */,
+				F1C4A70C1E5771F800A6CA1B /* OmiBar */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
@@ -263,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				F143C2B11E49D78C00CFDE3A /* Assets.xcassets */,
+				F1DE78551E5CA0CD0058895A /* Fonts-Licensed */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F1C5ED041E37D14C00C599A4 /* Localizable.strings */,
@@ -311,6 +333,7 @@
 				F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1B745211E549D550072547E /* UIColorExtension.swift */,
+				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -318,9 +341,10 @@
 		F143C3311E4A9A6A00CFDE3A /* Web */ = {
 			isa = PBXGroup;
 			children = (
-				F143C3381E4A9A9200CFDE3A /* WebLoadingDelegate.swift */,
 				F143C3391E4A9A9200CFDE3A /* WebViewController.swift */,
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
+				F143C3381E4A9A9200CFDE3A /* WebLoadingDelegate.swift */,
+				F130D73B1E577C3000C45811 /* WebViewCreationDelegate.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -413,6 +437,15 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		F1C4A70C1E5771F800A6CA1B /* OmiBar */ = {
+			isa = PBXGroup;
+			children = (
+				F1C4A70D1E57725800A6CA1B /* OmniBar.swift */,
+				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
+			);
+			name = OmiBar;
+			sourceTree = "<group>";
+		};
 		F1C5ECF31E37812900C599A4 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +460,11 @@
 			isa = PBXGroup;
 			children = (
 				F17669D61E43401C003D3222 /* BrowserViewController.swift */,
+				F1617C121E572E0300DEDCAF /* TabViewController.swift */,
+				F1617C181E573EA800DEDCAF /* TabViewControllerDelegate.swift */,
+				F1617C141E57336D00DEDCAF /* TabManager.swift */,
+				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
+				F18608DC1E5E588400361C30 /* TabIconMaker.swift */,
 			);
 			name = Browser;
 			sourceTree = "<group>";
@@ -620,6 +658,7 @@
 			files = (
 				F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
+				F1DE78561E5CA0CD0058895A /* Fonts-Licensed in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
@@ -666,8 +705,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				F176699A1E3FA5EE003D3222 /* Version.swift in Sources */,
 				F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */,
+				F1617C131E572E0300DEDCAF /* TabViewController.swift in Sources */,
+				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
+				F18608DD1E5E588400361C30 /* TabIconMaker.swift in Sources */,
+				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
+				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
+				F1617C191E573EA800DEDCAF /* TabViewControllerDelegate.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				F17669D71E43401C003D3222 /* BrowserViewController.swift in Sources */,
@@ -700,10 +746,12 @@
 				F143C3271E4A9A0E00CFDE3A /* Logger.swift in Sources */,
 				F143C32F1E4A9A4800CFDE3A /* UIViewControllerExtension.swift in Sources */,
 				F143C32E1E4A9A4800CFDE3A /* RoundedRectangleView.swift in Sources */,
+				F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */,
 				F143C3261E4A9A0E00CFDE3A /* GroupData.swift in Sources */,
 				F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
+				F130D73C1E577C3000C45811 /* WebViewCreationDelegate.swift in Sources */,
 				F143C33C1E4A9A9200CFDE3A /* WebViewController.swift in Sources */,
 				F143C3421E4A9C9A00CFDE3A /* UserText.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,

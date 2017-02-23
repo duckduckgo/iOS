@@ -10,19 +10,23 @@ import UIKit
 import WebKit
 import Core
 
-class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDelegate {
+class BrowserViewController: UIViewController, WebLoadingDelegate, WebViewCreationDelegate {
     
+    @IBOutlet weak var tabsButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     
-    private let groupData = GroupData()
-    private var searchBar: UISearchBar!
-    private weak var webController: WebViewController?
+    private var omniBar: OmniBar!
+    fileprivate weak var webController: WebViewController?
     private var initialUrl: URL?
+    
+    private let groupData = GroupData()
+    
+    lazy var tabManager = TabManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSearchBar()
+        configureOmniBar()
         refreshNavigationButtons()
     }
     
@@ -31,14 +35,10 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         configureNavigationBar()
     }
     
-    private func configureSearchBar() {
-        searchBar = UISearchBar()
-        searchBar.placeholder = UserText.searchDuckDuckGo
-        searchBar.textColor = UIColor.darkGray
-        searchBar.tintColor = UIColor.accent
-        searchBar.autocapitalizationType = .none
-        searchBar.delegate = self
-        navigationItem.titleView = searchBar
+    private func configureOmniBar() {
+        omniBar = OmniBar()
+        omniBar.omniDelegate = self
+        navigationItem.titleView = omniBar
     }
     
     private func configureNavigationBar() {
@@ -46,39 +46,14 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
         navigationController?.isToolbarHidden = false
     }
     
-    private func refreshSearchBarText() {
-        guard let url = webController?.url else {
-            searchBar.text = nil
-            return
-        }
-        
-        if let query = AppUrls.searchQuery(fromUrl: url) {
-            searchBar.text = query
-            return
-        }
-
-        if AppUrls.isDuckDuckGo(url: url) {
-            searchBar.text = nil
-            return
-        }
- 
-        searchBar.text = url.absoluteString
+    func webViewCreated(webView: WKWebView) {
+        tabManager.add(tab: webView)
+        refeshTabIcon()
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        onSearchSubmitted()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        onSearchSubmitted()
-    }
-    
-    private func onSearchSubmitted() {
-        searchBar.resignFirstResponder()
-        guard let text = searchBar.text?.trimWhitespace() else {
-            return
-        }
-        load(query: text)
+    func webViewDestroyed(webView: WKWebView) {
+        tabManager.remove(webView: webView)
+        refeshTabIcon()
     }
     
     func webpageDidStartLoading() {
@@ -87,8 +62,16 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     
     func webpageDidFinishLoading() {
         refreshNavigationButtons()
-        refreshSearchBarText()
+        refreshOmniBar()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    func refreshOmniBar() {
+        omniBar.refreshText(forUrl: webController?.url)
+    }
+    
+    func refeshTabIcon() {
+        tabsButton.image = TabIconMaker().icon(forTabs: tabManager.count)
     }
     
     private func refreshNavigationButtons() {
@@ -142,15 +125,77 @@ class BrowserViewController: UIViewController, UISearchBarDelegate, WebLoadingDe
     
     @IBAction func onDeleteEverything(_ sender: UIBarButtonItem) {
         webController?.reset()
+        clearAllTabs()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? WebViewController else {
+        if let controller = segue.destination as? WebViewController {
+            onWebViewControllerSegue(controller: controller)
             return
         }
+        if let controller = segue.destination as? TabViewController {
+            onTabViewControllerSegue(controller: controller)
+            return
+        }
+    }
+    
+    private func onWebViewControllerSegue(controller: WebViewController) {
         webController = controller
         controller.loadingDelegate = self
+        controller.webViewCreationDelegate = self
         controller.initialUrl = initialUrl
         initialUrl = nil
+    }
+    
+    private func onTabViewControllerSegue(controller: TabViewController) {
+        controller.delegate = self
+    }
+}
+
+extension BrowserViewController: OmniBarDelegate {
+    
+    func onOmniQuerySubmitted(_ query: String) {
+        load(query: query)
+    }
+}
+
+extension BrowserViewController: TabViewControllerDelegate {
+    
+    var tabDetails: [Link] {
+        return tabManager.tabDetails
+    }
+    
+    func createTab() {
+        webController?.attachNewWebView()
+        refreshOmniBar()
+        refeshTabIcon()
+    }
+    
+    func select(tabAt index: Int) {
+        let selectedTab = tabManager.get(at: index)
+        webController?.attachWebView(newWebView: selectedTab)
+        refreshOmniBar()
+        refeshTabIcon()
+    }
+    
+    func remove(tabAt index: Int) {
+        tabManager.remove(at: index)
+        
+        if tabManager.isEmpty {
+            createTab()
+            return
+        }
+        
+        if let lastIndex = tabManager.lastIndex, index > lastIndex {
+            select(tabAt: lastIndex)
+            return
+        }
+        
+        select(tabAt: index)
+    }
+    
+    func clearAllTabs() {
+        tabManager.clearAll()
+        createTab()
     }
 }

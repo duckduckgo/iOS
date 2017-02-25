@@ -26,16 +26,20 @@ class TabIconMaker {
     }
     
     private func point(forCount count: Int) -> CGPoint {
-        if count < 10 {
+        if isSingleDigit(count) {
             return CGPoint(x: 10.8, y: 3.5)
         }
         return CGPoint(x: 9, y: 5)
     }
     
     private func attributes(forCount count: Int) -> [String : NSObject] {
-        let size = (count < 10) ? 10 : 8
-        let weight = (count < 10) ? 5 : 3
+        let size = (isSingleDigit(count)) ? 10 : 8
+        let weight = (isSingleDigit(count)) ? 5 : 3
         let font = UIFont.systemFont(ofSize: CGFloat(size), weight: CGFloat(weight))
-        return [ NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.white]
+        return [ NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.white ]
+    }
+    
+    private func isSingleDigit(_ number: Int) -> Bool {
+        return number < 10
     }
 }

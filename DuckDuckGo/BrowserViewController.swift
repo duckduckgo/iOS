@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import Core
 
-class BrowserViewController: UIViewController, WebLoadingDelegate, WebViewCreationDelegate {
+class BrowserViewController: UIViewController, WebEventsDelegate {
     
     @IBOutlet weak var tabsButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
@@ -48,9 +48,10 @@ class BrowserViewController: UIViewController, WebLoadingDelegate, WebViewCreati
     
     func webViewCreated(webView: WKWebView) {
         tabManager.add(tab: webView)
+        webView.loadScripts()
         refeshTabIcon()
     }
-    
+        
     func webViewDestroyed(webView: WKWebView) {
         tabManager.remove(webView: webView)
         refeshTabIcon()
@@ -72,6 +73,12 @@ class BrowserViewController: UIViewController, WebLoadingDelegate, WebViewCreati
     
     func refeshTabIcon() {
         tabsButton.image = TabIconMaker().icon(forTabs: tabManager.count)
+    }
+    
+    func refreshControls() {
+        refreshOmniBar()
+        refeshTabIcon()
+        refreshNavigationButtons()
     }
     
     private func refreshNavigationButtons() {
@@ -122,10 +129,14 @@ class BrowserViewController: UIViewController, WebLoadingDelegate, WebViewCreati
             view.makeToast(UserText.webSaveLinkDone)
         }
     }
-    
-    @IBAction func onDeleteEverything(_ sender: UIBarButtonItem) {
-        webController?.reset()
-        clearAllTabs()
+
+    func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point) {
+        webView.getUrlAtPoint(x: point.x, y: point.y) { (url) in
+            if let url = url {
+                self.view.makeToast(UserText.webUrlLaunchedInNewTab)
+                self.webController?.attachNewWebView(forUrl: url)
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -141,8 +152,7 @@ class BrowserViewController: UIViewController, WebLoadingDelegate, WebViewCreati
     
     private func onWebViewControllerSegue(controller: WebViewController) {
         webController = controller
-        controller.loadingDelegate = self
-        controller.webViewCreationDelegate = self
+        controller.delegate = self
         controller.initialUrl = initialUrl
         initialUrl = nil
     }
@@ -167,15 +177,13 @@ extension BrowserViewController: TabViewControllerDelegate {
     
     func createTab() {
         webController?.attachNewWebView()
-        refreshOmniBar()
-        refeshTabIcon()
+        refreshControls()
     }
     
     func select(tabAt index: Int) {
         let selectedTab = tabManager.get(at: index)
         webController?.attachWebView(newWebView: selectedTab)
-        refreshOmniBar()
-        refeshTabIcon()
+        refreshControls()
     }
     
     func remove(tabAt index: Int) {

@@ -10,7 +10,7 @@ import UIKit
 
 class TabViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "Tab"
+    static let reuseIdentifier = "TabCell"
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var link: UILabel!

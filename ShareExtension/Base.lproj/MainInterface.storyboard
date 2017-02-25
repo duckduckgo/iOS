@@ -47,7 +47,8 @@
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chY-SO-aI0">
                                                         <rect key="frame" x="263" y="0.0" width="24" height="24"/>
-                                                        <state key="normal" image="DeleteForever"/>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" image="Fire"/>
                                                         <connections>
                                                             <action selector="onDeleteEverything:" destination="j1y-V4-xli" eventType="touchUpInside" id="owH-fI-UDC"/>
                                                         </connections>
@@ -96,7 +97,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUv-sN-6NX">
                                                         <rect key="frame" x="263" y="0.0" width="24" height="24"/>
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" image="Add"/>
+                                                        <state key="normal" image="StarBorder"/>
                                                         <connections>
                                                             <action selector="onSaveQuickLink:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
                                                         </connections>
@@ -202,12 +203,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add" width="24" height="24"/>
         <image name="AppButton" width="24" height="24"/>
         <image name="BrosweForward" width="24" height="24"/>
         <image name="BrowseBack" width="24" height="24"/>
         <image name="Close" width="24" height="24"/>
         <image name="DeleteForever" width="24" height="24"/>
+        <image name="Fire" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
+        <image name="StarBorder" width="24" height="24"/>
     </resources>
 </document>

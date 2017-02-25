@@ -6,11 +6,11 @@
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
-import UIKit
+import WebKit
 import Social
 import Core
 
-class ShareViewController: UIViewController, WebLoadingDelegate {
+class ShareViewController: UIViewController {
     
     private let urlIdentifier = "public.url"
     private let textIdentifier = "public.plain-text"
@@ -67,14 +67,7 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
         })
     }
     
-    func webpageDidStartLoading() {
-    }
-    
-    func webpageDidFinishLoading() {
-        refreshNavigationButtons()
-    }
-    
-    private func refreshNavigationButtons() {
+    func refreshNavigationButtons() {
         backButton.isEnabled = webController?.canGoBack ?? false
         forwardButton.isEnabled = webController?.canGoForward ?? false
     }
@@ -108,8 +101,27 @@ class ShareViewController: UIViewController, WebLoadingDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? WebViewController {
-            controller.loadingDelegate = self
+            controller.delegate = self
             webController = controller
         }
+    }
+}
+
+extension ShareViewController: WebEventsDelegate {
+    
+    func webViewCreated(webView: WKWebView) {
+    }
+    
+    func webViewDestroyed(webView: WKWebView) {
+    }
+    
+    func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point) {
+    }
+    
+    func webpageDidStartLoading() {
+    }
+    
+    func webpageDidFinishLoading() {
+        refreshNavigationButtons()
     }
 }

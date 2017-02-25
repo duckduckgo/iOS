@@ -18,5 +18,5 @@ public struct UserText {
     
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Web session cleared / deleted")
     public static let webSaveLinkDone = NSLocalizedString("web.url.save.done", comment: "Confirmation message when quick link saved to the today extension")
-    public static let webUrlOpenedInNewTab = NSLocalizedString("web.url.open.newtab", comment: "Web url was opened in a new tab")
+    public static let webUrlLaunchedInNewTab = NSLocalizedString("web.url.launch.newtab", comment: "Web url launched in a new tab")
 }

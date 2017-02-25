@@ -10,9 +10,15 @@ import WebKit
 
 extension WKWebView {
     
-    public static func createPrivateBrowser(frame: CGRect) -> WKWebView {
+    public static func createPrivateWebView(frame: CGRect) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        let webView = WKWebView(frame: frame, configuration: configuration)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return webView
+    }
+    
+    public func createSiblingWebView() -> WKWebView {
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView

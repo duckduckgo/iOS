@@ -55,13 +55,20 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func attachNewWebView(forUrl url: URL? = nil) {
-        let newWebView = WKWebView.createPrivateBrowser(frame: view.bounds)
+        let newWebView = createNewWebView()
         newWebView.allowsBackForwardNavigationGestures = true
         newWebView.translatesAutoresizingMaskIntoConstraints = false
         attachWebView(newWebView: newWebView)
         attachLongPressHandler(webView: webView)
         delegate?.webViewCreated(webView: webView)
         loadStartPage(url: url)
+    }
+    
+    private func createNewWebView() -> WKWebView {
+        if let oldWebView = webView {
+            return oldWebView.createSiblingWebView()
+        }
+        return WKWebView.createPrivateWebView(frame: view.bounds)
     }
     
     public func attachWebView(newWebView: WKWebView) {
@@ -156,6 +163,8 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     private func resetWebView() {
         delegate?.webViewDestroyed(webView: webView)
+        detachWebView(webView: webView)
+        webView = nil
         attachNewWebView()
     }
 }

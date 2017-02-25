@@ -92,7 +92,7 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func onClose(_ sender: UIButton) {
-        extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+        extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     
     @IBAction func onDeleteEverything(_ sender: UIButton) {

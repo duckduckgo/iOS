@@ -9,5 +9,10 @@
 import Foundation
 
 protocol OmniBarDelegate: class {
+    
     func onOmniQuerySubmitted(_ query: String)
+    
+    func onLeftButtonPressed()
+    
+    func onRightButtonPressed()
 }

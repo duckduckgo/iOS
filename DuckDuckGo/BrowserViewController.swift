@@ -26,24 +26,23 @@ class BrowserViewController: UIViewController, WebEventsDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationBar()
         configureOmniBar()
         refreshNavigationButtons()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureNavigationBar()
-    }
-    
     private func configureOmniBar() {
-        omniBar = OmniBar()
+        omniBar = OmniBar.loadFromXib(withStyle: .web)
         omniBar.omniDelegate = self
         navigationItem.titleView = omniBar
+        navigationController?.toolbar.tintColor = UIColor.tint
     }
     
     private func configureNavigationBar() {
-        navigationController?.hidesBarsOnSwipe = true
+        navigationItem.hidesBackButton = true
+        navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     func webViewCreated(webView: WKWebView) {
@@ -85,7 +84,7 @@ class BrowserViewController: UIViewController, WebEventsDelegate {
         backButton.isEnabled = webController?.canGoBack ?? false
         forwardButton.isEnabled = webController?.canGoForward ?? false
     }
-    
+        
     func load(query: String) {
         guard let url = AppUrls.url(forQuery: query) else {
             return
@@ -103,10 +102,6 @@ class BrowserViewController: UIViewController, WebEventsDelegate {
     
     @IBAction func onHomePressed(_ sender: UIBarButtonItem) {
         webController?.loadHomepage()
-    }
-    
-    @IBAction func onRefreshPressed(_ sender: UIBarButtonItem) {
-        webController?.reload()
     }
     
     @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
@@ -128,6 +123,10 @@ class BrowserViewController: UIViewController, WebEventsDelegate {
             groupData.addQuickLink(link: link)
             view.makeToast(UserText.webSaveLinkDone)
         }
+    }
+    
+    fileprivate func onRefreshPressed() {
+        webController?.reload()
     }
 
     func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point) {
@@ -160,6 +159,11 @@ class BrowserViewController: UIViewController, WebEventsDelegate {
     private func onTabViewControllerSegue(controller: TabViewController) {
         controller.delegate = self
     }
+    
+    fileprivate func dismissAll() {
+        tabManager.clearAll()
+        _ = navigationController?.popToRootViewController(animated: false)
+    }
 }
 
 extension BrowserViewController: OmniBarDelegate {
@@ -167,6 +171,15 @@ extension BrowserViewController: OmniBarDelegate {
     func onOmniQuerySubmitted(_ query: String) {
         load(query: query)
     }
+    
+    func onLeftButtonPressed() {
+        dismissAll()
+    }
+    
+    func onRightButtonPressed() {
+        onRefreshPressed()
+    }
+
 }
 
 extension BrowserViewController: TabViewControllerDelegate {
@@ -190,7 +203,7 @@ extension BrowserViewController: TabViewControllerDelegate {
         tabManager.remove(at: index)
         
         if tabManager.isEmpty {
-            createTab()
+            dismissAll()
             return
         }
         
@@ -203,7 +216,6 @@ extension BrowserViewController: TabViewControllerDelegate {
     }
     
     func clearAllTabs() {
-        tabManager.clearAll()
-        createTab()
+        dismissAll()
     }
 }

@@ -167,6 +167,13 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
         webView = nil
         attachNewWebView()
     }
+    
+    public override func viewDidDisappear(_ animated: Bool) {
+        if let webView = webView {
+            webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        }
+        super.viewDidDisappear(animated)
+    }
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

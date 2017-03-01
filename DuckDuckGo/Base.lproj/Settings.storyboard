@@ -16,7 +16,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Us0-75-vOB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <sections>
                             <tableViewSection headerTitle="Help" id="dj9-vh-Rig">
                                 <cells>
@@ -86,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="1580" y="58"/>
         </scene>
-        <!--View Controller-->
+        <!--Use Duck Duck Go View Controller-->
         <scene sceneID="xKv-Qo-gXO">
             <objects>
-                <viewController id="UuG-Dn-ta0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UuG-Dn-ta0" customClass="UseDuckDuckGoViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lHs-Fa-hpD"/>
                         <viewControllerLayoutGuide type="bottom" id="YDG-si-6Dw"/>
@@ -151,7 +151,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="GbW-nw-dIn" secondAttribute="trailing" id="6gO-em-hKR"/>
                             <constraint firstItem="roe-pH-Kep" firstAttribute="trailing" secondItem="SM4-k6-pUD" secondAttribute="trailing" id="C3a-IV-Gci"/>

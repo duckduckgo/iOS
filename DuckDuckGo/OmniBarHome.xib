@@ -29,12 +29,17 @@
                                 <action selector="onLeftButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="uoe-Mq-XIs"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-qH-IL0">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-qH-IL0" customClass="TextFieldWithInsets" customModule="Core">
                             <rect key="frame" x="42" y="6.5" width="335" height="19"/>
                             <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onTextEntered:" destination="iN0-l3-epB" eventType="primaryActionTriggered" id="FL4-u4-poU"/>
                             </connections>
@@ -46,6 +51,7 @@
                                 <constraint firstAttribute="width" constant="20" id="jTe-75-i93"/>
                             </constraints>
                             <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="0.0"/>
                             <state key="normal" image="Bookmarks"/>
                             <connections>
                                 <action selector="onRightButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="DRp-dK-dYW"/>

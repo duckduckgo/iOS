@@ -58,6 +58,7 @@
 		F18326871E60542100240060 /* JavascriptLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18326861E60542100240060 /* JavascriptLoader.swift */; };
 		F18608DD1E5E588400361C30 /* TabIconMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18608DC1E5E588400361C30 /* TabIconMaker.swift */; };
 		F18608E01E5E649400361C30 /* documentExtension.js in Resources */ = {isa = PBXBuildFile; fileRef = F18608DF1E5E649400361C30 /* documentExtension.js */; };
+		F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */; };
 		F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */; };
 		F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */; };
 		F1AA54611E48D90700223211 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1AA54601E48D90700223211 /* NotificationCenter.framework */; };
@@ -186,6 +187,7 @@
 		F18326861E60542100240060 /* JavascriptLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavascriptLoader.swift; sourceTree = "<group>"; };
 		F18608DC1E5E588400361C30 /* TabIconMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabIconMaker.swift; sourceTree = "<group>"; };
 		F18608DF1E5E649400361C30 /* documentExtension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = documentExtension.js; sourceTree = "<group>"; };
+		F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithInsets.swift; sourceTree = "<group>"; };
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtensionTests.swift; sourceTree = "<group>"; };
 		F1AA54571E48CA0E00223211 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Toast.swift; path = "Submodule/Toast-Swift/Toast/Toast.swift"; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				F1B745211E549D550072547E /* UIColorExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
+				F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -818,6 +821,7 @@
 				F143C3261E4A9A0E00CFDE3A /* GroupData.swift in Sources */,
 				F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
+				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				F1D934031E610DCE00A6F0D6 /* Point.swift in Sources */,
 				F143C33C1E4A9A9200CFDE3A /* WebViewController.swift in Sources */,

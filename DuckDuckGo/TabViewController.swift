@@ -15,6 +15,10 @@ class TabViewController: UIViewController {
     
     weak var delegate: TabViewControllerDelegate!
     
+    static func loadFromStoryboard() -> TabViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         blur()
@@ -45,8 +49,13 @@ class TabViewController: UIViewController {
     }
     
     func onDeleted(tabAt index: Int) {
+        let shouldFinish =  delegate.tabDetails.count == 1
         delegate.remove(tabAt: index)
-        collectionView.reloadData()
+        if shouldFinish {
+            dismiss()
+        } else {
+            collectionView.reloadData()
+        }
     }
     
     fileprivate func dismiss() {

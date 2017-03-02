@@ -89,7 +89,7 @@
         <!--Use Duck Duck Go View Controller-->
         <scene sceneID="xKv-Qo-gXO">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UuG-Dn-ta0" customClass="UseDuckDuckGoViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UseDuckDuckGoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UuG-Dn-ta0" customClass="UseDuckDuckGoViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lHs-Fa-hpD"/>
                         <viewControllerLayoutGuide type="bottom" id="YDG-si-6Dw"/>

@@ -7,24 +7,30 @@
 //
 
 import UIKit
+import Core
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, Tab {
     
     @IBOutlet weak var passiveContainerView: UIView!
-
     @IBOutlet weak var centreBar: UIView!
-    private var omniBar: OmniBar!
-    private var activeMode = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureOmniBar()
+    weak var tabDelegate: HomeTabDelegate?
+    var omniBar: OmniBar
+    var name: String? = UserText.homeLinkTitle
+    var url: URL? = URL(string: AppUrls.base)!
+    var canGoBack = false
+    var canGoForward: Bool = false
+    
+    private var activeMode = false
+
+    static func loadFromStoryboard() -> HomeViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
-    private func configureOmniBar() {
-        omniBar = OmniBar.loadFromXib(withStyle: .home)
+    required init?(coder aDecoder: NSCoder) {
+        self.omniBar = OmniBar.loadFromXib(withStyle: .home)
+        super.init(coder: aDecoder)
         omniBar.omniDelegate = self
-        navigationItem.titleView = omniBar
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +62,11 @@ class HomeViewController: UIViewController {
         enterPassiveMode()
     }
     
+    
+    @IBAction func onTabButtonTapped(_ sender: UIButton) {
+        tabDelegate?.launchTabsSwitcher()
+    }
+    
     fileprivate func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContainerView.isHidden = false
@@ -69,28 +80,24 @@ class HomeViewController: UIViewController {
         _ = omniBar.becomeFirstResponder()
     }
     
-    public func loadBrowserQuery(query: String) {
-        let controller = UIStoryboard(name: "Browser", bundle: nil).instantiateInitialViewController() as! BrowserViewController
-        controller.load(query: query)
-        show(controller, sender: nil)
-    }
+    func load(url: URL) {}
     
-    public func loadBrowserUrl(url: URL) {
-        let controller = UIStoryboard(name: "Browser", bundle: nil).instantiateInitialViewController() as! BrowserViewController
-        controller.load(url: url)
-        show(controller, sender: nil)
-    }
+    func refreshOmniText() {}
     
+    func goBack() {}
     
-    private func openSafariHelp() {
-        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! SettingsViewController
-        show(controller, sender: nil)
+    func goForward() {}
+    
+    func clear() {
+        removeFromParentViewController()
+        view.removeFromSuperview()
     }
 }
 
 extension HomeViewController: OmniBarDelegate {
+    
     func onOmniQuerySubmitted(_ query: String) {
-        loadBrowserQuery(query: query)
+        tabDelegate?.loadNewWebQuery(query: query)
     }
     
     func onLeftButtonPressed() {

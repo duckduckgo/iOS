@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clearNavigationStack()
         }
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-            homeViewController()?.loadBrowserQuery(query: query)
+            mainViewController()?.loadNewWebQuery(query: query)
         }
     }
     
@@ -65,11 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func loadQuickLink(link: Link) {
-        homeViewController()?.loadBrowserUrl(url: link.url)
+        mainViewController()?.loadNewWebUrl(url: link.url)
     }
     
-    private func homeViewController() -> HomeViewController? {
-        return UIApplication.shared.keyWindow?.rootViewController?.childViewControllers.first as? HomeViewController
+    private func mainViewController() -> MainViewController? {
+        return UIApplication.shared.keyWindow?.rootViewController?.childViewControllers.first as? MainViewController
     }
     
     private func clearNavigationStack() {

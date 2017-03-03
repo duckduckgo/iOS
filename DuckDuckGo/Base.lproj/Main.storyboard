@@ -47,6 +47,7 @@
                         </constraints>
                     </view>
                     <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gHf-Mt-22S"/>
                         <barButtonItem image="Home" id="Jsx-JA-uHA">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -75,19 +76,13 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="N8h-59-zIV"/>
-                        <barButtonItem image="AddBox" id="mpt-fw-vpE">
+                        <barButtonItem image="StarBorder" id="mpt-fw-vpE">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onSaveQuickLink:" destination="BYZ-38-t0r" id="mJI-ep-wQ1"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="NlQ-qK-mjv"/>
-                        <barButtonItem image="DeleteForever" id="Cba-s8-cVa">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="onDeleteEverything:" destination="BYZ-38-t0r" id="6BI-Q2-UsZ"/>
-                            </connections>
-                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="4ID-JO-kUn">
                         <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="CQj-Mv-x5k">
@@ -173,7 +168,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xnc-eB-mv9">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem title="Close All" id="TRA-Ar-QQG">
+                                    <barButtonItem image="Fire" id="TRA-Ar-QQG">
                                         <connections>
                                             <action selector="onCloseAllPressed:" destination="BuT-4g-3wv" id="013-re-8Y4"/>
                                         </connections>
@@ -204,7 +199,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Tab" id="SAd-Yk-SOq" customClass="TabViewCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TabCell" id="SAd-Yk-SOq" customClass="TabViewCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="10" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -223,13 +218,13 @@
                                                             <state key="normal" image="Close"/>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjm-0q-x8h">
-                                                            <rect key="frame" x="16" y="8" width="228" height="21.5"/>
+                                                            <rect key="frame" x="16" y="8" width="228" height="22"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                             <color key="textColor" red="0.086260028183460236" green="0.08628285676240921" blue="0.086258567869663239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRl-5X-Wgi">
-                                                            <rect key="frame" x="16" y="32" width="228" height="19.5"/>
+                                                            <rect key="frame" x="16" y="32" width="228" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <color key="textColor" red="0.6391444206237793" green="0.63925665616989136" blue="0.63913732767105103" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -340,14 +335,14 @@
     </scenes>
     <resources>
         <image name="Add" width="24" height="24"/>
-        <image name="AddBox" width="24" height="24"/>
         <image name="BrosweForward" width="24" height="24"/>
         <image name="BrowseBack" width="24" height="24"/>
         <image name="Close" width="24" height="24"/>
-        <image name="DeleteForever" width="24" height="24"/>
+        <image name="Fire" width="24" height="24"/>
         <image name="Home" width="22" height="22"/>
         <image name="MoreVertical" width="10" height="24"/>
         <image name="Share" width="24" height="24"/>
+        <image name="StarBorder" width="24" height="24"/>
         <image name="webbar-tabs" width="24" height="24"/>
     </resources>
 </document>

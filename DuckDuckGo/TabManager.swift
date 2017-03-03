@@ -54,13 +54,17 @@ struct TabManager {
         for (index, tab) in tabs.enumerated() {
             if tab == webView {
                 remove(at: index)
+                webView.clearCache(completionHandler: {})
                 return
             }
         }
     }
     
     mutating func clearAll() {
-        tabs = [WKWebView]()
+        for tab in tabs {
+            remove(webView: tab)
+            tab.clearCache(completionHandler: {})
+        }
     }
 }
 

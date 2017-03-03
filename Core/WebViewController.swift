@@ -13,9 +13,7 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     private static let estimatedProgressKeyPath = "estimatedProgress"
     
-    public weak var loadingDelegate: WebLoadingDelegate?
-    
-    public weak var webViewCreationDelegate: WebViewCreationDelegate?
+    public weak var delegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
     
@@ -57,12 +55,20 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func attachNewWebView(forUrl url: URL? = nil) {
-        let newWebView = WKWebView.createPrivateBrowser(frame: view.bounds)
+        let newWebView = createNewWebView()
         newWebView.allowsBackForwardNavigationGestures = true
         newWebView.translatesAutoresizingMaskIntoConstraints = false
         attachWebView(newWebView: newWebView)
-        webViewCreationDelegate?.webViewCreated(webView: webView)
+        attachLongPressHandler(webView: webView)
+        delegate?.webViewCreated(webView: webView)
         loadStartPage(url: url)
+    }
+    
+    private func createNewWebView() -> WKWebView {
+        if let oldWebView = webView {
+            return oldWebView.createSiblingWebView()
+        }
+        return WKWebView.createPrivateWebView(frame: view.bounds)
     }
     
     public func attachWebView(newWebView: WKWebView) {
@@ -73,6 +79,23 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
         newWebView.navigationDelegate = self
         view.insertWithEqualSize(subView: newWebView)
         webView = newWebView
+    }
+    
+    private func attachLongPressHandler(webView: WKWebView) {
+        let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
+        longPressRecogniser.delegate = self
+        webView.scrollView.addGestureRecognizer(longPressRecogniser)
+    }
+    
+    func onLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state != .began {
+            return
+        }
+        let webView = sender.view?.superview as! WKWebView
+        let x = Int(sender.location(in: webView).x)
+        let y = Int(sender.location(in: webView).y)
+        let point = Point(x: x, y: y)
+        delegate?.webView(webView, didReceiveLongPressAtPoint: point)
     }
     
     private func detachWebView(webView: WKWebView) {
@@ -96,12 +119,12 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         showProgressIndicator()
-        loadingDelegate?.webpageDidStartLoading()
+        delegate?.webpageDidStartLoading()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
-        loadingDelegate?.webpageDidFinishLoading()
+        delegate?.webpageDidFinishLoading()
     }
     
     private func showProgressIndicator() {
@@ -139,7 +162,15 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     private func resetWebView() {
-        webViewCreationDelegate?.webViewDestroyed(webView: webView)
+        delegate?.webViewDestroyed(webView: webView)
+        detachWebView(webView: webView)
+        webView = nil
         attachNewWebView()
+    }
+}
+
+extension WebViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

@@ -30,7 +30,7 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl(text: "test.com"))
     }
     
-    func testIsWebUrlWithStringContinaingSpaceReturnsFalse() {
+    func testIsWebUrlWithStringContainingSpaceReturnsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http://t est.com"))
     }
     

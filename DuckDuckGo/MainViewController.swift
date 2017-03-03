@@ -65,12 +65,12 @@ class MainViewController: UIViewController {
     }
     
     func refreshControls() {
-        refeshTabIcon()
+        refreshTabIcon()
         refreshNavigationButtons()
         refreshOmniText()
     }
     
-    func refeshTabIcon() {
+    func refreshTabIcon() {
         tabsButton.image = TabIconMaker().icon(forTabs: tabManager.count)
     }
     

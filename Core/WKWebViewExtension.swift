@@ -25,8 +25,8 @@ extension WKWebView {
     }
     
     public func loadScripts() {
-        let javacriptLoader = JavascriptLoader()
-        javacriptLoader.load(.documentExtension, withController: configuration.userContentController)
+        let javascriptLoader = JavascriptLoader()
+        javascriptLoader.load(.documentExtension, withController: configuration.userContentController)
     }
     
     public func clearCache(completionHandler: @escaping () -> Swift.Void) {

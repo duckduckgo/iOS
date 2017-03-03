@@ -70,7 +70,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
             quicklinks = newQuickLinks
             tableView.reloadData()
             refreshViews()
-            return true;
+            return true
         }
         return false
     }

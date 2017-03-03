@@ -9,24 +9,26 @@
 import UIKit
 import WebKit
 
-public class WebViewController: UIViewController, WKNavigationDelegate {
+open class WebViewController: UIViewController, WKNavigationDelegate {
     
     private static let estimatedProgressKeyPath = "estimatedProgress"
     
+    public weak var webEventsDelegate: WebEventsDelegate?
+    
     @IBOutlet weak var progressBar: UIProgressView!
     
-    private var webView: WKWebView!
+    open var webView: WKWebView!
     
-    public var loadingDelegate: WebLoadingDelegate?
-    
-    public var initialUrl: URL?
+    public var name: String? {
+        return webView.title
+    }
     
     public var url: URL? {
         return webView.url
     }
     
     public var link: Link? {
-        if let url = webView.url, let title = webView.title {
+        if let url = webView.url, let title = name {
             return Link(title: title, url: url)
         }
         return nil
@@ -40,27 +42,61 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
         return webView.canGoForward
     }
     
-    public override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
-        configureWebView()
-        loadStartPage()
-    }
-    
-    private func loadStartPage() {
-        if let url = initialUrl {
-            load(url: url)
-            initialUrl = nil
-        } else {
-           loadHomepage()
+        if webView == nil {
+            attachNewWebView()
         }
     }
     
-    private func configureWebView() {
-        webView = WKWebView.createPrivateBrowser(frame: view.bounds)
-        webView.allowsBackForwardNavigationGestures = true
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.navigationDelegate = self
-        view.insertSubview(webView, at: 0)
+    private func loadStartPage(url: URL? = nil) {
+        if let url = url {
+            load(url: url)
+        } else {
+            loadHomepage()
+        }
+    }
+    
+    public func attachNewWebView() {
+        let newWebView = WKWebView.createPrivateWebView(frame: view.bounds)
+        attachWebView(newWebView: newWebView)
+        loadStartPage(url: url)
+    }
+    
+    public func attachWebView(newWebView: WKWebView) {
+        if let oldWebView = webView {
+            detachWebView(webView: oldWebView)
+        }
+        webView = newWebView
+        attachLongPressHandler(webView: newWebView)
+        newWebView.allowsBackForwardNavigationGestures = true
+        newWebView.translatesAutoresizingMaskIntoConstraints = false
+        newWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        newWebView.navigationDelegate = self
+        view.insertWithEqualSize(subView: newWebView)
+        webEventsDelegate?.attached(webView: webView)
+    }
+    
+    private func attachLongPressHandler(webView: WKWebView) {
+        let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
+        longPressRecogniser.delegate = self
+        webView.scrollView.addGestureRecognizer(longPressRecogniser)
+    }
+    
+    func onLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state != .began {
+            return
+        }
+        let webView = sender.view?.superview as! WKWebView
+        let x = Int(sender.location(in: webView).x)
+        let y = Int(sender.location(in: webView).y)
+        let point = Point(x: x, y: y)
+        webEventsDelegate?.webView(webView, didReceiveLongPressAtPoint: point)
+    }
+    
+    private func detachWebView(webView: WKWebView) {
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        webView.removeFromSuperview()
     }
     
     public func loadHomepage() {
@@ -68,10 +104,11 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func load(url: URL) {
+        loadViewIfNeeded()
         webView.load(URLRequest(url: url))
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == WebViewController.estimatedProgressKeyPath {
             progressBar.progress = Float(webView.estimatedProgress)
         }
@@ -79,12 +116,17 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         showProgressIndicator()
-        loadingDelegate?.webpageDidStartLoading()
+        webEventsDelegate?.webpageDidStartLoading()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
-        loadingDelegate?.webpageDidFinishLoading()
+        webEventsDelegate?.webpageDidFinishLoading()
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFinishLoading()
     }
     
     private func showProgressIndicator() {
@@ -108,23 +150,29 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     public func goForward() {
         webView.goForward()
     }
+
+    public func tearDown() {
+        clearCache()
+        if let webView = webView {
+            detachWebView(webView: webView)
+        }
+    }
     
     public func reset() {
         clearCache()
-        resetWebView()
-        loadHomepage()
+        attachNewWebView()
     }
     
-    private func clearCache() {
+    public func clearCache() {
         webView.clearCache {
             Logger.log(text: "Cache cleared")
         }
         view.makeToast(UserText.webSessionCleared)
     }
-    
-    private func resetWebView() {
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-        webView.removeFromSuperview()
-        configureWebView()
+}
+
+extension WebViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

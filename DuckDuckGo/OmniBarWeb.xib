@@ -17,10 +17,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcg-Xg-cFs" customClass="RoundedRectangleView" customModule="Core">
                     <rect key="frame" x="0.0" y="4" width="375" height="32"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiq-Y4-yRH">
-                            <rect key="frame" x="0.0" y="-6" width="44" height="44"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiq-Y4-yRH">
+                            <rect key="frame" x="0.0" y="-6" width="40" height="44"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="44" id="0fz-VT-XMt"/>
+                                <constraint firstAttribute="width" constant="40" id="0fz-VT-XMt"/>
                                 <constraint firstAttribute="height" constant="44" id="hVD-It-LuB"/>
                             </constraints>
                             <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -67,9 +67,9 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="KN8-qH-IL0" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" id="2kw-XB-O0R"/>
+                        <constraint firstItem="KN8-qH-IL0" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" constant="4" id="2kw-XB-O0R"/>
                         <constraint firstItem="ZWM-LZ-spq" firstAttribute="top" secondItem="kcg-Xg-cFs" secondAttribute="top" constant="4" id="Fbe-bd-3HL"/>
-                        <constraint firstItem="ZWM-LZ-spq" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" constant="-6" id="Fmd-kx-cYU"/>
+                        <constraint firstItem="ZWM-LZ-spq" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" constant="-2" id="Fmd-kx-cYU"/>
                         <constraint firstItem="KN8-qH-IL0" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="Gs2-iU-oe2"/>
                         <constraint firstItem="kFt-83-9ch" firstAttribute="leading" secondItem="KN8-qH-IL0" secondAttribute="trailing" constant="-24" id="Jfk-e0-01m"/>
                         <constraint firstAttribute="bottom" secondItem="ZWM-LZ-spq" secondAttribute="bottom" constant="4" id="U77-XV-sZj"/>
@@ -109,7 +109,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Fire" width="24" height="24"/>
-        <image name="Refresh" width="24" height="24"/>
+        <image name="Fire" width="26" height="26"/>
+        <image name="Refresh" width="22" height="22"/>
     </resources>
 </document>

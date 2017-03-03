@@ -20,8 +20,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLaunch" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
-                                <rect key="frame" x="128" y="274" width="120" height="120"/>
+                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
+                                <rect key="frame" x="128.5" y="274.5" width="119" height="119"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="170" id="a7x-eG-u4v"/>
                                     <constraint firstAttribute="width" constant="182" id="d9j-AH-Q1Q"/>
@@ -48,6 +48,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppLaunch" width="120" height="120"/>
+        <image name="Logo" width="119" height="119"/>
     </resources>
 </document>

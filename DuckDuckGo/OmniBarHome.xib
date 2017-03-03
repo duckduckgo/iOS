@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="OmniBar" customModule="DuckDuckGo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcg-Xg-cFs" customClass="RoundedRectangleView" customModule="Core">
+                    <rect key="frame" x="0.0" y="4" width="375" height="32"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiq-Y4-yRH">
+                            <rect key="frame" x="8" y="3" width="26" height="26"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="26" id="4sw-kr-4e0"/>
+                                <constraint firstAttribute="width" constant="26" id="xbf-qg-7YV"/>
+                            </constraints>
+                            <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <state key="normal" image="Home"/>
+                            <connections>
+                                <action selector="onLeftButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="uoe-Mq-XIs"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-qH-IL0" customClass="TextFieldWithInsets" customModule="Core">
+                            <rect key="frame" x="42" y="6.5" width="335" height="19"/>
+                            <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="onTextEntered:" destination="iN0-l3-epB" eventType="primaryActionTriggered" id="FL4-u4-poU"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFt-83-9ch">
+                            <rect key="frame" x="353" y="6" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="FVE-qL-mtE"/>
+                                <constraint firstAttribute="width" constant="20" id="jTe-75-i93"/>
+                            </constraints>
+                            <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="0.0"/>
+                            <state key="normal" image="Bookmarks"/>
+                            <connections>
+                                <action selector="onRightButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="DRp-dK-dYW"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="KN8-qH-IL0" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" constant="8" id="2kw-XB-O0R"/>
+                        <constraint firstItem="KN8-qH-IL0" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="Gs2-iU-oe2"/>
+                        <constraint firstItem="kFt-83-9ch" firstAttribute="leading" secondItem="KN8-qH-IL0" secondAttribute="trailing" constant="-24" id="Jfk-e0-01m"/>
+                        <constraint firstAttribute="trailing" secondItem="kFt-83-9ch" secondAttribute="trailing" constant="2" id="d3k-g4-X8q"/>
+                        <constraint firstItem="oiq-Y4-yRH" firstAttribute="leading" secondItem="kcg-Xg-cFs" secondAttribute="leading" constant="8" id="kbS-9Z-QdX"/>
+                        <constraint firstItem="kFt-83-9ch" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="msa-In-fdP"/>
+                        <constraint firstItem="oiq-Y4-yRH" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="uao-lL-tHK"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="6"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="kcg-Xg-cFs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="2pd-u6-de2"/>
+                <constraint firstAttribute="trailing" secondItem="kcg-Xg-cFs" secondAttribute="trailing" id="QZy-mC-C19"/>
+                <constraint firstAttribute="bottom" secondItem="kcg-Xg-cFs" secondAttribute="bottom" constant="4" id="UHf-a2-vJr"/>
+                <constraint firstItem="kcg-Xg-cFs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aCe-BY-gE6"/>
+                <constraint firstItem="oiq-Y4-yRH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="sh6-g1-uT2"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="leftButton" destination="oiq-Y4-yRH" id="lJP-ix-RbC"/>
+                <outlet property="rightButton" destination="kFt-83-9ch" id="SJa-QE-wKe"/>
+                <outlet property="textField" destination="KN8-qH-IL0" id="CJC-dc-Ith"/>
+            </connections>
+            <point key="canvasLocation" x="32.5" y="43"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Bookmarks" width="44" height="40"/>
+        <image name="Home" width="52" height="52"/>
+    </resources>
+</document>

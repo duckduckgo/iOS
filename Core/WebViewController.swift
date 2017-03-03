@@ -9,24 +9,26 @@
 import UIKit
 import WebKit
 
-public class WebViewController: UIViewController, WKNavigationDelegate {
+open class WebViewController: UIViewController, WKNavigationDelegate {
     
     private static let estimatedProgressKeyPath = "estimatedProgress"
     
-    public weak var delegate: WebEventsDelegate?
+    public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
     
-    private var webView: WKWebView!
+    open var webView: WKWebView!
     
-    public var initialUrl: URL?
+    public var name: String? {
+        return webView.title
+    }
     
     public var url: URL? {
         return webView.url
     }
     
     public var link: Link? {
-        if let url = webView.url, let title = webView.title {
+        if let url = webView.url, let title = name {
             return Link(title: title, url: url)
         }
         return nil
@@ -40,45 +42,39 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
         return webView.canGoForward
     }
     
-    public override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
-        attachNewWebView()
+        if webView == nil {
+            attachNewWebView()
+        }
     }
     
     private func loadStartPage(url: URL? = nil) {
-        if let url = url ?? initialUrl {
+        if let url = url {
             load(url: url)
-            initialUrl = nil
         } else {
             loadHomepage()
         }
     }
     
-    public func attachNewWebView(forUrl url: URL? = nil) {
-        let newWebView = createNewWebView()
-        newWebView.allowsBackForwardNavigationGestures = true
-        newWebView.translatesAutoresizingMaskIntoConstraints = false
+    public func attachNewWebView() {
+        let newWebView = WKWebView.createPrivateWebView(frame: view.bounds)
         attachWebView(newWebView: newWebView)
-        attachLongPressHandler(webView: webView)
-        delegate?.webViewCreated(webView: webView)
         loadStartPage(url: url)
-    }
-    
-    private func createNewWebView() -> WKWebView {
-        if let oldWebView = webView {
-            return oldWebView.createSiblingWebView()
-        }
-        return WKWebView.createPrivateWebView(frame: view.bounds)
     }
     
     public func attachWebView(newWebView: WKWebView) {
         if let oldWebView = webView {
             detachWebView(webView: oldWebView)
         }
+        webView = newWebView
+        attachLongPressHandler(webView: newWebView)
+        newWebView.allowsBackForwardNavigationGestures = true
+        newWebView.translatesAutoresizingMaskIntoConstraints = false
         newWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         newWebView.navigationDelegate = self
         view.insertWithEqualSize(subView: newWebView)
-        webView = newWebView
+        webEventsDelegate?.attached(webView: webView)
     }
     
     private func attachLongPressHandler(webView: WKWebView) {
@@ -95,12 +91,12 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
         let x = Int(sender.location(in: webView).x)
         let y = Int(sender.location(in: webView).y)
         let point = Point(x: x, y: y)
-        delegate?.webView(webView, didReceiveLongPressAtPoint: point)
+        webEventsDelegate?.webView(webView, didReceiveLongPressAtPoint: point)
     }
     
     private func detachWebView(webView: WKWebView) {
-        webView.removeFromSuperview()
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        webView.removeFromSuperview()
     }
     
     public func loadHomepage() {
@@ -108,10 +104,11 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func load(url: URL) {
+        loadViewIfNeeded()
         webView.load(URLRequest(url: url))
     }
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == WebViewController.estimatedProgressKeyPath {
             progressBar.progress = Float(webView.estimatedProgress)
         }
@@ -119,12 +116,17 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         showProgressIndicator()
-        delegate?.webpageDidStartLoading()
+        webEventsDelegate?.webpageDidStartLoading()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
-        delegate?.webpageDidFinishLoading()
+        webEventsDelegate?.webpageDidFinishLoading()
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFinishLoading()
     }
     
     private func showProgressIndicator() {
@@ -148,24 +150,24 @@ public class WebViewController: UIViewController, WKNavigationDelegate {
     public func goForward() {
         webView.goForward()
     }
+
+    public func tearDown() {
+        clearCache()
+        if let webView = webView {
+            detachWebView(webView: webView)
+        }
+    }
     
     public func reset() {
         clearCache()
-        resetWebView()
+        attachNewWebView()
     }
     
-    private func clearCache() {
+    public func clearCache() {
         webView.clearCache {
             Logger.log(text: "Cache cleared")
         }
         view.makeToast(UserText.webSessionCleared)
-    }
-    
-    private func resetWebView() {
-        delegate?.webViewDestroyed(webView: webView)
-        detachWebView(webView: webView)
-        webView = nil
-        attachNewWebView()
     }
 }
 

@@ -67,7 +67,7 @@ class ShareViewController: UIViewController {
         })
     }
     
-    func refreshNavigationButtons() {
+    fileprivate func refreshNavigationButtons() {
         backButton.isEnabled = webController?.canGoBack ?? false
         forwardButton.isEnabled = webController?.canGoForward ?? false
     }
@@ -101,7 +101,7 @@ class ShareViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? WebViewController {
-            controller.delegate = self
+            controller.webEventsDelegate = self
             webController = controller
         }
     }
@@ -109,10 +109,7 @@ class ShareViewController: UIViewController {
 
 extension ShareViewController: WebEventsDelegate {
     
-    func webViewCreated(webView: WKWebView) {
-    }
-    
-    func webViewDestroyed(webView: WKWebView) {
+    func attached(webView: WKWebView) {
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point) {

@@ -15,6 +15,10 @@ class TabViewController: UIViewController {
     
     weak var delegate: TabViewControllerDelegate!
     
+    static func loadFromStoryboard() -> TabViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         blur()
@@ -45,8 +49,13 @@ class TabViewController: UIViewController {
     }
     
     func onDeleted(tabAt index: Int) {
+        let shouldFinish =  delegate.tabDetails.count == 1
         delegate.remove(tabAt: index)
-        collectionView.reloadData()
+        if shouldFinish {
+            dismiss()
+        } else {
+            collectionView.reloadData()
+        }
     }
     
     fileprivate func dismiss() {
@@ -67,13 +76,15 @@ extension TabViewController: UICollectionViewDataSource {
         cell.link.text = link.url.absoluteString
         cell.removeButton.tag = indexPath.row
         cell.removeButton.addTarget(self, action: #selector(onRemoveTapped(sender:)), for: .touchUpInside)
-        cell.removeButton.isHidden = (delegate.tabDetails.count == 1)
         return cell
     }
     
     func onRemoveTapped(sender: UIView) {
         let index = sender.tag
         onDeleted(tabAt: index)
+        if delegate.tabDetails.isEmpty {
+            dismiss()
+        }
     }
 }
 

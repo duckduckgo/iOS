@@ -13,7 +13,8 @@ public struct UserText {
     public static let appTitle = NSLocalizedString("app.title", comment: "App title DuckDuckGo")
     public static let appInfo = NSLocalizedString("app.info" , comment: "App name and version number")
     public static let appInfoWithBuild = NSLocalizedString("app.infoWithBuild" , comment: "App name, version and build number")
-    
+
+    public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo home title")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search bar hint")
     
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Web session cleared / deleted")

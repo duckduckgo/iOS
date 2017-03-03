@@ -9,10 +9,8 @@
 import WebKit
 
 public protocol WebEventsDelegate: class {
-    
-    func webViewCreated(webView: WKWebView)
-    
-    func webViewDestroyed(webView: WKWebView)
+
+    func attached(webView: WKWebView)
     
     func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point)
     

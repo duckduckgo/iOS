@@ -7,12 +7,13 @@
 //
 
 import Core
-import WebKit
 
 struct TabManager {
-    
-    private var tabs = [WKWebView]()
-    
+
+    private(set) var current: Tab?
+
+    private var tabs = [Tab]()
+        
     var tabDetails: [Link] {
         return buildTabDetails()
     }
@@ -32,29 +33,29 @@ struct TabManager {
     private func buildTabDetails() -> [Link] {
         var links = [Link]()
         for tab in tabs {
-            let link = Link(title: tab.title ?? "", url: tab.url ?? URL(string: "")!)
-            links.append(link)
+            links.append(tab.link)
         }
         return links
     }
     
-    func get(at index: Int) -> WKWebView {
+    func get(at index: Int) -> Tab {
         return tabs[index]
     }
     
-    mutating func add(tab: WKWebView) {
+    mutating func add(tab: Tab) {
         tabs.append(tab)
+        current = tab
     }
     
     mutating func remove(at index: Int) {
-        tabs.remove(at: index)
+        let tab = tabs.remove(at: index)
+        tab.clear()
     }
     
-    mutating func remove(webView: WKWebView) {
-        for (index, tab) in tabs.enumerated() {
-            if tab == webView {
+    mutating func remove(tab: Tab) {
+        for (index, current) in tabs.enumerated() {
+            if current === tab {
                 remove(at: index)
-                webView.clearCache(completionHandler: {})
                 return
             }
         }
@@ -62,9 +63,8 @@ struct TabManager {
     
     mutating func clearAll() {
         for tab in tabs {
-            remove(webView: tab)
-            tab.clearCache(completionHandler: {})
-        }
+            remove(tab: tab)
+         }
     }
 }
 

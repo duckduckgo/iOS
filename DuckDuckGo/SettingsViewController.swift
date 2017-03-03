@@ -24,6 +24,7 @@ class SettingsViewController: UITableViewController {
     
     private func configureNavigationBar() {
         navigationController?.hidesBarsOnSwipe = false
+        navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = true
     }
     

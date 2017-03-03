@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class Link: NSObject, NSCoding {
+public class Link: NSObject, NSCoding {
     
     public let title: String
     public let url: URL
@@ -23,7 +23,7 @@ public final class Link: NSObject, NSCoding {
         self.url = url
     }
     
-    public convenience init?(coder aDecoder: NSCoder) {
+    public convenience required init?(coder aDecoder: NSCoder) {
         guard let title = aDecoder.decodeObject(forKey: NSCodingKeys.title) as? String,
               let url = aDecoder.decodeObject(forKey: NSCodingKeys.url) as? URL else {
             return nil

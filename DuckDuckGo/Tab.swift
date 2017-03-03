@@ -22,10 +22,6 @@ protocol Tab: class {
     var canGoBack: Bool { get }
     
     var canGoForward: Bool { get }
-        
-    func load(query: String)
-    
-    func load(url: URL)
     
     func refreshOmniText()
     
@@ -37,15 +33,7 @@ protocol Tab: class {
 }
 
 extension Tab {
-    
     var link: Link {
         return Link(title: name ?? "", url: url ?? URL(string: "-")!)
-    }
-    
-    func load(query: String) {
-        guard let url = AppUrls.url(forQuery: query) else {
-            return
-        }
-        load(url: url)
     }
 }

@@ -104,6 +104,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func load(url: URL) {
+        loadViewIfNeeded()
         webView.load(URLRequest(url: url))
     }
     

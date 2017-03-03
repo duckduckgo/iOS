@@ -51,7 +51,9 @@ class WebTabViewController: WebViewController, Tab {
 extension WebTabViewController: OmniBarDelegate {
     
     func onOmniQuerySubmitted(_ query: String) {
-        load(query: query)
+        if let url = AppUrls.url(forQuery: query) {
+            load(url: url)
+        }
     }
     
     func onLeftButtonPressed() {

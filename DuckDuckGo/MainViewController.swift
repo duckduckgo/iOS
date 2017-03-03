@@ -33,11 +33,15 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
     
-    func attachWebTab() {
+    func attachWebTab(forUrl url: URL? = nil) {
         let tab = WebTabViewController.loadFromStoryboard()
         tabManager.add(tab: tab)
         tab.tabDelegate = self
+        if let url = url {
+            tab.load(url: url)
+        }
         addToView(tab: tab)
+        
     }
     
     func attachSiblingTab(fromWebView webView: WKWebView, forUrl url: URL) {
@@ -121,19 +125,15 @@ class MainViewController: UIViewController {
 extension MainViewController: HomeTabDelegate {
     
     func loadNewWebQuery(query: String) {
-        let homeTab = tabManager.current as? HomeViewController
-        attachWebTab()
-        tabManager.current?.load(query: query)
-        if let oldTab = homeTab {
-            tabManager.remove(tab: oldTab)
+        if let url = AppUrls.url(forQuery: query) {
+            loadNewWebUrl(url: url)
         }
-        refreshControls()
     }
     
     func loadNewWebUrl(url: URL) {
+        loadViewIfNeeded()
         let homeTab = tabManager.current as? HomeViewController
-        attachWebTab()
-        tabManager.current?.load(url: url)
+        attachWebTab(forUrl: url)
         if let oldTab = homeTab {
             tabManager.remove(tab: oldTab)
         }

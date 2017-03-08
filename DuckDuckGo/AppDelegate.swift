@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if settings.showOnboarding {
+        if !settings.hasSeenOnboarding {
             startOnboardingFlow()
         }
     }
@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let onboardingController = OnboardingViewController.loadFromStoryboard()
             onboardingController.modalTransitionStyle = .flipHorizontal
             root.present(onboardingController, animated: false, completion: nil)
-            settings.showOnboarding = false
+            settings.hasSeenOnboarding = true
         }
     }
     

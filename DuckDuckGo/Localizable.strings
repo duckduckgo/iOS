@@ -10,9 +10,23 @@
 "app.infoWithBuild" = "%@ %@ (%@)";
 
 "home.link.title" = "DuckDuckGo Home";
-
 "search.hint.duckduckgo" = "Search DuckDuckGo";
 
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Quick link saved to Today widget";
-"web.url.launch.newtab" = "Launching in new tab";
+
+"action.title.newTab" = "Open in New Tab";
+"action.title.open" = "Open";
+"action.title.readingList" = "Add to Reading List";
+"action.title.copy" = "Copy";
+"action.title.share"= "Share...";
+"action.title.cancel" = "Cancel";
+
+"onboarding.realprivacy.title" = "Real Privacy";
+"onboarding.realprivacy.description" = "We never store or share your personal information. Ever.";
+"onboarding.contentblocking.title" = "Content Blocking";
+"onboarding.contentblocking.description" = "We block trackers and annoying ads that follow you around.";
+"onboarding.tracking.title" = "No Tracking";
+"onboarding.tracking.description" = "Other search engines track you even when you’re in ‘private browsing mode’. We don’t track you — period..";
+"onboarding.privacyright.title" = "Privacy is a Right!";
+"onboarding.privacyright.description" = "Use DuckDuckGo and take back your privacy!";

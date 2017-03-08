@@ -19,13 +19,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    private var groupData = GroupData()
+    private lazy var groupData = GroupData()
+    
+    private lazy var settings = Settings()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if let shortcutItem = launchOptions?[.shortcutItem] {
             handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
         }
         return true
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if settings.showOnboarding {
+            startOnboardingFlow()
+        }
+    }
+    
+    private func startOnboardingFlow() {
+        if let root = mainViewController() {
+            let onboardingController = OnboardingViewController.loadFromStoryboard()
+            onboardingController.modalTransitionStyle = .flipHorizontal
+            root.present(onboardingController, animated: false, completion: nil)
+            settings.showOnboarding = false
+        }
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {

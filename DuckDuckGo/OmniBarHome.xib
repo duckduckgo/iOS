@@ -100,7 +100,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Bookmarks" width="44" height="40"/>
+        <image name="Bookmarks" width="22" height="22"/>
         <image name="Home" width="52" height="52"/>
     </resources>
 </document>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zU9-9M-3CH">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Onboarding View Controller-->
+        <scene sceneID="ZGe-ho-G2C">
+            <objects>
+                <viewController id="zU9-9M-3CH" customClass="OnboardingViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GGd-Bw-GgU"/>
+                        <viewControllerLayoutGuide type="bottom" id="6rd-jW-Hqu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hQM-5s-1no">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dp7-xK-fdE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <segue destination="kUt-1t-7Ra" kind="embed" id="exk-QA-hg9"/>
+                                </connections>
+                            </containerView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="o9P-ew-2bg">
+                                <rect key="frame" x="159" y="598" width="39" height="37"/>
+                                <connections>
+                                    <action selector="onPageSelected:" destination="zU9-9M-3CH" eventType="valueChanged" id="YJb-IR-t0g"/>
+                                </connections>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZ7-y8-sJg">
+                                <rect key="frame" x="198" y="604.5" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="0UC-HV-FcN"/>
+                                    <constraint firstAttribute="width" constant="24" id="Zla-Kg-n8I"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="searchLoupeSmall"/>
+                                <connections>
+                                    <action selector="onSearchPressed:" destination="zU9-9M-3CH" eventType="touchUpInside" id="jax-3A-lHY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="NZ7-y8-sJg" firstAttribute="centerY" secondItem="o9P-ew-2bg" secondAttribute="centerY" id="DYk-bo-64J"/>
+                            <constraint firstItem="NZ7-y8-sJg" firstAttribute="leading" secondItem="o9P-ew-2bg" secondAttribute="trailing" id="NMb-A1-1vq"/>
+                            <constraint firstItem="6rd-jW-Hqu" firstAttribute="top" secondItem="o9P-ew-2bg" secondAttribute="bottom" constant="32" id="S3O-t5-KZf">
+                                <variation key="heightClass=compact" constant="12"/>
+                            </constraint>
+                            <constraint firstItem="o9P-ew-2bg" firstAttribute="centerX" secondItem="hQM-5s-1no" secondAttribute="centerX" constant="-9" id="ZVs-Pc-dI7"/>
+                            <constraint firstAttribute="trailing" secondItem="Dp7-xK-fdE" secondAttribute="trailing" id="aC2-S6-afW"/>
+                            <constraint firstItem="6rd-jW-Hqu" firstAttribute="top" secondItem="Dp7-xK-fdE" secondAttribute="bottom" id="jFQ-Vw-eio"/>
+                            <constraint firstItem="Dp7-xK-fdE" firstAttribute="leading" secondItem="hQM-5s-1no" secondAttribute="leading" id="s9k-cO-hzZ"/>
+                            <constraint firstItem="Dp7-xK-fdE" firstAttribute="top" secondItem="hQM-5s-1no" secondAttribute="top" id="uyQ-uo-iw6"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ea9-X5-Va7" appends="YES" id="wdd-LI-pGx"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="pageControl" destination="o9P-ew-2bg" id="fY8-cm-IXa"/>
+                        <outlet property="swipeGestureRecogniser" destination="ea9-X5-Va7" id="ygl-HG-ANH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ICT-Ya-NJ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="ea9-X5-Va7">
+                    <connections>
+                        <action selector="onLastPageSwiped:" destination="zU9-9M-3CH" id="sAs-oc-RBO"/>
+                        <outlet property="delegate" destination="zU9-9M-3CH" id="KHT-s8-Vis"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-1495.2" y="205.54722638680661"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="CUp-IP-UMx">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="kUt-1t-7Ra" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ei3-f8-AFB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-570" y="206"/>
+        </scene>
+        <!--Onboarding Page View Controller-->
+        <scene sceneID="BZa-lc-MyY">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingPageViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Yq4-uW-Jq7" customClass="OnboardingPageViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ie3-mw-U3s"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tab-1Y-88o"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lom-C8-A66">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5o-Zw-sUZ">
+                                <rect key="frame" x="32" y="360" width="311" height="27"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We never store or share your personal information. Ever." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFw-H5-FAw">
+                                <rect key="frame" x="64" y="403" width="247" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRealPrivacy" translatesAutoresizingMaskIntoConstraints="NO" id="ibn-9S-Udn">
+                                <rect key="frame" x="87.5" y="136" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="dP6-B7-qMt"/>
+                                    <constraint firstAttribute="height" constant="180" id="wDk-L5-DcS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="dP6-B7-qMt"/>
+                                        <exclude reference="wDk-L5-DcS"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="dP6-B7-qMt"/>
+                                        <include reference="wDk-L5-DcS"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.57647058823529407" green="0.75294117647058822" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="o5o-Zw-sUZ" secondAttribute="trailing" constant="16" id="5pk-Jj-IyQ"/>
+                            <constraint firstItem="hFw-H5-FAw" firstAttribute="top" secondItem="o5o-Zw-sUZ" secondAttribute="bottom" constant="16" id="941-vW-ScV"/>
+                            <constraint firstItem="o5o-Zw-sUZ" firstAttribute="centerY" secondItem="lom-C8-A66" secondAttribute="centerY" constant="40" id="MtF-18-KsO">
+                                <variation key="heightClass=compact" constant="70"/>
+                            </constraint>
+                            <constraint firstItem="ibn-9S-Udn" firstAttribute="centerX" secondItem="lom-C8-A66" secondAttribute="centerX" id="ONJ-30-9wk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hFw-H5-FAw" secondAttribute="trailing" constant="48" id="Wtd-GZ-fHa"/>
+                            <constraint firstItem="o5o-Zw-sUZ" firstAttribute="top" secondItem="ibn-9S-Udn" secondAttribute="bottom" constant="24" id="jcY-C6-PCc"/>
+                            <constraint firstItem="o5o-Zw-sUZ" firstAttribute="leading" secondItem="lom-C8-A66" secondAttribute="leadingMargin" constant="16" id="lFE-WE-5f2"/>
+                            <constraint firstItem="hFw-H5-FAw" firstAttribute="leading" secondItem="lom-C8-A66" secondAttribute="leadingMargin" constant="48" id="meL-N8-7w9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="image" destination="ibn-9S-Udn" id="ncO-Mr-tHt"/>
+                        <outlet property="pageDescription" destination="hFw-H5-FAw" id="gPq-et-8Lv"/>
+                        <outlet property="pageTitle" destination="o5o-Zw-sUZ" id="iGk-ck-ZJM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Ym-VQ-OOZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1060" y="1034.9325337331336"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="OnboardingRealPrivacy" width="200" height="200"/>
+        <image name="searchLoupeSmall" width="12" height="12"/>
+    </resources>
+</document>

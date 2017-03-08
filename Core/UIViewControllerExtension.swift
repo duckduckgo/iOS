@@ -20,19 +20,27 @@ extension UIViewController {
         view.backgroundColor = UIColor.clear
     }
     
-    public func presentShareSheetFromButton(activityItems: [Any], buttonItem: UIBarButtonItem) {
+    public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        if let popover = shareController.popoverPresentationController {
-            popover.barButtonItem = buttonItem
-        }
-        present(shareController, animated: true, completion: nil)
+        present(controller: shareController, fromButtonItem: buttonItem)
     }
     
-    public func presentShareSheetFromView(activityItems: [Any], sourceView: UIView) {
+    public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView) {
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        if let popover = shareController.popoverPresentationController {
+        present(controller: shareController, fromView: sourceView)
+    }
+
+    public func present(controller: UIViewController, fromButtonItem buttonItem: UIBarButtonItem) {
+        if let popover = controller.popoverPresentationController {
+            popover.barButtonItem = buttonItem
+        }
+        present(controller, animated: true, completion: nil)
+    }
+    
+    public func present(controller: UIViewController, fromView sourceView: UIView) {
+        if let popover = controller.popoverPresentationController {
             popover.sourceView = sourceView
         }
-        present(shareController, animated: true, completion: nil)
+        present(controller, animated: true, completion: nil)
     }
 }

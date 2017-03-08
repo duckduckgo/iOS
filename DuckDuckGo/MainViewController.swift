@@ -69,9 +69,13 @@ class MainViewController: UIViewController {
         refreshNavigationButtons()
         refreshOmniText()
     }
-    
+
     func refreshTabIcon() {
-        tabsButton.image = TabIconMaker().icon(forTabs: tabManager.count)
+        refreshTabIcon(count: tabManager.count)
+    }
+
+    func refreshTabIcon(count: Int) {
+        tabsButton.image = TabIconMaker().icon(forTabs: count)
     }
     
     private func refreshNavigationButtons() {
@@ -93,7 +97,7 @@ class MainViewController: UIViewController {
     
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = tabManager.current?.url {
-            presentShareSheetFromButton(activityItems: [url], buttonItem: sender)
+            presentShareSheet(withItems: [url], fromButtonItem: sender)
         }
     }
     
@@ -151,7 +155,7 @@ extension MainViewController: HomeTabDelegate {
 extension MainViewController: WebTabDelegate {
     
     func openNewTab(fromWebView webView: WKWebView, forUrl url: URL) {
-        makeToast(text: UserText.webUrlLaunchedInNewTab)
+        refreshTabIcon(count: tabManager.count+1)
         attachSiblingTab(fromWebView: webView, forUrl: url)
     }
     

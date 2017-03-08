@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch" translatesAutoresizingMaskIntoConstraints="NO" id="Y5c-p5-lL8">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchMaterial" translatesAutoresizingMaskIntoConstraints="NO" id="Y5c-p5-lL8">
                                 <rect key="frame" x="24" y="8" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="lGf-M9-9Ub"/>
@@ -117,6 +117,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Launch" width="48" height="48"/>
+        <image name="LaunchMaterial" width="48" height="48"/>
     </resources>
 </document>

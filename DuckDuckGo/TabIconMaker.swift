@@ -13,7 +13,7 @@ class TabIconMaker {
     
     func icon(forTabs count: Int) -> UIImage {
         
-        let image = #imageLiteral(resourceName: "webbar-tabs")
+        let image = #imageLiteral(resourceName: "Tabs")
         let text = "\(count)"
 
         UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
@@ -27,9 +27,9 @@ class TabIconMaker {
     
     private func point(forCount count: Int) -> CGPoint {
         if isSingleDigit(count) {
-            return CGPoint(x: 10.8, y: 3.5)
+            return CGPoint(x: 10.1, y: 3)
         }
-        return CGPoint(x: 9, y: 5)
+        return CGPoint(x: 7.9, y: 4.5)
     }
     
     private func attributes(forCount count: Int) -> [String : NSObject] {

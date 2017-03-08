@@ -13,15 +13,15 @@ struct Settings {
     private let suit = "settingsSuit"
     
     private struct Keys {
-        static let showOnboarding = "showOnBoarding"
+        static let hasSeenOnboarding = "hasSeenOnboarding"
     }
     
-    public var showOnboarding: Bool {
+    public var hasSeenOnboarding: Bool {
         get {
-            return userDefaults()?.bool(forKey: Keys.showOnboarding) ?? true
+            return userDefaults()?.bool(forKey: Keys.hasSeenOnboarding) ?? false
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.showOnboarding)
+            userDefaults()?.set(newValue, forKey: Keys.hasSeenOnboarding)
         }
     }
     

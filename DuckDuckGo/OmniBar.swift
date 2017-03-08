@@ -38,11 +38,11 @@ class OmniBar: UIView {
         textField.delegate = self
     }
     
-    override func becomeFirstResponder() -> Bool {
+    @discardableResult override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
     
-    override func resignFirstResponder() -> Bool {
+    @discardableResult override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
     }
     
@@ -85,7 +85,7 @@ class OmniBar: UIView {
         guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
             return
         }
-        _ = resignFirstResponder()
+        resignFirstResponder()
         if let omniDelegate = omniDelegate {
             omniDelegate.onOmniQuerySubmitted(query)
         }

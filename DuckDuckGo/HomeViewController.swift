@@ -70,14 +70,14 @@ class HomeViewController: UIViewController, Tab {
     fileprivate func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContainerView.isHidden = false
-        _ = omniBar.resignFirstResponder()
+        omniBar.resignFirstResponder()
         omniBar.clear()
     }
     
     fileprivate func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContainerView.isHidden = true
-        _ = omniBar.becomeFirstResponder()
+        omniBar.becomeFirstResponder()
     }
     
     func load(url: URL) {}

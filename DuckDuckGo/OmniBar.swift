@@ -82,10 +82,10 @@ class OmniBar: UIView {
     }
     
     func onQuerySubmitted() {
-        _ = resignFirstResponder()
-        guard let query = textField.text?.trimWhitespace() else {
+        guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
             return
         }
+        _ = resignFirstResponder()
         if let omniDelegate = omniDelegate {
             omniDelegate.onOmniQuerySubmitted(query)
         }

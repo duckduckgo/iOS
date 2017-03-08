@@ -19,7 +19,6 @@ public struct UserText {
     
     public static let webSessionCleared = forKey("web.session.clear")
     public static let webSaveLinkDone = forKey("web.url.save.done")
-    public static let webUrlLaunchedInNewTab = forKey("web.url.launch.newtab")
     
     public static let onboardingRealPrivacyTitle = forKey("onboarding.realprivacy.title")
     public static let onboardingRealPrivacyDescription = forKey( "onboarding.realprivacy.description")
@@ -30,8 +29,16 @@ public struct UserText {
     public static let onboardingPrivacyRightTitle = forKey("onboarding.privacyright.title")
     public static let onboardingPrivacyRightDescription = forKey("onboarding.privacyright.description")
     
+    public static let actionNewTab = forKey("action.title.newTab")
+    public static let actionOpen = forKey("action.title.open")
+    public static let actionReadingList = forKey("action.title.readingList")
+    public static let actionCopy = forKey("action.title.copy")
+    public static let actionShare = forKey("action.title.share")
+    public static let actionCancel = forKey("action.title.cancel")
+
+    
     fileprivate static func forKey(_ key: String) -> String {
         return NSLocalizedString(key, comment: key)
     }
-    
 }
+

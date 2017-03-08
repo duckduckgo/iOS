@@ -110,9 +110,11 @@ class ShareViewController: UIViewController {
 extension ShareViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
+        webView.loadScripts()
     }
     
-    func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point) {
+    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL) {
+        webView.load(URLRequest(url: url))
     }
     
     func webpageDidStartLoading() {

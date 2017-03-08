@@ -12,7 +12,7 @@ public protocol WebEventsDelegate: class {
 
     func attached(webView: WKWebView)
     
-    func webView(_ webView: WKWebView, didReceiveLongPressAtPoint point: Point)
+    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL)
     
     func webpageDidStartLoading()
     

@@ -33,9 +33,12 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? UIPageViewController else {
-            return
+        if let controller = segue.destination as? UIPageViewController {
+            prepare(forPageControllerSegue: controller)
         }
+    }
+    
+    private func prepare(forPageControllerSegue controller: UIPageViewController) {
         pageController = controller
         controller.dataSource = dataSource
         controller.delegate = self

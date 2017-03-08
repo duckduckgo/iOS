@@ -67,6 +67,16 @@
 		F1AA546B1E48D90700223211 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1AA545E1E48D90700223211 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */; };
 		F1B745221E549D550072547E /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
+		F1BE54501E69DDE000FCF649 /* RealPrivacyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */; };
+		F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */; };
+		F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */; };
+		F1BE54531E69DDE000FCF649 /* OnboardingPageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544C1E69DDE000FCF649 /* OnboardingPageConfiguration.swift */; };
+		F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */; };
+		F1BE54551E69DDE000FCF649 /* ContentBlockingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */; };
+		F1BE54561E69DDE000FCF649 /* TrackingConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */; };
+		F1BE54581E69DE1000FCF649 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE54571E69DE1000FCF649 /* Settings.swift */; };
+		F1BE545C1E69F73300FCF649 /* PrivacyRightConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */; };
+		F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */; };
 		F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4A70D1E57725800A6CA1B /* OmniBar.swift */; };
 		F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1C5ED041E37D14C00C599A4 /* Localizable.strings */; };
 		F1D934031E610DCE00A6F0D6 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D934021E610DCE00A6F0D6 /* Point.swift */; };
@@ -198,6 +208,16 @@
 		F1AA54681E48D90700223211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F1B745211E549D550072547E /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealPrivacyConfiguration.swift; sourceTree = "<group>"; };
+		F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataSource.swift; sourceTree = "<group>"; };
+		F1BE544C1E69DDE000FCF649 /* OnboardingPageConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageConfiguration.swift; sourceTree = "<group>"; };
+		F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockingConfiguration.swift; sourceTree = "<group>"; };
+		F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingConfiguration.swift; sourceTree = "<group>"; };
+		F1BE54571E69DE1000FCF649 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyRightConfiguration.swift; sourceTree = "<group>"; };
+		F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		F1C4A70D1E57725800A6CA1B /* OmniBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBar.swift; sourceTree = "<group>"; };
 		F1C5ED041E37D14C00C599A4 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		F1D934021E610DCE00A6F0D6 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
@@ -283,6 +303,7 @@
 			children = (
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				F1C5ECF31E37812900C599A4 /* Application */,
+				F1BE54481E69DD5F00FCF649 /* Onboarding */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				F16390801E648B68005B4550 /* Tabs */,
 				F1386BA21E6846320062FC3C /* TabSelector */,
@@ -498,6 +519,22 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		F1BE54481E69DD5F00FCF649 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */,
+				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
+				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
+				F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */,
+				F1BE544C1E69DDE000FCF649 /* OnboardingPageConfiguration.swift */,
+				F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */,
+				F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */,
+				F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */,
+				F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
 		F1C4A70C1E5771F800A6CA1B /* OmniBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,6 +553,7 @@
 				84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */,
 				F17669991E3FA5EE003D3222 /* Version.swift */,
 				F17669AC1E413E5F003D3222 /* InfoBundle.swift */,
+				F1BE54571E69DE1000FCF649 /* Settings.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -722,6 +760,7 @@
 				F114C55E1E6717800018F95F /* OmniBarHome.xib in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F114C55F1E6717800018F95F /* OmniBarWeb.xib in Resources */,
+				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 			);
@@ -770,19 +809,28 @@
 			files = (
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				F176699A1E3FA5EE003D3222 /* Version.swift in Sources */,
+				F1BE545C1E69F73300FCF649 /* PrivacyRightConfiguration.swift in Sources */,
+				F1BE54581E69DE1000FCF649 /* Settings.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* WebTabDelegate.swift in Sources */,
+				F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */,
+				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
+				F1BE54561E69DDE000FCF649 /* TrackingConfiguration.swift in Sources */,
+				F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */,
 				F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabViewController.swift in Sources */,
+				F1BE54551E69DDE000FCF649 /* ContentBlockingConfiguration.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeTabDelegate.swift in Sources */,
 				F114C5611E67599C0018F95F /* UseDuckDuckGoViewController.swift in Sources */,
+				F1BE54531E69DDE000FCF649 /* OnboardingPageConfiguration.swift in Sources */,
 				F18608DD1E5E588400361C30 /* TabIconMaker.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabViewControllerDelegate.swift in Sources */,
 				F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
+				F1BE54501E69DDE000FCF649 /* RealPrivacyConfiguration.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */,
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,

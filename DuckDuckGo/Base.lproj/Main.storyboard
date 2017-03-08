@@ -101,11 +101,7 @@
                                         </connections>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
-                                        <rect key="frame" x="60" y="94" width="200" height="158"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="158.19999999999999" id="Zk2-v5-udw"/>
-                                            <constraint firstAttribute="width" constant="200" id="tbx-CQ-Ozt"/>
-                                        </constraints>
+                                        <rect key="frame" x="59.5" y="93" width="201" height="159"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-lo-6Ex">
                                         <rect key="frame" x="70" y="523" width="181" height="18"/>
@@ -139,7 +135,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="leading" secondItem="DPw-xt-wy9" secondAttribute="leading" constant="16" id="1d4-H9-4rF"/>
                                     <constraint firstItem="KUX-Ym-KLT" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="5MP-0X-rBd"/>

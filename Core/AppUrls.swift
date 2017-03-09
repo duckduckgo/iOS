@@ -18,6 +18,8 @@ public struct AppUrls {
     
     public static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
     
+    public static let autocomplete = "https://duckduckgo.com/ac/"
+    
     private static let searchParam = "q"
     
     public static func isLaunch(url: URL) -> Bool {
@@ -56,10 +58,16 @@ public struct AppUrls {
     }
     
     private static func searchUrl(text: String) -> URL? {
+        guard let encodedQuery = URL.encode(queryText: text) else { return nil }
+        let url = "\(home)&\(searchParam)=\(encodedQuery)"
+        return URL(string: url)
+    }
+    
+    public static func autocompleteUrl(forText text: String) -> URL? {
         guard let encodedQuery = URL.encode(queryText: text) else {
             return nil
         }
-        let url = "\(home)&\(searchParam)=\(encodedQuery)"
+        let url = "\(autocomplete)?\(searchParam)=\(encodedQuery)"
         return URL(string: url)
     }
 }

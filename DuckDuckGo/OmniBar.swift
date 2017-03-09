@@ -18,31 +18,39 @@ class OmniBar: UIView {
         case web = "OmniBarWeb"
     }
     
-    @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
+    var style: Style!
+    
+    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var refreshButton: UIButton?
+    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     
     weak var omniDelegate: OmniBarDelegate?
+    
+    static func loadFromXib(withStyle style: Style) -> OmniBar {
+        let omniBar = OmniBar.load(nibName: style.rawValue)
+        omniBar.style = style
+        return omniBar
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    static func loadFromXib(withStyle style: Style) -> OmniBar {
-       return OmniBar.load(nibName: style.rawValue)
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
+        hideDismissButton()
         textField.placeholder = UserText.searchDuckDuckGo
         textField.delegate = self
     }
     
     @discardableResult override func becomeFirstResponder() -> Bool {
+        showDismissButton()
         return textField.becomeFirstResponder()
     }
     
     @discardableResult override func resignFirstResponder() -> Bool {
+        hideDismissButton()
         return textField.resignFirstResponder()
     }
     
@@ -69,12 +77,24 @@ class OmniBar: UIView {
         textField.text = url.absoluteString
     }
     
-    @IBAction func onLeftButtonPressed() {
-        omniDelegate?.onLeftButtonPressed()
+    func showDismissButton() {
+        // TODO
     }
- 
-    @IBAction func onRightButtonPressed() {
-        omniDelegate?.onRightButtonPressed()
+    
+    func hideDismissButton() {
+        // TODO
+    }
+    
+    @IBAction func onActionButtonPressed() {
+        omniDelegate?.onActionButtonPressed()
+    }
+    
+    @IBAction func onRefreshButtonPressed() {
+        omniDelegate?.onRefreshButtonPressed()
+    }
+    
+    @IBAction func onDismissButtonPressed() {
+        omniDelegate?.onDismissButtonPressed()
     }
     
     @IBAction func onTextEntered(_ sender: Any) {
@@ -94,10 +114,32 @@ class OmniBar: UIView {
 
 extension OmniBar: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        rightButton.isHidden = true
+        refreshButton?.isHidden = true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let oldQuery = textField.text,
+              let queryRange = oldQuery.range(from: range) else {
+            return true
+        }
+        let newQuery = oldQuery.replacingCharacters(in: queryRange, with: string)
+        omniDelegate?.onOmniQueryUpdated(newQuery)
+        return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        rightButton.isHidden = false
+        refreshButton?.isHidden = false
+    }
+}
+
+extension String {
+    func range(from nsRange: NSRange) -> Range<String.Index>? {
+        guard
+            let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
+            let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
+            let from = from16.samePosition(in: self),
+            let to = to16.samePosition(in: self)
+            else { return nil }
+        return from ..< to
     }
 }

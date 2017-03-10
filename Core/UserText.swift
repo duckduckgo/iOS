@@ -10,14 +10,35 @@ import Foundation
 
 public struct UserText {
     
-    public static let appTitle = NSLocalizedString("app.title", comment: "App title DuckDuckGo")
-    public static let appInfo = NSLocalizedString("app.info" , comment: "App name and version number")
-    public static let appInfoWithBuild = NSLocalizedString("app.infoWithBuild" , comment: "App name, version and build number")
-
-    public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo home title")
-    public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search bar hint")
+    public static let appTitle = forKey("app.title")
+    public static let appInfo = forKey("app.info")
+    public static let appInfoWithBuild = forKey("app.infoWithBuild")
     
-    public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Web session cleared / deleted")
-    public static let webSaveLinkDone = NSLocalizedString("web.url.save.done", comment: "Confirmation message when quick link saved to the today extension")
-    public static let webUrlLaunchedInNewTab = NSLocalizedString("web.url.launch.newtab", comment: "Web url launched in a new tab")
+    public static let homeLinkTitle = forKey("home.link.title")
+    public static let searchDuckDuckGo = forKey("search.hint.duckduckgo")
+    
+    public static let webSessionCleared = forKey("web.session.clear")
+    public static let webSaveLinkDone = forKey("web.url.save.done")
+    
+    public static let onboardingRealPrivacyTitle = forKey("onboarding.realprivacy.title")
+    public static let onboardingRealPrivacyDescription = forKey( "onboarding.realprivacy.description")
+    public static let onboardingContentBlockingTitle = forKey("onboarding.contentblocking.title")
+    public static let onboardingContentBlockingDescription = forKey("onboarding.contentblocking.description")
+    public static let onboardingTrackingTitle = forKey("onboarding.tracking.title")
+    public static let onboardingTrackingDescription = forKey("onboarding.tracking.description")
+    public static let onboardingPrivacyRightTitle = forKey("onboarding.privacyright.title")
+    public static let onboardingPrivacyRightDescription = forKey("onboarding.privacyright.description")
+    
+    public static let actionNewTab = forKey("action.title.newTab")
+    public static let actionOpen = forKey("action.title.open")
+    public static let actionReadingList = forKey("action.title.readingList")
+    public static let actionCopy = forKey("action.title.copy")
+    public static let actionShare = forKey("action.title.share")
+    public static let actionCancel = forKey("action.title.cancel")
+
+    
+    fileprivate static func forKey(_ key: String) -> String {
+        return NSLocalizedString(key, comment: key)
+    }
 }
+

@@ -38,8 +38,10 @@ struct TabManager {
         return links
     }
     
-    func get(at index: Int) -> Tab {
-        return tabs[index]
+    mutating func select(tabAt index: Int) -> Tab {
+        let tab = tabs[index]
+        current = tab
+        return tab
     }
     
     mutating func add(tab: Tab) {
@@ -49,7 +51,7 @@ struct TabManager {
     
     mutating func remove(at index: Int) {
         let tab = tabs.remove(at: index)
-        tab.clear()
+        tab.dismiss()
     }
     
     mutating func remove(tab: Tab) {

@@ -15,24 +15,22 @@ class HomeViewController: UIViewController, Tab {
     @IBOutlet weak var centreBar: UIView!
     
     weak var tabDelegate: HomeTabDelegate?
-    var omniBar: OmniBar
+  
+    let omniBarStyle: OmniBar.Style = .home
+    let showsUrlInOmniBar = false
+    
     var name: String? = UserText.homeLinkTitle
     var url: URL? = URL(string: AppUrls.base)!
+    
     var canGoBack = false
     var canGoForward: Bool = false
-    
+
     private var activeMode = false
 
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        self.omniBar = OmniBar.loadFromXib(withStyle: .home)
-        super.init(coder: aDecoder)
-        omniBar.omniDelegate = self
-    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
         activeMode = false
@@ -62,7 +60,6 @@ class HomeViewController: UIViewController, Tab {
         enterPassiveMode()
     }
     
-    
     @IBAction func onTabButtonTapped(_ sender: UIButton) {
         tabDelegate?.launchTabsSwitcher()
     }
@@ -70,40 +67,31 @@ class HomeViewController: UIViewController, Tab {
     fileprivate func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContainerView.isHidden = false
-        _ = omniBar.resignFirstResponder()
-        omniBar.clear()
+        tabDelegate?.deactivateOmniBar()
     }
     
     fileprivate func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContainerView.isHidden = true
-        _ = omniBar.becomeFirstResponder()
+        tabDelegate?.activateOmniBar()
     }
     
-    func load(url: URL) {}
-    
-    func refreshOmniText() {}
+    func load(url: URL) {
+        tabDelegate?.loadNewWebUrl(url: url)
+    }
     
     func goBack() {}
     
     func goForward() {}
     
-    func clear() {
+    func reload() {}
+    
+    func dismiss() {
         removeFromParentViewController()
         view.removeFromSuperview()
     }
-}
-
-extension HomeViewController: OmniBarDelegate {
     
-    func onOmniQuerySubmitted(_ query: String) {
-        tabDelegate?.loadNewWebQuery(query: query)
-    }
-    
-    func onLeftButtonPressed() {
+    func omniBarWasDismissed() {
         enterPassiveMode()
-    }
-    
-    func onRightButtonPressed() {
     }
 }

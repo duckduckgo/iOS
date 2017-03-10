@@ -32,7 +32,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJ5-lh-reH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-616" y="-131"/>
+            <point key="canvasLocation" x="-726" y="-132"/>
         </scene>
         <!--Settings-->
         <scene sceneID="DvK-Po-UbE">
@@ -40,7 +40,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="MzK-2g-91A" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L9a-Og-n5f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1690" y="-189"/>
+            <point key="canvasLocation" x="1805" y="-694"/>
         </scene>
         <!--UseDuckDuckGoViewController-->
         <scene sceneID="SIJ-Tg-4kw">
@@ -48,7 +48,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" referencedIdentifier="UseDuckDuckGoViewController" id="rAP-1L-ux0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qaL-Bk-dgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1822" y="-132"/>
+            <point key="canvasLocation" x="1938" y="-637"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="oC3-hG-Uf2">
@@ -81,7 +81,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qi3-F2-882">
                                         <rect key="frame" x="16" y="292" width="288" height="48"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Search" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
                                                 <rect key="frame" x="258" y="13" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="22" id="AyC-Sf-lsN"/>
@@ -101,11 +101,7 @@
                                         </connections>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
-                                        <rect key="frame" x="60" y="94" width="200" height="158"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="158.19999999999999" id="Zk2-v5-udw"/>
-                                            <constraint firstAttribute="width" constant="200" id="tbx-CQ-Ozt"/>
-                                        </constraints>
+                                        <rect key="frame" x="59.5" y="93" width="201" height="159"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-lo-6Ex">
                                         <rect key="frame" x="70" y="523" width="181" height="18"/>
@@ -133,13 +129,13 @@
                                         </constraints>
                                         <color key="tintColor" red="0.39995324609999999" green="0.40002685789999998" blue="0.39994865660000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
-                                        <state key="normal" image="webbar-tabs"/>
+                                        <state key="normal" image="Tabs"/>
                                         <connections>
                                             <action selector="onTabButtonTapped:" destination="V6g-Vt-ptZ" eventType="touchUpInside" id="hqe-BH-kIa"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="leading" secondItem="DPw-xt-wy9" secondAttribute="leading" constant="16" id="1d4-H9-4rF"/>
                                     <constraint firstItem="KUX-Ym-KLT" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="5MP-0X-rBd"/>
@@ -187,7 +183,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="892.5" y="-156.33802816901408"/>
+            <point key="canvasLocation" x="966" y="-770"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="DKA-ax-iTU">
@@ -223,13 +219,13 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem image="BrowseBack" id="5JU-XX-Abv">
+                        <barButtonItem image="BrowsePrevious" id="5JU-XX-Abv">
                             <connections>
                                 <action selector="onBackPressed:" destination="C1X-Zd-UbA" id="Npu-sc-Z5S"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Qps-aQ-bCE"/>
-                        <barButtonItem image="BrosweForward" id="6rN-GX-Jcx">
+                        <barButtonItem image="BrowseNext" id="6rN-GX-Jcx">
                             <connections>
                                 <action selector="onForwardPressed:" destination="C1X-Zd-UbA" id="snl-Dk-fe2"/>
                             </connections>
@@ -241,13 +237,13 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="vG3-iz-6ex"/>
-                        <barButtonItem image="StarBorder" id="M7u-mw-fly">
+                        <barButtonItem image="StarMaterial" id="M7u-mw-fly">
                             <connections>
                                 <action selector="onSaveQuickLink:" destination="C1X-Zd-UbA" id="ro0-O6-qZf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="vQj-Jz-LJh"/>
-                        <barButtonItem image="webbar-tabs" id="K7o-WL-SC5">
+                        <barButtonItem image="Tabs" id="K7o-WL-SC5">
                             <connections>
                                 <action selector="onTabsPressed:" destination="C1X-Zd-UbA" id="Alq-Y0-Ev7"/>
                                 <segue destination="G9p-Sf-e96" kind="presentation" modalPresentationStyle="overCurrentContext" id="FBe-bK-oaH"/>
@@ -266,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="171" y="-131"/>
+            <point key="canvasLocation" x="128" y="-132"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="x1c-tI-gDe">
@@ -283,15 +279,15 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem image="Fire" id="R5p-Y9-Hh4">
+                                    <barButtonItem image="PlusMaterial" id="nYf-xs-PE7">
                                         <connections>
-                                            <action selector="onCloseAllPressed:" destination="G9p-Sf-e96" id="xbX-w0-bAk"/>
+                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="aHI-aT-NPz"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
-                                    <barButtonItem image="Add" id="nYf-xs-PE7">
+                                    <barButtonItem image="Fire" id="R5p-Y9-Hh4">
                                         <connections>
-                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="aHI-aT-NPz"/>
+                                            <action selector="onCloseAllPressed:" destination="G9p-Sf-e96" id="xbX-w0-bAk"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yc9-ps-qXW"/>
@@ -408,7 +404,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="171" y="639"/>
+            <point key="canvasLocation" x="966" y="867"/>
         </scene>
         <!--Web Tab View Controller-->
         <scene sceneID="PLi-M5-qzj">
@@ -445,21 +441,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbR-Oc-W7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="944" y="643"/>
+            <point key="canvasLocation" x="1017" y="16"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Add" width="24" height="24"/>
-        <image name="BrosweForward" width="24" height="24"/>
-        <image name="BrowseBack" width="24" height="24"/>
-        <image name="Close" width="24" height="24"/>
-        <image name="Fire" width="24" height="24"/>
-        <image name="LogoWithText" width="400" height="316"/>
-        <image name="Safari" width="60" height="60"/>
-        <image name="Search" width="45" height="45"/>
-        <image name="Settings" width="45" height="44"/>
-        <image name="Share" width="24" height="24"/>
-        <image name="StarBorder" width="24" height="24"/>
-        <image name="webbar-tabs" width="24" height="24"/>
+        <image name="BrowseNext" width="22" height="22"/>
+        <image name="BrowsePrevious" width="22" height="22"/>
+        <image name="Close" width="12" height="12"/>
+        <image name="Fire" width="26" height="26"/>
+        <image name="LogoWithText" width="201" height="159"/>
+        <image name="PlusMaterial" width="24" height="24"/>
+        <image name="Safari" width="30" height="30"/>
+        <image name="SearchLoupe" width="22" height="22"/>
+        <image name="Settings" width="22" height="22"/>
+        <image name="Share" width="22" height="22"/>
+        <image name="StarMaterial" width="24" height="24"/>
+        <image name="Tabs" width="22" height="22"/>
     </resources>
 </document>

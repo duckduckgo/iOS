@@ -7,7 +7,7 @@
 //
 
 function getHrefFromPoint(x, y) {
-    element = document.elementFromPoint(x, y);
+    var element = document.elementFromPoint(x, y);
     while (element && !element.href) {
         element = element.parentNode
     }

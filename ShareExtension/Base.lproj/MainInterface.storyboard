@@ -32,21 +32,33 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cVC-Jy-zIt">
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="46"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="SFp-pC-fOV">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SFp-pC-fOV">
                                                 <rect key="frame" x="32" y="11" width="287" height="24"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yp-br-SN3">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yp-br-SN3">
                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                        <state key="normal" image="Close"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="24" id="Iio-pF-BFr"/>
+                                                            <constraint firstAttribute="height" constant="24" id="fWQ-6R-Z0A"/>
+                                                        </constraints>
+                                                        <state key="normal" image="CloseMaterial"/>
                                                         <connections>
                                                             <action selector="onClose:" destination="j1y-V4-xli" eventType="touchUpInside" id="ruK-wt-d0t"/>
                                                         </connections>
                                                     </button>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppButton" translatesAutoresizingMaskIntoConstraints="NO" id="D7J-aq-9ik">
-                                                        <rect key="frame" x="131.5" y="0.0" width="24" height="24"/>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoStamp" translatesAutoresizingMaskIntoConstraints="NO" id="D7J-aq-9ik">
+                                                        <rect key="frame" x="133.5" y="0.0" width="24" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="Zvg-rK-xb7"/>
+                                                            <constraint firstAttribute="width" constant="24" id="iWa-j9-F1b"/>
+                                                        </constraints>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chY-SO-aI0">
-                                                        <rect key="frame" x="263" y="0.0" width="24" height="24"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chY-SO-aI0">
+                                                        <rect key="frame" x="267" y="2" width="20" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="Lfy-js-uUz"/>
+                                                            <constraint firstAttribute="width" constant="20" id="XqW-xg-juu"/>
+                                                        </constraints>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <state key="normal" image="Fire"/>
                                                         <connections>
@@ -71,33 +83,33 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gv0-nD-0OB">
                                                 <rect key="frame" x="32" y="11" width="287" height="24"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opb-VJ-xNQ">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opb-VJ-xNQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                        <state key="normal" image="Refresh"/>
+                                                        <state key="normal" image="RefreshMaterial"/>
                                                         <connections>
                                                             <action selector="onRefreshPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="3IV-dB-feh"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4I-fM-C5y">
-                                                        <rect key="frame" x="87.5" y="0.0" width="24" height="24"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4I-fM-C5y">
+                                                        <rect key="frame" x="89" y="0.0" width="22" height="24"/>
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" image="BrowseBack"/>
+                                                        <state key="normal" image="BrowsePrevious"/>
                                                         <connections>
                                                             <action selector="onBackPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="urM-qv-dTz"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sr-dj-QDL">
-                                                        <rect key="frame" x="175.5" y="0.0" width="24" height="24"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sr-dj-QDL">
+                                                        <rect key="frame" x="176" y="0.0" width="22" height="24"/>
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" image="BrosweForward"/>
+                                                        <state key="normal" image="BrowseNext"/>
                                                         <connections>
                                                             <action selector="onForwardPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="aL7-9n-P5W"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUv-sN-6NX">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUv-sN-6NX">
                                                         <rect key="frame" x="263" y="0.0" width="24" height="24"/>
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" image="StarBorder"/>
+                                                        <state key="normal" image="StarMaterial"/>
                                                         <connections>
                                                             <action selector="onSaveQuickLink:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
                                                         </connections>
@@ -203,13 +215,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AppButton" width="24" height="24"/>
-        <image name="BrosweForward" width="24" height="24"/>
-        <image name="BrowseBack" width="24" height="24"/>
-        <image name="Close" width="24" height="24"/>
+        <image name="BrowseNext" width="22" height="22"/>
+        <image name="BrowsePrevious" width="22" height="22"/>
+        <image name="CloseMaterial" width="24" height="24"/>
         <image name="DeleteForever" width="24" height="24"/>
-        <image name="Fire" width="24" height="24"/>
-        <image name="Refresh" width="24" height="24"/>
-        <image name="StarBorder" width="24" height="24"/>
+        <image name="Fire" width="26" height="26"/>
+        <image name="LogoStamp" width="24" height="24"/>
+        <image name="RefreshMaterial" width="24" height="24"/>
+        <image name="StarMaterial" width="24" height="24"/>
     </resources>
 </document>

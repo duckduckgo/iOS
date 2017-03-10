@@ -13,6 +13,9 @@ extension WKWebView {
     public static func createPrivateWebView(frame: CGRect) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        if #available(iOSApplicationExtension 10.0, *) {
+            configuration.dataDetectorTypes = .link
+        }
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
@@ -34,6 +37,23 @@ extension WKWebView {
         let distantPast = Date.distantPast
         let dataStore = configuration.websiteDataStore
         dataStore.removeData(ofTypes: allData, modifiedSince: distantPast, completionHandler: completionHandler)
+    }
+
+    public func getUrlAtPointSynchronously(x: Int, y: Int) -> URL? {
+        var complete = false
+        var url: URL?
+        let javascript = "getHrefFromPoint(\(x), \(y))"
+        evaluateJavaScript(javascript) { (result, error) in
+            if let text = result as? String {
+                url = URL(string: text)
+            }
+            complete = true
+        }
+        
+        while (!complete) {
+            RunLoop.current.run(mode: .defaultRunLoopMode, before: .distantFuture)
+        }
+        return url
     }
     
     public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Swift.Void) {

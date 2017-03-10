@@ -87,11 +87,13 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
         if sender.state != .began {
             return
         }
-        let webView = sender.view?.superview as! WKWebView
         let x = Int(sender.location(in: webView).x)
-        let y = Int(sender.location(in: webView).y)
-        let point = Point(x: x, y: y)
-        webEventsDelegate?.webView(webView, didReceiveLongPressAtPoint: point)
+        let y = Int(sender.location(in: webView).y-touchesYOffset())
+        webView.getUrlAtPoint(x: x, y: y)  { [weak self] (url) in
+            if let webView = self?.webView, let url = url {
+                self?.webEventsDelegate?.webView(webView, didReceiveLongPressForUrl: url)
+            }
+        }
     }
     
     private func detachWebView(webView: WKWebView) {
@@ -150,7 +152,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     public func goForward() {
         webView.goForward()
     }
-
+    
     public func tearDown() {
         clearCache()
         if let webView = webView {
@@ -169,9 +171,26 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
         }
         view.makeToast(UserText.webSessionCleared)
     }
+    
+    fileprivate func touchesYOffset() -> CGFloat {
+        let statusBarSize: CGFloat = 20
+        if let nav = navigationController {
+            return nav.isNavigationBarHidden ? statusBarSize : nav.navigationBar.frame.height + statusBarSize
+        }
+        return 0
+    }
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {
+    
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let yOffset = touchesYOffset()
+        let x = Int(gestureRecognizer.location(in: webView).x)
+        let y = Int(gestureRecognizer.location(in: webView).y-yOffset)
+        let url = webView.getUrlAtPointSynchronously(x: x, y: y)
+        return url != nil
+    }
+    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }

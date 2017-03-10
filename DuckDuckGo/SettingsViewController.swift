@@ -17,19 +17,12 @@ class SettingsViewController: UITableViewController {
         configureVersionText()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureNavigationBar()
-    }
-    
-    private func configureNavigationBar() {
-        navigationController?.hidesBarsOnSwipe = false
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = true
-    }
-    
     private func configureVersionText() {
         let version = Version()
         versionText.text = version.localized()
+    }
+    
+    @IBAction func onDonePressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }

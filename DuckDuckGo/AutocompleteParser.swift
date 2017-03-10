@@ -29,7 +29,6 @@ class AutocompleteParser {
         var suggestions = [Suggestion]()
         for element in json {
             if let type = element.keys.first, let suggestion = element[type] {
-                Logger.log(text: "\(type): \(suggestion)")
                 suggestions.append(Suggestion(type: type, suggestion: suggestion))
             }
         }

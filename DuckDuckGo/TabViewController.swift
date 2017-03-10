@@ -29,7 +29,11 @@ class TabViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    @IBAction func onAddPressed(_ sender: UIButton) {
         delegate?.createTab()
         dismiss()
     }
@@ -38,7 +42,7 @@ class TabViewController: UIViewController {
         dismiss()
     }
     
-    @IBAction func onCloseAllPressed(_ sender: UIBarButtonItem) {
+    @IBAction func onCloseAllPressed(_ sender: UIButton) {
         delegate.clearAllTabs()
         dismiss()
     }

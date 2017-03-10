@@ -10,16 +10,7 @@ import UIKit
 
 class UseDuckDuckGoViewController: UIViewController {
     
-    @IBOutlet weak var versionText: UILabel!
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureNavigationBar()
-    }
-    
-    private func configureNavigationBar() {
-        navigationController?.hidesBarsOnSwipe = false
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = true
+    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
 }

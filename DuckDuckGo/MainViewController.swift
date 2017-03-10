@@ -59,20 +59,22 @@ class MainViewController: UIViewController {
     }
     
     func addToView(tab: UIViewController) {
+        if let tab = tab as? Tab {
+            resetOmniBar(withStyle: tab.omniBarStyle)
+        }
         tab.view.frame = containerView.frame
         tab.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(tab)
         containerView.addSubview(tab.view)
-        if let tab = tab as? Tab {
-            resetOmniBar(withStyle: tab.omniBarStyle)
-        }
     }
     
     func resetOmniBar(withStyle style: OmniBar.Style) {
         if omniBar?.style == style {
             return
         }
+        let omniBarText = omniBar?.textField.text
         omniBar = OmniBar.loadFromXib(withStyle: style)
+        omniBar?.textField.text = omniBarText
         omniBar?.omniDelegate = self
         navigationItem.titleView = omniBar
     }

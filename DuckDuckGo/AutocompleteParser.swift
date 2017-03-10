@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Core
 
 class AutocompleteParser {
     
@@ -28,7 +29,7 @@ class AutocompleteParser {
         var suggestions = [Suggestion]()
         for element in json {
             if let type = element.keys.first, let suggestion = element[type] {
-                NSLog("\(type): \(suggestion)")
+                Logger.log(text: "\(type): \(suggestion)")
                 suggestions.append(Suggestion(type: type, suggestion: suggestion))
             }
         }

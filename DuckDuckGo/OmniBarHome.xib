@@ -24,13 +24,13 @@
                                 <constraint firstAttribute="width" constant="26" id="xbf-qg-7YV"/>
                             </constraints>
                             <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <state key="normal" image="Home"/>
+                            <state key="normal" image="BrowsePrevious"/>
                             <connections>
-                                <action selector="onLeftButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="uoe-Mq-XIs"/>
+                                <action selector="onDismissButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="OR8-48-4Qr"/>
                             </connections>
                         </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-qH-IL0" customClass="TextFieldWithInsets" customModule="Core">
-                            <rect key="frame" x="42" y="6.5" width="335" height="19"/>
+                            <rect key="frame" x="42" y="6.5" width="297" height="19"/>
                             <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -45,16 +45,16 @@
                             </connections>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFt-83-9ch">
-                            <rect key="frame" x="353" y="6" width="20" height="20"/>
+                            <rect key="frame" x="347" y="6" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="FVE-qL-mtE"/>
                                 <constraint firstAttribute="width" constant="20" id="jTe-75-i93"/>
                             </constraints>
                             <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="0.0"/>
-                            <state key="normal" image="Bookmarks"/>
+                            <state key="normal" backgroundImage="Bookmarks"/>
                             <connections>
-                                <action selector="onRightButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="DRp-dK-dYW"/>
+                                <action selector="onActionButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="dda-nw-SDb"/>
                             </connections>
                         </button>
                     </subviews>
@@ -62,8 +62,8 @@
                     <constraints>
                         <constraint firstItem="KN8-qH-IL0" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" constant="8" id="2kw-XB-O0R"/>
                         <constraint firstItem="KN8-qH-IL0" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="Gs2-iU-oe2"/>
-                        <constraint firstItem="kFt-83-9ch" firstAttribute="leading" secondItem="KN8-qH-IL0" secondAttribute="trailing" constant="-24" id="Jfk-e0-01m"/>
-                        <constraint firstAttribute="trailing" secondItem="kFt-83-9ch" secondAttribute="trailing" constant="2" id="d3k-g4-X8q"/>
+                        <constraint firstItem="kFt-83-9ch" firstAttribute="leading" secondItem="KN8-qH-IL0" secondAttribute="trailing" constant="8" id="Jfk-e0-01m"/>
+                        <constraint firstAttribute="trailing" secondItem="kFt-83-9ch" secondAttribute="trailing" constant="8" id="d3k-g4-X8q"/>
                         <constraint firstItem="oiq-Y4-yRH" firstAttribute="leading" secondItem="kcg-Xg-cFs" secondAttribute="leading" constant="8" id="kbS-9Z-QdX"/>
                         <constraint firstItem="kFt-83-9ch" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="msa-In-fdP"/>
                         <constraint firstItem="oiq-Y4-yRH" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="uao-lL-tHK"/>
@@ -92,8 +92,8 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="leftButton" destination="oiq-Y4-yRH" id="lJP-ix-RbC"/>
-                <outlet property="rightButton" destination="kFt-83-9ch" id="SJa-QE-wKe"/>
+                <outlet property="actionButton" destination="kFt-83-9ch" id="izX-EN-8Rl"/>
+                <outlet property="dismissButton" destination="oiq-Y4-yRH" id="QH0-uw-mKd"/>
                 <outlet property="textField" destination="KN8-qH-IL0" id="CJC-dc-Ith"/>
             </connections>
             <point key="canvasLocation" x="32.5" y="43"/>
@@ -101,6 +101,6 @@
     </objects>
     <resources>
         <image name="Bookmarks" width="22" height="22"/>
-        <image name="Home" width="52" height="52"/>
+        <image name="BrowsePrevious" width="22" height="22"/>
     </resources>
 </document>

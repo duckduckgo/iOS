@@ -11,25 +11,31 @@ import Core
 
 protocol Tab: class {
 
-    var omniBar: OmniBar { get }
-    
     var link: Link { get }
     
     var name: String? { get }
     
     var url: URL? { get }
     
+    var omniBarStyle: OmniBar.Style { get }
+    
+    var showsUrlInOmniBar: Bool { get }
+
     var canGoBack: Bool { get }
     
     var canGoForward: Bool { get }
+        
+    func omniBarWasDismissed()
     
-    func refreshOmniText()
+    func load(url: URL)
     
     func goBack()
     
     func goForward()
 
-    func clear()
+    func reload()
+    
+    func dismiss()
 }
 
 extension Tab {

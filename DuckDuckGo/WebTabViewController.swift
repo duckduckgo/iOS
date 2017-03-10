@@ -12,18 +12,18 @@ import Core
 
 class WebTabViewController: WebViewController, Tab {
     
-    internal var omniBar: OmniBar
-    
     weak var tabDelegate: WebTabDelegate?
     
+    var omniBarStyle: OmniBar.Style = .web
+    
+    var showsUrlInOmniBar = true
+
     static func loadFromStoryboard() -> WebTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.omniBar = OmniBar.loadFromXib(withStyle: .web)
         super.init(coder: aDecoder)
-        omniBar.omniDelegate = self
         webEventsDelegate = self
     }
     
@@ -36,10 +36,6 @@ class WebTabViewController: WebViewController, Tab {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = true
-    }
-    
-    func refreshOmniText() {
-        omniBar.refreshText(forUrl: url)
     }
     
     func launchActionSheet(forUrl url: URL) {
@@ -71,11 +67,7 @@ class WebTabViewController: WebViewController, Tab {
     
     func readingAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionReadingList, style: .default) { action in
-            do {
-                try SSReadingList.default()?.addItem(with: url, title: nil, previewText: nil)
-            } catch {
-                
-            }
+            try? SSReadingList.default()?.addItem(with: url, title: nil, previewText: nil)
         }
     }
     
@@ -85,7 +77,6 @@ class WebTabViewController: WebViewController, Tab {
         }
     }
     
-    
     func shareAction(forURL url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             if let webView = self?.webView {
@@ -94,28 +85,13 @@ class WebTabViewController: WebViewController, Tab {
         }
     }
     
-    func clear() {
+    func dismiss() {
         tearDown()
         removeFromParentViewController()
         view.removeFromSuperview()
     }
-}
-
-extension WebTabViewController: OmniBarDelegate {
     
-    func onOmniQuerySubmitted(_ query: String) {
-        if let url = AppUrls.url(forQuery: query) {
-            load(url: url)
-        }
-    }
-    
-    func onLeftButtonPressed() {
-        tabDelegate?.resetAll()
-    }
-    
-    func onRightButtonPressed() {
-        reload()
-    }
+    func omniBarWasDismissed() {}
 }
 
 extension WebTabViewController: WebEventsDelegate {
@@ -125,6 +101,7 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
+        tabDelegate?.refreshControls()
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     

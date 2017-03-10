@@ -27,6 +27,6 @@
 "onboarding.contentblocking.title" = "Content Blocking";
 "onboarding.contentblocking.description" = "We block trackers and annoying ads that follow you around.";
 "onboarding.tracking.title" = "No Tracking";
-"onboarding.tracking.description" = "Other search engines track you even when you’re in ‘private browsing mode’. We don’t track you — period..";
+"onboarding.tracking.description" = "Other search engines track you even when you’re in ‘private browsing mode’. We don’t track you — period.";
 "onboarding.privacyright.title" = "Privacy is a Right!";
 "onboarding.privacyright.description" = "Use DuckDuckGo and take back your privacy!";

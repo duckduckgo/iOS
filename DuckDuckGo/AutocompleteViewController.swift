@@ -21,24 +21,27 @@ class AutocompleteViewController: UIViewController {
     fileprivate let minItems = 1
     fileprivate let maxItems = 6
     
+    private var initialHidesBarsOnSwipe = false
+    
     @IBOutlet weak var tableView: UITableView!
+    
     
     static func loadFromStoryboard() -> AutocompleteViewController {
         let storyboard = UIStoryboard.init(name: "Autocomplete", bundle: nil)
         return storyboard.instantiateInitialViewController() as! AutocompleteViewController
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configueNavigationBar()
-    }
-    
-    private func configueNavigationBar() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        initialHidesBarsOnSwipe = navigationController?.hidesBarsOnSwipe ?? false
         navigationController?.hidesBarsOnSwipe = false
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.hidesBarsOnSwipe = initialHidesBarsOnSwipe
+    }
+
     func updateQuery(query: String) {
         self.query = query
         cancelInFlightRequests()

@@ -105,7 +105,7 @@
                                         <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
                                         <state key="normal" image="Safari"/>
                                         <connections>
-                                            <segue destination="rAP-1L-ux0" kind="show" id="ubM-3p-IDI"/>
+                                            <segue destination="rAP-1L-ux0" kind="presentation" id="ubM-3p-IDI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7u-aG-tcz">

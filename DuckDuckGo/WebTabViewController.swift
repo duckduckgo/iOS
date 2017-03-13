@@ -51,8 +51,8 @@ class WebTabViewController: WebViewController, Tab {
     
     func newTabAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] action in
-            if let webView = self?.webView {
-                self?.tabDelegate?.openNewTab(fromWebView: webView, forUrl: url)
+            if let weakSelf = self {
+                weakSelf.tabDelegate?.webTab(weakSelf, didRequestNewTabForUrl: url)
             }
         }
     }
@@ -105,12 +105,12 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        tabDelegate?.refreshControls()
+        tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
-        tabDelegate?.refreshControls()
+        tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     

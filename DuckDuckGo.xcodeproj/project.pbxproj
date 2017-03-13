@@ -46,10 +46,10 @@
 		F15A8B7E1E43A428008B8C6F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F15A8B741E43A428008B8C6F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */; };
 		F15D43241E70CC7200BF2CDC /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15D43221E70CC7200BF2CDC /* Autocomplete.storyboard */; };
-		F1617C131E572E0300DEDCAF /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabViewController.swift */; };
+		F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */; };
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
-		F1617C191E573EA800DEDCAF /* TabViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabViewControllerDelegate.swift */; };
-		F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16390811E648B7A005B4550 /* HomeViewController.swift */; };
+		F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */; };
+		F16390821E648B7A005B4550 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16390811E648B7A005B4550 /* HomeTabViewController.swift */; };
 		F176699A1E3FA5EE003D3222 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669991E3FA5EE003D3222 /* Version.swift */; };
 		F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F176699D1E40BC86003D3222 /* Settings.storyboard */; };
 		F17669A31E411DB8003D3222 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669991E3FA5EE003D3222 /* Version.swift */; };
@@ -195,10 +195,10 @@
 		F15A8B7B1E43A428008B8C6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteViewController.swift; sourceTree = "<group>"; };
 		F15D43231E70CC7200BF2CDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Autocomplete.storyboard; sourceTree = "<group>"; };
-		F1617C121E572E0300DEDCAF /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherViewController.swift; sourceTree = "<group>"; };
 		F1617C141E57336D00DEDCAF /* TabManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
-		F1617C181E573EA800DEDCAF /* TabViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewControllerDelegate.swift; sourceTree = "<group>"; };
-		F16390811E648B7A005B4550 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherDelegate.swift; sourceTree = "<group>"; };
+		F16390811E648B7A005B4550 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		F17669991E3FA5EE003D3222 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F176699E1E40BC86003D3222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		F17669A71E412A12003D3222 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
@@ -358,8 +358,8 @@
 		F1386BA21E6846320062FC3C /* TabSelector */ = {
 			isa = PBXGroup;
 			children = (
-				F1617C181E573EA800DEDCAF /* TabViewControllerDelegate.swift */,
-				F1617C121E572E0300DEDCAF /* TabViewController.swift */,
+				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
+				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
 			);
 			name = TabSelector;
@@ -451,7 +451,7 @@
 			children = (
 				F1E90C1B1E67684B005E7E21 /* Tab.swift */,
 				F1617C141E57336D00DEDCAF /* TabManager.swift */,
-				F16390811E648B7A005B4550 /* HomeViewController.swift */,
+				F16390811E648B7A005B4550 /* HomeTabViewController.swift */,
 				F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */,
 				F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */,
 				F1386BA31E6846C40062FC3C /* WebTabDelegate.swift */,
@@ -876,7 +876,7 @@
 				F1BE54561E69DDE000FCF649 /* TrackingConfiguration.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */,
 				F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */,
-				F1617C131E572E0300DEDCAF /* TabViewController.swift in Sources */,
+				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				F1BE54551E69DDE000FCF649 /* ContentBlockingConfiguration.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
@@ -889,14 +889,14 @@
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
-				F1617C191E573EA800DEDCAF /* TabViewControllerDelegate.swift in Sources */,
+				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				F1BE54501E69DDE000FCF649 /* RealPrivacyConfiguration.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */,
-				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
+				F16390821E648B7A005B4550 /* HomeTabViewController.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 			);

@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clearNavigationStack()
         }
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-            mainViewController()?.loadNewWebQuery(query: query)
+            mainViewController()?.loadQueryInNewWebTab(query: query)
         }
     }
     
@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func loadQuickLink(link: Link) {
-        mainViewController()?.loadNewWebUrl(url: link.url)
+        mainViewController()?.loadUrlInNewWebTab(url: link.url)
     }
     
     private func mainViewController() -> MainViewController? {

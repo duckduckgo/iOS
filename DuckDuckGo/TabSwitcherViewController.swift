@@ -1,5 +1,5 @@
 //
-//  TabViewController.swift
+//  TabSwitcherViewController.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 17/02/2017.
@@ -9,14 +9,14 @@
 import UIKit
 import Core
 
-class TabViewController: UIViewController {
+class TabSwitcherViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    weak var delegate: TabViewControllerDelegate!
+    weak var delegate: TabSwitcherDelegate!
     
-    static func loadFromStoryboard() -> TabViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
+    static func loadFromStoryboard() -> TabSwitcherViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabSwitcherViewController") as! TabSwitcherViewController
     }
     
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class TabViewController: UIViewController {
     }
     
     @IBAction func onAddPressed(_ sender: UIButton) {
-        delegate?.createTab()
+        delegate?.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
     }
     
@@ -43,18 +43,18 @@ class TabViewController: UIViewController {
     }
     
     @IBAction func onCloseAllPressed(_ sender: UIButton) {
-        delegate.clearAllTabs()
+        delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         dismiss()
     }
     
     func onSelected(tabAt index: Int) {
-        delegate.select(tabAt: index)
+        delegate.tabSwitcher(self, didSelectTabAt: index)
         dismiss()
     }
     
     func onDeleted(tabAt index: Int) {
         let shouldFinish =  delegate.tabDetails.count == 1
-        delegate.remove(tabAt: index)
+        delegate.tabSwitcher(self, didRemoveTabAt: index)
         if shouldFinish {
             dismiss()
         } else {
@@ -67,7 +67,7 @@ class TabViewController: UIViewController {
     }
 }
 
-extension TabViewController: UICollectionViewDataSource {
+extension TabSwitcherViewController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return delegate.tabDetails.count
@@ -92,7 +92,7 @@ extension TabViewController: UICollectionViewDataSource {
     }
 }
 
-extension TabViewController: UICollectionViewDelegate {
+extension TabSwitcherViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelected(tabAt: indexPath.row)
@@ -100,7 +100,7 @@ extension TabViewController: UICollectionViewDelegate {
     
 }
 
-extension TabViewController: UICollectionViewDelegateFlowLayout {
+extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

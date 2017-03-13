@@ -50,10 +50,10 @@
             </objects>
             <point key="canvasLocation" x="1863" y="-771"/>
         </scene>
-        <!--Home View Controller-->
+        <!--Home Tab View Controller-->
         <scene sceneID="oC3-hG-Uf2">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="V6g-Vt-ptZ" customClass="HomeViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="V6g-Vt-ptZ" customClass="HomeTabViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XY4-pp-oth"/>
                         <viewControllerLayoutGuide type="bottom" id="MHq-pJ-zx8"/>
@@ -261,10 +261,10 @@
             </objects>
             <point key="canvasLocation" x="208" y="-34"/>
         </scene>
-        <!--Tab View Controller-->
+        <!--Tab Switcher View Controller-->
         <scene sceneID="x1c-tI-gDe">
             <objects>
-                <viewController storyboardIdentifier="TabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G9p-Sf-e96" customClass="TabViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TabSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G9p-Sf-e96" customClass="TabSwitcherViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a8e-Ri-3yS"/>
                         <viewControllerLayoutGuide type="bottom" id="RLs-RI-FXc"/>

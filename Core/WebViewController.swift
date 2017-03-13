@@ -174,7 +174,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     fileprivate func touchesYOffset() -> CGFloat {
-        let statusBarSize: CGFloat = 20
+        let statusBarSize: CGFloat = prefersStatusBarHidden ? 0 : InterfaceMeasurement.defaultStatusBarHeight
         if let nav = navigationController {
             return nav.isNavigationBarHidden ? statusBarSize : nav.navigationBar.frame.height + statusBarSize
         }

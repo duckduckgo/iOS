@@ -39,19 +39,21 @@ struct TabManager {
     }
     
     mutating func select(tabAt index: Int) -> Tab {
+        current?.dismiss()
         let tab = tabs[index]
         current = tab
         return tab
     }
     
     mutating func add(tab: Tab) {
+        current?.dismiss()
         tabs.append(tab)
         current = tab
     }
     
     mutating func remove(at index: Int) {
         let tab = tabs.remove(at: index)
-        tab.dismiss()
+        tab.destroy()
     }
     
     mutating func remove(tab: Tab) {

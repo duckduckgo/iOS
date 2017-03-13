@@ -86,9 +86,13 @@ class WebTabViewController: WebViewController, Tab {
     }
     
     func dismiss() {
-        tearDown()
         removeFromParentViewController()
         view.removeFromSuperview()
+    }
+    
+    func destroy() {
+        dismiss()
+        tearDown()
     }
     
     func omniBarWasDismissed() {}

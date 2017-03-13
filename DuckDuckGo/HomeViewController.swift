@@ -15,7 +15,7 @@ class HomeViewController: UIViewController, Tab {
     @IBOutlet weak var centreBar: UIView!
     
     weak var tabDelegate: HomeTabDelegate?
-  
+    
     let omniBarStyle: OmniBar.Style = .home
     let showsUrlInOmniBar = false
     
@@ -24,13 +24,13 @@ class HomeViewController: UIViewController, Tab {
     
     var canGoBack = false
     var canGoForward: Bool = false
-
+    
     private var activeMode = false
-
+    
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
         activeMode = false
@@ -89,6 +89,10 @@ class HomeViewController: UIViewController, Tab {
     func dismiss() {
         removeFromParentViewController()
         view.removeFromSuperview()
+    }
+    
+    func destroy() {
+        dismiss()
     }
     
     func omniBarWasDismissed() {

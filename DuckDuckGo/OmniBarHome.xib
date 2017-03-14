@@ -10,63 +10,74 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="OmniBar" customModule="DuckDuckGo" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="ojX-nM-dyN" customClass="OmniBar" customModule="DuckDuckGo" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcg-Xg-cFs" customClass="RoundedRectangleView" customModule="Core">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk" customClass="RoundedRectangleView" customModule="Core">
                     <rect key="frame" x="0.0" y="4" width="375" height="32"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiq-Y4-yRH">
-                            <rect key="frame" x="8" y="3" width="26" height="26"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="26" id="4sw-kr-4e0"/>
-                                <constraint firstAttribute="width" constant="26" id="xbf-qg-7YV"/>
-                            </constraints>
-                            <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <state key="normal" image="BrowsePrevious"/>
-                            <connections>
-                                <action selector="onDismissButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="OR8-48-4Qr"/>
-                            </connections>
-                        </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-qH-IL0" customClass="TextFieldWithInsets" customModule="Core">
-                            <rect key="frame" x="42" y="6.5" width="297" height="19"/>
-                            <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
-                                    <real key="value" value="22"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="onTextEntered:" destination="iN0-l3-epB" eventType="primaryActionTriggered" id="FL4-u4-poU"/>
-                            </connections>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFt-83-9ch">
-                            <rect key="frame" x="347" y="6" width="20" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="FVE-qL-mtE"/>
-                                <constraint firstAttribute="width" constant="20" id="jTe-75-i93"/>
-                            </constraints>
-                            <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
-                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="16" maxY="0.0"/>
-                            <state key="normal" backgroundImage="Bookmarks"/>
-                            <connections>
-                                <action selector="onActionButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="dda-nw-SDb"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
+                            <rect key="frame" x="8" y="0.0" width="359" height="32"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SiJ-OY-KKg">
+                                    <rect key="frame" x="0.0" y="0.0" width="26" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="26" id="F7e-Td-clh"/>
+                                    </constraints>
+                                    <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <state key="normal" image="BrowsePrevious"/>
+                                    <connections>
+                                        <action selector="onDismissButtonPressed" destination="ojX-nM-dyN" eventType="touchUpInside" id="Ztv-cu-4Ee"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h4P-7r-0LQ">
+                                    <rect key="frame" x="26" y="0.0" width="313" height="32"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="Core">
+                                            <rect key="frame" x="8" y="0.0" width="297" height="32"/>
+                                            <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                    <real key="value" value="22"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="V92-DI-svc"/>
+                                        <constraint firstItem="fqM-N4-jNd" firstAttribute="leading" secondItem="h4P-7r-0LQ" secondAttribute="leading" constant="8" id="WRq-p6-pgI"/>
+                                        <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="h4P-7r-0LQ" secondAttribute="top" id="nbi-OY-owC"/>
+                                        <constraint firstAttribute="trailing" secondItem="fqM-N4-jNd" secondAttribute="trailing" constant="8" id="ys7-C4-2vz"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
+                                    <rect key="frame" x="339" y="0.0" width="20" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="tPa-cu-41T"/>
+                                    </constraints>
+                                    <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <state key="normal" image="Bookmarks"/>
+                                    <connections>
+                                        <action selector="onActionButtonPressed" destination="ojX-nM-dyN" eventType="touchUpInside" id="t1n-uE-J9a"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="KN8-qH-IL0" firstAttribute="leading" secondItem="oiq-Y4-yRH" secondAttribute="trailing" constant="8" id="2kw-XB-O0R"/>
-                        <constraint firstItem="KN8-qH-IL0" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="Gs2-iU-oe2"/>
-                        <constraint firstItem="kFt-83-9ch" firstAttribute="leading" secondItem="KN8-qH-IL0" secondAttribute="trailing" constant="8" id="Jfk-e0-01m"/>
-                        <constraint firstAttribute="trailing" secondItem="kFt-83-9ch" secondAttribute="trailing" constant="8" id="d3k-g4-X8q"/>
-                        <constraint firstItem="oiq-Y4-yRH" firstAttribute="leading" secondItem="kcg-Xg-cFs" secondAttribute="leading" constant="8" id="kbS-9Z-QdX"/>
-                        <constraint firstItem="kFt-83-9ch" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="msa-In-fdP"/>
-                        <constraint firstItem="oiq-Y4-yRH" firstAttribute="centerY" secondItem="kcg-Xg-cFs" secondAttribute="centerY" id="uao-lL-tHK"/>
+                        <constraint firstAttribute="bottom" secondItem="N6K-Lj-Fn6" secondAttribute="bottom" id="2jK-ZZ-jP6"/>
+                        <constraint firstItem="N6K-Lj-Fn6" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" constant="8" id="46h-tq-VAZ"/>
+                        <constraint firstAttribute="trailing" secondItem="N6K-Lj-Fn6" secondAttribute="trailing" constant="8" id="Gvd-Lw-SeQ"/>
+                        <constraint firstItem="N6K-Lj-Fn6" firstAttribute="top" secondItem="5D5-iT-bUk" secondAttribute="top" id="HJ5-s0-Q5X"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -83,20 +94,19 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="kcg-Xg-cFs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="2pd-u6-de2"/>
-                <constraint firstAttribute="trailing" secondItem="kcg-Xg-cFs" secondAttribute="trailing" id="QZy-mC-C19"/>
-                <constraint firstAttribute="bottom" secondItem="kcg-Xg-cFs" secondAttribute="bottom" constant="4" id="UHf-a2-vJr"/>
-                <constraint firstItem="kcg-Xg-cFs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aCe-BY-gE6"/>
-                <constraint firstItem="oiq-Y4-yRH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="sh6-g1-uT2"/>
+                <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" constant="4" id="CAp-Y6-JkA"/>
+                <constraint firstAttribute="trailing" secondItem="5D5-iT-bUk" secondAttribute="trailing" id="NbL-di-rIM"/>
+                <constraint firstItem="5D5-iT-bUk" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" id="T3s-dq-Hqo"/>
+                <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="4" id="wcf-gz-2jh"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="actionButton" destination="kFt-83-9ch" id="izX-EN-8Rl"/>
-                <outlet property="dismissButton" destination="oiq-Y4-yRH" id="QH0-uw-mKd"/>
-                <outlet property="textField" destination="KN8-qH-IL0" id="CJC-dc-Ith"/>
+                <outlet property="actionButton" destination="nJo-2d-gri" id="uRM-XH-5M0"/>
+                <outlet property="dismissButton" destination="SiJ-OY-KKg" id="07f-JA-Ria"/>
+                <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
             </connections>
-            <point key="canvasLocation" x="32.5" y="43"/>
+            <point key="canvasLocation" x="39" y="-97"/>
         </view>
     </objects>
     <resources>

@@ -169,7 +169,11 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
+    fileprivate func updateOmniBar(withQuery updatedQuery: String) {
+        displayAutocompleteSuggestions(forQuery: updatedQuery)
+    }
+    
+    private func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
@@ -179,15 +183,18 @@ class MainViewController: UIViewController {
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
-        omniBar?.becomeFirstResponder()
     }
     
-    fileprivate func dismissAutcompleteSuggestions() {
+    fileprivate func dismissOmniBar() {
+        dismissAutcompleteSuggestions()
+        refreshOmniText()
+        currentTab?.omniBarWasDismissed()
+    }
+    
+    private func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
         controller.view.removeFromSuperview()
         controller.removeFromParentViewController()
-        omniBar?.resignFirstResponder()
-        currentTab?.omniBarWasDismissed()
         autocompleteController = nil
     }
     
@@ -230,11 +237,6 @@ class MainViewController: UIViewController {
         controller.delegate = self
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        dismissAutcompleteSuggestions()
-    }
-    
     private func makeToast(text: String) {
         let x = view.bounds.size.width / 2.0
         let y = view.bounds.size.height - 80
@@ -245,7 +247,7 @@ class MainViewController: UIViewController {
 extension MainViewController: OmniBarDelegate {
     
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        displayAutocompleteSuggestions(forQuery: updatedQuery)
+        updateOmniBar(withQuery: updatedQuery)
     }
     
     func onOmniQuerySubmitted(_ query: String) {
@@ -261,7 +263,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onDismissButtonPressed() {
-        dismissAutcompleteSuggestions()
+        dismissOmniBar()
     }
 }
 
@@ -269,6 +271,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
         loadQueryInCurrentTab(query: suggestion)
+        omniBar?.resignFirstResponder()
     }
 }
 
@@ -325,7 +328,6 @@ extension MainViewController: TabSwitcherDelegate {
         remove(tabAt: index)
     }
 
-    
     func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
         clearAllTabs()
     }

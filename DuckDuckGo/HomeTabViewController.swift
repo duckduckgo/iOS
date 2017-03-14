@@ -64,13 +64,13 @@ class HomeTabViewController: UIViewController, Tab {
         tabDelegate?.homeTabDidRequestTabsSwitcher(homeTab: self)
     }
     
-    fileprivate func enterPassiveMode() {
+    func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContainerView.isHidden = false
         tabDelegate?.homeTabDidDeactivateOmniBar(homeTab: self)
     }
     
-    fileprivate func enterActiveMode() {
+    func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContainerView.isHidden = true
         tabDelegate?.homeTabDidActivateOmniBar(homeTab: self)

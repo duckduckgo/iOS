@@ -58,7 +58,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTab() {
-        attachHomeTab()
+        attachHomeTab(active: settings.launchNewTabInActiveMode)
         refreshControls()
     }
     
@@ -68,11 +68,14 @@ class MainViewController: UIViewController {
         refreshControls()
     }
     
-    private func attachHomeTab() {
+    private func attachHomeTab(active: Bool = false) {
         let tab = HomeTabViewController.loadFromStoryboard()
         tabManager.add(tab: tab)
         tab.tabDelegate = self
         addToView(tab: tab)
+        if active {
+            tab.enterActiveMode()
+        }
     }
     
     private func attachWebTab(forUrl url: URL) {
@@ -107,7 +110,7 @@ class MainViewController: UIViewController {
         addToView(tab: selectedTab)
         refreshControls()
     }
-    
+  
     fileprivate func remove(tabAt index: Int) {
         tabManager.remove(at: index)
         
@@ -125,7 +128,8 @@ class MainViewController: UIViewController {
     
     fileprivate func clearAllTabs() {
         tabManager.clearAll()
-        launchTab()
+        attachHomeTab()
+        refreshControls()
     }
     
     private func resetOmniBar(withStyle style: OmniBar.Style) {

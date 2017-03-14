@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        attachHomeTab()
+        launchTab(active: false)
     }
     
     func loadQueryInNewWebTab(query: String) {
@@ -57,8 +57,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func launchTab() {
-        attachHomeTab(active: settings.launchNewTabInActiveMode)
+    fileprivate func launchTab(active: Bool? = nil) {
+        let active = active ?? settings.launchNewTabInActiveMode
+        attachHomeTab(active: active)
         refreshControls()
     }
     
@@ -128,8 +129,7 @@ class MainViewController: UIViewController {
     
     fileprivate func clearAllTabs() {
         tabManager.clearAll()
-        attachHomeTab()
-        refreshControls()
+        launchTab(active: false)
     }
     
     private func resetOmniBar(withStyle style: OmniBar.Style) {
@@ -262,7 +262,7 @@ extension MainViewController: OmniBarDelegate {
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
-        launchTabSwitcher()
+        launchTab()
     }
     
     func onRefreshButtonPressed() {

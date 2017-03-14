@@ -17,7 +17,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     
     @IBOutlet weak var progressBar: UIProgressView!
     
-    open var webView: WKWebView!
+    open private(set) var webView: WKWebView!
     
     public var name: String? {
         return webView.title
@@ -70,10 +70,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
         webView = newWebView
         attachLongPressHandler(webView: newWebView)
         newWebView.allowsBackForwardNavigationGestures = true
-        newWebView.translatesAutoresizingMaskIntoConstraints = false
         newWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         newWebView.navigationDelegate = self
-        view.insertWithEqualSize(subView: newWebView)
+        newWebView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(newWebView, at: 0)
+        view.addEqualSizeConstraints(subView: newWebView)
         webEventsDelegate?.attached(webView: webView)
     }
     
@@ -173,7 +174,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     fileprivate func touchesYOffset() -> CGFloat {
-        let statusBarSize: CGFloat = 20
+        let statusBarSize: CGFloat = prefersStatusBarHidden ? 0 : InterfaceMeasurement.defaultStatusBarHeight
         if let nav = navigationController {
             return nav.isNavigationBarHidden ? statusBarSize : nav.navigationBar.frame.height + statusBarSize
         }

@@ -36,6 +36,8 @@ protocol Tab: class {
     func reload()
     
     func dismiss()
+    
+    func destroy()
 }
 
 extension Tab {

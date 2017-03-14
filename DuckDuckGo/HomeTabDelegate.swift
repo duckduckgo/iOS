@@ -10,13 +10,13 @@ import Foundation
 
 protocol HomeTabDelegate: class {
 
-    func activateOmniBar()
+    func homeTabDidActivateOmniBar(homeTab: HomeTabViewController)
     
-    func deactivateOmniBar()
-    
-    func loadNewWebUrl(url: URL)
+    func homeTabDidDeactivateOmniBar(homeTab: HomeTabViewController)
 
-    func loadNewWebQuery(query: String)
-    
-    func launchTabsSwitcher()
+    func homeTabDidRequestTabsSwitcher(homeTab: HomeTabViewController)
+
+    func homeTab(_ homeTab: HomeTabViewController, didRequestUrl url: URL)
+
+    func homeTab(_ homeTab: HomeTabViewController, didRequestQuery query: String)
 }

@@ -41,4 +41,8 @@ extension URL {
     public static func encode(queryText: String) -> String? {
         return queryText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
     }
+    
+    public static func decode(query: String) -> String? {
+        return query.replacingOccurrences(of: "+", with: " ").removingPercentEncoding
+    }
 }

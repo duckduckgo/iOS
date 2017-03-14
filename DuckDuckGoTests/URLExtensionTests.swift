@@ -66,4 +66,19 @@ class URLExtensionTests: XCTestCase {
         let actual = URL.encode(queryText: input)
         XCTAssertEqual(expected, actual)
     }
+    
+    func testDecodeUrlDecodesPercentageEncodedText() {
+        let input = "test%20%22%25-.%3C%3E%5C%5E_%60%7B%7C~"
+        let expected = "test \"%-.<>\\^_`{|~"
+        let actual = URL.decode(query: input)
+        XCTAssertEqual(expected, actual)
+    }
+    
+    func testDecodeUrlDecodesSpaces() {
+        let input = "test+space"
+        let expected = "test space"
+        let actual = URL.decode(query: input)
+        XCTAssertEqual(expected, actual)
+    }
+
 }

@@ -255,7 +255,10 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onActionButtonPressed() {
-        clearAllTabs()
+        if let current = currentTab, let index = tabManager.indexOf(tab: current) {
+            remove(tabAt: index)
+        }
+        launchTabSwitcher()
     }
     
     func onRefreshButtonPressed() {

@@ -9,11 +9,11 @@
 import Core
 
 struct TabManager {
-
+    
     private(set) var current: Tab?
-
+    
     private var tabs = [Tab]()
-        
+    
     var tabDetails: [Link] {
         return buildTabDetails()
     }
@@ -57,18 +57,24 @@ struct TabManager {
     }
     
     mutating func remove(tab: Tab) {
+        if let index = indexOf(tab: tab) {
+            remove(at: index)
+        }
+    }
+    
+    func indexOf(tab: Tab) -> Int? {
         for (index, current) in tabs.enumerated() {
             if current === tab {
-                remove(at: index)
-                return
+                return index
             }
         }
+        return nil
     }
     
     mutating func clearAll() {
         for tab in tabs {
             remove(tab: tab)
-         }
+        }
     }
 }
 

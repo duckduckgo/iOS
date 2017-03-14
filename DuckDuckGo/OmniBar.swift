@@ -66,7 +66,7 @@ class OmniBar: UIView {
         }
         
         if let query = AppUrls.searchQuery(fromUrl: url) {
-            textField.text = query
+            textField.text = URL.decode(query: query)
             return
         }
         

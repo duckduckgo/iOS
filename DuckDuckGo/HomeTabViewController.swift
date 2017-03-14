@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  HomeTabViewController.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 27/02/2017.
@@ -9,13 +9,13 @@
 import UIKit
 import Core
 
-class HomeViewController: UIViewController, Tab {
+class HomeTabViewController: UIViewController, Tab {
     
     @IBOutlet weak var passiveContainerView: UIView!
     @IBOutlet weak var centreBar: UIView!
     
     weak var tabDelegate: HomeTabDelegate?
-  
+    
     let omniBarStyle: OmniBar.Style = .home
     let showsUrlInOmniBar = false
     
@@ -24,13 +24,13 @@ class HomeViewController: UIViewController, Tab {
     
     var canGoBack = false
     var canGoForward: Bool = false
-
+    
     private var activeMode = false
 
-    static func loadFromStoryboard() -> HomeViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+    static func loadFromStoryboard() -> HomeTabViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
         activeMode = false
@@ -61,23 +61,23 @@ class HomeViewController: UIViewController, Tab {
     }
     
     @IBAction func onTabButtonTapped(_ sender: UIButton) {
-        tabDelegate?.launchTabsSwitcher()
+        tabDelegate?.homeTabDidRequestTabsSwitcher(homeTab: self)
     }
     
-    fileprivate func enterPassiveMode() {
+    func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContainerView.isHidden = false
-        tabDelegate?.deactivateOmniBar()
+        tabDelegate?.homeTabDidDeactivateOmniBar(homeTab: self)
     }
     
-    fileprivate func enterActiveMode() {
+    func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContainerView.isHidden = true
-        tabDelegate?.activateOmniBar()
+        tabDelegate?.homeTabDidActivateOmniBar(homeTab: self)
     }
     
     func load(url: URL) {
-        tabDelegate?.loadNewWebUrl(url: url)
+        tabDelegate?.homeTab(self, didRequestUrl: url)
     }
     
     func goBack() {}
@@ -89,6 +89,10 @@ class HomeViewController: UIViewController, Tab {
     func dismiss() {
         removeFromParentViewController()
         view.removeFromSuperview()
+    }
+    
+    func destroy() {
+        dismiss()
     }
     
     func omniBarWasDismissed() {

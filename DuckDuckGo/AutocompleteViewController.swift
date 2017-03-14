@@ -21,10 +21,10 @@ class AutocompleteViewController: UIViewController {
     fileprivate let minItems = 1
     fileprivate let maxItems = 6
     
-    private var initialHidesBarsOnSwipe = false
-    
+    private var hidesBarsOnSwipeDefault = true
+    private var isToolbarEnabledDefault = true
+
     @IBOutlet weak var tableView: UITableView!
-    
     
     static func loadFromStoryboard() -> AutocompleteViewController {
         let storyboard = UIStoryboard.init(name: "Autocomplete", bundle: nil)
@@ -33,15 +33,26 @@ class AutocompleteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        initialHidesBarsOnSwipe = navigationController?.hidesBarsOnSwipe ?? false
+        configureNavigationBar()
+    }
+    
+    private func configureNavigationBar() {
+        hidesBarsOnSwipeDefault = navigationController?.hidesBarsOnSwipe ?? hidesBarsOnSwipeDefault
+        isToolbarEnabledDefault = navigationController?.toolbar.isUserInteractionEnabled ?? isToolbarEnabledDefault
         navigationController?.hidesBarsOnSwipe = false
+        navigationController?.toolbar.isUserInteractionEnabled = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.hidesBarsOnSwipe = initialHidesBarsOnSwipe
+        resetNaviagtionBar()
     }
 
+    private func resetNaviagtionBar() {
+        navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
+        navigationController?.toolbar.isUserInteractionEnabled = isToolbarEnabledDefault
+    }
+    
     func updateQuery(query: String) {
         self.query = query
         cancelInFlightRequests()

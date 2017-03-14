@@ -10,8 +10,7 @@ import Foundation
 
 extension UIView {
     
-    public func insertWithEqualSize(subView: UIView) {
-        insertSubview(subView, at: 0)
+    public func addEqualSizeConstraints(subView: UIView) {
         addEqualWidthConstraint(subView: subView)
         addEqualHeightConstraint(subView: subView)
     }

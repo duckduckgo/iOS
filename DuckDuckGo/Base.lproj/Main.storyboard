@@ -32,7 +32,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uJ5-lh-reH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-713" y="-34"/>
+            <point key="canvasLocation" x="-347" y="-5"/>
         </scene>
         <!--Settings-->
         <scene sceneID="DvK-Po-UbE">
@@ -40,7 +40,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="MzK-2g-91A" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L9a-Og-n5f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="987" y="1263"/>
+            <point key="canvasLocation" x="38" y="1289"/>
         </scene>
         <!--UseDuckDuckGoViewController-->
         <scene sceneID="SIJ-Tg-4kw">
@@ -166,6 +166,7 @@
                     <connections>
                         <outlet property="centreBar" destination="Qi3-F2-882" id="qLA-Gp-FLx"/>
                         <outlet property="passiveContainerView" destination="DPw-xt-wy9" id="XQ9-zR-xLL"/>
+                        <outlet property="tabIcon" destination="x7u-aG-tcz" id="Cp9-J5-5kU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="whO-FE-jZt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -234,7 +235,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="vG3-iz-6ex"/>
-                        <barButtonItem image="StarMaterial" id="M7u-mw-fly">
+                        <barButtonItem image="Bookmarks" id="M7u-mw-fly">
                             <connections>
                                 <action selector="onSaveQuickLink:" destination="C1X-Zd-UbA" id="ro0-O6-qZf"/>
                             </connections>
@@ -242,8 +243,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="vQj-Jz-LJh"/>
                         <barButtonItem image="Tabs" id="K7o-WL-SC5">
                             <connections>
-                                <action selector="onTabsPressed:" destination="C1X-Zd-UbA" id="Alq-Y0-Ev7"/>
-                                <segue destination="G9p-Sf-e96" kind="presentation" modalPresentationStyle="overCurrentContext" id="FBe-bK-oaH"/>
+                                <action selector="onLaunchTabSwitcher:" destination="C1X-Zd-UbA" id="ipE-XZ-7gh"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -259,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="208" y="-34"/>
+            <point key="canvasLocation" x="375" y="-5"/>
         </scene>
         <!--Tab Switcher View Controller-->
         <scene sceneID="x1c-tI-gDe">
@@ -448,7 +448,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="758"/>
+            <point key="canvasLocation" x="38" y="787"/>
         </scene>
         <!--Web Tab View Controller-->
         <scene sceneID="PLi-M5-qzj">
@@ -485,7 +485,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbR-Oc-W7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1016" y="-34"/>
+            <point key="canvasLocation" x="1120" y="-10"/>
         </scene>
     </scenes>
     <resources>
@@ -499,7 +499,6 @@
         <image name="Safari" width="30" height="30"/>
         <image name="SearchLoupe" width="22" height="22"/>
         <image name="Share" width="22" height="22"/>
-        <image name="StarMaterial" width="24" height="24"/>
         <image name="Tabs" width="22" height="22"/>
     </resources>
 </document>

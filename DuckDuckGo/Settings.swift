@@ -14,7 +14,6 @@ struct Settings {
     
     private struct Keys {
         static let hasSeenOnboarding = "hasSeenOnboarding"
-        static let launchNewTabInActiveMode = "launchNewTabInActiveMode"
     }
     
     public var hasSeenOnboarding: Bool {
@@ -23,15 +22,6 @@ struct Settings {
         }
         set(newValue) {
             userDefaults()?.set(newValue, forKey: Keys.hasSeenOnboarding)
-        }
-    }
-    
-    public var launchNewTabInActiveMode: Bool {
-        get {
-            return userDefaults()?.bool(forKey: Keys.launchNewTabInActiveMode) ?? false
-        }
-        set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.launchNewTabInActiveMode)
         }
     }
     

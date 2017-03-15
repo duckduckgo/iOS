@@ -15,16 +15,16 @@ class SuggestionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var typeImage: UIImageView!
-    @IBOutlet weak var plusImage: UIImageView!
+    @IBOutlet weak var plusButton: UIButton!
     
     func updateFor(query: String, suggestion: Suggestion) {
         let text = suggestion.suggestion
         if URL.isWebUrl(text: text) {
             typeImage.image = #imageLiteral(resourceName: "GlobeSmall")
-            plusImage.isHidden = true
+            plusButton.isHidden = true
         } else {
             typeImage.image = #imageLiteral(resourceName: "searchLoupeSmall")
-            plusImage.isHidden = false
+            plusButton.isHidden = false
         }
          styleText(query: query, text: suggestion.suggestion)
     }

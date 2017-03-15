@@ -11,6 +11,7 @@ import Core
 
 class HomeTabViewController: UIViewController, Tab {
     
+    @IBOutlet weak var tabIcon: UIButton!
     @IBOutlet weak var passiveContainerView: UIView!
     @IBOutlet weak var centreBar: UIView!
     
@@ -26,6 +27,7 @@ class HomeTabViewController: UIViewController, Tab {
     var canGoForward: Bool = false
     
     private var activeMode = false
+    private lazy var tabIconMaker = TabIconMaker()
 
     static func loadFromStoryboard() -> HomeTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController
@@ -35,6 +37,7 @@ class HomeTabViewController: UIViewController, Tab {
         resetNavigationBar()
         activeMode = false
         refreshMode()
+        refreshTabIcon()
         super.viewWillAppear(animated)
     }
     
@@ -49,6 +52,14 @@ class HomeTabViewController: UIViewController, Tab {
             enterActiveMode()
         } else {
             enterPassiveMode()
+        }
+    }
+    
+    private func refreshTabIcon() {
+        guard let count = tabDelegate?.homeTabDidRequestTabCount(homeTab: self) else { return }
+        if count > 1 {
+            let image = tabIconMaker.icon(forTabs: count)
+            tabIcon.setImage(image, for: .normal)
         }
     }
     

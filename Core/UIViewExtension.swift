@@ -30,4 +30,11 @@ extension UIView {
             attribute: .width, multiplier: 1, constant: 0))
     }
     
+    public func round(corners: UIRectCorner, radius: CGFloat) {
+        let cornerRadii = CGSize(width: radius, height: radius)
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: cornerRadii)
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        layer.mask = maskLayer
+    }
 }

@@ -62,43 +62,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Search Options" id="p50-26-7TY">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ayO-Lt-02m">
-                                        <rect key="frame" x="0.0" y="201" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ayO-Lt-02m" id="aGe-89-Jzi">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Launch new tab in active mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KL2-sE-j00">
-                                                    <rect key="frame" x="16" y="11.5" width="286" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R9E-Ae-vIE">
-                                                    <rect key="frame" x="310" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="onNewTabModeToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="hR1-zg-3Wy"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="R9E-Ae-vIE" firstAttribute="centerY" secondItem="aGe-89-Jzi" secondAttribute="centerY" id="5gK-pX-eiw"/>
-                                                <constraint firstItem="KL2-sE-j00" firstAttribute="centerY" secondItem="aGe-89-Jzi" secondAttribute="centerY" id="HM4-YL-Pmm"/>
-                                                <constraint firstItem="R9E-Ae-vIE" firstAttribute="leading" secondItem="KL2-sE-j00" secondAttribute="trailing" constant="8" id="dby-d2-F69"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="R9E-Ae-vIE" secondAttribute="trailing" constant="8" id="gEP-pu-R9J"/>
-                                                <constraint firstItem="KL2-sE-j00" firstAttribute="leading" secondItem="aGe-89-Jzi" secondAttribute="leadingMargin" constant="8" id="o6T-au-xQS"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="About" id="dOj-jn-mSN">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleSubtitle" id="TYF-GX-a3j">
-                                        <rect key="frame" x="0.0" y="302" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="201" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -138,7 +105,6 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="newTabeModeToggle" destination="R9E-Ae-vIE" id="tdp-xp-BOp"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
                     </connections>
                 </tableViewController>

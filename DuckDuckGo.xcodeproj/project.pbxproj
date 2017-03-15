@@ -51,6 +51,7 @@
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
 		F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */; };
 		F16390821E648B7A005B4550 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16390811E648B7A005B4550 /* HomeTabViewController.swift */; };
+		F1668BCB1E796366008CBA04 /* PartiallyRoundedRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1668BCA1E796366008CBA04 /* PartiallyRoundedRectangleView.swift */; };
 		F176699A1E3FA5EE003D3222 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669991E3FA5EE003D3222 /* Version.swift */; };
 		F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F176699D1E40BC86003D3222 /* Settings.storyboard */; };
 		F17669A31E411DB8003D3222 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669991E3FA5EE003D3222 /* Version.swift */; };
@@ -201,6 +202,7 @@
 		F1617C141E57336D00DEDCAF /* TabManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabManager.swift; sourceTree = "<group>"; };
 		F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherDelegate.swift; sourceTree = "<group>"; };
 		F16390811E648B7A005B4550 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
+		F1668BCA1E796366008CBA04 /* PartiallyRoundedRectangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartiallyRoundedRectangleView.swift; sourceTree = "<group>"; };
 		F17669991E3FA5EE003D3222 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		F176699E1E40BC86003D3222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		F17669A71E412A12003D3222 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
@@ -324,7 +326,7 @@
 				F1BE54481E69DD5F00FCF649 /* Onboarding */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				F16390801E648B68005B4550 /* Tabs */,
-				F1386BA21E6846320062FC3C /* TabSelector */,
+				F1386BA21E6846320062FC3C /* TabSwitcher */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1AB2B401E3F75A000868554 /* Settings */,
@@ -357,14 +359,14 @@
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
 		};
-		F1386BA21E6846320062FC3C /* TabSelector */ = {
+		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
 			);
-			name = TabSelector;
+			name = TabSwitcher;
 			sourceTree = "<group>";
 		};
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
@@ -406,6 +408,7 @@
 			children = (
 				F143C3411E4A9C9A00CFDE3A /* UserText.swift */,
 				F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */,
+				F1668BCA1E796366008CBA04 /* PartiallyRoundedRectangleView.swift */,
 				F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1B745211E549D550072547E /* UIColorExtension.swift */,
@@ -931,6 +934,7 @@
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
 				F143C3271E4A9A0E00CFDE3A /* Logger.swift in Sources */,
 				F143C32F1E4A9A4800CFDE3A /* UIViewControllerExtension.swift in Sources */,
+				F1668BCB1E796366008CBA04 /* PartiallyRoundedRectangleView.swift in Sources */,
 				F143C32E1E4A9A4800CFDE3A /* RoundedRectangleView.swift in Sources */,
 				F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */,
 				F143C3261E4A9A0E00CFDE3A /* GroupData.swift in Sources */,

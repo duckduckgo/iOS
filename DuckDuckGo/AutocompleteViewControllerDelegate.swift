@@ -12,4 +12,6 @@ import Foundation
 protocol AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String)
+    
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: String)
 }

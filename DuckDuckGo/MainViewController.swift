@@ -34,6 +34,11 @@ class MainViewController: UIViewController {
         launchTab(active: false)
     }
     
+    override func viewDidLayoutSubviews() {
+        updateAutocompleteSize()
+        super.viewDidLayoutSubviews()
+    }
+    
     func loadQueryInNewWebTab(query: String) {
         if let url = AppUrls.url(forQuery: query) {
             loadUrlInNewWebTab(url: url)
@@ -58,7 +63,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTab(active: Bool? = nil) {
-        let active = active ?? settings.launchNewTabInActiveMode
+        let active = active ?? true
         attachHomeTab(active: active)
         refreshControls()
     }
@@ -111,7 +116,7 @@ class MainViewController: UIViewController {
         addToView(tab: selectedTab)
         refreshControls()
     }
-  
+    
     fileprivate func remove(tabAt index: Int) {
         tabManager.remove(at: index)
         
@@ -184,9 +189,16 @@ class MainViewController: UIViewController {
             addChildViewController(controller)
             containerView.addSubview(controller.view)
             autocompleteController = controller
+            updateAutocompleteSize()
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
+    }
+    
+    private func updateAutocompleteSize() {
+        if let omniBarWidth = omniBar?.frame.width, let autocompleteController = autocompleteController {
+            autocompleteController.widthConstraint.constant = omniBarWidth
+        }
     }
     
     fileprivate func dismissOmniBar() {
@@ -223,22 +235,16 @@ class MainViewController: UIViewController {
         }
     }
     
+    @IBAction func onLaunchTabSwitcher(_ sender: UIBarButtonItem) {
+        launchTabSwitcher()
+    }
+    
     fileprivate func launchTabSwitcher() {
         let controller = TabSwitcherViewController.loadFromStoryboard()
         controller.delegate = self
         controller.modalPresentationStyle = .overCurrentContext
+        controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true, completion: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? TabSwitcherViewController {
-            onTabSwitcherViewControllerSegue(controller: controller)
-            return
-        }
-    }
-    
-    private func onTabSwitcherViewControllerSegue(controller: TabSwitcherViewController) {
-        controller.delegate = self
     }
     
     private func makeToast(text: String) {
@@ -280,6 +286,10 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         loadQueryInCurrentTab(query: suggestion)
         omniBar?.resignFirstResponder()
     }
+    
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
+        omniBar?.textField.text = suggestion
+    }
 }
 
 extension MainViewController: HomeTabDelegate {
@@ -303,6 +313,10 @@ extension MainViewController: HomeTabDelegate {
     
     func homeTabDidRequestTabsSwitcher(homeTab: HomeTabViewController) {
         launchTabSwitcher()
+    }
+    
+    func homeTabDidRequestTabCount(homeTab: HomeTabViewController) -> Int {
+        return tabManager.count
     }
 }
 
@@ -334,7 +348,7 @@ extension MainViewController: TabSwitcherDelegate {
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTabAt index: Int) {
         remove(tabAt: index)
     }
-
+    
     func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
         clearAllTabs()
     }

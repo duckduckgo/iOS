@@ -23,7 +23,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SiJ-OY-KKg">
                                     <rect key="frame" x="0.0" y="0.0" width="26" height="32"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="26" id="F7e-Td-clh"/>
+                                        <constraint firstAttribute="width" priority="900" constant="26" id="F7e-Td-clh"/>
                                     </constraints>
                                     <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <state key="normal" image="BrowsePrevious"/>

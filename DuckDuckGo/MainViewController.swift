@@ -56,7 +56,6 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQueryInCurrentTab(query: String) {
-        dismissAutcompleteSuggestions()
         if let queryUrl = AppUrls.url(forQuery: query) {
             currentTab?.load(url: queryUrl)
         }
@@ -202,6 +201,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func dismissOmniBar() {
+        omniBar?.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniText()
         currentTab?.omniBarWasDismissed()
@@ -209,9 +209,9 @@ class MainViewController: UIViewController {
     
     private func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
+        autocompleteController = nil
         controller.view.removeFromSuperview()
         controller.removeFromParentViewController()
-        autocompleteController = nil
     }
     
     @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
@@ -261,10 +261,12 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onOmniQuerySubmitted(_ query: String) {
+        dismissOmniBar()
         loadQueryInCurrentTab(query: query)
     }
     
     func onActionButtonPressed() {
+        dismissOmniBar()
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
@@ -283,8 +285,8 @@ extension MainViewController: OmniBarDelegate {
 extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
+        dismissOmniBar()
         loadQueryInCurrentTab(query: suggestion)
-        omniBar?.resignFirstResponder()
     }
     
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {

@@ -21,6 +21,7 @@
 "action.title.copy" = "Copy";
 "action.title.share"= "Share...";
 "action.title.cancel" = "Cancel";
+"action.title.save.bookmark" = "Add to Bookmarks";
 
 "onboarding.realprivacy.title" = "Real Privacy";
 "onboarding.realprivacy.description" = "We never store or share your personal information. Ever.";
@@ -30,3 +31,5 @@
 "onboarding.tracking.description" = "Other search engines track you even when you’re in ‘private browsing mode’. We don’t track you — period.";
 "onboarding.privacyright.title" = "Privacy is a Right!";
 "onboarding.privacyright.description" = "Use DuckDuckGo and take back your privacy!";
+
+"navigation.title.edit" = "Edit";

@@ -35,7 +35,9 @@ public struct UserText {
     public static let actionCopy = forKey("action.title.copy")
     public static let actionShare = forKey("action.title.share")
     public static let actionCancel = forKey("action.title.cancel")
-
+    public static let actionSaveBookmark = forKey("action.title.save.bookmark")
+    
+    public static let navigationTitleEdit = forKey("navigation.title.edit")
     
     fileprivate static func forKey(_ key: String) -> String {
         return NSLocalizedString(key, comment: key)

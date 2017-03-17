@@ -66,7 +66,7 @@
                                     <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <state key="normal" image="Bookmarks"/>
                                     <connections>
-                                        <action selector="onActionButtonPressed" destination="ojX-nM-dyN" eventType="touchUpInside" id="t1n-uE-J9a"/>
+                                        <action selector="onBookmarksButtonPressed" destination="ojX-nM-dyN" eventType="touchUpInside" id="Kl4-Pm-dTh"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -81,7 +81,7 @@
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="6"/>
+                            <integer key="value" value="4"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                             <real key="value" value="2"/>

@@ -94,12 +94,16 @@ class OmniBar: UIView {
          refreshButton?.isHidden = true
     }
     
-    @IBAction func onActionButtonPressed() {
-        omniDelegate?.onActionButtonPressed()
+    @IBAction func onFireButtonPressed() {
+        omniDelegate?.onFireButtonPressed()
     }
     
     @IBAction func onRefreshButtonPressed() {
         omniDelegate?.onRefreshButtonPressed()
+    }
+    
+    @IBAction func onBookmarksButtonPressed() {
+        omniDelegate?.onBookmarksButtonPressed()
     }
     
     @IBAction func onDismissButtonPressed() {

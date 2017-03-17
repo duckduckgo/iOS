@@ -21,12 +21,14 @@ extension UIViewController {
     }
     
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
-        let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        let activities = [SaveBookmarkActivity()]
+        let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         present(controller: shareController, fromButtonItem: buttonItem)
     }
     
     public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView) {
-        let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        let activities = [SaveBookmarkActivity()]
+        let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
         present(controller: shareController, fromView: sourceView)
     }
 

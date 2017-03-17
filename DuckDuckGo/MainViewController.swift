@@ -57,8 +57,12 @@ class MainViewController: UIViewController {
     
     fileprivate func loadQueryInCurrentTab(query: String) {
         if let queryUrl = AppUrls.url(forQuery: query) {
-            currentTab?.load(url: queryUrl)
+            loadUrlInCurrentTab(url: queryUrl)
         }
+    }
+    
+    fileprivate func loadUrlInCurrentTab(url: URL) {
+        currentTab?.load(url: url)
     }
     
     fileprivate func launchTab(active: Bool? = nil) {
@@ -224,7 +228,8 @@ class MainViewController: UIViewController {
     
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = currentTab?.url {
-            presentShareSheet(withItems: [url], fromButtonItem: sender)
+            let title = currentTab?.name ?? ""
+            presentShareSheet(withItems: [title, url], fromButtonItem: sender)
         }
     }
     
@@ -235,13 +240,23 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func onLaunchTabSwitcher(_ sender: UIBarButtonItem) {
+    @IBAction func onTabButtonPressed(_ sender: UIBarButtonItem) {
         launchTabSwitcher()
     }
     
     fileprivate func launchTabSwitcher() {
-        let controller = TabSwitcherViewController.loadFromStoryboard()
-        controller.delegate = self
+        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self)
+        controller.modalPresentationStyle = .overCurrentContext
+        controller.modalTransitionStyle = .crossDissolve
+        present(controller, animated: true, completion: nil)
+    }
+    
+    @IBAction func onBookmarksButtonPressed(_ sender: UIBarButtonItem) {
+        launchBookmarks()
+    }
+    
+    fileprivate func launchBookmarks() {
+        let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
         controller.modalPresentationStyle = .overCurrentContext
         controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true, completion: nil)
@@ -265,12 +280,16 @@ extension MainViewController: OmniBarDelegate {
         loadQueryInCurrentTab(query: query)
     }
     
-    func onActionButtonPressed() {
+    func onFireButtonPressed() {
         dismissOmniBar()
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
         launchTab()
+    }
+    
+    func onBookmarksButtonPressed() {
+        launchBookmarks()
     }
     
     func onRefreshButtonPressed() {
@@ -317,6 +336,10 @@ extension MainViewController: HomeTabDelegate {
         launchTabSwitcher()
     }
     
+    func homeTabDidRequestBookmarks(homeTab: HomeTabViewController) {
+        launchBookmarks()
+    }
+    
     func homeTabDidRequestTabCount(homeTab: HomeTabViewController) -> Int {
         return tabManager.count
     }
@@ -353,5 +376,11 @@ extension MainViewController: TabSwitcherDelegate {
     
     func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
         clearAllTabs()
+    }
+}
+
+extension MainViewController: BookmarksDelegate {
+    func bookmarksDidSelect(link: Link) {
+        loadUrlInNewWebTab(url: link.url)
     }
 }

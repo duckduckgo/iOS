@@ -14,9 +14,11 @@ protocol OmniBarDelegate: class {
 
     func onOmniQuerySubmitted(_ query: String)
     
-    func onActionButtonPressed()
+    func onFireButtonPressed()
     
     func onRefreshButtonPressed()
+    
+    func onBookmarksButtonPressed()
     
     func onDismissButtonPressed()
 }

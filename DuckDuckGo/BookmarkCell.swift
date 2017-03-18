@@ -16,4 +16,9 @@ class BookmarkCell: UITableViewCell {
     
     static let reuseIdentifier = "BookmarkCell"
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        linkImage.isHidden = editing
+        super.setEditing(editing, animated: animated)
+    }
+    
 }

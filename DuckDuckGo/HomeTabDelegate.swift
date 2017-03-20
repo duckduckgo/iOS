@@ -15,6 +15,8 @@ protocol HomeTabDelegate: class {
     func homeTabDidDeactivateOmniBar(homeTab: HomeTabViewController)
 
     func homeTabDidRequestTabsSwitcher(homeTab: HomeTabViewController)
+
+    func homeTabDidRequestBookmarks(homeTab: HomeTabViewController)
     
     func homeTabDidRequestTabCount(homeTab: HomeTabViewController) -> Int
 

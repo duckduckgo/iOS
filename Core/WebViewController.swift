@@ -20,7 +20,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     open private(set) var webView: WKWebView!
     
     public var name: String? {
-        return webView.title
+        return webView.title    
     }
     
     public var url: URL? {

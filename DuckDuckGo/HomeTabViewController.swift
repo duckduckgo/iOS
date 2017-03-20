@@ -71,8 +71,12 @@ class HomeTabViewController: UIViewController, Tab {
         enterPassiveMode()
     }
     
-    @IBAction func onTabButtonTapped(_ sender: UIButton) {
+    @IBAction func onTabButtonPressed(_ sender: UIButton) {
         tabDelegate?.homeTabDidRequestTabsSwitcher(homeTab: self)
+    }
+    
+    @IBAction func onBookmarksButtonPressed(_ sender: UIButton) {
+        tabDelegate?.homeTabDidRequestBookmarks(homeTab: self)
     }
     
     func enterPassiveMode() {

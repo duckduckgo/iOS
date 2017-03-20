@@ -22,6 +22,9 @@
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fI8-B4-2bV">
                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" priority="900" constant="26" id="Fqj-g7-oE0"/>
+                                    </constraints>
                                     <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <state key="normal" image="BrowsePrevious"/>
                                     <connections>
@@ -85,7 +88,7 @@
                                     <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <state key="normal" image="Fire"/>
                                     <connections>
-                                        <action selector="onActionButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="pXP-sW-PPb"/>
+                                        <action selector="onFireButtonPressed" destination="iN0-l3-epB" eventType="touchUpInside" id="5kX-t0-t7r"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -100,7 +103,7 @@
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                            <real key="value" value="6"/>
+                            <real key="value" value="4"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                             <real key="value" value="2"/>

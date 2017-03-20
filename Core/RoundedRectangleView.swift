@@ -28,4 +28,17 @@ public class RoundedRectangleView: UIView {
             layer.cornerRadius = cornerRadius
         }
     }
+    
+    @IBInspectable var dropShadow: Bool = false
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        configureDropShadow()
+    }
+    
+    private func configureDropShadow() {
+        if dropShadow {
+            displayDropShadow()
+        }
+    }
 }

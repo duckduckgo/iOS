@@ -22,34 +22,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAI-u8-HTS" customClass="PartiallyRoundedRectangleView" customModule="Core">
-                                <rect key="frame" x="14" y="22" width="347" height="278"/>
+                                <rect key="frame" x="14" y="22" width="347" height="276"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NI7-km-NQP">
-                                        <rect key="frame" x="2" y="2" width="343" height="274"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="347" height="276"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SuggestionTableViewCell" id="OKw-LH-qE9" userLabel="Suggestion" customClass="SuggestionTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="343" height="46"/>
+                                                <rect key="frame" x="0.0" y="28" width="347" height="46"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OKw-LH-qE9" id="xqJ-kD-Lnu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="45"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="347" height="45"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="ESE-Rj-Bim">
-                                                            <rect key="frame" x="12" y="13" width="18" height="18"/>
+                                                            <rect key="frame" x="16" y="13" width="18" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="18" id="KWV-SS-cp6"/>
                                                                 <constraint firstAttribute="width" constant="18" id="eRs-db-3SW"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWx-AW-1JS">
-                                                            <rect key="frame" x="42" y="13" width="251" height="18"/>
+                                                            <rect key="frame" x="46" y="13" width="251" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                             <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vt-0M-Hjg">
-                                                            <rect key="frame" x="305" y="8" width="30" height="30"/>
+                                                            <rect key="frame" x="309" y="8" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="JSK-3e-Inr"/>
                                                                 <constraint firstAttribute="width" constant="30" id="SFn-9o-0Ax"/>
@@ -64,7 +65,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="2Vt-0M-Hjg" secondAttribute="trailing" constant="8" id="023-2a-aHJ"/>
                                                         <constraint firstItem="2Vt-0M-Hjg" firstAttribute="leading" secondItem="qWx-AW-1JS" secondAttribute="trailing" constant="12" id="25t-ML-zyK"/>
-                                                        <constraint firstItem="ESE-Rj-Bim" firstAttribute="leading" secondItem="xqJ-kD-Lnu" secondAttribute="leadingMargin" constant="4" id="80f-20-WI9"/>
+                                                        <constraint firstItem="ESE-Rj-Bim" firstAttribute="leading" secondItem="xqJ-kD-Lnu" secondAttribute="leadingMargin" constant="8" id="80f-20-WI9"/>
                                                         <constraint firstItem="2Vt-0M-Hjg" firstAttribute="centerY" secondItem="xqJ-kD-Lnu" secondAttribute="centerY" id="P2B-JV-zyR"/>
                                                         <constraint firstItem="qWx-AW-1JS" firstAttribute="leading" secondItem="ESE-Rj-Bim" secondAttribute="trailing" constant="12" id="mKU-Mb-emI"/>
                                                         <constraint firstItem="qWx-AW-1JS" firstAttribute="centerY" secondItem="xqJ-kD-Lnu" secondAttribute="centerY" id="qVn-38-VVp"/>
@@ -78,14 +79,14 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoSuggestionsTableViewCell" id="hy0-ZL-Uaq" userLabel="Empty" customClass="NoSuggestionsTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="74" width="343" height="46"/>
+                                                <rect key="frame" x="0.0" y="74" width="347" height="46"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hy0-ZL-Uaq" id="dny-UO-HQX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="45"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="347" height="45"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Suggestions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92X-C7-Llu">
-                                                            <rect key="frame" x="24" y="13" width="295" height="19.5"/>
+                                                            <rect key="frame" x="24" y="13" width="299" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -108,22 +109,16 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="NI7-km-NQP" secondAttribute="bottom" constant="2" id="UpP-O9-rk2"/>
+                                    <constraint firstAttribute="bottom" secondItem="NI7-km-NQP" secondAttribute="bottom" id="UpP-O9-rk2"/>
                                     <constraint firstAttribute="width" constant="347" id="YZw-yg-XAd"/>
-                                    <constraint firstAttribute="trailing" secondItem="NI7-km-NQP" secondAttribute="trailing" constant="2" id="auX-AA-cEv"/>
-                                    <constraint firstItem="NI7-km-NQP" firstAttribute="top" secondItem="EAI-u8-HTS" secondAttribute="top" constant="2" id="cAX-Xx-6HJ"/>
-                                    <constraint firstItem="NI7-km-NQP" firstAttribute="leading" secondItem="EAI-u8-HTS" secondAttribute="leading" constant="2" id="iTF-f3-mZs"/>
-                                    <constraint firstAttribute="height" constant="278" id="lZk-Px-l6m"/>
+                                    <constraint firstAttribute="trailing" secondItem="NI7-km-NQP" secondAttribute="trailing" id="auX-AA-cEv"/>
+                                    <constraint firstItem="NI7-km-NQP" firstAttribute="top" secondItem="EAI-u8-HTS" secondAttribute="top" id="cAX-Xx-6HJ"/>
+                                    <constraint firstItem="NI7-km-NQP" firstAttribute="leading" secondItem="EAI-u8-HTS" secondAttribute="leading" id="iTF-f3-mZs"/>
+                                    <constraint firstAttribute="height" constant="276" id="lZk-Px-l6m"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topLeftCorner" value="NO"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="topRightCorner" value="NO"/>

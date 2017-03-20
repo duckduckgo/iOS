@@ -15,8 +15,10 @@ class TabSwitcherViewController: UIViewController {
     
     weak var delegate: TabSwitcherDelegate!
     
-    static func loadFromStoryboard() -> TabSwitcherViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabSwitcherViewController") as! TabSwitcherViewController
+    static func loadFromStoryboard(delegate: TabSwitcherDelegate) -> TabSwitcherViewController {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabSwitcherViewController") as! TabSwitcherViewController
+        controller.delegate = delegate
+        return controller
     }
     
     override func viewDidLoad() {
@@ -34,7 +36,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onAddPressed(_ sender: UIButton) {
-        delegate?.tabSwitcherDidRequestNewTab(tabSwitcher: self)
+        delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
     }
     

@@ -13,7 +13,7 @@ class AutocompleteViewController: UIViewController {
 
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
     
-    var delegate: AutocompleteViewControllerDelegate?
+    weak var delegate: AutocompleteViewControllerDelegate?
 
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?

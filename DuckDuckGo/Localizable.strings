@@ -15,13 +15,17 @@
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Quick link saved to Today widget";
 
+"action.title.save" = "Save";
+"action.title.cancel" = "Cancel";
 "action.title.newTab" = "Open in New Tab";
 "action.title.open" = "Open";
 "action.title.readingList" = "Add to Reading List";
 "action.title.copy" = "Copy";
 "action.title.share"= "Share...";
-"action.title.cancel" = "Cancel";
 "action.title.save.bookmark" = "Add to Bookmarks";
+
+"alert.title.save.bookmark" = "Save Bookmark";
+"alert.title.edit.bookmark" = "Edit Bookmark";
 
 "onboarding.realprivacy.title" = "Real Privacy";
 "onboarding.realprivacy.description" = "We never store or share your personal information. Ever.";

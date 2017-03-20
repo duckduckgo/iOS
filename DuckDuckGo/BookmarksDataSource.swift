@@ -11,17 +11,23 @@ import Core
 
 class BookmarksDataSource: NSObject, UITableViewDataSource {
     
-    fileprivate lazy var groupData = GroupData()
+    private lazy var bookmarksManager = BookmarksManager()
+    
+    var isEmpty: Bool {
+        return bookmarksManager.isEmpty
+    }
+    
+    func bookmark(atIndex index: Int) -> Link {
+        return bookmarksManager.bookmark(atIndex: index)
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let bookmarks = groupData.quickLinks, !isEmpty() else {
-            return 1
-        }
-        return bookmarks.count
+        if isEmpty { return 1 }
+        return bookmarksManager.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isEmpty() {
+        if bookmarksManager.isEmpty {
             return createEmptyCell(tableView)
         }
         return createBookmarkCell(tableView, forIndex: indexPath.row)
@@ -32,52 +38,28 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
     
     private func createBookmarkCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
-        let data = groupData.quickLinks![index]
+        let bookmark = bookmarksManager.bookmark(atIndex: index)
         let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as! BookmarkCell
-        cell.title.text = data.title
-        cell.showsReorderControl = true
+        cell.update(withBookmark: bookmark)
         return cell
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return !isEmpty()
+        return !isEmpty
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return !isEmpty()
+        return !isEmpty
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            delete(itemAtIndex: indexPath.row)
+            bookmarksManager.delete(itemAtIndex: indexPath.row)
         }
         tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        move(itemAtIndex: sourceIndexPath.row, to: destinationIndexPath.row)
-    }
-    
-    public func getData(atIndex index: Int) -> Link {
-        return groupData.quickLinks![index]
-    }
-    
-    private func delete(itemAtIndex index: Int) {
-        if var newLinks = groupData.quickLinks {
-            newLinks.remove(at: index)
-            groupData.quickLinks = newLinks
-        }
-    }
-    
-    private func move(itemAtIndex oldIndex: Int, to newIndex: Int) {
-        if var newLinks = groupData.quickLinks {
-            let link = newLinks.remove(at: oldIndex)
-            newLinks.insert(link, at: newIndex)
-            groupData.quickLinks = newLinks
-        }
-    }
-    
-    func isEmpty() -> Bool {
-        return groupData.quickLinks?.isEmpty ?? true
+        bookmarksManager.move(itemAtIndex: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }

@@ -381,6 +381,6 @@ extension MainViewController: TabSwitcherDelegate {
 
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(link: Link) {
-        loadUrlInNewWebTab(url: link.url)
+        loadUrlInCurrentTab(url: link.url)
     }
 }

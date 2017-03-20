@@ -11,8 +11,7 @@ import Core
 
 class SaveBookmarkActivity: UIActivity {
     
-    private lazy var groupData = GroupData()
-    
+    private lazy var bookmarksManager = BookmarksManager()
     private var bookmark: Link?
     
     override var activityTitle: String? {
@@ -52,13 +51,29 @@ class SaveBookmarkActivity: UIActivity {
         }
     }
     
-    override func perform() {
-        if let bookmark = bookmark {
-            groupData.addQuickLink(link: bookmark)
-            activityDidFinish(true)
-        } else {
+    override var activityViewController: UIViewController? {
+        guard let bookmark = bookmark else {
             activityDidFinish(false)
+            return nil
         }
+        
+        let title = UserText.alertSaveBookmark
+        let alert = EditBookmarkAlert.buildAlert (
+            title: title,
+            bookmark: bookmark,
+            saveCompletion: { [weak self] (updatedBookmark) in self?.onDone(updatedBookmark: updatedBookmark) },
+            cancelCompletion: { [weak self] in self?.onCancel() }
+        )
+        return alert
+    }
+    
+    private func onDone(updatedBookmark: Link) {
+        bookmarksManager.save(bookmark: updatedBookmark)
+        activityDidFinish(true)
+    }
+    
+    private func onCancel() {
+        activityDidFinish(true)
     }
 }
 

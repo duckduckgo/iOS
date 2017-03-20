@@ -34,6 +34,11 @@ class MainViewController: UIViewController {
         launchTab(active: false)
     }
     
+    override func viewDidLayoutSubviews() {
+        updateAutocompleteSize()
+        super.viewDidLayoutSubviews()
+    }
+    
     func loadQueryInNewWebTab(query: String) {
         if let url = AppUrls.url(forQuery: query) {
             loadUrlInNewWebTab(url: url)
@@ -51,14 +56,17 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQueryInCurrentTab(query: String) {
-        dismissAutcompleteSuggestions()
         if let queryUrl = AppUrls.url(forQuery: query) {
-            currentTab?.load(url: queryUrl)
+            loadUrlInCurrentTab(url: queryUrl)
         }
     }
     
+    fileprivate func loadUrlInCurrentTab(url: URL) {
+        currentTab?.load(url: url)
+    }
+    
     fileprivate func launchTab(active: Bool? = nil) {
-        let active = active ?? settings.launchNewTabInActiveMode
+        let active = active ?? true
         attachHomeTab(active: active)
         refreshControls()
     }
@@ -111,7 +119,7 @@ class MainViewController: UIViewController {
         addToView(tab: selectedTab)
         refreshControls()
     }
-  
+    
     fileprivate func remove(tabAt index: Int) {
         tabManager.remove(at: index)
         
@@ -184,12 +192,20 @@ class MainViewController: UIViewController {
             addChildViewController(controller)
             containerView.addSubview(controller.view)
             autocompleteController = controller
+            updateAutocompleteSize()
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
     }
     
+    private func updateAutocompleteSize() {
+        if let omniBarWidth = omniBar?.frame.width, let autocompleteController = autocompleteController {
+            autocompleteController.widthConstraint.constant = omniBarWidth
+        }
+    }
+    
     fileprivate func dismissOmniBar() {
+        omniBar?.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniText()
         currentTab?.omniBarWasDismissed()
@@ -197,9 +213,9 @@ class MainViewController: UIViewController {
     
     private func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
+        autocompleteController = nil
         controller.view.removeFromSuperview()
         controller.removeFromParentViewController()
-        autocompleteController = nil
     }
     
     @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
@@ -212,7 +228,8 @@ class MainViewController: UIViewController {
     
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = currentTab?.url {
-            presentShareSheet(withItems: [url], fromButtonItem: sender)
+            let title = currentTab?.name ?? ""
+            presentShareSheet(withItems: [title, url], fromButtonItem: sender)
         }
     }
     
@@ -223,22 +240,26 @@ class MainViewController: UIViewController {
         }
     }
     
+    @IBAction func onTabButtonPressed(_ sender: UIBarButtonItem) {
+        launchTabSwitcher()
+    }
+    
     fileprivate func launchTabSwitcher() {
-        let controller = TabSwitcherViewController.loadFromStoryboard()
-        controller.delegate = self
+        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self)
         controller.modalPresentationStyle = .overCurrentContext
+        controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true, completion: nil)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? TabSwitcherViewController {
-            onTabSwitcherViewControllerSegue(controller: controller)
-            return
-        }
+    @IBAction func onBookmarksButtonPressed(_ sender: UIBarButtonItem) {
+        launchBookmarks()
     }
     
-    private func onTabSwitcherViewControllerSegue(controller: TabSwitcherViewController) {
-        controller.delegate = self
+    fileprivate func launchBookmarks() {
+        let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
+        controller.modalPresentationStyle = .overCurrentContext
+        controller.modalTransitionStyle = .crossDissolve
+        present(controller, animated: true, completion: nil)
     }
     
     private func makeToast(text: String) {
@@ -255,14 +276,20 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onOmniQuerySubmitted(_ query: String) {
+        dismissOmniBar()
         loadQueryInCurrentTab(query: query)
     }
     
-    func onActionButtonPressed() {
+    func onFireButtonPressed() {
+        dismissOmniBar()
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
         launchTab()
+    }
+    
+    func onBookmarksButtonPressed() {
+        launchBookmarks()
     }
     
     func onRefreshButtonPressed() {
@@ -277,8 +304,12 @@ extension MainViewController: OmniBarDelegate {
 extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
+        dismissOmniBar()
         loadQueryInCurrentTab(query: suggestion)
-        omniBar?.resignFirstResponder()
+    }
+    
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
+        omniBar?.textField.text = suggestion
     }
 }
 
@@ -303,6 +334,14 @@ extension MainViewController: HomeTabDelegate {
     
     func homeTabDidRequestTabsSwitcher(homeTab: HomeTabViewController) {
         launchTabSwitcher()
+    }
+    
+    func homeTabDidRequestBookmarks(homeTab: HomeTabViewController) {
+        launchBookmarks()
+    }
+    
+    func homeTabDidRequestTabCount(homeTab: HomeTabViewController) -> Int {
+        return tabManager.count
     }
 }
 
@@ -334,8 +373,14 @@ extension MainViewController: TabSwitcherDelegate {
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTabAt index: Int) {
         remove(tabAt: index)
     }
-
+    
     func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
         clearAllTabs()
+    }
+}
+
+extension MainViewController: BookmarksDelegate {
+    func bookmarksDidSelect(link: Link) {
+        loadUrlInCurrentTab(url: link.url)
     }
 }

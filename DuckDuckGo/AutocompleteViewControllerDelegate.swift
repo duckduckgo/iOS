@@ -9,7 +9,9 @@
 import Foundation
 
 
-protocol AutocompleteViewControllerDelegate {
+protocol AutocompleteViewControllerDelegate: class {
     
     func autocomplete(selectedSuggestion suggestion: String)
+    
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: String)
 }

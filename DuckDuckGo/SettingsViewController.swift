@@ -10,29 +10,18 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    @IBOutlet weak var newTabeModeToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
     
     private lazy var settings = Settings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNewTabModeToggle()
         configureVersionText()
-    }
-
-    private func configureNewTabModeToggle() {
-        newTabeModeToggle.isOn = settings.launchNewTabInActiveMode
     }
     
     private func configureVersionText() {
         let version = Version()
         versionText.text = version.localized()
-    }
-
-    
-    @IBAction func onNewTabModeToggled(_ sender: UISwitch) {
-        settings.launchNewTabInActiveMode = newTabeModeToggle.isOn
     }
     
     @IBAction func onDonePressed(_ sender: Any) {

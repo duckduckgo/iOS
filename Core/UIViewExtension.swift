@@ -30,4 +30,26 @@ extension UIView {
             attribute: .width, multiplier: 1, constant: 0))
     }
     
+    public func round(corners: UIRectCorner, radius: CGFloat) {
+        let cornerRadii = CGSize(width: radius, height: radius)
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: cornerRadii)
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        layer.mask = maskLayer
+    }
+    
+    public func displayDropShadow() {
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.darkGray.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.5)
+        layer.shadowOpacity = 0.2
+        layer.shadowRadius = 1.5
+        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
+    }
+    
+    public func clearSubviews() {
+        for view in subviews {
+            view.removeFromSuperview()
+        }
+    }
 }

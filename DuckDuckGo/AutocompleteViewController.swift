@@ -11,7 +11,9 @@ import Core
 
 class AutocompleteViewController: UIViewController {
 
-    var delegate: AutocompleteViewControllerDelegate?
+    @IBOutlet weak var widthConstraint: NSLayoutConstraint!
+    
+    weak var delegate: AutocompleteViewControllerDelegate?
 
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
@@ -59,6 +61,11 @@ class AutocompleteViewController: UIViewController {
         requestSuggestions(query: query)
     }
     
+    @IBAction func onPlusButtonPressed(_ button: UIButton) {
+        let suggestion = suggestions[button.tag]
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion.suggestion)
+    }
+    
     private func cancelInFlightRequests() {
         if let inFlightRequest = lastRequest {
             inFlightRequest.cancel()
@@ -95,6 +102,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         let type = SuggestionTableViewCell.reuseIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as! SuggestionTableViewCell
         cell.updateFor(query: query, suggestion: suggestions[indexPath.row])
+        cell.plusButton.tag = indexPath.row
         return cell
     }
     

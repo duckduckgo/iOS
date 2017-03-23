@@ -9,15 +9,17 @@
 import Foundation
 import WebKit
 
-public enum ScriptFile: String {
-    case documentExtension
-}
 
 public class JavascriptLoader {
     
-    public func load(_ scriptFile: ScriptFile, withController controller: WKUserContentController) {
+    public enum Script: String {
+        case document
+        case favicon
+    }
+    
+    public func load(_ script: Script, withController controller: WKUserContentController) {
         let bundle = Bundle(for: JavascriptLoader.self)
-        let path = bundle.path(forResource: scriptFile.rawValue, ofType: "js")!
+        let path = bundle.path(forResource: script.rawValue, ofType: "js")!
         let scriptString = try! String(contentsOfFile: path)
         let script = WKUserScript(source: scriptString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         controller.addUserScript(script)

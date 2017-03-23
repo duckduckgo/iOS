@@ -17,6 +17,8 @@ protocol Tab: class {
     
     var url: URL? { get }
     
+    var favicon: URL? { get }
+    
     var omniBarStyle: OmniBar.Style { get }
     
     var showsUrlInOmniBar: Bool { get }
@@ -42,6 +44,6 @@ protocol Tab: class {
 
 extension Tab {
     var link: Link {
-        return Link(title: name ?? "", url: url ?? URL(string: "-")!)
+        return Link(title: name ?? "", url: url ?? URL(string: "-")!, favicon: favicon)
     }
 }

@@ -22,17 +22,17 @@ class EditBookmarkAlert {
         let editBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
         editBox.addTextField { (textField) in textField.text = bookmark.title }
         editBox.addTextField { (textField) in textField.text = bookmark.url.absoluteString }
-        editBox.addAction(saveAction(editBox: editBox, completion: saveCompletion))
+        editBox.addAction(saveAction(editBox: editBox, originalBookmark: bookmark, completion: saveCompletion))
         editBox.addAction(cancelAction(completion: cancelCompletion))
         return editBox
     }
     
-    private static func saveAction(editBox: UIAlertController, completion: @escaping SaveCompletion) -> UIAlertAction {
+    private static func saveAction(editBox: UIAlertController, originalBookmark bookmark: Link, completion: @escaping SaveCompletion) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionSave, style: .default) { (action) in
             if let title = editBox.textFields?[0].text,
                 let urlString = editBox.textFields?[1].text,
                 let url = URL(string: urlString) {
-                let newBookmark = Link(title: title, url: url)
+                let newBookmark = Link(title: title, url: url, favicon: bookmark.favicon)
                 completion(newBookmark)
             }
         }

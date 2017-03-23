@@ -29,8 +29,8 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     static func loadFromStoryboard() -> AutocompleteViewController {
-        let storyboard = UIStoryboard.init(name: "Autocomplete", bundle: nil)
-        return storyboard.instantiateInitialViewController() as! AutocompleteViewController
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: "AutocompleteViewController") as! AutocompleteViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {

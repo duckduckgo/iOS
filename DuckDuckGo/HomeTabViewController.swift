@@ -22,6 +22,7 @@ class HomeTabViewController: UIViewController, Tab {
     
     var name: String? = UserText.homeLinkTitle
     var url: URL? = URL(string: AppUrls.base)!
+    var favicon: URL? = URL(string: AppUrls.favicon)
     
     var canGoBack = false
     var canGoForward: Bool = false

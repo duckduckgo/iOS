@@ -8,6 +8,7 @@
 
 import UIKit
 import Core
+import Kingfisher
 
 class BookmarkCell: UITableViewCell {
     
@@ -31,5 +32,14 @@ class BookmarkCell: UITableViewCell {
     func update(withBookmark bookmark: Link) {
         self.bookmark = bookmark
         title.text = bookmark.title
+        configureFavicon(bookmark.favicon)
+    }
+    
+    private func configureFavicon(_ favicon: URL?) {
+        let placeholder = #imageLiteral(resourceName: "GlobeSmall")
+        linkImage.image = placeholder
+        if let favicon = favicon {
+            linkImage.kf.setImage(with: favicon, placeholder: placeholder)
+        }
     }
 }

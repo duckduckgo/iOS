@@ -21,7 +21,7 @@
                             <rect key="frame" x="8" y="0.0" width="367" height="32"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fI8-B4-2bV">
-                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="32"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="26" height="32"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="26" id="Fqj-g7-oE0"/>
                                     </constraints>
@@ -32,10 +32,10 @@
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pT5-fm-2CT">
-                                    <rect key="frame" x="0.0" y="0.0" width="325" height="32"/>
+                                    <rect key="frame" x="26" y="0.0" width="299" height="32"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="m0r-3C-r7V" customClass="TextFieldWithInsets" customModule="Core">
-                                            <rect key="frame" x="8" y="0.0" width="317" height="32"/>
+                                            <rect key="frame" x="8" y="0.0" width="291" height="32"/>
                                             <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -50,7 +50,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCm-n3-UGw">
-                                            <rect key="frame" x="293" y="0.0" width="32" height="32"/>
+                                            <rect key="frame" x="267" y="0.0" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="32" id="Iyz-IL-wHJ"/>
                                                 <constraint firstAttribute="width" constant="32" id="aDZ-IV-I5q"/>

@@ -27,6 +27,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
         return webView.url
     }
     
+    public var favicon: URL?
+    
     public var link: Link? {
         if let url = webView.url, let title = name {
             return Link(title: title, url: url)
@@ -118,12 +120,16 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        favicon = nil
         showProgressIndicator()
         webEventsDelegate?.webpageDidStartLoading()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
+        webView.getFavicon(completion: { [weak self] (favicon) in
+            self?.favicon = favicon
+        })
         webEventsDelegate?.webpageDidFinishLoading()
     }
     

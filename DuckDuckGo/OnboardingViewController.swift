@@ -11,25 +11,45 @@ import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
+    enum DoneButtonStyle: String {
+        case search = "searchLoupeSmall"
+        case close = "Close"
+    }
+    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
+    @IBOutlet weak var doneButton: UIButton!
     
+    private var doneButtonStyle: DoneButtonStyle?
     private weak var pageController: UIPageViewController!
-    fileprivate lazy var dataSource = OnboardingDataSource()
+    fileprivate var dataSource: OnboardingDataSource!
     
-    static func loadFromStoryboard() -> OnboardingViewController {
+    static func loadFromStoryboard(size: OnboardingViewSize, doneButtonStyle: DoneButtonStyle? ) -> OnboardingViewController {
+        let identifier = (size == .mini) ? "MiniOnboardingViewController" : "OnboardingViewController"
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateInitialViewController() as! OnboardingViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! OnboardingViewController
+        controller.doneButtonStyle = doneButtonStyle
+        controller.dataSource = OnboardingDataSource(withSize: size)
+        return controller
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageControl()
+        configureDoneButton()
     }
     
     private func configurePageControl() {
         pageControl.numberOfPages = dataSource.count
         pageControl.currentPage = 0
+    }
+    
+    private func configureDoneButton() {
+        guard let buttonStyle = doneButtonStyle else {
+            return
+        }
+        let image = UIImage(named: buttonStyle.rawValue)
+        doneButton.setImage(image, for: .normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -82,7 +102,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         goToPage(index: sender.currentPage)
     }
     
-    @IBAction func onSearchPressed(_ sender: UIButton) {
+    @IBAction func onDonePressed(_ sender: UIButton) {
         finishOnboardingFlow()
     }
     

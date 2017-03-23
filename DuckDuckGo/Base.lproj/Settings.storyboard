@@ -56,9 +56,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="tjP-hZ-hbE" kind="presentation" modalTransitionStyle="flipHorizontal" id="iQH-SN-276"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -112,19 +109,11 @@
             </objects>
             <point key="canvasLocation" x="2024.8" y="53.523238380809602"/>
         </scene>
-        <!--Onboarding-->
-        <scene sceneID="jDm-Q0-NUD">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" id="tjP-hZ-hbE" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G6S-Hu-yDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2935" y="264"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="mFG-kj-9J2">
             <objects>
                 <navigationController id="w88-u3-TgK" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KnU-qQ-aLl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KnU-qQ-aLl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -220,7 +209,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ixa-78-vr8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3097" y="-175"/>
+            <point key="canvasLocation" x="3097" y="54"/>
         </scene>
         <!--Use Duck Duck Go View Controller-->
         <scene sceneID="Jxv-9S-rL2">

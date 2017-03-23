@@ -229,7 +229,11 @@ class MainViewController: UIViewController {
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = currentTab?.url {
             let title = currentTab?.name ?? ""
-            presentShareSheet(withItems: [title, url], fromButtonItem: sender)
+            var items: [Any] = [url, title]
+            if let favicon = currentTab?.favicon {
+                items.append(favicon)
+            }
+            presentShareSheet(withItems: items, fromButtonItem: sender)
         }
     }
     

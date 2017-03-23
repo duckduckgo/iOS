@@ -16,6 +16,8 @@ public struct AppUrls {
     
     public static let base = "duckduckgo.com"
     
+    public static let favicon = "https://duckduckgo.com/favicon.ico"
+    
     public static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
     
     public static let autocomplete = "https://duckduckgo.com/ac/"

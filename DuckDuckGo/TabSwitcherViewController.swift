@@ -78,8 +78,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let link = delegate.tabDetails[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as! TabViewCell
-        cell.title.text = link.title
-        cell.link.text = link.url.absoluteString
+        cell.update(withLink: link)
         cell.removeButton.tag = indexPath.row
         cell.removeButton.addTarget(self, action: #selector(onRemoveTapped(sender:)), for: .touchUpInside)
         return cell

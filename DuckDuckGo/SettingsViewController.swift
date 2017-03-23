@@ -27,4 +27,16 @@ class SettingsViewController: UITableViewController {
     @IBAction func onDonePressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 1 {
+            launchOnboardingFlow()
+        }
+    }
+    
+    private func launchOnboardingFlow() {
+        let controller = OnboardingViewController.loadFromStoryboard(size: .fullScreen, doneButtonStyle: .close)
+        controller.modalTransitionStyle = .flipHorizontal
+        present(controller, animated: false, completion: nil)
+    }
 }

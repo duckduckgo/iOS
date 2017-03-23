@@ -15,12 +15,15 @@ class OnboardingPageViewController: UIViewController {
     @IBOutlet weak var image: UIImageView!
     
     var configuration: OnboardingPageConfiguration!
+    var size: OnboardingViewSize!
     var isLastPage = false
     
-    static func loadFromStoryboard(withConfiguartion configuration: OnboardingPageConfiguration) -> OnboardingPageViewController {
+    static func loadFromStoryboard(withConfiguartion configuration: OnboardingPageConfiguration, size: OnboardingViewSize) -> OnboardingPageViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
+        let identifier = size == .mini ? "MiniOnboardingPageViewController" : "OnboardingPageViewController"
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! OnboardingPageViewController
         controller.configuration = configuration
+        controller.size = size
         return controller
     }
     
@@ -33,7 +36,9 @@ class OnboardingPageViewController: UIViewController {
         pageTitle.text = configuration.title
         pageDescription.text = configuration.description
         image.image = configuration.image
-        view.backgroundColor = configuration.background
+        if size == .fullScreen {
+            view.backgroundColor = configuration.background
+        }
     }
     
     public func performImageShrinkAnimation() {

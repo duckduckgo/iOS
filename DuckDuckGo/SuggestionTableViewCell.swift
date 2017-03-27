@@ -23,7 +23,7 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = #imageLiteral(resourceName: "GlobeSmall")
             plusButton.isHidden = true
         } else {
-            typeImage.image = #imageLiteral(resourceName: "searchLoupeSmall")
+            typeImage.image = #imageLiteral(resourceName: "SearchLoupeSmall")
             plusButton.isHidden = false
         }
          styleText(query: query, text: suggestion.suggestion)

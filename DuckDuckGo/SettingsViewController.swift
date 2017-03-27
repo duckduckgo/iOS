@@ -32,11 +32,12 @@ class SettingsViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 1 {
             launchOnboardingFlow()
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     private func launchOnboardingFlow() {
-        let controller = OnboardingViewController.loadFromStoryboard(size: .fullScreen, doneButtonStyle: .close)
+        let controller = OnboardingViewController.loadFromStoryboard(doneButtonStyle: .close)
         controller.modalTransitionStyle = .flipHorizontal
-        present(controller, animated: false, completion: nil)
+        present(controller, animated: true, completion: nil)
     }
 }

@@ -37,22 +37,7 @@ class HomeTabViewController: UIViewController, Tab {
     static func loadFromStoryboard() -> HomeTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if UIApplication.shared.statusBarOrientation.isLandscape, traitCollection.verticalSizeClass == .compact{
-                onboardingBottomConstraint.constant = 0
-            } else {
-                onboardingBottomConstraint.constant = keyboardSize.height
-            }
-        }
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
         activeMode = false
@@ -64,6 +49,16 @@ class HomeTabViewController: UIViewController, Tab {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         dismissMiniOnboardingFlow()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        addKeyboardObserver()
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeKeyboardObserver()
     }
     
     private func resetNavigationBar() {
@@ -119,7 +114,7 @@ class HomeTabViewController: UIViewController, Tab {
     }
     
     private func showMiniOnboardingFlow() {
-        let onboardingController = OnboardingViewController.loadFromStoryboard(size: .mini, doneButtonStyle: nil)
+        let onboardingController = OnboardingViewController.loadMiniFromStoryboard()
         self.onboardingController = onboardingController
         addChildViewController(onboardingController)
         onboardingController.view.frame = miniOnboardingContainer.frame
@@ -132,6 +127,24 @@ class HomeTabViewController: UIViewController, Tab {
         onboardingController?.removeFromParentViewController()
         miniOnboardingContainer.clearSubviews()
         onboardingController = nil
+    }
+    
+    private func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+    }
+    
+    private func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if UIApplication.shared.statusBarOrientation.isLandscape, traitCollection.verticalSizeClass == .compact{
+                onboardingBottomConstraint.constant = 0
+            } else {
+                onboardingBottomConstraint.constant = keyboardSize.height
+            }
+        }
     }
     
     func load(url: URL) {

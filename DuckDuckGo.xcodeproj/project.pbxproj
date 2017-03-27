@@ -106,6 +106,7 @@
 		F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */; };
 		F1E90C201E678E7C005E7E21 /* HomeTabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */; };
 		F1ED9E521E81C8FE00785880 /* OnboardingViewSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1ED9E511E81C8FE00785880 /* OnboardingViewSize.swift */; };
+		F1F4D8E71E8435A800F38D83 /* OnboardingMini.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -369,6 +370,7 @@
 		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabDelegate.swift; sourceTree = "<group>"; };
 		F1ED9E511E81C8FE00785880 /* OnboardingViewSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewSize.swift; sourceTree = "<group>"; };
+		F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnboardingMini.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -734,7 +736,6 @@
 			children = (
 				F176699D1E40BC86003D3222 /* Settings.storyboard */,
 				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
-				F114C5601E67599C0018F95F /* UseDuckDuckGoViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -743,6 +744,7 @@
 			isa = PBXGroup;
 			children = (
 				F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */,
+				F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */,
 				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
 				F1ED9E511E81C8FE00785880 /* OnboardingViewSize.swift */,
 				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
@@ -752,6 +754,7 @@
 				F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */,
 				F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */,
 				F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */,
+				F114C5601E67599C0018F95F /* UseDuckDuckGoViewController.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -1084,6 +1087,7 @@
 				F114C55E1E6717800018F95F /* OmniBarHome.xib in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F114C55F1E6717800018F95F /* OmniBarWeb.xib in Resources */,
+				F1F4D8E71E8435A800F38D83 /* OnboardingMini.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,

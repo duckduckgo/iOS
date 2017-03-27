@@ -45,7 +45,7 @@
         <!--UseDuckDuckGoViewController-->
         <scene sceneID="SIJ-Tg-4kw">
             <objects>
-                <viewControllerPlaceholder storyboardName="Settings" referencedIdentifier="UseDuckDuckGoViewController" id="rAP-1L-ux0" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="UseDuckDuckGoViewController" id="rAP-1L-ux0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qaL-Bk-dgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1163" y="-800"/>
@@ -69,7 +69,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qi3-F2-882" customClass="RoundedRectangleView" customModule="Core">
-                                        <rect key="frame" x="16" y="341.5" width="343" height="48"/>
+                                        <rect key="frame" x="16" y="342" width="343" height="48"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
                                                 <rect key="frame" x="313" y="13" width="22" height="22"/>
@@ -103,24 +103,19 @@
                                         </connections>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
-                                        <rect key="frame" x="87" y="142.5" width="201" height="159"/>
+                                        <rect key="frame" x="87" y="143" width="201" height="159"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-lo-6Ex">
-                                        <rect key="frame" x="97.5" y="622" width="181" height="18"/>
+                                        <rect key="frame" x="97" y="622" width="181" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.1764705882352941" green="0.63137254901960782" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUX-Ym-KLT">
-                                        <rect key="frame" x="166.5" y="570" width="42" height="42"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="42" id="Z34-7B-FGa"/>
-                                            <constraint firstAttribute="width" constant="42" id="zGA-Vo-ugG"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                                        <rect key="frame" x="173" y="582" width="30" height="30"/>
                                         <state key="normal" image="Safari"/>
                                         <connections>
-                                            <segue destination="rAP-1L-ux0" kind="presentation" id="ubM-3p-IDI"/>
+                                            <segue destination="rAP-1L-ux0" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ubM-3p-IDI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7u-aG-tcz">
@@ -356,7 +351,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GE-Nf-lKM">
-                                                            <rect key="frame" x="44" y="10" width="203" height="19.5"/>
+                                                            <rect key="frame" x="44" y="10" width="203" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                             <color key="textColor" red="0.086260028180000003" green="0.086282856759999998" blue="0.086258567869999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -451,7 +446,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSc-wr-m04">
-                                <rect key="frame" x="157.5" y="615" width="60" height="52"/>
+                                <rect key="frame" x="158" y="615" width="60" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="HRi-l3-QSR"/>
                                     <constraint firstAttribute="height" constant="52" id="LN7-Xz-rHJ"/>

@@ -15,15 +15,19 @@ class OnboardingPageViewController: UIViewController {
     @IBOutlet weak var image: UIImageView!
     
     var configuration: OnboardingPageConfiguration!
-    var size: OnboardingViewSize!
+    var changesColor = true
     var isLastPage = false
     
+    var preferredBackgroundColor: UIColor {
+        return configuration.background
+    }
+    
     static func loadFromStoryboard(withConfiguartion configuration: OnboardingPageConfiguration, size: OnboardingViewSize) -> OnboardingPageViewController {
-        let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        let identifier = size == .mini ? "MiniOnboardingPageViewController" : "OnboardingPageViewController"
-        let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! OnboardingPageViewController
+        let storyboardName = (size == .mini) ? "OnboardingMini" : "Onboarding"
+        let storyboard = UIStoryboard.init(name: storyboardName, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
         controller.configuration = configuration
-        controller.size = size
+        controller.changesColor = (size == .fullScreen)
         return controller
     }
     
@@ -36,9 +40,7 @@ class OnboardingPageViewController: UIViewController {
         pageTitle.text = configuration.title
         pageDescription.text = configuration.description
         image.image = configuration.image
-        if size == .fullScreen {
-            view.backgroundColor = configuration.background
-        }
+        refreshBackgroundColor()
     }
     
     public func performImageShrinkAnimation() {
@@ -50,6 +52,22 @@ class OnboardingPageViewController: UIViewController {
     public func performImageResetAnimation() {
         UIView.animate(withDuration: 0.4) {
             self.image.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }
+    }
+    
+    public func refreshBackgroundColor() {
+        if changesColor {
+            self.view.backgroundColor = preferredBackgroundColor
+        }
+    }
+    
+    public func animateBackground(fromColor: UIColor, toColor: UIColor) {
+        if !changesColor {
+            return
+        }
+        view.backgroundColor = fromColor
+        UIView.animate(withDuration: 0.7) {
+            self.view.backgroundColor = toColor
         }
     }
 }

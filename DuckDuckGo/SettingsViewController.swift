@@ -7,21 +7,44 @@
 //
 
 import UIKit
+import Core
 
 class SettingsViewController: UITableViewController {
     
+    @IBOutlet weak var safeSearchToggle: UISwitch!
+    @IBOutlet weak var regionFilterText: UILabel!
+    @IBOutlet weak var dateFilterText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     
-    private lazy var settings = Settings()
+    fileprivate lazy var groupData = GroupDataStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSafeSearchToggle()
         configureVersionText()
+    }
+    
+    private func configureSafeSearchToggle() {
+        safeSearchToggle.isOn = groupData.safeSearchEnabled
     }
     
     private func configureVersionText() {
         let version = Version()
         versionText.text = version.localized()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureRegionFilter()
+        configureDateFilter()
+    }
+
+    private func configureRegionFilter() {
+        regionFilterText.text = currentRegionSelection().name
+    }
+    
+    private func configureDateFilter() {
+        dateFilterText.text = UserText.forDateFilter(currentDateFilter())
     }
     
     @IBAction func onDonePressed(_ sender: Any) {
@@ -40,4 +63,50 @@ class SettingsViewController: UITableViewController {
         controller.modalTransitionStyle = .flipHorizontal
         present(controller, animated: true, completion: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? RegionSelectionViewController {
+            controller.delegate = self
+        }
+        if let controller = segue.destination as? DateFilterSelectionViewController {
+            controller.delegate = self
+        }
+    }
+    
+    @IBAction func onSafeSearchToggled(_ sender: UISwitch) {
+        groupData.safeSearchEnabled = sender.isOn
+    }
+    
+    fileprivate func currentRegionFilter() -> RegionFilter {
+        return RegionFilter.forKey(groupData.regionFilter)
+    }
+    
+    fileprivate func currentDateFilter() -> DateFilter {
+        return DateFilter.forKey(groupData.dateFilter)
+    }
 }
+
+extension SettingsViewController: RegionSelectionDelegate {
+    func currentRegionSelection() -> RegionFilter {
+        return currentRegionFilter()
+    }
+    
+    func onRegionSelected(region: RegionFilter) {
+        groupData.regionFilter = region.filter
+    }
+}
+
+extension SettingsViewController: DateFilterSelectionDelegate {
+    
+    func currentDateFilterSelection() -> DateFilter {
+        return currentDateFilter()
+    }
+    
+    func onDateFilterSelected(dateFilter: DateFilter) {
+        let value = (dateFilter == .any) ? nil : dateFilter.rawValue
+        groupData.dateFilter = value
+    }
+}
+
+
+

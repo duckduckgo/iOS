@@ -19,7 +19,7 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var forwardButton: UIButton!
     
     private var webController: WebViewController?
-    private var groupData = GroupData()
+    private lazy var groupData = GroupDataStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +61,10 @@ class ShareViewController: UIViewController {
     
     private func loadText(textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: textIdentifier, options: nil, completionHandler: { [weak self] (item, error) in
-            if let text = item as? String, let queryUrl = AppUrls.url(forQuery: text) {
-                self?.webController?.load(url: queryUrl)
-            }
+            let dataStore = GroupDataStore()
+            guard let text = item as? String else { return }
+            guard let queryUrl = AppUrls.url(forQuery: text, filters: dataStore) else { return }
+            self?.webController?.load(url: queryUrl)
         })
     }
     

@@ -19,8 +19,7 @@ class MainViewController: UIViewController {
     
     fileprivate var autocompleteController: AutocompleteViewController?
     
-    fileprivate lazy var groupData = GroupData()
-    fileprivate lazy var settings = Settings()
+    fileprivate lazy var groupData = GroupDataStore()
     fileprivate lazy var tabManager = TabManager()
     
     weak var omniBar: OmniBar?
@@ -40,7 +39,7 @@ class MainViewController: UIViewController {
     }
     
     func loadQueryInNewWebTab(query: String) {
-        if let url = AppUrls.url(forQuery: query) {
+        if let url = AppUrls.url(forQuery: query, filters: groupData) {
             loadUrlInNewWebTab(url: url)
         }
     }
@@ -56,7 +55,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQueryInCurrentTab(query: String) {
-        if let queryUrl = AppUrls.url(forQuery: query) {
+        if let queryUrl = AppUrls.url(forQuery: query, filters: groupData) {
             loadUrlInCurrentTab(url: queryUrl)
         }
     }

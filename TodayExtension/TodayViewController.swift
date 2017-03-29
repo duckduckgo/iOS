@@ -12,7 +12,7 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDelegate, UITableViewDataSource {
     
-    private var groupData = GroupData()
+    private var groupData = GroupDataStore()
     private var quicklinks = [Link]()
 
     @IBOutlet weak var tableView: UITableView!
@@ -84,7 +84,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     @IBAction func onLaunchPressed(_ sender: Any) {
-        let url = URL(string: AppUrls.launch)!
+        let url = URL(string: AppDeepLinks.launch)!
         extensionContext?.open(url, completionHandler: nil)
     }
     
@@ -133,7 +133,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selection = indexPath.row
-        if let url = URL(string: "\(AppUrls.quickLink)\(selection)") {
+        if let url = URL(string: "\(AppDeepLinks.quickLink)\(selection)") {
             extensionContext?.open(url, completionHandler: nil)
         }
     }

@@ -37,3 +37,8 @@
 "onboarding.privacyright.description" = "Use DuckDuckGo and take back your privacy!";
 
 "navigation.title.edit" = "Edit";
+
+"datefilter.code.any" = "Any Time";
+"datefilter.code.d" = "Past Day";
+"datefilter.code.w" = "Past Week";
+"datefilter.code.m" = "Past Month";

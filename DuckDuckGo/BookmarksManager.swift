@@ -10,7 +10,7 @@ import Core
 
 class BookmarksManager {
     
-    private lazy var groupData = GroupData()
+    private lazy var groupData = GroupDataStore()
     
     var isEmpty: Bool {
         return groupData.quickLinks?.isEmpty ?? true

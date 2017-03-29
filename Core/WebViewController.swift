@@ -105,7 +105,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func loadHomepage() {
-        load(url: URL(string: AppUrls.home)!)
+        load(url: AppUrls.home)
     }
     
     public func load(url: URL) {

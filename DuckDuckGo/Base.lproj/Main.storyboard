@@ -203,7 +203,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="247.5" y="-800.70422535211264"/>
+            <point key="canvasLocation" x="247.19999999999999" y="-801.0494752623689"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="DKA-ax-iTU">

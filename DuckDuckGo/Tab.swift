@@ -11,8 +11,6 @@ import Core
 
 protocol Tab: class {
 
-    var link: Link { get }
-    
     var name: String? { get }
     
     var url: URL? { get }

@@ -53,7 +53,7 @@ extension GroupDataStore: SearchFilterStore {
     
     public var safeSearchEnabled: Bool {
         get {
-            return userDefaults()?.bool(forKey: Keys.safeSearch) ?? true
+            return userDefaults()?.object(forKey: Keys.safeSearch) as? Bool ?? true
         }
         set(newValue) {
             userDefaults()?.set(newValue, forKey: Keys.safeSearch)

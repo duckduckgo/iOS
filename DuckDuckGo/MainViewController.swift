@@ -236,9 +236,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func onSaveQuickLink(_ sender: UIBarButtonItem) {
+    @IBAction func onSaveBookmark(_ sender: UIBarButtonItem) {
         if let link = currentTab?.link {
-            groupData.addQuickLink(link: link)
+            groupData.addBookmark(link)
             makeToast(text: UserText.webSaveLinkDone)
         }
     }

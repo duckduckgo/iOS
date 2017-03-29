@@ -13,7 +13,7 @@ import NotificationCenter
 class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDelegate, UITableViewDataSource {
     
     private var groupData = GroupDataStore()
-    private var quicklinks = [Link]()
+    private var bookmarks = [Link]()
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,7 +34,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     
     private func configureWidgetSize(){
         if #available(iOSApplicationExtension 10.0, *) {
-            let mode = quicklinks.count > 2 ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
+            let mode = bookmarks.count > 2 ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
             extensionContext?.widgetLargestAvailableDisplayMode = mode
         }
         
@@ -65,9 +65,9 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     @discardableResult private func refresh() -> Bool {
-        let newQuickLinks = getData()
-        if newQuickLinks != quicklinks {
-            quicklinks = newQuickLinks
+        let newBookmarks = getData()
+        if newBookmarks != bookmarks {
+            bookmarks = newBookmarks
             tableView.reloadData()
             refreshViews()
             return true
@@ -80,7 +80,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     private func getData() -> [Link] {
-        return groupData.quickLinks ?? [Link]()
+        return groupData.bookmarks ?? [Link]()
     }
     
     @IBAction func onLaunchPressed(_ sender: Any) {
@@ -89,14 +89,14 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quicklinks.count == 0 ? 1 : quicklinks.count
+        return bookmarks.count == 0 ? 1 : bookmarks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if quicklinks.count == 0 {
+        if bookmarks.count == 0 {
             return emptyCell(for: indexPath)
         }
-        let link = quicklinks[indexPath.row]
+        let link = bookmarks[indexPath.row]
         return linkCell(for: indexPath, link: link)
     }
     
@@ -123,9 +123,9 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     
     func onClearTapped(sender: UIView) {
         let index = sender.tag
-        if index < quicklinks.count {
-            quicklinks.remove(at: sender.tag)
-            groupData.quickLinks = quicklinks
+        if index < bookmarks.count {
+            bookmarks.remove(at: sender.tag)
+            groupData.bookmarks = bookmarks
             tableView.reloadData()
             refreshViews()
         }

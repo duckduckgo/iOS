@@ -74,12 +74,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func quickLink(from url: URL) -> Link? {
-        guard let links = groupData.quickLinks,
-            let host = url.host,
-            let index = Int(host),
-            index < links.count else {
-                return nil
-        }
+        guard let links = groupData.bookmarks else { return nil }
+        guard let host = url.host else { return nil }
+        guard let index = Int(host) else { return nil }
+        guard index < links.count else { return nil }
         return links[index]
     }
     

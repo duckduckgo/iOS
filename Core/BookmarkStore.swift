@@ -9,6 +9,6 @@
 import Foundation
 
 public protocol BookmarkStore {
-    var quickLinks: [Link]? { get set }
-    func addQuickLink(link: Link)
+    var bookmarks: [Link]? { get set }
+    func addBookmark(_ bookmaark: Link)
 }

@@ -111,7 +111,7 @@
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <state key="normal" image="StarMaterial"/>
                                                         <connections>
-                                                            <action selector="onSaveQuickLink:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
+                                                            <action selector="onSaveBookmark:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>

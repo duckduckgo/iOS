@@ -13,7 +13,7 @@ public class GroupDataStore {
     private let groupName = "group.com.duckduckgo.extension"
     
     fileprivate struct Keys {
-        static let quickLinksKey = "quickLinksKey"
+        static let bookmarkKey = "bookmarkKey"
         static let safeSearch = "safeSearch"
         static let regionFilter = "regionFilter"
         static let dateFilter = "dateFilter"
@@ -27,25 +27,25 @@ public class GroupDataStore {
 }
 
 extension GroupDataStore: BookmarkStore {
-    public var quickLinks: [Link]? {
+    public var bookmarks: [Link]? {
         get {
-            if let data = userDefaults()?.data(forKey: Keys.quickLinksKey) {
+            if let data = userDefaults()?.data(forKey: Keys.bookmarkKey) {
                 return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
             }
             return nil
         }
-        set(newQuickLinks) {
-            if let newQuickLinks = newQuickLinks {
-                let data = NSKeyedArchiver.archivedData(withRootObject: newQuickLinks)
-                userDefaults()?.set(data, forKey: Keys.quickLinksKey)
+        set(newBookmarks) {
+            if let newBookmarks = newBookmarks {
+                let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
+                userDefaults()?.set(data, forKey: Keys.bookmarkKey)
             }
         }
     }
     
-    public func addQuickLink(link: Link) {
-        var links = quickLinks ?? [Link]()
-        links.append(link)
-        quickLinks = links
+    public func addBookmark(_ bookmark: Link) {
+        var newBookmarks = bookmarks ?? [Link]()
+        newBookmarks.append(bookmark)
+        bookmarks = newBookmarks
     }
 }
 

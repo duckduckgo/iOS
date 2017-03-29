@@ -85,9 +85,9 @@ class ShareViewController: UIViewController {
         webController?.goForward()
     }
     
-    @IBAction func onSaveQuickLink(_ sender: UIButton) {
+    @IBAction func onSaveBookmark(_ sender: UIButton) {
         if let link = webController?.link {
-            groupData.addQuickLink(link: link)
+            groupData.addBookmark(link)
             webController?.view.makeToast(UserText.webSaveLinkDone)
         }
     }

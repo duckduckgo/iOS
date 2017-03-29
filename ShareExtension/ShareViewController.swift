@@ -92,6 +92,7 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func onClose(_ sender: UIButton) {
+        webController?.tearDown()
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     

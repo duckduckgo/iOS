@@ -14,7 +14,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jmT-gh-cHl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jmT-gh-cHl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -105,14 +105,14 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
                                         <rect key="frame" x="87" y="143" width="201" height="159"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-lo-6Ex">
-                                        <rect key="frame" x="97" y="622" width="181" height="18"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-lo-6Ex">
+                                        <rect key="frame" x="97" y="613" width="181" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.1764705882352941" green="0.63137254901960782" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUX-Ym-KLT">
-                                        <rect key="frame" x="173" y="582" width="30" height="30"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUX-Ym-KLT">
+                                        <rect key="frame" x="173" y="573" width="30" height="30"/>
                                         <state key="normal" image="Safari"/>
                                         <connections>
                                             <segue destination="rAP-1L-ux0" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="ubM-3p-IDI"/>
@@ -154,7 +154,7 @@
                                     <constraint firstAttribute="trailing" secondItem="8uT-JX-uGc" secondAttribute="trailing" constant="16" id="8ZL-Qh-RNd"/>
                                     <constraint firstItem="8uT-JX-uGc" firstAttribute="top" secondItem="DPw-xt-wy9" secondAttribute="top" constant="26" id="Ev8-MW-rcR"/>
                                     <constraint firstItem="yFR-7m-lZn" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="fRR-OU-T7q"/>
-                                    <constraint firstAttribute="bottom" secondItem="LLI-lo-6Ex" secondAttribute="bottom" constant="27" id="jDZ-Sw-BnF"/>
+                                    <constraint firstAttribute="bottom" secondItem="LLI-lo-6Ex" secondAttribute="bottom" constant="36" id="jDZ-Sw-BnF"/>
                                     <constraint firstItem="LLI-lo-6Ex" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="jiC-0d-Uwa"/>
                                     <constraint firstItem="x7u-aG-tcz" firstAttribute="top" secondItem="DPw-xt-wy9" secondAttribute="top" constant="26" id="n3M-t2-AqS"/>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="centerY" secondItem="DPw-xt-wy9" secondAttribute="centerY" constant="32" id="prx-ob-ngU"/>
@@ -184,6 +184,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="zV4-a4-ChM"/>
                     <connections>
+                        <outlet property="bookmarksIcon" destination="8uT-JX-uGc" id="238-d0-Ghf"/>
                         <outlet property="centreBar" destination="Qi3-F2-882" id="qLA-Gp-FLx"/>
                         <outlet property="miniOnboardingContainer" destination="eQQ-Vt-V93" id="JNC-57-j98"/>
                         <outlet property="onboardingBottomConstraint" destination="Y5v-Eo-pSC" id="XJV-Tm-i7G"/>

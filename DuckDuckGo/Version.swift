@@ -40,14 +40,14 @@ public struct Version {
     }
     
     func localized() -> String? {
-        guard let name = name(), let versionNumber = versionNumber(), let buildNumber = buildNumber() else {
-            return nil
-        }
+        
+        guard let name = name() else { return nil }
+        guard let versionNumber = versionNumber() else { return nil }
+        guard let buildNumber = buildNumber() else { return nil }
         
         guard (versionNumber != buildNumber) else {
             return String.localizedStringWithFormat(UserText.appInfo, name, versionNumber)
         }
-        
         return String.localizedStringWithFormat(UserText.appInfoWithBuild, name, versionNumber, buildNumber)
     }
 }

@@ -19,8 +19,7 @@ class MainViewController: UIViewController {
     
     fileprivate var autocompleteController: AutocompleteViewController?
     
-    fileprivate lazy var groupData = GroupData()
-    fileprivate lazy var settings = Settings()
+    fileprivate lazy var groupData = GroupDataStore()
     fileprivate lazy var tabManager = TabManager()
     
     weak var omniBar: OmniBar?
@@ -40,7 +39,7 @@ class MainViewController: UIViewController {
     }
     
     func loadQueryInNewWebTab(query: String) {
-        if let url = AppUrls.url(forQuery: query) {
+        if let url = AppUrls.url(forQuery: query, filters: groupData) {
             loadUrlInNewWebTab(url: url)
         }
     }
@@ -56,7 +55,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQueryInCurrentTab(query: String) {
-        if let queryUrl = AppUrls.url(forQuery: query) {
+        if let queryUrl = AppUrls.url(forQuery: query, filters: groupData) {
             loadUrlInCurrentTab(url: queryUrl)
         }
     }
@@ -72,8 +71,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabFrom(webTab: WebTabViewController, forUrl url: URL) {
+        launchTabFrom(webTab: webTab, forUrlRequest: URLRequest(url: url))
+    }
+    
+    fileprivate func launchTabFrom(webTab: WebTabViewController, forUrlRequest urlRequest: URLRequest) {
         refreshTabIcon(count: tabManager.count+1)
-        attachSiblingWebTab(fromWebView: webTab.webView, forUrl: url)
+        attachSiblingWebTab(fromWebView: webTab.webView, forUrlRequest: urlRequest)
         refreshControls()
     }
     
@@ -95,12 +98,12 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
     
-    private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrl url: URL) {
+    private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
         let tab = WebTabViewController.loadFromStoryboard()
         tab.attachWebView(newWebView: webView.createSiblingWebView())
         tab.tabDelegate = self
         tabManager.add(tab: tab)
-        tab.load(url: url)
+        tab.load(urlRequest: urlRequest)
         addToView(tab: tab)
     }
     
@@ -237,9 +240,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func onSaveQuickLink(_ sender: UIBarButtonItem) {
+    @IBAction func onSaveBookmark(_ sender: UIBarButtonItem) {
         if let link = currentTab?.link {
-            groupData.addQuickLink(link: link)
+            groupData.addBookmark(link)
             makeToast(text: UserText.webSaveLinkDone)
         }
     }
@@ -357,6 +360,10 @@ extension MainViewController: WebTabDelegate {
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {
         launchTabFrom(webTab: webTab, forUrl: url)
+    }
+    
+    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
+        launchTabFrom(webTab: webTab, forUrlRequest: urlRequest)
     }
 }
 

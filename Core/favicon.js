@@ -25,7 +25,7 @@ var duckduckgoFavicon = function() {
     };
     
     function findFavicons() {
-        var favicons = []
+        var favicons = [];
         for (var selector in selectors) {
             var icons = document.head.querySelectorAll(selector);
             for (var i = 0; i < icons.length; i++) {

@@ -11,11 +11,12 @@ import Core
 
 class HomeTabViewController: UIViewController, Tab {
     
+    private static let onboardingHeight: CGFloat = 220
+    
     @IBOutlet weak var tabIcon: UIButton!
+    @IBOutlet weak var bookmarksIcon: UIButton!
     @IBOutlet weak var passiveContainerView: UIView!
     @IBOutlet weak var centreBar: UIView!
-    @IBOutlet weak var miniOnboardingContainer: UIView!
-    @IBOutlet weak var onboardingBottomConstraint: NSLayoutConstraint!
     
     var onboardingController: OnboardingViewController?
     
@@ -25,32 +26,18 @@ class HomeTabViewController: UIViewController, Tab {
     let showsUrlInOmniBar = false
     
     var name: String? = UserText.homeLinkTitle
-    var url: URL? = URL(string: AppUrls.base)!
-    var favicon: URL? = URL(string: AppUrls.favicon)
+    var url: URL? = AppUrls.base
+    var favicon: URL? = AppUrls.favicon
     
     var canGoBack = false
     var canGoForward: Bool = false
     
     private var activeMode = false
     private lazy var tabIconMaker = TabIconMaker()
+    private lazy var groupData = GroupDataStore()
     
     static func loadFromStoryboard() -> HomeTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if UIApplication.shared.statusBarOrientation.isLandscape, traitCollection.verticalSizeClass == .compact{
-                onboardingBottomConstraint.constant = 0
-            } else {
-                onboardingBottomConstraint.constant = keyboardSize.height
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,13 +53,24 @@ class HomeTabViewController: UIViewController, Tab {
         dismissMiniOnboardingFlow()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addKeyboardObserver()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeKeyboardObserver()
+    }
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = true
+        navigationController?.isToolbarHidden = !groupData.uniformNavigationEnabled
         navigationController?.hidesBarsOnSwipe = false
     }
     
     private func refreshMode() {
+        tabIcon.isHidden = groupData.uniformNavigationEnabled
+        bookmarksIcon.isHidden = groupData.uniformNavigationEnabled
         if activeMode {
             enterActiveMode()
         } else {
@@ -119,19 +117,56 @@ class HomeTabViewController: UIViewController, Tab {
     }
     
     private func showMiniOnboardingFlow() {
-        let onboardingController = OnboardingViewController.loadFromStoryboard(size: .mini, doneButtonStyle: nil)
+        dismissMiniOnboardingFlow()
+        let onboardingController = OnboardingViewController.loadMiniFromStoryboard()
         self.onboardingController = onboardingController
         addChildViewController(onboardingController)
-        onboardingController.view.frame = miniOnboardingContainer.frame
-        miniOnboardingContainer.addSubview(onboardingController.view)
-        miniOnboardingContainer.isHidden = false
+        view.addSubview(onboardingController.view)
+        onboardingController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: HomeTabViewController.onboardingHeight)
+        centreMiniOnboardingScreen()
     }
     
     private func dismissMiniOnboardingFlow() {
-        miniOnboardingContainer.isHidden = true
+        onboardingController?.view.removeFromSuperview()
         onboardingController?.removeFromParentViewController()
-        miniOnboardingContainer.clearSubviews()
         onboardingController = nil
+    }
+    
+    private func addKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+    }
+    
+    private func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardInfo = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] else { return }
+        guard let keyboardValue = keyboardInfo as? NSValue else { return }
+        let keyboardRect = keyboardValue.cgRectValue
+        if UIApplication.shared.statusBarOrientation.isLandscape, traitCollection.verticalSizeClass == .compact {
+            centreMiniOnboardingScreen()
+        } else {
+            floatMiniOnboaridngScreenAboveKeyboard(keyboardRect: keyboardRect)
+        }
+    }
+    
+    private func centreMiniOnboardingScreen() {
+        centreMiniOnboardingScreenWithin(height: view.frame.height)
+    }
+    
+    private func floatMiniOnboaridngScreenAboveKeyboard(keyboardRect: CGRect) {
+        let availableHeight = view.frame.height - keyboardRect.height
+        centreMiniOnboardingScreenWithin(height: availableHeight)
+    }
+    
+    private func centreMiniOnboardingScreenWithin(height: CGFloat) {
+        guard let onboardingView = onboardingController?.view else { return }
+        let navbarHeight = navigationController?.navigationBar.frame.height ?? 0
+        let decorHeight = InterfaceMeasurement.defaultStatusBarHeight + navbarHeight
+        let availableHeight = height - decorHeight
+        let y = decorHeight + (availableHeight / 2) - (HomeTabViewController.onboardingHeight / 2)
+        onboardingView.frame.origin.y = y
     }
     
     func load(url: URL) {

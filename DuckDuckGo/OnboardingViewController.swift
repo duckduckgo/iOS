@@ -12,24 +12,30 @@ import Core
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     enum DoneButtonStyle: String {
-        case search = "searchLoupeSmall"
+        case search = "SearchLoupeSmall"
         case close = "Close"
     }
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
     @IBOutlet weak var doneButton: UIButton!
-    
     private var doneButtonStyle: DoneButtonStyle?
+    
     private weak var pageController: UIPageViewController!
     fileprivate var dataSource: OnboardingDataSource!
     
-    static func loadFromStoryboard(size: OnboardingViewSize, doneButtonStyle: DoneButtonStyle? ) -> OnboardingViewController {
-        let identifier = (size == .mini) ? "MiniOnboardingViewController" : "OnboardingViewController"
+    static func loadFromStoryboard(doneButtonStyle: DoneButtonStyle? ) -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: identifier) as! OnboardingViewController
+        let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
         controller.doneButtonStyle = doneButtonStyle
-        controller.dataSource = OnboardingDataSource(withSize: size)
+        controller.dataSource = OnboardingDataSource(withSize: .fullScreen)
+        return controller
+    }
+    
+    static func loadMiniFromStoryboard() -> OnboardingViewController {
+        let storyboard = UIStoryboard.init(name: "OnboardingMini", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
+        controller.dataSource = OnboardingDataSource(withSize: .mini)
         return controller
     }
     
@@ -66,23 +72,23 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let next = pendingViewControllers.first as? OnboardingPageViewController else { return }
+        guard let index = dataSource.index(of: next) else { return }
+        animateBackgroundColors(current: currentPageController(), next: next)
         currentPageController().performImageShrinkAnimation()
-        if let next = pendingViewControllers.first, let index = dataSource.index(of: next) {
-            configureDisplay(forPage: index)
-        }
+        configureDisplay(forPage: index)
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController,
-                            didFinishAnimating finished: Bool,
-                            previousViewControllers: [UIViewController],
-                            transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        let previous = previousViewControllers.first as? OnboardingPageViewController
-        if let previous = previous, let previousIndex = dataSource.index(of: previous) {
-            previous.performImageResetAnimation()
-            if !completed {
-                configureDisplay(forPage: previousIndex)
-            }
+        guard let previous = previousViewControllers.first as? OnboardingPageViewController else { return }
+        guard let previousIndex = dataSource.index(of: previous) else { return }
+        previous.performImageResetAnimation()
+        previous.refreshBackgroundColor()
+        
+        if !completed {
+            configureDisplay(forPage: previousIndex)
         }
     }
     
@@ -90,11 +96,14 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         pageControl.currentPage = index
     }
     
+    func animateBackgroundColors(current: OnboardingPageViewController, next: OnboardingPageViewController) {
+        current.animateBackground(fromColor: current.preferredBackgroundColor, toColor: next.preferredBackgroundColor)
+        next.animateBackground(fromColor: current.preferredBackgroundColor, toColor: next.preferredBackgroundColor)
+    }
+    
     private func goToPage(index: Int) {
-        pageController.setViewControllers([dataSource.controller(forIndex: index)],
-                                          direction: .forward,
-                                          animated: true,
-                                          completion: nil)
+        let controller = dataSource.controller(forIndex: index)
+        pageController.setViewControllers([controller], direction: .forward, animated: true, completion: nil)
         configureDisplay(forPage: index)
     }
     
@@ -128,8 +137,7 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
         return true
     }
     
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                                  shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
@@ -137,7 +145,6 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
         if currentPageController().isLastPage {
             return true
         }
-        
         return false
     }
 }

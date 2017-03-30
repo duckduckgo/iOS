@@ -111,7 +111,7 @@
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <state key="normal" image="StarMaterial"/>
                                                         <connections>
-                                                            <action selector="onSaveQuickLink:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
+                                                            <action selector="onSaveBookmark:" destination="j1y-V4-xli" eventType="touchUpInside" id="Yj3-Fz-ma6"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -170,9 +170,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEy-Cv-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="DeleteForever" id="nnR-h8-CMr">
-                    <color key="tintColor" red="0.70358673094952784" green="0.97917258006125452" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="416.80000000000001" y="-244.22788605697153"/>
         </scene>
@@ -218,7 +215,6 @@
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
         <image name="CloseMaterial" width="24" height="24"/>
-        <image name="DeleteForever" width="24" height="24"/>
         <image name="Fire" width="26" height="26"/>
         <image name="LogoStamp" width="24" height="24"/>
         <image name="RefreshMaterial" width="24" height="24"/>

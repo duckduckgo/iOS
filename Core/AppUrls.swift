@@ -10,66 +10,77 @@ import Foundation
 
 public struct AppUrls {
     
-    public static let launch = "ddgLaunch://"
-    
-    public static let quickLink = "ddgQuickLink://"
-    
-    public static let base = "duckduckgo.com"
-    
-    public static let favicon = "https://duckduckgo.com/favicon.ico"
-    
-    public static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
-    
-    public static let autocomplete = "https://duckduckgo.com/ac/"
-    
-    private static let searchParam = "q"
-    
-    public static func isLaunch(url: URL) -> Bool {
-        if let scheme = url.scheme {
-            return AppUrls.launch.contains(scheme)
-        }
-        return false
+    private struct Url {
+        static let base = "duckduckgo.com"
+        static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
+        static let autocomplete = "https://duckduckgo.com/ac/"
+        static let favicon = "https://duckduckgo.com/favicon.ico"
     }
     
-    public static func isQuickLink(url: URL) -> Bool {
-        if let scheme = url.scheme {
-            return AppUrls.quickLink.contains(scheme)
-        }
-        return false
+    private struct Param {
+        static let search = "q"
+        static let safeSearch = "kp"
+        static let regionFilter = "kl"
+        static let dateFilter = "df"
+    }
+    
+    private struct ParamValue {
+        static let safeSearchOff = "-1"
+    }
+    
+    public static var base: URL {
+        return URL(string: Url.base)!
+    }
+    
+    public static var favicon: URL {
+        return URL(string: Url.favicon)!
+    }
+    
+    public static var home: URL {
+        return URL(string: Url.home)!
     }
     
     public static func isDuckDuckGo(url: URL) -> Bool {
-        return url.absoluteString.contains(base)
+        return url.absoluteString.contains(Url.base)
     }
     
     public static func searchQuery(fromUrl url: URL) -> String? {
         if !isDuckDuckGo(url: url) {
             return nil
         }
-        return url.get(param: searchParam)
+        return url.getParam(name: Param.search)
     }
     
-    public static func url(forQuery query: String) -> URL? {
+    public static func url(forQuery query: String, filters: SearchFilterStore) -> URL? {
         if let url = URL.webUrl(fromText: query) {
             return url
         }
-        if let searchUrl = AppUrls.searchUrl(text: query) {
+        if let searchUrl = searchUrl(text: query, filters: filters) {
             return searchUrl
         }
         return nil
     }
     
-    private static func searchUrl(text: String) -> URL? {
-        guard let encodedQuery = URL.encode(queryText: text) else { return nil }
-        let url = "\(home)&\(searchParam)=\(encodedQuery)"
-        return URL(string: url)
+    public static func searchUrl(text: String, filters: SearchFilterStore) -> URL? {
+        let url = addfilters(filters, toUrl: home)
+        return url.addParam(name: Param.search, value: text)
+    }
+    
+    private static func addfilters(_ filters: SearchFilterStore, toUrl url: URL) -> URL {
+        var filteredUrl = url
+        if !filters.safeSearchEnabled {
+            filteredUrl = filteredUrl.addParam(name: Param.safeSearch, value: ParamValue.safeSearchOff)
+        }
+        if let regionFilter = filters.regionFilter {
+            filteredUrl = filteredUrl.addParam(name: Param.regionFilter, value: regionFilter)
+        }
+        if let dateFilter = filters.dateFilter {
+            filteredUrl = filteredUrl.addParam(name: Param.dateFilter, value: dateFilter)
+        }
+        return filteredUrl
     }
     
     public static func autocompleteUrl(forText text: String) -> URL? {
-        guard let encodedQuery = URL.encode(queryText: text) else {
-            return nil
-        }
-        let url = "\(autocomplete)?\(searchParam)=\(encodedQuery)"
-        return URL(string: url)
+        return URL(string: Url.autocomplete)?.addParam(name: Param.search, value: text)
     }
 }

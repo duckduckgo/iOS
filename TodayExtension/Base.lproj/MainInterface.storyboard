@@ -39,11 +39,11 @@
                                         <rect key="frame" x="0.0" y="28" width="296" height="32"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DER-8H-iW5" id="Umv-Da-dOh">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="31"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="31.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="No saved quick links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yga-ZB-lD8">
-                                                    <rect key="frame" x="15" y="0.0" width="266" height="31"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="No saved bookmarks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yga-ZB-lD8">
+                                                    <rect key="frame" x="15" y="0.0" width="266" height="31.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -57,11 +57,11 @@
                                         <rect key="frame" x="0.0" y="60" width="296" height="32"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bj8-hq-ZTt" id="TMa-E4-eO9">
-                                            <rect key="frame" x="0.0" y="0.0" width="249" height="31"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="249" height="31.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Wikipedia" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gwT-1t-oux">
-                                                    <rect key="frame" x="15" y="0.0" width="234" height="31"/>
+                                                    <rect key="frame" x="15" y="0.0" width="234" height="31.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -77,8 +77,8 @@
                                     <outlet property="delegate" destination="M4Y-Lb-cyx" id="gaq-c8-L3p"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quick Links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDh-rB-yH2">
-                                <rect key="frame" x="68" y="14" width="95.5" height="21.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bookmarks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDh-rB-yH2">
+                                <rect key="frame" x="68" y="14" width="93" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

@@ -10,5 +10,5 @@ import Foundation
 
 
 public struct InterfaceMeasurement {
-    static let defaultStatusBarHeight: CGFloat = 20
+    public static let defaultStatusBarHeight: CGFloat = 20
 }

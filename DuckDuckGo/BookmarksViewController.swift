@@ -26,8 +26,25 @@ class BookmarksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addAplicationActiveObserver()
         tableView.dataSource = dataSource
         refreshEditButton()
+    }
+    
+    deinit {
+        removeApplicationActiveObserver()
+    }
+    
+    private func addAplicationActiveObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationBecameActive), name: .UIApplicationDidBecomeActive, object: nil)
+    }
+    
+    private func removeApplicationActiveObserver() {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    }
+    
+    func onApplicationBecameActive(notification: NSNotification) {
+        tableView.reloadData()
     }
     
     private func refreshEditButton() {

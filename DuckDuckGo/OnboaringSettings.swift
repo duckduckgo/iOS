@@ -1,5 +1,5 @@
 //
-//  Settings.swift
+//  OnboardingSettings.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 03/03/2017.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Settings {
+struct OnboardingSettings {
     
-    private let suit = "settingsSuit"
+    private let suit = "onboardingSettingsSuit"
     
     private struct Keys {
         static let hasSeenOnboarding = "hasSeenOnboarding"

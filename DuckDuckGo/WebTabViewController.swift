@@ -114,6 +114,10 @@ extension WebTabViewController: WebEventsDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
+    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
+        tabDelegate?.webTab(self, didRequestNewTabForRequest: urlRequest)
+    }
+    
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL) {
         launchActionSheet(forUrl: url)
     }

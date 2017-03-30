@@ -42,6 +42,14 @@ public struct UserText {
     public static let alertEditBookmark = forKey("alert.title.edit.bookmark")
 
     public static let navigationTitleEdit = forKey("navigation.title.edit")
+  
+    public static func forDateFilter(_ dateFilter: DateFilter) -> String {
+        if dateFilter == .any {
+            return forKey("datefilter.code.any")
+        }
+        let key = "datefilter.code.\(dateFilter.rawValue)"
+        return forKey(key)
+    }
     
     fileprivate static func forKey(_ key: String) -> String {
         return NSLocalizedString(key, comment: key)

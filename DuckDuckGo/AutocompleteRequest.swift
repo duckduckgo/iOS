@@ -13,10 +13,9 @@ class AutocompleteRequest {
     
     typealias Completion = ([Suggestion]?, Error?) -> Swift.Void
     
-    let url: URL
-    let parser: AutocompleteParser
-    var task: URLSessionDataTask?
-    
+    private let url: URL
+    private let parser: AutocompleteParser
+    private var task: URLSessionDataTask?
     
     init(query : String, parser: AutocompleteParser) {
         self.url = AppUrls.autocompleteUrl(forText: query)!

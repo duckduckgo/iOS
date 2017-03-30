@@ -40,6 +40,15 @@ class HomeTabViewController: UIViewController, Tab {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addKeyboardObserver()
+    }
+    
+    deinit {
+        removeKeyboardObserver()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
         activeMode = false
@@ -53,15 +62,6 @@ class HomeTabViewController: UIViewController, Tab {
         dismissMiniOnboardingFlow()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addKeyboardObserver()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        removeKeyboardObserver()
-    }
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = true
         navigationController?.isToolbarHidden = !groupData.uniformNavigationEnabled
@@ -123,7 +123,6 @@ class HomeTabViewController: UIViewController, Tab {
         addChildViewController(onboardingController)
         view.addSubview(onboardingController.view)
         onboardingController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: HomeTabViewController.onboardingHeight)
-        centreMiniOnboardingScreen()
     }
     
     private func dismissMiniOnboardingFlow() {

@@ -71,8 +71,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabFrom(webTab: WebTabViewController, forUrl url: URL) {
+        launchTabFrom(webTab: webTab, forUrlRequest: URLRequest(url: url))
+    }
+    
+    fileprivate func launchTabFrom(webTab: WebTabViewController, forUrlRequest urlRequest: URLRequest) {
         refreshTabIcon(count: tabManager.count+1)
-        attachSiblingWebTab(fromWebView: webTab.webView, forUrl: url)
+        attachSiblingWebTab(fromWebView: webTab.webView, forUrlRequest: urlRequest)
         refreshControls()
     }
     
@@ -94,12 +98,12 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
     
-    private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrl url: URL) {
+    private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
         let tab = WebTabViewController.loadFromStoryboard()
         tab.attachWebView(newWebView: webView.createSiblingWebView())
         tab.tabDelegate = self
         tabManager.add(tab: tab)
-        tab.load(url: url)
+        tab.load(urlRequest: urlRequest)
         addToView(tab: tab)
     }
     
@@ -356,6 +360,10 @@ extension MainViewController: WebTabDelegate {
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {
         launchTabFrom(webTab: webTab, forUrl: url)
+    }
+    
+    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
+        launchTabFrom(webTab: webTab, forUrlRequest: urlRequest)
     }
 }
 

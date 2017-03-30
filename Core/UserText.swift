@@ -29,13 +29,27 @@ public struct UserText {
     public static let onboardingPrivacyRightTitle = forKey("onboarding.privacyright.title")
     public static let onboardingPrivacyRightDescription = forKey("onboarding.privacyright.description")
     
+    public static let actionSave = forKey("action.title.save")
+    public static let actionCancel = forKey("action.title.cancel")
     public static let actionNewTab = forKey("action.title.newTab")
     public static let actionOpen = forKey("action.title.open")
     public static let actionReadingList = forKey("action.title.readingList")
     public static let actionCopy = forKey("action.title.copy")
     public static let actionShare = forKey("action.title.share")
-    public static let actionCancel = forKey("action.title.cancel")
+    public static let actionSaveBookmark = forKey("action.title.save.bookmark")
+    
+    public static let alertSaveBookmark = forKey("alert.title.save.bookmark")
+    public static let alertEditBookmark = forKey("alert.title.edit.bookmark")
 
+    public static let navigationTitleEdit = forKey("navigation.title.edit")
+  
+    public static func forDateFilter(_ dateFilter: DateFilter) -> String {
+        if dateFilter == .any {
+            return forKey("datefilter.code.any")
+        }
+        let key = "datefilter.code.\(dateFilter.rawValue)"
+        return forKey(key)
+    }
     
     fileprivate static func forKey(_ key: String) -> String {
         return NSLocalizedString(key, comment: key)

@@ -9,14 +9,42 @@
 import Foundation
 
 extension URL {
-
+    
     private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"
     
-    public func get(param: String) -> String? {
-        if let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false), let queryItems = (urlComponents.queryItems) {
-            return queryItems.filter({ (item) in item.name == param }).first?.value
+    public func getParam(name: String) -> String? {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
+        guard let query = components.queryItems else { return nil }
+        return query.filter({ (item) in item.name == name }).first?.value
+    }
+    
+    public func addParam(name: String, value: String?) -> URL {
+        let clearedUrl = removeParam(name: name)
+        guard var components = URLComponents(url: clearedUrl, resolvingAgainstBaseURL: false) else { return self }
+        var query = components.queryItems ?? [URLQueryItem]()
+        query.append(URLQueryItem(name: name, value: value))
+        components.queryItems = query
+        return components.url ?? self
+    }
+    
+    public func addParams(_ params: [URLQueryItem]) -> URL {
+        var url = self
+        for param in params {
+            url = url.addParam(name: param.name, value: param.value)
         }
-        return nil
+        return url
+    }
+    
+    public func removeParam(name: String) -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
+        guard var query = components.queryItems else { return self }
+        for (index, param) in query.enumerated() {
+            if param.name == name {
+                query.remove(at: index)
+            }
+        }
+        components.queryItems = query
+        return components.url ?? self
     }
     
     public static func webUrl(fromText text: String) -> URL? {
@@ -37,8 +65,12 @@ extension URL {
     private static func appendScheme(path: String) -> String {
         return "http://\(path)"
     }
-
+    
     public static func encode(queryText: String) -> String? {
         return queryText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+    }
+    
+    public static func decode(query: String) -> String? {
+        return query.replacingOccurrences(of: "+", with: " ").removingPercentEncoding
     }
 }

@@ -39,18 +39,19 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        hideDismissButton()
+        configureTextField()
+    }
+    
+    private func configureTextField() {
         textField.placeholder = UserText.searchDuckDuckGo
         textField.delegate = self
     }
     
     @discardableResult override func becomeFirstResponder() -> Bool {
-        showDismissButton()
         return textField.becomeFirstResponder()
     }
     
     @discardableResult override func resignFirstResponder() -> Bool {
-        hideDismissButton()
         return textField.resignFirstResponder()
     }
     
@@ -65,7 +66,7 @@ class OmniBar: UIView {
         }
         
         if let query = AppUrls.searchQuery(fromUrl: url) {
-            textField.text = query
+            textField.text = URL.decode(query: query)
             return
         }
         
@@ -77,23 +78,36 @@ class OmniBar: UIView {
         textField.text = url.absoluteString
     }
     
-    func showDismissButton() {
-        // TODO
+    fileprivate func showDismissButton() {
+        dismissButton.isHidden = false
     }
     
-    func hideDismissButton() {
-        // TODO
+    fileprivate func hideDismissButton() {
+        dismissButton.isHidden = true
     }
     
-    @IBAction func onActionButtonPressed() {
-        omniDelegate?.onActionButtonPressed()
+    fileprivate func showRefreshButton() {
+        refreshButton?.isHidden = false
+    }
+    
+    fileprivate func hideRefreshButton() {
+         refreshButton?.isHidden = true
+    }
+    
+    @IBAction func onFireButtonPressed() {
+        omniDelegate?.onFireButtonPressed()
     }
     
     @IBAction func onRefreshButtonPressed() {
         omniDelegate?.onRefreshButtonPressed()
     }
     
+    @IBAction func onBookmarksButtonPressed() {
+        omniDelegate?.onBookmarksButtonPressed()
+    }
+    
     @IBAction func onDismissButtonPressed() {
+        resignFirstResponder()
         omniDelegate?.onDismissButtonPressed()
     }
     
@@ -113,8 +127,10 @@ class OmniBar: UIView {
 }
 
 extension OmniBar: UITextFieldDelegate {
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        refreshButton?.isHidden = true
+        hideRefreshButton()
+        showDismissButton()
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -128,7 +144,8 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        refreshButton?.isHidden = false
+        showRefreshButton()
+        hideDismissButton()
     }
 }
 

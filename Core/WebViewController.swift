@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-open class WebViewController: UIViewController, WKNavigationDelegate {
+open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     private static let estimatedProgressKeyPath = "estimatedProgress"
     
@@ -17,15 +17,17 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     
     @IBOutlet weak var progressBar: UIProgressView!
     
-    open var webView: WKWebView!
+    open private(set) var webView: WKWebView!
     
     public var name: String? {
-        return webView.title
+        return webView.title    
     }
     
     public var url: URL? {
         return webView.url
     }
+    
+    public var favicon: URL?
     
     public var link: Link? {
         if let url = webView.url, let title = name {
@@ -70,10 +72,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
         webView = newWebView
         attachLongPressHandler(webView: newWebView)
         newWebView.allowsBackForwardNavigationGestures = true
-        newWebView.translatesAutoresizingMaskIntoConstraints = false
         newWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         newWebView.navigationDelegate = self
-        view.insertWithEqualSize(subView: newWebView)
+        newWebView.uiDelegate = self
+        newWebView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(newWebView, at: 0)
+        view.addEqualSizeConstraints(subView: newWebView)
         webEventsDelegate?.attached(webView: webView)
     }
     
@@ -102,12 +106,16 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func loadHomepage() {
-        load(url: URL(string: AppUrls.home)!)
+        load(url: AppUrls.home)
     }
     
     public func load(url: URL) {
+        load(urlRequest: URLRequest(url: url))
+    }
+ 
+    public func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
-        webView.load(URLRequest(url: url))
+        webView.load(urlRequest)
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -117,18 +125,27 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        favicon = nil
         showProgressIndicator()
         webEventsDelegate?.webpageDidStartLoading()
     }
     
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
+        webView.getFavicon(completion: { [weak self] (favicon) in
+            self?.favicon = favicon
+        })
         webEventsDelegate?.webpageDidFinishLoading()
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFinishLoading()
+    }
+    
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        webEventsDelegate?.webView(webView, didRequestNewTabForRequest: navigationAction.request)
+        return nil
     }
     
     private func showProgressIndicator() {
@@ -173,7 +190,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     fileprivate func touchesYOffset() -> CGFloat {
-        let statusBarSize: CGFloat = 20
+        let statusBarSize: CGFloat = prefersStatusBarHidden ? 0 : InterfaceMeasurement.defaultStatusBarHeight
         if let nav = navigationController {
             return nav.isNavigationBarHidden ? statusBarSize : nav.navigationBar.frame.height + statusBarSize
         }

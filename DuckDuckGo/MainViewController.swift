@@ -19,8 +19,7 @@ class MainViewController: UIViewController {
     
     fileprivate var autocompleteController: AutocompleteViewController?
     
-    fileprivate lazy var groupData = GroupData()
-    fileprivate lazy var settings = Settings()
+    fileprivate lazy var groupData = GroupDataStore()
     fileprivate lazy var tabManager = TabManager()
     
     weak var omniBar: OmniBar?
@@ -31,17 +30,67 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        attachHomeTab()
+        launchTab(active: false)
     }
     
-    func attachHomeTab() {
-        let tab = HomeViewController.loadFromStoryboard()
+    override func viewDidLayoutSubviews() {
+        updateAutocompleteSize()
+        super.viewDidLayoutSubviews()
+    }
+    
+    func loadQueryInNewWebTab(query: String) {
+        if let url = AppUrls.url(forQuery: query, filters: groupData) {
+            loadUrlInNewWebTab(url: url)
+        }
+    }
+    
+    func loadUrlInNewWebTab(url: URL) {
+        loadViewIfNeeded()
+        if let homeTab = currentTab as? HomeTabViewController {
+            tabManager.remove(tab: homeTab)
+        }
+        currentTab?.dismiss()
+        attachWebTab(forUrl: url)
+        refreshControls()
+    }
+    
+    fileprivate func loadQueryInCurrentTab(query: String) {
+        if let queryUrl = AppUrls.url(forQuery: query, filters: groupData) {
+            loadUrlInCurrentTab(url: queryUrl)
+        }
+    }
+    
+    fileprivate func loadUrlInCurrentTab(url: URL) {
+        currentTab?.load(url: url)
+    }
+    
+    fileprivate func launchTab(active: Bool? = nil) {
+        let active = active ?? true
+        attachHomeTab(active: active)
+        refreshControls()
+    }
+    
+    fileprivate func launchTabFrom(webTab: WebTabViewController, forUrl url: URL) {
+        launchTabFrom(webTab: webTab, forUrlRequest: URLRequest(url: url))
+    }
+    
+    fileprivate func launchTabFrom(webTab: WebTabViewController, forUrlRequest urlRequest: URLRequest) {
+        refreshTabIcon(count: tabManager.count+1)
+        attachSiblingWebTab(fromWebView: webTab.webView, forUrlRequest: urlRequest)
+        refreshControls()
+    }
+    
+    private func attachHomeTab(active: Bool = false) {
+        let tab = HomeTabViewController.loadFromStoryboard()
         tabManager.add(tab: tab)
         tab.tabDelegate = self
         addToView(tab: tab)
+        if active {
+            tab.enterActiveMode()
+        }
     }
     
-    func attachWebTab(forUrl url: URL) {
+    private func attachWebTab(forUrl url: URL) {
         let tab = WebTabViewController.loadFromStoryboard()
         tabManager.add(tab: tab)
         tab.tabDelegate = self
@@ -49,16 +98,16 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
     
-    func attachSiblingWebTab(fromWebView webView: WKWebView, forUrl url: URL) {
+    private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
         let tab = WebTabViewController.loadFromStoryboard()
         tab.attachWebView(newWebView: webView.createSiblingWebView())
         tab.tabDelegate = self
         tabManager.add(tab: tab)
-        tab.load(url: url)
+        tab.load(urlRequest: urlRequest)
         addToView(tab: tab)
     }
     
-    func addToView(tab: UIViewController) {
+    private func addToView(tab: UIViewController) {
         if let tab = tab as? Tab {
             resetOmniBar(withStyle: tab.omniBarStyle)
         }
@@ -68,7 +117,33 @@ class MainViewController: UIViewController {
         containerView.addSubview(tab.view)
     }
     
-    func resetOmniBar(withStyle style: OmniBar.Style) {
+    fileprivate func select(tabAt index: Int) {
+        let selectedTab = tabManager.select(tabAt: index) as! UIViewController
+        addToView(tab: selectedTab)
+        refreshControls()
+    }
+    
+    fileprivate func remove(tabAt index: Int) {
+        tabManager.remove(at: index)
+        
+        if tabManager.isEmpty {
+            launchTab()
+        }
+        
+        if let lastIndex = tabManager.lastIndex, index > lastIndex {
+            select(tabAt: lastIndex)
+            return
+        }
+        
+        select(tabAt: index)
+    }
+    
+    fileprivate func clearAllTabs() {
+        tabManager.clearAll()
+        launchTab(active: false)
+    }
+    
+    private func resetOmniBar(withStyle style: OmniBar.Style) {
         if omniBar?.style == style {
             return
         }
@@ -79,17 +154,17 @@ class MainViewController: UIViewController {
         navigationItem.titleView = omniBar
     }
     
-    func refreshControls() {
+    fileprivate func refreshControls() {
         refreshOmniText()
         refreshTabIcon()
         refreshNavigationButtons()
     }
     
-    func refreshTabIcon() {
+    private func refreshTabIcon() {
         refreshTabIcon(count: tabManager.count)
     }
     
-    func refreshTabIcon(count: Int) {
+    private func refreshTabIcon(count: Int) {
         tabsButton.image = TabIconMaker().icon(forTabs: count)
     }
     
@@ -109,6 +184,43 @@ class MainViewController: UIViewController {
         }
     }
     
+    fileprivate func updateOmniBar(withQuery updatedQuery: String) {
+        displayAutocompleteSuggestions(forQuery: updatedQuery)
+    }
+    
+    private func displayAutocompleteSuggestions(forQuery query: String) {
+        if autocompleteController == nil {
+            let controller = AutocompleteViewController.loadFromStoryboard()
+            controller.delegate = self
+            addChildViewController(controller)
+            containerView.addSubview(controller.view)
+            autocompleteController = controller
+            updateAutocompleteSize()
+        }
+        guard let autocompleteController = autocompleteController else { return }
+        autocompleteController.updateQuery(query: query)
+    }
+    
+    private func updateAutocompleteSize() {
+        if let omniBarWidth = omniBar?.frame.width, let autocompleteController = autocompleteController {
+            autocompleteController.widthConstraint.constant = omniBarWidth
+        }
+    }
+    
+    fileprivate func dismissOmniBar() {
+        omniBar?.resignFirstResponder()
+        dismissAutcompleteSuggestions()
+        refreshOmniText()
+        currentTab?.omniBarWasDismissed()
+    }
+    
+    private func dismissAutcompleteSuggestions() {
+        guard let controller = autocompleteController else { return }
+        autocompleteController = nil
+        controller.view.removeFromSuperview()
+        controller.removeFromParentViewController()
+    }
+    
     @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
         currentTab?.goBack()
     }
@@ -119,77 +231,72 @@ class MainViewController: UIViewController {
     
     @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
         if let url = currentTab?.url {
-            presentShareSheet(withItems: [url], fromButtonItem: sender)
+            let title = currentTab?.name ?? ""
+            var items: [Any] = [url, title]
+            if let favicon = currentTab?.favicon {
+                items.append(favicon)
+            }
+            presentShareSheet(withItems: items, fromButtonItem: sender)
         }
     }
     
-    @IBAction func onSaveQuickLink(_ sender: UIBarButtonItem) {
+    @IBAction func onSaveBookmark(_ sender: UIBarButtonItem) {
         if let link = currentTab?.link {
-            groupData.addQuickLink(link: link)
+            groupData.addBookmark(link)
             makeToast(text: UserText.webSaveLinkDone)
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? TabViewController {
-            onTabViewControllerSegue(controller: controller)
-            return
-        }
+    @IBAction func onTabButtonPressed(_ sender: UIBarButtonItem) {
+        launchTabSwitcher()
     }
     
-    private func onTabViewControllerSegue(controller: TabViewController) {
-        controller.delegate = self
+    fileprivate func launchTabSwitcher() {
+        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self)
+        controller.modalPresentationStyle = .overCurrentContext
+        controller.modalTransitionStyle = .crossDissolve
+        present(controller, animated: true, completion: nil)
     }
     
-    func makeToast(text: String) {
+    @IBAction func onBookmarksButtonPressed(_ sender: UIBarButtonItem) {
+        launchBookmarks()
+    }
+    
+    fileprivate func launchBookmarks() {
+        let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
+        controller.modalPresentationStyle = .overCurrentContext
+        controller.modalTransitionStyle = .crossDissolve
+        present(controller, animated: true, completion: nil)
+    }
+    
+    private func makeToast(text: String) {
         let x = view.bounds.size.width / 2.0
         let y = view.bounds.size.height - 80
         view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
-    }
-    
-    func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil {
-            let controller = AutocompleteViewController.loadFromStoryboard()
-            controller.delegate = self
-            addChildViewController(controller)
-            containerView.addSubview(controller.view)
-            autocompleteController = controller
-        }
-        guard let autocompleteController = autocompleteController else { return }
-        autocompleteController.updateQuery(query: query)
-        omniBar?.becomeFirstResponder()
-    }
-    
-    func dismissAutcompleteSuggestions() {
-        guard let controller = autocompleteController else { return }
-        controller.view.removeFromSuperview()
-        controller.removeFromParentViewController()
-        omniBar?.resignFirstResponder()
-        currentTab?.omniBarWasDismissed()
-        autocompleteController = nil
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        dismissAutcompleteSuggestions()
     }
 }
 
 extension MainViewController: OmniBarDelegate {
     
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        displayAutocompleteSuggestions(forQuery: updatedQuery)
+        updateOmniBar(withQuery: updatedQuery)
     }
     
     func onOmniQuerySubmitted(_ query: String) {
-        dismissAutcompleteSuggestions()
-        if let url = AppUrls.url(forQuery: query) {
-            currentTab?.load(url: url)
-        }
+        dismissOmniBar()
+        loadQueryInCurrentTab(query: query)
     }
     
-    func onActionButtonPressed() {
-        clearAllTabs()
+    func onFireButtonPressed() {
+        dismissOmniBar()
+        if let current = currentTab, let index = tabManager.indexOf(tab: current) {
+            remove(tabAt: index)
+        }
+        launchTab()
+    }
+    
+    func onBookmarksButtonPressed() {
+        launchBookmarks()
     }
     
     func onRefreshButtonPressed() {
@@ -197,102 +304,94 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onDismissButtonPressed() {
-        dismissAutcompleteSuggestions()
+        dismissOmniBar()
     }
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
-        dismissAutcompleteSuggestions()
-        if let queryUrl = AppUrls.url(forQuery: suggestion) {
-            currentTab?.load(url: queryUrl)
-        }
+        dismissOmniBar()
+        loadQueryInCurrentTab(query: suggestion)
+    }
+    
+    func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
+        omniBar?.textField.text = suggestion
     }
 }
 
 extension MainViewController: HomeTabDelegate {
     
-    func activateOmniBar() {
+    func homeTabDidActivateOmniBar(homeTab: HomeTabViewController) {
         omniBar?.becomeFirstResponder()
     }
     
-    func deactivateOmniBar() {
+    func homeTabDidDeactivateOmniBar(homeTab: HomeTabViewController) {
         omniBar?.resignFirstResponder()
         omniBar?.clear()
     }
     
-    func loadNewWebQuery(query: String) {
-        if let url = AppUrls.url(forQuery: query) {
-            loadNewWebUrl(url: url)
-        }
+    func homeTab(_ homeTab: HomeTabViewController, didRequestQuery query: String) {
+        loadQueryInNewWebTab(query: query)
     }
     
-    func loadNewWebUrl(url: URL) {
-        loadViewIfNeeded()
-        let homeTab = currentTab as? HomeViewController
-        attachWebTab(forUrl: url)
-        if let oldTab = homeTab {
-            tabManager.remove(tab: oldTab)
-        }
-        refreshControls()
+    func homeTab(_ homeTab: HomeTabViewController, didRequestUrl url: URL) {
+        loadUrlInNewWebTab(url: url)
     }
     
-    func launchTabsSwitcher() {
-        let controller = TabViewController.loadFromStoryboard()
-        controller.delegate = self
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
+    func homeTabDidRequestTabsSwitcher(homeTab: HomeTabViewController) {
+        launchTabSwitcher()
+    }
+    
+    func homeTabDidRequestBookmarks(homeTab: HomeTabViewController) {
+        launchBookmarks()
+    }
+    
+    func homeTabDidRequestTabCount(homeTab: HomeTabViewController) -> Int {
+        return tabManager.count
     }
 }
 
 extension MainViewController: WebTabDelegate {
     
-    func openNewTab(fromWebView webView: WKWebView, forUrl url: URL) {
-        refreshTabIcon(count: tabManager.count+1)
-        attachSiblingWebTab(fromWebView: webView, forUrl: url)
+    func webTabLoadingStateDidChange(webTab: WebTabViewController) {
         refreshControls()
     }
     
-    func resetAll() {
-        clearAllTabs()
+    func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {
+        launchTabFrom(webTab: webTab, forUrl: url)
+    }
+    
+    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
+        launchTabFrom(webTab: webTab, forUrlRequest: urlRequest)
     }
 }
 
-extension MainViewController: TabViewControllerDelegate {
+extension MainViewController: TabSwitcherDelegate {
     
     var tabDetails: [Link] {
         return tabManager.tabDetails
     }
     
-    func createTab() {
-        attachHomeTab()
-        refreshControls()
+    func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
+        launchTab()
     }
     
-    func select(tabAt index: Int) {
-        let selectedTab = tabManager.select(tabAt: index) as! UIViewController
-        addToView(tab: selectedTab)
-        refreshControls()
-    }
-    
-    func remove(tabAt index: Int) {
-        tabManager.remove(at: index)
-        
-        if tabManager.isEmpty {
-            createTab()
-        }
-        
-        if let lastIndex = tabManager.lastIndex, index > lastIndex {
-            select(tabAt: lastIndex)
-            return
-        }
-        
+    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTabAt index: Int) {
         select(tabAt: index)
     }
     
-    func clearAllTabs() {
-        tabManager.clearAll()
-        createTab()
+    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTabAt index: Int) {
+        remove(tabAt: index)
+    }
+    
+    func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
+        clearAllTabs()
+    }
+}
+
+extension MainViewController: BookmarksDelegate {
+    func bookmarksDidSelect(link: Link) {
+        loadUrlInCurrentTab(url: link.url)
     }
 }

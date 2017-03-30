@@ -51,8 +51,8 @@ class WebTabViewController: WebViewController, Tab {
     
     func newTabAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] action in
-            if let webView = self?.webView {
-                self?.tabDelegate?.openNewTab(fromWebView: webView, forUrl: url)
+            if let weakSelf = self {
+                weakSelf.tabDelegate?.webTab(weakSelf, didRequestNewTabForUrl: url)
             }
         }
     }
@@ -86,9 +86,13 @@ class WebTabViewController: WebViewController, Tab {
     }
     
     func dismiss() {
-        tearDown()
         removeFromParentViewController()
         view.removeFromSuperview()
+    }
+    
+    func destroy() {
+        dismiss()
+        tearDown()
     }
     
     func omniBarWasDismissed() {}
@@ -101,13 +105,17 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        tabDelegate?.refreshControls()
+        tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
-        tabDelegate?.refreshControls()
+        tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
+        tabDelegate?.webTab(self, didRequestNewTabForRequest: urlRequest)
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL) {

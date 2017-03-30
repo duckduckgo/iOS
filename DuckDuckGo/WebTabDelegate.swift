@@ -10,9 +10,9 @@ import WebKit
 
 protocol WebTabDelegate: class {
     
-    func openNewTab(fromWebView webView: WKWebView, forUrl url: URL)
+    func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL)
     
-    func refreshControls()
+    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
     
-    func resetAll()
+    func webTabLoadingStateDidChange(webTab: WebTabViewController)
 }

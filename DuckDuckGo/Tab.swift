@@ -11,11 +11,11 @@ import Core
 
 protocol Tab: class {
 
-    var link: Link { get }
-    
     var name: String? { get }
     
     var url: URL? { get }
+    
+    var favicon: URL? { get }
     
     var omniBarStyle: OmniBar.Style { get }
     
@@ -36,10 +36,12 @@ protocol Tab: class {
     func reload()
     
     func dismiss()
+    
+    func destroy()
 }
 
 extension Tab {
     var link: Link {
-        return Link(title: name ?? "", url: url ?? URL(string: "-")!)
+        return Link(title: name ?? "", url: url ?? URL(string: "-")!, favicon: favicon)
     }
 }

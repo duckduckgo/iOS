@@ -18,21 +18,16 @@ class AutocompleteParser {
     
     func parse(data: Data?) throws -> [Suggestion] {
         
-        guard let data = data else {
-            throw ParsingError.noData
-        }
-        
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [[String: String]] else {
-            throw ParsingError.invalidJson
-        }
+        guard let data = data else { throw ParsingError.noData }
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [[String: String]] else { throw ParsingError.invalidJson }
         
         var suggestions = [Suggestion]()
         for element in json {
             if let type = element.keys.first, let suggestion = element[type] {
-                Logger.log(text: "\(type): \(suggestion)")
                 suggestions.append(Suggestion(type: type, suggestion: suggestion))
             }
         }
+        
         return suggestions
     }
 }

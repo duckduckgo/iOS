@@ -44,7 +44,7 @@
                                             <constraint firstAttribute="height" constant="24" id="lZW-L4-rSz"/>
                                         </constraints>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="SearchLoupeSmall"/>
+                                        <state key="normal" image="SearchLoupeMini"/>
                                         <connections>
                                             <action selector="onDonePressed:" destination="jGy-gB-XA1" eventType="touchUpInside" id="Eja-C8-Djy"/>
                                         </connections>
@@ -433,6 +433,6 @@
         <image name="InstructionsSettings" width="47" height="47"/>
         <image name="InstructionsTick" width="50" height="48"/>
         <image name="OnboardingRealPrivacy" width="200" height="200"/>
-        <image name="SearchLoupeSmall" width="12" height="12"/>
+        <image name="SearchLoupeMini" width="12" height="12"/>
     </resources>
 </document>

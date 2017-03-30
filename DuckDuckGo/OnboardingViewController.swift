@@ -12,7 +12,7 @@ import Core
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     enum DoneButtonStyle: String {
-        case search = "SearchLoupeSmall"
+        case search = "SearchLoupeMini"
         case close = "Close"
     }
     

@@ -11,7 +11,7 @@ import Core
 
 class HomeTabViewController: UIViewController, Tab {
     
-    private static let onboardingHeight: CGFloat = 220
+    private static let onboardingHeight: CGFloat = 230
     
     @IBOutlet weak var tabIcon: UIButton!
     @IBOutlet weak var bookmarksIcon: UIButton!
@@ -122,7 +122,6 @@ class HomeTabViewController: UIViewController, Tab {
         self.onboardingController = onboardingController
         addChildViewController(onboardingController)
         view.addSubview(onboardingController.view)
-        onboardingController.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: HomeTabViewController.onboardingHeight)
     }
     
     private func dismissMiniOnboardingFlow() {
@@ -165,7 +164,7 @@ class HomeTabViewController: UIViewController, Tab {
         let decorHeight = InterfaceMeasurement.defaultStatusBarHeight + navbarHeight
         let availableHeight = height - decorHeight
         let y = decorHeight + (availableHeight / 2) - (HomeTabViewController.onboardingHeight / 2)
-        onboardingView.frame.origin.y = y
+        onboardingView.frame = CGRect(x: 0, y: y, width: view.frame.width, height: HomeTabViewController.onboardingHeight)
     }
     
     func load(url: URL) {

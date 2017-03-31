@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func startOnboardingFlow() {
         guard let root = mainViewController() else { return }
-        let onboardingController = OnboardingViewController.loadFromStoryboard(doneButtonStyle: .search)
+        let onboardingController = OnboardingViewController.loadFromStoryboard()
         onboardingController.modalTransitionStyle = .flipHorizontal
         root.present(onboardingController, animated: false, completion: nil)
     }

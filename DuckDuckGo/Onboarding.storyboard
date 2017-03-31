@@ -53,7 +53,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd6-It-gRc">
-                                <rect key="frame" x="117.5" y="533" width="140" height="40"/>
+                                <rect key="frame" x="118" y="533" width="140" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="Zuk-Jt-TXn">
@@ -104,7 +104,6 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="doneButton" destination="Q5R-sJ-B88" id="vsZ-KE-FV8"/>
                         <outlet property="pageControl" destination="Mom-DW-Dup" id="tNf-wL-7cm"/>
                         <outlet property="swipeGestureRecogniser" destination="Jc4-v5-FSQ" id="WiE-sT-3LY"/>
                     </connections>
@@ -140,7 +139,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgM-zL-1yd">
-                                <rect key="frame" x="33.5" y="360.5" width="308" height="26.5"/>
+                                <rect key="frame" x="34" y="360" width="308" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="308" id="ED8-cm-uRI">
                                         <variation key="heightClass=regular-widthClass=regular" constant="460"/>
@@ -154,7 +153,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xm8-7V-I4X">
-                                <rect key="frame" x="33.5" y="393" width="308" height="57.5"/>
+                                <rect key="frame" x="34" y="393" width="308" height="58"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="308" id="j30-az-JCE">
                                         <variation key="heightClass=regular-widthClass=regular" constant="460"/>
@@ -171,7 +170,7 @@ We don’t track you — period.</string>
                                 </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRealPrivacy" translatesAutoresizingMaskIntoConstraints="NO" id="9WE-Tj-PRw">
-                                <rect key="frame" x="87.5" y="136.5" width="200" height="200"/>
+                                <rect key="frame" x="88" y="136" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="SwP-TY-ujq">
                                         <variation key="heightClass=compact-widthClass=compact" constant="140"/>

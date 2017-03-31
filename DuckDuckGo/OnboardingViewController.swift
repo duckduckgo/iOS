@@ -11,23 +11,15 @@ import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
-    enum DoneButtonStyle: String {
-        case search = "SearchLoupeMini"
-        case close = "Close"
-    }
-    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
-    @IBOutlet weak var doneButton: UIButton!
-    private var doneButtonStyle: DoneButtonStyle?
     
     private weak var pageController: UIPageViewController!
     fileprivate var dataSource: OnboardingDataSource!
     
-    static func loadFromStoryboard(doneButtonStyle: DoneButtonStyle? ) -> OnboardingViewController {
+    static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
-        controller.doneButtonStyle = doneButtonStyle
         controller.dataSource = OnboardingDataSource(withSize: .fullScreen)
         return controller
     }
@@ -42,20 +34,11 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageControl()
-        configureDoneButton()
     }
     
     private func configurePageControl() {
         pageControl.numberOfPages = dataSource.count
         pageControl.currentPage = 0
-    }
-    
-    private func configureDoneButton() {
-        guard let buttonStyle = doneButtonStyle else {
-            return
-        }
-        let image = UIImage(named: buttonStyle.rawValue)
-        doneButton.setImage(image, for: .normal)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

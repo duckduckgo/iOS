@@ -94,6 +94,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     func configureDisplay(forPage index: Int) {
         pageControl.currentPage = index
+        self.view.backgroundColor = currentPageController().view.backgroundColor
     }
     
     func animateBackgroundColors(current: OnboardingPageViewController, next: OnboardingPageViewController) {

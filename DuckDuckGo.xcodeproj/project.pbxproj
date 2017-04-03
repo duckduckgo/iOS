@@ -116,6 +116,7 @@
 		F1DE78561E5CA0CD0058895A /* Fonts-Licensed in Resources */ = {isa = PBXBuildFile; fileRef = F1DE78551E5CA0CD0058895A /* Fonts-Licensed */; };
 		F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewCell.swift */; };
 		F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78591E5CD2A70058895A /* UIViewExtension.swift */; };
+		F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */; };
 		F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1B1E67684B005E7E21 /* Tab.swift */; };
 		F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */; };
 		F1E90C201E678E7C005E7E21 /* HomeTabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */; };
@@ -392,6 +393,7 @@
 		F1DE78551E5CA0CD0058895A /* Fonts-Licensed */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Fonts-Licensed"; sourceTree = "<group>"; };
 		F1DE78571E5CAE350058895A /* TabViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
 		F1DE78591E5CD2A70058895A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
 		F1E90C1B1E67684B005E7E21 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabDelegate.swift; sourceTree = "<group>"; };
@@ -492,9 +494,8 @@
 			isa = PBXGroup;
 			children = (
 				F17669A21E411D63003D3222 /* Application */,
-				F198D78F1E3976300088DA8A /* Utilities */,
-				F17D722C1E8B3563003E8B0E /* Domain */,
 				F198D7961E3A45C00088DA8A /* Web */,
+				F1E092B31E92A6B900732CCC /* Core */,
 				F17669A91E412A17003D3222 /* Mocks */,
 				84E341AC1E2F7EFB00BDBA6F /* Info.plist */,
 			);
@@ -731,8 +732,8 @@
 		F198D78F1E3976300088DA8A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F14E491E1E391CE900DC037C /* URLExtensionTests.swift */,
 				F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */,
+				F14E491E1E391CE900DC037C /* URLExtensionTests.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -849,6 +850,24 @@
 			isa = PBXGroup;
 			children = (
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
+			);
+			name = UserInterface;
+			sourceTree = "<group>";
+		};
+		F1E092B31E92A6B900732CCC /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F17D722C1E8B3563003E8B0E /* Domain */,
+				F198D78F1E3976300088DA8A /* Utilities */,
+				F1E092BF1E92A6EA00732CCC /* UserInterface */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		F1E092BF1E92A6EA00732CCC /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+				F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -1251,6 +1270,7 @@
 				F17D723A1E8B366E003E8B0E /* AppUrls.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* VersionTests.swift in Sources */,
+				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,
 				F17669A31E411DB8003D3222 /* Version.swift in Sources */,
 				F17669B01E413F7F003D3222 /* InfoBundle.swift in Sources */,

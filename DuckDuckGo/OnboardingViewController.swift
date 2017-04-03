@@ -16,11 +16,15 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     private weak var pageController: UIPageViewController!
     fileprivate var dataSource: OnboardingDataSource!
+
+    private var changesColor = false
+    private var transitioningToPage: OnboardingPageViewController?
     
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
         controller.dataSource = OnboardingDataSource(withSize: .fullScreen)
+        controller.changesColor = true
         return controller
     }
     
@@ -34,6 +38,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageControl()
+        let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
+        scrollView?.delegate = self
     }
     
     private func configurePageControl() {
@@ -56,33 +62,36 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         guard let next = pendingViewControllers.first as? OnboardingPageViewController else { return }
-        guard let index = dataSource.index(of: next) else { return }
-        animateBackgroundColors(current: currentPageController(), next: next)
-        currentPageController().performImageShrinkAnimation()
-        configureDisplay(forPage: index)
+        transitioningToPage = next
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
                             previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        
-        guard let previous = previousViewControllers.first as? OnboardingPageViewController else { return }
-        guard let previousIndex = dataSource.index(of: previous) else { return }
-        previous.performImageResetAnimation()
-        previous.refreshBackgroundColor()
-        
         if !completed {
-            configureDisplay(forPage: previousIndex)
+            guard let previous = previousViewControllers.first as? OnboardingPageViewController else { return }
+            guard let index = dataSource.index(of: previous) else { return }
+           configureDisplay(forPage: index)
+        } else {
+            guard let current = transitioningToPage else { return }
+            guard let index = dataSource.index(of: current) else { return }
+            configureDisplay(forPage: index)
         }
+        transitioningToPage = nil
     }
     
-    func configureDisplay(forPage index: Int) {
+    private func configureDisplay(forPage index: Int) {
         pageControl.currentPage = index
-        self.view.backgroundColor = currentPageController().view.backgroundColor
+        if changesColor {
+            view.backgroundColor = currentPageController().preferredBackgroundColor
+        }
+        currentPageController().performImageResetAnimation()
     }
     
-    func animateBackgroundColors(current: OnboardingPageViewController, next: OnboardingPageViewController) {
-        current.animateBackground(fromColor: current.preferredBackgroundColor, toColor: next.preferredBackgroundColor)
-        next.animateBackground(fromColor: current.preferredBackgroundColor, toColor: next.preferredBackgroundColor)
+    fileprivate func transitionBackgroundColor(withRatio ratio: CGFloat) {
+        guard changesColor else { return }
+        guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
+        let currentColor = currentPageController().preferredBackgroundColor
+        view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
     }
     
     private func goToPage(index: Int) {
@@ -124,11 +133,21 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if currentPageController().isLastPage {
             return true
         }
         return false
+    }
+}
+
+extension OnboardingViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let x = scrollView.contentOffset.x
+        var ratio = x / view.bounds.size.width
+        ratio = (ratio > 1) ? 2 - ratio : ratio
+        transitionBackgroundColor(withRatio: ratio)
     }
 }

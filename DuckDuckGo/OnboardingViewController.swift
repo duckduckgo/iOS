@@ -13,6 +13,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint?
     
     private weak var pageController: UIPageViewController!
     fileprivate var dataSource: OnboardingDataSource!
@@ -34,17 +35,31 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         controller.dataSource = OnboardingDataSource(withSize: .mini)
         return controller
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageControl()
-        let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
-        scrollView?.delegate = self
+        configureScrollView()
     }
     
     private func configurePageControl() {
         pageControl.numberOfPages = dataSource.count
         pageControl.currentPage = 0
+    }
+    
+    private func configureScrollView() {
+        let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
+        scrollView?.delegate = self
+    }
+  
+    override func viewDidLayoutSubviews() {
+        configureDisplayForVerySmallHandsets()
+    }
+    
+    private func configureDisplayForVerySmallHandsets() {
+        if view.bounds.height <= 480 && view.bounds.width <= 480 {
+            bottomMarginConstraint?.constant = 0
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

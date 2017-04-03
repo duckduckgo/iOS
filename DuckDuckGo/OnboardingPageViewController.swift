@@ -40,15 +40,11 @@ class OnboardingPageViewController: UIViewController {
         image.image = configuration.image
     }
     
-    public func performImageShrinkAnimation() {
-        UIView.animate(withDuration: 0.4) {
-            self.image.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
-        }
+    public func scaleImage(_ scale: CGFloat) {
+        image.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
     
-    public func performImageResetAnimation() {
-        UIView.animate(withDuration: 0.4) {
-            self.image.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
+    public func resetImage() {
+        image.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
 }

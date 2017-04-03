@@ -84,14 +84,27 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         if changesColor {
             view.backgroundColor = currentPageController().preferredBackgroundColor
         }
-        currentPageController().performImageResetAnimation()
+        currentPageController().resetImage()
+    }
+
+    fileprivate func transition(withRatio ratio: CGFloat) {
+        transitionBackgroundColor(withRatio: ratio)
+        shrinkImages(withRatio: ratio)
     }
     
-    fileprivate func transitionBackgroundColor(withRatio ratio: CGFloat) {
+    private func transitionBackgroundColor(withRatio ratio: CGFloat) {
         guard changesColor else { return }
         guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
         let currentColor = currentPageController().preferredBackgroundColor
         view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
+    }
+    
+    private func shrinkImages(withRatio ratio: CGFloat) {
+        let currentImageScale = 1 - (0.2 * (1 - ratio))
+        currentPageController().scaleImage(currentImageScale)
+
+        let nextImageScale = 1 - (0.2 * ratio)
+        transitioningToPage?.scaleImage(nextImageScale)
     }
     
     private func goToPage(index: Int) {
@@ -148,6 +161,6 @@ extension OnboardingViewController: UIScrollViewDelegate {
         let x = scrollView.contentOffset.x
         var ratio = x / view.bounds.size.width
         ratio = (ratio > 1) ? 2 - ratio : ratio
-        transitionBackgroundColor(withRatio: ratio)
+        transition(withRatio: ratio)
     }
 }

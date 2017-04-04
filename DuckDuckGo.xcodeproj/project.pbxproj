@@ -85,6 +85,7 @@
 		F18326871E60542100240060 /* JavascriptLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18326861E60542100240060 /* JavascriptLoader.swift */; };
 		F18608DD1E5E588400361C30 /* TabIconMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18608DC1E5E588400361C30 /* TabIconMaker.swift */; };
 		F18608E01E5E649400361C30 /* document.js in Resources */ = {isa = PBXBuildFile; fileRef = F18608DF1E5E649400361C30 /* document.js */; };
+		F18CA9A91E93E863003EA579 /* OnboardingMiniViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18CA9A81E93E863003EA579 /* OnboardingMiniViewController.swift */; };
 		F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */; };
 		F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */; };
 		F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */; };
@@ -120,7 +121,6 @@
 		F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1B1E67684B005E7E21 /* Tab.swift */; };
 		F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */; };
 		F1E90C201E678E7C005E7E21 /* HomeTabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */; };
-		F1ED9E521E81C8FE00785880 /* OnboardingViewSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1ED9E511E81C8FE00785880 /* OnboardingViewSize.swift */; };
 		F1F4D8E71E8435A800F38D83 /* OnboardingMini.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -361,6 +361,7 @@
 		F18326861E60542100240060 /* JavascriptLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavascriptLoader.swift; sourceTree = "<group>"; };
 		F18608DC1E5E588400361C30 /* TabIconMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabIconMaker.swift; sourceTree = "<group>"; };
 		F18608DF1E5E649400361C30 /* document.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = document.js; sourceTree = "<group>"; };
+		F18CA9A81E93E863003EA579 /* OnboardingMiniViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingMiniViewController.swift; sourceTree = "<group>"; };
 		F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithInsets.swift; sourceTree = "<group>"; };
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtensionTests.swift; sourceTree = "<group>"; };
@@ -397,7 +398,6 @@
 		F1E90C1B1E67684B005E7E21 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabDelegate.swift; sourceTree = "<group>"; };
-		F1ED9E511E81C8FE00785880 /* OnboardingViewSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewSize.swift; sourceTree = "<group>"; };
 		F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnboardingMini.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -729,6 +729,47 @@
 			name = Javascript;
 			sourceTree = "<group>";
 		};
+		F18CA9B51E93F19C003EA579 /* FullScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F1BE54571E69DE1000FCF649 /* OnboaringSettings.swift */,
+				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
+				F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */,
+			);
+			name = FullScreen;
+			sourceTree = "<group>";
+		};
+		F18CA9B61E93F1BC003EA579 /* Mini */ = {
+			isa = PBXGroup;
+			children = (
+				F18CA9A81E93E863003EA579 /* OnboardingMiniViewController.swift */,
+				F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */,
+			);
+			name = Mini;
+			sourceTree = "<group>";
+		};
+		F18CA9B71E93F1D6003EA579 /* SharedPages */ = {
+			isa = PBXGroup;
+			children = (
+				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
+				F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */,
+				F1BE544C1E69DDE000FCF649 /* OnboardingPageConfiguration.swift */,
+				F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */,
+				F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */,
+				F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */,
+				F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */,
+			);
+			name = SharedPages;
+			sourceTree = "<group>";
+		};
+		F18CA9B81E93F1FA003EA579 /* Instructions */ = {
+			isa = PBXGroup;
+			children = (
+				F114C5601E67599C0018F95F /* UseDuckDuckGoViewController.swift */,
+			);
+			name = Instructions;
+			sourceTree = "<group>";
+		};
 		F198D78F1E3976300088DA8A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -798,19 +839,10 @@
 		F1BE54481E69DD5F00FCF649 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				F1BE54571E69DE1000FCF649 /* OnboaringSettings.swift */,
-				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
-				F1ED9E511E81C8FE00785880 /* OnboardingViewSize.swift */,
-				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
-				F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */,
-				F1BE544C1E69DDE000FCF649 /* OnboardingPageConfiguration.swift */,
-				F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */,
-				F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */,
-				F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */,
-				F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */,
-				F114C5601E67599C0018F95F /* UseDuckDuckGoViewController.swift */,
-				F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */,
-				F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */,
+				F18CA9B51E93F19C003EA579 /* FullScreen */,
+				F18CA9B61E93F1BC003EA579 /* Mini */,
+				F18CA9B71E93F1D6003EA579 /* SharedPages */,
+				F18CA9B81E93F1FA003EA579 /* Instructions */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -1214,7 +1246,6 @@
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
 				F13508031E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift in Sources */,
-				F1ED9E521E81C8FE00785880 /* OnboardingViewSize.swift in Sources */,
 				F176699A1E3FA5EE003D3222 /* Version.swift in Sources */,
 				F1BE545C1E69F73300FCF649 /* PrivacyRightConfiguration.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* OnboaringSettings.swift in Sources */,
@@ -1248,6 +1279,7 @@
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
 				F13508101E8C307800B7ECC4 /* RegionSelectionDelegate.swift in Sources */,
+				F18CA9A91E93E863003EA579 /* OnboardingMiniViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,

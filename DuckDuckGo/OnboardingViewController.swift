@@ -13,29 +13,19 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
-    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint?
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
     
     private weak var pageController: UIPageViewController!
-    fileprivate var dataSource: OnboardingDataSource!
-
-    private var changesColor = false
     private var transitioningToPage: OnboardingPageViewController?
+    fileprivate var dataSource: OnboardingDataSource!
     
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
-        controller.dataSource = OnboardingDataSource(withSize: .fullScreen)
-        controller.changesColor = true
+        controller.dataSource = OnboardingDataSource(storyboard: storyboard)
         return controller
     }
     
-    static func loadMiniFromStoryboard() -> OnboardingViewController {
-        let storyboard = UIStoryboard.init(name: "OnboardingMini", bundle: nil)
-        let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
-        controller.dataSource = OnboardingDataSource(withSize: .mini)
-        return controller
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageControl()
@@ -51,7 +41,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
         scrollView?.delegate = self
     }
-  
+    
     override func viewDidLayoutSubviews() {
         configureDisplayForVerySmallHandsets()
     }
@@ -85,7 +75,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         if !completed {
             guard let previous = previousViewControllers.first as? OnboardingPageViewController else { return }
             guard let index = dataSource.index(of: previous) else { return }
-           configureDisplay(forPage: index)
+            configureDisplay(forPage: index)
         } else {
             guard let current = transitioningToPage else { return }
             guard let index = dataSource.index(of: current) else { return }
@@ -96,19 +86,16 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     private func configureDisplay(forPage index: Int) {
         pageControl.currentPage = index
-        if changesColor {
-            view.backgroundColor = currentPageController().preferredBackgroundColor
-        }
         currentPageController().resetImage()
+        view.backgroundColor = currentPageController().preferredBackgroundColor
     }
-
+    
     fileprivate func transition(withRatio ratio: CGFloat) {
         transitionBackgroundColor(withRatio: ratio)
         shrinkImages(withRatio: ratio)
     }
     
     private func transitionBackgroundColor(withRatio ratio: CGFloat) {
-        guard changesColor else { return }
         guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
         let currentColor = currentPageController().preferredBackgroundColor
         view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
@@ -117,7 +104,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     private func shrinkImages(withRatio ratio: CGFloat) {
         let currentImageScale = 1 - (0.2 * (1 - ratio))
         currentPageController().scaleImage(currentImageScale)
-
+        
         let nextImageScale = 1 - (0.2 * ratio)
         transitioningToPage?.scaleImage(nextImageScale)
     }
@@ -161,7 +148,7 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-
+    
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if currentPageController().isLastPage {

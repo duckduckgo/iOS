@@ -21,9 +21,7 @@ class OnboardingPageViewController: UIViewController {
         return configuration.background
     }
     
-    static func loadFromStoryboard(withConfiguartion configuration: OnboardingPageConfiguration, size: OnboardingViewSize) -> OnboardingPageViewController {
-        let storyboardName = (size == .mini) ? "OnboardingMini" : "Onboarding"
-        let storyboard = UIStoryboard.init(name: storyboardName, bundle: nil)
+    static func loadFromStoryboard(storyboard: UIStoryboard, withConfiguartion configuration: OnboardingPageConfiguration) -> OnboardingPageViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
         controller.configuration = configuration
         return controller

@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Core
 
 class OnboardingPageViewController: UIViewController {
     
     @IBOutlet weak var pageTitle: UILabel!
     @IBOutlet weak var pageDescription: UILabel!
     @IBOutlet weak var image: UIImageView!
+    
+    var descriptionLineHeight: CGFloat = 0
     
     var configuration: OnboardingPageConfiguration!
     var isLastPage = false
@@ -34,8 +37,9 @@ class OnboardingPageViewController: UIViewController {
     
     private func configureViews() {
         pageTitle.text = configuration.title
-        pageDescription.text = configuration.description
         image.image = configuration.image
+        pageDescription.text = configuration.description
+        adjustLineHeight(descriptionLineHeight, forLabel: pageDescription)
     }
     
     public func scaleImage(_ scale: CGFloat) {
@@ -44,5 +48,18 @@ class OnboardingPageViewController: UIViewController {
     
     public func resetImage() {
         image.transform = CGAffineTransform(scaleX: 1, y: 1)
+    }
+    
+    private func adjustLineHeight(_ height: CGFloat, forLabel label: UILabel) {
+        let paragaphStyle = NSMutableParagraphStyle()
+        paragaphStyle.lineHeightMultiple = height
+        paragaphStyle.alignment = label.textAlignment
+        
+        let attributes: [String: Any] = [
+            NSFontAttributeName: label.font,
+            NSForegroundColorAttributeName: label.textColor,
+            NSParagraphStyleAttributeName: paragaphStyle
+        ]
+        label.attributedText = NSAttributedString(string: label.text!, attributes: attributes)
     }
 }

@@ -109,9 +109,6 @@
                             <constraint firstItem="9KN-hu-vtf" firstAttribute="top" secondItem="nPR-7s-nAz" secondAttribute="bottom" id="rGc-S0-q9Y"/>
                             <constraint firstItem="nPR-7s-nAz" firstAttribute="top" secondItem="4ez-RW-SXn" secondAttribute="top" id="wxX-mg-jkD"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="p3k-re-Jez" appends="YES" id="Q40-aI-IpV"/>
-                        </connections>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="230"/>
@@ -120,12 +117,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dpa-WM-zvd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="p3k-re-Jez">
-                    <connections>
-                        <action selector="onLastPageSwiped:" destination="oGm-qT-kEd" id="Ctp-z6-Q3n"/>
-                        <outlet property="delegate" destination="oGm-qT-kEd" id="0bV-B6-nPo"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1515" y="-666.25"/>
         </scene>

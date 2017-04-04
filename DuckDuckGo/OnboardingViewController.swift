@@ -110,8 +110,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func goToPage(index: Int) {
-        let controller = dataSource.controller(forIndex: index)
-        pageController.setViewControllers([controller], direction: .forward, animated: true, completion: nil)
+        let controllers = [dataSource.controller(forIndex: index)]
+        pageController.setViewControllers(controllers, direction: .forward, animated: true, completion: nil)
         configureDisplay(forPage: index)
     }
     

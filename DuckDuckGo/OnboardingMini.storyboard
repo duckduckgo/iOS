@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGm-qT-kEd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oGm-qT-kEd">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -69,10 +69,10 @@
             </objects>
             <point key="canvasLocation" x="148" y="-669"/>
         </scene>
-        <!--Onboarding View Controller-->
+        <!--Onboarding Mini View Controller-->
         <scene sceneID="Wsa-Sy-Mcv">
             <objects>
-                <viewController storyboardIdentifier="MiniOnboardingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGm-qT-kEd" customClass="OnboardingViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MiniOnboardingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oGm-qT-kEd" customClass="OnboardingMiniViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Xs-pH-8ss"/>
                         <viewControllerLayoutGuide type="bottom" id="e5S-ch-bxS"/>
@@ -109,9 +109,6 @@
                             <constraint firstItem="9KN-hu-vtf" firstAttribute="top" secondItem="nPR-7s-nAz" secondAttribute="bottom" id="rGc-S0-q9Y"/>
                             <constraint firstItem="nPR-7s-nAz" firstAttribute="top" secondItem="4ez-RW-SXn" secondAttribute="top" id="wxX-mg-jkD"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="p3k-re-Jez" appends="YES" id="Q40-aI-IpV"/>
-                        </connections>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="230"/>
@@ -120,12 +117,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dpa-WM-zvd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="p3k-re-Jez">
-                    <connections>
-                        <action selector="onLastPageSwiped:" destination="oGm-qT-kEd" id="Ctp-z6-Q3n"/>
-                        <outlet property="delegate" destination="oGm-qT-kEd" id="0bV-B6-nPo"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1515" y="-666.25"/>
         </scene>

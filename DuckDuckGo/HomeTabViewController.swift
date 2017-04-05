@@ -18,7 +18,7 @@ class HomeTabViewController: UIViewController, Tab {
     @IBOutlet weak var passiveContainerView: UIView!
     @IBOutlet weak var centreBar: UIView!
     
-    var onboardingController: OnboardingViewController?
+    var miniOnboardingController: OnboardingMiniViewController?
     
     weak var tabDelegate: HomeTabDelegate?
     
@@ -118,16 +118,16 @@ class HomeTabViewController: UIViewController, Tab {
     
     private func showMiniOnboardingFlow() {
         dismissMiniOnboardingFlow()
-        let onboardingController = OnboardingViewController.loadMiniFromStoryboard()
-        self.onboardingController = onboardingController
-        addChildViewController(onboardingController)
-        view.addSubview(onboardingController.view)
+        let miniOnboardingController = OnboardingMiniViewController.loadFromStoryboard()
+        self.miniOnboardingController = miniOnboardingController
+        addChildViewController(miniOnboardingController)
+        view.addSubview(miniOnboardingController.view)
     }
     
     private func dismissMiniOnboardingFlow() {
-        onboardingController?.view.removeFromSuperview()
-        onboardingController?.removeFromParentViewController()
-        onboardingController = nil
+        miniOnboardingController?.view.removeFromSuperview()
+        miniOnboardingController?.removeFromParentViewController()
+        miniOnboardingController = nil
     }
     
     private func addKeyboardObserver() {
@@ -159,7 +159,7 @@ class HomeTabViewController: UIViewController, Tab {
     }
     
     private func centreMiniOnboardingScreenWithin(height: CGFloat) {
-        guard let onboardingView = onboardingController?.view else { return }
+        guard let onboardingView = miniOnboardingController?.view else { return }
         let navbarHeight = navigationController?.navigationBar.frame.height ?? 0
         let decorHeight = InterfaceMeasurement.defaultStatusBarHeight + navbarHeight
         let availableHeight = height - decorHeight

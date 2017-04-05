@@ -17,7 +17,6 @@ class UseDuckDuckGoViewController: UIViewController {
     private static let minimumTopMargin: CGFloat = 0
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         applyTopMargin()
     }
     

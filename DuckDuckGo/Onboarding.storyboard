@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
+    <device id="ipad12_9" orientation="landscape">
+        <adaptation id="splitview2_3"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Onboarding View Controller-->
         <scene sceneID="LXh-Ha-lHK">
@@ -18,21 +22,23 @@
                         <viewControllerLayoutGuide type="bottom" id="48G-w4-Xuh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bOv-vd-VY9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-a2-Ooa">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Wam-Zg-GbZ" kind="embed" id="HHT-Fz-Hk7"/>
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="igT-FT-upA">
-                                <rect key="frame" x="175.66666666666666" y="680" width="63" height="24"/>
+                                <rect key="frame" x="459" y="955" width="63" height="24"/>
                                 <subviews>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Mom-DW-Dup">
                                         <rect key="frame" x="0.0" y="0.0" width="39" height="24"/>
+                                        <color key="pageIndicatorTintColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                        <color key="currentPageIndicatorTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onPageSelected:" destination="jGy-gB-XA1" eventType="valueChanged" id="7ow-IO-qnu"/>
                                         </connections>
@@ -43,7 +49,7 @@
                                             <constraint firstAttribute="width" constant="24" id="O52-1k-oQ0"/>
                                             <constraint firstAttribute="height" constant="24" id="lZW-L4-rSz"/>
                                         </constraints>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="SearchLoupeMini"/>
                                         <connections>
                                             <action selector="onDonePressed:" destination="jGy-gB-XA1" eventType="touchUpInside" id="Eja-C8-Djy"/>
@@ -51,6 +57,36 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd6-It-gRc">
+                                <rect key="frame" x="403" y="880" width="175" height="50"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="Zuk-Jt-TXn">
+                                        <variation key="heightClass=compact" constant="118"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="175"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="40" id="kAU-6U-4zl">
+                                        <variation key="heightClass=compact" constant="34"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" title="Add to Safari">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="ECn-Bi-78R" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="cAM-ci-SCE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -58,18 +94,22 @@
                             <constraint firstItem="yNS-a2-Ooa" firstAttribute="top" secondItem="bOv-vd-VY9" secondAttribute="top" id="OcK-Ty-q6G"/>
                             <constraint firstAttribute="trailing" secondItem="yNS-a2-Ooa" secondAttribute="trailing" id="R8k-Tv-S6m"/>
                             <constraint firstItem="igT-FT-upA" firstAttribute="centerX" secondItem="bOv-vd-VY9" secondAttribute="centerX" id="aKW-EF-oYI"/>
-                            <constraint firstItem="48G-w4-Xuh" firstAttribute="top" secondItem="igT-FT-upA" secondAttribute="bottom" constant="32" id="jzr-BB-CFt">
+                            <constraint firstItem="Xd6-It-gRc" firstAttribute="centerX" secondItem="bOv-vd-VY9" secondAttribute="centerX" id="dJy-1u-pvd"/>
+                            <constraint firstItem="48G-w4-Xuh" firstAttribute="top" secondItem="igT-FT-upA" secondAttribute="bottom" constant="45" id="jzr-BB-CFt">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="48G-w4-Xuh" firstAttribute="top" secondItem="yNS-a2-Ooa" secondAttribute="bottom" id="lDS-mA-Boo"/>
                             <constraint firstItem="yNS-a2-Ooa" firstAttribute="leading" secondItem="bOv-vd-VY9" secondAttribute="leading" id="n2u-k4-OI3"/>
+                            <constraint firstItem="igT-FT-upA" firstAttribute="top" secondItem="Xd6-It-gRc" secondAttribute="bottom" constant="25" id="pqV-dD-rHD">
+                                <variation key="heightClass=compact" constant="2"/>
+                            </constraint>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Jc4-v5-FSQ" appends="YES" id="rNx-MA-kWa"/>
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="doneButton" destination="Q5R-sJ-B88" id="vsZ-KE-FV8"/>
+                        <outlet property="bottomMarginConstraint" destination="jzr-BB-CFt" id="WFH-Hc-074"/>
                         <outlet property="pageControl" destination="Mom-DW-Dup" id="tNf-wL-7cm"/>
                         <outlet property="swipeGestureRecogniser" destination="Jc4-v5-FSQ" id="WiE-sT-3LY"/>
                     </connections>
@@ -82,7 +122,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1514" y="-1446"/>
+            <point key="canvasLocation" x="-1514.4927536231885" y="-1446.1956521739132"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="Gj7-pq-SV1">
@@ -101,75 +141,78 @@
                         <viewControllerLayoutGuide type="bottom" id="UGc-zJ-lRf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dCa-dp-DgZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real Privacy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgM-zL-1yd">
-                                <rect key="frame" x="36" y="394.66666666666669" width="342" height="27"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <rect key="frame" x="260.5" y="556.5" width="460" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="308" id="ED8-cm-uRI">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="460"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="31"/>
+                                </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We never store or share your personal information. Ever." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xm8-7V-I4X">
-                                <rect key="frame" x="36" y="429.66666666666674" width="342" height="19.333333333333314"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xm8-7V-I4X">
+                                <rect key="frame" x="260.5" y="605.5" width="460" height="72"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="308" id="j30-az-JCE">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="460"/>
+                                    </constraint>
+                                </constraints>
+                                <string key="text">Other search engines track you even
+when you’re in ‘private browsing mode’.
+We don’t track you — period.</string>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="24"/>
+                                </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRealPrivacy" translatesAutoresizingMaskIntoConstraints="NO" id="9WE-Tj-PRw">
-                                <rect key="frame" x="112" y="180.66666666666669" width="190" height="190.00000000000006"/>
+                                <rect key="frame" x="350.5" y="244.5" width="280" height="280"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="190" id="SwP-TY-ujq">
+                                    <constraint firstAttribute="width" constant="200" id="SwP-TY-ujq">
                                         <variation key="heightClass=compact-widthClass=compact" constant="140"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="280"/>
                                     </constraint>
-                                    <constraint firstAttribute="height" constant="190" id="ifb-YQ-jZK">
+                                    <constraint firstAttribute="height" constant="200" id="ifb-YQ-jZK">
                                         <variation key="heightClass=compact-widthClass=compact" constant="140"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="280"/>
                                     </constraint>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1as-NH-22B">
-                                <rect key="frame" x="150" y="636" width="114" height="36"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                <state key="normal" title="Add to Safari">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ECn-Bi-78R" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="GEi-kr-IUT"/>
-                                </connections>
-                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="hgM-zL-1yd" firstAttribute="top" secondItem="9WE-Tj-PRw" secondAttribute="bottom" constant="24" id="0lJ-Zv-WUA">
-                                <variation key="heightClass=compact" constant="10"/>
-                            </constraint>
-                            <constraint firstItem="Xm8-7V-I4X" firstAttribute="leading" secondItem="dCa-dp-DgZ" secondAttribute="leadingMargin" constant="16" id="2fG-34-DAI">
-                                <variation key="widthClass=regular" constant="64"/>
-                            </constraint>
-                            <constraint firstItem="hgM-zL-1yd" firstAttribute="leading" secondItem="dCa-dp-DgZ" secondAttribute="leadingMargin" constant="16" id="2uN-uW-X2y">
-                                <variation key="widthClass=regular" constant="64"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="6"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="32"/>
                             </constraint>
                             <constraint firstItem="9WE-Tj-PRw" firstAttribute="centerX" secondItem="dCa-dp-DgZ" secondAttribute="centerX" id="4bn-77-UMz"/>
                             <constraint firstItem="hgM-zL-1yd" firstAttribute="centerY" secondItem="dCa-dp-DgZ" secondAttribute="centerY" constant="40" id="Dvx-ma-0F4">
-                                <variation key="heightClass=compact" constant="20"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="14"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="60"/>
                             </constraint>
-                            <constraint firstItem="UGc-zJ-lRf" firstAttribute="top" secondItem="1as-NH-22B" secondAttribute="bottom" constant="64" id="Ky6-65-ikE">
-                                <variation key="heightClass=compact" constant="28"/>
-                            </constraint>
-                            <constraint firstAttribute="trailingMargin" secondItem="Xm8-7V-I4X" secondAttribute="trailing" constant="16" id="T0w-VK-rWJ">
-                                <variation key="widthClass=regular" constant="64"/>
-                            </constraint>
-                            <constraint firstItem="1as-NH-22B" firstAttribute="centerX" secondItem="dCa-dp-DgZ" secondAttribute="centerX" id="dPA-wS-jOL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hgM-zL-1yd" secondAttribute="trailing" constant="16" id="og2-Mu-NBQ">
-                                <variation key="widthClass=regular" constant="64"/>
-                            </constraint>
-                            <constraint firstItem="Xm8-7V-I4X" firstAttribute="top" secondItem="hgM-zL-1yd" secondAttribute="bottom" constant="8" id="qsb-FU-sVx">
-                                <variation key="heightClass=compact" constant="4"/>
+                            <constraint firstItem="hgM-zL-1yd" firstAttribute="centerX" secondItem="dCa-dp-DgZ" secondAttribute="centerX" id="Zez-dZ-gGo"/>
+                            <constraint firstItem="Xm8-7V-I4X" firstAttribute="centerX" secondItem="dCa-dp-DgZ" secondAttribute="centerX" id="nZ3-8W-p23"/>
+                            <constraint firstItem="Xm8-7V-I4X" firstAttribute="top" secondItem="hgM-zL-1yd" secondAttribute="bottom" constant="6" id="qsb-FU-sVx">
+                                <variation key="heightClass=compact-widthClass=compact" constant="3"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="18"/>
                             </constraint>
                         </constraints>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="descriptionLineHeight">
+                            <real key="value" value="1.375"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="image" destination="9WE-Tj-PRw" id="dXA-Sy-cM6"/>
                         <outlet property="pageDescription" destination="Xm8-7V-I4X" id="2ET-pJ-SJY"/>
@@ -178,7 +221,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdo-zr-R2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="148" y="-1446"/>
+            <point key="canvasLocation" x="147.65625" y="-1446.09375"/>
         </scene>
         <!--Use Duck Duck Go View Controller-->
         <scene sceneID="JVu-td-mdf">
@@ -189,54 +232,83 @@
                         <viewControllerLayoutGuide type="bottom" id="FXt-wt-vgu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WqM-24-Wc9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="981" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHS-3F-rPh">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="20" width="981" height="1004"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4Y-XF-E47" customClass="RoundedRectangleView" customModule="Core">
-                                        <rect key="frame" x="51.666666666666657" y="75" width="312" height="484"/>
+                                        <rect key="frame" x="180.5" y="105" width="620" height="484"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="TkV-iz-XUg">
-                                                <rect key="frame" x="4" y="91" width="304" height="28"/>
+                                                <rect key="frame" x="4" y="125" width="612" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="HAR-vi-iO1"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                                 <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
+                                                </variation>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="rpk-Fm-slK">
-                                                <rect key="frame" x="36" y="237" width="240" height="47"/>
+                                                <rect key="frame" x="190" y="237" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsSettings" translatesAutoresizingMaskIntoConstraints="NO" id="3mJ-I3-dQv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="46.999999999999986" height="47"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="47" id="Dph-3M-ytz"/>
                                                             <constraint firstAttribute="width" constant="47" id="sug-KC-7s4"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xla-wd-gx2">
-                                                        <rect key="frame" x="58.999999999999986" y="14.333333333333314" width="181" height="18.666666666666686"/>
+                                                        <rect key="frame" x="59" y="13.5" width="181" height="20"/>
                                                         <attributedString key="attributedText">
-                                                            <fragment content="Open ">
+                                                            <fragment content="Open">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Regular"/>
-                                                                    <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
-                                                            <fragment content="Settings App">
+                                                            <fragment content=" Settings App">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Open">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content=" ">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content="Settings App">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                        </variation>
                                                     </label>
                                                 </subviews>
                                                 <constraints>
@@ -245,56 +317,88 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Tab-Yw-sCT">
-                                                <rect key="frame" x="36" y="300" width="240" height="47"/>
+                                                <rect key="frame" x="190" y="300" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsSafari" translatesAutoresizingMaskIntoConstraints="NO" id="UBW-Fh-Fim">
-                                                        <rect key="frame" x="0.0" y="0.0" width="46.999999999999986" height="47"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="47" id="7e2-Z1-P7T"/>
                                                             <constraint firstAttribute="height" constant="47" id="Mtm-u3-Och"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sco-hz-HzL">
-                                                        <rect key="frame" x="58.999999999999986" y="0.0" width="181" height="47"/>
+                                                        <rect key="frame" x="59" y="0.0" width="181" height="47"/>
                                                         <attributedString key="attributedText">
-                                                            <fragment content="Navigate to">
+                                                            <fragment content="Navigate to ">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Regular"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                            <fragment content=" ">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Regular"/>
-                                                                    <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content="Safari">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
-                                                            <fragment content=", then">
+                                                            <fragment content=", then ">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Regular"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
-                                                            <fragment content=" Search Engine">
+                                                            <fragment content="Search Engine">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                 </attributes>
                                                             </fragment>
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Navigate to">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content=" ">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content="Safari">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content=", then ">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content="Search Engine">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                        </variation>
                                                     </label>
                                                 </subviews>
                                                 <constraints>
@@ -302,29 +406,29 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="8Z2-Rm-DXX">
-                                                <rect key="frame" x="36" y="363" width="240" height="47"/>
+                                                <rect key="frame" x="190" y="363" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsTick" translatesAutoresizingMaskIntoConstraints="NO" id="xBr-8z-dxd">
-                                                        <rect key="frame" x="0.0" y="0.0" width="46.999999999999986" height="47"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="47" id="b3l-rp-IVx"/>
                                                             <constraint firstAttribute="width" constant="47" id="nho-AB-S1r"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWz-94-aVt">
-                                                        <rect key="frame" x="58.999999999999986" y="0.0" width="181" height="47"/>
+                                                        <rect key="frame" x="59" y="0.0" width="181" height="47"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Select">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Regular"/>
+                                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
                                                             <fragment content=" ">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Regular"/>
+                                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                     <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
@@ -332,12 +436,38 @@
                                                             <fragment content="DuckDuckGo">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" size="16" name="SFUIDisplay-Semibold"/>
+                                                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Select">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content=" ">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <font key="NSOriginalFont" size="16" name="SFUIDisplay-Regular"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                                <fragment content="DuckDuckGo">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                        </variation>
                                                     </label>
                                                 </subviews>
                                                 <constraints>
@@ -345,13 +475,16 @@
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other search engines track your searches even when you’re in private browsing mode. We don’t track you — period." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pb-0h-ezh">
-                                                <rect key="frame" x="24" y="135" width="264" height="86"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="24" y="169" width="572" height="52"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wHw-Cv-iZV">
-                                                <rect key="frame" x="137.66666666666669" y="438" width="38" height="30"/>
+                                                <rect key="frame" x="291" y="438" width="38" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="GtC-Hd-4MN"/>
                                                 </constraints>
@@ -367,7 +500,9 @@
                                             <constraint firstAttribute="width" constant="312" id="5XN-Zu-XSq">
                                                 <variation key="widthClass=regular" constant="620"/>
                                             </constraint>
-                                            <constraint firstItem="TkV-iz-XUg" firstAttribute="top" secondItem="d4Y-XF-E47" secondAttribute="top" constant="91" id="6ti-8L-ekU"/>
+                                            <constraint firstItem="TkV-iz-XUg" firstAttribute="top" secondItem="d4Y-XF-E47" secondAttribute="top" constant="91" id="6ti-8L-ekU">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="125"/>
+                                            </constraint>
                                             <constraint firstAttribute="trailing" secondItem="1pb-0h-ezh" secondAttribute="trailing" constant="24" id="CHZ-Lb-XyT"/>
                                             <constraint firstItem="Tab-Yw-sCT" firstAttribute="top" secondItem="rpk-Fm-slK" secondAttribute="bottom" constant="16" id="Cgy-RP-UXJ"/>
                                             <constraint firstItem="Tab-Yw-sCT" firstAttribute="centerX" secondItem="d4Y-XF-E47" secondAttribute="centerX" id="EzB-pq-Uhf"/>
@@ -391,24 +526,34 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsImage" translatesAutoresizingMaskIntoConstraints="NO" id="y3Z-l4-PzZ">
-                                        <rect key="frame" x="132.66666666666669" y="0.0" width="150.00000000000006" height="150"/>
+                                        <rect key="frame" x="386" y="0.0" width="210" height="210"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="Ysq-Dr-s9b"/>
-                                            <constraint firstAttribute="height" constant="150" id="hYE-A2-khN"/>
+                                            <constraint firstAttribute="width" constant="150" id="Ysq-Dr-s9b">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="210"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="150" id="hYE-A2-khN">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="210"/>
+                                            </constraint>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="y3Z-l4-PzZ" firstAttribute="centerX" secondItem="MHS-3F-rPh" secondAttribute="centerX" id="41y-MN-6pP"/>
                                     <constraint firstAttribute="trailing" secondItem="d4Y-XF-E47" secondAttribute="trailing" id="AT6-Vj-G83"/>
-                                    <constraint firstItem="d4Y-XF-E47" firstAttribute="top" secondItem="y3Z-l4-PzZ" secondAttribute="bottom" constant="-75" id="Jra-pF-8L3"/>
-                                    <constraint firstItem="d4Y-XF-E47" firstAttribute="top" secondItem="MHS-3F-rPh" secondAttribute="top" constant="75" id="aS0-gY-ueJ"/>
-                                    <constraint firstItem="d4Y-XF-E47" firstAttribute="centerX" secondItem="MHS-3F-rPh" secondAttribute="centerX" id="hVm-g3-kyQ"/>
+                                    <constraint firstItem="d4Y-XF-E47" firstAttribute="top" secondItem="y3Z-l4-PzZ" secondAttribute="bottom" constant="-75" id="Jra-pF-8L3">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="-105"/>
+                                    </constraint>
+                                    <constraint firstItem="d4Y-XF-E47" firstAttribute="top" secondItem="MHS-3F-rPh" secondAttribute="top" constant="75" id="aS0-gY-ueJ">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="105"/>
+                                    </constraint>
+                                    <constraint firstItem="d4Y-XF-E47" firstAttribute="centerX" secondItem="MHS-3F-rPh" secondAttribute="centerX" id="hVm-g3-kyQ">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="0.0"/>
+                                    </constraint>
                                     <constraint firstAttribute="bottom" secondItem="d4Y-XF-E47" secondAttribute="bottom" constant="4" id="laH-Ge-9Ax"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="MHS-3F-rPh" secondAttribute="trailing" id="L9K-If-2Ax"/>
                             <constraint firstItem="MHS-3F-rPh" firstAttribute="top" secondItem="0EC-Nq-XgN" secondAttribute="bottom" id="T8n-34-Z0G"/>
@@ -424,7 +569,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NTg-Qo-H2E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1066.6666666666667" y="-1447.0108695652175"/>
+            <point key="canvasLocation" x="-1514" y="-632"/>
         </scene>
     </scenes>
     <resources>

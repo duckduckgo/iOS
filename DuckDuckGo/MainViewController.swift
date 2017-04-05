@@ -35,7 +35,6 @@ class MainViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         updateAutocompleteSize()
-        super.viewDidLayoutSubviews()
     }
     
     func loadQueryInNewWebTab(query: String) {

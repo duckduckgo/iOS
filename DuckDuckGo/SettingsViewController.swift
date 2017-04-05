@@ -58,14 +58,14 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row == 1 {
+        if indexPath.section == 1 && indexPath.row == 0 {
             launchOnboardingFlow()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     private func launchOnboardingFlow() {
-        let controller = OnboardingViewController.loadFromStoryboard(doneButtonStyle: .close)
+        let controller = OnboardingViewController.loadFromStoryboard()
         controller.modalTransitionStyle = .flipHorizontal
         present(controller, animated: true, completion: nil)
     }

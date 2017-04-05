@@ -27,7 +27,6 @@ class TabSwitcherViewController: UIViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
         collectionView.reloadData()
     }
     

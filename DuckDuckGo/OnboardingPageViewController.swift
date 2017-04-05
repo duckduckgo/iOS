@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 
 class OnboardingPageViewController: UIViewController {
     
@@ -14,20 +15,18 @@ class OnboardingPageViewController: UIViewController {
     @IBOutlet weak var pageDescription: UILabel!
     @IBOutlet weak var image: UIImageView!
     
+    var descriptionLineHeight: CGFloat = 0
+    
     var configuration: OnboardingPageConfiguration!
-    var changesColor = true
     var isLastPage = false
     
     var preferredBackgroundColor: UIColor {
         return configuration.background
     }
     
-    static func loadFromStoryboard(withConfiguartion configuration: OnboardingPageConfiguration, size: OnboardingViewSize) -> OnboardingPageViewController {
-        let storyboardName = (size == .mini) ? "OnboardingMini" : "Onboarding"
-        let storyboard = UIStoryboard.init(name: storyboardName, bundle: nil)
+    static func loadFromStoryboard(storyboard: UIStoryboard, withConfiguartion configuration: OnboardingPageConfiguration) -> OnboardingPageViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
         controller.configuration = configuration
-        controller.changesColor = (size == .fullScreen)
         return controller
     }
     
@@ -38,36 +37,29 @@ class OnboardingPageViewController: UIViewController {
     
     private func configureViews() {
         pageTitle.text = configuration.title
-        pageDescription.text = configuration.description
         image.image = configuration.image
-        refreshBackgroundColor()
+        pageDescription.text = configuration.description
+        adjustLineHeight(descriptionLineHeight, forLabel: pageDescription)
     }
     
-    public func performImageShrinkAnimation() {
-        UIView.animate(withDuration: 0.4) {
-            self.image.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
-        }
+    public func scaleImage(_ scale: CGFloat) {
+        image.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
     
-    public func performImageResetAnimation() {
-        UIView.animate(withDuration: 0.4) {
-            self.image.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
+    public func resetImage() {
+        image.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
-    public func refreshBackgroundColor() {
-        if changesColor {
-            self.view.backgroundColor = preferredBackgroundColor
-        }
-    }
-    
-    public func animateBackground(fromColor: UIColor, toColor: UIColor) {
-        if !changesColor {
-            return
-        }
-        view.backgroundColor = fromColor
-        UIView.animate(withDuration: 0.7) {
-            self.view.backgroundColor = toColor
-        }
+    private func adjustLineHeight(_ height: CGFloat, forLabel label: UILabel) {
+        let paragaphStyle = NSMutableParagraphStyle()
+        paragaphStyle.lineHeightMultiple = height
+        paragaphStyle.alignment = label.textAlignment
+        
+        let attributes: [String: Any] = [
+            NSFontAttributeName: label.font,
+            NSForegroundColorAttributeName: label.textColor,
+            NSParagraphStyleAttributeName: paragaphStyle
+        ]
+        label.attributedText = NSAttributedString(string: label.text!, attributes: attributes)
     }
 }

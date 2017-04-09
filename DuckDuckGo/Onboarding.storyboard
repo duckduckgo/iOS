@@ -495,12 +495,14 @@ We don’t track you — period.</string>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wHw-Cv-iZV">
-                                                <rect key="frame" x="127" y="421" width="38" height="30"/>
+                                                <rect key="frame" x="126.5" y="421" width="39" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="GtC-Hd-4MN"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                <state key="normal" title="Done"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                <state key="normal" title="Done">
+                                                    <color key="titleColor" red="0.1764705882352941" green="0.47450980392156861" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="onDonePressed:" destination="ECn-Bi-78R" eventType="touchUpInside" id="xEC-uN-txg"/>
                                                 </connections>

@@ -17,9 +17,10 @@ class UseDuckDuckGoViewController: UIViewController {
     var descriptionLineHeight: CGFloat = 0
     
     private static let minimumTopMargin: CGFloat = 14
-    private static let verticalCenteringOfset: CGFloat = 20
+    private static let verticalOffset: CGFloat = 20
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         configureViews()
     }
     
@@ -39,7 +40,7 @@ class UseDuckDuckGoViewController: UIViewController {
         let availableHeight = view.frame.size.height
         let contentHeight = scrollView.contentSize.height
         let excessHeight = availableHeight - contentHeight
-        let marginForVerticalCentering = (excessHeight  / 2) - UseDuckDuckGoViewController.verticalCenteringOfset
+        let marginForVerticalCentering = (excessHeight  / 2) - UseDuckDuckGoViewController.verticalOffset
         let minimumMargin = UseDuckDuckGoViewController.minimumTopMargin
         topMarginConstraint.constant = marginForVerticalCentering > minimumMargin ? marginForVerticalCentering : minimumMargin
     }

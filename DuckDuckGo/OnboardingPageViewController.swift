@@ -39,7 +39,7 @@ class OnboardingPageViewController: UIViewController {
         pageTitle.text = configuration.title
         image.image = configuration.image
         pageDescription.text = configuration.description
-        adjustLineHeight(descriptionLineHeight, forLabel: pageDescription)
+        pageDescription.adjustPlainTextLineHeight(descriptionLineHeight)
     }
     
     public func scaleImage(_ scale: CGFloat) {
@@ -48,18 +48,5 @@ class OnboardingPageViewController: UIViewController {
     
     public func resetImage() {
         image.transform = CGAffineTransform(scaleX: 1, y: 1)
-    }
-    
-    private func adjustLineHeight(_ height: CGFloat, forLabel label: UILabel) {
-        let paragaphStyle = NSMutableParagraphStyle()
-        paragaphStyle.lineHeightMultiple = height
-        paragaphStyle.alignment = label.textAlignment
-        
-        let attributes: [String: Any] = [
-            NSFontAttributeName: label.font,
-            NSForegroundColorAttributeName: label.textColor,
-            NSParagraphStyleAttributeName: paragaphStyle
-        ]
-        label.attributedText = NSAttributedString(string: label.text!, attributes: attributes)
     }
 }

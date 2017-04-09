@@ -100,6 +100,7 @@
 		F1AA54671E48D90700223211 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1AA54651E48D90700223211 /* MainInterface.storyboard */; };
 		F1AA546B1E48D90700223211 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1AA545E1E48D90700223211 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */; };
+		F1B29E1F1E9A5DA1007F5046 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B29E1E1E9A5DA1007F5046 /* UILabelExtension.swift */; };
 		F1B745221E549D550072547E /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
 		F1BE54501E69DDE000FCF649 /* RealPrivacyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */; };
 		F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */; };
@@ -382,6 +383,7 @@
 		F1AA54661E48D90700223211 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		F1AA54681E48D90700223211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		F1B29E1E1E9A5DA1007F5046 /* UILabelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		F1B745211E549D550072547E /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealPrivacyConfiguration.swift; sourceTree = "<group>"; };
 		F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
 				F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */,
 				F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */,
+				F1B29E1E1E9A5DA1007F5046 /* UILabelExtension.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -750,45 +753,52 @@
 			path = fonts;
 			sourceTree = SOURCE_ROOT;
 		};
-		F18CA9B51E93F19C003EA579 /* FullScreen */ = {
+		F186421A1E94A3F900B2A911 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				F1BE54571E69DE1000FCF649 /* OnboaringSettings.swift */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		F18CA9B51E93F19C003EA579 /* StartupFlow */ = {
+			isa = PBXGroup;
+			children = (
 				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
 				F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */,
 			);
-			name = FullScreen;
+			name = StartupFlow;
 			sourceTree = "<group>";
 		};
-		F18CA9B61E93F1BC003EA579 /* Mini */ = {
+		F18CA9B61E93F1BC003EA579 /* MiniFlow */ = {
 			isa = PBXGroup;
 			children = (
 				F18CA9A81E93E863003EA579 /* OnboardingMiniViewController.swift */,
 				F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */,
 			);
-			name = Mini;
+			name = MiniFlow;
 			sourceTree = "<group>";
 		};
-		F18CA9B71E93F1D6003EA579 /* SharedPages */ = {
+		F18CA9B71E93F1D6003EA579 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
 				F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */,
+				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
 				F1BE544C1E69DDE000FCF649 /* OnboardingPageConfiguration.swift */,
 				F1BE54491E69DDE000FCF649 /* RealPrivacyConfiguration.swift */,
 				F1BE544E1E69DDE000FCF649 /* ContentBlockingConfiguration.swift */,
 				F1BE544F1E69DDE000FCF649 /* TrackingConfiguration.swift */,
 				F1BE545B1E69F73300FCF649 /* PrivacyRightConfiguration.swift */,
 			);
-			name = SharedPages;
+			name = Pages;
 			sourceTree = "<group>";
 		};
-		F18CA9B81E93F1FA003EA579 /* Instructions */ = {
+		F18CA9B81E93F1FA003EA579 /* SafariInstructions */ = {
 			isa = PBXGroup;
 			children = (
 				F114C5601E67599C0018F95F /* UseDuckDuckGoViewController.swift */,
 			);
-			name = Instructions;
+			name = SafariInstructions;
 			sourceTree = "<group>";
 		};
 		F198D78F1E3976300088DA8A /* Utilities */ = {
@@ -860,10 +870,11 @@
 		F1BE54481E69DD5F00FCF649 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				F18CA9B51E93F19C003EA579 /* FullScreen */,
-				F18CA9B61E93F1BC003EA579 /* Mini */,
-				F18CA9B71E93F1D6003EA579 /* SharedPages */,
-				F18CA9B81E93F1FA003EA579 /* Instructions */,
+				F18CA9B51E93F19C003EA579 /* StartupFlow */,
+				F18CA9B61E93F1BC003EA579 /* MiniFlow */,
+				F18CA9B71E93F1D6003EA579 /* Pages */,
+				F18CA9B81E93F1FA003EA579 /* SafariInstructions */,
+				F186421A1E94A3F900B2A911 /* Support */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -1344,6 +1355,7 @@
 				F143C33E1E4A9B8000CFDE3A /* Toast.swift in Sources */,
 				F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */,
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
+				F1B29E1F1E9A5DA1007F5046 /* UILabelExtension.swift in Sources */,
 				F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */,
 				F1B745221E549D550072547E /* UIColorExtension.swift in Sources */,
 				F143C33B1E4A9A9200CFDE3A /* WebEventsDelegate.swift in Sources */,

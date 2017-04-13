@@ -13,8 +13,6 @@ class HomeTabViewController: UIViewController, Tab {
     
     private static let onboardingHeight: CGFloat = 230
     
-    @IBOutlet weak var tabIcon: UIButton!
-    @IBOutlet weak var bookmarksIcon: UIButton!
     @IBOutlet weak var passiveContainerView: UIView!
     @IBOutlet weak var centreBar: UIView!
     
@@ -53,7 +51,6 @@ class HomeTabViewController: UIViewController, Tab {
         resetNavigationBar()
         activeMode = false
         refreshMode()
-        refreshTabIcon()
         super.viewWillAppear(animated)
     }
     
@@ -64,25 +61,15 @@ class HomeTabViewController: UIViewController, Tab {
     
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = !groupData.uniformNavigationEnabled
+        navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = false
     }
     
     private func refreshMode() {
-        tabIcon.isHidden = groupData.uniformNavigationEnabled
-        bookmarksIcon.isHidden = groupData.uniformNavigationEnabled
         if activeMode {
             enterActiveMode()
         } else {
             enterPassiveMode()
-        }
-    }
-    
-    private func refreshTabIcon() {
-        guard let count = tabDelegate?.homeTabDidRequestTabCount(homeTab: self) else { return }
-        if count > 1 {
-            let image = tabIconMaker.icon(forTabs: count)
-            tabIcon.setImage(image, for: .normal)
         }
     }
     
@@ -92,14 +79,6 @@ class HomeTabViewController: UIViewController, Tab {
     
     @IBAction func onEnterPassiveModeTapped(_ sender: Any) {
         enterPassiveMode()
-    }
-    
-    @IBAction func onTabButtonPressed(_ sender: UIButton) {
-        tabDelegate?.homeTabDidRequestTabsSwitcher(homeTab: self)
-    }
-    
-    @IBAction func onBookmarksButtonPressed(_ sender: UIButton) {
-        tabDelegate?.homeTabDidRequestBookmarks(homeTab: self)
     }
     
     func enterPassiveMode() {

@@ -21,13 +21,8 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUniformNavigationToggle()
         configureSafeSearchToggle()
         configureVersionText()
-    }
-
-    private func configureUniformNavigationToggle() {
-        uniformNavigationToggle.isOn = groupData.uniformNavigationEnabled
     }
     
     private func configureSafeSearchToggle() {
@@ -77,10 +72,6 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? DateFilterSelectionViewController {
             controller.delegate = self
         }
-    }
-
-    @IBAction func onUniformNavigationToggled(_ sender: UISwitch) {
-        groupData.uniformNavigationEnabled = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {

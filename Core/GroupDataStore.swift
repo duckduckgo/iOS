@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Core
 
 public class GroupDataStore {
     
@@ -24,7 +25,8 @@ public class GroupDataStore {
     
     public var uniformNavigationEnabled: Bool {
         get {
-            return userDefaults()?.object(forKey: Keys.uniformNavigationKey) as? Bool ?? true
+            guard let userDefaults = userDefaults() else { return true }
+            return userDefaults.bool(forKey: Keys.uniformNavigationKey, defaultValue: true)
         }
         set(newValue) {
             userDefaults()?.set(newValue, forKey: Keys.uniformNavigationKey)
@@ -64,7 +66,8 @@ extension GroupDataStore: SearchFilterStore {
     
     public var safeSearchEnabled: Bool {
         get {
-            return userDefaults()?.object(forKey: Keys.safeSearch) as? Bool ?? true
+            guard let userDefaults = userDefaults() else { return true }
+            return userDefaults.bool(forKey: Keys.safeSearch, defaultValue: true)
         }
         set(newValue) {
             userDefaults()?.set(newValue, forKey: Keys.safeSearch)

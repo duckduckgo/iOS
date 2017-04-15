@@ -22,6 +22,7 @@ class HomeTabViewController: UIViewController, Tab {
     
     let omniBarStyle: OmniBar.Style = .home
     let showsUrlInOmniBar = false
+    var keyboardSize: CGRect? = nil
     
     var name: String? = UserText.homeLinkTitle
     var url: URL? = AppUrls.base
@@ -41,11 +42,11 @@ class HomeTabViewController: UIViewController, Tab {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addKeyboardObserver()
+        addKeyboardObservers()
     }
     
     deinit {
-        removeKeyboardObserver()
+        removeKeyboardObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,8 +93,8 @@ class HomeTabViewController: UIViewController, Tab {
     func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContainerView.isHidden = true
-        showMiniOnboardingFlow()
         tabDelegate?.homeTabDidActivateOmniBar(homeTab: self)
+        showMiniOnboardingFlow()
     }
     
     private func showMiniOnboardingFlow() {
@@ -102,6 +103,7 @@ class HomeTabViewController: UIViewController, Tab {
         self.miniOnboardingController = miniOnboardingController
         addChildViewController(miniOnboardingController)
         view.addSubview(miniOnboardingController.view)
+        refreshMiniOnboardingPosition()
     }
     
     private func dismissMiniOnboardingFlow() {
@@ -110,23 +112,36 @@ class HomeTabViewController: UIViewController, Tab {
         miniOnboardingController = nil
     }
     
-    private func addKeyboardObserver() {
+    private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
     }
     
-    private func removeKeyboardObserver() {
+    private func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] else { return }
         guard let keyboardValue = keyboardInfo as? NSValue else { return }
         let keyboardRect = keyboardValue.cgRectValue
+        keyboardSize = keyboardRect
+        refreshMiniOnboardingPosition()
+    }
+    
+    private func refreshMiniOnboardingPosition() {
         if UIApplication.shared.statusBarOrientation.isLandscape, traitCollection.verticalSizeClass == .compact {
             centreMiniOnboardingScreen()
-        } else {
+        } else if let keyboardRect = keyboardSize {
             floatMiniOnboaridngScreenAboveKeyboard(keyboardRect: keyboardRect)
+        } else {
+            centreMiniOnboardingScreen()
         }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        keyboardSize = nil
     }
     
     private func centreMiniOnboardingScreen() {

@@ -65,53 +65,12 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="xLt-kV-ZY9">
-                                        <rect key="frame" x="0.0" y="199.5" width="375" height="88"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xLt-kV-ZY9" id="dAt-oa-lMA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Duw-5s-HZx">
-                                                    <rect key="frame" x="310" y="28.5" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="onUniformNavigationToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="qe7-Z2-W9B"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uniform navigation on Home Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="Y4r-GQ-F5R">
-                                                    <rect key="frame" x="16" y="14" width="285" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Displays the toolbar rather than top custom buttons on the home screen. Will take effect once existing tabs are closed." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="7Ya-HA-xXv">
-                                                    <rect key="frame" x="16" y="39" width="285" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="Z67-Zm-NVS"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Y4r-GQ-F5R" firstAttribute="top" secondItem="dAt-oa-lMA" secondAttribute="topMargin" constant="6" id="60p-Bp-cUk"/>
-                                                <constraint firstAttribute="trailing" secondItem="Y4r-GQ-F5R" secondAttribute="trailing" constant="74" id="C9O-HI-DgQ"/>
-                                                <constraint firstItem="Duw-5s-HZx" firstAttribute="centerY" secondItem="dAt-oa-lMA" secondAttribute="centerY" id="DRQ-Lb-Zh4"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Duw-5s-HZx" secondAttribute="trailing" constant="8" id="E2U-d6-BYR"/>
-                                                <constraint firstAttribute="trailing" secondItem="7Ya-HA-xXv" secondAttribute="trailing" constant="74" id="GFM-BU-bMM"/>
-                                                <constraint firstItem="7Ya-HA-xXv" firstAttribute="top" secondItem="Y4r-GQ-F5R" secondAttribute="bottom" constant="4" id="TTH-y6-GfX"/>
-                                                <constraint firstItem="7Ya-HA-xXv" firstAttribute="leading" secondItem="dAt-oa-lMA" secondAttribute="leadingMargin" constant="8" id="mW8-na-CL0"/>
-                                                <constraint firstItem="Y4r-GQ-F5R" firstAttribute="leading" secondItem="dAt-oa-lMA" secondAttribute="leadingMargin" constant="8" id="mYM-3M-p8f"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Search Results" id="2bg-Ec-Yox">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="Gq6-rL-nrH">
-                                        <rect key="frame" x="0.0" y="343.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="255.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gq6-rL-nrH" id="3ug-Xe-e5n">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
@@ -142,7 +101,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="ZiW-nW-ALS">
-                                        <rect key="frame" x="0.0" y="387.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="299.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZiW-nW-ALS" id="z8J-ER-bnj">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
@@ -173,7 +132,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mSK-2I-WT0">
-                                        <rect key="frame" x="0.0" y="431.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="343.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mSK-2I-WT0" id="HWd-2q-3fq">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -206,7 +165,7 @@
                             <tableViewSection headerTitle="About" id="dOj-jn-mSN">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleSubtitle" id="TYF-GX-a3j">
-                                        <rect key="frame" x="0.0" y="531.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="443.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -249,7 +208,6 @@
                         <outlet property="dateFilterText" destination="ely-UD-inr" id="zKO-sq-hBP"/>
                         <outlet property="regionFilterText" destination="guE-b7-H1j" id="gyD-Ew-XAf"/>
                         <outlet property="safeSearchToggle" destination="8qa-k9-bsi" id="BKE-D0-VFs"/>
-                        <outlet property="uniformNavigationToggle" destination="Duw-5s-HZx" id="EFL-U3-65B"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
                     </connections>
                 </tableViewController>
@@ -283,7 +241,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RegionFilterCell" textLabel="cHI-yc-ebe" style="IBUITableViewCellStyleDefault" id="XRc-KG-HYD" customClass="DateFilterCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="RegionFilterCell" textLabel="cHI-yc-ebe" style="IBUITableViewCellStyleDefault" id="XRc-KG-HYD" customClass="DateFilterCell">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XRc-KG-HYD" id="r4H-ox-qOq">

@@ -87,6 +87,10 @@ class AutocompleteViewController: UIViewController {
         suggestions = newSuggestions
         tableView.reloadData()
     }
+    
+    @IBAction func onAutocompleteDismissed(_ sender: Any) {
+        delegate?.autocompleteWasDismissed()
+    }
 }
 
 extension AutocompleteViewController: UITableViewDataSource {
@@ -126,5 +130,11 @@ extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let suggestion = suggestions[indexPath.row]
         delegate?.autocomplete(selectedSuggestion: suggestion.suggestion)
+    }
+}
+
+extension AutocompleteViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return view == touch.view
     }
 }

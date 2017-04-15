@@ -751,6 +751,9 @@
                             <constraint firstItem="7LC-T1-mn0" firstAttribute="top" secondItem="gyt-98-JMh" secondAttribute="bottom" constant="2" id="CFA-1g-3Km"/>
                             <constraint firstItem="7LC-T1-mn0" firstAttribute="centerX" secondItem="IiA-uy-AxZ" secondAttribute="centerX" id="VYp-3i-8kG"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="oav-36-p8s" appends="YES" id="K6j-iq-IU0"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="3mS-sG-8Ub" id="yvC-S9-H84"/>
@@ -758,6 +761,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Kj-Cf-Dek" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="oav-36-p8s">
+                    <connections>
+                        <action selector="onAutocompleteDismissed:" destination="HV3-WA-HxT" id="MKj-kv-9FB"/>
+                        <outlet property="delegate" destination="HV3-WA-HxT" id="u0P-0p-qhp"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="771" y="841"/>
         </scene>

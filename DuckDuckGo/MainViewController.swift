@@ -323,6 +323,10 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
         omniBar?.textField.text = suggestion
     }
+    
+    func autocompleteWasDismissed() {
+        dismissOmniBar()
+    }
 }
 
 extension MainViewController: HomeTabDelegate {

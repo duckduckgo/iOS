@@ -16,6 +16,7 @@ class WebTabViewController: WebViewController, Tab {
     
     var omniBarStyle: OmniBar.Style = .web
     
+    var canShare = true
     var showsUrlInOmniBar = true
 
     static func loadFromStoryboard() -> WebTabViewController {

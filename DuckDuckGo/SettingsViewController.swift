@@ -21,13 +21,8 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUniformNavigationToggle()
         configureSafeSearchToggle()
         configureVersionText()
-    }
-
-    private func configureUniformNavigationToggle() {
-        uniformNavigationToggle.isOn = groupData.uniformNavigationEnabled
     }
     
     private func configureSafeSearchToggle() {
@@ -58,14 +53,14 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row == 1 {
+        if indexPath.section == 1 && indexPath.row == 0 {
             launchOnboardingFlow()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     private func launchOnboardingFlow() {
-        let controller = OnboardingViewController.loadFromStoryboard(doneButtonStyle: .close)
+        let controller = OnboardingViewController.loadFromStoryboard()
         controller.modalTransitionStyle = .flipHorizontal
         present(controller, animated: true, completion: nil)
     }
@@ -77,10 +72,6 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? DateFilterSelectionViewController {
             controller.delegate = self
         }
-    }
-
-    @IBAction func onUniformNavigationToggled(_ sender: UISwitch) {
-        groupData.uniformNavigationEnabled = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {

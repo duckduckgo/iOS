@@ -14,4 +14,6 @@ protocol AutocompleteViewControllerDelegate: class {
     func autocomplete(selectedSuggestion suggestion: String)
     
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String)
+    
+    func autocompleteWasDismissed()
 }

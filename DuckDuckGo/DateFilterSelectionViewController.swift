@@ -42,6 +42,8 @@ class DateFilterSelectionViewController: UITableViewController {
         if delegate?.currentDateFilterSelection() == data {
             cell.accessoryType = .checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }  else {
+            cell.accessoryType = .none
         }
     }
     

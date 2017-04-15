@@ -13,7 +13,6 @@ public class GroupDataStore {
     private let groupName = "group.com.duckduckgo.extension"
     
     fileprivate struct Keys {
-        static let uniformNavigationKey = "uniformNavigationKey"
         static let bookmarkKey = "bookmarkKey"
         static let safeSearch = "safeSearch"
         static let regionFilter = "regionFilter"
@@ -21,16 +20,6 @@ public class GroupDataStore {
     }
     
     public init() {}
-    
-    public var uniformNavigationEnabled: Bool {
-        get {
-            return userDefaults()?.object(forKey: Keys.uniformNavigationKey) as? Bool ?? true
-        }
-        set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.uniformNavigationKey)
-        }
-    }
-    
     
     fileprivate func userDefaults() -> UserDefaults? {
         return UserDefaults(suiteName: groupName)
@@ -64,7 +53,8 @@ extension GroupDataStore: SearchFilterStore {
     
     public var safeSearchEnabled: Bool {
         get {
-            return userDefaults()?.object(forKey: Keys.safeSearch) as? Bool ?? true
+            guard let userDefaults = userDefaults() else { return true }
+            return userDefaults.bool(forKey: Keys.safeSearch, defaultValue: true)
         }
         set(newValue) {
             userDefaults()?.set(newValue, forKey: Keys.safeSearch)

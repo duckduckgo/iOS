@@ -42,6 +42,8 @@ class RegionSelectionViewController: UITableViewController {
         if delegate?.currentRegionSelection().filter == data.filter {
             cell.accessoryType = .checkmark
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        } else {
+            cell.accessoryType = .none
         }
     }
     

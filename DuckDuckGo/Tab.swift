@@ -10,7 +10,7 @@ import Foundation
 import Core
 
 protocol Tab: class {
-
+    
     var name: String? { get }
     
     var url: URL? { get }
@@ -20,11 +20,13 @@ protocol Tab: class {
     var omniBarStyle: OmniBar.Style { get }
     
     var showsUrlInOmniBar: Bool { get }
-
+    
     var canGoBack: Bool { get }
     
     var canGoForward: Bool { get }
-        
+    
+    var canShare: Bool { get }
+    
     func omniBarWasDismissed()
     
     func load(url: URL)
@@ -32,7 +34,7 @@ protocol Tab: class {
     func goBack()
     
     func goForward()
-
+    
     func reload()
     
     func dismiss()

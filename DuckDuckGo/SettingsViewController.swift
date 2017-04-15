@@ -11,7 +11,6 @@ import Core
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet weak var uniformNavigationToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!

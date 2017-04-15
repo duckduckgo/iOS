@@ -28,7 +28,8 @@ class HomeTabViewController: UIViewController, Tab {
     var favicon: URL? = AppUrls.favicon
     
     var canGoBack = false
-    var canGoForward: Bool = false
+    var canGoForward = false
+    var canShare = false
     
     private var activeMode = false
     private lazy var tabIconMaker = TabIconMaker()

@@ -15,6 +15,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
     @IBOutlet weak var versionText: UILabel!
+
+    private lazy var versionProvider = Version()
     
     fileprivate lazy var groupData = GroupDataStore()
     
@@ -29,8 +31,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureVersionText() {
-        let version = Version()
-        versionText.text = version.localized()
+        versionText.text = versionProvider.localized()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +56,9 @@ class SettingsViewController: UITableViewController {
         if indexPath.section == 1 && indexPath.row == 0 {
             launchOnboardingFlow()
         }
+        if indexPath.section == 3 && indexPath.row == 0 {
+            sendFeedback()
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -62,6 +66,18 @@ class SettingsViewController: UITableViewController {
         let controller = OnboardingViewController.loadFromStoryboard()
         controller.modalTransitionStyle = .flipHorizontal
         present(controller, animated: true, completion: nil)
+    }
+    
+    private func sendFeedback() {
+        let appVersion = versionProvider.localized() ?? ""
+        let device = UIDevice.current.localizedModel
+        let osName = UIDevice.current.systemName
+        let osVersion = UIDevice.current.systemVersion
+        
+        let feedback = FeedbackEmail(appVersion: appVersion, device: device, osName: osName, osVersion: osVersion)
+        if let url = feedback.url {
+            UIApplication.shared.openURL(url)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -107,6 +123,5 @@ extension SettingsViewController: DateFilterSelectionDelegate {
         groupData.dateFilter = value
     }
 }
-
 
 

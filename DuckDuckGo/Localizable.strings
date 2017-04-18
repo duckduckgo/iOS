@@ -36,6 +36,9 @@
 "onboarding.privacyright.title" = "Privacy is a Right!";
 "onboarding.privacyright.description" = "Use DuckDuckGo and take\nback your privacy!";
 
+"feedbackemail.subject" = "DuckDuckGo for iOS feedback";
+"feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
+
 "navigation.title.edit" = "Edit";
 
 "datefilter.code.any" = "Any Time";

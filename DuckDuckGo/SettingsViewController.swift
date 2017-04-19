@@ -12,6 +12,7 @@ import Core
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
@@ -24,6 +25,7 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
         configureSafeSearchToggle()
         configureVersionText()
+        configureOmniFireExperiment()
     }
     
     private func configureSafeSearchToggle() {
@@ -32,6 +34,10 @@ class SettingsViewController: UITableViewController {
     
     private func configureVersionText() {
         versionText.text = versionProvider.localized()
+    }
+    
+    private func configureOmniFireExperiment() {
+        omniFireOpensNewTabExperimentToggle.isOn = groupData.omniFireOpensNewTab
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,6 +96,11 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? DateFilterSelectionViewController {
             controller.delegate = self
         }
+    }
+    
+    
+    @IBAction func onOmniFireOpensNewTabToggled(_ sender: UISwitch) {
+        groupData.omniFireOpensNewTab = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {

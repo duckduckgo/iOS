@@ -127,7 +127,7 @@ class MainViewController: UIViewController {
         tabManager.remove(at: index)
         
         if tabManager.isEmpty {
-            launchTab()
+            return
         }
         
         if let lastIndex = tabManager.lastIndex, index > lastIndex {
@@ -297,7 +297,11 @@ extension MainViewController: OmniBarDelegate {
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
-        launchTab()
+        if groupData.omniFireOpensNewTab {
+            launchTab()
+        } else {
+            launchTabSwitcher()
+        }
     }
     
     func onBookmarksButtonPressed() {

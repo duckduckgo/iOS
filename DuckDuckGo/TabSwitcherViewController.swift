@@ -54,16 +54,14 @@ class TabSwitcherViewController: UIViewController {
     }
     
     func onDeleted(tabAt index: Int) {
-        let shouldFinish =  delegate.tabDetails.count == 1
         delegate.tabSwitcher(self, didRemoveTabAt: index)
-        if shouldFinish {
-            dismiss()
-        } else {
-            collectionView.reloadData()
-        }
+        collectionView.reloadData()
     }
     
     fileprivate func dismiss() {
+        if delegate.tabDetails.isEmpty {
+            delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
+        }
         dismiss(animated: true, completion: nil)
     }
 }
@@ -86,9 +84,6 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     func onRemoveTapped(sender: UIView) {
         let index = sender.tag
         onDeleted(tabAt: index)
-        if delegate.tabDetails.isEmpty {
-            dismiss()
-        }
     }
 }
 

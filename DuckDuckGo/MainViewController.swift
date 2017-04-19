@@ -14,6 +14,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     
@@ -126,7 +127,7 @@ class MainViewController: UIViewController {
         tabManager.remove(at: index)
         
         if tabManager.isEmpty {
-            launchTab()
+            return
         }
         
         if let lastIndex = tabManager.lastIndex, index > lastIndex {
@@ -157,6 +158,7 @@ class MainViewController: UIViewController {
         refreshOmniText()
         refreshTabIcon()
         refreshNavigationButtons()
+        refreshShareButton()
     }
     
     private func refreshTabIcon() {
@@ -170,6 +172,10 @@ class MainViewController: UIViewController {
     private func refreshNavigationButtons() {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
+    }
+    
+    private func refreshShareButton() {
+        shareButton.isEnabled = currentTab?.canShare ?? false
     }
     
     private func refreshOmniText() {
@@ -291,7 +297,11 @@ extension MainViewController: OmniBarDelegate {
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
-        launchTab()
+        if groupData.omniFireOpensNewTab {
+            launchTab()
+        } else {
+            launchTabSwitcher()
+        }
     }
     
     func onBookmarksButtonPressed() {
@@ -316,6 +326,10 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
         omniBar?.textField.text = suggestion
+    }
+    
+    func autocompleteWasDismissed() {
+        dismissOmniBar()
     }
 }
 

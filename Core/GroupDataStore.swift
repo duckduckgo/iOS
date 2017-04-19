@@ -7,32 +7,30 @@
 //
 
 import Foundation
-import Core
 
 public class GroupDataStore {
     
     private let groupName = "group.com.duckduckgo.extension"
     
     fileprivate struct Keys {
-        static let uniformNavigationKey = "uniformNavigationKey"
         static let bookmarkKey = "bookmarkKey"
         static let safeSearch = "safeSearch"
         static let regionFilter = "regionFilter"
         static let dateFilter = "dateFilter"
+        static let omniFireOpensNewTab = "omniFireOpensNewTab"
     }
     
     public init() {}
     
-    public var uniformNavigationEnabled: Bool {
+    public var omniFireOpensNewTab: Bool {
         get {
             guard let userDefaults = userDefaults() else { return true }
-            return userDefaults.bool(forKey: Keys.uniformNavigationKey, defaultValue: true)
+            return userDefaults.bool(forKey: Keys.omniFireOpensNewTab, defaultValue: true)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.uniformNavigationKey)
+            userDefaults()?.set(newValue, forKey: Keys.omniFireOpensNewTab)
         }
     }
-    
     
     fileprivate func userDefaults() -> UserDefaults? {
         return UserDefaults(suiteName: groupName)

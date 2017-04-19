@@ -7,27 +7,25 @@
 //
 
 import UIKit
+import MessageUI
 import Core
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet weak var uniformNavigationToggle: UISwitch!
+    @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
     @IBOutlet weak var versionText: UILabel!
-    
+
+    private lazy var versionProvider = Version()
     fileprivate lazy var groupData = GroupDataStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUniformNavigationToggle()
         configureSafeSearchToggle()
         configureVersionText()
-    }
-
-    private func configureUniformNavigationToggle() {
-        uniformNavigationToggle.isOn = groupData.uniformNavigationEnabled
+        configureOmniFireExperiment()
     }
     
     private func configureSafeSearchToggle() {
@@ -35,8 +33,11 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureVersionText() {
-        let version = Version()
-        versionText.text = version.localized()
+        versionText.text = versionProvider.localized()
+    }
+    
+    private func configureOmniFireExperiment() {
+        omniFireOpensNewTabExperimentToggle.isOn = groupData.omniFireOpensNewTab
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +62,9 @@ class SettingsViewController: UITableViewController {
         if indexPath.section == 1 && indexPath.row == 0 {
             launchOnboardingFlow()
         }
+        if indexPath.section == 3 && indexPath.row == 0 {
+            sendFeedback()
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -68,6 +72,21 @@ class SettingsViewController: UITableViewController {
         let controller = OnboardingViewController.loadFromStoryboard()
         controller.modalTransitionStyle = .flipHorizontal
         present(controller, animated: true, completion: nil)
+    }
+    
+    private func sendFeedback() {
+        let appVersion = versionProvider.localized() ?? ""
+        let device = UIDevice.current.deviceType.displayName
+        let osName = UIDevice.current.systemName
+        let osVersion = UIDevice.current.systemVersion
+        
+        let feedback = FeedbackEmail(appVersion: appVersion, device: device, osName: osName, osVersion: osVersion)
+        guard let mail = MFMailComposeViewController.create() else { return }
+        mail.mailComposeDelegate = self
+        mail.setToRecipients([feedback.mailTo])
+        mail.setSubject(feedback.subject)
+        mail.setMessageBody(feedback.body, isHTML: false)
+        present(mail, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -78,9 +97,10 @@ class SettingsViewController: UITableViewController {
             controller.delegate = self
         }
     }
-
-    @IBAction func onUniformNavigationToggled(_ sender: UISwitch) {
-        groupData.uniformNavigationEnabled = sender.isOn
+    
+    
+    @IBAction func onOmniFireOpensNewTabToggled(_ sender: UISwitch) {
+        groupData.omniFireOpensNewTab = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {
@@ -118,5 +138,16 @@ extension SettingsViewController: DateFilterSelectionDelegate {
     }
 }
 
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MFMailComposeViewController {
+    static func create() -> MFMailComposeViewController? {
+        return MFMailComposeViewController()
+    }
+}
 
 

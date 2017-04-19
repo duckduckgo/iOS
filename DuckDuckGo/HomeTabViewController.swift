@@ -13,8 +13,6 @@ class HomeTabViewController: UIViewController, Tab {
     
     private static let onboardingHeight: CGFloat = 230
     
-    @IBOutlet weak var tabIcon: UIButton!
-    @IBOutlet weak var bookmarksIcon: UIButton!
     @IBOutlet weak var passiveContainerView: UIView!
     @IBOutlet weak var centreBar: UIView!
     
@@ -24,13 +22,15 @@ class HomeTabViewController: UIViewController, Tab {
     
     let omniBarStyle: OmniBar.Style = .home
     let showsUrlInOmniBar = false
+    var keyboardSize: CGRect? = nil
     
     var name: String? = UserText.homeLinkTitle
     var url: URL? = AppUrls.base
     var favicon: URL? = AppUrls.favicon
     
     var canGoBack = false
-    var canGoForward: Bool = false
+    var canGoForward = false
+    var canShare = false
     
     private var activeMode = false
     private lazy var tabIconMaker = TabIconMaker()
@@ -42,18 +42,17 @@ class HomeTabViewController: UIViewController, Tab {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addKeyboardObserver()
+        addKeyboardObservers()
     }
     
     deinit {
-        removeKeyboardObserver()
+        removeKeyboardObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
         activeMode = false
         refreshMode()
-        refreshTabIcon()
         super.viewWillAppear(animated)
     }
     
@@ -64,25 +63,15 @@ class HomeTabViewController: UIViewController, Tab {
     
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = !groupData.uniformNavigationEnabled
+        navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = false
     }
     
     private func refreshMode() {
-        tabIcon.isHidden = groupData.uniformNavigationEnabled
-        bookmarksIcon.isHidden = groupData.uniformNavigationEnabled
         if activeMode {
             enterActiveMode()
         } else {
             enterPassiveMode()
-        }
-    }
-    
-    private func refreshTabIcon() {
-        guard let count = tabDelegate?.homeTabDidRequestTabCount(homeTab: self) else { return }
-        if count > 1 {
-            let image = tabIconMaker.icon(forTabs: count)
-            tabIcon.setImage(image, for: .normal)
         }
     }
     
@@ -92,14 +81,6 @@ class HomeTabViewController: UIViewController, Tab {
     
     @IBAction func onEnterPassiveModeTapped(_ sender: Any) {
         enterPassiveMode()
-    }
-    
-    @IBAction func onTabButtonPressed(_ sender: UIButton) {
-        tabDelegate?.homeTabDidRequestTabsSwitcher(homeTab: self)
-    }
-    
-    @IBAction func onBookmarksButtonPressed(_ sender: UIButton) {
-        tabDelegate?.homeTabDidRequestBookmarks(homeTab: self)
     }
     
     func enterPassiveMode() {
@@ -112,8 +93,8 @@ class HomeTabViewController: UIViewController, Tab {
     func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContainerView.isHidden = true
-        showMiniOnboardingFlow()
         tabDelegate?.homeTabDidActivateOmniBar(homeTab: self)
+        showMiniOnboardingFlow()
     }
     
     private func showMiniOnboardingFlow() {
@@ -122,6 +103,7 @@ class HomeTabViewController: UIViewController, Tab {
         self.miniOnboardingController = miniOnboardingController
         addChildViewController(miniOnboardingController)
         view.addSubview(miniOnboardingController.view)
+        refreshMiniOnboardingPosition()
     }
     
     private func dismissMiniOnboardingFlow() {
@@ -130,23 +112,36 @@ class HomeTabViewController: UIViewController, Tab {
         miniOnboardingController = nil
     }
     
-    private func addKeyboardObserver() {
+    private func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
     }
     
-    private func removeKeyboardObserver() {
+    private func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] else { return }
         guard let keyboardValue = keyboardInfo as? NSValue else { return }
         let keyboardRect = keyboardValue.cgRectValue
+        keyboardSize = keyboardRect
+        refreshMiniOnboardingPosition()
+    }
+    
+    private func refreshMiniOnboardingPosition() {
         if UIApplication.shared.statusBarOrientation.isLandscape, traitCollection.verticalSizeClass == .compact {
             centreMiniOnboardingScreen()
-        } else {
+        } else if let keyboardRect = keyboardSize {
             floatMiniOnboaridngScreenAboveKeyboard(keyboardRect: keyboardRect)
+        } else {
+            centreMiniOnboardingScreen()
         }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        keyboardSize = nil
     }
     
     private func centreMiniOnboardingScreen() {

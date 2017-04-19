@@ -25,6 +25,7 @@
 		F1126DFC1EA5CC220016A6C7 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3411E4A9C9A00CFDE3A /* UserText.swift */; };
 		F1126DFD1EA5CC280016A6C7 /* AppEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */; };
 		F1126DFE1EA5CD1F0016A6C7 /* DateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BCE1E8BFAF00058AAA5 /* DateFilter.swift */; };
+		F1126E1E1EA6FB170016A6C7 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126E1D1EA6FB170016A6C7 /* UIDeviceExtension.swift */; };
 		F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114C55A1E66EB020018F95F /* NibLoading.swift */; };
 		F114C55E1E6717800018F95F /* OmniBarHome.xib in Resources */ = {isa = PBXBuildFile; fileRef = F114C55C1E6717800018F95F /* OmniBarHome.xib */; };
 		F114C55F1E6717800018F95F /* OmniBarWeb.xib in Resources */ = {isa = PBXBuildFile; fileRef = F114C55D1E6717800018F95F /* OmniBarWeb.xib */; };
@@ -315,6 +316,7 @@
 		F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEmails.swift; sourceTree = "<group>"; };
 		F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackEmail.swift; sourceTree = "<group>"; };
 		F1126DF81EA5CA6D0016A6C7 /* FeedbackEmailTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackEmailTests.swift; sourceTree = "<group>"; };
+		F1126E1D1EA6FB170016A6C7 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIDeviceExtension.swift; path = Submodule/Device/Device/UIDeviceExtension.swift; sourceTree = "<group>"; };
 		F114C55A1E66EB020018F95F /* NibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoading.swift; sourceTree = "<group>"; };
 		F114C55C1E6717800018F95F /* OmniBarHome.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OmniBarHome.xib; sourceTree = "<group>"; };
 		F114C55D1E6717800018F95F /* OmniBarWeb.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OmniBarWeb.xib; sourceTree = "<group>"; };
@@ -561,6 +563,14 @@
 				F1126DF81EA5CA6D0016A6C7 /* FeedbackEmailTests.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		F1126E0F1EA6FAA20016A6C7 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				F1126E1D1EA6FB170016A6C7 /* UIDeviceExtension.swift */,
+			);
+			name = Device;
 			sourceTree = "<group>";
 		};
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
@@ -845,6 +855,7 @@
 			isa = PBXGroup;
 			children = (
 				F103073C1E7D5AAE0059FEC7 /* Kingfisher.xcodeproj */,
+				F1126E0F1EA6FAA20016A6C7 /* Device */,
 				F1AA54561E48C9FE00223211 /* Toast-Swift */,
 			);
 			name = "3rd Party";
@@ -1411,6 +1422,7 @@
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 				F17D72401E8BD943003E8B0E /* SearchFilterStore.swift in Sources */,
+				F1126E1E1EA6FB170016A6C7 /* UIDeviceExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

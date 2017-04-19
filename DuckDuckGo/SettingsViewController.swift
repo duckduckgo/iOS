@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 import Core
 
 class SettingsViewController: UITableViewController {
@@ -17,7 +18,6 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionText: UILabel!
 
     private lazy var versionProvider = Version()
-    
     fileprivate lazy var groupData = GroupDataStore()
     
     override func viewDidLoad() {
@@ -70,14 +70,17 @@ class SettingsViewController: UITableViewController {
     
     private func sendFeedback() {
         let appVersion = versionProvider.localized() ?? ""
-        let device = UIDevice.current.localizedModel
+        let device = UIDevice.current.deviceType.displayName
         let osName = UIDevice.current.systemName
         let osVersion = UIDevice.current.systemVersion
         
         let feedback = FeedbackEmail(appVersion: appVersion, device: device, osName: osName, osVersion: osVersion)
-        if let url = feedback.url {
-            UIApplication.shared.openURL(url)
-        }
+        guard let mail = MFMailComposeViewController.create() else { return }
+        mail.mailComposeDelegate = self
+        mail.setToRecipients([feedback.mailTo])
+        mail.setSubject(feedback.subject)
+        mail.setMessageBody(feedback.body, isHTML: false)
+        present(mail, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,6 +124,18 @@ extension SettingsViewController: DateFilterSelectionDelegate {
     func onDateFilterSelected(dateFilter: DateFilter) {
         let value = (dateFilter == .any) ? nil : dateFilter.rawValue
         groupData.dateFilter = value
+    }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MFMailComposeViewController {
+    static func create() -> MFMailComposeViewController? {
+        return MFMailComposeViewController()
     }
 }
 

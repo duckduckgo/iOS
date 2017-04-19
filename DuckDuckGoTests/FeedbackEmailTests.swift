@@ -32,11 +32,4 @@ class FeedbackEmailTests: XCTestCase {
     func testThatBodyIsCorrect() {
         XCTAssertEqual(testee.body, expectedBody)
     }
-    
-    func testThatUrlIsCorrectWithEncodedParameters() {
-        let subject = URL.encode(queryText: expectedSubject) ?? ""
-        let body = URL.encode(queryText: expectedBody) ?? ""
-        let expectedUrl = "mailto:help@duckduckgo.com?subject=\(subject)&body=\(body)"
-        XCTAssertEqual(testee.url!.absoluteString, expectedUrl)
-    }
 }

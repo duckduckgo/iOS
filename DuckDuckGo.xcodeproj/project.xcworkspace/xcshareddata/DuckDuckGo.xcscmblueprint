@@ -4,15 +4,17 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "53612C08C5421ECACF401AB384C8A608425DD07E" : 9223372036854775807,
     "1AE4A4A0564E38992EFB0E8F9258432F89681A15" : 9223372036854775807,
-    "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : 9223372036854775807
+    "53612C08C5421ECACF401AB384C8A608425DD07E" : 9223372036854775807,
+    "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : 9223372036854775807,
+    "253D0CBDFD77E3D4ECB1F46782A45DB72A1281D1" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2EB3A609-2EDA-41B7-A39E-160DB53E8D7F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "53612C08C5421ECACF401AB384C8A608425DD07E" : "ddg-tik-ios\/",
     "1AE4A4A0564E38992EFB0E8F9258432F89681A15" : "ddg-tik-ios\/Submodule\/Toast-Swift\/",
-    "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : "ddg-tik-ios\/Submodule\/Kingfisher\/"
+    "53612C08C5421ECACF401AB384C8A608425DD07E" : "ddg-tik-ios\/",
+    "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : "ddg-tik-ios\/Submodule\/Kingfisher\/",
+    "253D0CBDFD77E3D4ECB1F46782A45DB72A1281D1" : "ddg-tik-ios\/Submodule\/Device\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "DuckDuckGo",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -27,6 +29,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/scalessec\/Toast-Swift",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1AE4A4A0564E38992EFB0E8F9258432F89681A15"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TheInfiniteKind\/Device.swift",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "253D0CBDFD77E3D4ECB1F46782A45DB72A1281D1"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TheInfiniteKind\/duckduckgo-iOS.git",

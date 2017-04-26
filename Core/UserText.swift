@@ -29,6 +29,9 @@ public struct UserText {
     public static let onboardingPrivacyRightTitle = forKey("onboarding.privacyright.title")
     public static let onboardingPrivacyRightDescription = forKey("onboarding.privacyright.description")
     
+    public static let feedbackEmailSubject = forKey("feedbackemail.subject")
+    public static let feedbackEmailBody = forKey("feedbackemail.body")
+
     public static let actionSave = forKey("action.title.save")
     public static let actionCancel = forKey("action.title.cancel")
     public static let actionNewTab = forKey("action.title.newTab")

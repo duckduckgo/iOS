@@ -127,7 +127,7 @@ class MainViewController: UIViewController {
         tabManager.remove(at: index)
         
         if tabManager.isEmpty {
-            launchTab()
+            return
         }
         
         if let lastIndex = tabManager.lastIndex, index > lastIndex {
@@ -258,8 +258,8 @@ class MainViewController: UIViewController {
     
     fileprivate func launchTabSwitcher() {
         let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self)
+        controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
-        controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true, completion: nil)
     }
     
@@ -297,7 +297,11 @@ extension MainViewController: OmniBarDelegate {
         if let current = currentTab, let index = tabManager.indexOf(tab: current) {
             remove(tabAt: index)
         }
-        launchTab()
+        if groupData.omniFireOpensNewTab {
+            launchTab()
+        } else {
+            launchTabSwitcher()
+        }
     }
     
     func onBookmarksButtonPressed() {
@@ -402,5 +406,15 @@ extension MainViewController: TabSwitcherDelegate {
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(link: Link) {
         loadUrlInCurrentTab(url: link.url)
+    }
+}
+
+extension MainViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return BlurAnimatedTransitioning()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DissolveAnimatedTransitioning()        
     }
 }

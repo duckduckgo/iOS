@@ -17,9 +17,20 @@ public class GroupDataStore {
         static let safeSearch = "safeSearch"
         static let regionFilter = "regionFilter"
         static let dateFilter = "dateFilter"
+        static let omniFireOpensNewTab = "omniFireOpensNewTab"
     }
     
     public init() {}
+    
+    public var omniFireOpensNewTab: Bool {
+        get {
+            guard let userDefaults = userDefaults() else { return true }
+            return userDefaults.bool(forKey: Keys.omniFireOpensNewTab, defaultValue: true)
+        }
+        set(newValue) {
+            userDefaults()?.set(newValue, forKey: Keys.omniFireOpensNewTab)
+        }
+    }
     
     fileprivate func userDefaults() -> UserDefaults? {
         return UserDefaults(suiteName: groupName)

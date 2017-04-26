@@ -21,11 +21,6 @@ class TabSwitcherViewController: UIViewController {
         return controller
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        blur()
-    }
-    
     override func viewWillLayoutSubviews() {
         collectionView.reloadData()
     }

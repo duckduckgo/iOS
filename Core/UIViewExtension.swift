@@ -20,7 +20,6 @@ extension UIView {
             item: subView,
             attribute: .height, relatedBy: .equal, toItem: self,
             attribute: .height, multiplier: 1, constant: 0))
-        
     }
     
     public func addEqualWidthConstraint(subView: UIView) {
@@ -36,6 +35,18 @@ extension UIView {
         let maskLayer = CAShapeLayer()
         maskLayer.path = path.cgPath
         layer.mask = maskLayer
+    }
+    
+    public func blur(style: UIBlurEffectStyle) {
+        let blurView = UIVisualEffectView()
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = UIColor.clear
+        insertSubview(blurView, at: 0)
+        addEqualWidthConstraint(subView: blurView)
+        addEqualHeightConstraint(subView: blurView)
+        UIView.animate(withDuration: 0.5) { 
+            blurView.effect = UIBlurEffect(style: style)
+        }
     }
     
     public func displayDropShadow() {

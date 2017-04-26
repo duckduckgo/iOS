@@ -258,8 +258,8 @@ class MainViewController: UIViewController {
     
     fileprivate func launchTabSwitcher() {
         let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self)
+        controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
-        controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true, completion: nil)
     }
     
@@ -406,5 +406,15 @@ extension MainViewController: TabSwitcherDelegate {
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(link: Link) {
         loadUrlInCurrentTab(url: link.url)
+    }
+}
+
+extension MainViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return BlurAnimatedTransitioning()
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DissolveAnimatedTransitioning()        
     }
 }

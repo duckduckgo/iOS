@@ -18,6 +18,7 @@
 		F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */; };
 		F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */; };
 		F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */; };
+		F111C3801EB7A1D100AD9189 /* UIDeviceSimulatorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F111C37F1EB7A1D100AD9189 /* UIDeviceSimulatorExtension.swift */; };
 		F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */; };
 		F1126DF71EA5C92E0016A6C7 /* FeedbackEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */; };
 		F1126DF91EA5CA6D0016A6C7 /* FeedbackEmailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DF81EA5CA6D0016A6C7 /* FeedbackEmailTests.swift */; };
@@ -315,6 +316,7 @@
 		F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkAlert.swift; sourceTree = "<group>"; };
 		F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtension.swift; sourceTree = "<group>"; };
+		F111C37F1EB7A1D100AD9189 /* UIDeviceSimulatorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceSimulatorExtension.swift; sourceTree = "<group>"; };
 		F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEmails.swift; sourceTree = "<group>"; };
 		F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackEmail.swift; sourceTree = "<group>"; };
 		F1126DF81EA5CA6D0016A6C7 /* FeedbackEmailTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackEmailTests.swift; sourceTree = "<group>"; };
@@ -426,10 +428,10 @@
 		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabDelegate.swift; sourceTree = "<group>"; };
 		F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DissolveAnimatedTransitioning.swift; sourceTree = "<group>"; };
-		F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-bold.otf"; sourceTree = "<group>"; };
-		F1EEAC491EAFC708006128D9 /* proximanova-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-light.otf"; sourceTree = "<group>"; };
-		F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-regular.otf"; sourceTree = "<group>"; };
-		F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-semibold.otf"; sourceTree = "<group>"; };
+		F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-bold.otf"; sourceTree = "<group>"; };
+		F1EEAC491EAFC708006128D9 /* proximanova-light.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-light.otf"; sourceTree = "<group>"; };
+		F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-regular.otf"; sourceTree = "<group>"; };
+		F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-semibold.otf"; sourceTree = "<group>"; };
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnboardingMini.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -631,6 +633,7 @@
 				F143C3251E4A9A0E00CFDE3A /* URLExtension.swift */,
 				F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */,
 				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
+				F111C37F1EB7A1D100AD9189 /* UIDeviceSimulatorExtension.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1456,6 +1459,7 @@
 				F143C3421E4A9C9A00CFDE3A /* UserText.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
+				F111C3801EB7A1D100AD9189 /* UIDeviceSimulatorExtension.swift in Sources */,
 				F17D72401E8BD943003E8B0E /* SearchFilterStore.swift in Sources */,
 				F1126E1E1EA6FB170016A6C7 /* UIDeviceExtension.swift in Sources */,
 			);
@@ -1722,6 +1726,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				"OTHER_SWIFT_FLAGS[sdk=iphonesimulator*]" = "-D IOS_SIMULATOR";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.DuckDuckGo.Core;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

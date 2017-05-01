@@ -45,6 +45,8 @@ public struct UserText {
     public static let alertEditBookmark = forKey("alert.title.edit.bookmark")
 
     public static let navigationTitleEdit = forKey("navigation.title.edit")
+    
+    public static let settingsOpenSafariError = forKey("settings.openSafari.error")
   
     public static func forDateFilter(_ dateFilter: DateFilter) -> String {
         if dateFilter == .any {

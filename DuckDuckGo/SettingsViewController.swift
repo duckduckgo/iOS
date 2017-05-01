@@ -11,13 +11,13 @@ import MessageUI
 import Core
 
 class SettingsViewController: UITableViewController {
-
+    
     @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
     @IBOutlet weak var versionText: UILabel!
-
+    
     private lazy var versionProvider = Version()
     fileprivate lazy var groupData = GroupDataStore()
     
@@ -45,7 +45,7 @@ class SettingsViewController: UITableViewController {
         configureRegionFilter()
         configureDateFilter()
     }
-
+    
     private func configureRegionFilter() {
         regionFilterText.text = currentRegionSelection().name
     }
@@ -62,6 +62,9 @@ class SettingsViewController: UITableViewController {
         if indexPath.section == 1 && indexPath.row == 0 {
             launchOnboardingFlow()
         }
+        if indexPath.section == 1 && indexPath.row == 2 {
+            launchSafariSetting()
+        }
         if indexPath.section == 3 && indexPath.row == 0 {
             sendFeedback()
         }
@@ -72,6 +75,18 @@ class SettingsViewController: UITableViewController {
         let controller = OnboardingViewController.loadFromStoryboard()
         controller.modalTransitionStyle = .flipHorizontal
         present(controller, animated: true, completion: nil)
+    }
+    
+    private func launchSafariSetting() {
+        let path = UIDevice.current.isSimulator ? "App-Prefs:root=Safari" : "App-Prefs:root=SAFARI"
+        if !openApplicationPath(path: path) {
+            view.makeToast(UserText.settingsOpenSafariError)
+        }
+    }
+    
+    private func openApplicationPath(path: String) -> Bool {
+        guard let url = URL(string: path) else { return false }
+        return UIApplication.shared.openURL(url)
     }
     
     private func sendFeedback() {

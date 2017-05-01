@@ -45,3 +45,5 @@
 "datefilter.code.d" = "Past Day";
 "datefilter.code.w" = "Past Week";
 "datefilter.code.m" = "Past Month";
+
+"settings.openSafari.error" = "Oh no, we could not open Safari Settings. Try opening via the Settings app";

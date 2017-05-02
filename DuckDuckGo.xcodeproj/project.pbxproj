@@ -140,6 +140,8 @@
 		F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642031E949E1900B2A911 /* proximanova-light.otf */; };
 		F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642041E949E1900B2A911 /* proximanova-regular.otf */; };
 		F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642051E949E1900B2A911 /* proximanova-semibold.otf */; };
+		F1F33DEE1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */; };
+		F1F33DF11EB8B88700E462C3 /* ContentBlocking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */; };
 		F1F4D8E71E8435A800F38D83 /* OnboardingMini.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -446,6 +448,8 @@
 		F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-regular.otf"; sourceTree = "<group>"; };
 		F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-semibold.otf"; sourceTree = "<group>"; };
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableSafariContentBlockerViewController.swift; sourceTree = "<group>"; };
+		F1F33DF01EB8B88700E462C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ContentBlocking.storyboard; sourceTree = "<group>"; };
 		F1F4D8E61E8435A800F38D83 /* OnboardingMini.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OnboardingMini.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -540,6 +544,7 @@
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
+				F1F33DE11EB899D100E462C3 /* ContentBlocking */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
@@ -648,11 +653,11 @@
 				F143C3151E4A99D200CFDE3A /* AppUrls.swift */,
 				F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */,
 				F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */,
+				F143C3161E4A99D200CFDE3A /* Link.swift */,
 				F1722BCE1E8BFAF00058AAA5 /* DateFilter.swift */,
 				F13508111E8C3B9800B7ECC4 /* RegionFilter.swift */,
-				F143C3161E4A99D200CFDE3A /* Link.swift */,
-				F17D72271E8B1646003E8B0E /* regions.json */,
 				F13508131E8C5F9C00B7ECC4 /* RegionFilterLoader.swift */,
+				F17D72271E8B1646003E8B0E /* regions.json */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -1038,6 +1043,15 @@
 			name = Licensed;
 			sourceTree = "<group>";
 		};
+		F1F33DE11EB899D100E462C3 /* ContentBlocking */ = {
+			isa = PBXGroup;
+			children = (
+				F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */,
+				F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */,
+			);
+			name = ContentBlocking;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1355,6 +1369,7 @@
 				F114C55F1E6717800018F95F /* OmniBarWeb.xib in Resources */,
 				F1F4D8E71E8435A800F38D83 /* OnboardingMini.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
+				F1F33DF11EB8B88700E462C3 /* ContentBlocking.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 			);
@@ -1424,6 +1439,7 @@
 				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
+				F1F33DEE1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift in Sources */,
 				F1BE54561E69DDE000FCF649 /* TrackingConfiguration.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */,
 				F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */,
@@ -1625,6 +1641,14 @@
 				F1AA54661E48D90700223211 /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1F33DF01EB8B88700E462C3 /* Base */,
+			);
+			name = ContentBlocking.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

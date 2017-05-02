@@ -59,7 +59,7 @@ func last(list: Array<Any>, index: Int) -> Bool {
 }
 
 func blockedEntry(url: String) -> String {
-    return "{ \"action\":  { \"type\": \"block\" }, \"trigger\": { \"load-type\": [\"third-party\"], \"url-filter\": [\"\(url)\"]}}"
+    return "{ \"action\":  { \"type\": \"block\" }, \"trigger\": { \"load-type\": [\"third-party\"], \"url-filter\": \"\(url)\"}}"
 }
 
 func saveToFile(text: String) {

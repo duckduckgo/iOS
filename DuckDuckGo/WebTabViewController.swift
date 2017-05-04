@@ -15,9 +15,10 @@ class WebTabViewController: WebViewController, Tab {
     weak var tabDelegate: WebTabDelegate?
     
     var omniBarStyle: OmniBar.Style = .web
-    
     var canShare = true
     var showsUrlInOmniBar = true
+    
+    private lazy var settings = TutorialSettings()
 
     static func loadFromStoryboard() -> WebTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
@@ -37,6 +38,26 @@ class WebTabViewController: WebViewController, Tab {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        displayTutorialIfNotSeen()
+    }
+    
+    private func displayTutorialIfNotSeen() {
+        if !settings.hasSeenFireTutorial {
+            displayTutorial()
+        }
+    }
+    
+    private func displayTutorial() {
+        guard let button = navigationController?.view.viewWithTag(OmniBar.actionButtonTag) else { return }
+        let controller = FireTutorialViewController.loadFromStoryboard()
+        controller.modalPresentationStyle = .popover
+        controller.popoverPresentationController?.delegate = controller
+        present(controller: controller, fromView: button)
+        settings.hasSeenFireTutorial = true
     }
     
     func launchActionSheet(forUrl url: URL) {

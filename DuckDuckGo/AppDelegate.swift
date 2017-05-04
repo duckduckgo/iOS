@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func startOnboardingFlowIfNotSeenBefore() {
-        var settings = OnboardingSettings()
+        var settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
             startOnboardingFlow()
             settings.hasSeenOnboarding = true

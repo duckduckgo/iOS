@@ -52,7 +52,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func showInstructions() {
-        performSegue(withIdentifier: "UseDuckDuckGoSegue", sender: self)
+        performSegue(withIdentifier: "SafariSearchInstructionsSegue", sender: self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,7 +60,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func configureDisplayForVerySmallHandsets() {
-        if view.bounds.height <= 480 && view.bounds.width <= 480 {
+        if InterfaceMeasurement.hasiPhone4ScreenSize {
             bottomMarginConstraint?.constant = 0
         }
     }

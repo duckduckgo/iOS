@@ -13,6 +13,8 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
     
+    public static let actionButtonTag = 100
+    
     public enum Style: String {
         case home = "OmniBarHome"
         case web = "OmniBarWeb"
@@ -39,6 +41,7 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        actionButton.tag = OmniBar.actionButtonTag
         configureTextField()
     }
     

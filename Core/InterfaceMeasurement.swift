@@ -6,27 +6,40 @@
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CoreGraphics
 
 public struct InterfaceMeasurement {
     
     public static let defaultStatusBarHeight: CGFloat = 20
-    
-    private static let iPhone4Height: CGFloat = 480
-    private static let iPhone5Height: CGFloat = 568
 
-    public static var isSmallScreenDevice: Bool {
+    private static let iPhone4Size = CGSize(width: 320, height: 480)
+    private static let iPhone5Size = CGSize(width: 320, height: 568)
+    
+    private let screen: UIScreen
+    
+    public init(forScreen screen: UIScreen) {
+        self.screen = screen
+    }
+    
+    public var isSmallScreenDevice: Bool {
         return hasiPhone4ScreenSize || hasiPhone5ScreenSize
     }
     
-    public static var hasiPhone4ScreenSize: Bool {
-        let nativeHeight = UIScreen.main.nativeBounds.size.height
-        return (nativeHeight / UIScreen.main.scale) == iPhone4Height
+    public var hasiPhone4ScreenSize: Bool {
+        return isNativeScaledSize(InterfaceMeasurement.iPhone4Size)
     }
     
-    public static var hasiPhone5ScreenSize: Bool {
-        let nativeHeight = UIScreen.main.nativeBounds.size.height
-        return (nativeHeight / UIScreen.main.scale) == iPhone5Height
+    public var hasiPhone5ScreenSize: Bool {
+        return isNativeScaledSize(InterfaceMeasurement.iPhone5Size)
+    }
+    
+    private func isNativeScaledSize(_ size: CGSize) -> Bool {
+        let scale = screen.scale
+        let scaledWidth = screen.nativeBounds.size.width / scale
+        let scaledHeight = screen.nativeBounds.size.height / scale
+        let scaledSize = CGSize(width: scaledWidth, height: scaledHeight)
+        return scaledSize == size
     }
 }
 

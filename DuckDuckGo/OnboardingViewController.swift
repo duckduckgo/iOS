@@ -20,6 +20,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     private var transitioningToPage: OnboardingPageViewController?
     fileprivate var dataSource: OnboardingDataSource!
     
+    private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
+    
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
@@ -60,7 +62,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func configureDisplayForVerySmallHandsets() {
-        if InterfaceMeasurement.hasiPhone4ScreenSize {
+        if interfaceMeasurement.hasiPhone4ScreenSize {
             bottomMarginConstraint?.constant = 0
         }
     }

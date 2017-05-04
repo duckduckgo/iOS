@@ -31,7 +31,8 @@ class FireTutorialViewController: UIViewController {
     }
     
     private func scaleDisplayOnSmallScreens() {
-        if InterfaceMeasurement.isSmallScreenDevice {
+        let measurements = InterfaceMeasurement(forScreen: UIScreen.main)
+        if measurements.isSmallScreenDevice {
             view.transform = CGAffineTransform(scaleX: 0.88, y: 0.88)
         }
     }

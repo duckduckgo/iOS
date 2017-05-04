@@ -34,6 +34,7 @@
 		F114C5611E67599C0018F95F /* SafariSearchInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114C5601E67599C0018F95F /* SafariSearchInstructionsViewController.swift */; };
 		F11CEF661EBB66EF0088E4D7 /* FireTutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F11CEF641EBB66EF0088E4D7 /* FireTutorial.storyboard */; };
 		F11CEF681EBB66FC0088E4D7 /* FireTutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11CEF671EBB66FC0088E4D7 /* FireTutorialViewController.swift */; };
+		F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */; };
 		F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F130D7391E5776C500C45811 /* OmniBarDelegate.swift */; };
 		F13508031E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13508021E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift */; };
 		F13508101E8C307800B7ECC4 /* RegionSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F135080F1E8C307800B7ECC4 /* RegionSelectionDelegate.swift */; };
@@ -73,6 +74,8 @@
 		F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C141E57336D00DEDCAF /* TabManager.swift */; };
 		F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */; };
 		F16390821E648B7A005B4550 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16390811E648B7A005B4550 /* HomeTabViewController.swift */; };
+		F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12790ED1EBBEDD8001D3AEC /* FireTutorialViewControllerTests.swift */; };
+		F165B8FE1EBBF0FC004496FC /* InterfaceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */; };
 		F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */; };
 		F1722BBC1E8BE1D10058AAA5 /* GroupDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BBB1E8BE1D10058AAA5 /* GroupDataStore.swift */; };
 		F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */; };
@@ -330,6 +333,8 @@
 		F114C5601E67599C0018F95F /* SafariSearchInstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariSearchInstructionsViewController.swift; sourceTree = "<group>"; };
 		F11CEF651EBB66EF0088E4D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/FireTutorial.storyboard; sourceTree = "<group>"; };
 		F11CEF671EBB66FC0088E4D7 /* FireTutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTutorialViewController.swift; sourceTree = "<group>"; };
+		F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurementTests.swift; sourceTree = "<group>"; };
+		F12790ED1EBBEDD8001D3AEC /* FireTutorialViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTutorialViewControllerTests.swift; sourceTree = "<group>"; };
 		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
 		F13508021E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFilterSelectionDelegate.swift; sourceTree = "<group>"; };
 		F135080F1E8C307800B7ECC4 /* RegionSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -534,6 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				F17669A21E411D63003D3222 /* Application */,
+				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
 				F198D7961E3A45C00088DA8A /* Web */,
 				F1126DFA1EA5CA730016A6C7 /* Settings */,
 				F1E092B31E92A6B900732CCC /* Core */,
@@ -605,6 +611,22 @@
 			children = (
 				F11CEF671EBB66FC0088E4D7 /* FireTutorialViewController.swift */,
 				F11CEF641EBB66EF0088E4D7 /* FireTutorial.storyboard */,
+			);
+			name = FireTutorial;
+			sourceTree = "<group>";
+		};
+		F12790DD1EBBDDF3001D3AEC /* Tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				F12790ED1EBBEDD8001D3AEC /* FireTutorialViewControllerTests.swift */,
+				F12790EC1EBBEDBB001D3AEC /* FireTutorial */,
+			);
+			name = Tutorials;
+			sourceTree = "<group>";
+		};
+		F12790EC1EBBEDBB001D3AEC /* FireTutorial */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = FireTutorial;
 			sourceTree = "<group>";
@@ -1004,6 +1026,7 @@
 			isa = PBXGroup;
 			children = (
 				F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */,
+				F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -1432,8 +1455,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F165B8FE1EBBF0FC004496FC /* InterfaceMeasurement.swift in Sources */,
+				F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */,
 				F1126DFE1EA5CD1F0016A6C7 /* DateFilter.swift in Sources */,
 				F1126DFD1EA5CC280016A6C7 /* AppEmails.swift in Sources */,
+				F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */,
 				F1126DFC1EA5CC220016A6C7 /* UserText.swift in Sources */,
 				F17D72431E8BDBB8003E8B0E /* SearchFilterStore.swift in Sources */,
 				F17D723A1E8B366E003E8B0E /* AppUrls.swift in Sources */,

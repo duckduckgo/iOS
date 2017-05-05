@@ -21,7 +21,7 @@ struct TutorialSettings {
     
     public var hasSeenOnboarding: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return false }
+            guard let userDefaults = userDefaults() else { return true }
             return userDefaults.bool(forKey: Keys.hasSeenOnboarding, defaultValue: false)
         }
         set(newValue) {
@@ -31,7 +31,7 @@ struct TutorialSettings {
     
     public var hasSeenSafariSearchInstructions: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return false }
+            guard let userDefaults = userDefaults() else { return true }
             return userDefaults.bool(forKey: Keys.hasSeenSafariSearchInstructions, defaultValue: false)
         }
         set(newValue) {
@@ -41,7 +41,7 @@ struct TutorialSettings {
     
     public var hasSeenFireTutorial: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return false }
+            guard let userDefaults = userDefaults() else { return true }
             return userDefaults.bool(forKey: Keys.hasSeenFireTutorial, defaultValue: false)
         }
         set(newValue) {

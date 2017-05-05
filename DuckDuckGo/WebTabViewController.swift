@@ -42,16 +42,16 @@ class WebTabViewController: WebViewController, Tab {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        displayTutorialIfNotSeen()
+        displayFireTutorialIfNotSeen()
     }
     
-    private func displayTutorialIfNotSeen() {
+    private func displayFireTutorialIfNotSeen() {
         if !settings.hasSeenFireTutorial {
-            displayTutorial()
+            displayFireTutorial()
         }
     }
     
-    private func displayTutorial() {
+    private func displayFireTutorial() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.actionButtonTag) else { return }
         let controller = FireTutorialViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .popover

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
-    <device id="retina3_5" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="1164" y="408"/>
         </scene>
-        <!--UseDuckDuckGoViewController-->
+        <!--SafariSearchInstructionsViewController-->
         <scene sceneID="SIJ-Tg-4kw">
             <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="UseDuckDuckGoViewController" id="rAP-1L-ux0" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="SafariSearchInstructions" referencedIdentifier="SafariSearchInstructionsViewController" id="rAP-1L-ux0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qaL-Bk-dgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1163" y="-800"/>
@@ -59,14 +60,14 @@
                         <viewControllerLayoutGuide type="bottom" id="MHq-pJ-zx8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mqM-R6-tI8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPw-xt-wy9">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qi3-F2-882" customClass="RoundedRectangleView" customModule="Core">
-                                        <rect key="frame" x="16" y="248.5" width="288" height="48"/>
+                                        <rect key="frame" x="16" y="268" width="288" height="48"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
                                                 <rect key="frame" x="258" y="13" width="22" height="22"/>
@@ -81,7 +82,9 @@
                                         <constraints>
                                             <constraint firstItem="dsk-K1-r3i" firstAttribute="centerY" secondItem="Qi3-F2-882" secondAttribute="centerY" id="AYn-qj-LbS"/>
                                             <constraint firstAttribute="trailing" secondItem="dsk-K1-r3i" secondAttribute="trailing" constant="8" id="jXj-Nu-aDk"/>
-                                            <constraint firstAttribute="height" constant="48" id="ufw-Fz-wbp"/>
+                                            <constraint firstAttribute="height" constant="48" id="ufw-Fz-wbp">
+                                                <variation key="heightClass=compact-widthClass=compact" constant="32"/>
+                                            </constraint>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -100,10 +103,26 @@
                                         </connections>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
-                                        <rect key="frame" x="59.5" y="49.5" width="201" height="159"/>
+                                        <rect key="frame" x="59.5" y="69" width="201" height="159"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="RBq-6S-Kfw"/>
+                                            <constraint firstAttribute="width" secondItem="yFR-7m-lZn" secondAttribute="height" multiplier="67:53" id="SSY-zb-g1y"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="RBq-6S-Kfw"/>
+                                                <exclude reference="SSY-zb-g1y"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="RBq-6S-Kfw"/>
+                                                <include reference="SSY-zb-g1y"/>
+                                            </mask>
+                                        </variation>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="15O-9D-0eh">
-                                        <rect key="frame" x="70.5" y="384" width="180.5" height="64"/>
+                                        <rect key="frame" x="70.5" y="423" width="180.5" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Safari" translatesAutoresizingMaskIntoConstraints="NO" id="nyV-tv-oN2">
                                                 <rect key="frame" x="75.5" y="0.0" width="30" height="30"/>
@@ -115,6 +134,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <variation key="heightClass=compact-widthClass=compact" spacing="8"/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="KAG-UB-Nf4" appends="YES" id="jaN-1X-Vdh"/>
                                         </connections>
@@ -126,9 +146,13 @@
                                     <constraint firstAttribute="trailing" secondItem="Qi3-F2-882" secondAttribute="trailing" constant="16" id="5yw-Pj-1YR"/>
                                     <constraint firstItem="15O-9D-0eh" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="7uW-fa-gHg"/>
                                     <constraint firstItem="yFR-7m-lZn" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="fRR-OU-T7q"/>
-                                    <constraint firstAttribute="bottom" secondItem="15O-9D-0eh" secondAttribute="bottom" constant="32" id="mSj-K2-JdS"/>
+                                    <constraint firstAttribute="bottom" secondItem="15O-9D-0eh" secondAttribute="bottom" constant="32" id="mSj-K2-JdS">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="6"/>
+                                    </constraint>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="centerY" secondItem="DPw-xt-wy9" secondAttribute="centerY" constant="32" id="prx-ob-ngU"/>
-                                    <constraint firstItem="Qi3-F2-882" firstAttribute="top" secondItem="yFR-7m-lZn" secondAttribute="bottom" constant="40" id="uzw-iH-vnp"/>
+                                    <constraint firstItem="Qi3-F2-882" firstAttribute="top" secondItem="yFR-7m-lZn" secondAttribute="bottom" constant="40" id="uzw-iH-vnp">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="20"/>
+                                    </constraint>
                                 </constraints>
                             </view>
                         </subviews>
@@ -145,6 +169,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="zV4-a4-ChM"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="centreBar" destination="Qi3-F2-882" id="qLA-Gp-FLx"/>
                         <outlet property="passiveContainerView" destination="DPw-xt-wy9" id="XQ9-zR-xLL"/>
@@ -163,7 +188,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="KAG-UB-Nf4">
                     <connections>
-                        <segue destination="rAP-1L-ux0" kind="presentation" id="JLK-9Q-rjB"/>
+                        <segue destination="rAP-1L-ux0" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="JLK-9Q-rjB"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -178,11 +203,11 @@
                         <viewControllerLayoutGuide type="bottom" id="p3W-es-khp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbM-b9-fdC">
                                 <rect key="frame" x="0.0" y="-20" width="320" height="20"/>
@@ -258,11 +283,11 @@
                         <viewControllerLayoutGuide type="bottom" id="RLs-RI-FXc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WJ0-lP-E4v">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
-                                <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <barButtonItem title="Settings" id="nYf-xs-PE7">
@@ -282,7 +307,7 @@
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
-                                <rect key="frame" x="0.0" y="72" width="320" height="364"/>
+                                <rect key="frame" x="0.0" y="72" width="320" height="452"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="7" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="60"/>
@@ -412,7 +437,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSc-wr-m04">
-                                <rect key="frame" x="130.5" y="428" width="60" height="52"/>
+                                <rect key="frame" x="130.5" y="516" width="60" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="HRi-l3-QSR"/>
                                     <constraint firstAttribute="height" constant="52" id="LN7-Xz-rHJ"/>
@@ -457,7 +482,7 @@
                         <viewControllerLayoutGuide type="bottom" id="JF8-c8-S2o"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vWV-Dz-cYi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIh-4M-cC6">
@@ -479,10 +504,10 @@
                                 </items>
                             </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u23-bP-LGE" customClass="PartiallyRoundedRectangleView" customModule="Core">
-                                <rect key="frame" x="8" y="72" width="304" height="356"/>
+                                <rect key="frame" x="8" y="72" width="304" height="444"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pcW-VG-Q2G">
-                                        <rect key="frame" x="0.0" y="0.0" width="304" height="356"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="444"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
@@ -638,7 +663,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hVI-59-K3j"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="IiA-uy-AxZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7LC-T1-mn0" customClass="PartiallyRoundedRectangleView" customModule="Core">

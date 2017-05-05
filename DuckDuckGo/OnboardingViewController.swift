@@ -20,6 +20,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     private var transitioningToPage: OnboardingPageViewController?
     fileprivate var dataSource: OnboardingDataSource!
     
+    private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
+    
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
@@ -52,7 +54,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func showInstructions() {
-        performSegue(withIdentifier: "UseDuckDuckGoSegue", sender: self)
+        performSegue(withIdentifier: "SafariSearchInstructionsSegue", sender: self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,7 +62,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func configureDisplayForVerySmallHandsets() {
-        if view.bounds.height <= 480 && view.bounds.width <= 480 {
+        if interfaceMeasurement.hasiPhone4ScreenSize {
             bottomMarginConstraint?.constant = 0
         }
     }

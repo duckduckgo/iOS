@@ -155,8 +155,6 @@ class HomeTabViewController: UIViewController, Tab {
     
     private func centreMiniOnboardingScreenWithin(height: CGFloat) {
         guard let onboardingView = miniOnboardingController?.view else { return }
-        let navbarHeight = navigationController?.navigationBar.frame.height ?? 0
-        let decorHeight = InterfaceMeasurement.defaultStatusBarHeight + navbarHeight
         let availableHeight = height - decorHeight
         let y = decorHeight + (availableHeight / 2) - (HomeTabViewController.onboardingHeight / 2)
         onboardingView.frame = CGRect(x: 0, y: y, width: view.frame.width, height: HomeTabViewController.onboardingHeight)

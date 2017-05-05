@@ -116,11 +116,15 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool {
-        if url.scheme == "tel" || url.scheme == "maps" {
+        if shouldOpenUrlExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
         }
         return true
+    }
+    
+    private func shouldOpenUrlExternally(url: URL) -> Bool {
+        return SupportedExternalURLScheme.isSupported(url: url) && UIApplication.shared.canOpenURL(url)
     }
     
     func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {

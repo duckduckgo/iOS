@@ -143,6 +143,20 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webEventsDelegate?.webpageDidFinishLoading()
     }
     
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let delegate = webEventsDelegate, let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        if delegate.webView(webView, shouldLoadUrl: url){
+            decisionHandler(.allow)
+            return
+        }
+        
+        decisionHandler(.cancel)
+    }
+    
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         webEventsDelegate?.webView(webView, didRequestNewTabForRequest: navigationAction.request)
         return nil

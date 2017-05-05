@@ -115,6 +115,10 @@ extension ShareViewController: WebEventsDelegate {
         webView.loadScripts()
     }
     
+    func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool {
+        return true
+    }
+    
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL) {
         webView.load(URLRequest(url: url))
     }

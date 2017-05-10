@@ -57,7 +57,7 @@ class TabSwitcherViewController: UIViewController {
         if delegate.tabDetails.isEmpty {
             delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         }
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: false, completion: nil)
     }
 }
 

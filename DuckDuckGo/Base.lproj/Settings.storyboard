@@ -419,10 +419,10 @@
             </objects>
             <point key="canvasLocation" x="2817" y="77"/>
         </scene>
-        <!--UseDuckDuckGoViewController-->
+        <!--SafariSearchInstructionsViewController-->
         <scene sceneID="8YY-rV-1E3">
             <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="UseDuckDuckGoViewController" id="VNm-a5-bBg" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="SafariSearchInstructions" referencedIdentifier="SafariSearchInstructionsViewController" id="VNm-a5-bBg" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mkU-kG-PHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1730" y="550"/>

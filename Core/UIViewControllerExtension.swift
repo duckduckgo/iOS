@@ -32,6 +32,7 @@ extension UIViewController {
     public func present(controller: UIViewController, fromView sourceView: UIView) {
         if let popover = controller.popoverPresentationController {
             popover.sourceView = sourceView
+            popover.sourceRect = sourceView.bounds;
         }
         present(controller, animated: true, completion: nil)
     }

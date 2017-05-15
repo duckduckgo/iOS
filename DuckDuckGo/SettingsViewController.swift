@@ -62,7 +62,7 @@ class SettingsViewController: UITableViewController {
         if indexPath.section == 1 && indexPath.row == 0 {
             launchOnboardingFlow()
         }
-        if indexPath.section == 3 && indexPath.row == 0 {
+        if indexPath.section == 4 && indexPath.row == 0 {
             sendFeedback()
         }
         tableView.deselectRow(at: indexPath, animated: true)

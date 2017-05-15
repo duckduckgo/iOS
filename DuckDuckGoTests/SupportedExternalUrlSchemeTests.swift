@@ -8,7 +8,7 @@
 
 import XCTest
 
-class SupportedExternalUrlScheme: XCTestCase {
+class SupportedExternalUrlSchemeTests: XCTestCase {
     
     func testThatEmailIsSupported() {
         let url = URL(string: "mailto://someurl")!

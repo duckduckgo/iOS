@@ -135,6 +135,9 @@
 		F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796F11E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift */; };
 		F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */; };
 		F1D934031E610DCE00A6F0D6 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D934021E610DCE00A6F0D6 /* Point.swift */; };
+		F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */; };
+		F1DA2F7D1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA2F7C1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift */; };
+		F1DA2F7E1EBCF2CB00313F51 /* SupportedExternalURLScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */; };
 		F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewCell.swift */; };
 		F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78591E5CD2A70058895A /* UIViewExtension.swift */; };
 		F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */; };
@@ -446,6 +449,8 @@
 		F1D796F11E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartiallyRoundedRectangleView.swift; sourceTree = "<group>"; };
 		F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDelegate.swift; sourceTree = "<group>"; };
 		F1D934021E610DCE00A6F0D6 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedExternalURLScheme.swift; sourceTree = "<group>"; };
+		F1DA2F7C1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedExternalUrlSchemeTests.swift; sourceTree = "<group>"; };
 		F1DE78571E5CAE350058895A /* TabViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
 		F1DE78591E5CD2A70058895A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
@@ -718,6 +723,7 @@
 				F143C3251E4A9A0E00CFDE3A /* URLExtension.swift */,
 				F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */,
 				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
+				F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -937,6 +943,7 @@
 			children = (
 				F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */,
 				F14E491E1E391CE900DC037C /* URLExtensionTests.swift */,
+				F1DA2F7C1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1537,6 +1544,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1DA2F7E1EBCF2CB00313F51 /* SupportedExternalURLScheme.swift in Sources */,
 				F165B8FE1EBBF0FC004496FC /* InterfaceMeasurement.swift in Sources */,
 				F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */,
 				F1126DFE1EA5CD1F0016A6C7 /* DateFilter.swift in Sources */,
@@ -1545,6 +1553,7 @@
 				F1126DFC1EA5CC220016A6C7 /* UserText.swift in Sources */,
 				F17D72431E8BDBB8003E8B0E /* SearchFilterStore.swift in Sources */,
 				F17D723A1E8B366E003E8B0E /* AppUrls.swift in Sources */,
+				F1DA2F7D1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				F1126DFB1EA5CAEC0016A6C7 /* FeedbackEmail.swift in Sources */,
 				F1126DF91EA5CA6D0016A6C7 /* FeedbackEmailTests.swift in Sources */,
@@ -1588,6 +1597,7 @@
 				F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */,
 				F13508121E8C3B9800B7ECC4 /* RegionFilter.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
+				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
 				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
 				F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,

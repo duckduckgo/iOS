@@ -136,6 +136,18 @@ extension WebTabViewController: WebEventsDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
+    func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool {
+        if shouldOpenUrlExternally(url: url) {
+            UIApplication.shared.openURL(url)
+            return false
+        }
+        return true
+    }
+    
+    private func shouldOpenUrlExternally(url: URL) -> Bool {
+        return SupportedExternalURLScheme.isSupported(url: url)
+    }
+    
     func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
         tabDelegate?.webTab(self, didRequestNewTabForRequest: urlRequest)
     }

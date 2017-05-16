@@ -143,6 +143,20 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webEventsDelegate?.webpageDidFinishLoading()
     }
     
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let delegate = webEventsDelegate, let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        if delegate.webView(webView, shouldLoadUrl: url){
+            decisionHandler(.allow)
+            return
+        }
+        
+        decisionHandler(.cancel)
+    }
+    
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         webEventsDelegate?.webView(webView, didRequestNewTabForRequest: navigationAction.request)
         return nil
@@ -190,11 +204,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     fileprivate func touchesYOffset() -> CGFloat {
-        let statusBarSize: CGFloat = prefersStatusBarHidden ? 0 : InterfaceMeasurement.defaultStatusBarHeight
-        if let nav = navigationController {
-            return nav.isNavigationBarHidden ? statusBarSize : nav.navigationBar.frame.height + statusBarSize
-        }
-        return 0
+        guard navigationController != nil else { return 0 }
+        return decorHeight
     }
 }
 

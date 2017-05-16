@@ -15,10 +15,11 @@ class WebTabViewController: WebViewController, Tab {
     weak var tabDelegate: WebTabDelegate?
     
     var omniBarStyle: OmniBar.Style = .web
-    
     var canShare = true
     var showsUrlInOmniBar = true
-
+    
+    private lazy var settings = TutorialSettings()
+    
     static func loadFromStoryboard() -> WebTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
     }
@@ -37,6 +38,28 @@ class WebTabViewController: WebViewController, Tab {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        displayFireTutorialIfNotSeen()
+    }
+    
+    private func displayFireTutorialIfNotSeen() {
+        if !settings.hasSeenFireTutorial {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                self?.displayFireTutorial()
+            }
+        }
+    }
+    
+    private func displayFireTutorial() {
+        guard let button = navigationController?.view.viewWithTag(OmniBar.actionButtonTag) else { return }
+        let controller = FireTutorialViewController.loadFromStoryboard()
+        controller.modalPresentationStyle = .popover
+        controller.popoverPresentationController?.delegate = controller
+        present(controller: controller, fromView: button)
+        settings.hasSeenFireTutorial = true
     }
     
     func launchActionSheet(forUrl url: URL) {
@@ -113,6 +136,18 @@ extension WebTabViewController: WebEventsDelegate {
     func webpageDidFinishLoading() {
         tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool {
+        if shouldOpenUrlExternally(url: url) {
+            UIApplication.shared.openURL(url)
+            return false
+        }
+        return true
+    }
+    
+    private func shouldOpenUrlExternally(url: URL) -> Bool {
+        return SupportedExternalURLScheme.isSupported(url: url)
     }
     
     func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {

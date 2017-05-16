@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u6U-cP-c9d">
+    <device id="retina3_5" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Fire Tutorial View Controller-->
+        <scene sceneID="ka9-J3-QxQ">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="u6U-cP-c9d" customClass="FireTutorialViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jD0-02-Xef"/>
+                        <viewControllerLayoutGuide type="bottom" id="sm7-YI-t5h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tvq-cb-Hlp">
+                        <rect key="frame" x="0.0" y="0.0" width="356" height="304"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the fire when you're done browsing to erase your tab." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Mj-9j-JFc">
+                                <rect key="frame" x="40" y="234" width="276" height="37.5"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRealPrivacy" translatesAutoresizingMaskIntoConstraints="NO" id="XJn-e1-cvr">
+                                <rect key="frame" x="102.5" y="30" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="2oD-tU-ywX"/>
+                                    <constraint firstAttribute="width" constant="150" id="AYe-gq-g96">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="150"/>
+                                    </constraint>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erase your tabs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mls-na-VJP">
+                                <rect key="frame" x="40" y="194" width="276" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="lQB-rT-BUT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="mls-na-VJP" firstAttribute="leading" secondItem="tvq-cb-Hlp" secondAttribute="leadingMargin" constant="24" id="2ub-Ue-D1q"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Mj-9j-JFc" secondAttribute="trailing" constant="24" id="Rp9-8H-Koj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mls-na-VJP" secondAttribute="trailing" constant="24" id="Swb-RQ-BgR"/>
+                            <constraint firstItem="4Mj-9j-JFc" firstAttribute="top" secondItem="mls-na-VJP" secondAttribute="bottom" constant="12" id="UxR-1x-bKh"/>
+                            <constraint firstItem="4Mj-9j-JFc" firstAttribute="leading" secondItem="tvq-cb-Hlp" secondAttribute="leadingMargin" constant="24" id="V7l-om-lu6"/>
+                            <constraint firstItem="mls-na-VJP" firstAttribute="top" secondItem="XJn-e1-cvr" secondAttribute="bottom" constant="14" id="WNQ-x7-t8A"/>
+                            <constraint firstItem="XJn-e1-cvr" firstAttribute="centerX" secondItem="tvq-cb-Hlp" secondAttribute="centerX" id="awH-VX-Nmu"/>
+                            <constraint firstItem="XJn-e1-cvr" firstAttribute="top" secondItem="tvq-cb-Hlp" secondAttribute="topMargin" constant="30" id="qyp-kq-B5l"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="psr-LJ-85e" appends="YES" id="BJv-hv-IMb"/>
+                        </connections>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="303"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="356" height="304"/>
+                    <connections>
+                        <outlet property="descriptionText" destination="4Mj-9j-JFc" id="pcu-Ma-ORI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yp6-7I-R9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="psr-LJ-85e">
+                    <connections>
+                        <action selector="onUserTap:" destination="u6U-cP-c9d" id="C7J-Pa-oUV"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-2363" y="-848"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="OnboardingRealPrivacy" width="200" height="200"/>
+    </resources>
+</document>

@@ -1,5 +1,5 @@
 //
-//  UseDuckDuckGoViewController.swift
+//  SafariSearchInstructionsViewController.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 01/03/2017.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UseDuckDuckGoViewController: UIViewController {
+class SafariSearchInstructionsViewController: UIViewController {
     
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -20,8 +20,7 @@ class UseDuckDuckGoViewController: UIViewController {
     private static let minimumTopMargin: CGFloat = 14
     private static let verticalOffset: CGFloat = 20
 
-
-    private lazy var onboardingSettings = OnboardingSettings()
+    private lazy var tutorialSettings = TutorialSettings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,15 +33,15 @@ class UseDuckDuckGoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if onboardingSettings.instructionsFirstLaunch {
-            disableDoneButtonForFiveSeconds()
-            onboardingSettings.instructionsFirstLaunch = false
+        if !tutorialSettings.hasSeenSafariSearchInstructions {
+            disableDoneButtonForASecond()
+            tutorialSettings.hasSeenSafariSearchInstructions = true
         }
     }
     
-    private func disableDoneButtonForFiveSeconds() {
+    private func disableDoneButtonForASecond() {
         doneButton.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.doneButton.isEnabled = true
         }
     }
@@ -59,8 +58,8 @@ class UseDuckDuckGoViewController: UIViewController {
         let availableHeight = view.frame.size.height
         let contentHeight = scrollView.contentSize.height
         let excessHeight = availableHeight - contentHeight
-        let marginForVerticalCentering = (excessHeight  / 2) - UseDuckDuckGoViewController.verticalOffset
-        let minimumMargin = UseDuckDuckGoViewController.minimumTopMargin
+        let marginForVerticalCentering = (excessHeight  / 2) - SafariSearchInstructionsViewController.verticalOffset
+        let minimumMargin = SafariSearchInstructionsViewController.minimumTopMargin
         topMarginConstraint.constant = marginForVerticalCentering > minimumMargin ? marginForVerticalCentering : minimumMargin
     }
     

@@ -11,6 +11,8 @@ import WebKit
 public protocol WebEventsDelegate: class {
 
     func attached(webView: WKWebView)
+
+    func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL)
     

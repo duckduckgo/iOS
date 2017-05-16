@@ -19,7 +19,7 @@ class WebTabViewController: WebViewController, Tab {
     var showsUrlInOmniBar = true
     
     private lazy var settings = TutorialSettings()
-
+    
     static func loadFromStoryboard() -> WebTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
     }
@@ -47,7 +47,9 @@ class WebTabViewController: WebViewController, Tab {
     
     private func displayFireTutorialIfNotSeen() {
         if !settings.hasSeenFireTutorial {
-            displayFireTutorial()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                self?.displayFireTutorial()
+            }
         }
     }
     

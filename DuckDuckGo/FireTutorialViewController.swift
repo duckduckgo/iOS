@@ -13,7 +13,7 @@ class FireTutorialViewController: UIViewController {
     
     @IBOutlet weak var descriptionText: UILabel!
     private var descriptionLineHeight: CGFloat = 1.375
-
+    
     static func loadFromStoryboard() -> FireTutorialViewController {
         let storyboard = UIStoryboard.init(name: "FireTutorial", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! FireTutorialViewController
@@ -25,7 +25,7 @@ class FireTutorialViewController: UIViewController {
         configureViews()
         scaleDisplayOnSmallScreens()
     }
-
+    
     private func configureViews() {
         descriptionText.adjustPlainTextLineHeight(descriptionLineHeight)
     }
@@ -41,12 +41,13 @@ class FireTutorialViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
 }
 
 extension FireTutorialViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {        return .none
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

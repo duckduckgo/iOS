@@ -34,14 +34,14 @@ class SafariSearchInstructionsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !tutorialSettings.hasSeenSafariSearchInstructions {
-            disableDoneButtonForFiveSeconds()
+            disableDoneButtonForASecond()
             tutorialSettings.hasSeenSafariSearchInstructions = true
         }
     }
     
-    private func disableDoneButtonForFiveSeconds() {
+    private func disableDoneButtonForASecond() {
         doneButton.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.doneButton.isEnabled = true
         }
     }

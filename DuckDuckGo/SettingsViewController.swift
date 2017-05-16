@@ -11,25 +11,37 @@ import MessageUI
 import Core
 
 class SettingsViewController: UITableViewController {
-
+    
     @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
+    @IBOutlet weak var blockAdvertisingToggle: UISwitch!
+    @IBOutlet weak var blockAnalyticsToggle: UISwitch!
+    @IBOutlet weak var blockSocialToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
-
+    
     private lazy var versionProvider = Version()
-    fileprivate lazy var groupData = GroupDataStore()
+    fileprivate lazy var filterStore = SearchFilterUserDefaults()
+    private lazy var contentBlockerStore = ContentBlockerConfigUserDefaults()
+    private lazy var settingsStore = MiscSettingsUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSafeSearchToggle()
+        configureContentBlockingToggles()
         configureVersionText()
         configureOmniFireExperiment()
     }
     
     private func configureSafeSearchToggle() {
-        safeSearchToggle.isOn = groupData.safeSearchEnabled
+        safeSearchToggle.isOn = filterStore.safeSearchEnabled
+    }
+    
+    private func configureContentBlockingToggles() {
+        blockAdvertisingToggle.isOn = contentBlockerStore.blockAdvertisers
+        blockAnalyticsToggle.isOn = contentBlockerStore.blockAnalytics
+        blockSocialToggle.isOn = contentBlockerStore.blockSocial
     }
     
     private func configureVersionText() {
@@ -37,7 +49,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureOmniFireExperiment() {
-        omniFireOpensNewTabExperimentToggle.isOn = groupData.omniFireOpensNewTab
+        omniFireOpensNewTabExperimentToggle.isOn = settingsStore.omniFireOpensNewTab
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,17 +57,13 @@ class SettingsViewController: UITableViewController {
         configureRegionFilter()
         configureDateFilter()
     }
-
+    
     private func configureRegionFilter() {
         regionFilterText.text = currentRegionSelection().name
     }
     
     private func configureDateFilter() {
         dateFilterText.text = UserText.forDateFilter(currentDateFilter())
-    }
-    
-    @IBAction func onDonePressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -98,21 +106,36 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    
     @IBAction func onOmniFireOpensNewTabToggled(_ sender: UISwitch) {
-        groupData.omniFireOpensNewTab = sender.isOn
+        settingsStore.omniFireOpensNewTab = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {
-        groupData.safeSearchEnabled = sender.isOn
+        filterStore.safeSearchEnabled = sender.isOn
     }
     
     fileprivate func currentRegionFilter() -> RegionFilter {
-        return RegionFilter.forKey(groupData.regionFilter)
+        return RegionFilter.forKey(filterStore.regionFilter)
     }
     
     fileprivate func currentDateFilter() -> DateFilter {
-        return DateFilter.forKey(groupData.dateFilter)
+        return DateFilter.forKey(filterStore.dateFilter)
+    }
+    
+    @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
+        contentBlockerStore.blockAdvertisers = sender.isOn
+    }
+    
+    @IBAction func onBlockAnalyticsToggled(_ sender: UISwitch) {
+        contentBlockerStore.blockAnalytics = sender.isOn
+    }
+    
+    @IBAction func onBlockSocialToggled(_ sender: UISwitch) {
+        contentBlockerStore.blockSocial = sender.isOn
+    }
+    
+    @IBAction func onDonePressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -122,7 +145,7 @@ extension SettingsViewController: RegionSelectionDelegate {
     }
     
     func onRegionSelected(region: RegionFilter) {
-        groupData.regionFilter = region.filter
+        filterStore.regionFilter = region.filter
     }
 }
 
@@ -134,7 +157,7 @@ extension SettingsViewController: DateFilterSelectionDelegate {
     
     func onDateFilterSelected(dateFilter: DateFilter) {
         let value = (dateFilter == .any) ? nil : dateFilter.rawValue
-        groupData.dateFilter = value
+        filterStore.dateFilter = value
     }
 }
 

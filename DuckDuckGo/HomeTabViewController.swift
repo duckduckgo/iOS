@@ -34,7 +34,7 @@ class HomeTabViewController: UIViewController, Tab {
     
     private var activeMode = false
     private lazy var tabIconMaker = TabIconMaker()
-    private lazy var groupData = GroupDataStore()
+//    private lazy var groupData = GroupDataStore()
     
     static func loadFromStoryboard() -> HomeTabViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController

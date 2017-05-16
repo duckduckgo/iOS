@@ -19,7 +19,7 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var forwardButton: UIButton!
     
     private var webController: WebViewController?
-    private lazy var groupData = GroupDataStore()
+    private lazy var bookmarkStore = BookmarkUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +61,9 @@ class ShareViewController: UIViewController {
     
     private func loadText(textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: textIdentifier, options: nil, completionHandler: { [weak self] (item, error) in
-            let dataStore = GroupDataStore()
             guard let text = item as? String else { return }
-            guard let queryUrl = AppUrls.url(forQuery: text, filters: dataStore) else { return }
+            let filterStore = SearchFilterUserDefaults()
+            guard let queryUrl = AppUrls.url(forQuery: text, filters: filterStore) else { return }
             self?.webController?.load(url: queryUrl)
         })
     }
@@ -87,7 +87,7 @@ class ShareViewController: UIViewController {
     
     @IBAction func onSaveBookmark(_ sender: UIButton) {
         if let link = webController?.link {
-            groupData.addBookmark(link)
+            bookmarkStore.addBookmark(link)
             webController?.view.makeToast(UserText.webSaveLinkDone)
         }
     }

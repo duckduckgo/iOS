@@ -290,7 +290,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="GtC-Hd-4MN"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                <state key="normal" title="I have done this!">
+                                                <state key="normal" title="Done!">
                                                     <color key="titleColor" red="0.1764705882352941" green="0.47450980392156861" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <state key="disabled">

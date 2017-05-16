@@ -85,9 +85,9 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allows you to upload photographs</string>
+	<string>Allows you to upload photographs and videos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to upload photographs</string>
+	<string>Allows you to upload photographs and videos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allows you to share your location</string>
 	<key>NSMicrophoneUsageDescription</key>

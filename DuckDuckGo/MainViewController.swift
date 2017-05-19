@@ -25,6 +25,7 @@ class MainViewController: UIViewController {
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     fileprivate lazy var settingsStore = MiscSettingsUserDefaults()
     fileprivate lazy var tabManager = TabManager()
+    private lazy var contentBlocker =  ContentBlocker()
     
     fileprivate var currentTab: Tab? {
         return tabManager.current
@@ -92,7 +93,7 @@ class MainViewController: UIViewController {
     }
     
     private func attachWebTab(forUrl url: URL) {
-        let tab = WebTabViewController.loadFromStoryboard()
+        let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
         tabManager.add(tab: tab)
         tab.tabDelegate = self
         tab.load(url: url)
@@ -100,7 +101,7 @@ class MainViewController: UIViewController {
     }
     
     private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
-        let tab = WebTabViewController.loadFromStoryboard()
+        let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
         tab.attachWebView(newWebView: webView.createSiblingWebView())
         tab.tabDelegate = self
         tabManager.add(tab: tab)

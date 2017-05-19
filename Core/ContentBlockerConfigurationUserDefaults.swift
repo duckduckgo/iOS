@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ContentBlockerConfigUserDefaults: ContentBlockerConfigStore {
+public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
     
     private let groupName = "group.com.duckduckgo.contentblocker"
     

@@ -23,7 +23,7 @@ class SettingsViewController: UITableViewController {
     
     private lazy var versionProvider = Version()
     fileprivate lazy var filterStore = SearchFilterUserDefaults()
-    private lazy var contentBlockerStore = ContentBlockerConfigUserDefaults()
+    private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
     private lazy var settingsStore = MiscSettingsUserDefaults()
     
     override func viewDidLoad() {

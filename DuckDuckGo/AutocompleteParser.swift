@@ -16,7 +16,7 @@ class AutocompleteParser {
         case invalidJson
     }
     
-    func parse(data: Data?) throws -> [Suggestion] {
+    func convert(fromJsonData data: Data?) throws -> [Suggestion] {
         
         guard let data = data else { throw ParsingError.noData }
         guard let json = try JSONSerialization.jsonObject(with: data) as? [[String: String]] else { throw ParsingError.invalidJson }

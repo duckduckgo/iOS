@@ -35,7 +35,7 @@ class AutocompleteRequest {
     
     private func processData(data: Data?, completion: @escaping Completion) {
         do {
-            let suggestions = try parser.parse(data: data)
+            let suggestions = try parser.convert(fromJsonData: data)
             complete(completion, withSuccess: suggestions)
         } catch {
             complete(completion, withError: error)

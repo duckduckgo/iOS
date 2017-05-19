@@ -19,9 +19,12 @@ class WebTabViewController: WebViewController, Tab {
     var showsUrlInOmniBar = true
     
     private lazy var settings = TutorialSettings()
+    private var contentBlocker: ContentBlocker!
     
-    static func loadFromStoryboard() -> WebTabViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
+    static func loadFromStoryboard(contentBlocker: ContentBlocker) -> WebTabViewController {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
+        controller.contentBlocker = contentBlocker
+        return controller
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -109,6 +112,21 @@ class WebTabViewController: WebViewController, Tab {
         }
     }
     
+    fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
+        if contentBlocker.block(url: url, forDocument: documentUrl) {
+            return false
+        }
+        if shouldOpenExternally(url: url) {
+            UIApplication.shared.openURL(url)
+            return false
+        }
+        return true
+    }
+    
+    private func shouldOpenExternally(url: URL) -> Bool {
+        return SupportedExternalURLScheme.isSupported(url: url)
+    }
+    
     func dismiss() {
         removeFromParentViewController()
         view.removeFromSuperview()
@@ -138,16 +156,8 @@ extension WebTabViewController: WebEventsDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool {
-        if shouldOpenUrlExternally(url: url) {
-            UIApplication.shared.openURL(url)
-            return false
-        }
-        return true
-    }
-    
-    private func shouldOpenUrlExternally(url: URL) -> Bool {
-        return SupportedExternalURLScheme.isSupported(url: url)
+    func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
+        return shouldLoad(url: url, forDocument: documentUrl)
     }
     
     func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {

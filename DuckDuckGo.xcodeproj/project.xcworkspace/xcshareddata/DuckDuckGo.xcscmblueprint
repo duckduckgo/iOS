@@ -7,6 +7,7 @@
     "1AE4A4A0564E38992EFB0E8F9258432F89681A15" : 9223372036854775807,
     "53612C08C5421ECACF401AB384C8A608425DD07E" : 9223372036854775807,
     "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : 9223372036854775807,
+    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : 9223372036854775807,
     "253D0CBDFD77E3D4ECB1F46782A45DB72A1281D1" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2EB3A609-2EDA-41B7-A39E-160DB53E8D7F",
@@ -14,6 +15,7 @@
     "1AE4A4A0564E38992EFB0E8F9258432F89681A15" : "ddg-ios\/Submodule\/Toast-Swift\/",
     "53612C08C5421ECACF401AB384C8A608425DD07E" : "ddg-ios\/",
     "17FB51EC7B87DC25DD21E28FDFD877B479CFFAC1" : "ddg-ios\/Submodule\/Kingfisher\/",
+    "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "ddg-ios\/Submodule\/SwiftyJSON\/",
     "253D0CBDFD77E3D4ECB1F46782A45DB72A1281D1" : "ddg-ios\/Submodule\/Device\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "DuckDuckGo",
@@ -39,6 +41,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TheInfiniteKind\/duckduckgo-iOS.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "53612C08C5421ECACF401AB384C8A608425DD07E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TheInfiniteKind\/SwiftyJSON",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3"
     }
   ]
 }

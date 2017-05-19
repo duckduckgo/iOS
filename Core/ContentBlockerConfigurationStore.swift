@@ -1,5 +1,5 @@
 //
-//  ContentBlockerConfigStore.swift
+//  ContentBlockerConfigurationStore.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 17/05/2017.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol ContentBlockerConfigStore {
+public protocol ContentBlockerConfigurationStore {
     
     var blockAdvertisers: Bool { get set }
     var blockAnalytics: Bool { get set }

@@ -10,7 +10,7 @@ import Foundation
 
 public struct RegionFilter {
         
-    private static let allRegions = RegionFilterLoader().loadRegions()
+    private static let allRegions = RegionFilterLoader().load()
     private static let defaultRegion = RegionFilter(filter: "wt-wt", name: "None (Default)")
     
     public let filter: String

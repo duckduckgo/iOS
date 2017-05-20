@@ -8,13 +8,28 @@
 
 import UIKit
 import MobileCoreServices
+import Core
 
 class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
-
+    
+    private lazy var contentBlocker = ContentBlocker()
+    
+    enum ContentBlockerError: Error {
+        case noData
+    }
+    
     func beginRequest(with context: NSExtensionContext) {
-        let attachment = NSItemProvider(contentsOf: Bundle.main.url(forResource: "blockerList", withExtension: "json"))!
-        let item = NSExtensionItem()
-        item.attachments = [attachment]
-        context.completeRequest(returningItems: [item], completionHandler: nil)
+        
+        let parser = AppleContentBlockerParser()
+        let entries = contentBlocker.blockedEntries
+
+        if let data = parser.toJsonData(forEntries: entries) as NSSecureCoding? {
+            let attachment = NSItemProvider(item: data, typeIdentifier: kUTTypeJSON as String)
+            let item = NSExtensionItem()
+            item.attachments = [attachment]
+            context.completeRequest(returningItems: [item], completionHandler: nil)
+        } else {
+            context.cancelRequest(withError: ContentBlockerError.noData)
+        }
     }
 }

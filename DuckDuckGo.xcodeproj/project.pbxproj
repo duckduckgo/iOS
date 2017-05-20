@@ -18,6 +18,10 @@
 		F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */; };
 		F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */; };
 		F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */; };
+		F11044FB1ECFCCDA00C5E3D3 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11044FA1ECFCCDA00C5E3D3 /* ArrayExtension.swift */; };
+		F11044FD1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11044FC1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift */; };
+		F11045001ECFD70E00C5E3D3 /* AppleContentBlockerParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11044FF1ECFD70E00C5E3D3 /* AppleContentBlockerParserTests.swift */; };
+		F11045081ECFE62F00C5E3D3 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */; };
 		F1126DF71EA5C92E0016A6C7 /* FeedbackEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */; };
 		F1126DF91EA5CA6D0016A6C7 /* FeedbackEmailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1126DF81EA5CA6D0016A6C7 /* FeedbackEmailTests.swift */; };
@@ -352,6 +356,9 @@
 		F10B06801EBB6CE000CC5910 /* SafariSearchInstructions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SafariSearchInstructions.storyboard; sourceTree = "<group>"; };
 		F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtension.swift; sourceTree = "<group>"; };
 		F11044F91ECF912F00C5E3D3 /* ContentBlockerExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ContentBlockerExtension.entitlements; sourceTree = "<group>"; };
+		F11044FA1ECFCCDA00C5E3D3 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		F11044FC1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParser.swift; sourceTree = "<group>"; };
+		F11044FF1ECFD70E00C5E3D3 /* AppleContentBlockerParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParserTests.swift; sourceTree = "<group>"; };
 		F1126DE91EA5C43C0016A6C7 /* AppEmails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEmails.swift; sourceTree = "<group>"; };
 		F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackEmail.swift; sourceTree = "<group>"; };
 		F1126DF81EA5CA6D0016A6C7 /* FeedbackEmailTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackEmailTests.swift; sourceTree = "<group>"; };
@@ -516,6 +523,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F11045081ECFE62F00C5E3D3 /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +647,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		F11044FE1ECFD6AF00C5E3D3 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				F11044FF1ECFD70E00C5E3D3 /* AppleContentBlockerParserTests.swift */,
+			);
+			name = Parser;
+			sourceTree = "<group>";
+		};
 		F1126DFA1EA5CA730016A6C7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,6 +767,7 @@
 				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
 				F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */,
 				F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */,
+				F11044FA1ECFCCDA00C5E3D3 /* ArrayExtension.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -823,6 +840,7 @@
 			isa = PBXGroup;
 			children = (
 				F16393F71ECCAB3A00DDD653 /* Store */,
+				F11044FE1ECFD6AF00C5E3D3 /* Parser */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -848,6 +866,7 @@
 			isa = PBXGroup;
 			children = (
 				F16394061ECE01E400DDD653 /* DisconnectMeContentBlockerParser.swift */,
+				F11044FC1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift */,
 				F12ABAAF1ECEFAAC0008AE50 /* disconnectmetrackers.json */,
 			);
 			name = Parser;
@@ -1699,6 +1718,7 @@
 				F165B8FE1EBBF0FC004496FC /* InterfaceMeasurement.swift in Sources */,
 				F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */,
 				F1126DFE1EA5CD1F0016A6C7 /* DateFilter.swift in Sources */,
+				F11045001ECFD70E00C5E3D3 /* AppleContentBlockerParserTests.swift in Sources */,
 				F1126DFD1EA5CC280016A6C7 /* AppEmails.swift in Sources */,
 				F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */,
 				F1126DFC1EA5CC220016A6C7 /* UserText.swift in Sources */,
@@ -1756,6 +1776,7 @@
 				F16394021ECCBD5600DDD653 /* RegionFilterLoader.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
+				F11044FD1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift in Sources */,
 				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
 				F16394051ECDFFE500DDD653 /* ContentBlockerEntry.swift in Sources */,
 				F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */,
@@ -1775,6 +1796,7 @@
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 				F17D72401E8BD943003E8B0E /* SearchFilterStore.swift in Sources */,
 				F1126E1E1EA6FB170016A6C7 /* UIDeviceExtension.swift in Sources */,
+				F11044FB1ECFCCDA00C5E3D3 /* ArrayExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

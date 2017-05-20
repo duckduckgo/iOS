@@ -21,7 +21,7 @@ public class ContentBlocker {
     
     private var categorizedEntries = CategorizedContentBlockerEntries()
     
-    private var blockedEntries: [ContentBlockerEntry] {
+    public var blockedEntries: [ContentBlockerEntry] {
         var entries = [ContentBlockerEntry]()
         for (categoryKey, categoryEntries) in categorizedEntries {
             let category = ContentBlockerCategory.forKey(categoryKey)

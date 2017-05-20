@@ -6,20 +6,18 @@
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
-import Foundation
-
 import XCTest
 import Core
 
 class  ContentBlockerUserDefaultsTests: XCTestCase {
     
     func testWhenInitialisedThenBlockAdvertisersIsTrue() {
-        let testee = ContentBlockerUserDefaults()
+        let testee = ContentBlockerConfigurationUserDefaults()
         XCTAssertTrue(testee.blockAdvertisers)
     }
     
     func testWhenBlockAdvertisersIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerUserDefaults()
+        let testee = ContentBlockerConfigurationUserDefaults()
         
         testee.blockAdvertisers = false
         XCTAssertFalse(testee.blockAdvertisers)
@@ -29,12 +27,12 @@ class  ContentBlockerUserDefaultsTests: XCTestCase {
     }
     
     func testWhenInitialisedThenBlockAnalyticssIsTrue() {
-        let testee = ContentBlockerUserDefaults()
+        let testee = ContentBlockerConfigurationUserDefaults()
         XCTAssertTrue(testee.blockAnalytics)
     }
     
     func testWhenBlockAnalyticsIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerUserDefaults()
+        let testee = ContentBlockerConfigurationUserDefaults()
         
         testee.blockAnalytics = false
         XCTAssertFalse(testee.blockAnalytics)
@@ -44,12 +42,12 @@ class  ContentBlockerUserDefaultsTests: XCTestCase {
     }
     
     func testWhenInitialisedThenBlockSocialIsTrue() {
-        let testee = ContentBlockerUserDefaults()
+        let testee = ContentBlockerConfigurationUserDefaults()
         XCTAssertTrue(testee.blockSocial)
     }
     
     func testWhenBlockSocialIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerUserDefaults()
+        let testee = ContentBlockerConfigurationUserDefaults()
         
         testee.blockSocial = false
         XCTAssertFalse(testee.blockSocial)

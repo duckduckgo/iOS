@@ -8,8 +8,8 @@
 
 import UIKit
 import MessageUI
-import Core
 import SafariServices
+import Core
 
 class SettingsViewController: UITableViewController {
     
@@ -22,8 +22,9 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var blockSocialToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
     
+    private lazy var regionFilterProvider = RegionFilterProvider()
     private lazy var versionProvider = Version()
-    fileprivate lazy var filterStore = SearchFilterUserDefaults()
+    fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
     private lazy var settingsStore = MiscSettingsUserDefaults()
     
@@ -36,7 +37,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureSafeSearchToggle() {
-        safeSearchToggle.isOn = filterStore.safeSearchEnabled
+        safeSearchToggle.isOn = searchFilterStore.safeSearchEnabled
     }
     
     private func configureContentBlockingToggles() {
@@ -112,15 +113,15 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {
-        filterStore.safeSearchEnabled = sender.isOn
+        searchFilterStore.safeSearchEnabled = sender.isOn
     }
     
     fileprivate func currentRegionFilter() -> RegionFilter {
-        return RegionFilter.forKey(filterStore.regionFilter)
+        return regionFilterProvider.regionForKey(searchFilterStore.regionFilter)
     }
     
     fileprivate func currentDateFilter() -> DateFilter {
-        return DateFilter.forKey(filterStore.dateFilter)
+        return DateFilter.forKey(searchFilterStore.dateFilter)
     }
     
     @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
@@ -159,7 +160,7 @@ extension SettingsViewController: RegionSelectionDelegate {
     }
     
     func onRegionSelected(region: RegionFilter) {
-        filterStore.regionFilter = region.filter
+        searchFilterStore.regionFilter = region.filter
     }
 }
 
@@ -171,7 +172,7 @@ extension SettingsViewController: DateFilterSelectionDelegate {
     
     func onDateFilterSelected(dateFilter: DateFilter) {
         let value = (dateFilter == .any) ? nil : dateFilter.rawValue
-        filterStore.dateFilter = value
+        searchFilterStore.dateFilter = value
     }
 }
 

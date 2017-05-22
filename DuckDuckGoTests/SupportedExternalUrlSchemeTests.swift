@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import Core
 
 class SupportedExternalUrlSchemeTests: XCTestCase {
     

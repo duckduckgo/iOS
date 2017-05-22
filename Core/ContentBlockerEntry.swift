@@ -12,3 +12,9 @@ public struct ContentBlockerEntry {
     public let domain: String
     public let url: String
 }
+
+extension ContentBlockerEntry: Equatable {}
+
+public func ==(first: ContentBlockerEntry, second: ContentBlockerEntry) -> Bool {
+    return first.domain == second.domain && first.url == second.url
+}

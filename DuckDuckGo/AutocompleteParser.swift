@@ -11,18 +11,18 @@ import Core
 
 class AutocompleteParser {
     
-    enum ParsingError: Error {
-        case noData
-        case invalidJson
-    }
-    
-    func convert(fromJsonData data: Data?) throws -> [Suggestion] {
+    func convert(fromJsonData data: Data) throws -> [Suggestion] {
         
-        guard let data = data else { throw ParsingError.noData }
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [[String: String]] else { throw ParsingError.invalidJson }
+        guard let json = try? JSONSerialization.jsonObject(with: data) else {
+            throw JsonError.invalidJson
+        }
+        
+        guard let jsonArray = json as? [[String: String]] else {
+            throw JsonError.typeMismatch
+        }
         
         var suggestions = [Suggestion]()
-        for element in json {
+        for element in jsonArray {
             if let type = element.keys.first, let suggestion = element[type] {
                 suggestions.append(Suggestion(type: type, suggestion: suggestion))
             }

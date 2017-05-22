@@ -10,6 +10,7 @@
 typealias CategorizedContentBlockerEntries = [String: [ContentBlockerEntry]]
 
 public enum ContentBlockerCategory: String {
+    
     case none = "None"
     case advertising = "Advertising"
     case analytics = "Analytics"

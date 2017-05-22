@@ -12,22 +12,26 @@ public struct AppleContentBlockerParser {
     
     public init() {}
     
-    public func toJsonData(forEntries entries: [ContentBlockerEntry]) -> Data? {
-        let jsonArray = toJsonArray(forEntries: entries)
-        let data = try! JSONSerialization.data(withJSONObject: jsonArray, options:  [])
+    public func toJsonData(entries: [ContentBlockerEntry]) throws -> Data {
+        let jsonArray = toJsonArray(entries: entries)
+        
+        guard let data = try? JSONSerialization.data(withJSONObject: jsonArray, options:  []) else {
+            throw JsonError.typeMismatch
+        }
+        
         return data
     }
-
-    public func toJsonArray(forEntries entries: [ContentBlockerEntry]) -> [Any] {
+    
+    public func toJsonArray(entries: [ContentBlockerEntry]) -> [Any] {
         var array = [Any]()
         for entry in entries {
-            let jsonEntry = toJsonObject(forEntry: entry)
+            let jsonEntry = toJsonObject(entry: entry)
             array.append(jsonEntry)
         }
         return array
     }
     
-    private func toJsonObject(forEntry entry: ContentBlockerEntry) -> [String: Any] {
+    private func toJsonObject(entry: ContentBlockerEntry) -> [String: Any] {
         
         let domain = "*\(entry.domain)"
         let url = "\(entry.url)"
@@ -40,7 +44,7 @@ public struct AppleContentBlockerParser {
                 "load-type": ["third-party"],
                 "url-filter": url,
                 "unless-domain": [domain]
-                ]
             ]
+        ]
     }
 }

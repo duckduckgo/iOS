@@ -1,5 +1,5 @@
 //
-//  ContentBlockerEntriesProvider.swift
+//  ContentBlocker.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 19/05/2017.
@@ -8,17 +8,15 @@
 
 import Foundation
 
-
-fileprivate struct Constants {
-    static let filename = "disconnectmetrackers"
-    static let fileExtension = "json"
-}
-
 public class ContentBlocker {
+    
+    private struct FileConstants {
+        static let name = "disconnectmetrackers"
+        static let ext = "json"
+    }
 
     private let configuration = ContentBlockerConfigurationUserDefaults()
     private let parser = DisconnectMeContentBlockerParser()
-    
     private var categorizedEntries = CategorizedContentBlockerEntries()
     
     public var blockedEntries: [ContentBlockerEntry] {
@@ -39,15 +37,17 @@ public class ContentBlocker {
     }
     
     public init() {
-        let data = loadTrackersFile()
-        if let loadedEntries = parser.convert(fromJsonData: data) {
-            categorizedEntries = loadedEntries
+        do {
+            categorizedEntries = try loadContentBlockerEntries()
+        } catch {
+            Logger.log(text: "Could not load content blocker entries \(error)")
         }
     }
     
-    private func loadTrackersFile() -> Data? {
+    private func loadContentBlockerEntries() throws -> CategorizedContentBlockerEntries {
         let fileLoader = FileLoader()
-        return fileLoader.load(name: Constants.filename, ext: Constants.fileExtension)
+        let data = try fileLoader.load(name: FileConstants.name, ext: FileConstants.ext)
+        return try parser.convert(fromJsonData: data)
     }
     
     public func block(url: URL, forDocument documentUrl: URL) -> Bool {

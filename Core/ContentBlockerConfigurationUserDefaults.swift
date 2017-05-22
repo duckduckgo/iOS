@@ -1,5 +1,5 @@
 //
-//  ContentBlockerUserDefaults.swift
+//  ContentBlockerConfigurationUserDefaults.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 17/05/2017.

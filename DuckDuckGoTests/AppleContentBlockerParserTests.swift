@@ -11,26 +11,35 @@ import XCTest
 
 class AppleContentBlockerParserTests: XCTestCase {
     
-    func testThatParserCreatesCorrectJsonData() {
-        let entries = [
-            ContentBlockerEntry(domain: "facebook.com", url: "facebook.gb"),
-            ContentBlockerEntry(domain: "reddit.com", url: "reddit.co.uk"),
-        ]
-        let testee = AppleContentBlockerParser()
-        let result = testee.toJsonData(forEntries: entries)!
+    private var testee = AppleContentBlockerParser()
+
+    func testWhenNoEntriesThenParserCreatesEmptyArray() {
+        let result = testee.toJsonArray(entries: noEntries())
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.count, 0)
+    }
+    
+    func testWhenEntriesValidThenParserCreatesJsonArrayOfCorrectSize() {
+        let result = testee.toJsonArray(entries: validEntries())
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result.count, 2)
+    }
+    
+    func testWhenEntriesValidThenParserCreatesCorrectJsonData() {
+        let result = try! testee.toJsonData(entries: validEntries())
         let resultString = String(data: result, encoding: .utf8)!
         let expectedString = "[{\"action\":{\"type\":\"block\"},\"trigger\":{\"unless-domain\":[\"*facebook.com\"],\"load-type\":[\"third-party\"],\"url-filter\":\"facebook.gb\"}},{\"action\":{\"type\":\"block\"},\"trigger\":{\"unless-domain\":[\"*reddit.com\"],\"load-type\":[\"third-party\"],\"url-filter\":\"reddit.co.uk\"}}]"
         XCTAssertEqual(resultString, expectedString)
     }
     
-    func testThatParserCreatesJsonArrayWithCorrectSize() {
-        let entries = [
+    private func noEntries() -> [ContentBlockerEntry] {
+        return [ContentBlockerEntry]()
+    }
+
+    private func validEntries() -> [ContentBlockerEntry] {
+        return [
             ContentBlockerEntry(domain: "facebook.com", url: "facebook.gb"),
             ContentBlockerEntry(domain: "reddit.com", url: "reddit.co.uk"),
         ]
-        let testee = AppleContentBlockerParser()
-        let result = testee.toJsonArray(forEntries: entries)
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result.count, 2)
     }
 }

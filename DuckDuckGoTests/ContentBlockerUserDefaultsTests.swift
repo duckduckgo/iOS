@@ -9,7 +9,7 @@
 import XCTest
 import Core
 
-class  ContentBlockerUserDefaultsTests: XCTestCase {
+class ContentBlockerUserDefaultsTests: XCTestCase {
     
     func testWhenInitialisedThenBlockAdvertisersIsTrue() {
         let testee = ContentBlockerConfigurationUserDefaults()

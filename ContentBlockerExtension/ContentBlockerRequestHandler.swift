@@ -23,12 +23,14 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
         let parser = AppleContentBlockerParser()
         let entries = contentBlocker.blockedEntries
 
-        if let data = parser.toJsonData(forEntries: entries) as NSSecureCoding? {
+        do {
+            let data = try parser.toJsonData(entries: entries) as NSSecureCoding
             let attachment = NSItemProvider(item: data, typeIdentifier: kUTTypeJSON as String)
             let item = NSExtensionItem()
             item.attachments = [attachment]
             context.completeRequest(returningItems: [item], completionHandler: nil)
-        } else {
+        } catch {
+            Logger.log(items: "Could not load content blocker", error)
             context.cancelRequest(withError: ContentBlockerError.noData)
         }
     }

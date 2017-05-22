@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import Core
+import SafariServices
 
 class SettingsViewController: UITableViewController {
     
@@ -124,14 +125,27 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
         contentBlockerStore.blockAdvertisers = sender.isOn
+        reloadContentBlockerExtension()
     }
     
     @IBAction func onBlockAnalyticsToggled(_ sender: UISwitch) {
         contentBlockerStore.blockAnalytics = sender.isOn
+        reloadContentBlockerExtension()
     }
     
     @IBAction func onBlockSocialToggled(_ sender: UISwitch) {
         contentBlockerStore.blockSocial = sender.isOn
+        reloadContentBlockerExtension()
+    }
+    
+    private func reloadContentBlockerExtension() {
+        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
+            if let error = error {
+                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
+                return
+            }
+            Logger.log(text: "Content blocker rules for Safari reloaded")
+        }
     }
     
     @IBAction func onDonePressed(_ sender: Any) {

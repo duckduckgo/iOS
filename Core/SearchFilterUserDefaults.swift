@@ -18,37 +18,37 @@ public class SearchFilterUserDefaults: SearchFilterStore {
         static let dateFilter = "com.duckduckgo.searchfilters.dateFilter"
     }
     
-    public init() {}
-    
-    private func userDefaults() -> UserDefaults? {
+    private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
     
+    public init() {}
+    
     public var safeSearchEnabled: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
+            guard let userDefaults = userDefaults else { return true }
             return userDefaults.bool(forKey: Keys.safeSearch, defaultValue: true)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.safeSearch)
+            userDefaults?.set(newValue, forKey: Keys.safeSearch)
         }
     }
     
     public var regionFilter: String? {
         get {
-            return userDefaults()?.string(forKey: Keys.regionFilter)
+            return userDefaults?.string(forKey: Keys.regionFilter)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.regionFilter)
+            userDefaults?.set(newValue, forKey: Keys.regionFilter)
         }
     }
     
     public var dateFilter: String? {
         get {
-            return userDefaults()?.string(forKey: Keys.dateFilter)
+            return userDefaults?.string(forKey: Keys.dateFilter)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.dateFilter)
+            userDefaults?.set(newValue, forKey: Keys.dateFilter)
         }
     }
 }

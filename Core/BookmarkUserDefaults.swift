@@ -16,15 +16,15 @@ public class BookmarkUserDefaults: BookmarkStore {
         static let bookmarkKey = "com.duckduckgo.bookmarks.bookmarkKey"
     }
     
-    public init() {}
-    
-    private func userDefaults() -> UserDefaults? {
+    private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
     
+    public init() {}
+    
     public var bookmarks: [Link]? {
         get {
-            if let data = userDefaults()?.data(forKey: Keys.bookmarkKey) {
+            if let data = userDefaults?.data(forKey: Keys.bookmarkKey) {
                 return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
             }
             return nil
@@ -32,7 +32,7 @@ public class BookmarkUserDefaults: BookmarkStore {
         set(newBookmarks) {
             if let newBookmarks = newBookmarks {
                 let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
-                userDefaults()?.set(data, forKey: Keys.bookmarkKey)
+                userDefaults?.set(data, forKey: Keys.bookmarkKey)
             }
         }
     }

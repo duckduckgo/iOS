@@ -18,39 +18,39 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         static let social = "com.duckduckgo.contentblocker.social"
     }
     
-    public init() {}
-    
-    private func userDefaults() -> UserDefaults? {
+    private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
+
+    public init() {}
     
     public var blockAdvertisers: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
+            guard let userDefaults = userDefaults else { return true }
             return userDefaults.bool(forKey: Keys.advertising, defaultValue: true)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.advertising)
+            userDefaults?.set(newValue, forKey: Keys.advertising)
         }
     }
     
     public var blockAnalytics: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
+            guard let userDefaults = userDefaults else { return true }
             return userDefaults.bool(forKey: Keys.analytics, defaultValue: true)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.analytics)
+            userDefaults?.set(newValue, forKey: Keys.analytics)
         }
     }
     
     public var blockSocial: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
+            guard let userDefaults = userDefaults else { return true }
             return userDefaults.bool(forKey: Keys.social, defaultValue: true)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.social)
+            userDefaults?.set(newValue, forKey: Keys.social)
         }
     }
 }

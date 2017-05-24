@@ -62,7 +62,7 @@ class WebTabViewController: WebViewController, Tab {
         settings.hasSeenFireTutorial = true
     }
     
-    func launchActionSheet(forUrl url: URL) {
+    func launchActionSheet(atPoint point: Point, forUrl url: URL) {
         let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
         alert.addAction(newTabAction(forUrl: url))
         alert.addAction(openAction(forUrl: url))
@@ -70,7 +70,7 @@ class WebTabViewController: WebViewController, Tab {
         alert.addAction(copyAction(forURL: url))
         alert.addAction(shareAction(forURL: url))
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        present(controller: alert, fromView: webView)
+        present(controller: alert, fromView: webView, atPoint: point)
     }
     
     func newTabAction(forUrl url: URL) -> UIAlertAction {
@@ -154,7 +154,7 @@ extension WebTabViewController: WebEventsDelegate {
         tabDelegate?.webTab(self, didRequestNewTabForRequest: urlRequest)
     }
     
-    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL) {
-        launchActionSheet(forUrl: url)
+    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
+        launchActionSheet(atPoint: point, forUrl: url)
     }
 }

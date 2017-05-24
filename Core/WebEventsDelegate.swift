@@ -14,7 +14,7 @@ public protocol WebEventsDelegate: class {
 
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL) -> Bool
     
-    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL)
+    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point)
     
     func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest)
     

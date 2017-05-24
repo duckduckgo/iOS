@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jwc-mW-FSA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jwc-mW-FSA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,7 +29,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rrr-NN-O0n" customClass="RoundedRectangleView" customModule="Core">
-                                        <rect key="frame" x="14" y="50" width="347" height="439"/>
+                                        <rect key="frame" x="14" y="50" width="347" height="444.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content Blocking in Safari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="cyM-Id-PcB">
                                                 <rect key="frame" x="24" y="110" width="299" height="28"/>
@@ -44,7 +44,7 @@
                                                 </variation>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="JhT-JE-ycC">
-                                                <rect key="frame" x="53.5" y="202" width="240" height="47"/>
+                                                <rect key="frame" x="53.5" y="207.5" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsSettings" translatesAutoresizingMaskIntoConstraints="NO" id="1fz-7h-8FX">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -54,7 +54,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlF-mQ-P6Z">
-                                                        <rect key="frame" x="59" y="15.5" width="181" height="16"/>
+                                                        <rect key="frame" x="59" y="14" width="181" height="19"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Open">
                                                                 <attributes>
@@ -107,7 +107,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="AfA-n3-MZ3">
-                                                <rect key="frame" x="53.5" y="265" width="240" height="47"/>
+                                                <rect key="frame" x="53.5" y="270.5" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsSafari" translatesAutoresizingMaskIntoConstraints="NO" id="c5G-8l-qqW">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -180,7 +180,7 @@
                                                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                     </attributes>
                                                                 </fragment>
-                                                                <fragment content="Search Engine">
+                                                                <fragment content="Content Blockers">
                                                                     <attributes>
                                                                         <color key="NSColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
@@ -196,7 +196,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Mhs-9z-aTr">
-                                                <rect key="frame" x="53.5" y="328" width="240" height="47"/>
+                                                <rect key="frame" x="53.5" y="333.5" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsTick" translatesAutoresizingMaskIntoConstraints="NO" id="EJd-Gw-WZb">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -265,7 +265,7 @@
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We block trackers and annoying ads that follow you around" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ENx-tL-BDa">
-                                                <rect key="frame" x="24" y="146" width="299" height="32"/>
+                                                <rect key="frame" x="24" y="146" width="299" height="37.5"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -285,7 +285,7 @@
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DLF-rT-Csg">
-                                                <rect key="frame" x="154.5" y="389" width="39" height="30"/>
+                                                <rect key="frame" x="155" y="394.5" width="38" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="fjF-pJ-T92"/>
                                                 </constraints>

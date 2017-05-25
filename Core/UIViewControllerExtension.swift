@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 
 extension UIViewController {
     
@@ -33,6 +34,14 @@ extension UIViewController {
         if let popover = controller.popoverPresentationController {
             popover.sourceView = sourceView
             popover.sourceRect = sourceView.bounds
+        }
+        present(controller, animated: true, completion: nil)
+    }
+    
+    public func present(controller: UIViewController, fromView sourceView: UIView, atPoint point: Point) {
+        if let popover = controller.popoverPresentationController {
+            popover.sourceView = sourceView
+            popover.sourceRect = CGRect(x: point.x, y: point.y, width: 0, height: 0)
         }
         present(controller, animated: true, completion: nil)
     }

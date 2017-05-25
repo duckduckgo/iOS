@@ -11,6 +11,10 @@ import Core
 
 class BlurAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
+    struct Constants {
+        static let duration = 0.3
+    }
+    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         containerView.blur(style: .dark)
@@ -20,7 +24,7 @@ class BlurAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning
         toView.alpha = 0
         containerView.addSubview(toView)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: Constants.duration, animations: {
             toView.alpha = 1
         }, completion: { (value: Bool) in
             transitionContext.completeTransition(true)
@@ -28,6 +32,6 @@ class BlurAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return Constants.duration
     }
 }

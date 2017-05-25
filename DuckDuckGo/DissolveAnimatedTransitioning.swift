@@ -10,12 +10,16 @@ import Core
 
 class DissolveAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
+    struct Constants {
+        static let duration = 0.25
+    }
+    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let fromView = transitionContext.view(forKey: .from)!
         fromView.backgroundColor = UIColor.clear
         fromView.alpha = 1
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: Constants.duration, animations: {
             fromView.alpha = 0.0
         }, completion: { (value: Bool) in
             transitionContext.completeTransition(true)
@@ -23,6 +27,6 @@ class DissolveAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5
+        return Constants.duration
     }
 }

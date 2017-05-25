@@ -16,7 +16,7 @@ class TabSwitcherViewController: UIViewController {
     weak var delegate: TabSwitcherDelegate!
     
     static func loadFromStoryboard(delegate: TabSwitcherDelegate) -> TabSwitcherViewController {
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabSwitcherViewController") as! TabSwitcherViewController
+        let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
         controller.delegate = delegate
         return controller
     }

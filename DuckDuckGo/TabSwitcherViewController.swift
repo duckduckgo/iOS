@@ -14,11 +14,25 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     weak var delegate: TabSwitcherDelegate!
+    private var initialIndex: Int?
     
-    static func loadFromStoryboard(delegate: TabSwitcherDelegate) -> TabSwitcherViewController {
+    static func loadFromStoryboard(delegate: TabSwitcherDelegate, scrollTo index: Int?) -> TabSwitcherViewController {
         let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
         controller.delegate = delegate
+        controller.initialIndex = index
         return controller
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        scrollToInitialTab()
+    }
+    
+    private func scrollToInitialTab() {
+        guard let index = initialIndex else { return }
+        guard index < collectionView.numberOfItems(inSection: 0) else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     override func viewWillLayoutSubviews() {

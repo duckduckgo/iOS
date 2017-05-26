@@ -103,6 +103,7 @@
 		F18608DD1E5E588400361C30 /* TabIconMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18608DC1E5E588400361C30 /* TabIconMaker.swift */; };
 		F18608E01E5E649400361C30 /* document.js in Resources */ = {isa = PBXBuildFile; fileRef = F18608DF1E5E649400361C30 /* document.js */; };
 		F18CA9A91E93E863003EA579 /* OnboardingMiniViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18CA9A81E93E863003EA579 /* OnboardingMiniViewController.swift */; };
+		F19476851ED661A400A7F537 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F19476831ED661A400A7F537 /* TabSwitcher.storyboard */; };
 		F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */; };
 		F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */; };
 		F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */; };
@@ -403,6 +404,7 @@
 		F18642041E949E1900B2A911 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-regular.otf"; path = "licensed/proximanova-regular.otf"; sourceTree = "<group>"; };
 		F18642051E949E1900B2A911 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-semibold.otf"; path = "licensed/proximanova-semibold.otf"; sourceTree = "<group>"; };
 		F18CA9A81E93E863003EA579 /* OnboardingMiniViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingMiniViewController.swift; sourceTree = "<group>"; };
+		F19476841ED661A400A7F537 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
 		F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithInsets.swift; sourceTree = "<group>"; };
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtensionTests.swift; sourceTree = "<group>"; };
@@ -639,6 +641,7 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				F19476831ED661A400A7F537 /* TabSwitcher.storyboard */,
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
@@ -1354,6 +1357,7 @@
 				F1F4D8E71E8435A800F38D83 /* OnboardingMini.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				F10B06811EBB6CE000CC5910 /* SafariSearchInstructions.storyboard in Resources */,
+				F19476851ED661A400A7F537 /* TabSwitcher.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 			);
@@ -1610,6 +1614,14 @@
 				F176699E1E40BC86003D3222 /* Base */,
 			);
 			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
+		F19476831ED661A400A7F537 /* TabSwitcher.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F19476841ED661A400A7F537 /* Base */,
+			);
+			name = TabSwitcher.storyboard;
 			sourceTree = "<group>";
 		};
 		F1AA54651E48D90700223211 /* MainInterface.storyboard */ = {

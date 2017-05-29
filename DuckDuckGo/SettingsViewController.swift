@@ -13,7 +13,6 @@ import Core
 
 class SettingsViewController: UITableViewController {
     
-    @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
@@ -26,14 +25,12 @@ class SettingsViewController: UITableViewController {
     private lazy var versionProvider = Version()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
-    private lazy var settingsStore = MiscSettingsUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSafeSearchToggle()
         configureContentBlockingToggles()
         configureVersionText()
-        configureOmniFireExperiment()
     }
     
     private func configureSafeSearchToggle() {
@@ -48,10 +45,6 @@ class SettingsViewController: UITableViewController {
     
     private func configureVersionText() {
         versionText.text = versionProvider.localized()
-    }
-    
-    private func configureOmniFireExperiment() {
-        omniFireOpensNewTabExperimentToggle.isOn = settingsStore.omniFireOpensNewTab
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,11 +62,11 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 {
-            launchOnboardingFlow()
+        if indexPath.section == 3 && indexPath.row == 0 {
+            sendFeedback()
         }
         if indexPath.section == 4 && indexPath.row == 0 {
-            sendFeedback()
+            launchOnboardingFlow()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -106,10 +99,6 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? DateFilterSelectionViewController {
             controller.delegate = self
         }
-    }
-    
-    @IBAction func onOmniFireOpensNewTabToggled(_ sender: UISwitch) {
-        settingsStore.omniFireOpensNewTab = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {

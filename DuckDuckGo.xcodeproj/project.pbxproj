@@ -157,6 +157,7 @@
 		F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1B1E67684B005E7E21 /* Tab.swift */; };
 		F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */; };
 		F1E90C201E678E7C005E7E21 /* HomeTabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */; };
+		F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */; };
 		F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */; };
 		F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642021E949E1900B2A911 /* proximanova-bold.otf */; };
 		F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642031E949E1900B2A911 /* proximanova-light.otf */; };
@@ -492,6 +493,7 @@
 		F1E90C1B1E67684B005E7E21 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeTabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabDelegate.swift; sourceTree = "<group>"; };
+		F1ED309C1EDC2EA400651986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
 		F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DissolveAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-bold.otf"; sourceTree = "<group>"; };
 		F1EEAC491EAFC708006128D9 /* proximanova-light.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-light.otf"; sourceTree = "<group>"; };
@@ -764,6 +766,7 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */,
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
@@ -1642,6 +1645,7 @@
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				F1CE429F1EC9E9E70074A8DF /* ContentBlocking.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
+				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1938,6 +1942,14 @@
 				F1AA54661E48D90700223211 /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1ED309C1EDC2EA400651986 /* Base */,
+			);
+			name = TabSwitcher.storyboard;
 			sourceTree = "<group>";
 		};
 		F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */ = {

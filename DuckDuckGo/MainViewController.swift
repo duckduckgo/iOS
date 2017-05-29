@@ -259,7 +259,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabSwitcher() {
-        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self)
+        let index = tabManager.currentIndex
+        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, scrollTo: index)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
@@ -296,7 +297,7 @@ extension MainViewController: OmniBarDelegate {
     
     func onFireButtonPressed() {
         dismissOmniBar()
-        if let current = currentTab, let index = tabManager.indexOf(tab: current) {
+        if let index = tabManager.currentIndex {
             remove(tabAt: index)
         }
         if settingsStore.omniFireOpensNewTab {

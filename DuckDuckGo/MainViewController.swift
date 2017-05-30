@@ -18,6 +18,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     
+    let reachability = Reachability()!
+    var previouslyReachable = false
+    
     fileprivate var autocompleteController: AutocompleteViewController?
     
     fileprivate lazy var groupData = GroupDataStore()
@@ -32,6 +35,49 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         launchTab(active: false)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        reachability.whenReachable = { reachability in
+            DispatchQueue.main.async {
+                if reachability.isReachableViaWiFi {
+                    print("Reachable via WiFi")
+                    if !self.previouslyReachable {
+                        self.currentTab?.reload()
+                        self.previouslyReachable = true
+                    }
+                    self.makeToast(text: "Using Wifi Connection")
+                } else {
+                    print("Reachable via Cellular")
+                    if !self.previouslyReachable {
+                        self.currentTab?.reload()
+                        self.previouslyReachable = true
+                    }
+                    self.makeToast(text: "Using 3G Connection")
+                }
+            }
+        }
+        reachability.whenUnreachable = { reachability in
+            DispatchQueue.main.async {
+                print("Not reachable")
+                self.previouslyReachable = false
+                self.makeToast(text: "Lost Internet Connection")
+                
+            }
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        reachability.stopNotifier()
     }
     
     override func viewDidLayoutSubviews() {
@@ -261,7 +307,7 @@ class MainViewController: UIViewController {
         let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, scrollTo: index)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
+        present(controller, animated: false, completion: nil)
     }
     
     @IBAction func onBookmarksButtonPressed(_ sender: UIBarButtonItem) {

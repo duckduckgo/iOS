@@ -59,15 +59,15 @@ class URLExtensionTests: XCTestCase {
         XCTAssertFalse(URL.isWebUrl(text: "121.33.2.11?s=!"))
     }
     
-    func testWhenGivenSimpleStringThenIsWebUrlReturnsFalse() {
+    func testWhenGivenSimpleStringThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "randomtext"))
     }
     
-    func testWhenGivenStringWithDotPrefixThenIsWebUrlReturnsFalse() {
+    func testWhenGivenStringWithDotPrefixThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: ".randomtext"))
     }
     
-    func testWhenGivenStringWithDotSuffixThenIsWebUrlReturnsFalse() {
+    func testWhenGivenStringWithDotSuffixThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "randomtext."))
     }
     
@@ -107,7 +107,7 @@ class URLExtensionTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
     
-    func testWhenParamDoesNotExistThenGetParamReturnsNil() {
+    func testWhenParamDoesNotExistThenGetParamIsNil() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
         let result = url?.getParam(name: "someOtherParam")
         XCTAssertNil(result)

@@ -56,7 +56,7 @@ extension URL {
         return text.replacingOccurrences(of: "+", with: "%2B")
     }
     
-    // iOS does not regognise plus symbols in an encoded web string as spaces. This method converts
+    // iOS does not recognise plus symbols in an encoded web string as spaces. This method converts
     // them to %20 which iOS does support and can thus subsequently decode correctly
     private func switchWebSpacesToSystemEncoding(text: String) -> String {
         return text.replacingOccurrences(of: "+", with: "%20")

@@ -10,10 +10,12 @@ import Foundation
 
 extension URL {
     
-    private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"
+    private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|(([\\d]+[.]){3}[\\d]+))([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"
     
     public func getParam(name: String) -> String? {
-        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
+        guard let encodedQuery = components.percentEncodedQuery else { return nil }
+        components.percentEncodedQuery = switchWebSpacesToSystemEncoding(text: encodedQuery)
         guard let query = components.queryItems else { return nil }
         return query.filter({ (item) in item.name == name }).first?.value
     }
@@ -24,6 +26,7 @@ extension URL {
         var query = components.queryItems ?? [URLQueryItem]()
         query.append(URLQueryItem(name: name, value: value))
         components.queryItems = query
+        components.percentEncodedQuery = encodePluses(text: components.percentEncodedQuery!)
         return components.url ?? self
     }
     
@@ -47,6 +50,18 @@ extension URL {
         return components.url ?? self
     }
     
+    // Encodes plus symbols in a string. iOS does not automatically encode plus symbols so it
+    // is often necessary to do so manually to avoid them being treated as spaces on the web
+    private func encodePluses(text: String) -> String {
+        return text.replacingOccurrences(of: "+", with: "%2B")
+    }
+    
+    // iOS does not regognise plus symbols in an encoded web string as spaces. This method converts
+    // them to %20 which iOS does support and can thus subsequently decode correctly
+    private func switchWebSpacesToSystemEncoding(text: String) -> String {
+        return text.replacingOccurrences(of: "+", with: "%20")
+    }
+    
     public static func webUrl(fromText text: String) -> URL? {
         guard isWebUrl(text: text) else {
             return nil
@@ -66,11 +81,7 @@ extension URL {
         return "http://\(path)"
     }
     
-    public static func encode(queryText: String) -> String? {
-        return queryText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
-    }
-    
     public static func decode(query: String) -> String? {
-        return query.replacingOccurrences(of: "+", with: " ").removingPercentEncoding
+        return query.removingPercentEncoding
     }
 }

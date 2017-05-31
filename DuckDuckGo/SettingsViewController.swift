@@ -12,7 +12,7 @@ import SafariServices
 import Core
 
 class SettingsViewController: UITableViewController {
-    
+
     @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
@@ -27,6 +27,11 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
     private lazy var settingsStore = MiscSettingsUserDefaults()
+    
+    private struct TableIndex {
+        static let onboardingFlow = IndexPath(item: 0, section: 1)
+        static let sendFeedback = IndexPath(item: 0, section: 4)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +64,7 @@ class SettingsViewController: UITableViewController {
         configureRegionFilter()
         configureDateFilter()
     }
-    
+
     private func configureRegionFilter() {
         regionFilterText.text = currentRegionSelection().name
     }
@@ -69,10 +74,10 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 {
+        if indexPath == TableIndex.onboardingFlow {
             launchOnboardingFlow()
         }
-        if indexPath.section == 4 && indexPath.row == 0 {
+        if indexPath == TableIndex.sendFeedback {
             sendFeedback()
         }
         tableView.deselectRow(at: indexPath, animated: true)

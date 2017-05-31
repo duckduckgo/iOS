@@ -12,7 +12,7 @@ import SafariServices
 import Core
 
 class SettingsViewController: UITableViewController {
-    
+
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
@@ -25,6 +25,11 @@ class SettingsViewController: UITableViewController {
     private lazy var versionProvider = Version()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
+    
+    private struct TableIndex {
+        static let sendFeedback = IndexPath(item: 0, section: 3)
+        static let onboardingFlow = IndexPath(item: 0, section: 4)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +57,7 @@ class SettingsViewController: UITableViewController {
         configureRegionFilter()
         configureDateFilter()
     }
-    
+
     private func configureRegionFilter() {
         regionFilterText.text = currentRegionSelection().name
     }
@@ -62,11 +67,11 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 && indexPath.row == 0 {
-            sendFeedback()
-        }
-        if indexPath.section == 4 && indexPath.row == 0 {
+        if indexPath == TableIndex.onboardingFlow {
             launchOnboardingFlow()
+        }
+        if indexPath == TableIndex.sendFeedback {
+            sendFeedback()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

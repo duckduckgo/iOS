@@ -11,45 +11,40 @@ import Core
 
 struct TutorialSettings {
     
-    private let suit = "onboardingSettingsSuit"
-    
     private struct Keys {
-        static let hasSeenOnboarding = "hasSeenOnboarding"
-        static let hasSeenSafariSearchInstructions = "hasSeenSafariSearchInstructions"
-        static let hasSeenFireTutorial = "hasSeenFireTutorial"
+        static let hasSeenOnboarding = "com.duckduckgo.tutorials.hasSeenOnboarding"
+        static let hasSeenSafariSearchInstructions = "com.duckduckgo.tutorials.hasSeenSafariSearchInstructions"
+        static let hasSeenFireTutorial = "com.duckduckgo.tutorials.hasSeenFireTutorial"
+    }
+    
+    private func userDefaults() -> UserDefaults {
+        return UserDefaults.standard
     }
     
     public var hasSeenOnboarding: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
-            return userDefaults.bool(forKey: Keys.hasSeenOnboarding, defaultValue: false)
+            return userDefaults().bool(forKey: Keys.hasSeenOnboarding, defaultValue: false)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.hasSeenOnboarding)
+            userDefaults().set(newValue, forKey: Keys.hasSeenOnboarding)
         }
     }
     
     public var hasSeenSafariSearchInstructions: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
-            return userDefaults.bool(forKey: Keys.hasSeenSafariSearchInstructions, defaultValue: false)
+            return userDefaults().bool(forKey: Keys.hasSeenSafariSearchInstructions, defaultValue: false)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.hasSeenSafariSearchInstructions)
+            userDefaults().set(newValue, forKey: Keys.hasSeenSafariSearchInstructions)
         }
     }
     
     public var hasSeenFireTutorial: Bool {
         get {
-            guard let userDefaults = userDefaults() else { return true }
-            return userDefaults.bool(forKey: Keys.hasSeenFireTutorial, defaultValue: false)
+            return userDefaults().bool(forKey: Keys.hasSeenFireTutorial, defaultValue: false)
         }
         set(newValue) {
-            userDefaults()?.set(newValue, forKey: Keys.hasSeenFireTutorial)
+            userDefaults().set(newValue, forKey: Keys.hasSeenFireTutorial)
         }
-    }
-    
-    private func userDefaults() -> UserDefaults? {
-        return UserDefaults(suiteName: suit)
     }
 }

@@ -12,9 +12,9 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDelegate, UITableViewDataSource {
     
-    private var groupData = GroupDataStore()
     private var bookmarks = [Link]()
-
+    private var bookmarkStore = BookmarkUserDefaults()
+    
     @IBOutlet weak var tableView: UITableView!
     
     private var preferredHeight: CGFloat {
@@ -80,7 +80,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     private func getData() -> [Link] {
-        return groupData.bookmarks ?? [Link]()
+        return bookmarkStore.bookmarks ?? [Link]()
     }
     
     @IBAction func onLaunchPressed(_ sender: Any) {
@@ -125,7 +125,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
         let index = sender.tag
         if index < bookmarks.count {
             bookmarks.remove(at: sender.tag)
-            groupData.bookmarks = bookmarks
+            bookmarkStore.bookmarks = bookmarks
             tableView.reloadData()
             refreshViews()
         }

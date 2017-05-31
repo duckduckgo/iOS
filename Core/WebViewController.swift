@@ -145,12 +145,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let delegate = webEventsDelegate, let url = navigationAction.request.url else {
+        
+        guard let delegate = webEventsDelegate,
+            let url = navigationAction.request.url,
+            let documentUrl = navigationAction.request.mainDocumentURL else {
             decisionHandler(.allow)
             return
         }
         
-        if delegate.webView(webView, shouldLoadUrl: url){
+        if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
             decisionHandler(.allow)
             return
         }

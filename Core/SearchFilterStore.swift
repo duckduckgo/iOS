@@ -9,7 +9,9 @@
 import Foundation
 
 public protocol SearchFilterStore {
+    
     var safeSearchEnabled: Bool { get set }
     var regionFilter: String? { get set }
     var dateFilter: String? { get set }
+
 }

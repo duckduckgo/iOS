@@ -17,13 +17,15 @@ class MainViewController: UIViewController {
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
-    
-    fileprivate var autocompleteController: AutocompleteViewController?
-    
-    fileprivate lazy var groupData = GroupDataStore()
-    fileprivate lazy var tabManager = TabManager()
-    
     weak var omniBar: OmniBar?
+
+    fileprivate var autocompleteController: AutocompleteViewController?
+
+    fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
+    fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
+    fileprivate lazy var settingsStore = MiscSettingsUserDefaults()
+    fileprivate lazy var tabManager = TabManager()
+    private lazy var contentBlocker =  ContentBlocker()
     
     fileprivate var currentTab: Tab? {
         return tabManager.current
@@ -39,7 +41,7 @@ class MainViewController: UIViewController {
     }
     
     func loadQueryInNewWebTab(query: String) {
-        if let url = AppUrls.url(forQuery: query, filters: groupData) {
+        if let url = AppUrls.url(forQuery: query, filters: searchFilterStore) {
             loadUrlInNewWebTab(url: url)
         }
     }
@@ -55,7 +57,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQueryInCurrentTab(query: String) {
-        if let queryUrl = AppUrls.url(forQuery: query, filters: groupData) {
+        if let queryUrl = AppUrls.url(forQuery: query, filters: searchFilterStore) {
             loadUrlInCurrentTab(url: queryUrl)
         }
     }
@@ -91,7 +93,7 @@ class MainViewController: UIViewController {
     }
     
     private func attachWebTab(forUrl url: URL) {
-        let tab = WebTabViewController.loadFromStoryboard()
+        let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
         tabManager.add(tab: tab)
         tab.tabDelegate = self
         tab.load(url: url)
@@ -99,7 +101,7 @@ class MainViewController: UIViewController {
     }
     
     private func attachSiblingWebTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
-        let tab = WebTabViewController.loadFromStoryboard()
+        let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
         tab.attachWebView(newWebView: webView.createSiblingWebView())
         tab.tabDelegate = self
         tabManager.add(tab: tab)
@@ -247,7 +249,7 @@ class MainViewController: UIViewController {
     
     @IBAction func onSaveBookmark(_ sender: UIBarButtonItem) {
         if let link = currentTab?.link {
-            groupData.addBookmark(link)
+            bookmarkStore.addBookmark(link)
             makeToast(text: UserText.webSaveLinkDone)
         }
     }
@@ -298,7 +300,7 @@ extension MainViewController: OmniBarDelegate {
         if let index = tabManager.currentIndex {
             remove(tabAt: index)
         }
-        if groupData.omniFireOpensNewTab {
+        if settingsStore.omniFireOpensNewTab {
             launchTab()
         } else {
             launchTabSwitcher()

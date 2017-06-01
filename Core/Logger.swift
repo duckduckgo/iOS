@@ -10,7 +10,7 @@ public struct Logger {
 
     public static func log(text: String) {
         #if DEBUG
-        print(text, separator: " ", terminator: "\n")
+            print(text, separator: " ", terminator: "\n")
         #endif
     }
 

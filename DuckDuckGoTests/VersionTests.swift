@@ -6,9 +6,8 @@
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
-import Foundation
-
 import XCTest
+@testable import DuckDuckGo
 
 class VersionTests: XCTestCase {
     

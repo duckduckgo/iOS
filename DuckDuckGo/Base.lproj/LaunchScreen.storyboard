@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9SF-AN-ir1">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9SF-AN-ir1">
+    <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,24 +17,30 @@
                         <viewControllerLayoutGuide type="bottom" id="5Qf-AC-est"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5uF-ws-lnA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
-                                <rect key="frame" x="128.5" y="274.5" width="119" height="119"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
+                                <rect key="frame" x="422" y="294" width="180" height="180"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="170" id="a7x-eG-u4v"/>
-                                    <constraint firstAttribute="width" constant="182" id="d9j-AH-Q1Q"/>
+                                    <constraint firstAttribute="height" constant="180" id="1pe-MT-Xab"/>
+                                    <constraint firstAttribute="width" constant="180" id="JS1-hH-rm4"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="a7x-eG-u4v"/>
-                                        <exclude reference="d9j-AH-Q1Q"/>
+                                        <exclude reference="1pe-MT-Xab"/>
+                                        <exclude reference="JS1-hH-rm4"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="1pe-MT-Xab"/>
+                                        <include reference="JS1-hH-rm4"/>
                                     </mask>
                                 </variation>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="UHM-6q-8Cp" secondAttribute="centerY" id="650-xC-0jZ"/>
                             <constraint firstAttribute="centerX" secondItem="UHM-6q-8Cp" secondAttribute="centerX" id="Y2A-ko-GCq"/>

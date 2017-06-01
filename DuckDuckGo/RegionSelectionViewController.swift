@@ -15,18 +15,18 @@ class RegionSelectionViewController: UITableViewController {
     
     private static let cellReuseInentifier = "RegionFilterCell"
     
-    private lazy var regionFilterData = RegionFilter.all()
+    private lazy var regionFilters = RegionFilterProvider().all
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return regionFilterData.count
+        return regionFilters.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = regionFilterData[indexPath.row]
+        let data = regionFilters[indexPath.row]
         let identifier = RegionSelectionViewController.cellReuseInentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         cell.textLabel?.text = data.name
@@ -34,7 +34,7 @@ class RegionSelectionViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let data = regionFilterData[indexPath.row]
+        let data = regionFilters[indexPath.row]
         configureSelection(forCell: cell, indexPath: indexPath, data: data)
     }
     
@@ -48,7 +48,7 @@ class RegionSelectionViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let filter = regionFilterData[indexPath.row]
+        let filter = regionFilters[indexPath.row]
         delegate?.onRegionSelected(region: filter)
         selectCellAt(indexPath: indexPath)
     }

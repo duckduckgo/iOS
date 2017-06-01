@@ -82,21 +82,22 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     private func attachLongPressHandler(webView: WKWebView) {
-        let longPressRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
-        longPressRecogniser.delegate = self
-        webView.scrollView.addGestureRecognizer(longPressRecogniser)
+        let handler = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
+        handler.delegate = self
+        webView.scrollView.addGestureRecognizer(handler)
     }
     
     func onLongPress(sender: UILongPressGestureRecognizer) {
-        if sender.state != .began {
-            return
-        }
+        guard sender.state == .began else { return }
+        
         let x = Int(sender.location(in: webView).x)
-        let y = Int(sender.location(in: webView).y-touchesYOffset())
-        webView.getUrlAtPoint(x: x, y: y)  { [weak self] (url) in
-            if let webView = self?.webView, let url = url {
-                self?.webEventsDelegate?.webView(webView, didReceiveLongPressForUrl: url)
-            }
+        let y = Int(sender.location(in: webView).y)
+        let offsetY = y - Int(touchesYOffset())
+        
+        webView.getUrlAtPoint(x: x, y: offsetY)  { [weak self] (url) in
+            guard let webView = self?.webView, let url = url else { return }
+            let point = Point(x: x, y: y)
+            self?.webEventsDelegate?.webView(webView, didReceiveLongPressForUrl: url, atPoint: point)
         }
     }
     
@@ -144,12 +145,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let delegate = webEventsDelegate, let url = navigationAction.request.url else {
+        
+        guard let delegate = webEventsDelegate,
+            let url = navigationAction.request.url,
+            let documentUrl = navigationAction.request.mainDocumentURL else {
             decisionHandler(.allow)
             return
         }
         
-        if delegate.webView(webView, shouldLoadUrl: url){
+        if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
             decisionHandler(.allow)
             return
         }

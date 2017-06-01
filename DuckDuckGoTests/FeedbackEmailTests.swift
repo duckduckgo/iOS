@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import WebKit
+@testable import DuckDuckGo
 
 class FeedbackEmailTests: XCTestCase {
     

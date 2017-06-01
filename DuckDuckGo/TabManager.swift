@@ -30,6 +30,11 @@ struct TabManager {
         return isEmpty ? nil : tabs.count-1
     }
     
+    var currentIndex: Int? {
+        guard let current = current else { return nil }
+        return indexOf(tab: current)
+    }
+    
     private func buildTabDetails() -> [Link] {
         var links = [Link]()
         for tab in tabs {

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    private lazy var groupData = GroupDataStore()
+    private lazy var bookmarkStore = BookmarkUserDefaults()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if let shortcutItem = launchOptions?[.shortcutItem] {
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func quickLink(from url: URL) -> Link? {
-        guard let links = groupData.bookmarks else { return nil }
+        guard let links = bookmarkStore.bookmarks else { return nil }
         guard let host = url.host else { return nil }
         guard let index = Int(host) else { return nil }
         guard index < links.count else { return nil }

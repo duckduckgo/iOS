@@ -8,36 +8,48 @@
 
 import UIKit
 import MessageUI
+import SafariServices
 import Core
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
+    @IBOutlet weak var blockAdvertisingToggle: UISwitch!
+    @IBOutlet weak var blockAnalyticsToggle: UISwitch!
+    @IBOutlet weak var blockSocialToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
-
+    
+    private lazy var regionFilterProvider = RegionFilterProvider()
     private lazy var versionProvider = Version()
-    fileprivate lazy var groupData = GroupDataStore()
+    fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
+    private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
+    
+    private struct TableIndex {
+        static let sendFeedback = IndexPath(item: 0, section: 3)
+        static let onboardingFlow = IndexPath(item: 0, section: 4)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSafeSearchToggle()
+        configureContentBlockingToggles()
         configureVersionText()
-        configureOmniFireExperiment()
     }
     
     private func configureSafeSearchToggle() {
-        safeSearchToggle.isOn = groupData.safeSearchEnabled
+        safeSearchToggle.isOn = searchFilterStore.safeSearchEnabled
+    }
+    
+    private func configureContentBlockingToggles() {
+        blockAdvertisingToggle.isOn = contentBlockerStore.blockAdvertisers
+        blockAnalyticsToggle.isOn = contentBlockerStore.blockAnalytics
+        blockSocialToggle.isOn = contentBlockerStore.blockSocial
     }
     
     private func configureVersionText() {
         versionText.text = versionProvider.localized()
-    }
-    
-    private func configureOmniFireExperiment() {
-        omniFireOpensNewTabExperimentToggle.isOn = groupData.omniFireOpensNewTab
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,15 +66,11 @@ class SettingsViewController: UITableViewController {
         dateFilterText.text = UserText.forDateFilter(currentDateFilter())
     }
     
-    @IBAction func onDonePressed(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 && indexPath.row == 0 {
+        if indexPath == TableIndex.onboardingFlow {
             launchOnboardingFlow()
         }
-        if indexPath.section == 3 && indexPath.row == 0 {
+        if indexPath == TableIndex.sendFeedback {
             sendFeedback()
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -98,21 +106,45 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    
-    @IBAction func onOmniFireOpensNewTabToggled(_ sender: UISwitch) {
-        groupData.omniFireOpensNewTab = sender.isOn
-    }
-    
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {
-        groupData.safeSearchEnabled = sender.isOn
+        searchFilterStore.safeSearchEnabled = sender.isOn
     }
     
     fileprivate func currentRegionFilter() -> RegionFilter {
-        return RegionFilter.forKey(groupData.regionFilter)
+        return regionFilterProvider.regionForKey(searchFilterStore.regionFilter)
     }
     
     fileprivate func currentDateFilter() -> DateFilter {
-        return DateFilter.forKey(groupData.dateFilter)
+        return DateFilter.forKey(searchFilterStore.dateFilter)
+    }
+    
+    @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
+        contentBlockerStore.blockAdvertisers = sender.isOn
+        reloadContentBlockerExtension()
+    }
+    
+    @IBAction func onBlockAnalyticsToggled(_ sender: UISwitch) {
+        contentBlockerStore.blockAnalytics = sender.isOn
+        reloadContentBlockerExtension()
+    }
+    
+    @IBAction func onBlockSocialToggled(_ sender: UISwitch) {
+        contentBlockerStore.blockSocial = sender.isOn
+        reloadContentBlockerExtension()
+    }
+    
+    private func reloadContentBlockerExtension() {
+        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
+            if let error = error {
+                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
+                return
+            }
+            Logger.log(text: "Content blocker rules for Safari reloaded")
+        }
+    }
+    
+    @IBAction func onDonePressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -122,7 +154,7 @@ extension SettingsViewController: RegionSelectionDelegate {
     }
     
     func onRegionSelected(region: RegionFilter) {
-        groupData.regionFilter = region.filter
+        searchFilterStore.regionFilter = region.filter
     }
 }
 
@@ -134,7 +166,7 @@ extension SettingsViewController: DateFilterSelectionDelegate {
     
     func onDateFilterSelected(dateFilter: DateFilter) {
         let value = (dateFilter == .any) ? nil : dateFilter.rawValue
-        groupData.dateFilter = value
+        searchFilterStore.dateFilter = value
     }
 }
 

@@ -13,7 +13,6 @@ import Core
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet weak var omniFireOpensNewTabExperimentToggle: UISwitch!
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
@@ -26,11 +25,10 @@ class SettingsViewController: UITableViewController {
     private lazy var versionProvider = Version()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
-    private lazy var settingsStore = MiscSettingsUserDefaults()
     
     private struct TableIndex {
-        static let onboardingFlow = IndexPath(item: 0, section: 1)
-        static let sendFeedback = IndexPath(item: 0, section: 4)
+        static let sendFeedback = IndexPath(item: 0, section: 3)
+        static let onboardingFlow = IndexPath(item: 0, section: 4)
     }
     
     override func viewDidLoad() {
@@ -38,7 +36,6 @@ class SettingsViewController: UITableViewController {
         configureSafeSearchToggle()
         configureContentBlockingToggles()
         configureVersionText()
-        configureOmniFireExperiment()
     }
     
     private func configureSafeSearchToggle() {
@@ -53,10 +50,6 @@ class SettingsViewController: UITableViewController {
     
     private func configureVersionText() {
         versionText.text = versionProvider.localized()
-    }
-    
-    private func configureOmniFireExperiment() {
-        omniFireOpensNewTabExperimentToggle.isOn = settingsStore.omniFireOpensNewTab
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,10 +104,6 @@ class SettingsViewController: UITableViewController {
         if let controller = segue.destination as? DateFilterSelectionViewController {
             controller.delegate = self
         }
-    }
-    
-    @IBAction func onOmniFireOpensNewTabToggled(_ sender: UISwitch) {
-        settingsStore.omniFireOpensNewTab = sender.isOn
     }
     
     @IBAction func onSafeSearchToggled(_ sender: UISwitch) {

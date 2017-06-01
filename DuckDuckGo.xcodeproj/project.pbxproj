@@ -94,7 +94,6 @@
 		F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */; };
 		F16956401ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F169563F1ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift */; };
 		F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16956411ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift */; };
-		F1722BBC1E8BE1D10058AAA5 /* MiscSetttingsUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BBB1E8BE1D10058AAA5 /* MiscSetttingsUserDefaults.swift */; };
 		F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */; };
 		F1722BCB1E8BF6E30058AAA5 /* DateFilterSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BCA1E8BF6E30058AAA5 /* DateFilterSelectionViewController.swift */; };
 		F1722BCD1E8BF71C0058AAA5 /* RegionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BCC1E8BF71C0058AAA5 /* RegionSelectionViewController.swift */; };
@@ -424,7 +423,6 @@
 		F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		F169563F1ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerConfigurationStore.swift; sourceTree = "<group>"; };
 		F16956411ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerConfigurationUserDefaults.swift; sourceTree = "<group>"; };
-		F1722BBB1E8BE1D10058AAA5 /* MiscSetttingsUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiscSetttingsUserDefaults.swift; path = ../Core/MiscSetttingsUserDefaults.swift; sourceTree = "<group>"; };
 		F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
 		F1722BCA1E8BF6E30058AAA5 /* DateFilterSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFilterSelectionViewController.swift; sourceTree = "<group>"; };
 		F1722BCC1E8BF71C0058AAA5 /* RegionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionSelectionViewController.swift; sourceTree = "<group>"; };
@@ -1144,7 +1142,6 @@
 				F1722BCA1E8BF6E30058AAA5 /* DateFilterSelectionViewController.swift */,
 				F13508021E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift */,
 				F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */,
-				F1722BBB1E8BE1D10058AAA5 /* MiscSetttingsUserDefaults.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1792,7 +1789,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1CE42A41ECA09F30074A8DF /* SearchFilterUserDefaults.swift in Sources */,
-				F1722BBC1E8BE1D10058AAA5 /* MiscSetttingsUserDefaults.swift in Sources */,
 				F16393FF1ECCB9CC00DDD653 /* FileLoader.swift in Sources */,
 				F16956401ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift in Sources */,
 				F143C33E1E4A9B8000CFDE3A /* Toast.swift in Sources */,

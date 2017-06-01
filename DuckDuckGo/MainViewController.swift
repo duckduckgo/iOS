@@ -23,7 +23,6 @@ class MainViewController: UIViewController {
 
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
-    fileprivate lazy var settingsStore = MiscSettingsUserDefaults()
     fileprivate lazy var tabManager = TabManager()
     private lazy var contentBlocker =  ContentBlocker()
     
@@ -300,11 +299,7 @@ extension MainViewController: OmniBarDelegate {
         if let index = tabManager.currentIndex {
             remove(tabAt: index)
         }
-        if settingsStore.omniFireOpensNewTab {
-            launchTab()
-        } else {
-            launchTabSwitcher()
-        }
+        launchTabSwitcher()
     }
     
     func onBookmarksButtonPressed() {

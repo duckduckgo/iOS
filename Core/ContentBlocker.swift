@@ -59,7 +59,7 @@ public class ContentBlocker {
      */
     public func block(url: URL, forDocument documentUrl: URL) -> Bool {
         for entry in blockedEntries {
-            if url.absoluteString.contains(entry.url) && !documentUrl.absoluteString.contains(entry.domain){
+            if url.absoluteString.contains(entry.url) && documentUrl.host != url.host {
                 Logger.log(text: "Content blocker BLOCKED \(url.absoluteString)")
                 return true
             }

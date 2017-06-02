@@ -33,7 +33,6 @@ public struct AppleContentBlockerParser {
     
     private func toJsonObject(entry: ContentBlockerEntry) -> [String: Any] {
         
-        let domain = "*\(entry.domain)"
         let url = "\(entry.url)"
         
         return [
@@ -42,8 +41,7 @@ public struct AppleContentBlockerParser {
             ],
             "trigger": [
                 "load-type": ["third-party"],
-                "url-filter": url,
-                "unless-domain": [domain]
+                "url-filter": url
             ]
         ]
     }

@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
-        navigationItem.titleView = omniBar
+        navigationController?.navigationBar.addSubview(omniBar)
     }
     
     override func viewDidLayoutSubviews() {
@@ -211,7 +211,7 @@ class MainViewController: UIViewController {
         currentTab?.omniBarWasDismissed()
     }
     
-    private func dismissAutcompleteSuggestions() {
+    fileprivate func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
         autocompleteController = nil
         controller.view.removeFromSuperview()
@@ -313,6 +313,7 @@ extension MainViewController: HomeTabDelegate {
     }
     
     func homeTabDidDeactivateOmniBar(homeTab: HomeTabViewController) {
+        dismissAutcompleteSuggestions()
         omniBar.resignFirstResponder()
         omniBar.clear()
     }

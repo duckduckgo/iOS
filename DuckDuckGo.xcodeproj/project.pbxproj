@@ -38,6 +38,7 @@
 		F11E231C1ED3AF1D00523BC9 /* disconnect_incorrect.json in Resources */ = {isa = PBXBuildFile; fileRef = F11E231B1ED3AF1D00523BC9 /* disconnect_incorrect.json */; };
 		F11E23201ED3B75D00523BC9 /* ContentBlockerEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E231F1ED3B75D00523BC9 /* ContentBlockerEntryTests.swift */; };
 		F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669A71E412A12003D3222 /* MockBundle.swift */; };
+		F1204B7E1EE606F900969006 /* OmniNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */; };
 		F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */; };
 		F12810A41EB35B5300F95E4E /* ContentBlockerRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12810A31EB35B5300F95E4E /* ContentBlockerRequestHandler.swift */; };
 		F12810A81EB35B5300F95E4E /* ContentBlockerExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F128109F1EB35B5300F95E4E /* ContentBlockerExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -365,6 +366,7 @@
 		F11E23191ED3ABFB00523BC9 /* disconnect_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = disconnect_valid.json; sourceTree = "<group>"; };
 		F11E231B1ED3AF1D00523BC9 /* disconnect_incorrect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = disconnect_incorrect.json; sourceTree = "<group>"; };
 		F11E231F1ED3B75D00523BC9 /* ContentBlockerEntryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerEntryTests.swift; sourceTree = "<group>"; };
+		F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniNavigationBar.swift; sourceTree = "<group>"; };
 		F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurementTests.swift; sourceTree = "<group>"; };
 		F12790ED1EBBEDD8001D3AEC /* FireTutorialViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireTutorialViewControllerTests.swift; sourceTree = "<group>"; };
 		F128109F1EB35B5300F95E4E /* ContentBlockerExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContentBlockerExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1130,6 +1132,7 @@
 				F1C4A70D1E57725800A6CA1B /* OmniBar.swift */,
 				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
 				F114C55C1E6717800018F95F /* OmniBar.xib */,
+				F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */,
 				F114C55A1E66EB020018F95F /* NibLoading.swift */,
 			);
 			name = OmniBar;
@@ -1714,6 +1717,7 @@
 				F1722BCD1E8BF71C0058AAA5 /* RegionSelectionViewController.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
+				F1204B7E1EE606F900969006 /* OmniNavigationBar.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

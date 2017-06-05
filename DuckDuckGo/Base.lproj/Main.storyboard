@@ -15,7 +15,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jmT-gh-cHl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -426,7 +426,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7LC-T1-mn0" customClass="PartiallyRoundedRectangleView" customModule="Core">
-                                <rect key="frame" x="-13.5" y="22" width="347" height="276"/>
+                                <rect key="frame" x="-13.5" y="21" width="347" height="276"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3mS-sG-8Ub">
                                         <rect key="frame" x="0.0" y="0.0" width="347" height="276"/>
@@ -533,7 +533,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="7LC-T1-mn0" firstAttribute="top" secondItem="gyt-98-JMh" secondAttribute="bottom" constant="2" id="CFA-1g-3Km"/>
+                            <constraint firstItem="7LC-T1-mn0" firstAttribute="top" secondItem="gyt-98-JMh" secondAttribute="bottom" constant="1" id="CFA-1g-3Km"/>
                             <constraint firstItem="7LC-T1-mn0" firstAttribute="centerX" secondItem="IiA-uy-AxZ" secondAttribute="centerX" id="VYp-3i-8kG"/>
                         </constraints>
                         <connections>

@@ -13,14 +13,25 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
     
-    @IBOutlet weak var actionButton: UIButton!
+    struct Measurement {
+        static let barHeight: CGFloat = 52
+        static let innerHeight: CGFloat = 40
+        static let leftMargin: CGFloat = 8
+        static let rightMargin: CGFloat = 8
+        static let topMargin: CGFloat = 4
+    }
+    
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var menuButton: UIButton!
     
     weak var omniDelegate: OmniBarDelegate?
     
     static func loadFromXib() -> OmniBar {
-        return OmniBar.load(nibName: "OmniBar")
+        let omnibar = OmniBar.load(nibName: "OmniBar")
+        let width = UIScreen.main.bounds.width - Measurement.leftMargin - Measurement.rightMargin
+        omnibar.frame = CGRect(x: Measurement.leftMargin, y: Measurement.topMargin, width: width, height: Measurement.innerHeight)
+        return omnibar
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -128,3 +139,4 @@ extension String {
         return from ..< to
     }
 }
+

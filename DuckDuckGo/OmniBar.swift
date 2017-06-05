@@ -13,26 +13,14 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
     
-    public static let actionButtonTag = 100
-    
-    public enum Style: String {
-        case home = "OmniBarHome"
-        case web = "OmniBarWeb"
-    }
-    
-    var style: Style!
-    
     @IBOutlet weak var actionButton: UIButton!
-    @IBOutlet weak var refreshButton: UIButton?
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     
     weak var omniDelegate: OmniBarDelegate?
     
-    static func loadFromXib(withStyle style: Style) -> OmniBar {
-        let omniBar = OmniBar.load(nibName: style.rawValue)
-        omniBar.style = style
-        return omniBar
+    static func loadFromXib() -> OmniBar {
+        return OmniBar.load(nibName: "OmniBar")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,7 +29,6 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        actionButton.tag = OmniBar.actionButtonTag
         configureTextField()
     }
     
@@ -89,26 +76,6 @@ class OmniBar: UIView {
         dismissButton.isHidden = true
     }
     
-    fileprivate func showRefreshButton() {
-        refreshButton?.isHidden = false
-    }
-    
-    fileprivate func hideRefreshButton() {
-         refreshButton?.isHidden = true
-    }
-    
-    @IBAction func onFireButtonPressed() {
-        omniDelegate?.onFireButtonPressed()
-    }
-    
-    @IBAction func onRefreshButtonPressed() {
-        omniDelegate?.onRefreshButtonPressed()
-    }
-    
-    @IBAction func onBookmarksButtonPressed() {
-        omniDelegate?.onBookmarksButtonPressed()
-    }
-    
     @IBAction func onDismissButtonPressed() {
         resignFirstResponder()
         omniDelegate?.onDismissButtonPressed()
@@ -132,7 +99,6 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        hideRefreshButton()
         showDismissButton()
     }
     
@@ -147,7 +113,6 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        showRefreshButton()
         hideDismissButton()
     }
 }

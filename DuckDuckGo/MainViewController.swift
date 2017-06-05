@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
-    weak var omniBar: OmniBar?
+    weak var omniBar: OmniBar!
 
     fileprivate var autocompleteController: AutocompleteViewController?
 
@@ -32,7 +32,14 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        attachOmniBar()
         launchTab(active: false)
+    }
+    
+    private func attachOmniBar() {
+        omniBar = OmniBar.loadFromXib()
+        omniBar.omniDelegate = self
+        navigationItem.titleView = omniBar
     }
     
     override func viewDidLayoutSubviews() {
@@ -109,9 +116,6 @@ class MainViewController: UIViewController {
     }
     
     private func addToView(tab: UIViewController) {
-        if let tab = tab as? Tab {
-            resetOmniBar(withStyle: tab.omniBarStyle)
-        }
         tab.view.frame = containerView.frame
         tab.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(tab)
@@ -144,17 +148,6 @@ class MainViewController: UIViewController {
         launchTab(active: false)
     }
     
-    private func resetOmniBar(withStyle style: OmniBar.Style) {
-        if omniBar?.style == style {
-            return
-        }
-        let omniBarText = omniBar?.textField.text
-        omniBar = OmniBar.loadFromXib(withStyle: style)
-        omniBar?.textField.text = omniBarText
-        omniBar?.omniDelegate = self
-        navigationItem.titleView = omniBar
-    }
-    
     fileprivate func refreshControls() {
         refreshOmniText()
         refreshTabIcon()
@@ -184,9 +177,9 @@ class MainViewController: UIViewController {
             return
         }
         if tab.showsUrlInOmniBar {
-            omniBar?.refreshText(forUrl: tab.url)
+            omniBar.refreshText(forUrl: tab.url)
         } else {
-            omniBar?.clear()
+            omniBar.clear()
         }
     }
     
@@ -208,13 +201,11 @@ class MainViewController: UIViewController {
     }
     
     private func updateAutocompleteSize() {
-        if let omniBarWidth = omniBar?.frame.width, let autocompleteController = autocompleteController {
-            autocompleteController.widthConstraint.constant = omniBarWidth
-        }
+        autocompleteController?.widthConstraint.constant = omniBar.frame.width
     }
     
     fileprivate func dismissOmniBar() {
-        omniBar?.resignFirstResponder()
+        omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniText()
         currentTab?.omniBarWasDismissed()
@@ -294,22 +285,6 @@ extension MainViewController: OmniBarDelegate {
         loadQueryInCurrentTab(query: query)
     }
     
-    func onFireButtonPressed() {
-        dismissOmniBar()
-        if let index = tabManager.currentIndex {
-            remove(tabAt: index)
-        }
-        launchTabSwitcher()
-    }
-    
-    func onBookmarksButtonPressed() {
-        launchBookmarks()
-    }
-    
-    func onRefreshButtonPressed() {
-        currentTab?.reload()
-    }
-    
     func onDismissButtonPressed() {
         dismissOmniBar()
     }
@@ -323,7 +298,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
     }
     
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
-        omniBar?.textField.text = suggestion
+        omniBar.textField.text = suggestion
     }
     
     func autocompleteWasDismissed() {
@@ -334,12 +309,12 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 extension MainViewController: HomeTabDelegate {
     
     func homeTabDidActivateOmniBar(homeTab: HomeTabViewController) {
-        omniBar?.becomeFirstResponder()
+        omniBar.becomeFirstResponder()
     }
     
     func homeTabDidDeactivateOmniBar(homeTab: HomeTabViewController) {
-        omniBar?.resignFirstResponder()
-        omniBar?.clear()
+        omniBar.resignFirstResponder()
+        omniBar.clear()
     }
     
     func homeTab(_ homeTab: HomeTabViewController, didRequestQuery query: String) {

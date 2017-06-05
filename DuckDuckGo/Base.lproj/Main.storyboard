@@ -35,14 +35,6 @@
             </objects>
             <point key="canvasLocation" x="-714" y="-5"/>
         </scene>
-        <!--SafariSearchInstructionsViewController-->
-        <scene sceneID="SIJ-Tg-4kw">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SafariSearchInstructions" referencedIdentifier="SafariSearchInstructionsViewController" id="rAP-1L-ux0" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qaL-Bk-dgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1163" y="-800"/>
-        </scene>
         <!--Home Tab View Controller-->
         <scene sceneID="oC3-hG-Uf2">
             <objects>
@@ -113,34 +105,12 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="15O-9D-0eh">
-                                        <rect key="frame" x="70.5" y="423" width="180.5" height="64"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Safari" translatesAutoresizingMaskIntoConstraints="NO" id="nyV-tv-oN2">
-                                                <rect key="frame" x="75.5" y="0.0" width="30" height="30"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-lo-6Ex">
-                                                <rect key="frame" x="0.0" y="46" width="180.5" height="18"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" red="0.1764705882352941" green="0.63137254901960782" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <variation key="heightClass=compact-widthClass=compact" spacing="8"/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="KAG-UB-Nf4" appends="YES" id="jaN-1X-Vdh"/>
-                                        </connections>
-                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="leading" secondItem="DPw-xt-wy9" secondAttribute="leading" constant="16" id="1d4-H9-4rF"/>
                                     <constraint firstAttribute="trailing" secondItem="Qi3-F2-882" secondAttribute="trailing" constant="16" id="5yw-Pj-1YR"/>
-                                    <constraint firstItem="15O-9D-0eh" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="7uW-fa-gHg"/>
                                     <constraint firstItem="yFR-7m-lZn" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="fRR-OU-T7q"/>
-                                    <constraint firstAttribute="bottom" secondItem="15O-9D-0eh" secondAttribute="bottom" constant="32" id="mSj-K2-JdS">
-                                        <variation key="heightClass=compact-widthClass=compact" constant="6"/>
-                                    </constraint>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="centerY" secondItem="DPw-xt-wy9" secondAttribute="centerY" constant="32" id="prx-ob-ngU"/>
                                     <constraint firstItem="Qi3-F2-882" firstAttribute="top" secondItem="yFR-7m-lZn" secondAttribute="bottom" constant="40" id="uzw-iH-vnp">
                                         <variation key="heightClass=compact-widthClass=compact" constant="20"/>
@@ -178,11 +148,7 @@
                         <action selector="onEnterActiveModeTapped:" destination="V6g-Vt-ptZ" id="dDR-qp-5Dj"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="KAG-UB-Nf4">
-                    <connections>
-                        <segue destination="rAP-1L-ux0" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="JLK-9Q-rjB"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="KAG-UB-Nf4"/>
             </objects>
             <point key="canvasLocation" x="247.19999999999999" y="-801.0494752623689"/>
         </scene>
@@ -597,7 +563,6 @@
         <image name="GlobeSmall" width="16" height="16"/>
         <image name="LogoWithText" width="201" height="159"/>
         <image name="Plus" width="16" height="16"/>
-        <image name="Safari" width="30" height="30"/>
         <image name="SearchLoupe" width="22" height="22"/>
         <image name="Share" width="22" height="22"/>
         <image name="Tabs" width="22" height="22"/>

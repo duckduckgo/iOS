@@ -16,9 +16,7 @@ protocol Tab: class {
     var url: URL? { get }
     
     var favicon: URL? { get }
-    
-    var omniBarStyle: OmniBar.Style { get }
-    
+        
     var showsUrlInOmniBar: Bool { get }
     
     var canGoBack: Bool { get }

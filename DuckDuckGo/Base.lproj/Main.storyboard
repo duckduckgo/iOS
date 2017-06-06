@@ -19,7 +19,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -66,28 +66,40 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qi3-F2-882" customClass="RoundedRectangleView" customModule="Core">
                                                 <rect key="frame" x="0.0" y="200" width="335" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or type URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxL-fx-9Iq">
-                                                        <rect key="frame" x="18" y="16.5" width="269" height="16"/>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
-                                                        <rect key="frame" x="305" y="14" width="22" height="22"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etZ-6L-2TM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or type URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxL-fx-9Iq">
+                                                                <rect key="frame" x="18" y="15.5" width="269" height="19"/>
+                                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
+                                                                <rect key="frame" x="295" y="14" width="22" height="22"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="22" id="AyC-Sf-lsN"/>
+                                                                    <constraint firstAttribute="width" constant="22" id="dDV-pC-oUh"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="22" id="AyC-Sf-lsN"/>
-                                                            <constraint firstAttribute="width" constant="22" id="dDV-pC-oUh"/>
+                                                            <constraint firstItem="dsk-K1-r3i" firstAttribute="leading" secondItem="lxL-fx-9Iq" secondAttribute="trailing" constant="8" id="ERz-D9-K2Y"/>
+                                                            <constraint firstItem="lxL-fx-9Iq" firstAttribute="centerY" secondItem="etZ-6L-2TM" secondAttribute="centerY" id="YbH-VV-NfS"/>
+                                                            <constraint firstItem="lxL-fx-9Iq" firstAttribute="leading" secondItem="etZ-6L-2TM" secondAttribute="leading" constant="18" id="cAv-Zd-Z1n"/>
+                                                            <constraint firstItem="dsk-K1-r3i" firstAttribute="centerY" secondItem="etZ-6L-2TM" secondAttribute="centerY" id="e4R-1a-hda"/>
+                                                            <constraint firstAttribute="trailing" secondItem="dsk-K1-r3i" secondAttribute="trailing" constant="18" id="wyE-oj-sWK"/>
                                                         </constraints>
-                                                    </imageView>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
-                                                    <constraint firstItem="lxL-fx-9Iq" firstAttribute="centerY" secondItem="Qi3-F2-882" secondAttribute="centerY" id="ASR-EY-maG"/>
-                                                    <constraint firstItem="dsk-K1-r3i" firstAttribute="centerY" secondItem="Qi3-F2-882" secondAttribute="centerY" id="AYn-qj-LbS"/>
-                                                    <constraint firstItem="lxL-fx-9Iq" firstAttribute="leading" secondItem="Qi3-F2-882" secondAttribute="leading" constant="18" id="D5c-ow-FKE"/>
-                                                    <constraint firstItem="dsk-K1-r3i" firstAttribute="leading" secondItem="lxL-fx-9Iq" secondAttribute="trailing" constant="18" id="Sqr-D2-BDj"/>
-                                                    <constraint firstAttribute="trailing" secondItem="dsk-K1-r3i" secondAttribute="trailing" constant="8" id="jXj-Nu-aDk"/>
+                                                    <constraint firstAttribute="bottom" secondItem="etZ-6L-2TM" secondAttribute="bottom" id="09L-ae-wZf"/>
+                                                    <constraint firstItem="etZ-6L-2TM" firstAttribute="top" secondItem="Qi3-F2-882" secondAttribute="top" id="8hq-uL-WTg"/>
+                                                    <constraint firstAttribute="trailing" secondItem="etZ-6L-2TM" secondAttribute="trailing" id="QVW-6T-SEi"/>
+                                                    <constraint firstItem="etZ-6L-2TM" firstAttribute="leading" secondItem="Qi3-F2-882" secondAttribute="leading" id="cY2-ef-2CS"/>
                                                     <constraint firstAttribute="height" constant="50" id="lTk-my-8uQ"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
@@ -137,8 +149,11 @@
                     <navigationItem key="navigationItem" id="zV4-a4-ChM"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="centreBar" destination="Qi3-F2-882" id="qLA-Gp-FLx"/>
-                        <outlet property="passiveContainerView" destination="DPw-xt-wy9" id="XQ9-zR-xLL"/>
+                        <outlet property="passiveContent" destination="DPw-xt-wy9" id="FC0-Nm-4ro"/>
+                        <outlet property="searchBar" destination="Qi3-F2-882" id="W7K-ZW-I0K"/>
+                        <outlet property="searchBarContent" destination="etZ-6L-2TM" id="C46-mj-H9w"/>
+                        <outlet property="searchImage" destination="dsk-K1-r3i" id="tCX-28-QO6"/>
+                        <outlet property="searchText" destination="lxL-fx-9Iq" id="1ym-sx-6FC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="whO-FE-jZt" userLabel="First Responder" sceneMemberID="firstResponder"/>

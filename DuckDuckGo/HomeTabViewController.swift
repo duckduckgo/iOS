@@ -11,15 +11,19 @@ import Core
 
 class HomeTabViewController: UIViewController, Tab {
     
-    private static let onboardingHeight: CGFloat = 230
+    private struct Constants {
+        static let animationDuration = 0.25
+    }
     
-    @IBOutlet weak var passiveContainerView: UIView!
-    @IBOutlet weak var centreBar: UIView!
+    @IBOutlet weak var passiveContent: UIView!
+    @IBOutlet weak var searchBar: UIView!
+    @IBOutlet weak var searchBarContent: UIView!
+    @IBOutlet weak var searchImage: UIImageView!
+    @IBOutlet weak var searchText: UILabel!
     
     weak var tabDelegate: HomeTabDelegate?
     
     let showsUrlInOmniBar = false
-    var keyboardSize: CGRect? = nil
     
     var name: String? = UserText.homeLinkTitle
     var url: URL? = AppUrls.base
@@ -58,27 +62,54 @@ class HomeTabViewController: UIViewController, Tab {
     }
     
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {
-        enterActiveMode()
+        UIView.animate(withDuration: Constants.animationDuration, animations: {
+            self.moveSearchBarUp()
+        }) { (finished) in
+            self.enterActiveMode()
+        }
     }
     
     @IBAction func onEnterPassiveModeTapped(_ sender: Any) {
         enterPassiveMode()
+        UIView.animate(withDuration: Constants.animationDuration) {
+            self.resetSearchBar()
+        }
     }
     
     func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
-        passiveContainerView.isHidden = false
+        passiveContent.isHidden = false
         tabDelegate?.homeTabDidDeactivateOmniBar(homeTab: self)
     }
     
     func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
-        passiveContainerView.isHidden = true
+        passiveContent.isHidden = true
         tabDelegate?.homeTabDidActivateOmniBar(homeTab: self)
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        keyboardSize = nil
+    private func moveSearchBarUp() {
+        let frame = searchBar.superview!.convert(searchBar.frame.origin, to: passiveContent)
+        let xScale = OmniBar.Measurement.width / searchBar.frame.size.width
+        let yScale = OmniBar.Measurement.height / searchBar.frame.size.height
+        let xIdentityScale = searchBar.frame.size.width / OmniBar.Measurement.width
+        let yIdentityScale = searchBar.frame.size.height / OmniBar.Measurement.height
+        let searchBarToOmniTextRatio: CGFloat = 0.875
+        let searchTextMarginChange: CGFloat = -12
+        passiveContent.transform.ty = statusBarSize - frame.y
+        searchBar.transform = CGAffineTransform(scaleX: xScale, y: yScale)
+        searchBarContent.transform = CGAffineTransform(scaleX: xIdentityScale, y: yIdentityScale)
+        searchText.transform = CGAffineTransform(scaleX: searchBarToOmniTextRatio, y: searchBarToOmniTextRatio)
+        searchText.transform.tx = searchTextMarginChange
+        searchImage.alpha = 0
+    }
+    
+    private func resetSearchBar() {
+        passiveContent.transform = CGAffineTransform.identity
+        searchBar.transform = CGAffineTransform.identity
+        searchBarContent.transform = CGAffineTransform.identity
+        searchText.transform = CGAffineTransform.identity
+        searchImage.alpha = 1
     }
     
     func load(url: URL) {

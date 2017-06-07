@@ -43,7 +43,7 @@ class TabSwitcherViewController: UIViewController {
         return .lightContent
     }
     
-    @IBAction func onAddPressed(_ sender: UIButton) {
+    @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
     }
@@ -109,6 +109,6 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 60)
+        return CGSize(width: collectionView.bounds.size.width, height: 70)
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 extension URL {
     
-    private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|(([\\d]+[.]){3}[\\d]+))([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"
+    private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|(([\\d]+[.]){3}[\\d]+))([\\/]?[\\/:?=&#]{1}[\\%\\da-zA-Z_\\.-]+)*[\\/\\?]?$"
     
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }

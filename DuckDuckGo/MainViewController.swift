@@ -201,6 +201,7 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniText()
+        homeController?.omniBarWasDismissed()
         currentTab?.omniBarWasDismissed()
     }
     

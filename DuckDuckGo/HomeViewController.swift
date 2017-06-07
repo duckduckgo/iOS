@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
-        refreshMode(active: false)
+        enterPassiveMode()
         super.viewWillAppear(animated)
     }
     
@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = false
     }
     
-    public func refreshMode(active: Bool) {
+    func refreshMode(active: Bool) {
         if active {
             enterActiveMode()
         } else {
@@ -48,6 +48,10 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {
+         enterActiveModeAnimated()
+    }
+    
+    private func enterActiveModeAnimated() {
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.moveSearchBarUp()
         }) { (finished) in
@@ -55,25 +59,29 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func enterActiveMode() {
+        navigationController?.isNavigationBarHidden = false
+        passiveContent.isHidden = true
+        delegate?.homeControllerDidActivateOmniBar(homeController: self)
+    }
+
     @IBAction func onEnterPassiveModeTapped(_ sender: Any) {
+        enterPassiveModeAnimated()
+    }
+    
+    private func enterPassiveModeAnimated() {
         enterPassiveMode()
         UIView.animate(withDuration: Constants.animationDuration) {
             self.resetSearchBar()
         }
     }
     
-    func enterPassiveMode() {
+    private func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContent.isHidden = false
         delegate?.homeControllerDidDeactivateOmniBar(homeController: self)
     }
-    
-    func enterActiveMode() {
-        navigationController?.isNavigationBarHidden = false
-        passiveContent.isHidden = true
-        delegate?.homeControllerDidActivateOmniBar(homeController: self)
-    }
-    
+
     private func moveSearchBarUp() {
         let frame = searchBar.superview!.convert(searchBar.frame.origin, to: passiveContent)
         let xScale = OmniBar.Measurement.width / searchBar.frame.size.width
@@ -100,6 +108,10 @@ class HomeViewController: UIViewController {
     
     func load(url: URL) {
         delegate?.homeController(self, didRequestUrl: url)
+    }
+    
+    func omniBarWasDismissed() {
+        enterPassiveModeAnimated()
     }
 
     func dismiss() {

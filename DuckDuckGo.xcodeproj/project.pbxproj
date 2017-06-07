@@ -150,6 +150,8 @@
 		F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewCell.swift */; };
 		F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78591E5CD2A70058895A /* UIViewExtension.swift */; };
 		F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */; };
+		F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */; };
+		F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */; };
 		F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1B1E67684B005E7E21 /* Tab.swift */; };
 		F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */; };
 		F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */; };
@@ -481,6 +483,8 @@
 		F1DE78571E5CAE350058895A /* TabViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
 		F1DE78591E5CD2A70058895A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
+		F1E4A4441EE89460006F2EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bookmarks.storyboard; sourceTree = "<group>"; };
+		F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
 		F1E90C1B1E67684B005E7E21 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
@@ -925,6 +929,7 @@
 		F1668BCC1E798025008CBA04 /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
+				F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */,
 				F103076A1E800DC30059FEC7 /* BookmarksManager.swift */,
 				F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */,
 				F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */,
@@ -973,6 +978,7 @@
 		F17922D41E7109DB006E3D97 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */,
 				F15D431F1E706CC500BF2CDC /* AutocompleteViewController.swift */,
 				F17922DF1E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift */,
 				F17922E11E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift */,
@@ -1595,6 +1601,8 @@
 				F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */,
 				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
 				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
+				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
+				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
@@ -1898,6 +1906,14 @@
 				F1AA54661E48D90700223211 /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1E4A4441EE89460006F2EAE /* Base */,
+			);
+			name = Bookmarks.storyboard;
 			sourceTree = "<group>";
 		};
 		F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */ = {

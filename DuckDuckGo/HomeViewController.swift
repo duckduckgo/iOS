@@ -23,8 +23,6 @@ class HomeViewController: UIViewController {
     
     weak var delegate: HomeControllerDelegate?
     
-    private lazy var tabIconMaker = TabIconMaker()
-    
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }

@@ -93,7 +93,6 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabFrom(webTab: WebTabViewController, forUrlRequest urlRequest: URLRequest) {
-        refreshTabIcon(count: tabManager.count+1)
         attachSiblingTab(fromWebView: webTab.webView, forUrlRequest: urlRequest)
         refreshControls()
     }
@@ -156,17 +155,8 @@ class MainViewController: UIViewController {
     
     fileprivate func refreshControls() {
         refreshOmniText()
-        refreshTabIcon()
         refreshNavigationButtons()
         refreshShareButton()
-    }
-    
-    private func refreshTabIcon() {
-        refreshTabIcon(count: tabManager.count)
-    }
-    
-    private func refreshTabIcon(count: Int) {
-        tabsButton.image = TabIconMaker().icon(forTabs: count)
     }
     
     private func refreshNavigationButtons() {

@@ -13,10 +13,7 @@ import Core
 class WebTabViewController: WebViewController, Tab {
     
     weak var tabDelegate: WebTabDelegate?
-    
-    var canShare = true
-    var showsUrlInOmniBar = true
-    
+        
     private var contentBlocker: ContentBlocker!
     
     static func loadFromStoryboard(contentBlocker: ContentBlocker) -> WebTabViewController {

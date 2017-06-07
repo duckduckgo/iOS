@@ -1,5 +1,5 @@
 //
-//  HomeTabViewController.swift
+//  HomeViewController.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 27/02/2017.
@@ -9,7 +9,7 @@
 import UIKit
 import Core
 
-class HomeTabViewController: UIViewController, Tab {
+class HomeViewController: UIViewController {
     
     private struct Constants {
         static let animationDuration = 0.25
@@ -21,29 +21,17 @@ class HomeTabViewController: UIViewController, Tab {
     @IBOutlet weak var searchImage: UIImageView!
     @IBOutlet weak var searchText: UILabel!
     
-    weak var tabDelegate: HomeTabDelegate?
+    weak var delegate: HomeControllerDelegate?
     
-    let showsUrlInOmniBar = false
-    
-    var name: String? = UserText.homeLinkTitle
-    var url: URL? = AppUrls.base
-    var favicon: URL? = AppUrls.favicon
-    
-    var canGoBack = false
-    var canGoForward = false
-    var canShare = false
-    
-    private var activeMode = false
     private lazy var tabIconMaker = TabIconMaker()
     
-    static func loadFromStoryboard() -> HomeTabViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeTabViewController") as! HomeTabViewController
+    static func loadFromStoryboard() -> HomeViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
         resetNavigationBar()
-        activeMode = false
-        refreshMode()
+        refreshMode(active: false)
         super.viewWillAppear(animated)
     }
     
@@ -53,8 +41,8 @@ class HomeTabViewController: UIViewController, Tab {
         navigationController?.hidesBarsOnSwipe = false
     }
     
-    private func refreshMode() {
-        if activeMode {
+    public func refreshMode(active: Bool) {
+        if active {
             enterActiveMode()
         } else {
             enterPassiveMode()
@@ -79,13 +67,13 @@ class HomeTabViewController: UIViewController, Tab {
     func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContent.isHidden = false
-        tabDelegate?.homeTabDidDeactivateOmniBar(homeTab: self)
+        delegate?.homeControllerDidDeactivateOmniBar(homeController: self)
     }
     
     func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContent.isHidden = true
-        tabDelegate?.homeTabDidActivateOmniBar(homeTab: self)
+        delegate?.homeControllerDidActivateOmniBar(homeController: self)
     }
     
     private func moveSearchBarUp() {
@@ -113,25 +101,11 @@ class HomeTabViewController: UIViewController, Tab {
     }
     
     func load(url: URL) {
-        tabDelegate?.homeTab(self, didRequestUrl: url)
+        delegate?.homeController(self, didRequestUrl: url)
     }
-    
-    func goBack() {}
-    
-    func goForward() {}
-    
-    func reload() {}
-    
+
     func dismiss() {
         removeFromParentViewController()
         view.removeFromSuperview()
-    }
-    
-    func destroy() {
-        dismiss()
-    }
-    
-    func omniBarWasDismissed() {
-        enterPassiveMode()
     }
 }

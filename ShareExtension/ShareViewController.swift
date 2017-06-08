@@ -98,10 +98,6 @@ class ShareViewController: UIViewController {
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
     }
     
-    @IBAction func onDeleteEverything(_ sender: UIButton) {
-        webController?.reset()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? WebViewController {
             controller.webEventsDelegate = self

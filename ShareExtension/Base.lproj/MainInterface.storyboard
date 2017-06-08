@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,22 +47,17 @@
                                                         </connections>
                                                     </button>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoStamp" translatesAutoresizingMaskIntoConstraints="NO" id="D7J-aq-9ik">
-                                                        <rect key="frame" x="133.5" y="0.0" width="24" height="24"/>
+                                                        <rect key="frame" x="131.5" y="0.0" width="24" height="24"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="24" id="Zvg-rK-xb7"/>
                                                             <constraint firstAttribute="width" constant="24" id="iWa-j9-F1b"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chY-SO-aI0">
-                                                        <rect key="frame" x="267" y="2" width="20" height="20"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="20" id="Lfy-js-uUz"/>
-                                                            <constraint firstAttribute="width" constant="20" id="XqW-xg-juu"/>
-                                                        </constraints>
-                                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <state key="normal" image="Fire"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opb-VJ-xNQ">
+                                                        <rect key="frame" x="263" y="0.0" width="24" height="24"/>
+                                                        <state key="normal" image="RefreshMaterial"/>
                                                         <connections>
-                                                            <action selector="onDeleteEverything:" destination="j1y-V4-xli" eventType="touchUpInside" id="owH-fI-UDC"/>
+                                                            <action selector="onRefreshPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="3IV-dB-feh"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -83,15 +78,8 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Gv0-nD-0OB">
                                                 <rect key="frame" x="32" y="11" width="287" height="24"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opb-VJ-xNQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                        <state key="normal" image="RefreshMaterial"/>
-                                                        <connections>
-                                                            <action selector="onRefreshPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="3IV-dB-feh"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4I-fM-C5y">
-                                                        <rect key="frame" x="89" y="0.0" width="22" height="24"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="22" height="24"/>
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <state key="normal" image="BrowsePrevious"/>
                                                         <connections>
@@ -99,7 +87,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sr-dj-QDL">
-                                                        <rect key="frame" x="176" y="0.0" width="22" height="24"/>
+                                                        <rect key="frame" x="131.5" y="0.0" width="22" height="24"/>
                                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <state key="normal" image="BrowseNext"/>
                                                         <connections>
@@ -215,7 +203,6 @@
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
         <image name="CloseMaterial" width="24" height="24"/>
-        <image name="Fire" width="26" height="26"/>
         <image name="LogoStamp" width="24" height="24"/>
         <image name="RefreshMaterial" width="24" height="24"/>
         <image name="StarMaterial" width="24" height="24"/>

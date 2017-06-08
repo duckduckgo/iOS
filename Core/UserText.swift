@@ -19,6 +19,9 @@ public struct UserText {
     
     public static let webSessionCleared = forKey("web.session.clear")
     public static let webSaveLinkDone = forKey("web.url.save.done")
+
+    public static let tabSwitcherTitleHasTabs = forKey("tabswitcher.title.tabs")
+    public static let tabSwitcherTitleNoTabs = forKey("tabswitcher.title.notabs")
     
     public static let onboardingRealPrivacyTitle = forKey("onboarding.realprivacy.title")
     public static let onboardingRealPrivacyDescription = forKey( "onboarding.realprivacy.description")

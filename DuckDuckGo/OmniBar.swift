@@ -81,12 +81,12 @@ class OmniBar: UIView {
         textField.text = url.absoluteString
     }
     
-    fileprivate func showDismissButton() {
-        dismissButton.isHidden = false
+    func showDismissButton(_ show: Bool) {
+        dismissButton.isHidden = !show
     }
     
-    fileprivate func hideDismissButton() {
-        dismissButton.isHidden = true
+    func showMenuButton(_ show: Bool) {
+        menuButton.isHidden = !show
     }
     
     @IBAction func onDismissButtonPressed() {
@@ -112,7 +112,7 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        showDismissButton()
+        showDismissButton(true)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -126,7 +126,7 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        hideDismissButton()
+        showDismissButton(false)
     }
 }
 

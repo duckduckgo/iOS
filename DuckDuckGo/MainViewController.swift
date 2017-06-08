@@ -155,6 +155,7 @@ class MainViewController: UIViewController {
     
     fileprivate func refreshControls() {
         refreshOmniText()
+        refreshMenuButton()
         refreshNavigationButtons()
         refreshShareButton()
     }
@@ -174,6 +175,11 @@ class MainViewController: UIViewController {
             return
         }
         omniBar.refreshText(forUrl: tab.url)
+    }
+    
+    private func refreshMenuButton() {
+        let show = currentTab != nil
+        omniBar.showMenuButton(show)
     }
     
     fileprivate func updateOmniBar(withQuery updatedQuery: String) {

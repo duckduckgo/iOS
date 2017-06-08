@@ -51,7 +51,7 @@
                                         <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
                                     </connections>
                                 </textField>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
                                     <rect key="frame" x="343" y="0.0" width="16" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="16" id="Ysb-N1-b8X"/>

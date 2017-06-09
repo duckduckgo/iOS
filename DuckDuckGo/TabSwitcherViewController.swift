@@ -65,7 +65,8 @@ class TabSwitcherViewController: UIViewController {
     
     @IBAction func onCloseAllPressed(_ sender: UIButton) {
         delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
-        dismiss()
+        collectionView.reloadData()
+        refreshTitle()
     }
     
     func onSelected(tabAt index: Int) {

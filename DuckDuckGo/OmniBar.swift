@@ -31,7 +31,6 @@ class OmniBar: UIView {
     @IBOutlet weak var menuButton: UIButton!
 
     weak var omniDelegate: OmniBarDelegate?
-    var supportMenuButton = false
     
     static func loadFromXib() -> OmniBar {
         let omnibar = OmniBar.load(nibName: "OmniBar")
@@ -49,6 +48,14 @@ class OmniBar: UIView {
         configureTextField()
     }
     
+    var supportMenuButton = false {
+        didSet {
+            if !textField.isFirstResponder {
+                menuButton.isHidden = !supportMenuButton
+            }
+        }
+    }
+
     private func configureTextField() {
         textField.placeholder = UserText.searchDuckDuckGo
         textField.delegate = self

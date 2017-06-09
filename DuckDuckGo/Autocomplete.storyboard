@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7LC-T1-mn0" customClass="PartiallyRoundedRectangleView" customModule="Core">
-                                <rect key="frame" x="14" y="21" width="347" height="276"/>
+                                <rect key="frame" x="14" y="20" width="347" height="276"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3mS-sG-8Ub">
                                         <rect key="frame" x="0.0" y="0.0" width="347" height="276"/>
@@ -129,7 +129,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="7LC-T1-mn0" firstAttribute="top" secondItem="gyt-98-JMh" secondAttribute="bottom" constant="1" id="CFA-1g-3Km"/>
+                            <constraint firstItem="7LC-T1-mn0" firstAttribute="top" secondItem="gyt-98-JMh" secondAttribute="bottom" id="CFA-1g-3Km"/>
                             <constraint firstItem="7LC-T1-mn0" firstAttribute="centerX" secondItem="IiA-uy-AxZ" secondAttribute="centerX" id="VYp-3i-8kG"/>
                         </constraints>
                         <connections>

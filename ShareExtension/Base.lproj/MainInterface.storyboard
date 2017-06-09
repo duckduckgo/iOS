@@ -33,10 +33,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="351" height="46"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SFp-pC-fOV">
-                                                <rect key="frame" x="32" y="11" width="287" height="24"/>
+                                                <rect key="frame" x="32" y="-7" width="287" height="60"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yp-br-SN3">
-                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                        <rect key="frame" x="0.0" y="18" width="24" height="24"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="24" id="Iio-pF-BFr"/>
                                                             <constraint firstAttribute="height" constant="24" id="fWQ-6R-Z0A"/>
@@ -46,15 +46,11 @@
                                                             <action selector="onClose:" destination="j1y-V4-xli" eventType="touchUpInside" id="ruK-wt-d0t"/>
                                                         </connections>
                                                     </button>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoStamp" translatesAutoresizingMaskIntoConstraints="NO" id="D7J-aq-9ik">
-                                                        <rect key="frame" x="131.5" y="0.0" width="24" height="24"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="24" id="Zvg-rK-xb7"/>
-                                                            <constraint firstAttribute="width" constant="24" id="iWa-j9-F1b"/>
-                                                        </constraints>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoShare" translatesAutoresizingMaskIntoConstraints="NO" id="D7J-aq-9ik">
+                                                        <rect key="frame" x="113.5" y="0.0" width="60" height="60"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opb-VJ-xNQ">
-                                                        <rect key="frame" x="263" y="0.0" width="24" height="24"/>
+                                                        <rect key="frame" x="263" y="18" width="24" height="24"/>
                                                         <state key="normal" image="RefreshMaterial"/>
                                                         <connections>
                                                             <action selector="onRefreshPressed:" destination="j1y-V4-xli" eventType="touchUpInside" id="3IV-dB-feh"/>
@@ -203,7 +199,7 @@
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
         <image name="CloseMaterial" width="24" height="24"/>
-        <image name="LogoStamp" width="24" height="24"/>
+        <image name="LogoShare" width="60" height="60"/>
         <image name="RefreshMaterial" width="24" height="24"/>
         <image name="StarMaterial" width="24" height="24"/>
     </resources>

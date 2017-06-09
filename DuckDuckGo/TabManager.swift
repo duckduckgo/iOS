@@ -43,6 +43,11 @@ struct TabManager {
         return links
     }
     
+    mutating func clearSelection() {
+        current?.dismiss()
+        current = nil
+    }
+    
     mutating func select(tabAt index: Int) -> Tab {
         current?.dismiss()
         let tab = tabs[index]

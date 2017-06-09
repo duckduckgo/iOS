@@ -10,7 +10,8 @@ import UIKit
 import Core
 
 class TabSwitcherViewController: UIViewController {
-    
+
+    @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     weak var delegate: TabSwitcherDelegate!
@@ -21,6 +22,11 @@ class TabSwitcherViewController: UIViewController {
         controller.delegate = delegate
         controller.initialIndex = index
         return controller
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        refreshTitle()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,11 +45,16 @@ class TabSwitcherViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    private func refreshTitle() {
+        let count = delegate.tabDetails.count
+        titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    @IBAction func onAddPressed(_ sender: UIButton) {
+    @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
     }
@@ -54,7 +65,8 @@ class TabSwitcherViewController: UIViewController {
     
     @IBAction func onCloseAllPressed(_ sender: UIButton) {
         delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
-        dismiss()
+        collectionView.reloadData()
+        refreshTitle()
     }
     
     func onSelected(tabAt index: Int) {
@@ -65,6 +77,7 @@ class TabSwitcherViewController: UIViewController {
     func onDeleted(tabAt index: Int) {
         delegate.tabSwitcher(self, didRemoveTabAt: index)
         collectionView.reloadData()
+        refreshTitle()
     }
     
     fileprivate func dismiss() {
@@ -97,18 +110,19 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelected(tabAt: indexPath.row)
     }
-    
+
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 60)
+        return CGSize(width: collectionView.bounds.size.width, height: 70)
     }
+
 }

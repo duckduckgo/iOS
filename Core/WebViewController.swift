@@ -195,11 +195,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
     }
     
-    public func reset() {
-        clearCache()
-        attachNewWebView()
-    }
-    
     public func clearCache() {
         webView.clearCache {
             Logger.log(text: "Cache cleared")

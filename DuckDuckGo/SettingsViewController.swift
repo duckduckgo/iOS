@@ -31,6 +31,10 @@ class SettingsViewController: UITableViewController {
         static let onboardingFlow = IndexPath(item: 0, section: 4)
     }
     
+    static func loadFromStoryboard() -> UIViewController {
+        return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSafeSearchToggle()

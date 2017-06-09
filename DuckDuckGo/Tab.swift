@@ -17,17 +17,13 @@ protocol Tab: class {
     
     var favicon: URL? { get }
     
-    var omniBarStyle: OmniBar.Style { get }
-    
-    var showsUrlInOmniBar: Bool { get }
-    
     var canGoBack: Bool { get }
     
     var canGoForward: Bool { get }
     
-    var canShare: Bool { get }
-    
     func omniBarWasDismissed()
+    
+    func launchBrowsingMenu()
     
     func load(url: URL)
     

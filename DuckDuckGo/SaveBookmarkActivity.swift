@@ -23,7 +23,7 @@ class SaveBookmarkActivity: UIActivity {
     }
     
     override var activityImage: UIImage {
-        return #imageLiteral(resourceName: "Bookmarks")
+        return #imageLiteral(resourceName: "LogoShare")
     }
     
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {

@@ -150,7 +150,7 @@
                                 <inset key="contentEdgeInsets" minX="0.0" minY="11" maxX="0.0" maxY="10"/>
                                 <state key="normal" image="Fire" backgroundImage="Circle"/>
                                 <connections>
-                                    <action selector="onCloseAllPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="JPE-WF-llv"/>
+                                    <action selector="onClearAllPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="Kuy-Os-AYu"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-Lb-veV">

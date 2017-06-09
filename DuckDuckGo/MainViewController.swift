@@ -99,6 +99,7 @@ class MainViewController: UIViewController {
     
     private func attachTab(forUrl url: URL) {
         let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
+        tab.attachNewWebView(persistsData: true)
         tabManager.add(tab: tab)
         tab.tabDelegate = self
         tab.load(url: url)

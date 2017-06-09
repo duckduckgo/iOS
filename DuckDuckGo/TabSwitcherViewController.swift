@@ -8,6 +8,7 @@
 
 import UIKit
 import Core
+import WebKit
 
 class TabSwitcherViewController: UIViewController {
 
@@ -63,7 +64,10 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
     
-    @IBAction func onCloseAllPressed(_ sender: UIButton) {
+    @IBAction func onClearAllPressed(_ sender: UIButton) {
+        WKWebView.clearCache {
+            Logger.log(text: "Cache cleared")
+        }
         delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         collectionView.reloadData()
         refreshTitle()

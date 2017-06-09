@@ -178,8 +178,8 @@ class MainViewController: UIViewController {
     }
     
     private func refreshMenuButton() {
-        let show = currentTab != nil
-        omniBar.showMenuButton(show)
+        let supportsMenu = currentTab != nil
+        omniBar.supportMenuButton = supportsMenu
     }
     
     fileprivate func updateOmniBar(withQuery updatedQuery: String) {

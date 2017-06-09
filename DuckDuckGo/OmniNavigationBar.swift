@@ -1,5 +1,5 @@
 //
-//  OmniNavigationController.swift
+//  OmniNavigationBar.swift
 //  DuckDuckGo
 //
 //  Created by Mia Alexiou on 05/06/2017.

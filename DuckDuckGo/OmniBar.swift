@@ -25,12 +25,13 @@ class OmniBar: UIView {
     }
     
     public static let menuButtonTag = 100
-    
+
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var menuButton: UIButton!
-    
+
     weak var omniDelegate: OmniBarDelegate?
+    var supportMenuButton = false
     
     static func loadFromXib() -> OmniBar {
         let omnibar = OmniBar.load(nibName: "OmniBar")
@@ -84,14 +85,6 @@ class OmniBar: UIView {
         textField.text = url.absoluteString
     }
     
-    func showDismissButton(_ show: Bool) {
-        dismissButton.isHidden = !show
-    }
-    
-    func showMenuButton(_ show: Bool) {
-        menuButton.isHidden = !show
-    }
-    
     @IBAction func onDismissButtonPressed() {
         resignFirstResponder()
         omniDelegate?.onDismissButtonPressed()
@@ -119,7 +112,8 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        showDismissButton(true)
+        dismissButton.isHidden = false
+        menuButton.isHidden = true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -133,7 +127,8 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        showDismissButton(false)
+        dismissButton.isHidden = true
+        menuButton.isHidden = !supportMenuButton
     }
 }
 

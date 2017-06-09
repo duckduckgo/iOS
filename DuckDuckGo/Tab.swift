@@ -23,6 +23,8 @@ protocol Tab: class {
     
     func omniBarWasDismissed()
     
+    func launchBrowsingMenu()
+    
     func load(url: URL)
     
     func goBack()

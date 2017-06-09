@@ -50,9 +50,8 @@ class SaveBookmarkActivity: UIActivity {
             return nil
         }
         
-        let title = UserText.alertSaveBookmark
         let alert = EditBookmarkAlert.buildAlert (
-            title: title,
+            title: UserText.alertSaveBookmark,
             bookmark: bookmark,
             saveCompletion: { [weak self] (updatedBookmark) in self?.onDone(updatedBookmark: updatedBookmark) },
             cancelCompletion: { [weak self] in self?.onCancel() }

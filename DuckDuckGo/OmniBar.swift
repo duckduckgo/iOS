@@ -24,6 +24,8 @@ class OmniBar: UIView {
         }
     }
     
+    public static let menuButtonTag = 100
+    
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var menuButton: UIButton!
@@ -42,6 +44,7 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        menuButton.tag = OmniBar.menuButtonTag
         configureTextField()
     }
     
@@ -106,6 +109,10 @@ class OmniBar: UIView {
         if let omniDelegate = omniDelegate {
             omniDelegate.onOmniQuerySubmitted(query)
         }
+    }
+    
+    @IBAction func onMenuButtonPressed(_ sender: UIButton) {
+        omniDelegate?.onMenuPressed()
     }
 }
 

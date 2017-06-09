@@ -218,6 +218,10 @@ class MainViewController: UIViewController {
         controller.removeFromParentViewController()
     }
     
+    fileprivate func launchMenu() {
+        currentTab?.launchBrowsingMenu()
+    }
+    
     @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
         currentTab?.goBack()
     }
@@ -283,6 +287,10 @@ extension MainViewController: OmniBarDelegate {
     func onOmniQuerySubmitted(_ query: String) {
         dismissOmniBar()
         loadQuery(query)
+    }
+    
+    func onMenuPressed() {
+        launchMenu()
     }
     
     func onDismissButtonPressed() {

@@ -24,6 +24,7 @@ class ShareViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        webController?.attachNewWebView(persistsData: false)
         refreshNavigationButtons()
     }
     

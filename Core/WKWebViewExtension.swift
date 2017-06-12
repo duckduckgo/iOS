@@ -10,9 +10,11 @@ import WebKit
 
 extension WKWebView {
     
-    public static func createPrivateWebView(frame: CGRect) -> WKWebView {
+    public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
         let configuration = WKWebViewConfiguration()
-        configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        if !persistsData {
+            configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
+        }
         if #available(iOSApplicationExtension 10.0, *) {
             configuration.dataDetectorTypes = [.link,  .address, .phoneNumber]
         }
@@ -27,10 +29,10 @@ extension WKWebView {
         return webView
     }
     
-    public func clearCache(completionHandler: @escaping () -> Swift.Void) {
+    public static func clearCache(completionHandler: @escaping () -> Swift.Void) {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
         let distantPast = Date.distantPast
-        let dataStore = configuration.websiteDataStore
+        let dataStore = WKWebsiteDataStore.default()
         dataStore.removeData(ofTypes: allData, modifiedSince: distantPast, completionHandler: completionHandler)
     }
     

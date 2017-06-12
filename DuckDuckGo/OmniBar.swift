@@ -13,26 +13,29 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
     
-    public static let actionButtonTag = 100
-    
-    public enum Style: String {
-        case home = "OmniBarHome"
-        case web = "OmniBarWeb"
+    struct Measurement {
+        static let barHeight: CGFloat = 52
+        static let leftMargin: CGFloat = 8
+        static let rightMargin: CGFloat = 8
+        static let topMargin: CGFloat = 4
+        static let height: CGFloat = 40
+        static var width: CGFloat {
+            return InterfaceMeasurement.screenWidth - leftMargin - rightMargin
+        }
     }
     
-    var style: Style!
-    
-    @IBOutlet weak var actionButton: UIButton!
-    @IBOutlet weak var refreshButton: UIButton?
+    public static let menuButtonTag = 100
+
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var textField: UITextField!
-    
+    @IBOutlet weak var menuButton: UIButton!
+
     weak var omniDelegate: OmniBarDelegate?
     
-    static func loadFromXib(withStyle style: Style) -> OmniBar {
-        let omniBar = OmniBar.load(nibName: style.rawValue)
-        omniBar.style = style
-        return omniBar
+    static func loadFromXib() -> OmniBar {
+        let omnibar = OmniBar.load(nibName: "OmniBar")
+        omnibar.frame = CGRect(x: Measurement.leftMargin, y: Measurement.topMargin, width: Measurement.width, height: Measurement.height)
+        return omnibar
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,10 +44,18 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        actionButton.tag = OmniBar.actionButtonTag
+        menuButton.tag = OmniBar.menuButtonTag
         configureTextField()
     }
     
+    var supportMenuButton = false {
+        didSet {
+            if !textField.isFirstResponder {
+                menuButton.isHidden = !supportMenuButton
+            }
+        }
+    }
+
     private func configureTextField() {
         textField.placeholder = UserText.searchDuckDuckGo
         textField.delegate = self
@@ -81,34 +92,6 @@ class OmniBar: UIView {
         textField.text = url.absoluteString
     }
     
-    fileprivate func showDismissButton() {
-        dismissButton.isHidden = false
-    }
-    
-    fileprivate func hideDismissButton() {
-        dismissButton.isHidden = true
-    }
-    
-    fileprivate func showRefreshButton() {
-        refreshButton?.isHidden = false
-    }
-    
-    fileprivate func hideRefreshButton() {
-         refreshButton?.isHidden = true
-    }
-    
-    @IBAction func onFireButtonPressed() {
-        omniDelegate?.onFireButtonPressed()
-    }
-    
-    @IBAction func onRefreshButtonPressed() {
-        omniDelegate?.onRefreshButtonPressed()
-    }
-    
-    @IBAction func onBookmarksButtonPressed() {
-        omniDelegate?.onBookmarksButtonPressed()
-    }
-    
     @IBAction func onDismissButtonPressed() {
         resignFirstResponder()
         omniDelegate?.onDismissButtonPressed()
@@ -127,13 +110,17 @@ class OmniBar: UIView {
             omniDelegate.onOmniQuerySubmitted(query)
         }
     }
+    
+    @IBAction func onMenuButtonPressed(_ sender: UIButton) {
+        omniDelegate?.onMenuPressed()
+    }
 }
 
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        hideRefreshButton()
-        showDismissButton()
+        dismissButton.isHidden = false
+        menuButton.isHidden = true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -147,8 +134,8 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        showRefreshButton()
-        hideDismissButton()
+        dismissButton.isHidden = true
+        menuButton.isHidden = !supportMenuButton
     }
 }
 
@@ -163,3 +150,4 @@ extension String {
         return from ..< to
     }
 }
+

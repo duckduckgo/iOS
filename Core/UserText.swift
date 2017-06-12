@@ -19,6 +19,9 @@ public struct UserText {
     
     public static let webSessionCleared = forKey("web.session.clear")
     public static let webSaveLinkDone = forKey("web.url.save.done")
+
+    public static let tabSwitcherTitleHasTabs = forKey("tabswitcher.title.tabs")
+    public static let tabSwitcherTitleNoTabs = forKey("tabswitcher.title.notabs")
     
     public static let onboardingRealPrivacyTitle = forKey("onboarding.realprivacy.title")
     public static let onboardingRealPrivacyDescription = forKey( "onboarding.realprivacy.description")
@@ -32,6 +35,7 @@ public struct UserText {
     public static let feedbackEmailSubject = forKey("feedbackemail.subject")
     public static let feedbackEmailBody = forKey("feedbackemail.body")
 
+    public static let actionRefresh = forKey("action.title.refresh")
     public static let actionSave = forKey("action.title.save")
     public static let actionCancel = forKey("action.title.cancel")
     public static let actionNewTab = forKey("action.title.newTab")
@@ -40,6 +44,7 @@ public struct UserText {
     public static let actionCopy = forKey("action.title.copy")
     public static let actionShare = forKey("action.title.share")
     public static let actionSaveBookmark = forKey("action.title.save.bookmark")
+    public static let actionSettings = forKey("action.title.settings")
     
     public static let alertSaveBookmark = forKey("alert.title.save.bookmark")
     public static let alertEditBookmark = forKey("alert.title.edit.bookmark")

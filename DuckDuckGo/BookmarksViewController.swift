@@ -19,7 +19,7 @@ class BookmarksViewController: UIViewController {
     fileprivate lazy var dataSource = BookmarksDataSource()
     
     static func loadFromStoryboard(delegate: BookmarksDelegate) -> BookmarksViewController {
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BookmarksViewController") as! BookmarksViewController
+        let controller = UIStoryboard(name: "Bookmarks", bundle: nil).instantiateInitialViewController() as! BookmarksViewController
         controller.delegate = delegate
         return controller
     }

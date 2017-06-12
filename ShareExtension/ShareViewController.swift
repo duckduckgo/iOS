@@ -24,6 +24,7 @@ class ShareViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        webController?.attachNewWebView(persistsData: false)
         refreshNavigationButtons()
     }
     
@@ -96,10 +97,6 @@ class ShareViewController: UIViewController {
     @IBAction func onClose(_ sender: UIButton) {
         webController?.tearDown()
         extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-    }
-    
-    @IBAction func onDeleteEverything(_ sender: UIButton) {
-        webController?.reset()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

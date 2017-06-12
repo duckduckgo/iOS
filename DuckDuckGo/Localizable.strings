@@ -15,14 +15,19 @@
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
 
+"tabswitcher.title.tabs" = "Tabs";
+"tabswitcher.title.notabs" = "No Tabs";
+
 "action.title.save" = "Save";
 "action.title.cancel" = "Cancel";
 "action.title.newTab" = "Open in New Tab";
 "action.title.open" = "Open";
+"action.title.refresh" = "Refresh";
 "action.title.readingList" = "Add to Reading List";
 "action.title.copy" = "Copy";
 "action.title.share"= "Share...";
-"action.title.save.bookmark" = "Add to Bookmarks";
+"action.title.save.bookmark" = "Bookmark";
+"action.title.settings" = "Settings";
 
 "alert.title.save.bookmark" = "Save Bookmark";
 "alert.title.edit.bookmark" = "Edit Bookmark";

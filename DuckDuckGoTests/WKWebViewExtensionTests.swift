@@ -11,9 +11,14 @@ import WebKit
 
 class WKWebViewExtensionTests: XCTestCase {
     
-    func testCreatePrivateBrowserUsesNonPersistentDataStore() {
-        let webView = WKWebView.createPrivateWebView(frame: CGRect())
+    func testWhenWebViewCreatedWithNonPersistenceThenDataStoreIsNonPersistent() {
+        let webView = WKWebView.createWebView(frame: CGRect(), persistsData: false)
         XCTAssertFalse(webView.configuration.websiteDataStore.isPersistent)
+    }
+
+    func testWhenWebViewCreatedWithPersistenceThenDataStoreIsPersistent() {
+        let webView = WKWebView.createWebView(frame: CGRect(), persistsData: true)
+        XCTAssertTrue(webView.configuration.websiteDataStore.isPersistent)
     }
     
 }

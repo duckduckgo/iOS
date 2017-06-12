@@ -44,31 +44,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return webView.canGoForward
     }
     
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        if webView == nil {
-            attachNewWebView()
-        }
-    }
-    
-    private func loadStartPage(url: URL? = nil) {
+    public func attachNewWebView(persistsData: Bool) {
+        let newWebView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData)
+        attachWebView(newWebView: newWebView)
         if let url = url {
             load(url: url)
-        } else {
-            loadHomepage()
         }
     }
-    
-    public func attachNewWebView() {
-        let newWebView = WKWebView.createPrivateWebView(frame: view.bounds)
-        attachWebView(newWebView: newWebView)
-        loadStartPage(url: url)
-    }
-    
+
     public func attachWebView(newWebView: WKWebView) {
-        if let oldWebView = webView {
-            detachWebView(webView: oldWebView)
-        }
         webView = newWebView
         attachLongPressHandler(webView: newWebView)
         newWebView.allowsBackForwardNavigationGestures = true
@@ -104,10 +88,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     private func detachWebView(webView: WKWebView) {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeFromSuperview()
-    }
-    
-    public func loadHomepage() {
-        load(url: AppUrls.home)
     }
     
     public func load(url: URL) {
@@ -189,22 +169,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func tearDown() {
-        clearCache()
-        if let webView = webView {
-            detachWebView(webView: webView)
-        }
-    }
-    
-    public func reset() {
-        clearCache()
-        attachNewWebView()
-    }
-    
-    public func clearCache() {
-        webView.clearCache {
-            Logger.log(text: "Cache cleared")
-        }
-        view.makeToast(UserText.webSessionCleared)
+        guard let webView = webView else { return }
+        detachWebView(webView: webView)
     }
     
     fileprivate func touchesYOffset() -> CGFloat {

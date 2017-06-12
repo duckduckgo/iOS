@@ -41,6 +41,14 @@ public struct InterfaceMeasurement {
         let scaledSize = CGSize(width: scaledWidth, height: scaledHeight)
         return scaledSize == size
     }
+    
+    public static var screenWidth: CGFloat {
+        return UIScreen.main.bounds.size.width
+    }
+
+    public static var screenHeight: CGFloat {
+        return UIScreen.main.bounds.size.height
+    }
 }
 
 public extension UIViewController {

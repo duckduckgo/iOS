@@ -1,0 +1,32 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "resizing" : {
+        "mode" : "3-part-vertical",
+        "center" : {
+          "mode" : "stretch",
+          "height" : 9
+        },
+        "cap-insets" : {
+          "top" : 825,
+          "bottom" : 0
+        }
+      },
+      "idiom" : "universal",
+      "filename" : "FireLarge.png",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

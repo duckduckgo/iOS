@@ -14,6 +14,7 @@ class TabSwitcherViewController: UIViewController {
 
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var animationContainer: UIView!
     
     weak var delegate: TabSwitcherDelegate!
     private var initialIndex: Int?
@@ -68,9 +69,27 @@ class TabSwitcherViewController: UIViewController {
         WKWebView.clearCache {
             Logger.log(text: "Cache cleared")
         }
-        delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
-        collectionView.reloadData()
-        refreshTitle()
+        animateFire {
+            self.delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
+            self.collectionView.reloadData()
+            self.refreshTitle()
+        }
+    }
+    
+    private func animateFire(withCompletion completion: @escaping () -> Swift.Void) {
+        let nativeSize = #imageLiteral(resourceName: "FireLarge").size
+        let fireView = UIImageView(image: #imageLiteral(resourceName: "FireLargeStretchable"))
+        animationContainer.isHidden = false
+        animationContainer.addSubview(fireView)
+        fireView.frame.size = CGSize(width: nativeSize.width, height: nativeSize.height+animationContainer.frame.size.height)
+        fireView.transform.ty = animationContainer.frame.size.height
+        UIView.animate(withDuration: 2, animations: {
+            fireView.transform.ty = -nativeSize.height
+        }) { _ in
+            completion()
+            fireView.removeFromSuperview()
+            self.animationContainer.isHidden = true
+        }
     }
     
     func onSelected(tabAt index: Int) {

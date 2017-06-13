@@ -41,7 +41,7 @@
                                     <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="webSearch"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
                                             <real key="value" value="22"/>

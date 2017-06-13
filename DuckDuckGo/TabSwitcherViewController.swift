@@ -77,14 +77,18 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func animateFire(withCompletion completion: @escaping () -> Swift.Void) {
-        let nativeSize = #imageLiteral(resourceName: "FireLarge").size
         let fireView = UIImageView(image: #imageLiteral(resourceName: "FireLargeStretchable"))
+        let nativeWidth = fireView.frame.size.width
+        let nativeHeight = fireView.frame.size.height
+        let stretchedHeight = nativeHeight + animationContainer.frame.size.height
+        fireView.frame.size = CGSize(width: nativeWidth, height: stretchedHeight)
+        fireView.transform.ty = animationContainer.frame.size.height
+        
         animationContainer.isHidden = false
         animationContainer.addSubview(fireView)
-        fireView.frame.size = CGSize(width: nativeSize.width, height: nativeSize.height+animationContainer.frame.size.height)
-        fireView.transform.ty = animationContainer.frame.size.height
+
         UIView.animate(withDuration: 2, animations: {
-            fireView.transform.ty = -nativeSize.height
+            fireView.transform.ty = -nativeHeight
         }) { _ in
             completion()
             fireView.removeFromSuperview()

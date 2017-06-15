@@ -45,8 +45,24 @@ extension UIColor {
         return softBlue
     }
     
+    public static var contentBlockerActiveTint: UIColor {
+        return lightOrange
+    }
+    
+    public static var contentBlockerInactiveTint: UIColor {
+        return midGray
+    }
+
+    private static var midGray: UIColor {
+        return UIColor(red: 190.0 / 255.0, green: 190.0 / 255.0, blue: 190.0 / 255.0, alpha: 1.0)
+    }
+    
     private static var orange: UIColor {
         return UIColor(red:0.85, green:0.36, blue:0.25, alpha:1.0)
+    }
+
+    private static var lightOrange: UIColor {
+        return UIColor(red: 241.0 / 255.0, green: 160.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
     }
     
     private static var fadedOrange: UIColor {

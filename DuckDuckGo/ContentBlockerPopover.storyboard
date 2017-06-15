@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5PJ-z2-49t">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Content Blocker Popover-->
+        <scene sceneID="JhU-MC-oEA">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5PJ-z2-49t" customClass="ContentBlockerPopover" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="w9b-6R-t4h"/>
+                        <viewControllerLayoutGuide type="bottom" id="pze-RB-cjZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oCN-MR-Ac7">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FKI-OA-NmF">
+                                <rect key="frame" x="24" y="18" width="252" height="16"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Content Blocker">
+                                        <attributes>
+                                            <color key="NSColor" red="0.51967005076142136" green="0.51967005076142136" blue="0.51967005076142136" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name="ProximaNova-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHQ-EL-PV2">
+                                <rect key="frame" x="24" y="46" width="252" height="16"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="No trackers">
+                                        <attributes>
+                                            <color key="NSColor" red="0.24573683375634514" green="0.24573683375634514" blue="0.24573683375634514" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="RHQ-EL-PV2" secondAttribute="trailing" constant="8" id="3c7-M3-MHd"/>
+                            <constraint firstItem="FKI-OA-NmF" firstAttribute="top" secondItem="oCN-MR-Ac7" secondAttribute="top" constant="18" id="3lH-G7-43B"/>
+                            <constraint firstItem="FKI-OA-NmF" firstAttribute="leading" secondItem="oCN-MR-Ac7" secondAttribute="leadingMargin" constant="8" id="D3Q-jh-G8O"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FKI-OA-NmF" secondAttribute="trailing" constant="8" id="ODD-oX-3zC"/>
+                            <constraint firstItem="RHQ-EL-PV2" firstAttribute="top" secondItem="FKI-OA-NmF" secondAttribute="bottom" constant="12" id="oVr-6h-GzC"/>
+                            <constraint firstItem="RHQ-EL-PV2" firstAttribute="leading" secondItem="oCN-MR-Ac7" secondAttribute="leadingMargin" constant="8" id="sjF-7r-7FJ"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="3fM-cs-UvJ" appends="YES" id="eDy-ua-InI"/>
+                        </connections>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="80"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="80"/>
+                    <connections>
+                        <outlet property="trackerCountLabel" destination="RHQ-EL-PV2" id="uv5-dq-TLw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mcq-wA-66T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="3fM-cs-UvJ">
+                    <connections>
+                        <action selector="onUserTap:" destination="5PJ-z2-49t" id="Ues-ak-859"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-2371" y="-797"/>
+        </scene>
+    </scenes>
+</document>

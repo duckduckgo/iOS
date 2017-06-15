@@ -21,9 +21,13 @@ protocol Tab: class {
     
     var canGoForward: Bool { get }
     
+    var contentBlockerCount: Int { get }
+    
     func omniBarWasDismissed()
     
     func launchBrowsingMenu()
+    
+    func launchContentBlockerPopover()
     
     func load(url: URL)
     

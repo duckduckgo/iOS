@@ -13,6 +13,8 @@ protocol WebTabDelegate: class {
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL)
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
+
+    func webTab(_ webTab: WebTabViewController, hasBlocked blockCount: Int)
     
     func webTabLoadingStateDidChange(webTab: WebTabViewController)
 }

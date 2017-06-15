@@ -50,16 +50,16 @@ class WebTabViewController: WebViewController, Tab {
         contentBlockerPopover = controller
     }
     
-    func resetContentBlockerCount() {
+    fileprivate func resetContentBlockerCount() {
         contentBlockerCount = 0
         contentBlockerPopover?.trackerCountLabel.text = trackerCoundLabel()
-        tabDelegate?.webTab(self, hasBlocked: contentBlockerCount)
+        tabDelegate?.webTab(self, contentBlockingCountForCurrentPageDidChange: contentBlockerCount)
     }
     
-    func incrementContentBlockerCount() {
+    fileprivate func incrementContentBlockerCount() {
         contentBlockerCount += 1
         contentBlockerPopover?.trackerCountLabel.text = trackerCoundLabel()
-        tabDelegate?.webTab(self, hasBlocked: contentBlockerCount)
+        tabDelegate?.webTab(self, contentBlockingCountForCurrentPageDidChange: contentBlockerCount)
     }
     
     private func trackerCoundLabel() -> String {

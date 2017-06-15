@@ -346,8 +346,8 @@ extension MainViewController: WebTabDelegate {
         refreshControls()
     }
     
-    func webTab(_ webTab: WebTabViewController, hasBlocked trackerBlockCount: Int) {
-        omniBar.updateContentBlockerCount(count: trackerBlockCount)
+    func webTab(_ webTab: WebTabViewController, contentBlockingCountForCurrentPageDidChange count: Int) {
+        omniBar.updateContentBlockerCount(count: count)
     }
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {

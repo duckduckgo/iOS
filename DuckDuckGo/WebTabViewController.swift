@@ -85,9 +85,11 @@ class WebTabViewController: WebViewController, Tab {
             alert.addAction(saveBookmarkAction(forLink: link))
         }
         
-        alert.addAction(settingsAction())
+        if let url = url {
+            alert.addAction(shareAction(forURL: url))
+        }
+        
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-
         present(controller: alert, fromView: button)
     }
     
@@ -121,12 +123,6 @@ class WebTabViewController: WebViewController, Tab {
             saveCompletion: { updatedBookmark in BookmarksManager().save(bookmark: updatedBookmark) },
             cancelCompletion: {})
         present(alert, animated: true, completion: nil)
-    }
-    
-    private func settingsAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionSettings, style: .default) { [weak self] action in
-            self?.launchSettings()
-        }
     }
     
     private func newTabAction(forUrl url: URL) -> UIAlertAction {
@@ -179,11 +175,6 @@ class WebTabViewController: WebViewController, Tab {
     
     private func shouldOpenExternally(url: URL) -> Bool {
         return SupportedExternalURLScheme.isSupported(url: url)
-    }
-
-    private func launchSettings() {
-        let controller = SettingsViewController.loadFromStoryboard()
-        present(controller, animated: true, completion: nil)
     }
     
     func dismiss() {

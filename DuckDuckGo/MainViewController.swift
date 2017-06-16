@@ -14,7 +14,6 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
-    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     weak var omniBar: OmniBar!
@@ -157,16 +156,11 @@ class MainViewController: UIViewController {
     fileprivate func refreshControls() {
         refreshOmniBar()
         refreshNavigationButtons()
-        refreshShareButton()
     }
     
     private func refreshNavigationButtons() {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
-    }
-    
-    private func refreshShareButton() {
-        shareButton.isEnabled = (currentTab != nil) ? true : false
     }
     
     private func refreshOmniBar() {

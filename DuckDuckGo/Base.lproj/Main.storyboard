@@ -19,7 +19,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -217,12 +217,6 @@
                                 <action selector="onForwardPressed:" destination="C1X-Zd-UbA" id="snl-Dk-fe2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="RpQ-Qh-RkL"/>
-                        <barButtonItem image="Share" id="cUp-YP-aMf">
-                            <connections>
-                                <action selector="onSharePressed:" destination="C1X-Zd-UbA" id="LJa-gx-thB"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="vG3-iz-6ex"/>
                         <barButtonItem image="Bookmarks" id="M7u-mw-fly">
                             <connections>
@@ -235,6 +229,12 @@
                                 <action selector="onTabButtonPressed:" destination="C1X-Zd-UbA" id="Pnz-c0-Sn6"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="RpQ-Qh-RkL"/>
+                        <barButtonItem image="Settings" id="cUp-YP-aMf">
+                            <connections>
+                                <segue destination="VKX-Zt-u98" kind="presentation" modalPresentationStyle="currentContext" id="U0y-bd-wwb"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="4Us-57-SWd"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -243,13 +243,20 @@
                         <outlet property="backButton" destination="5JU-XX-Abv" id="9Fz-6w-HKY"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
                         <outlet property="forwardButton" destination="6rN-GX-Jcx" id="OZ0-Fq-Nhf"/>
-                        <outlet property="shareButton" destination="cUp-YP-aMf" id="age-Yj-tOW"/>
                         <outlet property="tabsButton" destination="K7o-WL-SC5" id="6nF-LY-Gri"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="249" y="-5"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="put-MB-t6U">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Settings" id="VKX-Zt-u98" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0p2-cY-e6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="249" y="457"/>
         </scene>
         <!--Web Tab View Controller-->
         <scene sceneID="PLi-M5-qzj">
@@ -295,7 +302,7 @@
         <image name="BrowsePrevious" width="22" height="22"/>
         <image name="LogoWithText" width="201" height="159"/>
         <image name="SearchLoupe" width="22" height="22"/>
-        <image name="Share" width="22" height="22"/>
+        <image name="Settings" width="22" height="22"/>
         <image name="Tabs" width="22" height="22"/>
     </resources>
 </document>

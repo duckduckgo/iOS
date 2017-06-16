@@ -23,6 +23,10 @@ public struct UserText {
     public static let tabSwitcherTitleHasTabs = forKey("tabswitcher.title.tabs")
     public static let tabSwitcherTitleNoTabs = forKey("tabswitcher.title.notabs")
     
+    public static let contentBlockerNoTrackers = forKey("contentblocker.notrackersblocked")
+    public static let contentBlockerATracker = forKey("contentblocker.atrackerblocked")
+    public static let contentBlockerTrackers = forKey("contentblocker.trackersblocked")
+    
     public static let onboardingRealPrivacyTitle = forKey("onboarding.realprivacy.title")
     public static let onboardingRealPrivacyDescription = forKey( "onboarding.realprivacy.description")
     public static let onboardingContentBlockingTitle = forKey("onboarding.contentblocking.title")
@@ -50,7 +54,7 @@ public struct UserText {
     public static let alertEditBookmark = forKey("alert.title.edit.bookmark")
 
     public static let navigationTitleEdit = forKey("navigation.title.edit")
-  
+    
     public static func forDateFilter(_ dateFilter: DateFilter) -> String {
         if dateFilter == .any {
             return forKey("datefilter.code.any")

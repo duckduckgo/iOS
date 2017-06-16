@@ -23,10 +23,12 @@ class OmniBar: UIView {
             return InterfaceMeasurement.screenWidth - leftMargin - rightMargin
         }
     }
-    
-    public static let menuButtonTag = 100
 
+    public static let contentBlockerTag = 100
+    public static let menuButtonTag = 200
+    
     @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var contentBlockerButton: UIButton!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var menuButton: UIButton!
 
@@ -45,13 +47,15 @@ class OmniBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         menuButton.tag = OmniBar.menuButtonTag
+        contentBlockerButton.tag = OmniBar.contentBlockerTag
         configureTextField()
     }
     
-    var supportMenuButton = false {
+    var isBrowsing = false {
         didSet {
             if !textField.isFirstResponder {
-                menuButton.isHidden = !supportMenuButton
+                menuButton.isHidden = !isBrowsing
+                contentBlockerButton.isHidden = !isBrowsing
             }
         }
     }
@@ -67,6 +71,16 @@ class OmniBar: UIView {
     
     @discardableResult override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
+    }
+
+    func updateContentBlockerCount(count: Int) {
+        if count == 0 {
+            contentBlockerButton.tintColor = UIColor.contentBlockerInactiveTint
+            contentBlockerButton.setTitle("B", for: .normal)
+        } else {
+            contentBlockerButton.tintColor = UIColor.contentBlockerActiveTint
+            contentBlockerButton.setTitle("\(count)", for: .normal)
+        }
     }
     
     func clear() {
@@ -114,6 +128,10 @@ class OmniBar: UIView {
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
         omniDelegate?.onMenuPressed()
     }
+    
+    @IBAction func onContentBlockerButtonPressed(_ sender: UIButton) {
+        omniDelegate?.onContenBlockerPressed()
+    }
 }
 
 extension OmniBar: UITextFieldDelegate {
@@ -121,6 +139,7 @@ extension OmniBar: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         dismissButton.isHidden = false
         menuButton.isHidden = true
+        contentBlockerButton.isHidden = true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -135,7 +154,8 @@ extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         dismissButton.isHidden = true
-        menuButton.isHidden = !supportMenuButton
+        menuButton.isHidden = !isBrowsing
+        contentBlockerButton.isHidden = !isBrowsing
     }
 }
 

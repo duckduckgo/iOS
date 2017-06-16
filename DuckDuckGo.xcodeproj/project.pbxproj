@@ -150,6 +150,8 @@
 		F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewCell.swift */; };
 		F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78591E5CD2A70058895A /* UIViewExtension.swift */; };
 		F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */; };
+		F1E2494E1EF2078D008C947A /* ContentBlockerPopover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E2494D1EF2078D008C947A /* ContentBlockerPopover.storyboard */; };
+		F1E249501EF207D4008C947A /* ContentBlockerPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */; };
 		F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */; };
 		F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */; };
 		F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1B1E67684B005E7E21 /* Tab.swift */; };
@@ -483,6 +485,8 @@
 		F1DE78571E5CAE350058895A /* TabViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
 		F1DE78591E5CD2A70058895A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
+		F1E2494D1EF2078D008C947A /* ContentBlockerPopover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentBlockerPopover.storyboard; sourceTree = "<group>"; };
+		F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerPopover.swift; sourceTree = "<group>"; };
 		F1E4A4441EE89460006F2EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bookmarks.storyboard; sourceTree = "<group>"; };
 		F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
 		F1E90C1B1E67684B005E7E21 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -590,6 +594,7 @@
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
+				F1E249411EF2075C008C947A /* ContentBlocker */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
@@ -1256,6 +1261,15 @@
 			name = UserInterface;
 			sourceTree = "<group>";
 		};
+		F1E249411EF2075C008C947A /* ContentBlocker */ = {
+			isa = PBXGroup;
+			children = (
+				F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */,
+				F1E2494D1EF2078D008C947A /* ContentBlockerPopover.storyboard */,
+			);
+			name = ContentBlocker;
+			sourceTree = "<group>";
+		};
 		F1EEAC461EAFC708006128D9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1606,6 +1620,7 @@
 				F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
+				F1E2494E1EF2078D008C947A /* ContentBlockerPopover.storyboard in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F11CEF661EBB66EF0088E4D7 /* FireTutorial.storyboard in Resources */,
 				F1CE42A01EC9EA910074A8DF /* SafariSearchInstructions.storyboard in Resources */,
@@ -1674,6 +1689,7 @@
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
 				F13508031E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift in Sources */,
+				F1E249501EF207D4008C947A /* ContentBlockerPopover.swift in Sources */,
 				F176699A1E3FA5EE003D3222 /* Version.swift in Sources */,
 				F1BE545C1E69F73300FCF649 /* PrivacyRightConfiguration.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,

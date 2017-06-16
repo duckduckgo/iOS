@@ -22,13 +22,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk" customClass="RoundedRectangleView" customModule="Core">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
                             <rect key="frame" x="8" y="0.0" width="359" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SiJ-OY-KKg">
-                                    <rect key="frame" x="0.0" y="0.0" width="34" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="26" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" priority="900" constant="34" id="7G8-bW-C2K"/>
+                                        <constraint firstAttribute="width" priority="900" constant="26" id="7G8-bW-C2K"/>
                                     </constraints>
                                     <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <state key="normal" image="BrowsePrevious"/>
@@ -36,34 +36,51 @@
                                         <action selector="onDismissButtonPressed" destination="ojX-nM-dyN" eventType="touchUpInside" id="Ztv-cu-4Ee"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yd7-Gn-oar">
+                                    <rect key="frame" x="34" y="9" width="22" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" priority="900" constant="22" id="23V-XR-nBx"/>
+                                        <constraint firstAttribute="height" priority="900" constant="22" id="Hq5-OB-zAV"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="8"/>
+                                    <color key="tintColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" title="B" backgroundImage="Circle">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onContentBlockerButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="1Sh-sQ-lXT"/>
+                                    </connections>
+                                </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="Core">
-                                    <rect key="frame" x="34" y="0.0" width="295" height="40"/>
+                                    <rect key="frame" x="64" y="0.0" width="263" height="40"/>
                                     <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
-                                            <real key="value" value="22"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
+                                    <textInputTraits key="textInputTraits" keyboardType="webSearch"/>
                                     <connections>
                                         <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
                                     </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
-                                    <rect key="frame" x="329" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="335" y="0.0" width="24" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" priority="900" constant="30" id="Ysb-N1-b8X"/>
+                                        <constraint firstAttribute="width" constant="24" id="JrJ-da-Qn3"/>
                                     </constraints>
                                     <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     <state key="normal" image="Menu"/>
                                     <connections>
                                         <action selector="onMenuButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="Ixc-Oz-zYw"/>
                                     </connections>
                                 </button>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="nJo-2d-gri" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="4cW-4Y-KFb"/>
+                                <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="50f-uc-k20"/>
+                                <constraint firstAttribute="bottom" secondItem="nJo-2d-gri" secondAttribute="bottom" id="5F4-NR-FD3"/>
+                                <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="LIn-wf-t1c"/>
+                                <constraint firstItem="SiJ-OY-KKg" firstAttribute="top" secondItem="N6K-Lj-Fn6" secondAttribute="top" id="XpO-Ag-aZp"/>
+                                <constraint firstAttribute="bottom" secondItem="SiJ-OY-KKg" secondAttribute="bottom" id="zsl-Fo-ZsW"/>
+                            </constraints>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -97,6 +114,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="contentBlockerButton" destination="Yd7-Gn-oar" id="9mJ-Ol-Pgd"/>
                 <outlet property="dismissButton" destination="SiJ-OY-KKg" id="07f-JA-Ria"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
@@ -106,6 +124,7 @@
     </objects>
     <resources>
         <image name="BrowsePrevious" width="22" height="22"/>
-        <image name="Menu" width="4" height="16"/>
+        <image name="Circle" width="24" height="24"/>
+        <image name="Menu" width="24" height="24"/>
     </resources>
 </document>

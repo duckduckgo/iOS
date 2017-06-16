@@ -17,4 +17,6 @@ protocol OmniBarDelegate: class {
     func onDismissButtonPressed()
     
     func onMenuPressed()
+    
+    func onContenBlockerPressed()
 }

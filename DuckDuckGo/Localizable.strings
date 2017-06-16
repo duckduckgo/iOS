@@ -32,6 +32,10 @@
 "alert.title.save.bookmark" = "Save Bookmark";
 "alert.title.edit.bookmark" = "Edit Bookmark";
 
+"contentblocker.notrackersblocked" = "No trackers";
+"contentblocker.atrackerblocked" = "1 tracker blocked";
+"contentblocker.trackersblocked" = "%i trackers blocked";
+
 "onboarding.realprivacy.title" = "Real Privacy";
 "onboarding.realprivacy.description" = "We never store or share your\npersonal information. Ever.";
 "onboarding.contentblocking.title" = "Content Blocking";

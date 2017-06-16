@@ -15,6 +15,8 @@ class WebTabViewController: WebViewController, Tab {
     weak var tabDelegate: WebTabDelegate?
         
     private var contentBlocker: ContentBlocker!
+    private weak var contentBlockerPopover: ContentBlockerPopover?
+    private(set) var contentBlockerCount = 0
     
     static func loadFromStoryboard(contentBlocker: ContentBlocker) -> WebTabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
@@ -37,7 +39,39 @@ class WebTabViewController: WebViewController, Tab {
         navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = true
     }
-
+    
+    func launchContentBlockerPopover() {
+        guard let button = navigationController?.view.viewWithTag(OmniBar.contentBlockerTag) else { return }
+        let controller = ContentBlockerPopover.loadFromStoryboard()
+        controller.modalPresentationStyle = .popover
+        controller.popoverPresentationController?.delegate = controller
+        present(controller: controller, fromView: button)
+        controller.trackerCountLabel.text = trackerCoundLabel()
+        contentBlockerPopover = controller
+    }
+    
+    fileprivate func resetContentBlockerCount() {
+        contentBlockerCount = 0
+        contentBlockerPopover?.trackerCountLabel.text = trackerCoundLabel()
+        tabDelegate?.webTab(self, contentBlockingCountForCurrentPageDidChange: contentBlockerCount)
+    }
+    
+    fileprivate func incrementContentBlockerCount() {
+        contentBlockerCount += 1
+        contentBlockerPopover?.trackerCountLabel.text = trackerCoundLabel()
+        tabDelegate?.webTab(self, contentBlockingCountForCurrentPageDidChange: contentBlockerCount)
+    }
+    
+    private func trackerCoundLabel() -> String {
+        if contentBlockerCount == 0 {
+            return UserText.contentBlockerNoTrackers
+        }
+        if contentBlockerCount == 1 {
+            return UserText.contentBlockerATracker
+        }
+        return String(format: UserText.contentBlockerTrackers, contentBlockerCount)
+    }
+    
     func launchBrowsingMenu() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.menuButtonTag) else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -51,9 +85,11 @@ class WebTabViewController: WebViewController, Tab {
             alert.addAction(saveBookmarkAction(forLink: link))
         }
         
-        alert.addAction(settingsAction())
+        if let url = url {
+            alert.addAction(shareAction(forURL: url))
+        }
+        
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-
         present(controller: alert, fromView: button)
     }
     
@@ -87,12 +123,6 @@ class WebTabViewController: WebViewController, Tab {
             saveCompletion: { updatedBookmark in BookmarksManager().save(bookmark: updatedBookmark) },
             cancelCompletion: {})
         present(alert, animated: true, completion: nil)
-    }
-    
-    private func settingsAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionSettings, style: .default) { [weak self] action in
-            self?.launchSettings()
-        }
     }
     
     private func newTabAction(forUrl url: URL) -> UIAlertAction {
@@ -133,6 +163,7 @@ class WebTabViewController: WebViewController, Tab {
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if contentBlocker.block(url: url, forDocument: documentUrl) {
+            incrementContentBlockerCount()
             return false
         }
         if shouldOpenExternally(url: url) {
@@ -144,11 +175,6 @@ class WebTabViewController: WebViewController, Tab {
     
     private func shouldOpenExternally(url: URL) -> Bool {
         return SupportedExternalURLScheme.isSupported(url: url)
-    }
-
-    private func launchSettings() {
-        let controller = SettingsViewController.loadFromStoryboard()
-        present(controller, animated: true, completion: nil)
     }
     
     func dismiss() {
@@ -171,6 +197,7 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
+        resetContentBlockerCount()
         tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }

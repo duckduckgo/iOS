@@ -14,7 +14,6 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
-    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     weak var omniBar: OmniBar!
@@ -155,10 +154,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func refreshControls() {
-        refreshOmniText()
-        refreshMenuButton()
+        refreshOmniBar()
         refreshNavigationButtons()
-        refreshShareButton()
     }
     
     private func refreshNavigationButtons() {
@@ -166,21 +163,14 @@ class MainViewController: UIViewController {
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
     }
     
-    private func refreshShareButton() {
-        shareButton.isEnabled = (currentTab != nil) ? true : false
-    }
-    
-    private func refreshOmniText() {
+    private func refreshOmniBar() {
         guard let tab = currentTab else {
             omniBar.clear()
             return
         }
         omniBar.refreshText(forUrl: tab.url)
-    }
-    
-    private func refreshMenuButton() {
-        let supportsMenu = currentTab != nil
-        omniBar.supportMenuButton = supportsMenu
+        omniBar.updateContentBlockerCount(count: tab.contentBlockerCount)
+        omniBar.isBrowsing = currentTab != nil
     }
     
     fileprivate func updateOmniBar(withQuery updatedQuery: String) {
@@ -207,7 +197,7 @@ class MainViewController: UIViewController {
     fileprivate func dismissOmniBar() {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
-        refreshOmniText()
+        refreshOmniBar()
         homeController?.omniBarWasDismissed()
         currentTab?.omniBarWasDismissed()
     }
@@ -221,6 +211,10 @@ class MainViewController: UIViewController {
     
     fileprivate func launchMenu() {
         currentTab?.launchBrowsingMenu()
+    }
+    
+    fileprivate func launchContentBlockerPopover() {
+        currentTab?.launchContentBlockerPopover()
     }
     
     @IBAction func onBackPressed(_ sender: UIBarButtonItem) {
@@ -294,6 +288,10 @@ extension MainViewController: OmniBarDelegate {
         launchMenu()
     }
     
+    func onContenBlockerPressed() {
+        launchContentBlockerPopover()
+    }
+    
     func onDismissButtonPressed() {
         dismissOmniBar()
     }
@@ -340,6 +338,10 @@ extension MainViewController: WebTabDelegate {
     
     func webTabLoadingStateDidChange(webTab: WebTabViewController) {
         refreshControls()
+    }
+    
+    func webTab(_ webTab: WebTabViewController, contentBlockingCountForCurrentPageDidChange count: Int) {
+        omniBar.updateContentBlockerCount(count: count)
     }
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {

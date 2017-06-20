@@ -168,7 +168,7 @@ class MainViewController: UIViewController {
             omniBar.clear()
             return
         }
-        omniBar.refreshText(forUrl: tab.url)
+        omniBar.refreshText(forUrl: tab.link?.url)
         omniBar.updateContentBlockerCount(count: tab.contentBlockerCount)
         omniBar.isBrowsing = currentTab != nil
     }
@@ -223,17 +223,6 @@ class MainViewController: UIViewController {
     
     @IBAction func onForwardPressed(_ sender: UIBarButtonItem) {
         currentTab?.goForward()
-    }
-    
-    @IBAction func onSharePressed(_ sender: UIBarButtonItem) {
-        if let url = currentTab?.url {
-            let title = currentTab?.name ?? ""
-            var items: [Any] = [url, title]
-            if let favicon = currentTab?.favicon {
-                items.append(favicon)
-            }
-            presentShareSheet(withItems: items, fromButtonItem: sender)
-        }
     }
     
     @IBAction func onSaveBookmark(_ sender: UIBarButtonItem) {

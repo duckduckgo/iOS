@@ -37,7 +37,7 @@ class SaveBookmarkActivity: UIActivity {
     
     override func prepare(withActivityItems items: [Any]) {
         var favicon: URL? = nil
-        guard items.count >= 2, let url = items[0] as? URL, let title = items[1] as? String else { return }
+        guard items.count >= 2, let title = items[0] as? String, let url = items[1] as? URL else { return }
         if items.count == 3, let icon = items[2] as? URL {
             favicon = icon
         }

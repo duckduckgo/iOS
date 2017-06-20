@@ -131,4 +131,7 @@ extension ShareViewController: WebEventsDelegate {
     func webpageDidFinishLoading() {
         refreshNavigationButtons()
     }
+    
+    func faviconWasUpdated(_ favicon: URL, forUrl: URL) {
+    }
 }

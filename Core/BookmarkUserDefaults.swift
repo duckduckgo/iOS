@@ -42,4 +42,20 @@ public class BookmarkUserDefaults: BookmarkStore {
         newBookmarks.append(bookmark)
         bookmarks = newBookmarks
     }
+
+    public func updateFavicon(_ favicon: URL, forBookmarksWithUrl url: URL) {
+        guard var newBookmarks = bookmarks else { return }
+        for (index, bookmark) in newBookmarks.enumerated() {
+            if  shouldUpdate(bookmark: bookmark, withFavicon: favicon, fromUrl: url) {
+                newBookmarks.remove(at: index)
+                newBookmarks.insert(Link(title: bookmark.title, url: bookmark.url, favicon: favicon), at: index)
+            }
+        }
+        bookmarks = newBookmarks
+    }
+    
+    private func shouldUpdate(bookmark: Link, withFavicon favicon: URL, fromUrl url: URL) -> Bool {
+        return (bookmark.url == url && bookmark.favicon != favicon) ||
+               (bookmark.url.host == url.host && !bookmark.hasFavicon)
+    }
 }

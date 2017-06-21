@@ -20,7 +20,7 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     
     func update(withLink tabLink: Link) {
-        title.text = tabLink.title
+        title.text = tabLink.title ?? ""
         link.text = tabLink.url.absoluteString
         configureFavicon(tabLink.favicon)
     }

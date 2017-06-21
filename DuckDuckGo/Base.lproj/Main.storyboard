@@ -19,7 +19,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

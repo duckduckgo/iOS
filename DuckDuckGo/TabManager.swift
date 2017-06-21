@@ -38,7 +38,9 @@ struct TabManager {
     private func buildTabDetails() -> [Link] {
         var links = [Link]()
         for tab in tabs {
-            links.append(tab.link)
+            if let link = tab.link {
+                links.append(link)
+            }
         }
         return links
     }

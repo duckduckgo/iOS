@@ -30,10 +30,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public var favicon: URL?
     
     public var link: Link? {
-        if let url = webView.url, let title = name {
-            return Link(title: title, url: url)
-        }
-        return nil
+        guard let url = url else { return nil }
+        return Link(title: name, url: url, favicon: favicon)
     }
     
     public var canGoBack: Bool {
@@ -105,6 +103,13 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
     }
     
+    private func onFaviconLoaded(_ favicon: URL) {
+        self.favicon = favicon
+        if let url = url {
+            webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
+        }
+    }
+    
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         favicon = nil
         showProgressIndicator()
@@ -114,7 +119,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
-            self?.favicon = favicon
+            if let favicon = favicon {
+                self?.onFaviconLoaded(favicon)
+            }
         })
         webEventsDelegate?.webpageDidFinishLoading()
     }

@@ -21,4 +21,6 @@ public protocol WebEventsDelegate: class {
     func webpageDidStartLoading()
     
     func webpageDidFinishLoading()
+    
+    func faviconWasUpdated(_ favicon: URL, forUrl: URL)
 }

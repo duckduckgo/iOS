@@ -11,11 +11,7 @@ import Core
 
 protocol Tab: class {
     
-    var name: String? { get }
-    
-    var url: URL? { get }
-    
-    var favicon: URL? { get }
+    var link: Link? { get }
     
     var canGoBack: Bool { get }
     
@@ -40,10 +36,4 @@ protocol Tab: class {
     func dismiss()
     
     func destroy()
-}
-
-extension Tab {
-    var link: Link {
-        return Link(title: name ?? "", url: url ?? URL(string: "-")!, favicon: favicon)
-    }
 }

@@ -106,7 +106,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     
     func linkCell(for indexPath: IndexPath, link: Link) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Link", for: indexPath)
-        cell.textLabel?.text = link.title.isEmpty ? link.url.absoluteString : link.title
+        cell.textLabel?.text = link.title ?? link.url.absoluteString
         cell.accessoryView = clearAccessory(for: indexPath.row)
         return cell
     }

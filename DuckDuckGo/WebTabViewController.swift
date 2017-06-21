@@ -77,16 +77,10 @@ class WebTabViewController: WebViewController, Tab {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         
-        if let url = url {
-            alert.addAction(copyAction(forURL: url))
-        }
-        
         if let link = link {
+            alert.addAction(copyAction(forUrl: link.url))
             alert.addAction(saveBookmarkAction(forLink: link))
-        }
-        
-        if let url = url {
-            alert.addAction(shareAction(forURL: url))
+            alert.addAction(shareAction(forLink: link))
         }
         
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
@@ -98,8 +92,8 @@ class WebTabViewController: WebViewController, Tab {
         alert.addAction(newTabAction(forUrl: url))
         alert.addAction(openAction(forUrl: url))
         alert.addAction(readingAction(forUrl: url))
-        alert.addAction(copyAction(forURL: url))
-        alert.addAction(shareAction(forURL: url))
+        alert.addAction(copyAction(forUrl: url))
+        alert.addAction(shareAction(forUrl: url))
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: webView, atPoint: point)
     }
@@ -147,17 +141,27 @@ class WebTabViewController: WebViewController, Tab {
         }
     }
     
-    private func copyAction(forURL url: URL) -> UIAlertAction {
+    private func copyAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionCopy, style: .default) { (action) in
             UIPasteboard.general.string = AppUrls.searchQuery(fromUrl: url) ?? url.absoluteString
         }
     }
     
-    private func shareAction(forURL url: URL) -> UIAlertAction {
+    private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
-            if let webView = self?.webView {
-                self?.presentShareSheet(withItems: [url], fromView: webView)
+            guard let webView = self?.webView else { return }
+            var items = [link.title ?? "", link.url] as [Any]
+            if let favicon = link.favicon {
+               items.append(favicon)
             }
+            self?.presentShareSheet(withItems: items, fromView: webView)
+        }
+    }
+    
+    private func shareAction(forUrl url: URL) -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
+            guard let webView = self?.webView else { return }
+            self?.presentShareSheet(withItems: [url], fromView: webView)
         }
     }
     
@@ -205,6 +209,11 @@ extension WebTabViewController: WebEventsDelegate {
     func webpageDidFinishLoading() {
         tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
+        let bookmarks = BookmarkUserDefaults()
+        bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {

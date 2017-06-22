@@ -169,7 +169,7 @@ class MainViewController: UIViewController {
             return
         }
         omniBar.refreshText(forUrl: tab.link?.url)
-        omniBar.updateContentBlockerCount(count: tab.contentBlockerCount)
+        omniBar.updateContentBlockerMonitor(monitor: tab.contentBlockerMonitor)
         omniBar.isBrowsing = currentTab != nil
     }
     
@@ -329,8 +329,8 @@ extension MainViewController: WebTabDelegate {
         refreshControls()
     }
     
-    func webTab(_ webTab: WebTabViewController, contentBlockingCountForCurrentPageDidChange count: Int) {
-        omniBar.updateContentBlockerCount(count: count)
+    func webTab(_ webTab: WebTabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
+         omniBar.updateContentBlockerMonitor(monitor: monitor)
     }
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {

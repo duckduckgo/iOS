@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -42,9 +45,9 @@
                                         <constraint firstAttribute="width" priority="900" constant="22" id="23V-XR-nBx"/>
                                         <constraint firstAttribute="height" priority="900" constant="22" id="Hq5-OB-zAV"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="8"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                     <color key="tintColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <state key="normal" title="B" backgroundImage="Circle">
+                                    <state key="normal" title="100" backgroundImage="Circle">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>

@@ -7,6 +7,7 @@
 //
 
 import WebKit
+import Core
 
 protocol WebTabDelegate: class {
     
@@ -14,7 +15,7 @@ protocol WebTabDelegate: class {
     
     func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
 
-    func webTab(_ webTab: WebTabViewController, contentBlockingCountForCurrentPageDidChange count: Int)
+    func webTab(_ webTab: WebTabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
     
     func webTabLoadingStateDidChange(webTab: WebTabViewController)
 }

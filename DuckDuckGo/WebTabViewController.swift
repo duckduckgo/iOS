@@ -16,7 +16,7 @@ class WebTabViewController: WebViewController, Tab {
         
     private var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
-    private(set) var contentBlockerCount = 0
+    private(set) var contentBlockerMonitor = ContentBlockerMonitor()
     
     static func loadFromStoryboard(contentBlocker: ContentBlocker) -> WebTabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
@@ -42,34 +42,21 @@ class WebTabViewController: WebViewController, Tab {
     
     func launchContentBlockerPopover() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.contentBlockerTag) else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard()
+        let controller = ContentBlockerPopover.loadFromStoryboard(withMonitor: contentBlockerMonitor)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = controller
+        controller.popoverPresentationController?.backgroundColor = UIColor.white
         present(controller: controller, fromView: button)
-        controller.trackerCountLabel.text = trackerCoundLabel()
         contentBlockerPopover = controller
     }
-    
-    fileprivate func resetContentBlockerCount() {
-        contentBlockerCount = 0
-        contentBlockerPopover?.trackerCountLabel.text = trackerCoundLabel()
-        tabDelegate?.webTab(self, contentBlockingCountForCurrentPageDidChange: contentBlockerCount)
+
+    fileprivate func resetContentBlockerMonitor() {
+        contentBlockerMonitor = ContentBlockerMonitor()
     }
-    
-    fileprivate func incrementContentBlockerCount() {
-        contentBlockerCount += 1
-        contentBlockerPopover?.trackerCountLabel.text = trackerCoundLabel()
-        tabDelegate?.webTab(self, contentBlockingCountForCurrentPageDidChange: contentBlockerCount)
-    }
-    
-    private func trackerCoundLabel() -> String {
-        if contentBlockerCount == 0 {
-            return UserText.contentBlockerNoTrackers
-        }
-        if contentBlockerCount == 1 {
-            return UserText.contentBlockerATracker
-        }
-        return String(format: UserText.contentBlockerTrackers, contentBlockerCount)
+
+    fileprivate func notifyContentBlockerMonitorChanged() {
+        contentBlockerPopover?.updateMonitor(monitor: contentBlockerMonitor)
+        tabDelegate?.webTab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
     }
     
     func launchBrowsingMenu() {
@@ -166,8 +153,9 @@ class WebTabViewController: WebViewController, Tab {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        if contentBlocker.block(url: url, forDocument: documentUrl) {
-            incrementContentBlockerCount()
+        if let entry = contentBlocker.block(url: url, forDocument: documentUrl) {
+            contentBlockerMonitor.blocked(entry: entry)
+            notifyContentBlockerMonitorChanged()
             return false
         }
         if shouldOpenExternally(url: url) {
@@ -201,7 +189,8 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        resetContentBlockerCount()
+        resetContentBlockerMonitor()
+        notifyContentBlockerMonitorChanged()
         tabDelegate?.webTabLoadingStateDidChange(webTab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }

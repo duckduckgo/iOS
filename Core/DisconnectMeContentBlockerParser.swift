@@ -18,18 +18,19 @@ public struct DisconnectMeContentBlockerParser {
         let jsonCategories = json["categories"]
         var categorizedEntries = CategorizedContentBlockerEntries()
         for (category, jsonEntries) in jsonCategories {
-            try categorizedEntries[category] = parseCategory(fromJson: jsonEntries)
+            try categorizedEntries[category] = parseCategory(category, fromJson: jsonEntries)
         }
         return categorizedEntries
     }
     
-    private func parseCategory(fromJson jsonEntries: JSON) throws -> [ContentBlockerEntry] {
+    private func parseCategory(_ category: String, fromJson jsonEntries: JSON) throws -> [ContentBlockerEntry] {
         var entries = [ContentBlockerEntry]()
+        let category = ContentBlockerCategory.forKey(category)
         for jsonEntry in jsonEntries.arrayValue {
             guard let baseUrl = jsonEntry.first?.1.first?.0 else { throw JsonError.typeMismatch }
             guard let jsonTrackers = jsonEntry.first?.1.first?.1.arrayObject else { throw JsonError.typeMismatch }
             let domain = parseDomain(fromUrl: baseUrl)
-            let newEntries = jsonTrackers.map({ ContentBlockerEntry(domain: domain, url: "\($0)") })
+            let newEntries = jsonTrackers.map({ ContentBlockerEntry(category: category, domain: domain, url: "\($0)") })
             entries.append(contentsOf: newEntries)
         }
         return entries

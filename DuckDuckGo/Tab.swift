@@ -17,7 +17,7 @@ protocol Tab: class {
     
     var canGoForward: Bool { get }
     
-    var contentBlockerCount: Int { get }
+    var contentBlockerMonitor: ContentBlockerMonitor { get }
     
     func omniBarWasDismissed()
     

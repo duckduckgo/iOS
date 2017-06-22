@@ -40,11 +40,11 @@ class DisconnectMeContentBlockerParserTests: XCTestCase {
         XCTAssertEqual(result.count, 2)
         XCTAssertEqual(result["Advertising"]!.count, 1)
         XCTAssertEqual(result["Social"]!.count, 4)
-        XCTAssertEqual(result["Advertising"]![0], ContentBlockerEntry(domain: "anadurl.com", url: "99anadurl.com"))
-        XCTAssertEqual(result["Social"]![0], ContentBlockerEntry(domain: "asocialurl.com", url: "99asocialurl.com"))
-        XCTAssertEqual(result["Social"]![1], ContentBlockerEntry(domain: "anothersocialurl.com", url: "anothersocialurl.com"))
-        XCTAssertEqual(result["Social"]![2], ContentBlockerEntry(domain: "anothersocialurl.com", url: "55anothersocialurl.com"))
-        XCTAssertEqual(result["Social"]![3], ContentBlockerEntry(domain: "anothersocialurl.com", url: "99anothersocialurl.com"))
+        XCTAssertEqual(result["Advertising"]![0], ContentBlockerEntry(category: .advertising, domain: "anadurl.com", url: "99anadurl.com"))
+        XCTAssertEqual(result["Social"]![0], ContentBlockerEntry(category: .social, domain: "asocialurl.com", url: "99asocialurl.com"))
+        XCTAssertEqual(result["Social"]![1], ContentBlockerEntry(category: .social, domain: "anothersocialurl.com", url: "anothersocialurl.com"))
+        XCTAssertEqual(result["Social"]![2], ContentBlockerEntry(category: .social, domain: "anothersocialurl.com", url: "55anothersocialurl.com"))
+        XCTAssertEqual(result["Social"]![3], ContentBlockerEntry(category: .social, domain: "anothersocialurl.com", url: "99anothersocialurl.com"))
     }
     
     private func emptyData() -> Data {

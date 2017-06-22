@@ -44,29 +44,45 @@ extension UIColor {
     public static var onboardingPrivacyRightBackground: UIColor {
         return softBlue
     }
-    
-    public static var contentBlockerActiveTint: UIColor {
-        return lightOrange
+
+    public static var contentBlockerCompletelyDisabledTint: UIColor {
+        return dullRed
     }
     
     public static var contentBlockerInactiveTint: UIColor {
         return midGray
     }
 
+    public static var contentBlockerActiveDirtySiteTint: UIColor {
+        return squash
+    }
+    
+    public static var contentBlockerActiveCleanSiteTint: UIColor {
+        return nastyGreen
+    }
+
     private static var midGray: UIColor {
         return UIColor(red: 190.0 / 255.0, green: 190.0 / 255.0, blue: 190.0 / 255.0, alpha: 1.0)
     }
-    
-    private static var orange: UIColor {
-        return UIColor(red:0.85, green:0.36, blue:0.25, alpha:1.0)
+
+    private static var nastyGreen: UIColor {
+        return UIColor(red: 101.0 / 255.0, green: 187.0 / 255.0, blue: 70.0 / 255.0, alpha: 1.0)
     }
 
-    private static var lightOrange: UIColor {
-        return UIColor(red: 241.0 / 255.0, green: 160.0 / 255.0, blue: 49.0 / 255.0, alpha: 1.0)
+    private static var orange: UIColor {
+        return UIColor(red:0.85, green:0.36, blue:0.25, alpha:1.0)
     }
     
     private static var fadedOrange: UIColor {
         return UIColor(red: 245.0 / 255.0, green: 139.0 / 255.0, blue: 107.0 / 255.0, alpha: 1.0)
+    }
+    
+    private static var dullRed: UIColor {
+        return UIColor(red: 221.0 / 255.0, green: 88.0 / 255.0, blue: 56.0 / 255.0, alpha: 1.0)
+    }
+
+    private static var squash: UIColor {
+        return UIColor(red: 237.0 / 255.0, green: 158.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
     }
     
     private static var lightOliveGreen: UIColor {

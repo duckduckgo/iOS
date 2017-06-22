@@ -53,4 +53,8 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
             userDefaults?.set(newValue, forKey: Keys.social)
         }
     }
+    
+    public var blockingEnabled: Bool {
+        return blockSocial || blockAdvertisers || blockAnalytics
+    }
 }

@@ -13,7 +13,7 @@ import Core
 class WebTabViewController: WebViewController, Tab {
     
     weak var tabDelegate: WebTabDelegate?
-        
+    
     private var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private(set) var contentBlockerMonitor = ContentBlockerMonitor()
@@ -44,16 +44,16 @@ class WebTabViewController: WebViewController, Tab {
         guard let button = navigationController?.view.viewWithTag(OmniBar.contentBlockerTag) else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withMonitor: contentBlockerMonitor)
         controller.modalPresentationStyle = .popover
-        controller.popoverPresentationController?.delegate = controller
+        controller.popoverPresentationController?.delegate = self
         controller.popoverPresentationController?.backgroundColor = UIColor.white
         present(controller: controller, fromView: button)
         contentBlockerPopover = controller
     }
-
+    
     fileprivate func resetContentBlockerMonitor() {
         contentBlockerMonitor = ContentBlockerMonitor()
     }
-
+    
     fileprivate func notifyContentBlockerMonitorChanged() {
         contentBlockerPopover?.updateMonitor(monitor: contentBlockerMonitor)
         tabDelegate?.webTab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
@@ -84,19 +84,19 @@ class WebTabViewController: WebViewController, Tab {
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: webView, atPoint: point)
     }
-
+    
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] action in
             self?.reload()
         }
     }
-
+    
     private func saveBookmarkAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] action in
             self?.launchSaveBookmarkAlert(bookmark: link)
         }
     }
-
+    
     private func launchSaveBookmarkAlert(bookmark: Link) {
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveBookmark,
@@ -139,7 +139,7 @@ class WebTabViewController: WebViewController, Tab {
             guard let webView = self?.webView else { return }
             var items = [link.title ?? "", link.url] as [Any]
             if let favicon = link.favicon {
-               items.append(favicon)
+                items.append(favicon)
             }
             self?.presentShareSheet(withItems: items, fromView: webView)
         }
@@ -215,5 +215,15 @@ extension WebTabViewController: WebEventsDelegate {
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
+    }
+}
+
+extension WebTabViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        notifyContentBlockerMonitorChanged()
     }
 }

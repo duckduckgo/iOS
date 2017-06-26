@@ -93,18 +93,7 @@ class ContentBlockerPopover: UITableViewController {
         }
     }
     
-    @IBAction func onUserTap(_ sender: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
-}
-
-extension ContentBlockerPopover: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-    
 }

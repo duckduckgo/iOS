@@ -67,7 +67,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
                                     <rect key="frame" x="335" y="0.0" width="24" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="24" id="JrJ-da-Qn3"/>
+                                        <constraint firstAttribute="width" priority="900" constant="24" id="JrJ-da-Qn3"/>
                                     </constraints>
                                     <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <state key="normal" image="Menu"/>

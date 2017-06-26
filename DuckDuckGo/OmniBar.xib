@@ -40,12 +40,12 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yd7-Gn-oar">
-                                    <rect key="frame" x="34" y="9" width="22" height="22"/>
+                                    <rect key="frame" x="34" y="8" width="24" height="24"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" priority="900" constant="22" id="23V-XR-nBx"/>
-                                        <constraint firstAttribute="height" priority="900" constant="22" id="Hq5-OB-zAV"/>
+                                        <constraint firstAttribute="width" priority="900" constant="24" id="23V-XR-nBx"/>
+                                        <constraint firstAttribute="height" priority="900" constant="24" id="Hq5-OB-zAV"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                     <color key="tintColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="100" backgroundImage="Circle">
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,7 +55,7 @@
                                     </connections>
                                 </button>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="Core">
-                                    <rect key="frame" x="64" y="0.0" width="263" height="40"/>
+                                    <rect key="frame" x="66" y="0.0" width="261" height="40"/>
                                     <color key="tintColor" red="0.85490196080000003" green="0.35686274509999999" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>

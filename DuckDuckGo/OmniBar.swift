@@ -73,13 +73,16 @@ class OmniBar: UIView {
         return textField.resignFirstResponder()
     }
 
-    func updateContentBlockerCount(count: Int) {
-        if count == 0 {
-            contentBlockerButton.tintColor = UIColor.contentBlockerInactiveTint
-            contentBlockerButton.setTitle("B", for: .normal)
+    func updateContentBlockerMonitor(monitor: ContentBlockerMonitor) {
+        if !monitor.blockingEnabled {
+            contentBlockerButton.tintColor = UIColor.contentBlockerCompletelyDisabledTint
+            contentBlockerButton.setTitle("!", for: .normal)
+        } else if monitor.total == 0 {
+            contentBlockerButton.tintColor = UIColor.contentBlockerActiveCleanSiteTint
+            contentBlockerButton.setTitle("\(monitor.total)", for: .normal)
         } else {
-            contentBlockerButton.tintColor = UIColor.contentBlockerActiveTint
-            contentBlockerButton.setTitle("\(count)", for: .normal)
+            contentBlockerButton.tintColor = UIColor.contentBlockerActiveDirtySiteTint
+            contentBlockerButton.setTitle("\(monitor.total)", for: .normal)
         }
     }
     

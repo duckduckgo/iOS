@@ -9,6 +9,7 @@
 import Foundation
 
 public struct ContentBlockerEntry {
+    public let category: ContentBlockerCategory
     public let domain: String
     public let url: String
 }
@@ -16,5 +17,5 @@ public struct ContentBlockerEntry {
 extension ContentBlockerEntry: Equatable {}
 
 public func ==(first: ContentBlockerEntry, second: ContentBlockerEntry) -> Bool {
-    return first.domain == second.domain && first.url == second.url
+    return first.domain == second.domain && first.url == second.url && first.category == second.category
 }

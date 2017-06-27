@@ -75,6 +75,7 @@
 		F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
 		F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491E1E391CE900DC037C /* URLExtensionTests.swift */; };
 		F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */; };
+		F152F55C1EFC002400A911B5 /* ContentBlockerMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */; };
 		F15A8B771E43A428008B8C6F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15A8B761E43A428008B8C6F /* ShareViewController.swift */; };
 		F15A8B7A1E43A428008B8C6F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15A8B781E43A428008B8C6F /* MainInterface.storyboard */; };
 		F15A8B7E1E43A428008B8C6F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F15A8B741E43A428008B8C6F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -135,7 +136,7 @@
 		F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE545D1E69FB9900FCF649 /* OnboardingPageViewController.swift */; };
 		F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4A70D1E57725800A6CA1B /* OmniBar.swift */; };
 		F1C5ED051E37D14C00C599A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1C5ED041E37D14C00C599A4 /* Localizable.strings */; };
-		F1CE429F1EC9E9E70074A8DF /* ContentBlocking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */; };
+		F1CE429F1EC9E9E70074A8DF /* EnableSafariContentBlocker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */; };
 		F1CE42A01EC9EA910074A8DF /* SafariSearchInstructions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10B06801EBB6CE000CC5910 /* SafariSearchInstructions.storyboard */; };
 		F1CE42A41ECA09F30074A8DF /* SearchFilterUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CE42A31ECA09F30074A8DF /* SearchFilterUserDefaults.swift */; };
 		F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CE42A51ECA0A460074A8DF /* BookmarkUserDefaults.swift */; };
@@ -405,6 +406,7 @@
 		F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarExtension.swift; sourceTree = "<group>"; };
 		F14E491E1E391CE900DC037C /* URLExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
 		F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurement.swift; sourceTree = "<group>"; };
+		F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerMonitor.swift; sourceTree = "<group>"; };
 		F15A8B741E43A428008B8C6F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F15A8B761E43A428008B8C6F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F15A8B791E43A428008B8C6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -500,7 +502,7 @@
 		F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-semibold.otf"; sourceTree = "<group>"; };
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableSafariContentBlockerViewController.swift; sourceTree = "<group>"; };
-		F1F33DF01EB8B88700E462C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ContentBlocking.storyboard; sourceTree = "<group>"; };
+		F1F33DF01EB8B88700E462C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EnableSafariContentBlocker.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -783,6 +785,7 @@
 				F143C3191E4A99DD00CFDE3A /* Utilities */,
 				F1CE42AA1ECA0AA90074A8DF /* SearchFilters */,
 				F1CE42A21ECA08E60074A8DF /* ContentBlocker */,
+				F1C7EABF1EFA875F00670583 /* HttpsEverywhere */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				F143C32A1E4A9A2700CFDE3A /* UserInterface */,
 				F143C3311E4A9A6A00CFDE3A /* Web */,
@@ -1165,10 +1168,18 @@
 			name = Main;
 			sourceTree = "<group>";
 		};
+		F1C7EABF1EFA875F00670583 /* HttpsEverywhere */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = HttpsEverywhere;
+			sourceTree = "<group>";
+		};
 		F1CE42A21ECA08E60074A8DF /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
 				F12ABAA01ECEEDCF0008AE50 /* ContentBlocker.swift */,
+				F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */,
 				F16393F81ECCAF0F00DDD653 /* Domain */,
 				F16956331ECC9C4A009C35C9 /* Store */,
 				F16393FD1ECCB35700DDD653 /* Parser */,
@@ -1295,7 +1306,7 @@
 			isa = PBXGroup;
 			children = (
 				F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */,
-				F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */,
+				F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */,
 			);
 			name = ContentBlocking;
 			sourceTree = "<group>";
@@ -1625,7 +1636,7 @@
 				F11CEF661EBB66EF0088E4D7 /* FireTutorial.storyboard in Resources */,
 				F1CE42A01EC9EA910074A8DF /* SafariSearchInstructions.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
-				F1CE429F1EC9E9E70074A8DF /* ContentBlocking.storyboard in Resources */,
+				F1CE429F1EC9E9E70074A8DF /* EnableSafariContentBlocker.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
@@ -1781,6 +1792,7 @@
 				F16956401ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift in Sources */,
 				F143C33E1E4A9B8000CFDE3A /* Toast.swift in Sources */,
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
+				F152F55C1EFC002400A911B5 /* ContentBlockerMonitor.swift in Sources */,
 				F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */,
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
 				F1B29E1F1E9A5DA1007F5046 /* UILabelExtension.swift in Sources */,
@@ -1940,12 +1952,12 @@
 			name = TabSwitcher.storyboard;
 			sourceTree = "<group>";
 		};
-		F1F33DEF1EB8B88700E462C3 /* ContentBlocking.storyboard */ = {
+		F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F1F33DF01EB8B88700E462C3 /* Base */,
 			);
-			name = ContentBlocking.storyboard;
+			name = EnableSafariContentBlocker.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

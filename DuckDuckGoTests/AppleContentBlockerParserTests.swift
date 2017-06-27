@@ -38,8 +38,8 @@ class AppleContentBlockerParserTests: XCTestCase {
 
     private func validEntries() -> [ContentBlockerEntry] {
         return [
-            ContentBlockerEntry(domain: "facebook.com", url: "facebook.gb"),
-            ContentBlockerEntry(domain: "reddit.com", url: "reddit.co.uk"),
+            ContentBlockerEntry(category: .social, domain: "facebook.com", url: "facebook.gb"),
+            ContentBlockerEntry(category: .social, domain: "reddit.com", url: "reddit.co.uk"),
         ]
     }
 }

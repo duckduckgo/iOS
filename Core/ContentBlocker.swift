@@ -19,13 +19,16 @@ public class ContentBlocker {
     private let parser = DisconnectMeContentBlockerParser()
     private var categorizedEntries = CategorizedContentBlockerEntries()
     
-    
     public init() {
         do {
             categorizedEntries = try loadContentBlockerEntries()
         } catch {
             Logger.log(text: "Could not load content blocker entries \(error)")
         }
+    }
+    
+    public var blockingEnabled: Bool {
+        return configuration.blockingEnabled
     }
     
     public var blockedEntries: [ContentBlockerEntry] {
@@ -55,17 +58,17 @@ public class ContentBlocker {
         Checks if a url for a specific document should be blocked.
         - parameter url: the url to check
         - parameter documentUrl: the document requesting the url
-        - returns: true if the item is a third party url in the block list
+        - returns: entry if the item matches a third party url in the block list otherwise nil
      */
-    public func block(url: URL, forDocument documentUrl: URL) -> Bool {
+    public func block(url: URL, forDocument documentUrl: URL) -> ContentBlockerEntry? {
         for entry in blockedEntries {
             if url.absoluteString.contains(entry.url) && documentUrl.host != url.host {
                 Logger.log(text: "Content blocker BLOCKED \(url.absoluteString)")
-                return true
+                return entry
             }
         }
         Logger.log(text: "Content blocker did NOT block \(url.absoluteString)")
-        return false
+        return nil
     }
 }
 

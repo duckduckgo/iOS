@@ -8,7 +8,6 @@
 
 import UIKit
 import MessageUI
-import SafariServices
 import Core
 
 class SettingsViewController: UITableViewController {
@@ -16,19 +15,15 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
-    @IBOutlet weak var blockAdvertisingToggle: UISwitch!
-    @IBOutlet weak var blockAnalyticsToggle: UISwitch!
-    @IBOutlet weak var blockSocialToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
     
     private lazy var regionFilterProvider = RegionFilterProvider()
     private lazy var versionProvider = Version()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
-    private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
     
     private struct TableIndex {
-        static let sendFeedback = IndexPath(item: 0, section: 3)
-        static let onboardingFlow = IndexPath(item: 0, section: 4)
+        static let sendFeedback = IndexPath(item: 0, section: 2)
+        static let onboardingFlow = IndexPath(item: 0, section: 3)
     }
     
     static func loadFromStoryboard() -> UIViewController {
@@ -38,18 +33,11 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSafeSearchToggle()
-        configureContentBlockingToggles()
         configureVersionText()
     }
     
     private func configureSafeSearchToggle() {
         safeSearchToggle.isOn = searchFilterStore.safeSearchEnabled
-    }
-    
-    private func configureContentBlockingToggles() {
-        blockAdvertisingToggle.isOn = contentBlockerStore.blockAdvertisers
-        blockAnalyticsToggle.isOn = contentBlockerStore.blockAnalytics
-        blockSocialToggle.isOn = contentBlockerStore.blockSocial
     }
     
     private func configureVersionText() {
@@ -120,31 +108,6 @@ class SettingsViewController: UITableViewController {
     
     fileprivate func currentDateFilter() -> DateFilter {
         return DateFilter.forKey(searchFilterStore.dateFilter)
-    }
-    
-    @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockAdvertisers = sender.isOn
-        reloadContentBlockerExtension()
-    }
-    
-    @IBAction func onBlockAnalyticsToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockAnalytics = sender.isOn
-        reloadContentBlockerExtension()
-    }
-    
-    @IBAction func onBlockSocialToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockSocial = sender.isOn
-        reloadContentBlockerExtension()
-    }
-    
-    private func reloadContentBlockerExtension() {
-        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
-            if let error = error {
-                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
-                return
-            }
-            Logger.log(text: "Content blocker rules for Safari reloaded")
-        }
     }
     
     @IBAction func onDonePressed(_ sender: Any) {

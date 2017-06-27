@@ -2,9 +2,21 @@
 //  OmniBar.swift
 //  DuckDuckGo
 //
-//  Created by Mia Alexiou on 17/02/2017.
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
 
 import UIKit
 import Core
@@ -73,13 +85,16 @@ class OmniBar: UIView {
         return textField.resignFirstResponder()
     }
 
-    func updateContentBlockerCount(count: Int) {
-        if count == 0 {
-            contentBlockerButton.tintColor = UIColor.contentBlockerInactiveTint
-            contentBlockerButton.setTitle("B", for: .normal)
+    func updateContentBlockerMonitor(monitor: ContentBlockerMonitor) {
+        if !monitor.blockingEnabled {
+            contentBlockerButton.tintColor = UIColor.contentBlockerCompletelyDisabledTint
+            contentBlockerButton.setTitle("!", for: .normal)
+        } else if monitor.total == 0 {
+            contentBlockerButton.tintColor = UIColor.contentBlockerActiveCleanSiteTint
+            contentBlockerButton.setTitle("\(monitor.total)", for: .normal)
         } else {
-            contentBlockerButton.tintColor = UIColor.contentBlockerActiveTint
-            contentBlockerButton.setTitle("\(count)", for: .normal)
+            contentBlockerButton.tintColor = UIColor.contentBlockerActiveDirtySiteTint
+            contentBlockerButton.setTitle("\(monitor.total)", for: .normal)
         }
     }
     

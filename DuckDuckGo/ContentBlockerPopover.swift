@@ -103,8 +103,4 @@ class ContentBlockerPopover: UITableViewController {
             Logger.log(text: "Content blocker rules for Safari reloaded")
         }
     }
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
-    }
 }

@@ -26,7 +26,7 @@
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
 
-"tabswitcher.title.tabs" = "Tabs";
+"tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
 
 "action.title.save" = "Save";

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Yw3-5U-0LG">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Authentication View Controller-->
+        <scene sceneID="bSa-Ji-N8y">
+            <objects>
+                <viewController id="Yw3-5U-0LG" customClass="AuthenticationViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="llH-rt-Ubt"/>
+                        <viewControllerLayoutGuide type="bottom" id="riS-mG-DCt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hpC-6L-HLk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-7e-TRG">
+                                <rect key="frame" x="128" y="84" width="119" height="119"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="d8x-MH-MZx"/>
+                                    <constraint firstAttribute="height" constant="180" id="zcw-7u-NcP"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="d8x-MH-MZx"/>
+                                        <exclude reference="zcw-7u-NcP"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="d8x-MH-MZx"/>
+                                        <include reference="zcw-7u-NcP"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5T-jl-zuF">
+                                <rect key="frame" x="73.5" y="267" width="228" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="228" id="00o-jE-PQl"/>
+                                </constraints>
+                                <string key="text">DuckDuckGo is locked
+Tap to authenticate</string>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="eFh-7e-TRG" secondAttribute="centerX" id="5xW-e0-KqT"/>
+                            <constraint firstItem="z5T-jl-zuF" firstAttribute="top" secondItem="eFh-7e-TRG" secondAttribute="bottom" constant="64" id="Mz9-Tg-EWw"/>
+                            <constraint firstItem="z5T-jl-zuF" firstAttribute="centerX" secondItem="hpC-6L-HLk" secondAttribute="centerX" id="Wji-Qa-5eK"/>
+                            <constraint firstItem="eFh-7e-TRG" firstAttribute="top" secondItem="llH-rt-Ubt" secondAttribute="bottom" constant="64" id="czQ-4f-Vir"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Bkw-x4-tze" appends="YES" id="8EY-St-Xtr"/>
+                        </connections>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <outlet property="lockedText" destination="z5T-jl-zuF" id="zBy-AE-ZVh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EzF-AG-bep" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Bkw-x4-tze">
+                    <connections>
+                        <action selector="onTap:" destination="Yw3-5U-0LG" id="cep-Wi-ojQ"/>
+                        <outlet property="delegate" destination="hpC-6L-HLk" id="Goc-i5-hBB"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="97" y="220"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Logo" width="119" height="119"/>
+    </resources>
+</document>

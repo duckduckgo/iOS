@@ -155,6 +155,9 @@ extension OmniBar: UITextFieldDelegate {
         dismissButton.isHidden = false
         menuButton.isHidden = true
         contentBlockerButton.isHidden = true
+        DispatchQueue.main.async {
+            textField.selectAll(nil)
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

@@ -22,9 +22,11 @@ import UIKit
 
 class AuthenticationViewController: UIViewController {
 
-    @IBOutlet weak var lockedText: UILabel!
+    @IBOutlet weak var unlockInstructions: UIView!
 
     private let authenticator = Authenticator()
+    
+    private var completion: (() -> Void)?
     
     static func loadFromStoryboard() -> AuthenticationViewController {
         let storyboard = UIStoryboard.init(name: "Authentication", bundle: nil)
@@ -32,12 +34,17 @@ class AuthenticationViewController: UIViewController {
         return controller
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        hideUnlockInstructions()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    public func beginAuthentication(completion: (() -> Void)?) {
+        self.completion = completion
         if authenticator.canAuthenticate() {
             authenticate()
         } else {
@@ -46,7 +53,7 @@ class AuthenticationViewController: UIViewController {
     }
     
     private func authenticate() {
-        hideLockedText()
+        hideUnlockInstructions()
         authenticator.authenticate() { (success, evaluateError) in
             if (success) {
                 self.onAuthenticationSucceeded()
@@ -61,23 +68,25 @@ class AuthenticationViewController: UIViewController {
     }
     
     private func onCouldNotAuthenticate() {
+        completion?()
         dismiss(animated: true, completion: nil)
     }
     
     private func onAuthenticationSucceeded() {
+        completion?()
         dismiss(animated: true, completion: nil)
     }
     
     private func onAuthenticationFailed() {
-        showLockedText()
+        showUnlockInstructions()
     }
     
-    private func hideLockedText() {
-        lockedText.isHidden = true
+    private func hideUnlockInstructions() {
+        unlockInstructions.isHidden = true
     }
     
-    private func showLockedText() {
-        lockedText.isHidden = false
+    private func showUnlockInstructions() {
+        unlockInstructions.isHidden = false
     }
 }
 

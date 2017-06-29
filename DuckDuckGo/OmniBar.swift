@@ -61,6 +61,7 @@ class OmniBar: UIView {
         menuButton.tag = OmniBar.menuButtonTag
         contentBlockerButton.tag = OmniBar.contentBlockerTag
         configureTextField()
+        configureEditingMenu()
     }
     
     var isBrowsing = false {
@@ -75,6 +76,17 @@ class OmniBar: UIView {
     private func configureTextField() {
         textField.placeholder = UserText.searchDuckDuckGo
         textField.delegate = self
+    }
+    
+    private func configureEditingMenu() {
+        let title = UserText.actionPasteAndGo
+        UIMenuController.shared.menuItems = [UIMenuItem.init(title: title, action: #selector(pasteAndGo))]
+    }
+    
+    func pasteAndGo(sender: UIMenuItem) {
+        guard let pastedText = UIPasteboard.general.string else { return }
+        textField.text = pastedText
+        onQuerySubmitted()
     }
     
     @discardableResult override func becomeFirstResponder() -> Bool {
@@ -159,8 +171,8 @@ extension OmniBar: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let oldQuery = textField.text,
-              let queryRange = oldQuery.range(from: range) else {
-            return true
+            let queryRange = oldQuery.range(from: range) else {
+                return true
         }
         let newQuery = oldQuery.replacingCharacters(in: queryRange, with: string)
         omniDelegate?.onOmniQueryUpdated(newQuery)

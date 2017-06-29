@@ -34,6 +34,10 @@ class AuthenticationViewController: UIViewController {
         return controller
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUnlockInstructions()

@@ -36,7 +36,6 @@ public class Authenticator {
     public func authenticate(reply: @escaping (Bool, Error?) -> Swift.Void) {
         let context = LAContext()
         let reason = UserText.appUnlock
-        context.touchIDAuthenticationAllowableReuseDuration = 15
         context.evaluatePolicy(policy, localizedReason: reason) { (success, error) in
             DispatchQueue.main.async {
                 reply(success, error)

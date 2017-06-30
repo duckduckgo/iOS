@@ -27,15 +27,17 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var safeSearchToggle: UISwitch!
     @IBOutlet weak var regionFilterText: UILabel!
     @IBOutlet weak var dateFilterText: UILabel!
+    @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
     
     private lazy var regionFilterProvider = RegionFilterProvider()
     private lazy var versionProvider = Version()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
+    fileprivate lazy var privacyStore = PrivacyUserDefaults()
     
     private struct TableIndex {
-        static let sendFeedback = IndexPath(item: 0, section: 2)
-        static let onboardingFlow = IndexPath(item: 0, section: 3)
+        static let sendFeedback = IndexPath(item: 0, section: 3)
+        static let onboardingFlow = IndexPath(item: 0, section: 4)
     }
     
     static func loadFromStoryboard() -> UIViewController {
@@ -45,11 +47,16 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSafeSearchToggle()
+        configureAuthenticationToggle()
         configureVersionText()
     }
     
     private func configureSafeSearchToggle() {
         safeSearchToggle.isOn = searchFilterStore.safeSearchEnabled
+    }
+    
+    private func configureAuthenticationToggle() {
+        authenticationToggle.isOn = privacyStore.authenticationEnabled
     }
     
     private func configureVersionText() {
@@ -120,6 +127,10 @@ class SettingsViewController: UITableViewController {
     
     fileprivate func currentDateFilter() -> DateFilter {
         return DateFilter.forKey(searchFilterStore.dateFilter)
+    }
+    
+    @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
+        privacyStore.authenticationEnabled = sender.isOn
     }
     
     @IBAction func onDonePressed(_ sender: Any) {

@@ -25,6 +25,7 @@ public struct UserText {
     public static let appTitle = forKey("app.title")
     public static let appInfo = forKey("app.info")
     public static let appInfoWithBuild = forKey("app.infoWithBuild")
+    public static let appUnlock = forKey("app.authentication.unlock")
     
     public static let homeLinkTitle = forKey("home.link.title")
     public static let searchDuckDuckGo = forKey("search.hint.duckduckgo")

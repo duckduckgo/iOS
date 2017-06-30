@@ -19,6 +19,7 @@
 
 "app.info" = "%@ %@";
 "app.infoWithBuild" = "%@ %@ (%@)";
+"app.authentication.unlock" = "Unlock DuckDuckGo";
 
 "home.link.title" = "DuckDuckGo Home";
 "search.hint.duckduckgo" = "Search or type URL";

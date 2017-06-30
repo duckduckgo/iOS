@@ -28,7 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let search = "com.duckduckgo.mobile.ios.newsearch"
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
-    
+
+    private var appIsLaunching = false
+    var authWindow: UIWindow?
     var window: UIWindow?
     
     private lazy var bookmarkStore = BookmarkUserDefaults()
@@ -37,11 +39,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let shortcutItem = launchOptions?[.shortcutItem] {
             handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
         }
+        appIsLaunching = true
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         startOnboardingFlowIfNotSeenBefore()
+        if appIsLaunching {
+            appIsLaunching = false
+            displayAuthenticationWindow()
+            beginAuthentication()
+        }
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        beginAuthentication()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        displayAuthenticationWindow()
+    }
+    
+    private func displayAuthenticationWindow() {
+        let privacyStore = PrivacyUserDefaults()
+        guard authWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }
+        authWindow = UIWindow(frame: frame)
+        authWindow?.rootViewController = AuthenticationViewController.loadFromStoryboard()
+        authWindow?.makeKeyAndVisible()
+        window?.isHidden = true
+    }
+    
+    private func beginAuthentication() {
+        guard let controller = authWindow?.rootViewController as? AuthenticationViewController else { return }
+        controller.beginAuthentication() { [weak self] in
+            self?.completeAuthentication()
+        }
+    }
+    
+    private func completeAuthentication() {
+        window?.makeKeyAndVisible()
+        authWindow = nil
     }
     
     private func startOnboardingFlowIfNotSeenBefore() {
@@ -53,10 +90,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func startOnboardingFlow() {
-        guard let root = mainViewController() else { return }
+        guard let main = mainViewController else { return }
         let onboardingController = OnboardingViewController.loadFromStoryboard()
         onboardingController.modalTransitionStyle = .flipHorizontal
-        root.present(onboardingController, animated: false, completion: nil)
+        main.present(onboardingController, animated: false, completion: nil)
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
@@ -69,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clearNavigationStack()
         }
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
-            mainViewController()?.loadQueryInNewTab(query)
+            mainViewController?.loadQueryInNewTab(query)
         }
     }
     
@@ -94,17 +131,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func loadQuickLink(link: Link) {
-        mainViewController()?.loadUrlInNewTab(link.url)
+        mainViewController?.loadUrlInNewTab(link.url)
     }
     
-    private func mainViewController() -> MainViewController? {
-        return UIApplication.shared.keyWindow?.rootViewController?.childViewControllers.first as? MainViewController
+    private var rootViewController: UINavigationController? {
+        return window?.rootViewController as? UINavigationController
+    }
+    
+    private var mainViewController: MainViewController? {
+        return rootViewController?.childViewControllers.first as? MainViewController
     }
     
     private func clearNavigationStack() {
-        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
-            navigationController.popToRootViewController(animated: false)
-        }
+        rootViewController?.popToRootViewController(animated: false)
     }
 }
 

@@ -29,6 +29,7 @@
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
 
+"action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";
 "action.title.cancel" = "Cancel";
 "action.title.newTab" = "Open in New Tab";

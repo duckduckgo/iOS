@@ -48,6 +48,7 @@ public struct UserText {
     public static let feedbackEmailSubject = forKey("feedbackemail.subject")
     public static let feedbackEmailBody = forKey("feedbackemail.body")
 
+    public static let actionPasteAndGo = forKey("action.title.pasteAndGo")
     public static let actionRefresh = forKey("action.title.refresh")
     public static let actionSave = forKey("action.title.save")
     public static let actionCancel = forKey("action.title.cancel")
@@ -58,7 +59,6 @@ public struct UserText {
     public static let actionShare = forKey("action.title.share")
     public static let actionSaveBookmark = forKey("action.title.save.bookmark")
     public static let actionSettings = forKey("action.title.settings")
-    
     public static let alertSaveBookmark = forKey("alert.title.save.bookmark")
     public static let alertEditBookmark = forKey("alert.title.edit.bookmark")
 

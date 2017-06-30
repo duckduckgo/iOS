@@ -21,9 +21,9 @@
 import UIKit
 
 class AuthenticationViewController: UIViewController {
-
+    
     @IBOutlet weak var unlockInstructions: UIView!
-
+    
     private let authenticator = Authenticator()
     
     private var completion: (() -> Void)?
@@ -34,10 +34,6 @@ class AuthenticationViewController: UIViewController {
         return controller
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUnlockInstructions()
@@ -46,6 +42,11 @@ class AuthenticationViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     
     public func beginAuthentication(completion: (() -> Void)?) {
         self.completion = completion

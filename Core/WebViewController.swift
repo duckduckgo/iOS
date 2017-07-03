@@ -199,7 +199,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
 extension WebViewController: UIGestureRecognizerDelegate {
     
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let yOffset = touchesYOffset()
         let x = Int(gestureRecognizer.location(in: webView).x)
         let y = Int(gestureRecognizer.location(in: webView).y-yOffset)
@@ -207,7 +207,7 @@ extension WebViewController: UIGestureRecognizerDelegate {
         return url != nil
     }
     
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }

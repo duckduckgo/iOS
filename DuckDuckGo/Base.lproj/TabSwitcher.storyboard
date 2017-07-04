@@ -38,7 +38,7 @@
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="70"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -123,6 +123,26 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Footer" id="nEk-BZ-E8i" customClass="TabsFooter" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="90" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 items cached" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-NJ-M9S">
+                                            <rect key="frame" x="8" y="18" width="359" height="15"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
+                                            <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="cf1-NJ-M9S" secondAttribute="trailing" id="Bmb-6e-nRh"/>
+                                        <constraint firstItem="cf1-NJ-M9S" firstAttribute="leading" secondItem="nEk-BZ-E8i" secondAttribute="leadingMargin" id="MaO-sV-XAc"/>
+                                        <constraint firstItem="cf1-NJ-M9S" firstAttribute="centerY" secondItem="nEk-BZ-E8i" secondAttribute="centerY" id="xbI-6m-SFt"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="quantityLabel" destination="cf1-NJ-M9S" id="OFp-U8-E5F"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="G9p-Sf-e96" id="gcb-SK-xXr"/>
                                     <outlet property="delegate" destination="G9p-Sf-e96" id="GK9-W4-6gs"/>
@@ -174,7 +194,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="2c3-VD-tFG"/>

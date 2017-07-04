@@ -35,6 +35,7 @@ public struct UserText {
 
     public static let tabSwitcherTitleHasTabs = forKey("tabswitcher.title.tabs")
     public static let tabSwitcherTitleNoTabs = forKey("tabswitcher.title.notabs")
+    public static let tabSwitcherData = forKey("tabswitcher.data")
     
     public static let onboardingRealPrivacyTitle = forKey("onboarding.realprivacy.title")
     public static let onboardingRealPrivacyDescription = forKey( "onboarding.realprivacy.description")

@@ -35,6 +35,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private lazy var bookmarkStore = BookmarkUserDefaults()
     
+    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        return true
+    }
+    
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        return true
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if let shortcutItem = launchOptions?[.shortcutItem] {
             handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)

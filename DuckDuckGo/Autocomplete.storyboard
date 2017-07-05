@@ -12,7 +12,7 @@
         <!--Autocomplete View Controller-->
         <scene sceneID="Rjz-wO-12o">
             <objects>
-                <viewController storyboardIdentifier="AutocompleteViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HV3-WA-HxT" customClass="AutocompleteViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AutocompleteViewController" id="HV3-WA-HxT" customClass="AutocompleteViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gyt-98-JMh"/>
                         <viewControllerLayoutGuide type="bottom" id="hVI-59-K3j"/>

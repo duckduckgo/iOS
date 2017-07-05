@@ -12,7 +12,7 @@
         <!--Bookmarks View Controller-->
         <scene sceneID="sBD-ma-yVJ">
             <objects>
-                <viewController storyboardIdentifier="BookmarksViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bWO-94-mh0" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BookmarksViewController" id="bWO-94-mh0" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JMb-HG-uiB"/>
                         <viewControllerLayoutGuide type="bottom" id="JF8-c8-S2o"/>

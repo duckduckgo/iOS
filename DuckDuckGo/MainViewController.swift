@@ -22,6 +22,7 @@ import UIKit
 import WebKit
 import Core
 
+// TODO: fix positioning
 class MainViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
@@ -104,7 +105,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabFrom(webTab: WebTabViewController, forUrlRequest urlRequest: URLRequest) {
-        attachSiblingTab(fromWebView: webTab.webView, forUrlRequest: urlRequest)
+        guard let webView = webTab.webView else { return }
+        attachSiblingTab(fromWebView: webView, forUrlRequest: urlRequest)
         refreshControls()
     }
     
@@ -127,11 +129,15 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func select(tabAt index: Int) {
-        let selectedTab = tabManager.select(tabAt: index) as! UIViewController
-        addToView(tab: selectedTab)
+        let selectedTab = tabManager.select(tabAt: index)
+        select(tab: selectedTab)
+    }
+    
+    fileprivate func select(tab: Tab) {
+        addToView(tab: tab as! UIViewController)
         refreshControls()
     }
-
+    
     private func addToView(tab: UIViewController) {
         removeHomeScreen()
         addToView(controller: tab)
@@ -271,6 +277,23 @@ class MainViewController: UIViewController {
         let x = view.bounds.size.width / 2.0
         let y = view.bounds.size.height - 80
         view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
+    }
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        coder.encode(tabManager, forKey: "Tabs")
+        Logger.log(text: "STATE: MainViewController did save data")
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        if let manager = coder.decodeObject(forKey: "Tabs") as? TabManager {
+            tabManager = manager
+            if let currentTab = manager.current {
+                select(tab: currentTab)
+            }
+        }
+        Logger.log(text: "STATE: MainViewController did restore data")
+        super.decodeRestorableState(with: coder)
     }
 }
 

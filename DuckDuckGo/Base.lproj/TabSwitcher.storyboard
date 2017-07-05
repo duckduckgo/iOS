@@ -17,7 +17,7 @@
         <!--Tab Switcher View Controller-->
         <scene sceneID="x1c-tI-gDe">
             <objects>
-                <viewController storyboardIdentifier="TabSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G9p-Sf-e96" customClass="TabSwitcherViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TabSwitcherViewController" id="G9p-Sf-e96" customClass="TabSwitcherViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a8e-Ri-3yS"/>
                         <viewControllerLayoutGuide type="bottom" id="RLs-RI-FXc"/>

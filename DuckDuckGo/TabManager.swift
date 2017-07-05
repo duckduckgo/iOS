@@ -20,11 +20,24 @@
 
 import Core
 
-struct TabManager {
+class TabManager:  NSObject, NSCoding {
+    
+    private struct NSCodingKeys {
+        static let current = "current"
+        static let tabs = "tabs"
+    }
     
     private(set) var current: Tab?
+    private var tabs: [Tab]
     
-    private var tabs = [Tab]()
+    override init() {
+        tabs = [Tab]()
+    }
+    
+    init(tabs: [Tab], current: Tab?) {
+        self.tabs = tabs
+        self.current = current
+    }
     
     var tabDetails: [Link] {
         return buildTabDetails()
@@ -57,30 +70,30 @@ struct TabManager {
         return links
     }
     
-    mutating func clearSelection() {
+    func clearSelection() {
         current?.dismiss()
         current = nil
     }
     
-    mutating func select(tabAt index: Int) -> Tab {
+    func select(tabAt index: Int) -> Tab {
         current?.dismiss()
         let tab = tabs[index]
         current = tab
         return tab
     }
     
-    mutating func add(tab: Tab) {
+    func add(tab: Tab) {
         current?.dismiss()
         tabs.append(tab)
         current = tab
     }
     
-    mutating func remove(at index: Int) {
+    func remove(at index: Int) {
         let tab = tabs.remove(at: index)
         tab.destroy()
     }
     
-    mutating func remove(tab: Tab) {
+    func remove(tab: Tab) {
         if let index = indexOf(tab: tab) {
             remove(at: index)
         }
@@ -95,10 +108,21 @@ struct TabManager {
         return nil
     }
     
-    mutating func clearAll() {
+    func clearAll() {
         for tab in tabs {
             remove(tab: tab)
         }
+    }
+    
+    public convenience required init?(coder aDecoder: NSCoder) {
+        guard let tabs = aDecoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
+        let current = aDecoder.decodeObject(forKey: NSCodingKeys.current) as? Tab
+        self.init(tabs: tabs, current: current)
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(tabs, forKey: NSCodingKeys.tabs)
+        aCoder.encode(current, forKey: NSCodingKeys.current)
     }
 }
 

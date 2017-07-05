@@ -89,6 +89,7 @@ class WebTabViewController: WebViewController, Tab {
     }
     
     func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
+        guard let webView = webView else { return }
         let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
         alert.addAction(newTabAction(forUrl: url))
         alert.addAction(openAction(forUrl: url))
@@ -166,16 +167,17 @@ class WebTabViewController: WebViewController, Tab {
         }
     }
     
+    // TODO: reinstate contentBlocker
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        if let entry = contentBlocker.block(url: url, forDocument: documentUrl) {
-            contentBlockerMonitor.blocked(entry: entry)
-            notifyContentBlockerMonitorChanged()
-            return false
-        }
-        if shouldOpenExternally(url: url) {
-            UIApplication.shared.openURL(url)
-            return false
-        }
+//        if let entry = contentBlocker.block(url: url, forDocument: documentUrl) {
+//            contentBlockerMonitor.blocked(entry: entry)
+//            notifyContentBlockerMonitorChanged()
+//            return false
+//        }
+//        if shouldOpenExternally(url: url) {
+//            UIApplication.shared.openURL(url)
+//            return false
+//        }
         return true
     }
     
@@ -203,6 +205,7 @@ class WebTabViewController: WebViewController, Tab {
     }
     
     func omniBarWasDismissed() {}
+    
 }
 
 extension WebTabViewController: WebEventsDelegate {

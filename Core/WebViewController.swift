@@ -31,11 +31,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     open private(set) var webView: WKWebView!
     
     public var name: String? {
-        return webView.title    
+        return webView?.title
     }
     
     public var url: URL? {
-        return webView.url
+        return webView?.url
     }
     
     public var favicon: URL?
@@ -46,11 +46,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public var canGoBack: Bool {
-        return webView.canGoBack
+        return webView?.canGoBack ?? false
     }
     
     public var canGoForward: Bool {
-        return webView.canGoForward
+        return webView?.canGoForward ?? false
     }
     
     public func attachNewWebView(persistsData: Bool) {
@@ -71,7 +71,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         newWebView.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(newWebView, at: 0)
         view.addEqualSizeConstraints(subView: newWebView)
-        webEventsDelegate?.attached(webView: webView)
+        webEventsDelegate?.attached(webView: newWebView)
     }
     
     private func attachLongPressHandler(webView: WKWebView) {
@@ -87,7 +87,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         let y = Int(sender.location(in: webView).y)
         let offsetY = y - Int(touchesYOffset())
         
-        webView.getUrlAtPoint(x: x, y: offsetY)  { [weak self] (url) in
+        webView?.getUrlAtPoint(x: x, y: offsetY)  { [weak self] (url) in
             guard let webView = self?.webView, let url = url else { return }
             let point = Point(x: x, y: y)
             self?.webEventsDelegate?.webView(webView, didReceiveLongPressForUrl: url, atPoint: point)
@@ -105,12 +105,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
  
     public func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
-        webView.load(urlRequest)
+        webView?.load(urlRequest)
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == WebViewController.estimatedProgressKeyPath {
-            progressBar.progress = Float(webView.estimatedProgress)
+            progressBar.progress = Float(webView?.estimatedProgress ?? 100)
         }
     }
     
@@ -175,15 +175,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func reload() {
-        webView.reload()
+        webView?.reload()
     }
     
     public func goBack() {
-        webView.goBack()
+        webView?.goBack()
     }
     
     public func goForward() {
-        webView.goForward()
+        webView?.goForward()
     }
     
     public func tearDown() {
@@ -195,11 +195,28 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         guard navigationController != nil else { return 0 }
         return decorHeight
     }
+    
+    override open func encodeRestorableState(with coder: NSCoder) {
+        coder.encode(link, forKey: "Link")
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override open func decodeRestorableState(with coder: NSCoder) {
+        if let link = coder.decodeObject(forKey: "Link") as? Link {
+            attachNewWebView(persistsData: true)
+            webView?.load(URLRequest(url: link.url))
+        }
+        Logger.log(text: "STATE: MainViewController did restore data")
+        super.decodeRestorableState(with: coder)
+    }
+
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {
     
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let webView = webView else { return false }
+        
         let yOffset = touchesYOffset()
         let x = Int(gestureRecognizer.location(in: webView).x)
         let y = Int(gestureRecognizer.location(in: webView).y-yOffset)

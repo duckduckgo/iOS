@@ -78,6 +78,7 @@
 		F152F55C1EFC002400A911B5 /* ContentBlockerMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */; };
 		F159BDA71F0C073D00B4A01D /* CacheSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA61F0C073D00B4A01D /* CacheSummary.swift */; };
 		F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */; };
+		F159BDA41F0BDB5A00B4A01D /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* WebTabViewController.swift */; };
 		F15A8B771E43A428008B8C6F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15A8B761E43A428008B8C6F /* ShareViewController.swift */; };
 		F15A8B7A1E43A428008B8C6F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15A8B781E43A428008B8C6F /* MainInterface.storyboard */; };
 		F15A8B7E1E43A428008B8C6F /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F15A8B741E43A428008B8C6F /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -163,7 +164,6 @@
 		F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */; };
 		F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */; };
 		F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1B1E67684B005E7E21 /* Tab.swift */; };
-		F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */; };
 		F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */; };
 		F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */; };
 		F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */; };
@@ -416,6 +416,7 @@
 		F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerMonitor.swift; sourceTree = "<group>"; };
 		F159BDA61F0C073D00B4A01D /* CacheSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheSummary.swift; sourceTree = "<group>"; };
 		F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsFooter.swift; sourceTree = "<group>"; };
+		F159BDA31F0BDB5A00B4A01D /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F15A8B741E43A428008B8C6F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F15A8B761E43A428008B8C6F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F15A8B791E43A428008B8C6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -506,7 +507,6 @@
 		F1E4A4441EE89460006F2EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bookmarks.storyboard; sourceTree = "<group>"; };
 		F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
 		F1E90C1B1E67684B005E7E21 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
 		F1ED309C1EDC2EA400651986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
 		F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DissolveAnimatedTransitioning.swift; sourceTree = "<group>"; };
@@ -605,7 +605,6 @@
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
-				F16390801E648B68005B4550 /* Tabs */,
 				F1386BA21E6846320062FC3C /* TabSwitcher */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
@@ -782,6 +781,8 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				F1E90C1B1E67684B005E7E21 /* Tab.swift */,
+				F1617C141E57336D00DEDCAF /* TabManager.swift */,
 				F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */,
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
@@ -885,17 +886,6 @@
 				F17922D41E7109DB006E3D97 /* UI */,
 			);
 			name = Autocomplete;
-			sourceTree = "<group>";
-		};
-		F16390801E648B68005B4550 /* Tabs */ = {
-			isa = PBXGroup;
-			children = (
-				F1E90C1B1E67684B005E7E21 /* Tab.swift */,
-				F1617C141E57336D00DEDCAF /* TabManager.swift */,
-				F1E90C1D1E676D12005E7E21 /* WebTabViewController.swift */,
-				F1386BA31E6846C40062FC3C /* WebTabDelegate.swift */,
-			);
-			name = Tabs;
 			sourceTree = "<group>";
 		};
 		F16393F31ECCA83F00DDD653 /* ContentBlocker */ = {
@@ -1193,6 +1183,8 @@
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
 				F16390811E648B7A005B4550 /* HomeViewController.swift */,
 				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
+				F159BDA31F0BDB5A00B4A01D /* WebTabViewController.swift */,
+				F1386BA31E6846C40062FC3C /* WebTabDelegate.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -1768,6 +1760,7 @@
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				F1E90C1C1E67684B005E7E21 /* Tab.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
+				F159BDA41F0BDB5A00B4A01D /* WebTabViewController.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F13508101E8C307800B7ECC4 /* RegionSelectionDelegate.swift in Sources */,
@@ -1778,7 +1771,6 @@
 				F1BE54501E69DDE000FCF649 /* RealPrivacyConfiguration.swift in Sources */,
 				F1126DF71EA5C92E0016A6C7 /* FeedbackEmail.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
-				F1E90C1E1E676D12005E7E21 /* WebTabViewController.swift in Sources */,
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
 				F1722BCD1E8BF71C0058AAA5 /* RegionSelectionViewController.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,

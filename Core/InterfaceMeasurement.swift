@@ -24,6 +24,7 @@ import CoreGraphics
 public struct InterfaceMeasurement {
     
     public static let defaultStatusBarHeight: CGFloat = 20
+    public static let defaultToolbarHeight: CGFloat = 44
 
     private static let iPhone4Size = CGSize(width: 320, height: 480)
     private static let iPhone5Size = CGSize(width: 320, height: 568)
@@ -64,7 +65,7 @@ public struct InterfaceMeasurement {
 }
 
 public extension UIViewController {
-    
+
     public var statusBarSize: CGFloat {
         return prefersStatusBarHidden ? 0 : InterfaceMeasurement.defaultStatusBarHeight
     }

@@ -8,8 +8,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="proximanova-semibold.otf">
-            <string>ProximaNova-Semibold</string>
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -44,19 +44,16 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="uvf-JZ-PJq">
-                                <rect key="frame" x="67" y="267" width="280" height="78"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="uvf-JZ-PJq">
+                                <rect key="frame" x="67" y="599" width="280" height="91"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Lock" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5T-jl-zuF">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="28"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="28"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap anywhere to unlock" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vur-vA-mVI">
-                                        <rect key="frame" x="0.0" y="60" width="280" height="18"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="18"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fingerprint" translatesAutoresizingMaskIntoConstraints="NO" id="Fl4-Wo-Jo5">
+                                        <rect key="frame" x="112" y="0.0" width="56" height="56"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap anywhere to unlock app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vur-vA-mVI">
+                                        <rect key="frame" x="35" y="74" width="210.33333333333331" height="17"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
+                                        <color key="textColor" red="0.31372549019607843" green="0.74901960784313726" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -64,14 +61,23 @@
                                     <constraint firstAttribute="width" constant="280" id="7Ov-3H-kwL"/>
                                 </constraints>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lock" translatesAutoresizingMaskIntoConstraints="NO" id="YtA-pe-sC0">
+                                <rect key="frame" x="226.66666666666669" y="74" width="36.000000000000057" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="Qhf-as-tJG"/>
+                                    <constraint firstAttribute="height" constant="36" id="pzq-bK-SPV"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="riS-mG-DCt" firstAttribute="top" secondItem="uvf-JZ-PJq" secondAttribute="bottom" constant="46" id="2GB-Bf-Zb5"/>
+                            <constraint firstItem="eFh-7e-TRG" firstAttribute="top" secondItem="YtA-pe-sC0" secondAttribute="bottom" constant="-26" id="5ZZ-7w-NVy"/>
                             <constraint firstAttribute="centerX" secondItem="eFh-7e-TRG" secondAttribute="centerX" id="5xW-e0-KqT"/>
+                            <constraint firstItem="YtA-pe-sC0" firstAttribute="leading" secondItem="eFh-7e-TRG" secondAttribute="trailing" constant="-40" id="ARk-gL-s2f"/>
                             <constraint firstItem="eFh-7e-TRG" firstAttribute="top" secondItem="llH-rt-Ubt" secondAttribute="bottom" constant="64" id="czQ-4f-Vir"/>
                             <constraint firstItem="uvf-JZ-PJq" firstAttribute="centerX" secondItem="hpC-6L-HLk" secondAttribute="centerX" id="jZg-lE-UXr"/>
-                            <constraint firstItem="uvf-JZ-PJq" firstAttribute="top" secondItem="eFh-7e-TRG" secondAttribute="bottom" constant="64" id="lhL-WJ-l9P"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Bkw-x4-tze" appends="YES" id="8EY-St-Xtr"/>
@@ -90,10 +96,12 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="97" y="220"/>
+            <point key="canvasLocation" x="95.652173913043484" y="219.29347826086959"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Fingerprint" width="56" height="56"/>
+        <image name="Lock" width="36" height="36"/>
         <image name="Logo" width="119" height="119"/>
     </resources>
 </document>

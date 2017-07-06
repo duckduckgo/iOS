@@ -76,6 +76,8 @@
 		F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491E1E391CE900DC037C /* URLExtensionTests.swift */; };
 		F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */; };
 		F152F55C1EFC002400A911B5 /* ContentBlockerMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */; };
+		F159BDA71F0C073D00B4A01D /* CacheSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA61F0C073D00B4A01D /* CacheSummary.swift */; };
+		F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */; };
 		F159BDA41F0BDB5A00B4A01D /* WebTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* WebTabViewController.swift */; };
 		F15A8B771E43A428008B8C6F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15A8B761E43A428008B8C6F /* ShareViewController.swift */; };
 		F15A8B7A1E43A428008B8C6F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15A8B781E43A428008B8C6F /* MainInterface.storyboard */; };
@@ -412,6 +414,8 @@
 		F14E491E1E391CE900DC037C /* URLExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
 		F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurement.swift; sourceTree = "<group>"; };
 		F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerMonitor.swift; sourceTree = "<group>"; };
+		F159BDA61F0C073D00B4A01D /* CacheSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheSummary.swift; sourceTree = "<group>"; };
+		F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsFooter.swift; sourceTree = "<group>"; };
 		F159BDA31F0BDB5A00B4A01D /* WebTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebTabViewController.swift; sourceTree = "<group>"; };
 		F15A8B741E43A428008B8C6F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F15A8B761E43A428008B8C6F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -783,6 +787,7 @@
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
 				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
+				F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */,
 			);
 			name = TabSwitcher;
 			sourceTree = "<group>";
@@ -856,6 +861,7 @@
 				F143C3381E4A9A9200CFDE3A /* WebEventsDelegate.swift */,
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
 				F18326861E60542100240060 /* JavascriptLoader.swift */,
+				F159BDA61F0C073D00B4A01D /* CacheSummary.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -1715,6 +1721,7 @@
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
+				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
 				F13508031E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift in Sources */,
 				F1E249501EF207D4008C947A /* ContentBlockerPopover.swift in Sources */,
@@ -1834,6 +1841,7 @@
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
 				F11044FD1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift in Sources */,
 				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
+				F159BDA71F0C073D00B4A01D /* CacheSummary.swift in Sources */,
 				F16394051ECDFFE500DDD653 /* ContentBlockerEntry.swift in Sources */,
 				F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,

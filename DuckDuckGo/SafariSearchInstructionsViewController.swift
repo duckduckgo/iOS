@@ -62,10 +62,6 @@ class SafariSearchInstructionsViewController: UIViewController {
         applyTopMargin()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIApplication.shared.statusBarStyle
-    }
-    
     private func applyTopMargin() {
         let availableHeight = view.frame.size.height
         let contentHeight = scrollView.contentSize.height

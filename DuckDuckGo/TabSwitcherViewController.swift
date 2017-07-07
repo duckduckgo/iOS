@@ -64,10 +64,6 @@ class TabSwitcherViewController: UIViewController {
         titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()

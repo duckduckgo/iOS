@@ -161,10 +161,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     fileprivate func currentPageController() -> OnboardingPageViewController {
         return dataSource.controller(forIndex: pageControl.currentPage) as! OnboardingPageViewController
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 extension OnboardingViewController: UIGestureRecognizerDelegate {

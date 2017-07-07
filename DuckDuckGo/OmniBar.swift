@@ -74,7 +74,7 @@ class OmniBar: UIView {
     }
 
     private func configureTextField() {
-        textField.placeholder = UserText.searchDuckDuckGo
+        textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo, attributes: [NSForegroundColorAttributeName: UIColor.coolGray])
         textField.delegate = self
     }
     

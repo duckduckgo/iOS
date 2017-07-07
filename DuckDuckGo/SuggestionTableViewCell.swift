@@ -38,14 +38,14 @@ class SuggestionTableViewCell: UITableViewCell {
             typeImage.image = #imageLiteral(resourceName: "SearchLoupeMini")
             plusButton.isHidden = false
         }
-         styleText(query: query, text: suggestion.suggestion)
+        styleText(query: query, text: suggestion.suggestion)
     }
     
     private func styleText(query: String, text: String) {
-        
+
         let attributes = [
-            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16),
-            NSForegroundColorAttributeName: UIColor.black
+            NSFontAttributeName: UIFont.semiBoldAppFont(ofSize: 16),
+            NSForegroundColorAttributeName: UIColor.white
         ]
         
         let count = (query.length() < text.length()) ? query.length() : text.length()

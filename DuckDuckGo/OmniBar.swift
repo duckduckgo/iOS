@@ -42,6 +42,7 @@ class OmniBar: UIView {
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var contentBlockerButton: UIButton!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
 
     weak var omniDelegate: OmniBarDelegate?
@@ -152,6 +153,10 @@ class OmniBar: UIView {
         }
     }
     
+    @IBAction func onClearButtonPresed(_ sender: Any) {
+        textField.text = ""
+    }
+    
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
         omniDelegate?.onMenuPressed()
     }
@@ -164,9 +169,10 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        dismissButton.isHidden = false
         menuButton.isHidden = true
         contentBlockerButton.isHidden = true
+        dismissButton.isHidden = false
+        clearButton.isHidden = false
         DispatchQueue.main.async {
             textField.selectAll(nil)
         }
@@ -184,6 +190,7 @@ extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         dismissButton.isHidden = true
+        clearButton.isHidden = true
         menuButton.isHidden = !isBrowsing
         contentBlockerButton.isHidden = !isBrowsing
     }

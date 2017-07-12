@@ -146,6 +146,7 @@
 		F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CA3C361F045878005FADB3 /* PrivacyStore.swift */; };
 		F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CA3C381F045885005FADB3 /* PrivacyUserDefaults.swift */; };
 		F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CA3C3A1F045B65005FADB3 /* Authenticator.swift */; };
+		F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CDD3F11F16911700BE0581 /* AboutViewController.swift */; };
 		F1CE429F1EC9E9E70074A8DF /* EnableSafariContentBlocker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */; };
 		F1CE42A01EC9EA910074A8DF /* SafariSearchInstructions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10B06801EBB6CE000CC5910 /* SafariSearchInstructions.storyboard */; };
 		F1CE42A41ECA09F30074A8DF /* SearchFilterUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CE42A31ECA09F30074A8DF /* SearchFilterUserDefaults.swift */; };
@@ -494,6 +495,7 @@
 		F1CA3C361F045878005FADB3 /* PrivacyStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyStore.swift; sourceTree = "<group>"; };
 		F1CA3C381F045885005FADB3 /* PrivacyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyUserDefaults.swift; sourceTree = "<group>"; };
 		F1CA3C3A1F045B65005FADB3 /* Authenticator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
+		F1CDD3F11F16911700BE0581 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		F1CE42A31ECA09F30074A8DF /* SearchFilterUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterUserDefaults.swift; sourceTree = "<group>"; };
 		F1CE42A51ECA0A460074A8DF /* BookmarkUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkUserDefaults.swift; sourceTree = "<group>"; };
 		F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveBookmarkActivity.swift; sourceTree = "<group>"; };
@@ -1135,6 +1137,7 @@
 				F1722BCA1E8BF6E30058AAA5 /* DateFilterSelectionViewController.swift */,
 				F13508021E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift */,
 				F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */,
+				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1758,6 +1761,7 @@
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
+				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,

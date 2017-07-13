@@ -21,9 +21,7 @@
 import Core
 
 protocol TabSwitcherDelegate: class {
-    
-    var tabDetails: [Link] { get }
-    
+
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController)
     
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTabAt index: Int)

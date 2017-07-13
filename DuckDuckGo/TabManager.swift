@@ -22,14 +22,19 @@ import Core
 
 struct TabManager {
     
-    private(set) var current: Tab?
+    private(set) var model = TabsModel()
     
-    private var tabs = [Tab]()
+    private var tabs = [TabViewController]()
     
-    var tabDetails: [Link] {
-        return buildTabDetails()
+    var current: TabViewController? {
+        guard let index = model.currentIndex else { return nil }
+        return tabs[index]
     }
     
+    var currentIndex: Int? {
+        return model.currentIndex
+    }
+
     var isEmpty: Bool {
         return tabs.isEmpty
     }
@@ -42,51 +47,45 @@ struct TabManager {
         return isEmpty ? nil : tabs.count-1
     }
     
-    var currentIndex: Int? {
-        guard let current = current else { return nil }
-        return indexOf(tab: current)
-    }
-    
-    private func buildTabDetails() -> [Link] {
-        var links = [Link]()
-        for tab in tabs {
-            if let link = tab.link {
-                links.append(link)
-            }
-        }
-        return links
-    }
-    
     mutating func clearSelection() {
         current?.dismiss()
-        current = nil
+        model.clearSelection()
     }
     
-    mutating func select(tabAt index: Int) -> Tab {
+    mutating func select(tabAt index: Int) -> TabViewController {
         current?.dismiss()
-        let tab = tabs[index]
-        current = tab
-        return tab
+        model.currentIndex = index
+        return current!
     }
     
-    mutating func add(tab: Tab) {
+    mutating func add(tab: TabViewController) {
         current?.dismiss()
         tabs.append(tab)
-        current = tab
+        model.add(tab: Tab(link: tab.link))
     }
     
     mutating func remove(at index: Int) {
+        if index == model.currentIndex {
+            clearSelection()
+        }
+        
         let tab = tabs.remove(at: index)
         tab.destroy()
-    }
-    
-    mutating func remove(tab: Tab) {
-        if let index = indexOf(tab: tab) {
-            remove(at: index)
+        model.remove(at: index)
+        
+        if index < tabs.count {
+            model.currentIndex = index
+        } else if let lastIndex = lastIndex {
+            model.currentIndex = lastIndex
         }
     }
     
-    func indexOf(tab: Tab) -> Int? {
+    mutating func remove(tab: TabViewController) {
+        guard let index = indexOf(tab: tab) else { return }
+        remove(at: index)
+    }
+    
+    func indexOf(tab: TabViewController) -> Int? {
         for (index, current) in tabs.enumerated() {
             if current === tab {
                 return index
@@ -100,5 +99,12 @@ struct TabManager {
             remove(tab: tab)
         }
     }
+    
+    func updateModelFromTab(tab: TabViewController) {
+        if let index = indexOf(tab: tab) {
+            model.get(tabAt: index).link = tab.link
+        }
+    }
+
 }
 

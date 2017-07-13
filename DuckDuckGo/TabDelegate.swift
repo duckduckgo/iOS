@@ -1,5 +1,5 @@
 //
-//  WebTabDelegate.swift
+//  TabDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,13 +21,13 @@
 import WebKit
 import Core
 
-protocol WebTabDelegate: class {
+protocol TabDelegate: class {
     
-    func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL)
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
     
-    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
+    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
 
-    func webTab(_ webTab: WebTabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
+    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
     
-    func webTabLoadingStateDidChange(webTab: WebTabViewController)
+    func tabLoadingStateDidChange(tab: TabViewController)
 }

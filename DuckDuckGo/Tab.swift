@@ -18,34 +18,12 @@
 //
 
 
-import Foundation
 import Core
 
-protocol Tab: class {
+class Tab {
+    var link: Link?
     
-    var link: Link? { get }
-    
-    var canGoBack: Bool { get }
-    
-    var canGoForward: Bool { get }
-    
-    var contentBlockerMonitor: ContentBlockerMonitor { get }
-    
-    func omniBarWasDismissed()
-    
-    func launchBrowsingMenu()
-    
-    func launchContentBlockerPopover()
-    
-    func load(url: URL)
-    
-    func goBack()
-    
-    func goForward()
-    
-    func reload()
-    
-    func dismiss()
-    
-    func destroy()
+    init(link: Link?) {
+        self.link = link
+    }
 }

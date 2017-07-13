@@ -31,10 +31,10 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     
-    func update(withLink tabLink: Link) {
-        title.text = tabLink.title ?? ""
-        link.text = tabLink.url.absoluteString
-        configureFavicon(tabLink.favicon)
+    func update(withTab tab: Tab) {
+        title.text = tab.link?.title ?? ""
+        link.text = tab.link?.url.absoluteString ?? ""
+        configureFavicon(tab.link?.favicon)
     }
     
     private func configureFavicon(_ faviconUrl: URL?) {

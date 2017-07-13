@@ -29,12 +29,12 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var animationContainer: UIView!
     
     weak var delegate: TabSwitcherDelegate!
-    private var initialIndex: Int?
+    weak var tabsModel: TabsModel!
     
-    static func loadFromStoryboard(delegate: TabSwitcherDelegate, scrollTo index: Int?) -> TabSwitcherViewController {
+    static func loadFromStoryboard(delegate: TabSwitcherDelegate, tabsModel: TabsModel) -> TabSwitcherViewController {
         let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
         controller.delegate = delegate
-        controller.initialIndex = index
+        controller.tabsModel = tabsModel
         return controller
     }
     
@@ -49,7 +49,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func scrollToInitialTab() {
-        guard let index = initialIndex else { return }
+        guard let index = tabsModel.currentIndex else { return }
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
@@ -60,7 +60,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func refreshTitle() {
-        let count = delegate.tabDetails.count
+        let count = tabsModel.count
         titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
     }
     
@@ -115,7 +115,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     fileprivate func dismiss() {
-        if delegate.tabDetails.isEmpty {
+        if tabsModel.isEmpty {
             delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         }
         dismiss(animated: true, completion: nil)
@@ -125,13 +125,13 @@ class TabSwitcherViewController: UIViewController {
 extension TabSwitcherViewController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return delegate.tabDetails.count
+        return tabsModel.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let link = delegate.tabDetails[indexPath.row]
+        let tab = tabsModel.get(tabAt: indexPath.row)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as! TabViewCell
-        cell.update(withLink: link)
+        cell.update(withTab: tab)
         cell.removeButton.tag = indexPath.row
         cell.removeButton.addTarget(self, action: #selector(onRemoveTapped(sender:)), for: .touchUpInside)
         return cell

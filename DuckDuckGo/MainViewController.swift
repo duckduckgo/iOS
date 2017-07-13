@@ -47,11 +47,7 @@ class MainViewController: UIViewController {
         attachOmniBar()
         attachHomeScreen()
     }
-    
-    override func viewDidLayoutSubviews() {
-        updateAutocompleteSize()
-    }
-    
+
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
@@ -196,16 +192,11 @@ class MainViewController: UIViewController {
             addChildViewController(controller)
             containerView.addSubview(controller.view)
             autocompleteController = controller
-            updateAutocompleteSize()
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
     }
-    
-    private func updateAutocompleteSize() {
-        autocompleteController?.widthConstraint.constant = omniBar.frame.width
-    }
-    
+
     fileprivate func dismissOmniBar() {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
@@ -263,7 +254,6 @@ class MainViewController: UIViewController {
     fileprivate func launchBookmarks() {
         let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
         controller.modalPresentationStyle = .overCurrentContext
-        controller.modalTransitionStyle = .crossDissolve
         present(controller, animated: true, completion: nil)
     }
     

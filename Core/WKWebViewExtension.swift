@@ -40,12 +40,26 @@ extension WKWebView {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
     }
+  
+    public static func cacheSummary(completionHandler: @escaping (_ summary: CacheSummary) -> Swift.Void) {
+        let allData = WKWebsiteDataStore.allWebsiteDataTypes()
+        let dataStore = WKWebsiteDataStore.default()
+        
+        dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
+            let count = records.reduce(0, { $0 + $1.dataTypes.count })
+            let cacheSummary = CacheSummary(count: count)
+            completionHandler(cacheSummary)
+        })
+    }
     
     public static func clearCache(completionHandler: @escaping () -> Swift.Void) {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
-        let distantPast = Date.distantPast
         let dataStore = WKWebsiteDataStore.default()
-        dataStore.removeData(ofTypes: allData, modifiedSince: distantPast, completionHandler: completionHandler)
+        dataStore.fetchDataRecords(ofTypes: allData) { records in
+            dataStore.removeData(ofTypes: allData, for: records) {
+                completionHandler()
+            }
+        }
     }
     
     public func loadScripts() {

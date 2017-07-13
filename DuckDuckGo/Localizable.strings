@@ -29,6 +29,7 @@
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
+"tabswitcher.data" = "%d items cached";
 
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";

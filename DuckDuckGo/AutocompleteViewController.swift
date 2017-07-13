@@ -22,8 +22,6 @@ import UIKit
 import Core
 
 class AutocompleteViewController: UIViewController {
-
-    @IBOutlet weak var widthConstraint: NSLayoutConstraint!
     
     weak var delegate: AutocompleteViewControllerDelegate?
 
@@ -43,6 +41,16 @@ class AutocompleteViewController: UIViewController {
     static func loadFromStoryboard() -> AutocompleteViewController {
         let storyboard = UIStoryboard.init(name: "Autocomplete", bundle: nil)
         return storyboard.instantiateInitialViewController() as! AutocompleteViewController
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureTableView()
+    }
+    
+    private func configureTableView() {
+        tableView.backgroundColor = UIColor.clear
+        tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +155,6 @@ extension AutocompleteViewController: UITableViewDelegate {
 
 extension AutocompleteViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return view == touch.view
+        return tableView == touch.view
     }
 }

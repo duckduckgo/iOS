@@ -39,7 +39,7 @@ class BookmarksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addAplicationActiveObserver()
-        tableView.dataSource = dataSource
+        configureTableView()
         refreshEditButton()
     }
     
@@ -53,6 +53,11 @@ class BookmarksViewController: UIViewController {
     
     private func removeApplicationActiveObserver() {
         NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+    }
+    
+    private func configureTableView() {
+        tableView.dataSource = dataSource
+        tableView.backgroundColor = UIColor.clear
     }
     
     func onApplicationBecameActive(notification: NSNotification) {

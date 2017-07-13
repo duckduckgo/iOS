@@ -38,7 +38,7 @@
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="70"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
@@ -109,6 +109,7 @@
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="puo-AS-QV7" secondAttribute="bottom" id="3fw-42-0yk"/>
                                             <constraint firstAttribute="trailing" secondItem="puo-AS-QV7" secondAttribute="trailing" constant="10" id="44L-7t-6zy"/>
@@ -123,6 +124,26 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Footer" id="nEk-BZ-E8i" customClass="TabsFooter" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="90" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-NJ-M9S">
+                                            <rect key="frame" x="8" y="25" width="359" height="0.0"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
+                                            <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="cf1-NJ-M9S" secondAttribute="trailing" id="Bmb-6e-nRh"/>
+                                        <constraint firstItem="cf1-NJ-M9S" firstAttribute="leading" secondItem="nEk-BZ-E8i" secondAttribute="leadingMargin" id="MaO-sV-XAc"/>
+                                        <constraint firstItem="cf1-NJ-M9S" firstAttribute="centerY" secondItem="nEk-BZ-E8i" secondAttribute="centerY" id="xbI-6m-SFt"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="quantityLabel" destination="cf1-NJ-M9S" id="OFp-U8-E5F"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="G9p-Sf-e96" id="gcb-SK-xXr"/>
                                     <outlet property="delegate" destination="G9p-Sf-e96" id="GK9-W4-6gs"/>
@@ -134,23 +155,22 @@
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <barButtonItem title="New" id="nYf-xs-PE7">
+                                    <barButtonItem systemItem="add" id="nYf-xs-PE7">
                                         <connections>
                                             <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yc9-ps-qXW"/>
-                                    <barButtonItem title="Done" id="S1O-aT-Bgw">
+                                    <barButtonItem systemItem="done" id="S1O-aT-Bgw">
                                         <connections>
                                             <action selector="onDonePressed:" destination="G9p-Sf-e96" id="yns-QI-PSf"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSc-wr-m04">
                                 <rect key="frame" x="143" y="593" width="90" height="74"/>
@@ -174,7 +194,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="2c3-VD-tFG"/>

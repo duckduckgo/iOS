@@ -24,6 +24,8 @@ import Core
 
 class WebTabViewController: WebViewController, Tab {
     
+    @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
+    
     weak var tabDelegate: WebTabDelegate?
     
     private var contentBlocker: ContentBlocker!
@@ -181,6 +183,15 @@ class WebTabViewController: WebViewController, Tab {
         return SupportedExternalURLScheme.isSupported(url: url)
     }
     
+    @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
+        showBars()
+    }
+    
+    fileprivate func showBars() {
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = false
+    }
+    
     func dismiss() {
         removeFromParentViewController()
         view.removeFromSuperview()
@@ -198,6 +209,7 @@ extension WebTabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
         webView.loadScripts()
+        webView.scrollView.delegate = self
     }
     
     func webpageDidStartLoading() {
@@ -240,3 +252,42 @@ extension WebTabViewController: UIPopoverPresentationControllerDelegate {
         notifyContentBlockerMonitorChanged()
     }
 }
+
+extension WebTabViewController {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if isShowBarsTap(gestureRecognizer) {
+            return true
+        }
+        return super.gestureRecognizerShouldBegin(gestureRecognizer)
+    }
+    
+    private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let y = gestureRecognizer.location(in: webView).y
+        return gestureRecognizer == showBarsTapGestureRecogniser &&
+               navigationController?.isToolbarHidden == true &&
+               isBottom(yPosition: y)
+    }
+    
+    private func isBottom(yPosition y: CGFloat) -> Bool {
+        return y > (view.frame.size.height - InterfaceMeasurement.defaultToolbarHeight)
+    }
+    
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == showBarsTapGestureRecogniser {
+            return true
+        }
+        return super.gestureRecognizer(gestureRecognizer, shouldBeRequiredToFailBy: otherGestureRecognizer)
+    }
+}
+
+extension WebTabViewController: UIScrollViewDelegate {
+    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if navigationController?.isToolbarHidden == true {
+            showBars()
+            return false
+        }
+        return true
+    }
+}
+
+

@@ -64,10 +64,6 @@ class TabSwitcherViewController: UIViewController {
         titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)
         dismiss()
@@ -141,6 +137,13 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let reuseIdentifier = TabsFooter.reuseIdentifier
+        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
+        footer.refreshLabel()
+        return footer
+    }
+    
     func onRemoveTapped(sender: UIView) {
         let index = sender.tag
         onDeleted(tabAt: index)
@@ -152,7 +155,6 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onSelected(tabAt: indexPath.row)
     }
-
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {

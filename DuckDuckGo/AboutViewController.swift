@@ -19,9 +19,13 @@
 
 
 import UIKit
+import Core
 
 class AboutViewController: UIViewController {
     
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
+        dismiss(animated: true) { 
+            UIApplication.shared.openURL(AppDeepLinks.privacyPolicy)
+        }
     }
 }

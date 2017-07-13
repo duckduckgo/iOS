@@ -113,25 +113,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
         clearNavigationStack()
-        if AppDeepLinks.isLaunch(url: url) {
-            return true
-        }
-        if AppDeepLinks.isQuickLink(url: url), let link = quickLink(from: url) {
-            loadQuickLink(link: link)
+        if AppDeepLinks.isQuickLink(url: url) {
+            let query = AppDeepLinks.query(fromQuickLink: url)
+            mainViewController?.loadQueryInNewTab(query)
         }
         return true
-    }
-    
-    private func quickLink(from url: URL) -> Link? {
-        guard let links = bookmarkStore.bookmarks else { return nil }
-        guard let host = url.host else { return nil }
-        guard let index = Int(host) else { return nil }
-        guard index < links.count else { return nil }
-        return links[index]
-    }
-    
-    private func loadQuickLink(link: Link) {
-        mainViewController?.loadUrlInNewTab(link.url)
     }
     
     private var rootViewController: UINavigationController? {

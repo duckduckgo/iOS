@@ -1136,8 +1136,8 @@
 				F135080F1E8C307800B7ECC4 /* RegionSelectionDelegate.swift */,
 				F1722BCA1E8BF6E30058AAA5 /* DateFilterSelectionViewController.swift */,
 				F13508021E8C303F00B7ECC4 /* DateFilterSelectionDelegate.swift */,
-				F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */,
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
+				F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";

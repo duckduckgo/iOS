@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         attachOmniBar()
-        attachHomeScreen()
+        attachHomeScreen(active: false)
     }
 
     private func attachOmniBar() {

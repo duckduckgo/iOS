@@ -305,7 +305,7 @@
         <scene sceneID="mFG-kj-9J2">
             <objects>
                 <navigationController id="w88-u3-TgK" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="KnU-qQ-aLl">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="KnU-qQ-aLl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -512,7 +512,7 @@ See our privacy policy online.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW2-iC-9BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2817" y="853"/>
+            <point key="canvasLocation" x="2876" y="818"/>
         </scene>
     </scenes>
     <resources>

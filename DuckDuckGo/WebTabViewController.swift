@@ -254,7 +254,7 @@ extension WebTabViewController: UIPopoverPresentationControllerDelegate {
 }
 
 extension WebTabViewController {
-    public override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if isShowBarsTap(gestureRecognizer) {
             return true
         }
@@ -270,6 +270,13 @@ extension WebTabViewController {
     
     private func isBottom(yPosition y: CGFloat) -> Bool {
         return y > (view.frame.size.height - InterfaceMeasurement.defaultToolbarHeight)
+    }
+    
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == showBarsTapGestureRecogniser {
+            return true
+        }
+        return super.gestureRecognizer(gestureRecognizer, shouldBeRequiredToFailBy: otherGestureRecognizer)
     }
 }
 

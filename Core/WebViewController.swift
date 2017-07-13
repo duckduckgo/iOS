@@ -75,7 +75,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     private func attachLongPressHandler(webView: WKWebView) {
-        let handler = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
+        let handler = WebLongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
         handler.delegate = self
         webView.scrollView.addGestureRecognizer(handler)
     }
@@ -200,6 +200,10 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 extension WebViewController: UIGestureRecognizerDelegate {
     
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer is WebLongPressGestureRecognizer else {
+            return false
+        }
+        
         let yOffset = touchesYOffset()
         let x = Int(gestureRecognizer.location(in: webView).x)
         let y = Int(gestureRecognizer.location(in: webView).y-yOffset)
@@ -208,6 +212,8 @@ extension WebViewController: UIGestureRecognizerDelegate {
     }
     
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+        return gestureRecognizer is WebLongPressGestureRecognizer
     }
 }
+
+fileprivate class WebLongPressGestureRecognizer: UILongPressGestureRecognizer {}

@@ -144,7 +144,10 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selection = indexPath.row
+        
+        guard indexPath.row < bookmarks.count else { return }
+        
+        let selection = bookmarks[indexPath.row].url
         if let url = URL(string: "\(AppDeepLinks.quickLink)\(selection)") {
             extensionContext?.open(url, completionHandler: nil)
         }

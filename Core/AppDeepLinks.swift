@@ -26,6 +26,8 @@ public struct AppDeepLinks {
     
     public static let quickLink = "ddgQuickLink://"
     
+    public static let privacyPolicy = URL(string: "\(AppDeepLinks.quickLink)https://duckduckgo.com/privacy")!
+    
     public static func isLaunch(url: URL) -> Bool {
         if let scheme = url.scheme {
             return AppDeepLinks.launch.contains(scheme)
@@ -38,5 +40,9 @@ public struct AppDeepLinks {
             return AppDeepLinks.quickLink.contains(scheme)
         }
         return false
+    }
+    
+    public static func query(fromQuickLink url: URL) -> String {
+        return url.absoluteString.replacingOccurrences(of: quickLink, with: "")
     }
 }

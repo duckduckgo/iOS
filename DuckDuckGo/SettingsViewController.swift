@@ -36,7 +36,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     
     private struct TableIndex {
-        static let sendFeedback = IndexPath(item: 0, section: 3)
+        static let sendFeedback = IndexPath(item: 1, section: 3)
     }
     
     static func loadFromStoryboard() -> UIViewController {

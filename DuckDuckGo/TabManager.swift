@@ -26,22 +26,33 @@ struct TabManager {
     
     private var tabs = [TabViewController]()
     
+    private var contentBlocker: ContentBlocker
+    
+    private weak var delegate: TabDelegate?
+    
     init(model: TabsModel, contentBlocker: ContentBlocker, delegate: TabDelegate) {
         self.model = model
-        for element in model.tabs {
-            let url = element.link?.url
-            let controller = buildController(contentBlocker: contentBlocker, delegate: delegate, url: url)
+        self.contentBlocker = contentBlocker
+        self.delegate = delegate
+        for tabEntity in model.tabs {
+            let url = tabEntity.link?.url
+            let controller = buildTabController(url: url)
             tabs.append(controller)
         }
     }
+ 
+    private func buildTabController(url: URL?) -> TabViewController {
+        let request = url == nil ? nil : URLRequest(url: url!)
+        return buildTabController(request: request)
+    }
     
-    public func buildController(contentBlocker: ContentBlocker, delegate: TabDelegate, url: URL?) -> TabViewController {
+    private func buildTabController(request: URLRequest?) -> TabViewController {
         let controller = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
-        controller.attachNewWebView(persistsData: true)
-        if let url = url {
-            controller.load(url: url)
-        }
+        controller.attachWebView(persistsData: true)
         controller.delegate = delegate
+        if let request = request {
+            controller.load(urlRequest: request)
+        }
         return controller
     }
     
@@ -78,14 +89,21 @@ struct TabManager {
         save()
         return current!
     }
+
+    mutating func add(url: URL?) -> TabViewController {
+        let request = url == nil ? nil : URLRequest(url: url!)
+        return add(request: request)
+    }
     
-    mutating func add(tab: TabViewController) {
+    mutating func add(request: URLRequest?) -> TabViewController {
         current?.dismiss()
+        let tab = buildTabController(request: request)
         tabs.append(tab)
         model.add(tab: Tab(link: tab.link))
         save()
+        return tab
     }
-    
+
     mutating func remove(at index: Int) {
         if index == model.currentIndex {
             clearSelection()

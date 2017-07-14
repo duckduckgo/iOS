@@ -615,7 +615,9 @@
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
-				F13B4BCC1F180D8F00814661 /* Tabs */,
+				F13B4BF31F18C73A00814661 /* Home */,
+				F13B4BF41F18C74500814661 /* Tabs */,
+				F1386BA21E6846320062FC3C /* TabSwitcher */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
@@ -801,26 +803,42 @@
 			name = TabSwitcher;
 			sourceTree = "<group>";
 		};
-		F13B4BCC1F180D8F00814661 /* Tabs */ = {
+		F13B4BF31F18C73A00814661 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				F13B4BD21F1822C700814661 /* Tab.swift */,
-				F13B4BBF1F180D8A00814661 /* TabsModel.swift */,
-				F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */,
-				F13B4BCD1F18108400814661 /* Tab */,
-				F1386BA21E6846320062FC3C /* TabSwitcher */,
+				F16390811E648B7A005B4550 /* HomeViewController.swift */,
+				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		F13B4BF41F18C74500814661 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				F1617C141E57336D00DEDCAF /* TabManager.swift */,
+				F13B4BF61F18C76600814661 /* UI */,
+				F13B4BF51F18C75D00814661 /* Model */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
 		};
-		F13B4BCD1F18108400814661 /* Tab */ = {
+		F13B4BF51F18C75D00814661 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F1617C141E57336D00DEDCAF /* TabManager.swift */,
+				F13B4BD21F1822C700814661 /* Tab.swift */,
+				F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */,
+				F13B4BBF1F180D8A00814661 /* TabsModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F13B4BF61F18C76600814661 /* UI */ = {
+			isa = PBXGroup;
+			children = (
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 			);
-			name = Tab;
+			name = UI;
 			sourceTree = "<group>";
 		};
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
@@ -1221,8 +1239,6 @@
 			children = (
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
-				F16390811E648B7A005B4550 /* HomeViewController.swift */,
-				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";

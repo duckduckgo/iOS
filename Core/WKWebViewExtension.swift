@@ -34,13 +34,7 @@ extension WKWebView {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
     }
-    
-    public func createSiblingWebView() -> WKWebView {
-        let webView = WKWebView(frame: frame, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        return webView
-    }
-  
+
     public static func cacheSummary(completionHandler: @escaping (_ summary: CacheSummary) -> Swift.Void) {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
         let dataStore = WKWebsiteDataStore.default()

@@ -90,9 +90,13 @@ class MainViewController: UIViewController {
     }
     
     func loadUrlInNewTab(_ url: URL) {
+        loadRequestInNewTab(URLRequest(url: url))
+    }
+    
+    func loadRequestInNewTab(_ request: URLRequest) {
         loadViewIfNeeded()
         currentTab?.dismiss()
-        attachTab(forUrl: url)
+        attachTab(forUrlRequest: request)
         refreshControls()
     }
     
@@ -109,30 +113,8 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func launchTabFrom(tab: TabViewController, forUrl url: URL) {
-        launchTabFrom(tab: tab, forUrlRequest: URLRequest(url: url))
-    }
-    
-    fileprivate func launchTabFrom(tab: TabViewController, forUrlRequest urlRequest: URLRequest) {
-        attachSiblingTab(fromWebView: tab.webView, forUrlRequest: urlRequest)
-        refreshControls()
-    }
-    
-    private func attachTab(forUrl url: URL) {
-        let tab = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
-        tab.attachNewWebView(persistsData: true)
-        tabManager.add(tab: tab)
-        tab.delegate = self
-        tab.load(url: url)
-        addToView(tab: tab)
-    }
-    
-    private func attachSiblingTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
-        let tab = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
-        tab.attachWebView(newWebView: webView.createSiblingWebView())
-        tab.delegate = self
-        tabManager.add(tab: tab)
-        tab.load(urlRequest: urlRequest)
+    private func attachTab(forUrlRequest urlRequest: URLRequest) {
+        let tab = tabManager.add(request: urlRequest)
         addToView(tab: tab)
     }
     
@@ -343,11 +325,11 @@ extension MainViewController: TabDelegate {
     }
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
-        launchTabFrom(tab: tab, forUrl: url)
+        loadUrlInNewTab(url)
     }
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
-        launchTabFrom(tab: tab, forUrlRequest: urlRequest)
+        loadRequestInNewTab(urlRequest)
     }
 }
 

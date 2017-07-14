@@ -22,14 +22,49 @@ import Core
 
 struct TabManager {
     
-    private(set) var current: Tab?
+    private(set) var model: TabsModel
     
-    private var tabs = [Tab]()
+    private var tabs = [TabViewController]()
     
-    var tabDetails: [Link] {
-        return buildTabDetails()
+    private var contentBlocker: ContentBlocker
+    
+    private weak var delegate: TabDelegate?
+    
+    init(model: TabsModel, contentBlocker: ContentBlocker, delegate: TabDelegate) {
+        self.model = model
+        self.contentBlocker = contentBlocker
+        self.delegate = delegate
+        for tabEntity in model.tabs {
+            let url = tabEntity.link?.url
+            let controller = buildTabController(url: url)
+            tabs.append(controller)
+        }
+    }
+ 
+    private func buildTabController(url: URL?) -> TabViewController {
+        let request = url == nil ? nil : URLRequest(url: url!)
+        return buildTabController(request: request)
     }
     
+    private func buildTabController(request: URLRequest?) -> TabViewController {
+        let controller = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
+        controller.attachWebView(persistsData: true)
+        controller.delegate = delegate
+        if let request = request {
+            controller.load(urlRequest: request)
+        }
+        return controller
+    }
+    
+    var current: TabViewController? {
+        guard let index = model.currentIndex else { return nil }
+        return tabs[index]
+    }
+    
+    var currentIndex: Int? {
+        return model.currentIndex
+    }
+
     var isEmpty: Bool {
         return tabs.isEmpty
     }
@@ -38,55 +73,46 @@ struct TabManager {
         return tabs.count
     }
     
-    var lastIndex: Int? {
-        return isEmpty ? nil : tabs.count-1
-    }
-    
-    var currentIndex: Int? {
-        guard let current = current else { return nil }
-        return indexOf(tab: current)
-    }
-    
-    private func buildTabDetails() -> [Link] {
-        var links = [Link]()
-        for tab in tabs {
-            if let link = tab.link {
-                links.append(link)
-            }
-        }
-        return links
-    }
-    
     mutating func clearSelection() {
         current?.dismiss()
-        current = nil
+        model.clearSelection()
+        save()
     }
     
-    mutating func select(tabAt index: Int) -> Tab {
+    mutating func select(tabAt index: Int) -> TabViewController {
         current?.dismiss()
-        let tab = tabs[index]
-        current = tab
+        model.currentIndex = index
+        save()
+        return current!
+    }
+
+    mutating func add(url: URL?) -> TabViewController {
+        let request = url == nil ? nil : URLRequest(url: url!)
+        return add(request: request)
+    }
+    
+    mutating func add(request: URLRequest?) -> TabViewController {
+        current?.dismiss()
+        let tab = buildTabController(request: request)
+        tabs.append(tab)
+        model.add(tab: Tab(link: tab.link))
+        save()
         return tab
     }
-    
-    mutating func add(tab: Tab) {
-        current?.dismiss()
-        tabs.append(tab)
-        current = tab
-    }
-    
+
     mutating func remove(at index: Int) {
         let tab = tabs.remove(at: index)
         tab.destroy()
+        model.remove(at: index)
+        save()
     }
     
-    mutating func remove(tab: Tab) {
-        if let index = indexOf(tab: tab) {
-            remove(at: index)
-        }
+    mutating func remove(tab: TabViewController) {
+        guard let index = indexOf(tab: tab) else { return }
+        remove(at: index)
     }
     
-    func indexOf(tab: Tab) -> Int? {
+    func indexOf(tab: TabViewController) -> Int? {
         for (index, current) in tabs.enumerated() {
             if current === tab {
                 return index
@@ -99,6 +125,18 @@ struct TabManager {
         for tab in tabs {
             remove(tab: tab)
         }
+        save()
+    }
+    
+    func updateModelFromTab(tab: TabViewController) {
+        if let index = indexOf(tab: tab) {
+            model.get(tabAt: index).link = tab.link
+        }
+        save()
+    }
+    
+    func save() {
+        model.save()
     }
 }
 

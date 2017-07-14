@@ -53,25 +53,21 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return webView.canGoForward
     }
     
-    public func attachNewWebView(persistsData: Bool) {
-        let newWebView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData)
-        attachWebView(newWebView: newWebView)
+    public func attachWebView(persistsData: Bool) {
+        webView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData)
+        attachLongPressHandler(webView: webView)
+        webView.allowsBackForwardNavigationGestures = true
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.navigationDelegate = self
+        webView.uiDelegate = self
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(webView, at: 0)
+        view.addEqualSizeConstraints(subView: webView)
+        webEventsDelegate?.attached(webView: webView)
+        
         if let url = url {
             load(url: url)
         }
-    }
-
-    public func attachWebView(newWebView: WKWebView) {
-        webView = newWebView
-        attachLongPressHandler(webView: newWebView)
-        newWebView.allowsBackForwardNavigationGestures = true
-        newWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        newWebView.navigationDelegate = self
-        newWebView.uiDelegate = self
-        newWebView.translatesAutoresizingMaskIntoConstraints = false
-        view.insertSubview(newWebView, at: 0)
-        view.addEqualSizeConstraints(subView: newWebView)
-        webEventsDelegate?.attached(webView: webView)
     }
     
     private func attachLongPressHandler(webView: WKWebView) {

@@ -246,10 +246,10 @@
             </objects>
             <point key="canvasLocation" x="148" y="456"/>
         </scene>
-        <!--Web Tab View Controller-->
+        <!--Tab View Controller-->
         <scene sceneID="PLi-M5-qzj">
             <objects>
-                <viewController storyboardIdentifier="WebTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E9z-hU-o7g" customClass="WebTabViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TabViewController" id="E9z-hU-o7g" customClass="TabViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="acf-1z-30M"/>
                         <viewControllerLayoutGuide type="bottom" id="ocz-cr-GSn"/>

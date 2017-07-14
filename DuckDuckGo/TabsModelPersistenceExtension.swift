@@ -1,5 +1,5 @@
 //
-//  WebTabDelegate.swift
+//  TabsModelPersistenceExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,16 +18,22 @@
 //
 
 
-import WebKit
-import Core
+import Foundation
 
-protocol WebTabDelegate: class {
+extension TabsModel {
     
-    func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL)
+    private struct Constants {
+        static let key = "com.duckduckgo.opentabs"
+    }
     
-    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
-
-    func webTab(_ webTab: WebTabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
+    public static func get() -> TabsModel? {
+        guard let data = UserDefaults.standard.object(forKey: Constants.key) as? Data else { return nil }
+        return NSKeyedUnarchiver.unarchiveObject(with: data) as? TabsModel
+    }
     
-    func webTabLoadingStateDidChange(webTab: WebTabViewController)
+    func save() {
+        let data = NSKeyedArchiver.archivedData(withRootObject: self)
+        UserDefaults.standard.set(data, forKey: Constants.key)
+    }
 }
+

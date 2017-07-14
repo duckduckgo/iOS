@@ -54,4 +54,9 @@ public class Link: NSObject, NSCoding {
     public var hasFavicon: Bool {
         return favicon != nil
     }
+    
+    public override func isEqual(_ other: Any?) -> Bool {
+        guard let other = other as? Link else { return false }
+        return title == other.title && url == other.url && favicon == other.favicon
+    }
 }

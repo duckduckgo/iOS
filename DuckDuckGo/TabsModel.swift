@@ -69,7 +69,17 @@ public class TabsModel: NSObject, NSCoding {
     }
     
     func remove(at index: Int) {
+        
         tabs.remove(at: index)
+
+        guard let previous = currentIndex else { return }
+        if previous < tabs.count {
+            currentIndex = index
+        } else if let lastIndex = lastIndex {
+            currentIndex = lastIndex
+        } else {
+            currentIndex = nil
+        }
     }
     
     func remove(tab: Tab) {
@@ -85,6 +95,10 @@ public class TabsModel: NSObject, NSCoding {
             }
         }
         return nil
+    }
+    
+    var lastIndex: Int? {
+        return isEmpty ? nil : tabs.count-1
     }
     
     func clearAll() {

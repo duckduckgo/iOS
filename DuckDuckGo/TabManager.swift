@@ -73,10 +73,6 @@ struct TabManager {
         return tabs.count
     }
     
-    var lastIndex: Int? {
-        return isEmpty ? nil : tabs.count-1
-    }
-    
     mutating func clearSelection() {
         current?.dismiss()
         model.clearSelection()
@@ -105,19 +101,9 @@ struct TabManager {
     }
 
     mutating func remove(at index: Int) {
-        if index == model.currentIndex {
-            clearSelection()
-        }
-        
         let tab = tabs.remove(at: index)
         tab.destroy()
         model.remove(at: index)
-        
-        if index < tabs.count {
-            model.currentIndex = index
-        } else if let lastIndex = lastIndex {
-            model.currentIndex = lastIndex
-        }
         save()
     }
     

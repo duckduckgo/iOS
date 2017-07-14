@@ -40,4 +40,9 @@ public class Tab: NSObject, NSCoding {
     public func encode(with coder: NSCoder) {
         coder.encode(link, forKey: NSCodingKeys.link)
     }
+    
+    public override func isEqual(_ other: Any?) -> Bool {
+        guard let other = other as? Tab else { return false }
+        return link == other.link
+    }
 }

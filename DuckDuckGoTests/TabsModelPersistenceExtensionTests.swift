@@ -45,12 +45,6 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
         model.add(tab: secondTab)
         return model
     }
-    
-    
-    //TODO make test friendly
-//    func testWhenNothingPersistedThenGetIsNil() {
-//        XCTAssertNil(TabsModel.get())
-//    }
 
     func testWhenModelPersistedThenGetIsNotNil() {
         TabsModel().save()

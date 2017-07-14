@@ -21,11 +21,31 @@
 import Foundation
 import Core
 
-public class TabsModel {
+public class TabsModel: NSObject, NSCoding {
+
+    private struct NSCodingKeys {
+        static let currentIndex = "currentIndex"
+        static let tabs = "tabs"
+    }
     
     var currentIndex: Int?
-    private(set) var tabs = [Tab]()
+    private(set) var tabs: [Tab]
     
+    public init(tabs: [Tab] = [Tab](), currentIndex: Int? = nil) {
+        self.tabs = tabs
+        self.currentIndex = currentIndex
+    }
+    
+    public convenience required init?(coder decoder: NSCoder) {
+        guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
+        let currentIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int
+        self.init(tabs: tabs, currentIndex: currentIndex)
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(tabs, forKey: NSCodingKeys.tabs)
+        coder.encode(currentIndex, forKey: NSCodingKeys.currentIndex)
+    }
     
     var isEmpty: Bool {
         return tabs.isEmpty

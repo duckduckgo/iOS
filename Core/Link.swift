@@ -21,16 +21,16 @@
 import Foundation
 
 public class Link: NSObject, NSCoding {
-    
-    public let title: String?
-    public let url: URL
-    public let favicon: URL?
-    
+        
     private struct NSCodingKeys {
         static let title = "title"
         static let url = "url"
         static let favicon = "favicon"
     }
+
+    public let title: String?
+    public let url: URL
+    public let favicon: URL?
     
     public required init(title: String?, url: URL, favicon: URL? = nil) {
         self.title = title
@@ -38,20 +38,20 @@ public class Link: NSObject, NSCoding {
         self.favicon = favicon
     }
     
-    public var hasFavicon: Bool {
-        return favicon != nil
-    }
-    
-    public convenience required init?(coder aDecoder: NSCoder) {
-        guard let url = aDecoder.decodeObject(forKey: NSCodingKeys.url) as? URL else { return nil }
-        let title = aDecoder.decodeObject(forKey: NSCodingKeys.title) as? String
-        let favicon = aDecoder.decodeObject(forKey: NSCodingKeys.favicon) as? URL
+    public convenience required init?(coder decoder: NSCoder) {
+        guard let url = decoder.decodeObject(forKey: NSCodingKeys.url) as? URL else { return nil }
+        let title = decoder.decodeObject(forKey: NSCodingKeys.title) as? String
+        let favicon = decoder.decodeObject(forKey: NSCodingKeys.favicon) as? URL
         self.init(title: title, url: url, favicon: favicon)
     }
     
-    public func encode(with aCoder: NSCoder) {
-        aCoder.encode(title, forKey: NSCodingKeys.title)
-        aCoder.encode(url, forKey: NSCodingKeys.url)
-        aCoder.encode(favicon, forKey: NSCodingKeys.favicon)
+    public func encode(with coder: NSCoder) {
+        coder.encode(title, forKey: NSCodingKeys.title)
+        coder.encode(url, forKey: NSCodingKeys.url)
+        coder.encode(favicon, forKey: NSCodingKeys.favicon)
+    }
+    
+    public var hasFavicon: Bool {
+        return favicon != nil
     }
 }

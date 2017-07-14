@@ -1,5 +1,5 @@
 //
-//  Tab.swift
+//  TabsModelPersistenceExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,26 +18,22 @@
 //
 
 
-import Core
+import Foundation
 
-public class Tab: NSObject, NSCoding {
+extension TabsModel {
     
-    private struct NSCodingKeys {
-        static let link = "link"
+    private struct Constants {
+        static let key = "com.duckduckgo.opentabs"
     }
     
-    var link: Link?
-    
-    init(link: Link?) {
-        self.link = link
+    public static func get() -> TabsModel? {
+        guard let data = UserDefaults.standard.object(forKey: Constants.key) as? Data else { return nil }
+        return NSKeyedUnarchiver.unarchiveObject(with: data) as? TabsModel
     }
     
-    public convenience required init?(coder decoder: NSCoder) {
-        let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
-        self.init(link: link)
-    }
-    
-    public func encode(with coder: NSCoder) {
-        coder.encode(link, forKey: NSCodingKeys.link)
+    func save() {
+        let data = NSKeyedArchiver.archivedData(withRootObject: self)
+        UserDefaults.standard.set(data, forKey: Constants.key)
     }
 }
+

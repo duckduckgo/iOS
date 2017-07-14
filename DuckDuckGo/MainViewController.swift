@@ -32,10 +32,10 @@ class MainViewController: UIViewController {
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
-    
+
+    fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
-    fileprivate lazy var tabManager = TabManager()
     private lazy var contentBlocker =  ContentBlocker()
     
     fileprivate var currentTab: TabViewController? {
@@ -45,9 +45,23 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         attachOmniBar()
-        attachHomeScreen(active: false)
+        configureTabManager()
+        loadInitialView()
     }
-
+    
+    private func configureTabManager() {
+        let tabsModel = TabsModel.get() ?? TabsModel()
+        tabManager = TabManager(model: tabsModel, contentBlocker: contentBlocker, delegate: self)
+    }
+    
+    private func loadInitialView() {
+        if let index = tabManager.currentIndex {
+            select(tabAt: index)
+        } else {
+            attachHomeScreen(active: false)
+        }
+    }
+    
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
@@ -127,7 +141,7 @@ class MainViewController: UIViewController {
         addToView(tab: selectedTab)
         refreshControls()
     }
-
+    
     private func addToView(tab: UIViewController) {
         removeHomeScreen()
         addToView(controller: tab)

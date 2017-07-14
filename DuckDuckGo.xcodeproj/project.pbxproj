@@ -53,6 +53,7 @@
 		F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BA31E6846C40062FC3C /* TabDelegate.swift */; };
 		F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BBF1F180D8A00814661 /* TabsModel.swift */; };
 		F13B4BD31F1822C700814661 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BD21F1822C700814661 /* Tab.swift */; };
+		F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */; };
 		F143C2A61E48F2E400CFDE3A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1C5ED041E37D14C00C599A4 /* Localizable.strings */; };
 		F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		F143C2B31E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
@@ -397,6 +398,7 @@
 		F1386BA31E6846C40062FC3C /* TabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDelegate.swift; sourceTree = "<group>"; };
 		F13B4BBF1F180D8A00814661 /* TabsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModel.swift; sourceTree = "<group>"; };
 		F13B4BD21F1822C700814661 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModelPersistenceExtension.swift; sourceTree = "<group>"; };
 		F143C2B11E49D78C00CFDE3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F143C2C41E4A08C400CFDE3A /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DuckDuckGo.entitlements; sourceTree = "<group>"; };
@@ -804,6 +806,7 @@
 			children = (
 				F13B4BD21F1822C700814661 /* Tab.swift */,
 				F13B4BBF1F180D8A00814661 /* TabsModel.swift */,
+				F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */,
 				F13B4BCD1F18108400814661 /* Tab */,
 				F1386BA21E6846320062FC3C /* TabSwitcher */,
 			);
@@ -1775,6 +1778,7 @@
 				F1BE54561E69DDE000FCF649 /* TrackingConfiguration.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */,
 				F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */,
+				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				F1BE54551E69DDE000FCF649 /* ContentBlockingConfiguration.swift in Sources */,

@@ -31,6 +31,10 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
         static let secondUrl = "http://anotherurl.com"
     }
     
+    override func setUp() {
+        UserDefaults.standard.removeObject(forKey: "com.duckduckgo.opentabs")
+    }
+    
     private var firstTab: Tab {
         return tab(title: Constants.firstTitle, url: Constants.firstUrl)
     }
@@ -39,27 +43,36 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
         return tab(title: Constants.firstTitle, url: Constants.firstUrl)
     }
     
-    private var filledModel: TabsModel {
+    private var emptyModel: TabsModel {
+        return TabsModel()
+    }
+    
+    private var model: TabsModel {
         let model = TabsModel()
         model.add(tab: firstTab)
         model.add(tab: secondTab)
         return model
     }
 
-    func testWhenModelPersistedThenGetIsNotNil() {
-        TabsModel().save()
+    func testBeforeModelSavedThenGetIsNil() {
+        XCTAssertNil(TabsModel.get())
+    }
+    
+    func testWhenModelSavedThenGetIsNotNil() {
+        model.save()
         XCTAssertNotNil(TabsModel.get())
     }
     
     func testWhenEmptyModelIsSavedThenGetLoadsModelWithNoItemsAndNoCurrent() {
-        TabsModel().save()
+        emptyModel.save()
+        
         let loaded = TabsModel.get()!
         XCTAssertEqual(loaded.count, 0)
         XCTAssertNil(loaded.currentIndex)
     }
 
-    func testWhenFilledModelIsSavedThenGetLoadsFullTabs() {
-        filledModel.save()
+    func testWhenModelIsSavedThenGetLoadsCompleteTabs() {
+        model.save()
         
         let loaded = TabsModel.get()!
         XCTAssertEqual(loaded.get(tabAt: 0), firstTab)
@@ -67,22 +80,22 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
         XCTAssertEqual(loaded.currentIndex, 1)
     }
     
-    func testWhenFilledModelIsSavedThenGetLoadsFilledModelWithCurrentSelection() {
-        filledModel.save()
+    func testWhenModelIsSavedThenGetLoadsModelWithCurrentSelection() {
+        model.save()
         
         let loaded = TabsModel.get()!
         XCTAssertEqual(loaded.count, 2)
         XCTAssertEqual(loaded.currentIndex, 1)
     }
     
-    func testWhenFilledModelWithClearedSelectionIsSavedThenGetLoadsFilledModelWithNoCurrent() {
-        let model = filledModel
-        model.clearSelection()
-        model.save()
+    func testWhenModelWithClearedSelectionIsSavedThenGetLoadsModelWithNoCurrent() {
+        let saved = model
+        saved.clearSelection()
+        saved.save()
         
-        let loaded = TabsModel.get()!
-        XCTAssertEqual(loaded.count, 2)
-        XCTAssertNil(loaded.currentIndex)
+        let loadedModel = TabsModel.get()!
+        XCTAssertEqual(loadedModel.count, 2)
+        XCTAssertNil(loadedModel.currentIndex)
     }
 
     private func tab(title: String, url: String) -> Tab {

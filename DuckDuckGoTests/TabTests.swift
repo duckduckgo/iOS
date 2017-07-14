@@ -42,7 +42,7 @@ class TabTests: XCTestCase {
         XCTAssertEqual(lhs, rhs)
     }
 
-    func testWhenDataThenEqualsFails() {
+    func testWhenLinksDifferentThenEqualsFails() {
         let lhs = Tab(link: Link(title: Constants.title, url: Constants.url))
         let rhs = Tab(link: Link(title: Constants.title, url: Constants.differentUrl))
         XCTAssertNotEqual(lhs, rhs)

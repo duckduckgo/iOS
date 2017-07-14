@@ -50,6 +50,19 @@ class TabsModelTests: XCTestCase {
         XCTAssertNil(TabsModel().currentIndex)
     }
     
+    func testWhenTabExistsThenIndexReturned() {
+        let tab = Tab(link: nil)
+        let testee = filledModel
+        testee.add(tab: tab)
+        XCTAssertEqual(testee.indexOf(tab: tab), 3)
+    }
+
+    func testWhenTabDoesNotExistThenIndexIsNil() {
+        let tab = Tab(link: nil)
+        let testee = filledModel
+        XCTAssertNil(testee.indexOf(tab: tab))
+    }
+
     func testWhenFirstItemAddedThenCountIsOneAndCurrentIndexIsZero() {
         let testee = emptyModel
         testee.add(tab: Tab(link: nil))
@@ -87,21 +100,21 @@ class TabsModelTests: XCTestCase {
     
     func testWhenPreviousItemRemovedThenCurrentIndexDecrements() {
         let testee = filledModel
-        filledModel.currentIndex = 2
+        testee.currentIndex = 2
         testee.remove(at: 0)
         XCTAssertEqual(testee.currentIndex, 1)
     }
     
     func testWhenCurrentItemRemovedAndCurrentIsNotLastThenCurrentIndexStaysTheSame() {
         let testee = filledModel
-        filledModel.currentIndex = 1
+        testee.currentIndex = 1
         testee.remove(at: 1)
         XCTAssertEqual(testee.currentIndex, 1)
     }
     
     func testWhenCurrentItemRemovedAndCurrentIsLastThenCurrentIndexDecrements() {
         let testee = filledModel
-        filledModel.currentIndex = 2
+        testee.currentIndex = 2
         testee.remove(at: 2)
         XCTAssertEqual(testee.currentIndex, 1)
     }
@@ -109,6 +122,13 @@ class TabsModelTests: XCTestCase {
     func testWhenFinalItemRemovedThenCurrentIsNil() {
         let testee = singleModel
         testee.remove(at: 0)
+        XCTAssertNil(testee.currentIndex)
+    }
+    
+    func testWhenAllClearedThenCountIsZeroAndCurrentIsNil() {
+        let testee = filledModel
+        testee.clearAll()
+        XCTAssertEqual(testee.count, 0)
         XCTAssertNil(testee.currentIndex)
     }
 }

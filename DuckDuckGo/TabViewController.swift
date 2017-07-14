@@ -193,6 +193,7 @@ class TabViewController: WebViewController {
     }
     
     func dismiss() {
+        webView.scrollView.delegate = nil
         removeFromParentViewController()
         view.removeFromSuperview()
     }

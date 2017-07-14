@@ -90,11 +90,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
     }
     
-    private func detachWebView(webView: WKWebView) {
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-        webView.removeFromSuperview()
-    }
-    
     public func load(url: URL) {
         load(urlRequest: URLRequest(url: url))
     }
@@ -184,7 +179,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func tearDown() {
         guard let webView = webView else { return }
-        detachWebView(webView: webView)
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        webView.removeFromSuperview()
     }
     
     fileprivate func touchesYOffset() -> CGFloat {

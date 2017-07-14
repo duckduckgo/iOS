@@ -95,7 +95,6 @@ class MainViewController: UIViewController {
     
     func loadRequestInNewTab(_ request: URLRequest) {
         loadViewIfNeeded()
-        currentTab?.dismiss()
         attachTab(forUrlRequest: request)
         refreshControls()
     }

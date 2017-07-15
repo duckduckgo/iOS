@@ -422,97 +422,120 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We don't track you" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                <rect key="frame" x="47.5" y="224" width="280" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="8Ro-lJ-9ja">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                    </constraint>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="30"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                <rect key="frame" x="47.5" y="276" width="280" height="134.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                    </constraint>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw7-2D-U9S">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="560"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
+                                                <rect key="frame" x="87.5" y="32" width="201" height="160"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We don't track you" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
+                                                <rect key="frame" x="47.5" y="224" width="280" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="8Ro-lJ-9ja">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="30"/>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
+                                                <rect key="frame" x="47.5" y="276" width="280" height="134.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <attributedString key="attributedText">
+                                                    <fragment>
+                                                        <string key="content">What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.
 
 See our privacy policy online.</string>
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <attributedString key="attributedText">
-                                        <fragment>
-                                            <string key="content">What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.
+                                                        <attributes>
+                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <attributedString key="attributedText">
+                                                        <fragment>
+                                                            <string key="content">What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.
 
 See our privacy policy online.</string>
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </variation>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
-                                <rect key="frame" x="87" y="32" width="201" height="160"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                <rect key="frame" x="47.5" y="418.5" width="280" height="28"/>
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </variation>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
+                                                <rect key="frame" x="47.5" y="418.5" width="280" height="28"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                <state key="normal" title="https://duckduckgo.com/privacy">
+                                                    <color key="titleColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="24"/>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="onPrivacyLinkTapped:" destination="jEM-1g-lEl" eventType="touchUpInside" id="0fe-DB-iSz"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="odm-6J-APs" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="1Uv-WP-hY9"/>
+                                            <constraint firstItem="iNd-oh-m3g" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="7FP-Sb-xP2"/>
+                                            <constraint firstItem="iNd-oh-m3g" firstAttribute="top" secondItem="wfd-Kx-0gx" secondAttribute="top" constant="32" id="Abh-Ul-MPN"/>
+                                            <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="BtH-UX-7up"/>
+                                            <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="TuI-fs-lpV"/>
+                                            <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="WiW-aH-os0"/>
+                                            <constraint firstAttribute="height" constant="560" id="aBC-xi-cEy"/>
+                                            <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="eaN-Or-GFY"/>
+                                            <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="g71-aw-kOx"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
+                                    <constraint firstAttribute="trailing" secondItem="wfd-Kx-0gx" secondAttribute="trailing" id="VW8-l4-dPE"/>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="leading" secondItem="Yw7-2D-U9S" secondAttribute="leading" id="ZA2-4Z-oie"/>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="top" secondItem="Yw7-2D-U9S" secondAttribute="top" id="cmt-KF-1rA">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="96"/>
                                     </constraint>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="centerX" secondItem="Yw7-2D-U9S" secondAttribute="centerX" id="qA4-H5-jPI"/>
+                                    <constraint firstAttribute="bottom" secondItem="wfd-Kx-0gx" secondAttribute="bottom" id="xFX-6h-gAs"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <state key="normal" title="https://duckduckgo.com/privacy">
-                                    <color key="titleColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="24"/>
-                                </variation>
-                                <connections>
-                                    <action selector="onPrivacyLinkTapped:" destination="jEM-1g-lEl" eventType="touchUpInside" id="0fe-DB-iSz"/>
-                                </connections>
-                            </button>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="4J6-wO-LeG"/>
-                            <constraint firstItem="iNd-oh-m3g" firstAttribute="centerX" secondItem="wVe-g5-BZG" secondAttribute="centerX" id="5X1-6h-LFa"/>
-                            <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wVe-g5-BZG" secondAttribute="centerX" id="CY0-fw-dc2"/>
-                            <constraint firstItem="odm-6J-APs" firstAttribute="centerX" secondItem="wVe-g5-BZG" secondAttribute="centerX" id="RJj-8q-CRE"/>
-                            <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wVe-g5-BZG" secondAttribute="centerX" id="Thp-ao-yTi"/>
-                            <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="ZcT-dV-jPI"/>
-                            <constraint firstItem="odm-6J-APs" firstAttribute="centerX" secondItem="wVe-g5-BZG" secondAttribute="centerX" id="Zo4-dQ-MxS"/>
-                            <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wVe-g5-BZG" secondAttribute="centerX" id="mjI-Jf-hhY"/>
-                            <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="u52-F6-lXb"/>
-                            <constraint firstItem="iNd-oh-m3g" firstAttribute="top" secondItem="F90-sd-lQ0" secondAttribute="bottom" constant="32" id="yIB-J6-Z6Q">
-                                <variation key="heightClass=regular-widthClass=regular" constant="124"/>
-                            </constraint>
+                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="top" secondItem="wVe-g5-BZG" secondAttribute="top" id="3Ue-ao-Q20"/>
+                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="leading" secondItem="wVe-g5-BZG" secondAttribute="leading" id="RkM-cs-ztf"/>
+                            <constraint firstAttribute="trailing" secondItem="Yw7-2D-U9S" secondAttribute="trailing" id="gve-ZA-3nx"/>
+                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="bottom" secondItem="BFC-LK-P05" secondAttribute="top" id="hQN-lT-1KI"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW2-iC-9BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2876" y="818"/>
+            <point key="canvasLocation" x="2875.5395683453239" y="816.9064748201439"/>
         </scene>
     </scenes>
     <resources>

@@ -4,7 +4,7 @@
 # to next release after 3.1.4, when available
 github "subsymbolic/SwiftyJSON" "4a62eb3a37e1e694a7f83d50093e803f966055ba"
 
-github "subsymbolic/Kingfisher" ~> 3.10.2
+github "subsymbolic/Kingfisher" ~> 3.10.3
 
 github "subsymbolic/Device.swift" ~> 0.5.0
 

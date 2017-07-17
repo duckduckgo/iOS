@@ -36,8 +36,7 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     
     private struct TableIndex {
-        static let sendFeedback = IndexPath(item: 0, section: 3)
-        static let onboardingFlow = IndexPath(item: 0, section: 4)
+        static let sendFeedback = IndexPath(item: 1, section: 3)
     }
     
     static func loadFromStoryboard() -> UIViewController {
@@ -78,9 +77,6 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath == TableIndex.onboardingFlow {
-            launchOnboardingFlow()
-        }
         if indexPath == TableIndex.sendFeedback {
             sendFeedback()
         }
@@ -97,12 +93,6 @@ class SettingsViewController: UITableViewController {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = UIColor.silver
         }
-    }
-    
-    private func launchOnboardingFlow() {
-        let controller = OnboardingViewController.loadFromStoryboard()
-        controller.modalTransitionStyle = .flipHorizontal
-        present(controller, animated: true, completion: nil)
     }
     
     private func sendFeedback() {

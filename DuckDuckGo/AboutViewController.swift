@@ -1,5 +1,5 @@
 //
-//  TabSwitcherDelegate.swift
+//  AboutViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,15 +18,14 @@
 //
 
 
+import UIKit
 import Core
 
-protocol TabSwitcherDelegate: class {
-
-    func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController)
+class AboutViewController: UIViewController {
     
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTabAt index: Int)
-    
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTabAt index: Int)
-    
-    func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController)
+    @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
+        dismiss(animated: true) { 
+            UIApplication.shared.openURL(AppDeepLinks.privacyPolicy)
+        }
+    }
 }

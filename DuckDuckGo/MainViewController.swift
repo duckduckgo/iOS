@@ -32,22 +32,36 @@ class MainViewController: UIViewController {
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
-    
+
+    fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
     fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
-    fileprivate lazy var tabManager = TabManager()
     private lazy var contentBlocker =  ContentBlocker()
     
-    fileprivate var currentTab: Tab? {
+    fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         attachOmniBar()
-        attachHomeScreen()
+        configureTabManager()
+        loadInitialView()
     }
-
+    
+    private func configureTabManager() {
+        let tabsModel = TabsModel.get() ?? TabsModel()
+        tabManager = TabManager(model: tabsModel, contentBlocker: contentBlocker, delegate: self)
+    }
+    
+    private func loadInitialView() {
+        if let index = tabManager.currentIndex {
+            select(tabAt: index)
+        } else {
+            attachHomeScreen(active: false)
+        }
+    }
+    
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
@@ -76,9 +90,12 @@ class MainViewController: UIViewController {
     }
     
     func loadUrlInNewTab(_ url: URL) {
+        loadRequestInNewTab(URLRequest(url: url))
+    }
+    
+    func loadRequestInNewTab(_ request: URLRequest) {
         loadViewIfNeeded()
-        currentTab?.dismiss()
-        attachTab(forUrl: url)
+        attachTab(forUrlRequest: request)
         refreshControls()
     }
     
@@ -95,39 +112,17 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func launchTabFrom(webTab: WebTabViewController, forUrl url: URL) {
-        launchTabFrom(webTab: webTab, forUrlRequest: URLRequest(url: url))
-    }
-    
-    fileprivate func launchTabFrom(webTab: WebTabViewController, forUrlRequest urlRequest: URLRequest) {
-        attachSiblingTab(fromWebView: webTab.webView, forUrlRequest: urlRequest)
-        refreshControls()
-    }
-    
-    private func attachTab(forUrl url: URL) {
-        let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
-        tab.attachNewWebView(persistsData: true)
-        tabManager.add(tab: tab)
-        tab.tabDelegate = self
-        tab.load(url: url)
-        addToView(tab: tab)
-    }
-    
-    private func attachSiblingTab(fromWebView webView: WKWebView, forUrlRequest urlRequest: URLRequest) {
-        let tab = WebTabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
-        tab.attachWebView(newWebView: webView.createSiblingWebView())
-        tab.tabDelegate = self
-        tabManager.add(tab: tab)
-        tab.load(urlRequest: urlRequest)
+    private func attachTab(forUrlRequest urlRequest: URLRequest) {
+        let tab = tabManager.add(request: urlRequest)
         addToView(tab: tab)
     }
     
     fileprivate func select(tabAt index: Int) {
-        let selectedTab = tabManager.select(tabAt: index) as! UIViewController
+        let selectedTab = tabManager.select(tabAt: index)
         addToView(tab: selectedTab)
         refreshControls()
     }
-
+    
     private func addToView(tab: UIViewController) {
         removeHomeScreen()
         addToView(controller: tab)
@@ -142,18 +137,11 @@ class MainViewController: UIViewController {
 
     fileprivate func remove(tabAt index: Int) {
         tabManager.remove(at: index)
-        
-        if tabManager.isEmpty {
+        if let index = tabManager.currentIndex {
+            select(tabAt: index)
+        } else {
             attachHomeScreen(active: false)
-            return
         }
-        
-        if let lastIndex = tabManager.lastIndex, index > lastIndex {
-            select(tabAt: lastIndex)
-            return
-        }
-        
-        select(tabAt: index)
     }
     
     fileprivate func clearAllTabs() {
@@ -240,8 +228,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabSwitcher() {
-        let index = tabManager.currentIndex
-        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, scrollTo: index)
+        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
@@ -325,30 +312,27 @@ extension MainViewController: HomeControllerDelegate {
     }
 }
 
-extension MainViewController: WebTabDelegate {
+extension MainViewController: TabDelegate {
     
-    func webTabLoadingStateDidChange(webTab: WebTabViewController) {
+    func tabLoadingStateDidChange(tab: TabViewController) {
         refreshControls()
+        tabManager.updateModelFromTab(tab: tab)
     }
     
-    func webTab(_ webTab: WebTabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
+    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
          omniBar.updateContentBlockerMonitor(monitor: monitor)
     }
     
-    func webTab(_ webTab: WebTabViewController, didRequestNewTabForUrl url: URL) {
-        launchTabFrom(webTab: webTab, forUrl: url)
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
+        loadUrlInNewTab(url)
     }
     
-    func webTab(_ webTab: WebTabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
-        launchTabFrom(webTab: webTab, forUrlRequest: urlRequest)
+    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
+        loadRequestInNewTab(urlRequest)
     }
 }
 
 extension MainViewController: TabSwitcherDelegate {
-    
-    var tabDetails: [Link] {
-        return tabManager.tabDetails
-    }
     
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         attachHomeScreen()

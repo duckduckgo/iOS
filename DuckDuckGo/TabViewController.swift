@@ -22,18 +22,18 @@ import WebKit
 import SafariServices
 import Core
 
-class WebTabViewController: WebViewController, Tab {
+class TabViewController: WebViewController {
     
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
-    weak var tabDelegate: WebTabDelegate?
+    weak var delegate: TabDelegate?
     
     private var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private(set) var contentBlockerMonitor = ContentBlockerMonitor()
     
-    static func loadFromStoryboard(contentBlocker: ContentBlocker) -> WebTabViewController {
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WebTabViewController") as! WebTabViewController
+    static func loadFromStoryboard(contentBlocker: ContentBlocker) -> TabViewController {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
         return controller
     }
@@ -70,7 +70,7 @@ class WebTabViewController: WebViewController, Tab {
     
     fileprivate func notifyContentBlockerMonitorChanged() {
         contentBlockerPopover?.updateMonitor(monitor: contentBlockerMonitor)
-        tabDelegate?.webTab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
+        delegate?.tab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
     }
     
     func launchBrowsingMenu() {
@@ -123,7 +123,7 @@ class WebTabViewController: WebViewController, Tab {
     private func newTabAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] action in
             if let weakSelf = self {
-                weakSelf.tabDelegate?.webTab(weakSelf, didRequestNewTabForUrl: url)
+                weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
             }
         }
     }
@@ -193,6 +193,7 @@ class WebTabViewController: WebViewController, Tab {
     }
     
     func dismiss() {
+        webView.scrollView.delegate = nil
         removeFromParentViewController()
         view.removeFromSuperview()
     }
@@ -205,7 +206,7 @@ class WebTabViewController: WebViewController, Tab {
     func omniBarWasDismissed() {}
 }
 
-extension WebTabViewController: WebEventsDelegate {
+extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
         webView.loadScripts()
@@ -215,18 +216,19 @@ extension WebTabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         resetContentBlockerMonitor()
         notifyContentBlockerMonitorChanged()
-        tabDelegate?.webTabLoadingStateDidChange(webTab: self)
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
-        tabDelegate?.webTabLoadingStateDidChange(webTab: self)
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
+        delegate?.tabLoadingStateDidChange(tab: self)
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
@@ -234,7 +236,7 @@ extension WebTabViewController: WebEventsDelegate {
     }
     
     func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
-        tabDelegate?.webTab(self, didRequestNewTabForRequest: urlRequest)
+        delegate?.tab(self, didRequestNewTabForRequest: urlRequest)
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
@@ -242,7 +244,7 @@ extension WebTabViewController: WebEventsDelegate {
     }
 }
 
-extension WebTabViewController: UIPopoverPresentationControllerDelegate {
+extension TabViewController: UIPopoverPresentationControllerDelegate {
     
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
@@ -253,7 +255,7 @@ extension WebTabViewController: UIPopoverPresentationControllerDelegate {
     }
 }
 
-extension WebTabViewController {
+extension TabViewController {
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if isShowBarsTap(gestureRecognizer) {
             return true
@@ -280,7 +282,7 @@ extension WebTabViewController {
     }
 }
 
-extension WebTabViewController: UIScrollViewDelegate {
+extension TabViewController: UIScrollViewDelegate {
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         if navigationController?.isToolbarHidden == true {
             showBars()

@@ -1,5 +1,5 @@
 //
-//  Tab.swift
+//  TabDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,31 +18,16 @@
 //
 
 
+import WebKit
 import Core
 
-public class Tab: NSObject, NSCoding {
+protocol TabDelegate: class {
     
-    private struct NSCodingKeys {
-        static let link = "link"
-    }
+    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
     
-    var link: Link?
+    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
+
+    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
     
-    init(link: Link?) {
-        self.link = link
-    }
-    
-    public convenience required init?(coder decoder: NSCoder) {
-        let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
-        self.init(link: link)
-    }
-    
-    public func encode(with coder: NSCoder) {
-        coder.encode(link, forKey: NSCodingKeys.link)
-    }
-    
-    public override func isEqual(_ other: Any?) -> Bool {
-        guard let other = other as? Tab else { return false }
-        return link == other.link
-    }
+    func tabLoadingStateDidChange(tab: TabViewController)
 }

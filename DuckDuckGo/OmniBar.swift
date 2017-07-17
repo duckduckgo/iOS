@@ -63,6 +63,7 @@ class OmniBar: UIView {
         contentBlockerButton.tag = OmniBar.contentBlockerTag
         configureTextField()
         configureEditingMenu()
+        onNonEditingMode()
     }
     
     var isBrowsing = false {
@@ -72,6 +73,23 @@ class OmniBar: UIView {
                 contentBlockerButton.isHidden = !isBrowsing
             }
         }
+    }
+    
+    fileprivate func onEditingMode() {
+        menuButton.isHidden = true
+        contentBlockerButton.isHidden = true
+        dismissButton.isHidden = false
+        clearButton.isHidden = false
+        DispatchQueue.main.async {
+            self.textField.selectAll(nil)
+        }
+    }
+    
+    fileprivate func onNonEditingMode() {
+        dismissButton.isHidden = true
+        clearButton.isHidden = true
+        menuButton.isHidden = !isBrowsing
+        contentBlockerButton.isHidden = !isBrowsing
     }
 
     private func configureTextField() {
@@ -169,13 +187,7 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        menuButton.isHidden = true
-        contentBlockerButton.isHidden = true
-        dismissButton.isHidden = false
-        clearButton.isHidden = false
-        DispatchQueue.main.async {
-            textField.selectAll(nil)
-        }
+        onEditingMode()
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -189,10 +201,7 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        dismissButton.isHidden = true
-        clearButton.isHidden = true
-        menuButton.isHidden = !isBrowsing
-        contentBlockerButton.isHidden = !isBrowsing
+        onNonEditingMode()
     }
 }
 

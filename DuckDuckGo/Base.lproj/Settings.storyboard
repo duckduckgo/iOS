@@ -20,7 +20,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Settings View Controller-->
+        <!--Settings-->
         <scene sceneID="tpH-1C-rxA">
             <objects>
                 <tableViewController clearsSelectionOnViewWillAppear="NO" id="fAo-H3-Yyo" customClass="SettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -281,8 +281,8 @@
                             <outlet property="delegate" destination="fAo-H3-Yyo" id="hoi-4e-UWz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Dyd-bm-goj">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="tnr-Bk-bgU">
+                    <navigationItem key="navigationItem" title="Settings" id="Dyd-bm-goj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="tnr-Bk-bgU">
                             <connections>
                                 <action selector="onDonePressed:" destination="fAo-H3-Yyo" id="syd-F9-Obf"/>
                             </connections>
@@ -535,7 +535,7 @@ See our privacy policy online.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW2-iC-9BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2875.5395683453239" y="816.9064748201439"/>
+            <point key="canvasLocation" x="2817" y="818"/>
         </scene>
     </scenes>
     <resources>

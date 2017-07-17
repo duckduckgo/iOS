@@ -2,13 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>proximanova-light.otf</string>
-		<string>proximanova-regular.otf</string>
-		<string>proximanova-bold.otf</string>
-		<string>proximanova-semibold.otf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -23,34 +16,6 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>7</string>
-	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleBlackOpaque</string>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -62,6 +27,32 @@
 				<string>ddgQuickLink</string>
 			</array>
 		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>855</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Allows you to upload photographs and videos</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allows you to share your location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allows you to share recordings</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows you to upload photographs and videos</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>proximanova-light.otf</string>
+		<string>proximanova-regular.otf</string>
+		<string>proximanova-bold.otf</string>
+		<string>proximanova-semibold.otf</string>
 	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>
@@ -82,15 +73,24 @@
 			<string>com.duckduckgo.mobile.ios.clipboard</string>
 		</dict>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleBlackOpaque</string>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>Allows you to upload photographs and videos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to upload photographs and videos</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allows you to share your location</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Allows you to share recordings</string>
 </dict>
 </plist>

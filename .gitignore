@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData/
+Carthage/Checkouts
 
 ## Various settings
 *.pbxuser

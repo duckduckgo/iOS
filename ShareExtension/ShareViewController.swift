@@ -20,6 +20,7 @@
 
 import WebKit
 import Social
+import ToastSwiftFramework
 import Core
 
 class ShareViewController: UIViewController {

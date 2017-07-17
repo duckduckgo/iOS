@@ -20,6 +20,7 @@
 
 import UIKit
 import WebKit
+import ToastSwiftFramework
 import Core
 
 class MainViewController: UIViewController {

@@ -14,7 +14,7 @@ We use Carthage for dependency management. If you don't have Carthage installed 
 Run `carthage bootstrap --platform iOS` before opening the project in XCode
 
 ### Fonts
-We use ProximaNova fonts which are proprietary and cannot be committed to source control, see [fonts](https://github.com/duckduckgo/iOS/tree/develop/fonts/licensed). If you own the ProximaNova fonts you can add them to the fonts directory. If not, you can still run this project however the fonts will be slightly different on your builds.
+We use Proxima Nova fonts which are proprietary and cannot be committed to source control, see [fonts](https://github.com/duckduckgo/iOS/tree/develop/fonts/licensed). If you own the Proxima Nova fonts you can add them to the fonts directory. If not, you can still run this project however the fonts may look a little distorted.
 
 ## Discuss
 

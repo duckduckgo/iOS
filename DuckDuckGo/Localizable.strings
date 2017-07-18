@@ -59,8 +59,3 @@
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
-
-"datefilter.code.any" = "Any Time";
-"datefilter.code.d" = "Past Day";
-"datefilter.code.w" = "Past Week";
-"datefilter.code.m" = "Past Month";

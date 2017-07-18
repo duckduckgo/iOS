@@ -25,15 +25,10 @@ import Device
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet weak var safeSearchToggle: UISwitch!
-    @IBOutlet weak var regionFilterText: UILabel!
-    @IBOutlet weak var dateFilterText: UILabel!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
-    
-    private lazy var regionFilterProvider = RegionFilterProvider()
+
     private lazy var versionProvider = Version()
-    fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     
     private struct TableIndex {
@@ -46,13 +41,8 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSafeSearchToggle()
         configureAuthenticationToggle()
         configureVersionText()
-    }
-    
-    private func configureSafeSearchToggle() {
-        safeSearchToggle.isOn = searchFilterStore.safeSearchEnabled
     }
     
     private func configureAuthenticationToggle() {
@@ -62,21 +52,7 @@ class SettingsViewController: UITableViewController {
     private func configureVersionText() {
         versionText.text = versionProvider.localized()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureRegionFilter()
-        configureDateFilter()
-    }
 
-    private func configureRegionFilter() {
-        regionFilterText.text = currentRegionSelection().name
-    }
-    
-    private func configureDateFilter() {
-        dateFilterText.text = UserText.forDateFilter(currentDateFilter())
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath == TableIndex.sendFeedback {
             sendFeedback()
@@ -110,56 +86,13 @@ class SettingsViewController: UITableViewController {
         mail.setMessageBody(feedback.body, isHTML: false)
         present(mail, animated: true, completion: nil)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? RegionSelectionViewController {
-            controller.delegate = self
-        }
-        if let controller = segue.destination as? DateFilterSelectionViewController {
-            controller.delegate = self
-        }
-    }
-    
-    @IBAction func onSafeSearchToggled(_ sender: UISwitch) {
-        searchFilterStore.safeSearchEnabled = sender.isOn
-    }
-    
-    fileprivate func currentRegionFilter() -> RegionFilter {
-        return regionFilterProvider.regionForKey(searchFilterStore.regionFilter)
-    }
-    
-    fileprivate func currentDateFilter() -> DateFilter {
-        return DateFilter.forKey(searchFilterStore.dateFilter)
-    }
-    
+
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
     
     @IBAction func onDonePressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-    }
-}
-
-extension SettingsViewController: RegionSelectionDelegate {
-    func currentRegionSelection() -> RegionFilter {
-        return currentRegionFilter()
-    }
-    
-    func onRegionSelected(region: RegionFilter) {
-        searchFilterStore.regionFilter = region.filter
-    }
-}
-
-extension SettingsViewController: DateFilterSelectionDelegate {
-    
-    func currentDateFilterSelection() -> DateFilter {
-        return currentDateFilter()
-    }
-    
-    func onDateFilterSelected(dateFilter: DateFilter) {
-        let value = (dateFilter == .any) ? nil : dateFilter.rawValue
-        searchFilterStore.dateFilter = value
     }
 }
 

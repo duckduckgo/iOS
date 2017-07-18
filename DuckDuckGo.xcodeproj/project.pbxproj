@@ -133,7 +133,6 @@
 		F1AA54611E48D90700223211 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1AA54601E48D90700223211 /* NotificationCenter.framework */; };
 		F1AA54641E48D90700223211 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA54631E48D90700223211 /* TodayViewController.swift */; };
 		F1AA54671E48D90700223211 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1AA54651E48D90700223211 /* MainInterface.storyboard */; };
-		F1AA546B1E48D90700223211 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1AA545E1E48D90700223211 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */; };
 		F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */; };
 		F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1AE54E91F04263600D9A700 /* Authentication.storyboard */; };
@@ -213,13 +212,6 @@
 			remoteGlobalIDString = F15A8B731E43A428008B8C6F;
 			remoteInfo = ShareExtension;
 		};
-		F1AA54691E48D90700223211 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F1AA545D1E48D90700223211;
-			remoteInfo = TodayExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -251,7 +243,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				F12810A81EB35B5300F95E4E /* ContentBlockerExtension.appex in Embed App Extensions */,
-				F1AA546B1E48D90700223211 /* TodayExtension.appex in Embed App Extensions */,
 				F15A8B7E1E43A428008B8C6F /* ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -1292,7 +1283,6 @@
 			);
 			dependencies = (
 				F15A8B7D1E43A428008B8C6F /* PBXTargetDependency */,
-				F1AA546A1E48D90700223211 /* PBXTargetDependency */,
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
 				F12810A71EB35B5300F95E4E /* PBXTargetDependency */,
 			);
@@ -1799,11 +1789,6 @@
 			isa = PBXTargetDependency;
 			target = F15A8B731E43A428008B8C6F /* ShareExtension */;
 			targetProxy = F15A8B7C1E43A428008B8C6F /* PBXContainerItemProxy */;
-		};
-		F1AA546A1E48D90700223211 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F1AA545D1E48D90700223211 /* TodayExtension */;
-			targetProxy = F1AA54691E48D90700223211 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

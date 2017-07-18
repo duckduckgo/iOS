@@ -77,8 +77,7 @@ class ShareViewController: UIViewController {
     private func loadText(textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: textIdentifier, options: nil, completionHandler: { [weak self] (item, error) in
             guard let text = item as? String else { return }
-            let filterStore = SearchFilterUserDefaults()
-            guard let queryUrl = AppUrls.url(forQuery: text, filters: filterStore) else { return }
+            guard let queryUrl = AppUrls.url(forQuery: text) else { return }
             self?.webController?.load(url: queryUrl)
         })
     }

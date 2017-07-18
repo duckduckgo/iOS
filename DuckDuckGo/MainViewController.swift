@@ -20,7 +20,6 @@
 
 import UIKit
 import WebKit
-import ToastSwiftFramework
 import Core
 
 class MainViewController: UIViewController {
@@ -217,13 +216,6 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    @IBAction func onSaveBookmark(_ sender: UIBarButtonItem) {
-        if let link = currentTab?.link {
-            bookmarkStore.addBookmark(link)
-            makeToast(text: UserText.webSaveLinkDone)
-        }
-    }
-    
     @IBAction func onTabButtonPressed(_ sender: UIBarButtonItem) {
         launchTabSwitcher()
     }
@@ -243,12 +235,6 @@ class MainViewController: UIViewController {
         let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
-    }
-    
-    private func makeToast(text: String) {
-        let x = view.bounds.size.width / 2.0
-        let y = view.bounds.size.height - 80
-        view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
     }
 }
 

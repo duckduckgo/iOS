@@ -19,6 +19,7 @@
 
 
 import Foundation
+import SwiftyJSON
 
 public struct DisconnectMeContentBlockerParser {
     

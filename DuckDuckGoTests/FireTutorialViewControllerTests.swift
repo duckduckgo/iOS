@@ -20,7 +20,6 @@
 
 import XCTest
 @testable import DuckDuckGo
-@testable import Kingfisher
 @testable import Core
 
 

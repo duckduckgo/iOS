@@ -21,6 +21,7 @@
 import UIKit
 import MessageUI
 import Core
+import Device
 
 class SettingsViewController: UITableViewController {
 

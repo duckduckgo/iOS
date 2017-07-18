@@ -30,7 +30,19 @@ class TabsFooter: UICollectionReusableView {
 
     public func refreshLabel() {
         WKWebView.cacheSummary { [weak self] summary in
-            self?.quantityLabel.text = String(format: UserText.tabSwitcherData, summary.count)
+            self?.refreshLabel(withCachedSummary: summary)
         }
+    }
+    
+    public func refreshLabel(withCachedSummary summary: CacheSummary) {
+        if summary.count != 0 {
+            quantityLabel.text = String(format: UserText.tabSwitcherData, summary.count)
+        } else {
+            clearLabel()
+        }
+    }
+    
+    public func clearLabel() {
+        quantityLabel.text = ""
     }
 }

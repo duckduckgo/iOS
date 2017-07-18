@@ -41,6 +41,7 @@ extension WKWebView {
         
         dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
             let count = records.reduce(0, { $0 + $1.dataTypes.count })
+            Logger.log(text: String(format: "Web cache retrieved, there are %d items in the cache", count))
             let cacheSummary = CacheSummary(count: count)
             completionHandler(cacheSummary)
         })

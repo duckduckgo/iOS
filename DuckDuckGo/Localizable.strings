@@ -29,7 +29,7 @@
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
-"tabswitcher.data" = "%d items cached";
+"tabswitcher.data" = "Tap 'Forget' to erase your tabs and data";
 
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";

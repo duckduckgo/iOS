@@ -110,14 +110,14 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Bookmarks" id="rc6-aN-tJm">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="QwA-TP-8Nd">
-                                            <connections>
-                                                <action selector="onDonePressed:" destination="bWO-94-mh0" id="IpE-yE-8tj"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Item" id="TT0-Un-0Br">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" id="TT0-Un-0Br">
                                             <connections>
                                                 <action selector="onEditPressed:" destination="bWO-94-mh0" id="jmu-3F-EP3"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="QwA-TP-8Nd">
+                                            <connections>
+                                                <action selector="onDonePressed:" destination="bWO-94-mh0" id="IpE-yE-8tj"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

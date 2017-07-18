@@ -55,7 +55,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Security" footerTitle="Application Lock will request your Touch ID or system passcode to open the app" id="zMK-jc-4bJ">
+                            <tableViewSection headerTitle="Security" footerTitle="If Touch ID or a system passcode is set, you'll be requested to unlock the app when opening." id="zMK-jc-4bJ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mSQ-M3-da5">
                                         <rect key="frame" x="0.0" y="163" width="375" height="44"/>
@@ -75,7 +75,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-yq-FYj">
-                                                            <rect key="frame" x="30" y="7.5" width="256" height="16"/>
+                                                            <rect key="frame" x="30" y="6" width="256" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>

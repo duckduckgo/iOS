@@ -1,4 +1,4 @@
-#DuckDuckGo iOS
+# DuckDuckGo iOS
 
 
 We are excited to engage the community in development and will open up this project to contributions soon.

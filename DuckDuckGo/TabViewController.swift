@@ -25,6 +25,10 @@ import Core
 
 class TabViewController: WebViewController {
     
+    private struct ViewConstants {
+        static let toastBottomMargin: CGFloat = 80
+    }
+    
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
@@ -198,7 +202,7 @@ class TabViewController: WebViewController {
     
     private func makeToast(text: String) {
         let x = view.bounds.size.width / 2.0
-        let y = view.bounds.size.height - 80
+        let y = view.bounds.size.height - ViewConstants.toastBottomMargin
         view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
     }
     

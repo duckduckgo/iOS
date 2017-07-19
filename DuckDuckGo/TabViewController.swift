@@ -20,9 +20,14 @@
 
 import WebKit
 import SafariServices
+import ToastSwiftFramework
 import Core
 
 class TabViewController: WebViewController {
+    
+    private struct ViewConstants {
+        static let toastBottomMargin: CGFloat = 80
+    }
     
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
@@ -115,11 +120,14 @@ class TabViewController: WebViewController {
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveBookmark,
             bookmark: bookmark,
-            saveCompletion: { updatedBookmark in BookmarksManager().save(bookmark: updatedBookmark) },
+            saveCompletion: { [weak self] updatedBookmark in
+                BookmarksManager().save(bookmark: updatedBookmark)
+                self?.makeToast(text: UserText.webSaveLinkDone)
+            },
             cancelCompletion: {})
         present(alert, animated: true, completion: nil)
     }
-    
+
     private func newTabAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] action in
             if let weakSelf = self {
@@ -190,6 +198,12 @@ class TabViewController: WebViewController {
     fileprivate func showBars() {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
+    }
+    
+    private func makeToast(text: String) {
+        let x = view.bounds.size.width / 2.0
+        let y = view.bounds.size.height - ViewConstants.toastBottomMargin
+        view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
     }
     
     func dismiss() {

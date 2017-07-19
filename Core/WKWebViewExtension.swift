@@ -52,6 +52,7 @@ extension WKWebView {
                 }
                 return count + record.dataTypes.count
             }
+            Logger.log(text: String(format: "Web cache retrieved, there are %d items in the cache", count))
             completionHandler(CacheSummary(count: count))
         })
     }

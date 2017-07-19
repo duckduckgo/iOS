@@ -31,6 +31,8 @@ class TabSwitcherViewController: UIViewController {
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     
+    fileprivate var hasSeenFooter = false
+    
     static func loadFromStoryboard(delegate: TabSwitcherDelegate, tabsModel: TabsModel) -> TabSwitcherViewController {
         let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
         controller.delegate = delegate
@@ -140,7 +142,14 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let reuseIdentifier = TabsFooter.reuseIdentifier
         let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
-        footer.refreshLabel()
+
+        if !hasSeenFooter {
+            footer.refreshLabel()
+            hasSeenFooter = true
+        } else {
+            footer.clearLabel()
+        }
+
         return footer
     }
     

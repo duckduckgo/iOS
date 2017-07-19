@@ -22,6 +22,10 @@ import WebKit
 
 extension WKWebView {
     
+    private struct Constants {
+        static let cacheKey = "duckduckgo.com"
+    }
+    
     public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
@@ -34,24 +38,35 @@ extension WKWebView {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
     }
-
-    public static func cacheSummary(completionHandler: @escaping (_ summary: CacheSummary) -> Swift.Void) {
+    
+    /**
+     Provides a summary of the external (non-duckduckgo) cached data
+     */
+    public static func externalCacheSummary(completionHandler: @escaping (_ summary: CacheSummary) -> Swift.Void) {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
         let dataStore = WKWebsiteDataStore.default()
-        
         dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
-            let count = records.reduce(0, { $0 + $1.dataTypes.count })
+            let count = records.reduce(0) { (count, record) in
+                if record.displayName == Constants.cacheKey {
+                    return count
+                }
+                return count + record.dataTypes.count
+            }
             Logger.log(text: String(format: "Web cache retrieved, there are %d items in the cache", count))
-            let cacheSummary = CacheSummary(count: count)
-            completionHandler(cacheSummary)
+            completionHandler(CacheSummary(count: count))
         })
     }
     
-    public static func clearCache(completionHandler: @escaping () -> Swift.Void) {
+    /**
+     Clears the cache of all external (non-duckduckgo) data
+     */
+    public static func clearExternalCache(completionHandler: @escaping () -> Swift.Void) {
         let allData = WKWebsiteDataStore.allWebsiteDataTypes()
         let dataStore = WKWebsiteDataStore.default()
+        
         dataStore.fetchDataRecords(ofTypes: allData) { records in
-            dataStore.removeData(ofTypes: allData, for: records) {
+            let externalRecords = records.filter { $0.displayName != Constants.cacheKey }
+            dataStore.removeData(ofTypes: allData, for: externalRecords) {
                 completionHandler()
             }
         }

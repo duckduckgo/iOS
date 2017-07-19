@@ -29,7 +29,7 @@ class TabsFooter: UICollectionReusableView {
     @IBOutlet weak var quantityLabel: UILabel!
 
     public func refreshLabel() {
-        WKWebView.cacheSummary { [weak self] summary in
+        WKWebView.externalCacheSummary { [weak self] summary in
             self?.refreshLabel(withCachedSummary: summary)
         }
     }

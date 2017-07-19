@@ -35,7 +35,6 @@ class MainViewController: UIViewController {
 
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
-    fileprivate lazy var searchFilterStore = SearchFilterUserDefaults()
     private lazy var contentBlocker =  ContentBlocker()
     
     fileprivate var currentTab: TabViewController? {
@@ -85,7 +84,7 @@ class MainViewController: UIViewController {
     }
     
     func loadQueryInNewTab(_ query: String) {
-        guard let url = AppUrls.url(forQuery: query, filters: searchFilterStore) else { return }
+        guard let url = AppUrls.url(forQuery: query) else { return }
         loadUrlInNewTab(url)
     }
     
@@ -100,7 +99,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQuery(_ query: String) {
-        guard let queryUrl = AppUrls.url(forQuery: query, filters: searchFilterStore) else { return }
+        guard let queryUrl = AppUrls.url(forQuery: query) else { return }
         loadUrl(queryUrl)
     }
     

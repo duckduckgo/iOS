@@ -29,7 +29,7 @@
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
-"tabswitcher.data" = "%d items cached";
+"tabswitcher.data" = "Tap 'Forget' to erase your tabs and data";
 
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";
@@ -59,8 +59,3 @@
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
-
-"datefilter.code.any" = "Any Time";
-"datefilter.code.d" = "Past Day";
-"datefilter.code.w" = "Past Week";
-"datefilter.code.m" = "Past Month";

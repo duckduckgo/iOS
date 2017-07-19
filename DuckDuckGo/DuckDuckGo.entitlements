@@ -4,7 +4,6 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.duckduckgo.searchfilters</string>
 		<string>group.com.duckduckgo.bookmarks</string>
 		<string>group.com.duckduckgo.contentblocker</string>
 	</array>

@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-
+import APNGKit
 import UIKit
 
 struct FireAnimation {
@@ -30,11 +30,14 @@ struct FireAnimation {
         }
         
         let animationContainer = UIView(frame: window.frame)
-        let fireView = UIImageView(image: #imageLiteral(resourceName: "FireLargeStretchable"))
+        let fireImage = APNGImage(named: "FireAnimated")!
+        let fireView = APNGImageView(image: fireImage)
+        fireView.autoStartAnimation = true
+        
         let nativeHeight = fireView.frame.size.height
-        let stretchedHeight = nativeHeight + animationContainer.frame.size.height
-        fireView.frame.size = CGSize(width: animationContainer.frame.width, height: stretchedHeight)
         fireView.transform.ty = animationContainer.frame.size.height
+        
+        animationContainer.isHidden = false
         animationContainer.addSubview(fireView)
         window.addSubview(animationContainer)
         

@@ -75,6 +75,8 @@
 		F143C33C1E4A9A9200CFDE3A /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3391E4A9A9200CFDE3A /* WebViewController.swift */; };
 		F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */; };
 		F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
+		F144846C1F3A308000F6AD2D /* APNGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F144846B1F3A308000F6AD2D /* APNGKit.framework */; };
+		F144846E1F3A311100F6AD2D /* FireAnimated@3x.apng in Resources */ = {isa = PBXBuildFile; fileRef = F144846D1F3A311100F6AD2D /* FireAnimated@3x.apng */; };
 		F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491E1E391CE900DC037C /* URLExtensionTests.swift */; };
 		F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */; };
 		F152F55C1EFC002400A911B5 /* ContentBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152F55B1EFC002400A911B5 /* ContentBlocker.swift */; };
@@ -332,6 +334,8 @@
 		F143C3391E4A9A9200CFDE3A /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtension.swift; sourceTree = "<group>"; };
 		F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarExtension.swift; sourceTree = "<group>"; };
+		F144846B1F3A308000F6AD2D /* APNGKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APNGKit.framework; path = Carthage/Build/iOS/APNGKit.framework; sourceTree = "<group>"; };
+		F144846D1F3A311100F6AD2D /* FireAnimated@3x.apng */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FireAnimated@3x.apng"; sourceTree = "<group>"; };
 		F14E491E1E391CE900DC037C /* URLExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
 		F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurement.swift; sourceTree = "<group>"; };
 		F152F55B1EFC002400A911B5 /* ContentBlocker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlocker.swift; sourceTree = "<group>"; };
@@ -474,6 +478,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F144846C1F3A308000F6AD2D /* APNGKit.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				F17BA43D1F1CD99800460FFA /* Device.framework in Frameworks */,
 				F17BA43E1F1CD99800460FFA /* Kingfisher.framework in Frameworks */,
@@ -599,6 +604,7 @@
 				F18641FF1E949E1900B2A911 /* Fonts */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
 				F1F533861F26ABAC00D80D4F /* Localizable.strings */,
+				F144846D1F3A311100F6AD2D /* FireAnimated@3x.apng */,
 			);
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
@@ -1091,6 +1097,7 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F144846B1F3A308000F6AD2D /* APNGKit.framework */,
 				F17843E41F361AC900390DCD /* OHHTTPStubs.framework */,
 				F1C81A731F33873800241DE6 /* Alamofire.framework */,
 				F17BA4391F1CD99800460FFA /* Device.framework */,
@@ -1533,6 +1540,7 @@
 				F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */,
 				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
 				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
+				F144846E1F3A311100F6AD2D /* FireAnimated@3x.apng in Resources */,
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
@@ -1625,6 +1633,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ToastSwiftFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/APNGKit.framework",
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Device.framework",
@@ -1632,6 +1641,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ToastSwiftFramework.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftyJSON.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/APNGKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

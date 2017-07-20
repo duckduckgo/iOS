@@ -160,12 +160,12 @@ class MainViewController: UIViewController {
     
     private func refreshOmniBar() {
         guard let tab = currentTab else {
-            omniBar.clear()
+            omniBar.stopBrowsing()
             return
         }
         omniBar.refreshText(forUrl: tab.link?.url)
         omniBar.updateContentBlockerMonitor(monitor: tab.contentBlockerMonitor)
-        omniBar.isBrowsing = currentTab != nil
+        omniBar.startBrowsing()
     }
     
     fileprivate func updateOmniBar(withQuery updatedQuery: String) {
@@ -250,6 +250,10 @@ extension MainViewController: OmniBarDelegate {
     
     func onMenuPressed() {
         launchMenu()
+    }
+    
+    func onBookmarksPressed() {
+        launchBookmarks()
     }
     
     func onContenBlockerPressed() {

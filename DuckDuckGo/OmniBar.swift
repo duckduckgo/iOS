@@ -35,17 +35,23 @@ class OmniBar: UIView {
             return InterfaceMeasurement.screenWidth - leftMargin - rightMargin
         }
     }
-
-    public static let contentBlockerTag = 100
-    public static let menuButtonTag = 200
+    
+    struct Tag {
+        static let contentBlocker = 100
+        static let menuButton = 200
+    }
     
     @IBOutlet weak var dismissButton: UIButton!
-    @IBOutlet weak var contentBlockerButton: UIButton!
+    @IBOutlet weak var contentBlockerContainer: UIView!
+    @IBOutlet weak var contentBlockerCircle: UIImageView!
+    @IBOutlet weak var contentBlockerLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
 
     weak var omniDelegate: OmniBarDelegate?
+    var state: OmniBarState = HomeEmptyEditingState()
     
     static func loadFromXib() -> OmniBar {
         let omnibar = OmniBar.load(nibName: "OmniBar")
@@ -59,37 +65,32 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        menuButton.tag = OmniBar.menuButtonTag
-        contentBlockerButton.tag = OmniBar.contentBlockerTag
+        menuButton.tag = Tag.menuButton
+        contentBlockerContainer.tag = Tag.contentBlocker
         configureTextField()
         configureEditingMenu()
-        onNonEditingMode()
+        refreshState(state)
     }
     
-    var isBrowsing = false {
-        didSet {
-            if !textField.isFirstResponder {
-                menuButton.isHidden = !isBrowsing
-                contentBlockerButton.isHidden = !isBrowsing
-            }
+    func startBrowsing() {
+        refreshState(state.onBrowsingStartedState)
+    }
+    
+    func stopBrowsing() {
+        clear()
+        refreshState(state.onBrowsingStoppedState)
+    }
+
+    fileprivate func refreshState(_ newState: OmniBarState) {
+        if type(of: state) != type(of: newState)  {
+            Logger.log(text: "OmniBar entering \(Type.name(newState))")
+            state = newState
         }
-    }
-    
-    fileprivate func onEditingMode() {
-        menuButton.isHidden = true
-        contentBlockerButton.isHidden = true
-        dismissButton.isHidden = false
-        clearButton.isHidden = false
-        DispatchQueue.main.async {
-            self.textField.selectAll(nil)
-        }
-    }
-    
-    fileprivate func onNonEditingMode() {
-        dismissButton.isHidden = true
-        clearButton.isHidden = true
-        menuButton.isHidden = !isBrowsing
-        contentBlockerButton.isHidden = !isBrowsing
+        dismissButton.isHidden = !state.showDismiss
+        contentBlockerContainer.isHidden = !state.showContentBlocker
+        clearButton.isHidden = !state.showClear
+        menuButton.isHidden = !state.showMenu
+        bookmarksButton.isHidden = !state.showBookmarks
     }
 
     private func configureTextField() {
@@ -118,14 +119,14 @@ class OmniBar: UIView {
 
     func updateContentBlockerMonitor(monitor: ContentBlockerMonitor) {
         if !monitor.blockingEnabled {
-            contentBlockerButton.tintColor = UIColor.contentBlockerCompletelyDisabledTint
-            contentBlockerButton.setTitle("!", for: .normal)
+            contentBlockerCircle.tintColor = UIColor.contentBlockerCompletelyDisabledTint
+            contentBlockerLabel.text = "!"
         } else if monitor.total == 0 {
-            contentBlockerButton.tintColor = UIColor.contentBlockerActiveCleanSiteTint
-            contentBlockerButton.setTitle("\(monitor.total)", for: .normal)
+            contentBlockerCircle.tintColor = UIColor.contentBlockerActiveCleanSiteTint
+            contentBlockerLabel.text = "\(monitor.total)"
         } else {
-            contentBlockerButton.tintColor = UIColor.contentBlockerActiveDirtySiteTint
-            contentBlockerButton.setTitle("\(monitor.total)", for: .normal)
+            contentBlockerCircle.tintColor = UIColor.contentBlockerActiveDirtySiteTint
+            contentBlockerLabel.text = "\(monitor.total)"
         }
     }
     
@@ -171,15 +172,20 @@ class OmniBar: UIView {
         }
     }
     
-    @IBAction func onClearButtonPresed(_ sender: Any) {
-        textField.text = ""
+    @IBAction func onClearButtonPressed(_ sender: Any) {
+        clear()
+        refreshState(state.onTextClearedState)
+    }
+    
+    @IBAction func onBookmarksButtonPressed(_ sender: Any) {
+        omniDelegate?.onBookmarksPressed()
     }
     
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
         omniDelegate?.onMenuPressed()
     }
     
-    @IBAction func onContentBlockerButtonPressed(_ sender: UIButton) {
+    @IBAction func onContentBlockerButtonPressed(_ sender: Any) {
         omniDelegate?.onContenBlockerPressed()
     }
 }
@@ -187,21 +193,27 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        onEditingMode()
+        refreshState(state.onEditingStartedState)
+        DispatchQueue.main.async {
+            self.textField.selectAll(nil)
+        }
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let oldQuery = textField.text,
-            let queryRange = oldQuery.range(from: range) else {
-                return true
-        }
+        guard let oldQuery = textField.text else { return true }
+        guard let queryRange = oldQuery.range(from: range) else { return true }
         let newQuery = oldQuery.replacingCharacters(in: queryRange, with: string)
         omniDelegate?.onOmniQueryUpdated(newQuery)
+        if newQuery.isEmpty {
+            refreshState(state.onTextClearedState)
+        } else {
+            refreshState(state.onTextEnteredState)
+        }
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        onNonEditingMode()
+        refreshState(state.onEditingStoppedState)
     }
 }
 

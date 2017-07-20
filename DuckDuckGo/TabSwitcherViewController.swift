@@ -114,12 +114,12 @@ class TabSwitcherViewController: UIViewController {
         delegate.tabSwitcher(self, didRemoveTabAt: index)
         collectionView.reloadData()
         refreshTitle()
-    }
-    
-    fileprivate func dismiss() {
         if tabsModel.isEmpty {
             delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         }
+    }
+    
+    fileprivate func dismiss() {
         dismiss(animated: true, completion: nil)
     }
 }

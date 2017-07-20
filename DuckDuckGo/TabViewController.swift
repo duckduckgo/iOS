@@ -60,7 +60,7 @@ class TabViewController: WebViewController {
     }
     
     func launchContentBlockerPopover() {
-        guard let button = navigationController?.view.viewWithTag(OmniBar.contentBlockerTag) else { return }
+        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withMonitor: contentBlockerMonitor)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
@@ -79,7 +79,7 @@ class TabViewController: WebViewController {
     }
     
     func launchBrowsingMenu() {
-        guard let button = navigationController?.view.viewWithTag(OmniBar.menuButtonTag) else { return }
+        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())

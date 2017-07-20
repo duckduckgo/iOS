@@ -40,7 +40,7 @@
 "action.title.readingList" = "Add to Reading List";
 "action.title.copy" = "Copy";
 "action.title.share"= "Share...";
-"action.title.save.bookmark" = "Bookmark";
+"action.title.save.bookmark" = "Add to Bookmarks";
 "action.title.settings" = "Settings";
 
 "alert.title.save.bookmark" = "Save Bookmark";

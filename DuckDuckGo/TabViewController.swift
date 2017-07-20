@@ -82,6 +82,7 @@ class TabViewController: WebViewController {
         guard let button = navigationController?.view.viewWithTag(OmniBar.menuButtonTag) else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
+        alert.addAction(newTabAction())
         
         if let link = link {
             alert.addAction(copyAction(forUrl: link.url))
@@ -127,9 +128,17 @@ class TabViewController: WebViewController {
             cancelCompletion: {})
         present(alert, animated: true, completion: nil)
     }
-
-    private func newTabAction(forUrl url: URL) -> UIAlertAction {
+    
+    private func newTabAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] action in
+            if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestNewTab(weakSelf)
+            }
+        }
+    }
+    
+    private func newTabAction(forUrl url: URL) -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionNewTabForUrl, style: .default) { [weak self] action in
             if let weakSelf = self {
                 weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
             }

@@ -308,6 +308,10 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
          omniBar.updateContentBlockerMonitor(monitor: monitor)
     }
+
+    func tabDidRequestNewTab(_ tab: TabViewController) {
+        attachHomeScreen()
+    }
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)

@@ -34,7 +34,8 @@
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";
 "action.title.cancel" = "Cancel";
-"action.title.newTab" = "Open in New Tab";
+"action.title.newTab" = "New Tab";
+"action.title.newTabForUrl" = "Open in New Tab";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";
 "action.title.readingList" = "Add to Reading List";

@@ -92,7 +92,7 @@ struct BrowsingEmptyEditingState: OmniBarState {
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return self }
     var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
-    var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
+    var onBrowsingStartedState: OmniBarState { return self }
     var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
 }
 
@@ -107,7 +107,7 @@ struct BrowsingTextEditingState: OmniBarState {
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return self }
-    var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
+    var onBrowsingStartedState: OmniBarState { return self }
     var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
 }
 

@@ -86,11 +86,22 @@ class OmniBar: UIView {
             Logger.log(text: "OmniBar entering \(Type.name(newState))")
             state = newState
         }
-        dismissButton.isHidden = !state.showDismiss
-        contentBlockerContainer.isHidden = !state.showContentBlocker
-        clearButton.isHidden = !state.showClear
-        menuButton.isHidden = !state.showMenu
-        bookmarksButton.isHidden = !state.showBookmarks
+        setVisibility(dismissButton, hidden: !state.showDismiss)
+        setVisibility(contentBlockerContainer, hidden: !state.showContentBlocker)
+        setVisibility(clearButton, hidden: !state.showClear)
+        setVisibility(menuButton, hidden: !state.showMenu)
+        setVisibility(bookmarksButton, hidden: !state.showBookmarks)
+    }
+
+    /*
+     Superfluous check to overcome apple bug in stack view where setting value more than
+     once causes issues, related to http://www.openradar.me/22819594
+     Kill this method when radar is fixed - burn it with fire ;-) 
+     */
+    private func setVisibility(_ view: UIView, hidden: Bool) {
+        if view.isHidden != hidden {
+            view.isHidden = hidden
+        }
     }
 
     private func configureTextField() {

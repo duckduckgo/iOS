@@ -171,9 +171,9 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onTextClearedState.name, BrowsingEmptyEditingState().name)
     }
     
-    func testWhenInBrowsingEmptyEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
+    func testWhenInBrowsingEmptyEditingStateThenBrowsingStartedMaintainsState() {
         let testee = BrowsingEmptyEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingEmptyEditingState().name)
     }
     
     func testWhenInBrowsingEmptyEditingStateThenBrowsingStoppedTransitionsToHomeEmptyEditingState() {
@@ -210,9 +210,9 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onTextClearedState.name, BrowsingEmptyEditingState().name)
     }
     
-    func testWhenInBrowsingTextEditingStateThenBrowsingStartedTransitionsToBrowsingNonEditingState() {
+    func testWhenInBrowsingTextEditingStateThenBrowsingStartedMaintainsState() {
         let testee = BrowsingTextEditingState()
-        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
+        XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingTextEditingState().name)
     }
     
     func testWhenInBrowsingTextEditingStateThenBrowsingStoppedTransitionsToHomeTextEditingState() {

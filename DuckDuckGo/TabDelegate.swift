@@ -33,6 +33,10 @@ protocol TabDelegate: class {
     
     func tabDidRequestTabSwitcher(tab: TabViewController)
     
+    func tabDidRequestClearAll(tab: TabViewController)
+    
+    func tabDidRequestClose(tab: TabViewController)
+    
     func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
     
     func tabLoadingStateDidChange(tab: TabViewController)

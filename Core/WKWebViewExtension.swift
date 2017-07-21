@@ -67,6 +67,7 @@ extension WKWebView {
         dataStore.fetchDataRecords(ofTypes: allData) { records in
             let externalRecords = records.filter { $0.displayName != Constants.cacheKey }
             dataStore.removeData(ofTypes: allData, for: externalRecords) {
+                Logger.log(text: "External cache cleared")
                 completionHandler()
             }
         }

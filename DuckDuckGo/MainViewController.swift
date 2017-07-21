@@ -91,7 +91,7 @@ class MainViewController: UIViewController {
     
     func loadRequestInNewTab(_ request: URLRequest) {
         loadViewIfNeeded()
-        attachTab(forUrlRequest: request)
+        addTab(forUrlRequest: request)
         refreshOmniBar()
     }
     
@@ -108,7 +108,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func attachTab(forUrlRequest urlRequest: URLRequest) {
+    private func addTab(forUrlRequest urlRequest: URLRequest) {
         let tab = tabManager.add(request: urlRequest)
         addToView(tab: tab)
     }
@@ -139,9 +139,15 @@ class MainViewController: UIViewController {
             attachHomeScreen(active: false)
         }
     }
+
+    fileprivate func closeTabAndOpenNew(oldTab: TabViewController) {
+        tabManager.remove(tab: oldTab)
+        attachHomeScreen(active: true)
+    }
     
     fileprivate func clearAllTabs() {
         tabManager.clearAll()
+        WKWebView.clearExternalCache {}
         attachHomeScreen(active: false)
     }
     
@@ -159,6 +165,13 @@ class MainViewController: UIViewController {
         displayAutocompleteSuggestions(forQuery: updatedQuery)
     }
     
+    fileprivate func dismissOmniBar() {
+        omniBar.resignFirstResponder()
+        dismissAutcompleteSuggestions()
+        refreshOmniBar()
+        homeController?.omniBarWasDismissed()
+    }
+    
     private func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil {
             let controller = AutocompleteViewController.loadFromStoryboard()
@@ -169,14 +182,6 @@ class MainViewController: UIViewController {
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
-    }
-
-    fileprivate func dismissOmniBar() {
-        omniBar.resignFirstResponder()
-        dismissAutcompleteSuggestions()
-        refreshOmniBar()
-        homeController?.omniBarWasDismissed()
-        currentTab?.omniBarWasDismissed()
     }
     
     fileprivate func dismissAutcompleteSuggestions() {
@@ -310,6 +315,14 @@ extension MainViewController: TabDelegate {
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
         loadRequestInNewTab(urlRequest)
+    }
+    
+    func tabDidRequestClearAll(tab: TabViewController) {
+        clearAllTabs()
+    }
+    
+    func tabDidRequestClose(tab: TabViewController) {
+        closeTabAndOpenNew(oldTab: tab)
     }
 }
 

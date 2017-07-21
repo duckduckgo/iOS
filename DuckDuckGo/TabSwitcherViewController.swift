@@ -76,9 +76,6 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onClearAllPressed(_ sender: UIButton) {
-        WKWebView.clearExternalCache {
-            Logger.log(text: "Cache cleared")
-        }
         animateFire {
             self.delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
             self.collectionView.reloadData()

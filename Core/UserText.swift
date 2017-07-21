@@ -55,6 +55,8 @@ public struct UserText {
     public static let actionCancel = forKey("action.title.cancel")
     public static let actionNewTab = forKey("action.title.newTab")
     public static let actionNewTabForUrl = forKey("action.title.newTabForUrl")
+    public static let actionTabClearAll = forKey("action.title.tabClearAll")
+    public static let actionTabClose = forKey("action.title.tabClose")
     public static let actionOpen = forKey("action.title.open")
     public static let actionReadingList = forKey("action.title.readingList")
     public static let actionCopy = forKey("action.title.copy")

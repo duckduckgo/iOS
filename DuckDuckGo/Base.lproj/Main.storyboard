@@ -313,6 +313,9 @@
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" image="FireMini" backgroundImage="FireBackground"/>
+                                <connections>
+                                    <action selector="onFirePressed" destination="E9z-hU-o7g" eventType="touchUpInside" id="JhF-Ag-gSg"/>
+                                </connections>
                             </button>
                         </subviews>
                         <gestureRecognizers/>
@@ -337,6 +340,7 @@
                     </fixedSimulatedSizeMetrics>
                     <connections>
                         <outlet property="backButton" destination="5JU-XX-Abv" id="VmA-KF-6jU"/>
+                        <outlet property="fireButton" destination="ouZ-ZQ-DD8" id="DND-le-Dvt"/>
                         <outlet property="forwardButton" destination="6rN-GX-Jcx" id="La7-Sh-Tk5"/>
                         <outlet property="progressBar" destination="9b1-jz-pNY" id="erL-pu-2gE"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="o3F-pX-Jbo" id="yN5-q7-pMK"/>

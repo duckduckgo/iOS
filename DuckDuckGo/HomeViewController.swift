@@ -65,8 +65,10 @@ class HomeViewController: UIViewController {
     
     private func enterActiveModeAnimated() {
         UIView.animate(withDuration: Constants.animationDuration, animations: {
+            self.toolbar.isHidden = true
             self.moveSearchBarUp()
         }) { (finished) in
+            self.toolbar.isHidden = false
             self.enterActiveMode()
         }
     }
@@ -85,6 +87,7 @@ class HomeViewController: UIViewController {
         enterPassiveMode()
         UIView.animate(withDuration: Constants.animationDuration) {
             self.resetSearchBar()
+            self.toolbar.isHidden = false
         }
     }
     

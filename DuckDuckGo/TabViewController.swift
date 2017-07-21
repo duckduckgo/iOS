@@ -29,6 +29,8 @@ class TabViewController: WebViewController {
         static let toastBottomMargin: CGFloat = 80
     }
     
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
@@ -55,7 +57,6 @@ class TabViewController: WebViewController {
     
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = true
     }
     
@@ -200,19 +201,39 @@ class TabViewController: WebViewController {
         return SupportedExternalURLScheme.isSupported(url: url)
     }
     
+    @IBAction func onBackPressed() {
+        goBack()
+    }
+    
+    @IBAction func onForwardPressed() {
+        goForward()
+    }
+    
+    @IBAction func onBookmarksTapped() {
+        delegate?.tabDidRequestBookmarks(tab: self)
+    }
+    
+    @IBAction func onTabsTapped() {
+        delegate?.tabDidRequestTabSwitcher(tab: self)
+    }
+    
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
         showBars()
     }
     
     fileprivate func showBars() {
         navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
     }
     
     private func makeToast(text: String) {
         let x = view.bounds.size.width / 2.0
         let y = view.bounds.size.height - ViewConstants.toastBottomMargin
         view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
+    }
+
+    fileprivate func refreshNavigationButtons() {
+        backButton.isEnabled = canGoBack
+        forwardButton.isEnabled = canGoForward
     }
     
     func dismiss() {
@@ -239,11 +260,13 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         resetContentBlockerMonitor()
         notifyContentBlockerMonitorChanged()
+        refreshNavigationButtons()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
+        refreshNavigationButtons()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }

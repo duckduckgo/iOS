@@ -22,11 +22,15 @@ import Foundation
 
 protocol HomeControllerDelegate: class {
     
-    func homeControllerDidActivateOmniBar(homeController: HomeViewController)
+    func homeDidActivateOmniBar(home: HomeViewController)
     
-    func homeControllerDidDeactivateOmniBar(homeController: HomeViewController)
+    func homeDidDeactivateOmniBar(home: HomeViewController)
 
-    func homeController(_ homeController: HomeViewController, didRequestUrl url: URL)
+    func home(_ home: HomeViewController, didRequestUrl url: URL)
 
-    func homeController(_ homeController: HomeViewController, didRequestQuery query: String)
+    func home(_ home: HomeViewController, didRequestQuery query: String)
+    
+    func homeDidRequestBookmarks(home: HomeViewController)
+
+    func homeDidRequestTabSwitcher(home: HomeViewController)
 }

@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
         static let animationDuration = 0.25
     }
     
+    @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var passiveContent: UIView!
     @IBOutlet weak var searchBar: UIView!
     @IBOutlet weak var searchBarContent: UIView!
@@ -47,7 +48,6 @@ class HomeViewController: UIViewController {
     
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = false
     }
     
@@ -74,7 +74,7 @@ class HomeViewController: UIViewController {
     private func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
         passiveContent.isHidden = true
-        delegate?.homeControllerDidActivateOmniBar(homeController: self)
+        delegate?.homeDidActivateOmniBar(home: self)
     }
 
     @IBAction func onEnterPassiveModeTapped(_ sender: Any) {
@@ -91,7 +91,15 @@ class HomeViewController: UIViewController {
     private func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContent.isHidden = false
-        delegate?.homeControllerDidDeactivateOmniBar(homeController: self)
+        delegate?.homeDidDeactivateOmniBar(home: self)
+    }
+    
+    @IBAction func onBookmarksTapped() {
+        delegate?.homeDidRequestBookmarks(home: self)
+    }
+    
+    @IBAction func onTabsTapped() {
+        delegate?.homeDidRequestTabSwitcher(home: self)
     }
 
     private func moveSearchBarUp() {
@@ -119,7 +127,7 @@ class HomeViewController: UIViewController {
     }
     
     func load(url: URL) {
-        delegate?.homeController(self, didRequestUrl: url)
+        delegate?.home(self, didRequestUrl: url)
     }
     
     func omniBarWasDismissed() {

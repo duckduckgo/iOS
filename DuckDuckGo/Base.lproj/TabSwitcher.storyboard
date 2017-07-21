@@ -196,7 +196,7 @@
                                     <action selector="onClearAllPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="Kuy-Os-AYu"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forget" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hRb-fJ-fr1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forget All" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hRb-fJ-fr1">
                                 <rect key="frame" x="146" y="645" width="84" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="4u0-wi-Mk1"/>

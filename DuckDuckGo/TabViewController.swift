@@ -1,5 +1,5 @@
 //
-//  WebTabViewController.swift
+//  TabViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -123,7 +123,6 @@ class TabViewController: WebViewController {
         alert.addAction(newTabAction())
         
         if let link = link {
-            alert.addAction(copyAction(forUrl: link.url))
             alert.addAction(saveBookmarkAction(forLink: link))
             alert.addAction(shareAction(forLink: link))
         }

@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84E341A51E2F7EFB00BDBA6F"
-               BuildableName = "DuckDuckGoTests.xctest"
-               BlueprintName = "DuckDuckGoTests"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>

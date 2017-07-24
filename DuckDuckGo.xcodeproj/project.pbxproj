@@ -248,7 +248,7 @@
 		84E3419A1E2F7EFB00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84E3419F1E2F7EFB00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84E341A11E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DuckDuckGoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
@@ -486,7 +486,7 @@
 				F1AA54621E48D90700223211 /* TodayExtension */,
 				F15A8B751E43A428008B8C6F /* ShareExtension */,
 				F12810A01EB35B5300F95E4E /* ContentBlockerExtension */,
-				84E341A91E2F7EFB00BDBA6F /* DuckDuckGoTests */,
+				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
 			);
@@ -496,7 +496,7 @@
 			isa = PBXGroup;
 			children = (
 				84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */,
-				84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */,
+				84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */,
 				F15A8B741E43A428008B8C6F /* ShareExtension.appex */,
 				F1AA545E1E48D90700223211 /* TodayExtension.appex */,
 				F143C2E41E4A4CD400CFDE3A /* Core.framework */,
@@ -528,20 +528,15 @@
 			path = DuckDuckGo;
 			sourceTree = "<group>";
 		};
-		84E341A91E2F7EFB00BDBA6F /* DuckDuckGoTests */ = {
+		84E341A91E2F7EFB00BDBA6F /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				F17669A21E411D63003D3222 /* Application */,
-				F13B4BF71F18C9E800814661 /* Tabs */,
-				F1D477C71F2139210031ED49 /* OmniBar */,
-				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
-				F1126DFA1EA5CA730016A6C7 /* Settings */,
-				F194FAF91F14E605009B4DF8 /* UserInterface */,
+				F12D98401F266B30003C2EE3 /* DuckDuckGo */,
 				F1E092B31E92A6B900732CCC /* Core */,
 				F17669A91E412A17003D3222 /* Mocks */,
-				F11E23181ED3ABC700523BC9 /* Json */,
 				84E341AC1E2F7EFB00BDBA6F /* Info.plist */,
 			);
+			name = UnitTests;
 			path = DuckDuckGoTests;
 			sourceTree = "<group>";
 		};
@@ -659,6 +654,19 @@
 				F12810A51EB35B5300F95E4E /* Info.plist */,
 			);
 			path = ContentBlockerExtension;
+			sourceTree = "<group>";
+		};
+		F12D98401F266B30003C2EE3 /* DuckDuckGo */ = {
+			isa = PBXGroup;
+			children = (
+				F17669A21E411D63003D3222 /* Application */,
+				F13B4BF71F18C9E800814661 /* Tabs */,
+				F1D477C71F2139210031ED49 /* OmniBar */,
+				F1126DFA1EA5CA730016A6C7 /* Settings */,
+				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
+				F194FAF91F14E605009B4DF8 /* UserInterface */,
+			);
+			name = DuckDuckGo;
 			sourceTree = "<group>";
 		};
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
@@ -1153,6 +1161,7 @@
 				F16393F31ECCA83F00DDD653 /* ContentBlocker */,
 				F1E092BF1E92A6EA00732CCC /* UserInterface */,
 				F198D7961E3A45C00088DA8A /* Web */,
+				F11E23181ED3ABC700523BC9 /* Json */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1243,9 +1252,9 @@
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		84E341A51E2F7EFB00BDBA6F /* DuckDuckGoTests */ = {
+		84E341A51E2F7EFB00BDBA6F /* UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84E341BD1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGoTests" */;
+			buildConfigurationList = 84E341BD1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "UnitTests" */;
 			buildPhases = (
 				84E341A21E2F7EFB00BDBA6F /* Sources */,
 				84E341A31E2F7EFB00BDBA6F /* Frameworks */,
@@ -1256,9 +1265,9 @@
 			dependencies = (
 				84E341A81E2F7EFB00BDBA6F /* PBXTargetDependency */,
 			);
-			name = DuckDuckGoTests;
+			name = UnitTests;
 			productName = DuckDuckGoTests;
-			productReference = 84E341A61E2F7EFB00BDBA6F /* DuckDuckGoTests.xctest */;
+			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F128109E1EB35B5300F95E4E /* ContentBlockerExtension */ = {
@@ -1411,7 +1420,7 @@
 			targets = (
 				84E341911E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E31E4A4CD400CFDE3A /* Core */,
-				84E341A51E2F7EFB00BDBA6F /* DuckDuckGoTests */,
+				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
 				F15A8B731E43A428008B8C6F /* ShareExtension */,
 				F1AA545D1E48D90700223211 /* TodayExtension */,
 				F128109E1EB35B5300F95E4E /* ContentBlockerExtension */,
@@ -2175,7 +2184,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84E341BD1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGoTests" */ = {
+		84E341BD1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84E341BE1E2F7EFC00BDBA6F /* Debug */,

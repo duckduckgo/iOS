@@ -40,20 +40,20 @@ class SaveBookmarkActivity: UIActivity {
     
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         for item in activityItems {
-            if item is URL {
+            if item is Link {
                 return true
             }
         }
         return false
     }
     
-    override func prepare(withActivityItems items: [Any]) {
-        var favicon: URL? = nil
-        guard items.count >= 2, let title = items[0] as? String, let url = items[1] as? URL else { return }
-        if items.count == 3, let icon = items[2] as? URL {
-            favicon = icon
+    override func prepare(withActivityItems activityItems: [Any]) {
+        for item in activityItems {
+            if let link = item as? Link {
+                bookmark = link
+                return
+            }
         }
-        bookmark = Link(title: title, url: url, favicon: favicon)
     }
     
     override var activityViewController: UIViewController? {

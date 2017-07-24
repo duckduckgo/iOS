@@ -19,7 +19,7 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -52,10 +52,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPw-xt-wy9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Xuj-kZ-ete">
-                                        <rect key="frame" x="20" y="168" width="335" height="250"/>
+                                        <rect key="frame" x="20" y="192.5" width="335" height="250"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
                                                 <rect key="frame" x="67" y="0.0" width="201" height="160"/>
@@ -125,11 +125,41 @@
                                             <constraint firstItem="Qi3-F2-882" firstAttribute="centerX" secondItem="Xuj-kZ-ete" secondAttribute="centerX" id="oy2-wL-yMm"/>
                                         </constraints>
                                     </stackView>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dra-qY-jhb">
+                                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                        <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <items>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="Qhs-dl-WAQ"/>
+                                            <barButtonItem image="Settings" id="cUp-YP-aMf">
+                                                <connections>
+                                                    <segue destination="VKX-Zt-u98" kind="presentation" modalPresentationStyle="currentContext" id="U0y-bd-wwb"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
+                                            <barButtonItem image="Bookmarks" id="M7u-mw-fly">
+                                                <connections>
+                                                    <action selector="onBookmarksTapped" destination="V6g-Vt-ptZ" id="0ba-fS-c1d"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="cPN-mG-56x"/>
+                                            <barButtonItem image="Tabs" id="K7o-WL-SC5">
+                                                <connections>
+                                                    <action selector="onTabsTapped" destination="V6g-Vt-ptZ" id="R4d-0L-oNW"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="1ue-zN-8ei"/>
+                                        </items>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="barTintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </toolbar>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Xuj-kZ-ete" secondAttribute="trailing" constant="20" id="BXb-Jp-dJK"/>
                                     <constraint firstItem="Xuj-kZ-ete" firstAttribute="centerY" secondItem="DPw-xt-wy9" secondAttribute="centerY" constant="-16" id="Hv2-JJ-Cvc"/>
                                     <constraint firstItem="Xuj-kZ-ete" firstAttribute="leading" secondItem="DPw-xt-wy9" secondAttribute="leading" constant="20" id="M67-mO-TIM"/>
+                                    <constraint firstAttribute="bottom" secondItem="Dra-qY-jhb" secondAttribute="bottom" id="Pqp-h9-Abk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Dra-qY-jhb" secondAttribute="trailing" id="Vln-nj-M5M"/>
+                                    <constraint firstItem="Dra-qY-jhb" firstAttribute="leading" secondItem="DPw-xt-wy9" secondAttribute="leading" id="Z6C-kR-Dfx"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -146,13 +176,13 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="zV4-a4-ChM"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="passiveContent" destination="DPw-xt-wy9" id="FC0-Nm-4ro"/>
                         <outlet property="searchBar" destination="Qi3-F2-882" id="W7K-ZW-I0K"/>
                         <outlet property="searchBarContent" destination="etZ-6L-2TM" id="C46-mj-H9w"/>
                         <outlet property="searchImage" destination="dsk-K1-r3i" id="tCX-28-QO6"/>
                         <outlet property="searchText" destination="lxL-fx-9Iq" id="1ym-sx-6FC"/>
+                        <outlet property="toolbar" destination="Dra-qY-jhb" id="a5U-9G-pXf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="whO-FE-jZt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -194,35 +224,7 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem image="BrowsePrevious" id="5JU-XX-Abv">
-                            <connections>
-                                <action selector="onBackPressed:" destination="C1X-Zd-UbA" id="Npu-sc-Z5S"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Qps-aQ-bCE"/>
-                        <barButtonItem image="BrowseNext" id="6rN-GX-Jcx">
-                            <connections>
-                                <action selector="onForwardPressed:" destination="C1X-Zd-UbA" id="snl-Dk-fe2"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="RpQ-Qh-RkL"/>
-                        <barButtonItem image="Settings" id="cUp-YP-aMf">
-                            <connections>
-                                <segue destination="VKX-Zt-u98" kind="presentation" modalPresentationStyle="currentContext" id="U0y-bd-wwb"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="vG3-iz-6ex"/>
-                        <barButtonItem image="Bookmarks" id="M7u-mw-fly">
-                            <connections>
-                                <action selector="onBookmarksButtonPressed:" destination="C1X-Zd-UbA" id="7WN-Oz-QeN"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="vQj-Jz-LJh"/>
-                        <barButtonItem image="Tabs" id="K7o-WL-SC5">
-                            <connections>
-                                <action selector="onTabButtonPressed:" destination="C1X-Zd-UbA" id="Pnz-c0-Sn6"/>
-                            </connections>
-                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="4Us-57-SWd"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -236,7 +238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="148" y="-6"/>
+            <point key="canvasLocation" x="220" y="-6"/>
         </scene>
         <!--Settings-->
         <scene sceneID="put-MB-t6U">
@@ -244,7 +246,7 @@
                 <viewControllerPlaceholder storyboardName="Settings" id="VKX-Zt-u98" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0p2-cY-e6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="148" y="456"/>
+            <point key="canvasLocation" x="1182" y="103"/>
         </scene>
         <!--Tab View Controller-->
         <scene sceneID="PLi-M5-qzj">
@@ -269,13 +271,61 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yr9-4x-b5U">
+                                <rect key="frame" x="0.0" y="515" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <barButtonItem image="BrowsePrevious" id="5JU-XX-Abv">
+                                        <connections>
+                                            <action selector="onBackPressed" destination="E9z-hU-o7g" id="Ry0-WT-eQH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="vQj-Jz-LJh"/>
+                                    <barButtonItem image="BrowseNext" id="6rN-GX-Jcx">
+                                        <connections>
+                                            <action selector="onForwardPressed" destination="E9z-hU-o7g" id="Qua-Ti-fkH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="vG3-iz-6ex"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="FuI-O5-U8n"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="pyX-Hx-ffu"/>
+                                    <barButtonItem image="Bookmarks" id="i7z-xx-ZBH">
+                                        <connections>
+                                            <action selector="onBookmarksTapped" destination="E9z-hU-o7g" id="sH8-vh-d8k"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="IoD-Q0-zm8"/>
+                                    <barButtonItem image="Tabs" id="57F-8V-jy0">
+                                        <connections>
+                                            <action selector="onTabsTapped" destination="E9z-hU-o7g" id="Yu0-Wh-dj1"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouZ-ZQ-DD8">
+                                <rect key="frame" x="157.5" y="507" width="60" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="Hah-Pj-afD"/>
+                                    <constraint firstAttribute="height" constant="52" id="XI5-cQ-vAi"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="FireMini" backgroundImage="FireBackground"/>
+                                <connections>
+                                    <action selector="onFirePressed" destination="E9z-hU-o7g" eventType="touchUpInside" id="JhF-Ag-gSg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="RbM-b9-fdC" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" constant="-40" id="4pS-g7-3M5"/>
                             <constraint firstItem="9b1-jz-pNY" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leading" id="83m-pV-D21"/>
                             <constraint firstAttribute="trailing" secondItem="9b1-jz-pNY" secondAttribute="trailing" id="Gqq-an-IRo"/>
+                            <constraint firstItem="ouZ-ZQ-DD8" firstAttribute="centerX" secondItem="Yyc-sc-ZWN" secondAttribute="centerX" id="Pf2-2C-cGP"/>
                             <constraint firstItem="9b1-jz-pNY" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" id="ZLt-SM-4aL"/>
+                            <constraint firstItem="ocz-cr-GSn" firstAttribute="top" secondItem="ouZ-ZQ-DD8" secondAttribute="bottom" id="f9U-Qe-FOc"/>
                             <constraint firstItem="RbM-b9-fdC" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leading" id="r23-gU-PnS"/>
                             <constraint firstAttribute="trailing" secondItem="RbM-b9-fdC" secondAttribute="trailing" id="rnG-gB-xSN"/>
                         </constraints>
@@ -289,6 +339,9 @@
                         <size key="landscapeSize" width="559" height="375"/>
                     </fixedSimulatedSizeMetrics>
                     <connections>
+                        <outlet property="backButton" destination="5JU-XX-Abv" id="VmA-KF-6jU"/>
+                        <outlet property="fireButton" destination="ouZ-ZQ-DD8" id="DND-le-Dvt"/>
+                        <outlet property="forwardButton" destination="6rN-GX-Jcx" id="La7-Sh-Tk5"/>
                         <outlet property="progressBar" destination="9b1-jz-pNY" id="erL-pu-2gE"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="o3F-pX-Jbo" id="yN5-q7-pMK"/>
                     </connections>
@@ -301,13 +354,15 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1182" y="382"/>
+            <point key="canvasLocation" x="1182" y="527"/>
         </scene>
     </scenes>
     <resources>
         <image name="Bookmarks" width="22" height="22"/>
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
+        <image name="FireBackground" width="60" height="51"/>
+        <image name="FireMini" width="22" height="29"/>
         <image name="LogoWithText" width="201" height="160"/>
         <image name="SearchLoupe" width="22" height="22"/>
         <image name="Settings" width="23" height="22"/>

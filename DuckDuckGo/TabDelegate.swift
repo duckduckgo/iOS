@@ -22,11 +22,21 @@ import WebKit
 import Core
 
 protocol TabDelegate: class {
+
+    func tabDidRequestNewTab(_ tab: TabViewController)
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
 
+    func tabDidRequestBookmarks(tab: TabViewController)
+    
+    func tabDidRequestTabSwitcher(tab: TabViewController)
+    
+    func tabDidRequestClearAll(tab: TabViewController)
+    
+    func tabDidRequestClose(tab: TabViewController)
+    
     func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
     
     func tabLoadingStateDidChange(tab: TabViewController)

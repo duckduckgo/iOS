@@ -76,9 +76,6 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onClearAllPressed(_ sender: UIButton) {
-        WKWebView.clearExternalCache {
-            Logger.log(text: "Cache cleared")
-        }
         animateFire {
             self.delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
             self.collectionView.reloadData()
@@ -114,12 +111,12 @@ class TabSwitcherViewController: UIViewController {
         delegate.tabSwitcher(self, didRemoveTabAt: index)
         collectionView.reloadData()
         refreshTitle()
-    }
-    
-    fileprivate func dismiss() {
         if tabsModel.isEmpty {
             delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         }
+    }
+    
+    fileprivate func dismiss() {
         dismiss(animated: true, completion: nil)
     }
 }

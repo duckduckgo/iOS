@@ -34,7 +34,6 @@ class AutocompleteViewController: UIViewController {
     fileprivate let maxItems = 6
     
     private var hidesBarsOnSwipeDefault = true
-    private var isToolbarEnabledDefault = true
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -60,9 +59,7 @@ class AutocompleteViewController: UIViewController {
     
     private func configureNavigationBar() {
         hidesBarsOnSwipeDefault = navigationController?.hidesBarsOnSwipe ?? hidesBarsOnSwipeDefault
-        isToolbarEnabledDefault = navigationController?.toolbar.isUserInteractionEnabled ?? isToolbarEnabledDefault
         navigationController?.hidesBarsOnSwipe = false
-        navigationController?.toolbar.isUserInteractionEnabled = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,7 +69,6 @@ class AutocompleteViewController: UIViewController {
 
     private func resetNaviagtionBar() {
         navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipeDefault
-        navigationController?.toolbar.isUserInteractionEnabled = isToolbarEnabledDefault
     }
     
     func updateQuery(query: String) {

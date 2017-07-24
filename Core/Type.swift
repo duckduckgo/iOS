@@ -1,5 +1,5 @@
 //
-//  OmniBarDelegate.swift
+//  Type.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,17 +20,8 @@
 
 import Foundation
 
-protocol OmniBarDelegate: class {
-    
-    func onOmniQueryUpdated(_ query: String)
-
-    func onOmniQuerySubmitted(_ query: String)
-            
-    func onDismissButtonPressed()
-    
-    func onMenuPressed()
-    
-    func onBookmarksPressed()
-    
-    func onContenBlockerPressed()
+public struct Type {
+    public static func name(_ object: Any) -> String {
+        return String(describing: type(of: object))
+    }
 }

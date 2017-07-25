@@ -221,11 +221,7 @@ class TabViewController: WebViewController {
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let webView = self?.webView else { return }
-            var items = [link.title ?? "", link.url] as [Any]
-            if let favicon = link.favicon {
-                items.append(favicon)
-            }
-            self?.presentShareSheet(withItems: items, fromView: webView)
+            self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: webView)
         }
     }
     

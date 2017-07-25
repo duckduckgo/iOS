@@ -347,6 +347,7 @@ extension MainViewController: TabSwitcherDelegate {
 
 extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(link: Link) {
+        omniBar.resignFirstResponder()
         loadUrl(link.url)
     }
 }

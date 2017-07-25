@@ -123,8 +123,8 @@ class BookmarksViewController: UIViewController {
     }
     
     fileprivate func selectBookmark(_ bookmark: Link) {
-        delegate?.bookmarksDidSelect(link:  bookmark)
         dismiss()
+        delegate?.bookmarksDidSelect(link:  bookmark)
     }
     
     private func dismiss() {

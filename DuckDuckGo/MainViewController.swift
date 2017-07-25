@@ -160,11 +160,7 @@ class MainViewController: UIViewController {
         omniBar.updateContentBlockerMonitor(monitor: tab.contentBlockerMonitor)
         omniBar.startBrowsing()
     }
-    
-    fileprivate func updateOmniBar(withQuery updatedQuery: String) {
-        displayAutocompleteSuggestions(forQuery: updatedQuery)
-    }
-    
+
     fileprivate func dismissOmniBar() {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
@@ -172,7 +168,7 @@ class MainViewController: UIViewController {
         homeController?.omniBarWasDismissed()
     }
     
-    private func displayAutocompleteSuggestions(forQuery query: String) {
+    fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
@@ -216,7 +212,7 @@ class MainViewController: UIViewController {
 extension MainViewController: OmniBarDelegate {
     
     func onOmniQueryUpdated(_ updatedQuery: String) {
-        updateOmniBar(withQuery: updatedQuery)
+        displayAutocompleteSuggestions(forQuery: updatedQuery)
     }
     
     func onOmniQuerySubmitted(_ query: String) {

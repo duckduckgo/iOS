@@ -31,6 +31,8 @@ class TabSwitcherViewController: UIViewController {
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     
+    fileprivate var hasSeenFooter = false
+    
     static func loadFromStoryboard(delegate: TabSwitcherDelegate, tabsModel: TabsModel) -> TabSwitcherViewController {
         let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
         controller.delegate = delegate
@@ -74,9 +76,6 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onClearAllPressed(_ sender: UIButton) {
-        WKWebView.clearCache {
-            Logger.log(text: "Cache cleared")
-        }
         animateFire {
             self.delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
             self.collectionView.reloadData()
@@ -112,12 +111,12 @@ class TabSwitcherViewController: UIViewController {
         delegate.tabSwitcher(self, didRemoveTabAt: index)
         collectionView.reloadData()
         refreshTitle()
-    }
-    
-    fileprivate func dismiss() {
         if tabsModel.isEmpty {
             delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
         }
+    }
+    
+    fileprivate func dismiss() {
         dismiss(animated: true, completion: nil)
     }
 }
@@ -140,7 +139,14 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let reuseIdentifier = TabsFooter.reuseIdentifier
         let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
-        footer.refreshLabel()
+
+        if !hasSeenFooter {
+            footer.refreshLabel()
+            hasSeenFooter = true
+        } else {
+            footer.clearLabel()
+        }
+
         return footer
     }
     

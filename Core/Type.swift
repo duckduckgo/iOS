@@ -1,5 +1,5 @@
 //
-//  SearchFilterStore.swift
+//  Type.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,10 +20,8 @@
 
 import Foundation
 
-public protocol SearchFilterStore {
-    
-    var safeSearchEnabled: Bool { get set }
-    var regionFilter: String? { get set }
-    var dateFilter: String? { get set }
-
+public struct Type {
+    public static func name(_ object: Any) -> String {
+        return String(describing: type(of: object))
+    }
 }

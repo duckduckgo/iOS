@@ -1,5 +1,5 @@
 //
-//  WebTabViewController.swift
+//  TabViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,10 +20,18 @@
 
 import WebKit
 import SafariServices
+import ToastSwiftFramework
 import Core
 
 class TabViewController: WebViewController {
     
+    private struct ViewConstants {
+        static let toastBottomMargin: CGFloat = 80
+    }
+    
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: UIButton!
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
@@ -50,12 +58,39 @@ class TabViewController: WebViewController {
     
     private func resetNavigationBar() {
         navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
         navigationController?.hidesBarsOnSwipe = true
     }
     
+    @IBAction func onBackPressed() {
+        goBack()
+    }
+    
+    @IBAction func onForwardPressed() {
+        goForward()
+    }
+    
+    @IBAction func onFirePressed() {
+        launchFireMenu()
+    }
+    
+    @IBAction func onBookmarksTapped() {
+        delegate?.tabDidRequestBookmarks(tab: self)
+    }
+    
+    @IBAction func onTabsTapped() {
+        delegate?.tabDidRequestTabSwitcher(tab: self)
+    }
+    
+    @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
+        showBars()
+    }
+    
+    fileprivate func showBars() {
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     func launchContentBlockerPopover() {
-        guard let button = navigationController?.view.viewWithTag(OmniBar.contentBlockerTag) else { return }
+        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withMonitor: contentBlockerMonitor)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
@@ -73,13 +108,21 @@ class TabViewController: WebViewController {
         delegate?.tab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
     }
     
+    func launchFireMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(closeTabAction())
+        alert.addAction(clearAllTabsAction())
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        present(controller: alert, fromView: fireButton)
+    }
+    
     func launchBrowsingMenu() {
-        guard let button = navigationController?.view.viewWithTag(OmniBar.menuButtonTag) else { return }
+        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
+        alert.addAction(newTabAction())
         
         if let link = link {
-            alert.addAction(copyAction(forUrl: link.url))
             alert.addAction(saveBookmarkAction(forLink: link))
             alert.addAction(shareAction(forLink: link))
         }
@@ -115,15 +158,42 @@ class TabViewController: WebViewController {
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveBookmark,
             bookmark: bookmark,
-            saveCompletion: { updatedBookmark in BookmarksManager().save(bookmark: updatedBookmark) },
+            saveCompletion: { [weak self] updatedBookmark in
+                BookmarksManager().save(bookmark: updatedBookmark)
+                self?.makeToast(text: UserText.webSaveLinkDone)
+            },
             cancelCompletion: {})
         present(alert, animated: true, completion: nil)
     }
     
-    private func newTabAction(forUrl url: URL) -> UIAlertAction {
+    private func newTabAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] action in
             if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestNewTab(weakSelf)
+            }
+        }
+    }
+    
+    private func newTabAction(forUrl url: URL) -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionNewTabForUrl, style: .default) { [weak self] action in
+            if let weakSelf = self {
                 weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
+            }
+        }
+    }
+    
+    private func closeTabAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionTabClose, style: .default) { [weak self] action in
+            if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestClose(tab: weakSelf)
+            }
+        }
+    }
+    
+    private func clearAllTabsAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionTabClearAll, style: .destructive) { [weak self] action in
+            if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestClearAll(tab: weakSelf)
             }
         }
     }
@@ -151,11 +221,7 @@ class TabViewController: WebViewController {
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let webView = self?.webView else { return }
-            var items = [link.title ?? "", link.url] as [Any]
-            if let favicon = link.favicon {
-                items.append(favicon)
-            }
-            self?.presentShareSheet(withItems: items, fromView: webView)
+            self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: webView)
         }
     }
     
@@ -183,27 +249,27 @@ class TabViewController: WebViewController {
         return SupportedExternalURLScheme.isSupported(url: url)
     }
     
-    @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
-        showBars()
+    private func makeToast(text: String) {
+        let x = view.bounds.size.width / 2.0
+        let y = view.bounds.size.height - ViewConstants.toastBottomMargin
+        view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
     }
-    
-    fileprivate func showBars() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
+
+    fileprivate func refreshNavigationButtons() {
+        backButton.isEnabled = canGoBack
+        forwardButton.isEnabled = canGoForward
     }
-    
+
     func dismiss() {
         webView.scrollView.delegate = nil
         removeFromParentViewController()
         view.removeFromSuperview()
     }
-    
+
     func destroy() {
         dismiss()
         tearDown()
     }
-    
-    func omniBarWasDismissed() {}
 }
 
 extension TabViewController: WebEventsDelegate {
@@ -216,11 +282,13 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         resetContentBlockerMonitor()
         notifyContentBlockerMonitorChanged()
+        refreshNavigationButtons()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
+        refreshNavigationButtons()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }

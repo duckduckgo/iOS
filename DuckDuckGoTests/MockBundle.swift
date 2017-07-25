@@ -20,7 +20,6 @@
 
 import Foundation
 @testable import DuckDuckGo
-@testable import Kingfisher
 @testable import Core
 
 class MockBundle: InfoBundle {

@@ -30,5 +30,7 @@ protocol OmniBarDelegate: class {
     
     func onMenuPressed()
     
+    func onBookmarksPressed()
+    
     func onContenBlockerPressed()
 }

@@ -32,6 +32,18 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-vl-rDZ">
+                                <rect key="frame" x="329" y="35" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="22" id="3is-x4-uWE"/>
+                                    <constraint firstAttribute="height" constant="22" id="XXt-3T-rvh"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="Settings"/>
+                                <connections>
+                                    <segue destination="2xB-ij-q9e" kind="presentation" id="xf6-Fk-1xY"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
                                 <rect key="frame" x="0.0" y="72" width="375" height="551"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -184,7 +196,7 @@
                                     <action selector="onClearAllPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="Kuy-Os-AYu"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forget" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hRb-fJ-fr1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forget All" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hRb-fJ-fr1">
                                 <rect key="frame" x="146" y="645" width="84" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="4u0-wi-Mk1"/>
@@ -208,8 +220,10 @@
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="XZT-ek-lrC" secondAttribute="bottom" id="J8G-Xc-ZM0"/>
                             <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="hRb-fJ-fr1" secondAttribute="bottom" constant="8" id="QeI-8x-g0f"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="p8n-Qu-wGk" secondAttribute="bottom" id="Z1G-fO-6wr"/>
+                            <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="Z4n-hv-dDc"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
                             <constraint firstItem="hRb-fJ-fr1" firstAttribute="centerX" secondItem="bSc-wr-m04" secondAttribute="centerX" id="iXp-ju-AiW"/>
+                            <constraint firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="24" id="moD-HB-CMD"/>
                             <constraint firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
                             <constraint firstItem="p8n-Qu-wGk" firstAttribute="top" secondItem="WJ0-lP-E4v" secondAttribute="topMargin" id="rSY-kL-IbO"/>
                             <constraint firstItem="p8n-Qu-wGk" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="uJH-b2-uke"/>
@@ -225,11 +239,20 @@
             </objects>
             <point key="canvasLocation" x="1164" y="-6.746626686656672"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="QEK-TE-85v">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Settings" id="2xB-ij-q9e" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NqH-p4-TYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1714" y="-248"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Close" width="12" height="12"/>
         <image name="Fire" width="26" height="34"/>
         <image name="FireBackground" width="60" height="51"/>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="Settings" width="23" height="22"/>
     </resources>
 </document>

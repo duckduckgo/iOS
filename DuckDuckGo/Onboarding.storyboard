@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -57,36 +57,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xd6-It-gRc">
-                                <rect key="frame" x="90" y="434" width="140" height="40"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="Zuk-Jt-TXn">
-                                        <variation key="heightClass=compact" constant="118"/>
-                                        <variation key="heightClass=regular-widthClass=regular" constant="175"/>
-                                    </constraint>
-                                    <constraint firstAttribute="height" constant="40" id="kAU-6U-4zl">
-                                        <variation key="heightClass=compact" constant="34"/>
-                                        <variation key="heightClass=regular-widthClass=regular" constant="50"/>
-                                    </constraint>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                <state key="normal" title="Add to Safari">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                </variation>
-                                <connections>
-                                    <segue destination="dTD-Qw-ocT" kind="presentation" identifier="SafariSearchInstructionsSegue" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="cAM-ci-SCE"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -94,15 +64,11 @@
                             <constraint firstItem="yNS-a2-Ooa" firstAttribute="top" secondItem="bOv-vd-VY9" secondAttribute="top" id="OcK-Ty-q6G"/>
                             <constraint firstAttribute="trailing" secondItem="yNS-a2-Ooa" secondAttribute="trailing" id="R8k-Tv-S6m"/>
                             <constraint firstItem="igT-FT-upA" firstAttribute="centerX" secondItem="bOv-vd-VY9" secondAttribute="centerX" constant="2" id="aKW-EF-oYI"/>
-                            <constraint firstItem="Xd6-It-gRc" firstAttribute="centerX" secondItem="bOv-vd-VY9" secondAttribute="centerX" id="dJy-1u-pvd"/>
                             <constraint firstItem="48G-w4-Xuh" firstAttribute="top" secondItem="igT-FT-upA" secondAttribute="bottom" constant="45" id="jzr-BB-CFt">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="48G-w4-Xuh" firstAttribute="top" secondItem="yNS-a2-Ooa" secondAttribute="bottom" id="lDS-mA-Boo"/>
                             <constraint firstItem="yNS-a2-Ooa" firstAttribute="leading" secondItem="bOv-vd-VY9" secondAttribute="leading" id="n2u-k4-OI3"/>
-                            <constraint firstItem="igT-FT-upA" firstAttribute="top" secondItem="Xd6-It-gRc" secondAttribute="bottom" constant="25" id="pqV-dD-rHD">
-                                <variation key="heightClass=compact" constant="2"/>
-                            </constraint>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Jc4-v5-FSQ" appends="YES" id="rNx-MA-kWa"/>
@@ -223,17 +189,9 @@ We don’t track you — period.</string>
             </objects>
             <point key="canvasLocation" x="147.65625" y="-1446.09375"/>
         </scene>
-        <!--SafariSearchInstructionsViewController-->
-        <scene sceneID="0pC-ej-np0">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="SafariSearchInstructionsViewController" storyboardName="SafariSearchInstructions" referencedIdentifier="SafariSearchInstructionsViewController" id="dTD-Qw-ocT" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FRP-Bn-I7B" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1514" y="-963"/>
-        </scene>
     </scenes>
     <resources>
         <image name="OnboardingRealPrivacy" width="200" height="200"/>
-        <image name="SearchLoupeMini" width="12" height="12"/>
+        <image name="SearchLoupeMini" width="16" height="16"/>
     </resources>
 </document>

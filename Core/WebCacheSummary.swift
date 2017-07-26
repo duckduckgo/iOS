@@ -1,5 +1,5 @@
 //
-//  TabSwitcherDelegate.swift
+//  WebCacheSummary.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,15 +18,13 @@
 //
 
 
-import Core
+import Foundation
 
-protocol TabSwitcherDelegate: class {
-
-    func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController)
+public struct WebCacheSummary {
     
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTabAt index: Int)
+    public let count: Int
     
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTabAt index: Int)
-    
-    func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController)
+    public init(count: Int) {
+        self.count = count
+    }
 }

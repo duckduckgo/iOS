@@ -140,14 +140,14 @@ class MainViewController: UIViewController {
         }
     }
 
-    fileprivate func closeTabAndOpenNew(oldTab: TabViewController) {
-        tabManager.remove(tab: oldTab)
-        attachHomeScreen(active: true)
+    fileprivate func forgetPage(tab: TabViewController) {
+        tabManager.remove(tab: tab)
+        attachHomeScreen(active: false)
     }
     
-    fileprivate func clearAllTabs() {
+    fileprivate func forgetAllTabs() {
         tabManager.clearAll()
-        WKWebView.clearExternalCache {}
+        WebCacheManager.clear() {}
         attachHomeScreen(active: false)
     }
     
@@ -313,12 +313,12 @@ extension MainViewController: TabDelegate {
         loadRequestInNewTab(urlRequest)
     }
     
-    func tabDidRequestClearAll(tab: TabViewController) {
-        clearAllTabs()
+    func tabDidRequestForgetAllTabs(tab: TabViewController) {
+        forgetAllTabs()
     }
     
-    func tabDidRequestClose(tab: TabViewController) {
-        closeTabAndOpenNew(oldTab: tab)
+    func tabDidRequestForgetPage(tab: TabViewController) {
+        forgetPage(tab: tab)
     }
 }
 
@@ -336,8 +336,8 @@ extension MainViewController: TabSwitcherDelegate {
         remove(tabAt: index)
     }
     
-    func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
-        clearAllTabs()
+    func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
+        forgetAllTabs()
     }
 }
 

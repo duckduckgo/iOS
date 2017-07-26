@@ -34,8 +34,8 @@
 "action.title.cancel" = "Cancel";
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
-"action.title.tabClose" = "Close This Tab";
-"action.title.tabClearAll" = "Forget All Tabs and Data";
+"action.title.forgetPage" = "Forget This Page";
+"action.title.forgetAllTabs" = "Forget All Tabs";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";
 "action.title.readingList" = "Add to Reading List";

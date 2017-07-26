@@ -72,7 +72,7 @@
 		F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */; };
 		F152F55C1EFC002400A911B5 /* ContentBlockerMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */; };
 		F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */; };
-		F159BDA71F0C073D00B4A01D /* CacheSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA61F0C073D00B4A01D /* CacheSummary.swift */; };
+		F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */; };
 		F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */; };
 		F15A8B771E43A428008B8C6F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15A8B761E43A428008B8C6F /* ShareViewController.swift */; };
 		F15A8B7A1E43A428008B8C6F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15A8B781E43A428008B8C6F /* MainInterface.storyboard */; };
@@ -118,6 +118,8 @@
 		F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */; };
 		F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */; };
 		F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A568391E70F98E0081082E /* AutocompleteRequest.swift */; };
+		F1A886751F29335D0096251E /* PageMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A886741F29335D0096251E /* PageMonitor.swift */; };
+		F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A886771F29394E0096251E /* WebCacheManager.swift */; };
 		F1AA54611E48D90700223211 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1AA54601E48D90700223211 /* NotificationCenter.framework */; };
 		F1AA54641E48D90700223211 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA54631E48D90700223211 /* TodayViewController.swift */; };
 		F1AA54671E48D90700223211 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1AA54651E48D90700223211 /* MainInterface.storyboard */; };
@@ -315,7 +317,7 @@
 		F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurement.swift; sourceTree = "<group>"; };
 		F152F55B1EFC002400A911B5 /* ContentBlockerMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerMonitor.swift; sourceTree = "<group>"; };
 		F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
-		F159BDA61F0C073D00B4A01D /* CacheSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheSummary.swift; sourceTree = "<group>"; };
+		F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCacheSummary.swift; sourceTree = "<group>"; };
 		F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsFooter.swift; sourceTree = "<group>"; };
 		F15A8B741E43A428008B8C6F /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F15A8B761E43A428008B8C6F /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +367,8 @@
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtensionTests.swift; sourceTree = "<group>"; };
 		F1A568391E70F98E0081082E /* AutocompleteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteRequest.swift; sourceTree = "<group>"; };
+		F1A886741F29335D0096251E /* PageMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageMonitor.swift; sourceTree = "<group>"; };
+		F1A886771F29394E0096251E /* WebCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCacheManager.swift; sourceTree = "<group>"; };
 		F1AA545E1E48D90700223211 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1AA54601E48D90700223211 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		F1AA54631E48D90700223211 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -796,10 +800,12 @@
 			isa = PBXGroup;
 			children = (
 				F143C3391E4A9A9200CFDE3A /* WebViewController.swift */,
+				F1A886741F29335D0096251E /* PageMonitor.swift */,
 				F143C3381E4A9A9200CFDE3A /* WebEventsDelegate.swift */,
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
+				F1A886771F29394E0096251E /* WebCacheManager.swift */,
+				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
 				F18326861E60542100240060 /* JavascriptLoader.swift */,
-				F159BDA61F0C073D00B4A01D /* CacheSummary.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -1648,6 +1654,7 @@
 				F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */,
 				F1B745221E549D550072547E /* UIColorExtension.swift in Sources */,
 				F143C33B1E4A9A9200CFDE3A /* WebEventsDelegate.swift in Sources */,
+				F1A886751F29335D0096251E /* PageMonitor.swift in Sources */,
 				F16394071ECE01E400DDD653 /* DisconnectMeContentBlockerParser.swift in Sources */,
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
 				F143C3271E4A9A0E00CFDE3A /* Logger.swift in Sources */,
@@ -1657,10 +1664,11 @@
 				F12ABAA11ECEEDCF0008AE50 /* ContentBlocker.swift in Sources */,
 				F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
+				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
 				F11044FD1ECFD57100C5E3D3 /* AppleContentBlockerParser.swift in Sources */,
 				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
-				F159BDA71F0C073D00B4A01D /* CacheSummary.swift in Sources */,
+				F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */,
 				F16394051ECDFFE500DDD653 /* ContentBlockerEntry.swift in Sources */,
 				F1126DEA1EA5C43C0016A6C7 /* AppEmails.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,

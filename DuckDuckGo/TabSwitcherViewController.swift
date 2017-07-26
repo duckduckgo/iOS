@@ -77,7 +77,7 @@ class TabSwitcherViewController: UIViewController {
     
     @IBAction func onClearAllPressed(_ sender: UIButton) {
         animateFire {
-            self.delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
+            self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
             self.collectionView.reloadData()
             self.refreshTitle()
         }
@@ -112,7 +112,7 @@ class TabSwitcherViewController: UIViewController {
         collectionView.reloadData()
         refreshTitle()
         if tabsModel.isEmpty {
-            delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
+            delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
         }
     }
     

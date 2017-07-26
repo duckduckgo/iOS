@@ -27,7 +27,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
     @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
     
-    private var firstView = true
     private weak var pageController: UIPageViewController!
     private var transitioningToPage: OnboardingPageViewController?
     fileprivate var dataSource: OnboardingDataSource!
@@ -47,14 +46,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         configureScrollView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        if (firstView) {
-            showInstructions()
-            firstView = false
-        }
-        super.viewWillAppear(animated)
-    }
-    
     private func configurePageControl() {
         pageControl.numberOfPages = dataSource.count
         pageControl.currentPage = 0
@@ -64,11 +55,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
         scrollView?.delegate = self
     }
-    
-    private func showInstructions() {
-        performSegue(withIdentifier: "SafariSearchInstructionsSegue", sender: self)
-    }
-    
+
     override func viewDidLayoutSubviews() {
         configureDisplayForVerySmallHandsets()
     }

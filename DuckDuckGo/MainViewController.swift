@@ -174,7 +174,7 @@ class MainViewController: UIViewController {
         }
         
         if animated {
-            FireAnimation().animate(withCompletion: completion)
+            FireAnimation.animate(withCompletion: completion)
         } else {
             completion()
         }
@@ -188,7 +188,7 @@ class MainViewController: UIViewController {
         }
         
         if animated {
-            FireAnimation().animate(withCompletion: completion)
+            FireAnimation.animate(withCompletion: completion)
         } else {
             completion()
         }

@@ -22,7 +22,7 @@ import UIKit
 
 struct FireAnimation {
     
-    func animate(withCompletion completion: @escaping () -> Swift.Void) {
+    static func animate(withCompletion completion: @escaping () -> Swift.Void) {
         
         guard let window = UIApplication.shared.keyWindow else {
             completion()

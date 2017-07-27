@@ -29,15 +29,7 @@ protocol TabDelegate: class {
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
 
-    func tabDidRequestBookmarks(tab: TabViewController)
-    
-    func tabDidRequestTabSwitcher(tab: TabViewController)
-    
     func tabDidRequestSettings(tab: TabViewController)
-    
-    func tabDidRequestForgetAll(tab: TabViewController)
-    
-    func tabDidRequestForgetPage(tab: TabViewController)
     
     func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
     

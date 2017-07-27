@@ -80,13 +80,13 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GE-Nf-lKM">
-                                                            <rect key="frame" x="45" y="18" width="214" height="16"/>
+                                                            <rect key="frame" x="45" y="18" width="214" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="0.086260028180000003" green="0.086282856759999998" blue="0.086258567869999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caT-pD-5fn">
-                                                            <rect key="frame" x="45" y="41" width="214" height="14"/>
+                                                            <rect key="frame" x="45" y="38.5" width="214" height="16.5"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" red="0.63914442059999999" green="0.63925665620000005" blue="0.63913732769999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -161,10 +161,6 @@
                                     <outlet property="delegate" destination="G9p-Sf-e96" id="GK9-W4-6gs"/>
                                 </connections>
                             </collectionView>
-                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p8n-Qu-wGk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
-                            </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
@@ -174,6 +170,21 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
+                                    <barButtonItem style="plain" id="GPX-J2-LrD">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" id="mVy-93-3fh">
+                                            <rect key="frame" x="157" y="-8" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="BdY-jN-LXz"/>
+                                                <constraint firstAttribute="width" constant="60" id="y1U-7v-moW"/>
+                                            </constraints>
+                                            <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" image="Fire" backgroundImage="FireBackground"/>
+                                            <connections>
+                                                <action selector="onForgetAllPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="NZ7-xj-7Za"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yc9-ps-qXW"/>
                                     <barButtonItem systemItem="done" id="S1O-aT-Bgw">
                                         <connections>
@@ -184,44 +195,26 @@
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lN6-FJ-Zd4">
-                                <rect key="frame" x="157.5" y="615" width="60" height="52"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="5Fi-Iq-kKW"/>
-                                    <constraint firstAttribute="height" constant="52" id="VNC-KA-UEk"/>
-                                </constraints>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" image="Fire" backgroundImage="FireBackground"/>
-                                <connections>
-                                    <action selector="onForgetAllPressed:" destination="G9p-Sf-e96" eventType="touchUpInside" id="Ka6-32-ihc"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="2c3-VD-tFG"/>
-                            <constraint firstAttribute="trailing" secondItem="p8n-Qu-wGk" secondAttribute="trailing" id="9G4-Oh-f5g"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="B4L-BE-vvi"/>
                             <constraint firstAttribute="trailing" secondItem="PrD-ff-flI" secondAttribute="trailing" id="BaM-0l-RFS"/>
                             <constraint firstItem="Cy7-Lb-veV" firstAttribute="centerX" secondItem="WJ0-lP-E4v" secondAttribute="centerX" id="CZo-Zg-g4J"/>
-                            <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="lN6-FJ-Zd4" secondAttribute="bottom" id="EbD-Gr-jpI"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="XZT-ek-lrC" secondAttribute="bottom" id="J8G-Xc-ZM0"/>
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="top" secondItem="a8e-Ri-3yS" secondAttribute="bottom" constant="15" id="QqP-UV-2Ok"/>
-                            <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="p8n-Qu-wGk" secondAttribute="bottom" id="Z1G-fO-6wr"/>
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="ceJ-FA-nQB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
                             <constraint firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="24" id="moD-HB-CMD"/>
                             <constraint firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
-                            <constraint firstItem="p8n-Qu-wGk" firstAttribute="top" secondItem="WJ0-lP-E4v" secondAttribute="topMargin" id="rSY-kL-IbO"/>
-                            <constraint firstItem="p8n-Qu-wGk" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="uJH-b2-uke"/>
-                            <constraint firstItem="lN6-FJ-Zd4" firstAttribute="centerX" secondItem="WJ0-lP-E4v" secondAttribute="centerX" id="ykF-52-hBp"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="animationContainer" destination="p8n-Qu-wGk" id="yTr-mG-RsZ"/>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
+                        <outlet property="toolbar" destination="PrD-ff-flI" id="IUz-6K-N0F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -239,8 +232,8 @@
     </scenes>
     <resources>
         <image name="Close" width="12" height="12"/>
-        <image name="Fire" width="26" height="34"/>
-        <image name="FireBackground" width="60" height="51"/>
+        <image name="Fire" width="22" height="29"/>
+        <image name="FireBackground" width="60" height="60"/>
         <image name="GlobeSmall" width="16" height="16"/>
         <image name="Settings" width="23" height="22"/>
     </resources>

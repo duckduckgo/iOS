@@ -24,9 +24,9 @@ import WebKit
 
 class TabSwitcherViewController: UIViewController {
 
+    @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var animationContainer: UIView!
     
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -76,29 +76,10 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onForgetAllPressed(_ sender: UIButton) {
-        animateFire {
+         FireAnimation().animate() {
             self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
             self.collectionView.reloadData()
             self.refreshTitle()
-        }
-    }
-    
-    private func animateFire(withCompletion completion: @escaping () -> Swift.Void) {
-        let fireView = UIImageView(image: #imageLiteral(resourceName: "FireLargeStretchable"))
-        let nativeHeight = fireView.frame.size.height
-        let stretchedHeight = nativeHeight + animationContainer.frame.size.height
-        fireView.frame.size = CGSize(width: view.frame.width, height: stretchedHeight)
-        fireView.transform.ty = animationContainer.frame.size.height
-        
-        animationContainer.isHidden = false
-        animationContainer.addSubview(fireView)
-
-        UIView.animate(withDuration: 2, animations: {
-            fireView.transform.ty = -nativeHeight
-        }) { _ in
-            completion()
-            fireView.removeFromSuperview()
-            self.animationContainer.isHidden = true
         }
     }
     

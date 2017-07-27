@@ -29,9 +29,6 @@ class TabViewController: WebViewController {
         static let toastBottomMargin: CGFloat = 80
     }
     
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var forwardButton: UIBarButtonItem!
-    @IBOutlet weak var fireButton: UIButton!
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
@@ -60,35 +57,20 @@ class TabViewController: WebViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.hidesBarsOnSwipe = true
     }
-    
-    @IBAction func onBackPressed() {
-        goBack()
-    }
-    
-    @IBAction func onForwardPressed() {
-        goForward()
-    }
-    
-    @IBAction func onFirePressed() {
-        launchFireMenu()
-    }
-    
-    @IBAction func onBookmarksTapped() {
-        delegate?.tabDidRequestBookmarks(tab: self)
-    }
-    
-    @IBAction func onTabsTapped() {
-        delegate?.tabDidRequestTabSwitcher(tab: self)
-    }
-    
+        
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
         showBars()
     }
     
     fileprivate func showBars() {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = false
     }
     
+    func forgetPage() {
+        WebCacheManager.clear(forHosts:pageMonitor.hosts()) {}
+    }
+
     func launchContentBlockerPopover() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withMonitor: contentBlockerMonitor)
@@ -107,15 +89,7 @@ class TabViewController: WebViewController {
         contentBlockerPopover?.updateMonitor(monitor: contentBlockerMonitor)
         delegate?.tab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
     }
-    
-    func launchFireMenu() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(forgetPageAction())
-        alert.addAction(forgetAllAction())
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        present(controller: alert, fromView: fireButton)
-    }
-    
+
     func launchBrowsingMenu() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -179,23 +153,6 @@ class TabViewController: WebViewController {
         return UIAlertAction(title: UserText.actionNewTabForUrl, style: .default) { [weak self] action in
             if let weakSelf = self {
                 weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
-            }
-        }
-    }
-    
-    private func forgetPageAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetPage, style: .default) { [weak self] action in
-            if let weakSelf = self {
-                WebCacheManager.clear(forHosts: weakSelf.pageMonitor.hosts()) {}
-                weakSelf.delegate?.tabDidRequestForgetPage(tab: weakSelf)
-            }
-        }
-    }
-    
-    private func forgetAllAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
-            if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestForgetAll(tab: weakSelf)
             }
         }
     }
@@ -265,11 +222,6 @@ class TabViewController: WebViewController {
         view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
     }
 
-    fileprivate func refreshNavigationButtons() {
-        backButton.isEnabled = canGoBack
-        forwardButton.isEnabled = canGoForward
-    }
-
     func dismiss() {
         webView.scrollView.delegate = nil
         removeFromParentViewController()
@@ -292,13 +244,11 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         resetContentBlockerMonitor()
         notifyContentBlockerMonitorChanged()
-        refreshNavigationButtons()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
-        refreshNavigationButtons()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }

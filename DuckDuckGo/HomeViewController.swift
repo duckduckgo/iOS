@@ -27,13 +27,11 @@ class HomeViewController: UIViewController {
         static let animationDuration = 0.25
     }
     
-    @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var passiveContent: UIView!
     @IBOutlet weak var searchBar: UIView!
     @IBOutlet weak var searchBarContent: UIView!
     @IBOutlet weak var searchImage: UIImageView!
     @IBOutlet weak var searchText: UILabel!
-    @IBOutlet weak var fireButton: UIButton!
     
     weak var delegate: HomeControllerDelegate?
     
@@ -65,8 +63,6 @@ class HomeViewController: UIViewController {
     }
     
     private func enterActiveModeAnimated() {
-        toolbar.isHidden = true
-        fireButton.isHidden = true
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.moveSearchBarUp()
         }, completion: { _ in
@@ -76,8 +72,6 @@ class HomeViewController: UIViewController {
     
     private func enterActiveMode() {
         navigationController?.isNavigationBarHidden = false
-        toolbar.isHidden = true
-        fireButton.isHidden = true
         passiveContent.isHidden = true
         delegate?.homeDidActivateOmniBar(home: self)
     }
@@ -99,36 +93,7 @@ class HomeViewController: UIViewController {
     private func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
         passiveContent.isHidden = false
-        toolbar.isHidden = false
-        fireButton.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
-    }
-
-    @IBAction func onBookmarksTapped() {
-        delegate?.homeDidRequestBookmarks(home: self)
-    }
-    
-    @IBAction func onTabsTapped() {
-        delegate?.homeDidRequestTabSwitcher(home: self)
-    }
-    
-    @IBAction func onFireTapped() {
-        launchFireMenu()
-    }
-    
-    private func launchFireMenu() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(forgetAllAction())
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        present(controller: alert, fromView: fireButton)
-    }
-    
-    private func forgetAllAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
-            if let weakSelf = self {
-                weakSelf.delegate?.homeDidRequestForgetAll(home: weakSelf)
-            }
-        }
     }
 
     private func moveSearchBarUp() {

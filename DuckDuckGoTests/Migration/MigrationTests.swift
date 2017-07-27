@@ -13,6 +13,20 @@ import XCTest
 
 class MigrationTests: XCTestCase {
 
+    // testFavouriteSearchesDeletedAfterMigration
+    // testFavouriteSearchesMigratedToBookmarks
+    // testFavouriteStoriesDeletedAfterMigration
+    
+    func testFavouriteStoriesMigratedToBookmarks() {
+        
+        // add a story
+        
+        // run migration
+        
+        // check bookmark
+        
+    }
+    
     func testWhenNoMigrationRequiredCompletionIsCalled() {
         
         var completed = false

@@ -164,21 +164,33 @@ class MainViewController: UIViewController {
         }
     }
 
-    fileprivate func forgetCurrentPage() {
+    fileprivate func forgetCurrentPage(animated: Bool) {
         guard let tab = currentTab else { return }
         tab.forgetPage()
         
-        FireAnimation().animate() {
+        let completion = {
             self.tabManager.remove(tab: tab)
             self.attachHomeScreen(active: false)
         }
+        
+        if animated {
+            FireAnimation().animate(withCompletion: completion)
+        } else {
+            completion()
+        }
     }
     
-    fileprivate func forgetAll() {
+    fileprivate func forgetAll(animated: Bool) {
         WebCacheManager.clear() {}
-        FireAnimation().animate() {
+        let completion = {
             self.tabManager.clearAll()
             self.attachHomeScreen(active: false)
+        }
+        
+        if animated {
+            FireAnimation().animate(withCompletion: completion)
+        } else {
+            completion()
         }
     }
     
@@ -244,13 +256,13 @@ class MainViewController: UIViewController {
     
     private func forgetPageAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetPage, style: .default) { [weak self] action in
-            self?.forgetCurrentPage()
+            self?.forgetCurrentPage(animated: true)
         }
     }
     
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
-            self?.forgetAll()
+            self?.forgetAll(animated: true)
         }
     }
 
@@ -335,7 +347,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func homeDidRequestForgetAll(home: HomeViewController) {
-        forgetAll()
+        forgetAll(animated: true)
     }
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -398,7 +410,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
     
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        tabManager.clearAll()
+        forgetAll(animated: false)
     }
 }
 

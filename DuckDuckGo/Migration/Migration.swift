@@ -7,13 +7,20 @@
 //
 
 import Foundation
+import CoreData
 
 class Migration {
     
+    private var container: PersistenceContainer
     
-    func start(completion: () -> ()) {
-        
-        completion()
+    init(container: PersistenceContainer = PersistenceContainer(name: "Stories")) {
+        self.container = container
     }
-        
+    
+    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping () -> ()) {
+        queue.async {
+            completion()
+        }
+    }
+    
 }

@@ -20,22 +20,37 @@ class MigrationTests: XCTestCase {
     func testFavouriteStoriesMigratedToBookmarks() {
         
         // add a story
+        let container = PersistenceContainer(name: "testFavouriteStoriesMigratedToBookmarks")
+        let story = container.createStory()
+//        story.title = "A title"
+//        story.urlString = "http://example.com"
+//        story.imageURLString = "http://example.com/favicon.ico"
+//        story.saved = NSNumber(booleanLiteral: true)
+//        XCTAssert(container.save())
         
         // run migration
+        let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
+        Migration(container: container).start {
+            
+            // check bookmarks
+            XCTAssertEqual(1, BookmarksManager().count)
+            
+            expectation.fulfill()
+        }
         
-        // check bookmark
+        // Have a timeout for this test
+        wait(for: [expectation], timeout: 1)
         
     }
     
     func testWhenNoMigrationRequiredCompletionIsCalled() {
         
-        var completed = false
-        
+        let expectation = XCTestExpectation(description: "testWhenNoMigrationRequiredCompletionIsCalled")
         Migration().start {
-            completed = true
+            expectation.fulfill()
         }
         
-        XCTAssert(completed)
+        wait(for: [expectation], timeout: 1)
     }
     
 }

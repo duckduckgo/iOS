@@ -33,7 +33,9 @@ protocol TabDelegate: class {
     
     func tabDidRequestTabSwitcher(tab: TabViewController)
     
-    func tabDidRequestForgetAllTabs(tab: TabViewController)
+    func tabDidRequestSettings(tab: TabViewController)
+    
+    func tabDidRequestForgetAll(tab: TabViewController)
     
     func tabDidRequestForgetPage(tab: TabViewController)
     

@@ -111,7 +111,7 @@ class TabViewController: WebViewController {
     func launchFireMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(forgetPageAction())
-        alert.addAction(forgetAllTabsAction())
+        alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: fireButton)
     }
@@ -127,6 +127,7 @@ class TabViewController: WebViewController {
             alert.addAction(shareAction(forLink: link))
         }
         
+        alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
     }
@@ -191,10 +192,10 @@ class TabViewController: WebViewController {
         }
     }
     
-    private func forgetAllTabsAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetAllTabs, style: .destructive) { [weak self] action in
+    private func forgetAllAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
             if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestForgetAllTabs(tab: weakSelf)
+                weakSelf.delegate?.tabDidRequestForgetAll(tab: weakSelf)
             }
         }
     }
@@ -230,6 +231,14 @@ class TabViewController: WebViewController {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let webView = self?.webView else { return }
             self?.presentShareSheet(withItems: [url], fromView: webView)
+        }
+    }
+    
+    private func settingsAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionSettings, style: .default) { [weak self] action in
+            if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestSettings(tab: weakSelf)
+            }
         }
     }
     

@@ -54,7 +54,7 @@ public struct UserText {
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", comment: "Open in New Tab action")
-    public static let actionForgetAllTabs = NSLocalizedString("action.title.forgetAllTabs", comment: "Forget All Tabs action")
+    public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", comment: "Forget All action")
     public static let actionForgetPage = NSLocalizedString("action.title.forgetPage", comment: "Forget Page action")
     public static let actionOpen = NSLocalizedString("action.title.open", comment: "Open action")
     public static let actionReadingList = NSLocalizedString("action.title.readingList", comment: "Reading List action")

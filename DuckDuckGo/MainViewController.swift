@@ -145,7 +145,7 @@ class MainViewController: UIViewController {
         attachHomeScreen(active: false)
     }
     
-    fileprivate func forgetAllTabs() {
+    fileprivate func forgetAll() {
         tabManager.clearAll()
         WebCacheManager.clear() {}
         attachHomeScreen(active: false)
@@ -204,6 +204,12 @@ class MainViewController: UIViewController {
     
     fileprivate func launchBookmarks() {
         let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
+        controller.modalPresentationStyle = .overCurrentContext
+        present(controller, animated: true, completion: nil)
+    }
+    
+    fileprivate func launchSettings() {
+        let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
     }
@@ -273,6 +279,10 @@ extension MainViewController: HomeControllerDelegate {
         launchBookmarks()
     }
     
+    func homeDidRequestForgetAll(home: HomeViewController) {
+        forgetAll()
+    }
+    
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
@@ -305,6 +315,10 @@ extension MainViewController: TabDelegate {
         launchBookmarks()
     }
     
+    func tabDidRequestSettings(tab: TabViewController) {
+        launchSettings()
+    }
+    
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }
@@ -313,8 +327,8 @@ extension MainViewController: TabDelegate {
         loadRequestInNewTab(urlRequest)
     }
     
-    func tabDidRequestForgetAllTabs(tab: TabViewController) {
-        forgetAllTabs()
+    func tabDidRequestForgetAll(tab: TabViewController) {
+        forgetAll()
     }
     
     func tabDidRequestForgetPage(tab: TabViewController) {
@@ -337,7 +351,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
     
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        forgetAllTabs()
+        forgetAll()
     }
 }
 

@@ -75,7 +75,7 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
     
-    @IBAction func onClearAllPressed(_ sender: UIButton) {
+    @IBAction func onForgetAllPressed(_ sender: UIButton) {
         animateFire {
             self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
             self.collectionView.reloadData()

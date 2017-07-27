@@ -33,4 +33,6 @@ protocol HomeControllerDelegate: class {
     func homeDidRequestBookmarks(home: HomeViewController)
 
     func homeDidRequestTabSwitcher(home: HomeViewController)
+    
+    func homeDidRequestForgetAll(home: HomeViewController)
 }

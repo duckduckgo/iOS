@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="1" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Feed" representedClassName="DDGStoryFeed" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="enabled" optional="YES" attributeType="Integer 16" defaultValueString="NO" syncable="YES"/>
+        <attribute name="enabledByDefault" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="feedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="imageDownloaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="imageURLString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="stories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Story" inverseName="feed" inverseEntity="Story" syncable="YES"/>
+    </entity>
+    <entity name="HistoryItem" representedClassName="DDGHistoryItem" syncable="YES">
+        <attribute name="section" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="story" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Story" inverseName="recents" inverseEntity="Story" syncable="YES"/>
+    </entity>
+    <entity name="Story" representedClassName="DDGStory">
+        <attribute name="articleURLString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptionString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="htmlDownloaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="imageDownloaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="imageURLString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="saved" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date">
+            <userInfo/>
+        </attribute>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="feed" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Feed" inverseName="stories" inverseEntity="Feed" syncable="YES"/>
+        <relationship name="recents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoryItem" inverseName="story" inverseEntity="HistoryItem" syncable="YES"/>
+        <userInfo/>
+    </entity>
+    <elements>
+        <element name="Feed" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="HistoryItem" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Story" positionX="261" positionY="189" width="128" height="270"/>
+    </elements>
+</model>

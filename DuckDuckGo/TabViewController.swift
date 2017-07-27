@@ -110,8 +110,8 @@ class TabViewController: WebViewController {
     
     func launchFireMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(closeTabAction())
-        alert.addAction(clearAllTabsAction())
+        alert.addAction(forgetPageAction())
+        alert.addAction(forgetAllTabsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: fireButton)
     }
@@ -182,18 +182,19 @@ class TabViewController: WebViewController {
         }
     }
     
-    private func closeTabAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionTabClose, style: .default) { [weak self] action in
+    private func forgetPageAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionForgetPage, style: .default) { [weak self] action in
             if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestClose(tab: weakSelf)
+                WebCacheManager.clear(forHosts: weakSelf.pageMonitor.hosts()) {}
+                weakSelf.delegate?.tabDidRequestForgetPage(tab: weakSelf)
             }
         }
     }
     
-    private func clearAllTabsAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionTabClearAll, style: .destructive) { [weak self] action in
+    private func forgetAllTabsAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionForgetAllTabs, style: .destructive) { [weak self] action in
             if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestClearAll(tab: weakSelf)
+                weakSelf.delegate?.tabDidRequestForgetAllTabs(tab: weakSelf)
             }
         }
     }

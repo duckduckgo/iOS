@@ -1,5 +1,5 @@
 //
-//  CacheSummary.swift
+//  CacheMonitor.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,11 +20,17 @@
 
 import Foundation
 
-public struct CacheSummary {
+public struct PageMonitor {
     
-    public let count: Int
+    private(set) var urls = [URL]()
     
-    public init(count: Int) {
-        self.count = count
+    mutating func add(url: URL) {
+        urls.append(url)
+    }
+    
+    public func hosts() -> [String] {
+        return urls.filter { $0.host != nil }
+                   .map { $0.host! }
+
     }
 }

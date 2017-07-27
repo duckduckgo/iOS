@@ -29,12 +29,12 @@ class TabsFooter: UICollectionReusableView {
     @IBOutlet weak var quantityLabel: UILabel!
 
     public func refreshLabel() {
-        WKWebView.externalCacheSummary { [weak self] summary in
-            self?.refreshLabel(withCachedSummary: summary)
+        WebCacheManager.summary { [weak self] summary in
+            self?.refreshLabel(withCacheSummary: summary)
         }
     }
     
-    public func refreshLabel(withCachedSummary summary: CacheSummary) {
+    public func refreshLabel(withCacheSummary summary: WebCacheSummary) {
         if summary.count != 0 {
             quantityLabel.text = String(format: UserText.tabSwitcherData, summary.count)
         } else {

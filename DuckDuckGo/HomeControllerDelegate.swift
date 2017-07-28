@@ -29,8 +29,4 @@ protocol HomeControllerDelegate: class {
     func home(_ home: HomeViewController, didRequestUrl url: URL)
 
     func home(_ home: HomeViewController, didRequestQuery query: String)
-    
-    func homeDidRequestBookmarks(home: HomeViewController)
-
-    func homeDidRequestTabSwitcher(home: HomeViewController)
 }

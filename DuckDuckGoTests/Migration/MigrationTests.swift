@@ -13,32 +13,42 @@ import XCTest
 
 class MigrationTests: XCTestCase {
 
+    var container: PersistenceContainer!
+    
+    override func setUp() {
+        container = PersistenceContainer(name: UUID.init().uuidString)
+    }
+    
+    override func tearDown() {
+        container.clear()
+        BookmarksManager().clear()
+    }
+    
+    
     // testFavouriteSearchesDeletedAfterMigration
     // testFavouriteSearchesMigratedToBookmarks
     // testFavouriteStoriesDeletedAfterMigration
     
     func testFavouriteStoriesMigratedToBookmarks() {
         
-        // add a story
-        let container = PersistenceContainer(name: "testFavouriteStoriesMigratedToBookmarks")
-        let story = container.createStory()
-//        story.title = "A title"
-//        story.urlString = "http://example.com"
-//        story.imageURLString = "http://example.com/favicon.ico"
-//        story.saved = NSNumber(booleanLiteral: true)
-//        XCTAssert(container.save())
+        let feed = initialise(feed: container.createFeed())
+        let story = container.createStory(in: feed)
+        story.title = "A title"
+        story.articleURLString = "http://example.com"
+        story.imageURLString = "http://example.com/favicon.ico"
+        story.saved = NSNumber(booleanLiteral: true)
+        story.htmlDownloaded = NSNumber(booleanLiteral: false)
+        story.imageDownloaded = NSNumber(booleanLiteral: false)
+        XCTAssert(container.save())
         
-        // run migration
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
         Migration(container: container).start {
             
-            // check bookmarks
             XCTAssertEqual(1, BookmarksManager().count)
             
             expectation.fulfill()
         }
         
-        // Have a timeout for this test
         wait(for: [expectation], timeout: 1)
         
     }
@@ -51,6 +61,13 @@ class MigrationTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 1)
+    }
+    
+    private func initialise(feed: DDGStoryFeed) -> DDGStoryFeed {
+        feed.id = "fake id"
+        feed.enabledByDefault = NSNumber(booleanLiteral: true)
+        feed.imageDownloaded = NSNumber(booleanLiteral: false)
+        return feed
     }
     
 }

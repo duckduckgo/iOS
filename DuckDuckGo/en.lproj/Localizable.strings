@@ -27,7 +27,6 @@
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
-"tabswitcher.data" = "Tap 'Fire' to erase your tabs and data";
 
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";

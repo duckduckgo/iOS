@@ -34,8 +34,7 @@ public struct UserText {
     
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
-    public static let tabSwitcherData = NSLocalizedString("tabswitcher.data", comment: "Tap fire to forget instructions")
-    
+
     public static let onboardingRealPrivacyTitle = NSLocalizedString("onboarding.realprivacy.title", comment: "Onboarding real privacy title")
     public static let onboardingRealPrivacyDescription = NSLocalizedString("onboarding.realprivacy.description", comment: "Onboarding real privacy description")
     public static let onboardingContentBlockingTitle = NSLocalizedString("onboarding.contentblocking.title", comment: "Onboarding content blocking title")

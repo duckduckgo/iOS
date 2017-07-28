@@ -23,10 +23,11 @@ import Core
 import WebKit
 
 class TabSwitcherViewController: UIViewController {
-
-    @IBOutlet weak var toolbar: UIToolbar!
+    
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var fireButton: UIButton!
     
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -76,7 +77,16 @@ class TabSwitcherViewController: UIViewController {
     }
     
     @IBAction func onForgetAllPressed(_ sender: UIButton) {
-         FireAnimation.animate() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
+            self?.forgetAll()
+        })
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        present(controller: alert, fromView: fireButton)
+    }
+    
+    private func forgetAll() {
+        FireAnimation.animate() {
             self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
             self.collectionView.reloadData()
             self.refreshTitle()
@@ -119,16 +129,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let reuseIdentifier = TabsFooter.reuseIdentifier
-        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
-
-        if !hasSeenFooter {
-            footer.refreshLabel()
-            hasSeenFooter = true
-        } else {
-            footer.clearLabel()
-        }
-
-        return footer
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
     }
     
     func onRemoveTapped(sender: UIView) {

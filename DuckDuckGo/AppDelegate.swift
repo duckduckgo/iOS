@@ -82,6 +82,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func startOnboardingFlowIfNotSeenBefore() {
+        
+        // This should happen so fast that it's complete by the time the user finishes onboarding
+        Migration().start { storiesMigrated, bookmarksMigrated in
+            Logger.log(items: "Migration completed", storiesMigrated, bookmarksMigrated)
+        }
+        
         var settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
             startOnboardingFlow()

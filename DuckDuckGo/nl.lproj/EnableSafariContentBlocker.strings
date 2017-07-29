@@ -1,0 +1,9 @@
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "DLF-rT-Csg"; */
+"DLF-rT-Csg.normalTitle" = "Klaar";
+
+/* Class = "UILabel"; text = "We block trackers and annoying ads that follow you around"; ObjectID = "ENx-tL-BDa"; */
+"ENx-tL-BDa.text" = "We blokkeren trackers en vervelende advertenties die je proberen te volgen";
+
+/* Class = "UILabel"; text = "Content Blocking in Safari"; ObjectID = "cyM-Id-PcB"; */
+"cyM-Id-PcB.text" = "Inhoud blokkeren in Safari";
+

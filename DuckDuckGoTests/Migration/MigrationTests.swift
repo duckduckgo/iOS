@@ -16,7 +16,7 @@ class MigrationTests: XCTestCase {
     var container: PersistenceContainer!
     
     override func setUp() {
-        container = PersistenceContainer(name: UUID.init().uuidString)
+        container = PersistenceContainer(name: "test_stories")
     }
     
     override func tearDown() {
@@ -35,8 +35,8 @@ class MigrationTests: XCTestCase {
         defaults.synchronize()
 
         let feed = initialise(feed: container.createFeed())
-        let _ = retain(story: createStory(in: feed))
-        let _ = retain(story: createStory(in: feed))
+        let _ = createStory(in: feed)
+        let _ = createStory(in: feed)
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testMigrateBothTypes")

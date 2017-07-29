@@ -54,7 +54,7 @@ class MigrationTests: XCTestCase {
     }
     
     func testOldBookmarksDeletedAfterMigration() {
-        testOnlyFavouriteStoryMigratedToBookmarks()
+        testSingleFavouriteSearchesMigratedToBookmarks()
         XCTAssertNil(UserDefaults.standard.array(forKey: Migration.oldBookmarksKey))
     }
     

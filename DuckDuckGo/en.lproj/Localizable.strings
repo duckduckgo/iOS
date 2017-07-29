@@ -20,24 +20,21 @@
 "app.info" = "%@ %@";
 "app.infoWithBuild" = "%@ %@ (%@)";
 "app.authentication.unlock" = "Unlock DuckDuckGo";
-
 "home.link.title" = "DuckDuckGo Home";
 "search.hint.duckduckgo" = "Search or type URL";
-
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
-"tabswitcher.data" = "Tap 'Forget' to erase your tabs and data";
 
 "action.title.pasteAndGo" = "Paste & Go";
 "action.title.save" = "Save";
 "action.title.cancel" = "Cancel";
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
-"action.title.tabClose" = "Close This Tab";
-"action.title.tabClearAll" = "Forget All Tabs and Data";
+"action.title.forgetPage" = "Forget This Page";
+"action.title.forgetAll" = "Forget All";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";
 "action.title.readingList" = "Add to Reading List";

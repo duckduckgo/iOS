@@ -23,10 +23,11 @@ import Core
 import WebKit
 
 class TabSwitcherViewController: UIViewController {
-
+    
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var animationContainer: UIView!
+    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var fireButton: UIButton!
     
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -75,30 +76,20 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
     
-    @IBAction func onClearAllPressed(_ sender: UIButton) {
-        animateFire {
-            self.delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
-            self.collectionView.reloadData()
-            self.refreshTitle()
-        }
+    @IBAction func onForgetAllPressed(_ sender: UIButton) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
+            self?.forgetAll()
+        })
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        present(controller: alert, fromView: fireButton)
     }
     
-    private func animateFire(withCompletion completion: @escaping () -> Swift.Void) {
-        let fireView = UIImageView(image: #imageLiteral(resourceName: "FireLargeStretchable"))
-        let nativeHeight = fireView.frame.size.height
-        let stretchedHeight = nativeHeight + animationContainer.frame.size.height
-        fireView.frame.size = CGSize(width: view.frame.width, height: stretchedHeight)
-        fireView.transform.ty = animationContainer.frame.size.height
-        
-        animationContainer.isHidden = false
-        animationContainer.addSubview(fireView)
-
-        UIView.animate(withDuration: 2, animations: {
-            fireView.transform.ty = -nativeHeight
-        }) { _ in
-            completion()
-            fireView.removeFromSuperview()
-            self.animationContainer.isHidden = true
+    private func forgetAll() {
+        FireAnimation.animate() {
+            self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
+            self.collectionView.reloadData()
+            self.refreshTitle()
         }
     }
     
@@ -112,7 +103,7 @@ class TabSwitcherViewController: UIViewController {
         collectionView.reloadData()
         refreshTitle()
         if tabsModel.isEmpty {
-            delegate.tabSwitcherDidRequestClearAll(tabSwitcher: self)
+            delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
         }
     }
     
@@ -138,16 +129,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let reuseIdentifier = TabsFooter.reuseIdentifier
-        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
-
-        if !hasSeenFooter {
-            footer.refreshLabel()
-            hasSeenFooter = true
-        } else {
-            footer.clearLabel()
-        }
-
-        return footer
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
     }
     
     func onRemoveTapped(sender: UIView) {

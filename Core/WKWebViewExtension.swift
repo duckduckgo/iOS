@@ -21,11 +21,7 @@
 import WebKit
 
 extension WKWebView {
-    
-    private struct Constants {
-        static let cacheKey = "duckduckgo.com"
-    }
-    
+
     public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
@@ -37,40 +33,6 @@ extension WKWebView {
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
-    }
-    
-    /**
-     Provides a summary of the external (non-duckduckgo) cached data
-     */
-    public static func externalCacheSummary(completionHandler: @escaping (_ summary: CacheSummary) -> Swift.Void) {
-        let allData = WKWebsiteDataStore.allWebsiteDataTypes()
-        let dataStore = WKWebsiteDataStore.default()
-        dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
-            let count = records.reduce(0) { (count, record) in
-                if record.displayName == Constants.cacheKey {
-                    return count
-                }
-                return count + record.dataTypes.count
-            }
-            Logger.log(text: String(format: "Web cache retrieved, there are %d items in the cache", count))
-            completionHandler(CacheSummary(count: count))
-        })
-    }
-    
-    /**
-     Clears the cache of all external (non-duckduckgo) data
-     */
-    public static func clearExternalCache(completionHandler: @escaping () -> Swift.Void) {
-        let allData = WKWebsiteDataStore.allWebsiteDataTypes()
-        let dataStore = WKWebsiteDataStore.default()
-        
-        dataStore.fetchDataRecords(ofTypes: allData) { records in
-            let externalRecords = records.filter { $0.displayName != Constants.cacheKey }
-            dataStore.removeData(ofTypes: allData, for: externalRecords) {
-                Logger.log(text: "External cache cleared")
-                completionHandler()
-            }
-        }
     }
     
     public func loadScripts() {

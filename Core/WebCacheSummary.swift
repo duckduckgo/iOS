@@ -1,5 +1,5 @@
 //
-//  TabDelegate.swift
+//  WebCacheSummary.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,20 +18,13 @@
 //
 
 
-import WebKit
-import Core
+import Foundation
 
-protocol TabDelegate: class {
-
-    func tabDidRequestNewTab(_ tab: TabViewController)
+public struct WebCacheSummary {
     
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
+    public let count: Int
     
-    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
-
-    func tabDidRequestSettings(tab: TabViewController)
-    
-    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
-    
-    func tabLoadingStateDidChange(tab: TabViewController)
+    public init(count: Int) {
+        self.count = count
+    }
 }

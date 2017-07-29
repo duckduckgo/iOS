@@ -1,5 +1,5 @@
 //
-//  TabDelegate.swift
+//  UserText.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,20 +18,8 @@
 //
 
 
-import WebKit
-import Core
+import Foundation
 
-protocol TabDelegate: class {
-
-    func tabDidRequestNewTab(_ tab: TabViewController)
-    
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
-    
-    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
-
-    func tabDidRequestSettings(tab: TabViewController)
-    
-    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
-    
-    func tabLoadingStateDidChange(tab: TabViewController)
+public struct UserText {
+    public static let webSaveLinkDone = NSLocalizedString("web.url.save.done", comment: "Bookmark saved")
 }

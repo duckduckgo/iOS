@@ -25,6 +25,10 @@ import Core
 class MainViewController: UIViewController {
     
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var fireButton: UIButton!
+    @IBOutlet weak var tabsButton: UIButton!
     weak var omniBar: OmniBar!
 
     fileprivate var homeController: HomeViewController?
@@ -51,8 +55,9 @@ class MainViewController: UIViewController {
     }
     
     private func loadInitialView() {
-        if let index = tabManager.currentIndex {
-            select(tabAt: index)
+        if let tab = currentTab {
+            addToView(tab: tab)
+            refreshControls()
         } else {
             attachHomeScreen(active: false)
         }
@@ -72,12 +77,32 @@ class MainViewController: UIViewController {
         addToView(controller: controller)
         tabManager.clearSelection()
         controller.refreshMode(active: active)
-        refreshOmniBar()
+        refreshControls()
     }
     
     fileprivate func removeHomeScreen() {
         homeController?.dismiss()
         homeController = nil
+    }
+    
+    @IBAction func onBackPressed() {
+        currentTab?.goBack()
+    }
+    
+    @IBAction func onForwardPressed() {
+        currentTab?.goForward()
+    }
+    
+    @IBAction func onFirePressed() {
+        launchFireMenu()
+    }
+    
+    @IBAction func onBookmarksTapped() {
+        launchBookmarks()
+    }
+    
+    @IBAction func onTabsTapped() {
+        launchTabSwitcher()
     }
     
     func loadQueryInNewTab(_ query: String) {
@@ -116,7 +141,7 @@ class MainViewController: UIViewController {
     fileprivate func select(tabAt index: Int) {
         let selectedTab = tabManager.select(tabAt: index)
         addToView(tab: selectedTab)
-        refreshOmniBar()
+        refreshControls()
     }
     
     private func addToView(tab: UIViewController) {
@@ -140,18 +165,42 @@ class MainViewController: UIViewController {
         }
     }
 
-    fileprivate func closeTabAndOpenNew(oldTab: TabViewController) {
-        tabManager.remove(tab: oldTab)
-        attachHomeScreen(active: true)
+    fileprivate func forgetCurrentPage(animated: Bool) {
+        guard let tab = currentTab else { return }
+        tab.forgetPage()
+        
+        let completion = {
+            self.tabManager.remove(tab: tab)
+            self.attachHomeScreen(active: false)
+        }
+        
+        if animated {
+            FireAnimation.animate(withCompletion: completion)
+        } else {
+            completion()
+        }
     }
     
-    fileprivate func clearAllTabs() {
-        tabManager.clearAll()
-        WKWebView.clearExternalCache {}
-        attachHomeScreen(active: false)
+    fileprivate func forgetAll(animated: Bool) {
+        WebCacheManager.clear() {}
+        let completion = {
+            self.tabManager.clearAll()
+            self.attachHomeScreen(active: false)
+        }
+        
+        if animated {
+            FireAnimation.animate(withCompletion: completion)
+        } else {
+            completion()
+        }
     }
     
-    fileprivate func refreshOmniBar() {
+    fileprivate func refreshControls() {
+        refreshOmniBar()
+        refreshBackForwardButtons()
+    }
+    
+    private func refreshOmniBar() {
         guard let tab = currentTab else {
             omniBar.stopBrowsing()
             return
@@ -160,12 +209,17 @@ class MainViewController: UIViewController {
         omniBar.updateContentBlockerMonitor(monitor: tab.contentBlockerMonitor)
         omniBar.startBrowsing()
     }
-
+    
     fileprivate func dismissOmniBar() {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniBar()
         homeController?.omniBarWasDismissed()
+    }
+    
+    fileprivate func refreshBackForwardButtons() {
+        backButton.isEnabled = currentTab?.canGoBack ?? false
+        forwardButton.isEnabled = currentTab?.canGoForward ?? false
     }
     
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
@@ -187,10 +241,32 @@ class MainViewController: UIViewController {
         controller.removeFromParentViewController()
     }
     
-    fileprivate func launchMenu() {
+    fileprivate func launchBrowsingMenu() {
         currentTab?.launchBrowsingMenu()
     }
     
+    private func launchFireMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if currentTab != nil {
+            alert.addAction(forgetPageAction())
+        }
+        alert.addAction(forgetAllAction())
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        present(controller: alert, fromView: fireButton)
+    }
+    
+    private func forgetPageAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionForgetPage, style: .default) { [weak self] action in
+            self?.forgetCurrentPage(animated: true)
+        }
+    }
+    
+    private func forgetAllAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
+            self?.forgetAll(animated: true)
+        }
+    }
+
     fileprivate func launchContentBlockerPopover() {
         currentTab?.launchContentBlockerPopover()
     }
@@ -204,6 +280,12 @@ class MainViewController: UIViewController {
     
     fileprivate func launchBookmarks() {
         let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
+        controller.modalPresentationStyle = .overCurrentContext
+        present(controller, animated: true, completion: nil)
+    }
+    
+    fileprivate func launchSettings() {
+        let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
     }
@@ -221,7 +303,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onMenuPressed() {
-        launchMenu()
+        launchBrowsingMenu()
     }
     
     func onBookmarksPressed() {
@@ -265,12 +347,8 @@ extension MainViewController: HomeControllerDelegate {
         omniBar.clear()
     }
     
-    func homeDidRequestTabSwitcher(home: HomeViewController) {
-        launchTabSwitcher()
-    }
-    
-    func homeDidRequestBookmarks(home: HomeViewController) {
-        launchBookmarks()
+    func homeDidRequestForgetAll(home: HomeViewController) {
+        forgetAll(animated: true)
     }
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -285,12 +363,12 @@ extension MainViewController: HomeControllerDelegate {
 extension MainViewController: TabDelegate {
     
     func tabLoadingStateDidChange(tab: TabViewController) {
-        refreshOmniBar()
+        refreshControls()
         tabManager.updateModelFromTab(tab: tab)
     }
     
     func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
-         omniBar.updateContentBlockerMonitor(monitor: monitor)
+        omniBar.updateContentBlockerMonitor(monitor: monitor)
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
@@ -305,20 +383,16 @@ extension MainViewController: TabDelegate {
         launchBookmarks()
     }
     
+    func tabDidRequestSettings(tab: TabViewController) {
+        launchSettings()
+    }
+    
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
         loadRequestInNewTab(urlRequest)
-    }
-    
-    func tabDidRequestClearAll(tab: TabViewController) {
-        clearAllTabs()
-    }
-    
-    func tabDidRequestClose(tab: TabViewController) {
-        closeTabAndOpenNew(oldTab: tab)
     }
 }
 
@@ -336,8 +410,8 @@ extension MainViewController: TabSwitcherDelegate {
         remove(tabAt: index)
     }
     
-    func tabSwitcherDidRequestClearAll(tabSwitcher: TabSwitcherViewController) {
-        clearAllTabs()
+    func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
+        forgetAll(animated: false)
     }
 }
 

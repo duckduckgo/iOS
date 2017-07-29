@@ -81,7 +81,7 @@ struct TabManager {
     
     mutating func select(tabAt index: Int) -> TabViewController {
         current?.dismiss()
-        model.currentIndex = index
+        model.select(tabAt: index)
         save()
         return current!
     }

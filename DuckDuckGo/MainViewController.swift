@@ -55,8 +55,9 @@ class MainViewController: UIViewController {
     }
     
     private func loadInitialView() {
-        if let index = tabManager.currentIndex {
-            select(tabAt: index)
+        if let tab = currentTab {
+            addToView(tab: tab)
+            refreshControls()
         } else {
             attachHomeScreen(active: false)
         }

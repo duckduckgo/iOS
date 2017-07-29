@@ -61,4 +61,12 @@ class BookmarksManager {
             dataStore.bookmarks = newBookmarks
         }
     }
+    
+    func clear() {
+        if var newBookmarks = dataStore.bookmarks {
+            newBookmarks.removeAll()
+            dataStore.bookmarks = newBookmarks
+        }
+    }
+    
 }

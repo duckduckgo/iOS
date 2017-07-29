@@ -18,28 +18,32 @@ class Migration {
         self.container = container
     }
     
-    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping () -> ()) {
+    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping (_ stories: Int) -> ()) {
         queue.async {
-            
             let bookmarks = BookmarksManager()
+            let storiesMigrated = self.migrateStories(into: bookmarks)
+            completion(storiesMigrated)
+        }
+    }
+    
+    private func migrateStories(into bookmarks: BookmarksManager) -> Int {
+        let savedStories = self.container.savedStories()
+        let storiesMigrated = savedStories.count
+        for story in savedStories {
             
-            for story in self.container.stories() {
-                
-                debugPrint("Found story: ", story.title, story.articleURLString, story.imageURLString)
-                
-                guard let articleURLString = story.articleURLString else { continue }
-                guard let articleURL = URL(string: articleURLString) else { continue }
-                
-                var imageURL: URL?
-                if let url = story.imageURLString {
-                    imageURL = URL(string: url)
-                }
-                
-                bookmarks.save(bookmark: Link(title: story.title, url: articleURL, favicon: imageURL))
+            guard let articleURLString = story.articleURLString else { continue }
+            guard let articleURL = URL(string: articleURLString) else { continue }
+            
+            var imageURL: URL?
+            if let url = story.imageURLString {
+                imageURL = URL(string: url)
             }
             
-            completion()
+            bookmarks.save(bookmark: Link(title: story.title, url: articleURL, favicon: imageURL))
         }
+        
+        self.container.clear()
+        return storiesMigrated;
     }
     
 }

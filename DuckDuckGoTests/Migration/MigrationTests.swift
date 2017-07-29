@@ -24,27 +24,52 @@ class MigrationTests: XCTestCase {
         BookmarksManager().clear()
     }
     
-    
     // testFavouriteSearchesDeletedAfterMigration
     // testFavouriteSearchesMigratedToBookmarks
-    // testFavouriteStoriesDeletedAfterMigration
     
-    func testFavouriteStoriesMigratedToBookmarks() {
+    func testFavouriteStoriesDeletedAfterMigration() {
+        testOnlyFavouriteStoryMigratedToBookmarks()
+        XCTAssertEqual(0, container.allStories().count)
+    }
+    
+    func testOnlyFavouriteStoryMigratedToBookmarks() {
         
         let feed = initialise(feed: container.createFeed())
-        let story = container.createStory(in: feed)
-        story.title = "A title"
-        story.articleURLString = "http://example.com"
-        story.imageURLString = "http://example.com/favicon.ico"
-        story.saved = NSNumber(booleanLiteral: true)
-        story.htmlDownloaded = NSNumber(booleanLiteral: false)
-        story.imageDownloaded = NSNumber(booleanLiteral: false)
+        createStory(in: feed).saved = NSNumber(booleanLiteral: false)
+        createStory(in: feed).saved = NSNumber(booleanLiteral: true)
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container).start {
+        Migration(container: container).start { storiesMigrated in
             
+            XCTAssertEqual(1, storiesMigrated)
             XCTAssertEqual(1, BookmarksManager().count)
+            expectation.fulfill()
+            
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        
+    }
+    
+    
+    func testSingleFavouriteStoriesMigratedToBookmarks() {
+        
+        let feed = initialise(feed: container.createFeed())
+        let story = retain(story: createStory(in: feed))
+        XCTAssert(container.save())
+        
+        let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
+        Migration(container: container).start { storiesMigrated in
+            XCTAssertEqual(1, storiesMigrated)
+
+            let bookmarksManager = BookmarksManager()
+            XCTAssertEqual(1, bookmarksManager.count)
+            
+            let link = bookmarksManager.bookmark(atIndex: 0)
+            XCTAssertEqual(story.title, link.title)
+            XCTAssertEqual(story.articleURLString, link.url.absoluteString)
+            XCTAssertEqual(story.imageURLString, link.favicon?.absoluteString)
             
             expectation.fulfill()
         }
@@ -56,8 +81,11 @@ class MigrationTests: XCTestCase {
     func testWhenNoMigrationRequiredCompletionIsCalled() {
         
         let expectation = XCTestExpectation(description: "testWhenNoMigrationRequiredCompletionIsCalled")
-        Migration().start {
+        Migration().start { storiesMigrated in
+            
+            XCTAssertEqual(0, storiesMigrated)
             expectation.fulfill()
+            
         }
         
         wait(for: [expectation], timeout: 1)
@@ -68,6 +96,30 @@ class MigrationTests: XCTestCase {
         feed.enabledByDefault = NSNumber(booleanLiteral: true)
         feed.imageDownloaded = NSNumber(booleanLiteral: false)
         return feed
+    }
+    
+    private func createStory(in feed: DDGStoryFeed) -> DDGStory {
+        let story = container.createStory(in: feed)
+        story.title = "A title"
+        story.articleURLString = "http://example.com"
+        story.imageURLString = "http://example.com/favicon.ico"
+        story.saved = NSNumber(booleanLiteral: true)
+        story.htmlDownloaded = NSNumber(booleanLiteral: false)
+        story.imageDownloaded = NSNumber(booleanLiteral: false)
+        return story
+    }
+
+    // Stories created in the db are reset when deleted, so copy the bits we want to assert to a value holder
+    private func retain(story: DDGStory) -> Story {
+        return Story(title: story.title, articleURLString: story.articleURLString, imageURLString: story.imageURLString)
+    }
+    
+    struct Story {
+        
+        var title: String?
+        var articleURLString: String?
+        var imageURLString: String?
+        
     }
     
 }

@@ -51,19 +51,34 @@ class PersistenceContainer {
         return NSEntityDescription.insertNewObject(forEntityName: "Feed", into: managedObjectContext) as! DDGStoryFeed
     }
     
-    func stories() -> [DDGStory] {
+    func savedStories() -> [DDGStory] {
         do {
-            return try managedObjectContext.fetch(DDGStory.fetchRequest()) 
+            let request:NSFetchRequest<DDGStory> = DDGStory.fetchRequest()
+            request.predicate = NSPredicate(format: "saved > 0")
+            
+            return try managedObjectContext.fetch(request)
         } catch {
             debugPrint("Failed to fetch stories", error.localizedDescription)
         }
         return []
     }
-    
+
+    func allStories() -> [DDGStory] {
+        do {
+            return try managedObjectContext.fetch(DDGStory.fetchRequest())
+        } catch {
+            debugPrint("Failed to fetch stories", error.localizedDescription)
+        }
+        return []
+    }
+
     func clear() {
         
-        managedObjectContext.reset()
+        for story in allStories() {
+            managedObjectContext.delete(story)
+        }
         
+        _ = save()
     }
     
     func save() -> Bool {

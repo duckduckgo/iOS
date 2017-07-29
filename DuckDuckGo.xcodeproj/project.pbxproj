@@ -166,6 +166,7 @@
 		F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */; };
 		F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */; };
 		F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */; };
+		F1E9C9E01F2CDD62005F42C8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1E9C9E21F2CDD62005F42C8 /* InfoPlist.strings */; };
 		F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */; };
 		F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */; };
 		F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642021E949E1900B2A911 /* proximanova-bold.otf */; };
@@ -417,6 +418,18 @@
 		F1E4A4441EE89460006F2EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bookmarks.storyboard; sourceTree = "<group>"; };
 		F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
 		F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
+		F1E9C9D61F2CDD61005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		F1E9C9D71F2CDD61005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Settings.strings; sourceTree = "<group>"; };
+		F1E9C9D81F2CDD61005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F1E9C9E11F2CDD62005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F1E9C9E31F2CDD62005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		F1E9C9E91F2CDD63005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
+		F1E9C9EF1F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/EnableSafariContentBlocker.strings; sourceTree = "<group>"; };
+		F1E9C9F01F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		F1E9C9F11F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Bookmarks.strings; sourceTree = "<group>"; };
+		F1E9C9F21F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/TabSwitcher.strings; sourceTree = "<group>"; };
+		F1E9C9F31F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/FireTutorial.strings; sourceTree = "<group>"; };
+		F1E9C9F91F2CDD65005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F1ED309C1EDC2EA400651986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabSwitcher.storyboard; sourceTree = "<group>"; };
 		F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DissolveAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-bold.otf"; sourceTree = "<group>"; };
@@ -1038,6 +1051,7 @@
 		F1AA54621E48D90700223211 /* TodayExtension */ = {
 			isa = PBXGroup;
 			children = (
+				F1E9C9E21F2CDD62005F42C8 /* InfoPlist.strings */,
 				F143C2C41E4A08C400CFDE3A /* TodayExtension.entitlements */,
 				F1AA54631E48D90700223211 /* TodayViewController.swift */,
 				F1AA54651E48D90700223211 /* MainInterface.storyboard */,
@@ -1508,6 +1522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F143C2B41E49D78C00CFDE3A /* Assets.xcassets in Resources */,
+				F1E9C9E01F2CDD62005F42C8 /* InfoPlist.strings in Resources */,
 				F1AA54671E48D90700223211 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1738,6 +1753,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				84E3419A1E2F7EFB00BDBA6F /* Base */,
+				F1E9C9E91F2CDD63005F42C8 /* nl */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1746,6 +1762,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				84E3419F1E2F7EFB00BDBA6F /* Base */,
+				F1E9C9F01F2CDD64005F42C8 /* nl */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1754,6 +1771,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F11CEF651EBB66EF0088E4D7 /* Base */,
+				F1E9C9F31F2CDD64005F42C8 /* nl */,
 			);
 			name = FireTutorial.storyboard;
 			sourceTree = "<group>";
@@ -1762,6 +1780,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F15A8B791E43A428008B8C6F /* Base */,
+				F1E9C9E31F2CDD62005F42C8 /* nl */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -1770,6 +1789,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F176699E1E40BC86003D3222 /* Base */,
+				F1E9C9D71F2CDD61005F42C8 /* nl */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -1778,6 +1798,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F1AA54661E48D90700223211 /* Base */,
+				F1E9C9D61F2CDD61005F42C8 /* nl */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -1786,14 +1807,24 @@
 			isa = PBXVariantGroup;
 			children = (
 				F1E4A4441EE89460006F2EAE /* Base */,
+				F1E9C9F11F2CDD64005F42C8 /* nl */,
 			);
 			name = Bookmarks.storyboard;
+			sourceTree = "<group>";
+		};
+		F1E9C9E21F2CDD62005F42C8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1E9C9E11F2CDD62005F42C8 /* nl */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				F1ED309C1EDC2EA400651986 /* Base */,
+				F1E9C9F21F2CDD64005F42C8 /* nl */,
 			);
 			name = TabSwitcher.storyboard;
 			sourceTree = "<group>";
@@ -1802,6 +1833,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F1F33DF01EB8B88700E462C3 /* Base */,
+				F1E9C9EF1F2CDD64005F42C8 /* nl */,
 			);
 			name = EnableSafariContentBlocker.storyboard;
 			sourceTree = "<group>";
@@ -1810,6 +1842,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F1CB8EA21F26B39000A7171B /* en */,
+				F1E9C9F91F2CDD65005F42C8 /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1818,6 +1851,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F1CB8EA01F26B37600A7171B /* en */,
+				F1E9C9D81F2CDD61005F42C8 /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

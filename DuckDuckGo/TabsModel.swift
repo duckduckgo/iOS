@@ -28,7 +28,7 @@ public class TabsModel: NSObject, NSCoding {
         static let tabs = "tabs"
     }
     
-    var currentIndex: Int?
+    private(set) var currentIndex: Int?
     private(set) var tabs: [Tab]
     
     public init(tabs: [Tab] = [Tab](), currentIndex: Int? = nil) {
@@ -38,7 +38,10 @@ public class TabsModel: NSObject, NSCoding {
     
     public convenience required init?(coder decoder: NSCoder) {
         guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
-        let currentIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int
+        var currentIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int
+        if let index = currentIndex, index < 0 || index >= tabs.count {
+            currentIndex = nil
+        }
         self.init(tabs: tabs, currentIndex: currentIndex)
     }
     
@@ -55,12 +58,16 @@ public class TabsModel: NSObject, NSCoding {
         return tabs.count
     }
     
-    func get(tabAt index: Int) -> Tab {
-        return tabs[index]
+    func select(tabAt index: Int) {
+        currentIndex = index
     }
     
     func clearSelection() {
         currentIndex = nil
+    }
+
+    func get(tabAt index: Int) -> Tab {
+        return tabs[index]
     }
     
     func add(tab: Tab) {
@@ -72,14 +79,18 @@ public class TabsModel: NSObject, NSCoding {
         
         tabs.remove(at: index)
 
-        guard let previous = currentIndex else { return }
-        if previous < tabs.count {
-            currentIndex = index
-        } else if let lastIndex = lastIndex {
-            currentIndex = lastIndex
-        } else {
+        guard let current = currentIndex else { return }
+        
+        if tabs.isEmpty {
             currentIndex = nil
+            return
         }
+        
+        if current == 0 || current < index {
+            return
+        }
+        
+        currentIndex = current - 1
     }
     
     func remove(tab: Tab) {
@@ -95,10 +106,6 @@ public class TabsModel: NSObject, NSCoding {
             }
         }
         return nil
-    }
-    
-    var lastIndex: Int? {
-        return isEmpty ? nil : tabs.count-1
     }
     
     func clearAll() {

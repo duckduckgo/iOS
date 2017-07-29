@@ -100,27 +100,35 @@ class TabsModelTests: XCTestCase {
     
     func testWhenPreviousItemRemovedThenCurrentIndexDecrements() {
         let testee = filledModel
-        testee.currentIndex = 2
+        testee.select(tabAt: 2)
         testee.remove(at: 0)
         XCTAssertEqual(testee.currentIndex, 1)
     }
-    
-    func testWhenCurrentItemRemovedAndCurrentIsNotLastThenCurrentIndexStaysTheSame() {
+
+    func testWhenLaterItemRemovedThenCurrentIndexStaysTheSame() {
         let testee = filledModel
-        testee.currentIndex = 1
-        testee.remove(at: 1)
-        XCTAssertEqual(testee.currentIndex, 1)
-    }
-    
-    func testWhenCurrentItemRemovedAndCurrentIsLastThenCurrentIndexDecrements() {
-        let testee = filledModel
-        testee.currentIndex = 2
+        testee.select(tabAt: 0)
         testee.remove(at: 2)
-        XCTAssertEqual(testee.currentIndex, 1)
+        XCTAssertEqual(testee.currentIndex, 0)
+    }
+
+    func testWhenCurrentIsFirstItemAndItIsRemovedThenCurrentIsZero() {
+        let testee = filledModel
+        testee.select(tabAt: 0)
+        testee.remove(at: 0)
+        XCTAssertEqual(testee.currentIndex, 0)
     }
     
-    func testWhenFinalItemRemovedThenCurrentIsNil() {
+    func testWhenCurrentIsOnlyItemAndItIsRemovedThenCurrentIsNil() {
         let testee = singleModel
+        testee.select(tabAt: 0)
+        testee.remove(at: 0)
+        XCTAssertNil(testee.currentIndex)
+    }
+    
+    func testWhenNoSelectionAndFinalItemRemovedThenCurrentIsNil() {
+        let testee = singleModel
+        testee.clearSelection()
         testee.remove(at: 0)
         XCTAssertNil(testee.currentIndex)
     }

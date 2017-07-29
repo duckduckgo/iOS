@@ -48,6 +48,7 @@ class Migration {
             bookmarkCount += 1
         }
         
+        defaults.removeObject(forKey: Migration.oldBookmarksKey)
         return bookmarkCount
     }
     

@@ -26,8 +26,10 @@ class PersistenceContainer {
         let storeName = name + ".sqlite"
         let storeURL = docsDir.appendingPathComponent(storeName)
         let persistenceStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
+        let options = [ NSMigratePersistentStoresAutomaticallyOption: true,
+                        NSInferMappingModelAutomaticallyOption: true ]
         do {
-            try persistenceStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+            try persistenceStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: options)
         } catch {
             return
         }

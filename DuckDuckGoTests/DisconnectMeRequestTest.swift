@@ -23,6 +23,7 @@ import OHHTTPStubs
 
 class DisconnectMeRequestTests: XCTestCase {
     
+    let host = AppUrls().contentBlocking.host!
     var testee: DisconnectMeRequest!
     
     override func setUp() {
@@ -36,7 +37,7 @@ class DisconnectMeRequestTests: XCTestCase {
     
     func testWhenStatus200AndValidJsonThenRequestCompletestWithTrackersInSupportedCategories() {
         
-        stub(condition: isHost(AppUrls.contentBlocking.host!)) { _ in
+        stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
         
@@ -53,7 +54,7 @@ class DisconnectMeRequestTests: XCTestCase {
     
     func testWhenInvalidJsonThenRequestCompletestWithInvalidJsonError() {
         
-        stub(condition: isHost(AppUrls.contentBlocking.host!)) { _ in
+        stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.invalidJson(), status: 200, headers: nil)
         }
         
@@ -69,7 +70,7 @@ class DisconnectMeRequestTests: XCTestCase {
     
     func testWhenUnexpectedJsonThenRequestCompletestWithTypeMismatchError() {
         
-        stub(condition: isHost(AppUrls.contentBlocking.host!)) { _ in
+        stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.mismatchedJson(), status: 200, headers: nil)
         }
         
@@ -85,7 +86,7 @@ class DisconnectMeRequestTests: XCTestCase {
     
     func testWhenStatusIsLessThan200ThenRequestCompletesWithError() {
 
-        stub(condition: isHost(AppUrls.contentBlocking.host!)) { _ in
+        stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 199, headers: nil)
         }
         
@@ -100,7 +101,7 @@ class DisconnectMeRequestTests: XCTestCase {
     
     func testWhenStatusCodeIs300ThenRequestCompletestWithError() {
         
-        stub(condition: isHost(AppUrls.contentBlocking.host!)) { _ in
+        stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 300, headers: nil)
         }
         
@@ -115,7 +116,7 @@ class DisconnectMeRequestTests: XCTestCase {
     
     func testWhenStatusCodeIsGreaterThan300ThenRequestCompletestWithError() {
         
-        stub(condition: isHost(AppUrls.contentBlocking.host!)) { _ in
+        stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 301, headers: nil)
         }
         
@@ -129,7 +130,7 @@ class DisconnectMeRequestTests: XCTestCase {
     }
     
     func validJson() -> String {
-        return OHPathForFile("MockResponse/disconnect_valid.json", type(of: self))!
+        return OHPathForFile("MockResponse/disconnect.json", type(of: self))!
     }
     
     func mismatchedJson() -> String {

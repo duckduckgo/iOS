@@ -1,5 +1,5 @@
 //
-//  AppUserDefaults.swift
+//  AnalyticsUserDefaults.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,32 +20,31 @@
 
 import Foundation
 
-public class AppUserDefaults: AppSettings {
+public class AnalyticsUserDefaults: AnalyticsStore {
     
     private let groupName: String
     
     private struct Keys {
-        static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let campaignVersion = "com.duckduckgo.analytics.campaignVersion.key"
     }
     
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
     
-    init(groupName: String =  "group.com.duckduckgo.app") {
+    public init(groupName: String =  "group.com.duckduckgo.analytics") {
         self.groupName = groupName
     }
-
-    var autocomplete: Bool {
+    
+    public var campaignVersion: String? {
         
         get {
-            return userDefaults?.bool(forKey: Keys.autocompleteKey, defaultValue: true) ?? true
+            return userDefaults?.string(forKey: Keys.campaignVersion)
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
+            userDefaults?.setValue(newValue, forKey: Keys.campaignVersion)
         }
-        
     }
 }
 

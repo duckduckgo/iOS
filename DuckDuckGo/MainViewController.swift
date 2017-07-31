@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
 
+    private lazy var appUrls: AppUrls = AppUrls()
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -107,7 +108,7 @@ class MainViewController: UIViewController {
     }
     
     func loadQueryInNewTab(_ query: String) {
-        guard let url = AppUrls.url(forQuery: query) else { return }
+        let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
     }
     
@@ -122,7 +123,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQuery(_ query: String) {
-        guard let queryUrl = AppUrls.url(forQuery: query) else { return }
+        let queryUrl = appUrls.url(forQuery: query)
         loadUrl(queryUrl)
     }
     

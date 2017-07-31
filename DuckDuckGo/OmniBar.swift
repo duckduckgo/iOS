@@ -52,6 +52,7 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     var state: OmniBarState = HomeEmptyEditingState()
+    private lazy var appUrls: AppUrls = AppUrls()
     private var siteRating: SiteRating?
     
     static func loadFromXib() -> OmniBar {
@@ -170,12 +171,12 @@ class OmniBar: UIView {
             return
         }
         
-        if let query = AppUrls.searchQuery(fromUrl: url) {
+        if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
             return
         }
         
-        if AppUrls.isDuckDuckGo(url: url) {
+        if appUrls.isDuckDuckGo(url: url) {
             textField.text = nil
             return
         }

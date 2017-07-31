@@ -1,5 +1,5 @@
 //
-//  AppUserDefaults.swift
+//  JsonTestDataLoader.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,33 +19,28 @@
 
 
 import Foundation
+@testable import Core
 
-public class AppUserDefaults: AppSettings {
-    
-    private let groupName: String
-    
-    private struct Keys {
-        static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
-    }
-    
-    private var userDefaults: UserDefaults? {
-        return UserDefaults(suiteName: groupName)
-    }
-    
-    init(groupName: String =  "group.com.duckduckgo.app") {
-        self.groupName = groupName
-    }
 
-    var autocomplete: Bool {
-        
-        get {
-            return userDefaults?.bool(forKey: Keys.autocompleteKey, defaultValue: true) ?? true
-        }
-        
-        set {
-            userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
-        }
-        
+class JsonTestDataLoader {
+    
+    func empty() -> Data {
+        return "".data(using: .utf16)!
+    }
+    
+    func invalid() -> Data {
+        return "{[}".data(using: .utf16)!
+    }
+    
+    func unexpected() -> Data {
+        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/unexpected", ext: "json")
+    }
+    
+    func fromJsonFile(_ fileName: String) -> Data {
+        return try! FileLoader().load(bundle: bundle(), name: fileName, ext: "json")
+    }
+    
+    private func bundle() -> Bundle {
+        return Bundle(for: type(of: self))
     }
 }
-

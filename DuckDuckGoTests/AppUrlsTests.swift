@@ -22,28 +22,63 @@ import XCTest
 
 class AppUrlsTests: XCTestCase {
     
+    var mockAnalyticsStore = MockAnalyticsStore()
+    
     func testAutocompleteUrlCreatesCorrectUrlWithParams() {
-        let actual = AppUrls.autocompleteUrl(forText: "a term")?.absoluteString
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
+        let actual = testee.autocompleteUrl(forText: "a term").absoluteString
         let expected = "https://duckduckgo.com/ac/?q=a%20term"
         XCTAssertEqual(actual, expected)
     }
+
+    func testSearchUrlCreatesUrlWithQueryParam() {
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
+        let url = testee.searchUrl(text: "query")
+        XCTAssertEqual(url.getParam(name: "q"), "query")
+    }
     
+    func testSearchUrlCreatesUrlWithSourceParam() {
+        let mockBundle = MockBundle()
+        mockBundle.add(name: AppVersion.Keys.buildNumber, value: "657")
+        mockBundle.add(name: AppVersion.Keys.versionNumber, value: "1.2.9")
+
+        let testee = AppUrls(version: AppVersion(bundle: mockBundle), analyticsStore: mockAnalyticsStore)
+        let url = testee.searchUrl(text: "query")
+        XCTAssertEqual(url.getParam(name: "t"), "iOS-App-1.2.9-657")
+    }
+
+    func testSearchUrlCreatesUrlWithCampaignIfCapmaignExistsInAnalyticsStore() {
+        mockAnalyticsStore.campaignVersion = "556"
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
+        let urlWithCampaign = testee.searchUrl(text: "query")
+        XCTAssertEqual(urlWithCampaign.getParam(name: "atb"), "556")
+    }
+
+    func testSearchUrlCreatesUrlWithoutCampaignIfNoCapmaignInAnalyticsStore() {
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
+        let url = testee.searchUrl(text: "query")
+        XCTAssertNil(url.getParam(name: "atb"))
+    }
+
     func testSearchQueryReturnsSearchParamInDdgUrl() {
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
         let url = URL(string: "https://www.duckduckgo.com/?ko=-1&kl=wt-wt&q=some%20search")!
         let expected = "some search"
-        let actual = AppUrls.searchQuery(fromUrl: url)
+        let actual = testee.searchQuery(fromUrl: url)
         XCTAssertEqual(actual, expected)
     }
     
     func testSearchQueryReturnsNilIfNoSearchParamInDdgUrl() {
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
         let url = URL(string: "https://www.duckduckgo.com/?ko=-1&kl=wt-wt")!
-        let result = AppUrls.searchQuery(fromUrl: url)
+        let result = testee.searchQuery(fromUrl: url)
         XCTAssertNil(result)
     }
     
     func testSearchQueryReturnsNilIfNotDdgUrl() {
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
         let url = URL(string: "https://www.test.com/?ko=-1&kl=wt-wt&q=some%20search")!
-        let result = AppUrls.searchQuery(fromUrl: url)
+        let result = testee.searchQuery(fromUrl: url)
         XCTAssertNil(result)
     }
 }

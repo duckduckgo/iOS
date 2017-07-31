@@ -1,5 +1,5 @@
 //
-//  InfoBundle.swift
+//  MockVersion..swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,10 +19,3 @@
 
 
 import Foundation
-
-protocol InfoBundle {
-    func object(forInfoDictionaryKey key: String) -> Any?
-}
-
-extension Bundle: InfoBundle {
-}

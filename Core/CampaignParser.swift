@@ -1,5 +1,5 @@
 //
-//  AppUserDefaults.swift
+//  CampaignParser.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,33 +19,20 @@
 
 
 import Foundation
+import SwiftyJSON
 
-public class AppUserDefaults: AppSettings {
-    
-    private let groupName: String
-    
-    private struct Keys {
-        static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
-    }
-    
-    private var userDefaults: UserDefaults? {
-        return UserDefaults(suiteName: groupName)
-    }
-    
-    init(groupName: String =  "group.com.duckduckgo.app") {
-        self.groupName = groupName
-    }
 
-    var autocomplete: Bool {
-        
-        get {
-            return userDefaults?.bool(forKey: Keys.autocompleteKey, defaultValue: true) ?? true
+public struct CampaignParser {
+    
+    public init() {}
+    
+    func convert(fromJsonData data: Data) throws -> Campaign {
+        guard let json = try? JSON(data: data) else {
+            throw JsonError.invalidJson
         }
-        
-        set {
-            userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
+        guard let version = json["version"].string else {
+            throw JsonError.typeMismatch
         }
-        
+        return Campaign(version: version)
     }
 }
-

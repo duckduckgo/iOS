@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        startMigration()
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
@@ -85,17 +86,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
-            startMigration()
             startOnboardingFlow()
             settings.hasSeenOnboarding = true
         }
     }
     
     private func startMigration() {
-        // This should happen so fast that it's complete by the time the user finishes onboarding
+        // This should happen so fast that it's complete by the time the user finishes onboarding.  
+        //  On subsequent calls there won't be anything to do anyway so will finish pretty much instantly.
         Migration().start { storiesMigrated, bookmarksMigrated in
             Logger.log(items: "Migration completed", storiesMigrated, bookmarksMigrated)
-        }                
+        }
     }
     
     private func startOnboardingFlow() {

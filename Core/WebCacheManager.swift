@@ -62,20 +62,5 @@ public class WebCacheManager {
             }
         }
     }
-    
-    /**
-     Clears the cache of external (non-duckduckgo) data belonging to provided hosts
-     - parameter hosts: the hosts to clear from the cache
-     */
-    public static func clear(forHosts hosts: [String], completionHandler: @escaping () -> Swift.Void) {
-        dataStore.fetchDataRecords(ofTypes: allData) { records in
-            let hostRecords = records.filter { hosts.contains($0.displayName) }
-            let externalRecords = hostRecords.filter { $0.displayName != Constants.internalCache }
-            dataStore.removeData(ofTypes: allData, for: externalRecords) {
-                Logger.log(text: "External cache cleared for hosts \(hosts)")
-                completionHandler()
-            }
-        }
-    }
 }
     

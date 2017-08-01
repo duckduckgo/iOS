@@ -164,22 +164,6 @@ class MainViewController: UIViewController {
             attachHomeScreen(active: false)
         }
     }
-
-    fileprivate func forgetCurrentPage(animated: Bool) {
-        guard let tab = currentTab else { return }
-        tab.forgetPage()
-        
-        let completion = {
-            self.tabManager.remove(tab: tab)
-            self.attachHomeScreen(active: false)
-        }
-        
-        if animated {
-            FireAnimation.animate(withCompletion: completion)
-        } else {
-            completion()
-        }
-    }
     
     fileprivate func forgetAll(animated: Bool) {
         WebCacheManager.clear() {}
@@ -247,20 +231,11 @@ class MainViewController: UIViewController {
     
     private func launchFireMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        if currentTab != nil {
-            alert.addAction(forgetPageAction())
-        }
         alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: fireButton)
     }
-    
-    private func forgetPageAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetPage, style: .default) { [weak self] action in
-            self?.forgetCurrentPage(animated: true)
-        }
-    }
-    
+
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
             self?.forgetAll(animated: true)

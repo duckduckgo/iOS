@@ -24,6 +24,7 @@
 "search.hint.duckduckgo" = "Search or type URL";
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
+"web.page.load.failed" = "DuckDuckGo cannot load this page because %@";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";

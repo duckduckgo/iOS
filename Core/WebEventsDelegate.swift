@@ -33,5 +33,7 @@ public protocol WebEventsDelegate: class {
     
     func webpageDidFinishLoading()
     
+    func webpageDidFailToLoad()
+    
     func faviconWasUpdated(_ favicon: URL, forUrl: URL)
 }

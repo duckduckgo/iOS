@@ -23,48 +23,18 @@ import Core
 
 class ContentBlockerUserDefaultsTests: XCTestCase {
     
-    func testWhenInitialisedThenBlockAdvertisersIsTrue() {
+    func testWhenInitialisedThenEnableIsTrue() {
         let testee = ContentBlockerConfigurationUserDefaults()
-        XCTAssertTrue(testee.blockAdvertisers)
+        XCTAssertTrue(testee.enabled)
     }
     
-    func testWhenBlockAdvertisersIsSetThenValueIsUpdated() {
+    func testWhenBlockingEnabledIsSetThenValueIsUpdated() {
         let testee = ContentBlockerConfigurationUserDefaults()
         
-        testee.blockAdvertisers = false
-        XCTAssertFalse(testee.blockAdvertisers)
+        testee.enabled = false
+        XCTAssertFalse(testee.enabled)
 
-        testee.blockAdvertisers = true
-        XCTAssertTrue(testee.blockAdvertisers)
-    }
-    
-    func testWhenInitialisedThenBlockAnalyticssIsTrue() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        XCTAssertTrue(testee.blockAnalytics)
-    }
-    
-    func testWhenBlockAnalyticsIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        
-        testee.blockAnalytics = false
-        XCTAssertFalse(testee.blockAnalytics)
-        
-        testee.blockAnalytics = true
-        XCTAssertTrue(testee.blockAnalytics)
-    }
-    
-    func testWhenInitialisedThenBlockSocialIsTrue() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        XCTAssertTrue(testee.blockSocial)
-    }
-    
-    func testWhenBlockSocialIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        
-        testee.blockSocial = false
-        XCTAssertFalse(testee.blockSocial)
-        
-        testee.blockSocial = true
-        XCTAssertTrue(testee.blockSocial)
+        testee.enabled = true
+        XCTAssertTrue(testee.enabled)
     }
 }

@@ -25,9 +25,8 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
     private let groupName = "group.com.duckduckgo.contentblocker"
     
     private struct Keys {
-        static let advertising = "com.duckduckgo.contentblocker.advertising"
-        static let analytics = "com.duckduckgo.contentblocker.analytics"
-        static let social = "com.duckduckgo.contentblocker.social"
+        static let enabled = "com.duckduckgo.contentblocker.enabled"
+        static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
     }
     
     private var userDefaults: UserDefaults? {
@@ -36,37 +35,41 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
 
     public init() {}
     
-    public var blockAdvertisers: Bool {
+    public var enabled: Bool {
         get {
             guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.advertising, defaultValue: true)
+            return userDefaults.bool(forKey: Keys.enabled, defaultValue: true)
         }
         set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.advertising)
+            userDefaults?.set(newValue, forKey: Keys.enabled)
+        }
+    }
+
+    public var domainWhitelist: Set<String> {
+        get {
+            guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
+            guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
+            return whitelist
+        }
+        set(newWhitelistedDomain) {
+            let data = NSKeyedArchiver.archivedData(withRootObject: newWhitelistedDomain)
+            userDefaults?.set(data, forKey: Keys.whitelistedDomains)
         }
     }
     
-    public var blockAnalytics: Bool {
-        get {
-            guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.analytics, defaultValue: true)
-        }
-        set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.analytics)
-        }
+    public func whitelisted(domain: String) -> Bool {
+        return domainWhitelist.contains(domain)
     }
     
-    public var blockSocial: Bool {
-        get {
-            guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.social, defaultValue: true)
-        }
-        set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.social)
-        }
+    public func addToWhitelist(domain: String) {
+        var whitelist = domainWhitelist
+        whitelist.insert(domain)
+        domainWhitelist = whitelist
     }
     
-    public var blockingEnabled: Bool {
-        return blockSocial || blockAdvertisers || blockAnalytics
+    public func removeFromWhitelist(domain: String) {
+        var whitelist = domainWhitelist
+        whitelist.remove(domain)
+        domainWhitelist = whitelist
     }
 }

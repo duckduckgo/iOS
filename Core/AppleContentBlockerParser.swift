@@ -23,8 +23,8 @@ public struct AppleContentBlockerParser {
     
     public init() {}
     
-    public func toJsonData(entries: [ContentBlockerEntry]) throws -> Data {
-        let jsonArray = toJsonArray(entries: entries)
+    public func toJsonData(trackers: [Tracker]) throws -> Data {
+        let jsonArray = toJsonArray(trackers: trackers)
         
         guard let data = try? JSONSerialization.data(withJSONObject: jsonArray, options:  []) else {
             throw JsonError.typeMismatch
@@ -33,18 +33,18 @@ public struct AppleContentBlockerParser {
         return data
     }
     
-    public func toJsonArray(entries: [ContentBlockerEntry]) -> [Any] {
+    public func toJsonArray(trackers: [Tracker]) -> [Any] {
         var array = [Any]()
-        for entry in entries {
-            let jsonEntry = toJsonObject(entry: entry)
-            array.append(jsonEntry)
+        for tracker in trackers {
+            let jsonTracker = toJsonObject(tracker: tracker)
+            array.append(jsonTracker)
         }
         return array
     }
     
-    private func toJsonObject(entry: ContentBlockerEntry) -> [String: Any] {
+    private func toJsonObject(tracker: Tracker) -> [String: Any] {
         
-        let url = "\(entry.url)"
+        let url = "\(tracker.url)"
         
         return [
             "action": [

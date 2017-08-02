@@ -25,33 +25,33 @@ class AppleContentBlockerParserTests: XCTestCase {
     
     private var testee = AppleContentBlockerParser()
 
-    func testWhenNoEntriesThenParserCreatesEmptyArray() {
-        let result = testee.toJsonArray(entries: noEntries())
+    func testWhenNoTrackersThenParserCreatesEmptyArray() {
+        let result = testee.toJsonArray(trackers: noTrackers())
         XCTAssertNotNil(result)
         XCTAssertEqual(result.count, 0)
     }
     
-    func testWhenEntriesValidThenParserCreatesJsonArrayOfCorrectSize() {
-        let result = testee.toJsonArray(entries: validEntries())
+    func testWhenTrackersValidThenParserCreatesJsonArrayOfCorrectSize() {
+        let result = testee.toJsonArray(trackers: validTrackers())
         XCTAssertNotNil(result)
         XCTAssertEqual(result.count, 2)
     }
     
-    func testWhenEntriesValidThenParserCreatesCorrectJsonData() {
-        let result = try! testee.toJsonData(entries: validEntries())
+    func testWhenTrackersValidThenParserCreatesCorrectJsonData() {
+        let result = try! testee.toJsonData(trackers: validTrackers())
         let resultString = String(data: result, encoding: .utf8)!
         let expectedString = "[{\"action\":{\"type\":\"block\"},\"trigger\":{\"load-type\":[\"third-party\"],\"url-filter\":\"facebook.gb\"}},{\"action\":{\"type\":\"block\"},\"trigger\":{\"load-type\":[\"third-party\"],\"url-filter\":\"reddit.co.uk\"}}]"
         XCTAssertEqual(resultString, expectedString)
     }
     
-    private func noEntries() -> [ContentBlockerEntry] {
-        return [ContentBlockerEntry]()
+    private func noTrackers() -> [Tracker] {
+        return [Tracker]()
     }
 
-    private func validEntries() -> [ContentBlockerEntry] {
+    private func validTrackers() -> [Tracker] {
         return [
-            ContentBlockerEntry(category: .social, domain: "facebook.com", url: "facebook.gb"),
-            ContentBlockerEntry(category: .social, domain: "reddit.com", url: "reddit.co.uk"),
+            Tracker(url: "facebook.gb", parentDomain: "facebook.com"),
+            Tracker(url: "reddit.co.uk", parentDomain: "reddit.com")
         ]
     }
 }

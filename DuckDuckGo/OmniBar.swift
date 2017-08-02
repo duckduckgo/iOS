@@ -66,7 +66,7 @@ class OmniBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         menuButton.tag = Tag.menuButton
-        contentBlockerContainer.tag = Tag.contentBlocker
+        configureContentBlocker()
         configureTextField()
         configureEditingMenu()
         refreshState(state)
@@ -104,6 +104,11 @@ class OmniBar: UIView {
         }
     }
 
+    private func configureContentBlocker() {
+        contentBlockerContainer.tag = Tag.contentBlocker
+        contentBlockerCircle.tintColor = UIColor.coolGray
+    }
+    
     private func configureTextField() {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo, attributes: [NSForegroundColorAttributeName: UIColor.coolGray])
         textField.delegate = self
@@ -126,19 +131,6 @@ class OmniBar: UIView {
     
     @discardableResult override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
-    }
-
-    func updateContentBlockerMonitor(monitor: ContentBlockerMonitor) {
-        if !monitor.blockingEnabled {
-            contentBlockerCircle.tintColor = UIColor.contentBlockerCompletelyDisabledTint
-            contentBlockerLabel.text = "!"
-        } else if monitor.total == 0 {
-            contentBlockerCircle.tintColor = UIColor.contentBlockerActiveCleanSiteTint
-            contentBlockerLabel.text = "\(monitor.total)"
-        } else {
-            contentBlockerCircle.tintColor = UIColor.contentBlockerActiveDirtySiteTint
-            contentBlockerLabel.text = "\(monitor.total)"
-        }
     }
     
     func clear() {

@@ -33,12 +33,18 @@ class ShareViewController: UIViewController {
     
     private var webController: WebViewController?
     private lazy var bookmarkStore = BookmarkUserDefaults()
-    fileprivate lazy var contentBlocker = ContentBlocker()
+    fileprivate var contentBlocker: ContentBlocker!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureContentBlocker()
         webController?.attachWebView(persistsData: false)
         refreshNavigationButtons()
+    }
+    
+    private func configureContentBlocker() {
+        let trackerLoader = TrackerLoader()
+        contentBlocker = ContentBlocker(trackers: trackerLoader.trackers)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -126,7 +132,7 @@ extension ShareViewController: WebEventsDelegate {
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
-        return contentBlocker.block(url: url, forDocument: documentUrl) == nil
+        return contentBlocker.block(url: url, forDocument: documentUrl)
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {

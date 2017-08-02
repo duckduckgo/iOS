@@ -17,70 +17,91 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class ContentBlocker {
+
+    private var configuration: ContentBlockerConfigurationStore
+    private let trackers: [Tracker]
+    private(set) var trackersDetected = [Tracker: Int]()
+    private(set) var trackersBlocked = [Tracker: Int]()
     
-    private struct FileConstants {
-        static let name = "disconnectmetrackers"
-        static let ext = "json"
+    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults(),
+         trackers: [Tracker]) {
+        self.trackers = trackers
+        self.configuration = configuration
     }
     
-    private let configuration = ContentBlockerConfigurationUserDefaults()
-    private let parser = DisconnectMeContentBlockerParser()
-    private var categorizedEntries = CategorizedContentBlockerEntries()
-    
-    public init() {
-        do {
-            categorizedEntries = try loadContentBlockerEntries()
-        } catch {
-            Logger.log(text: "Could not load content blocker entries \(error)")
+    public var enabled: Bool {
+        get {
+            return configuration.enabled
+        }
+        set(newValue) {
+            configuration.enabled = newValue
         }
     }
     
-    public var blockingEnabled: Bool {
-        return configuration.blockingEnabled
+    public func enabled(forDomain domain: String) -> Bool {
+        return !configuration.whitelisted(domain: domain)
     }
     
-    public var blockedEntries: [ContentBlockerEntry] {
-        var entries = [ContentBlockerEntry]()
-        for (categoryKey, categoryEntries) in categorizedEntries {
-            let category = ContentBlockerCategory.forKey(categoryKey)
-            if category == .advertising && configuration.blockAdvertisers {
-                entries.append(contentsOf: categoryEntries)
-            }
-            if category == .analytics && configuration.blockAnalytics {
-                entries.append(contentsOf: categoryEntries)
-            }
-            if category == .social && configuration.blockSocial {
-                entries.append(contentsOf: categoryEntries)
-            }
+    public func whitelist(_ on: Bool, domain: String) {
+        if on {
+            configuration.addToWhitelist(domain: domain)
+        } else {
+            configuration.removeFromWhitelist(domain: domain)
         }
-        return entries
+    }
+
+    public var unique: Int {
+        return trackersBlocked.count
     }
     
-    private func loadContentBlockerEntries() throws -> CategorizedContentBlockerEntries {
-        let fileLoader = FileLoader()
-        let data = try fileLoader.load(name: FileConstants.name, ext: FileConstants.ext)
-        return try parser.convert(fromJsonData: data)
+    public var total: Int {
+        return trackersBlocked.reduce(0) { $0 + $1.value }
+    }
+
+    public func reset() {
+        trackersDetected = [Tracker: Int]()
+        trackersBlocked = [Tracker: Int]()
+    }
+    
+    public func block(url: URL, forDocument documentUrl: URL) -> Bool {
+        guard let host = url.host  else { return false }
+        if let tracker = thirdPartyTracker(forUrl: url, document: documentUrl), !configuration.whitelisted(domain: host)  {
+            Logger.log(text: "ContentBlocker BLOCKED \(url.absoluteString)")
+            trackerBlocked(tracker)
+            return true
+        }
+        Logger.log(text: "ContentBlocker did NOT block \(url.absoluteString)")
+        return false
+    }
+    
+    private func trackerBlocked(_ tracker: Tracker) {
+        let previousCount = trackersBlocked[tracker] ?? 0
+        trackersBlocked[tracker] = previousCount + 1
     }
     
     /**
-        Checks if a url for a specific document should be blocked.
-        - parameter url: the url to check
-        - parameter documentUrl: the document requesting the url
-        - returns: entry if the item matches a third party url in the block list otherwise nil
+     Checks if a url for a specific document is a tracker
+     - parameter url: the url to check
+     - parameter documentUrl: the document requesting the url
+     - returns: tracker if the item matches a third party url in the trackers list otherwise nil
      */
-    public func block(url: URL, forDocument documentUrl: URL) -> ContentBlockerEntry? {
-        for entry in blockedEntries {
-            if url.absoluteString.contains(entry.url) && documentUrl.host != url.host {
-                Logger.log(text: "Content blocker BLOCKED \(url.absoluteString)")
-                return entry
+    private func thirdPartyTracker(forUrl url: URL, document documentUrl: URL) -> Tracker? {
+        for tracker in trackers {
+            if url.absoluteString.contains(tracker.url) && documentUrl.host != url.host {
+                Logger.log(text: "ContentBlocker DETECTED tracker \(url.absoluteString)")
+                trackerDetected(tracker)
+                return tracker
             }
         }
-        Logger.log(text: "Content blocker did NOT block \(url.absoluteString)")
+        Logger.log(text: "ContentBlocker did NOT detect \(url.absoluteString) as a tracker")
         return nil
     }
+    
+    private func trackerDetected(_ tracker: Tracker) {
+        let previousCount = trackersDetected[tracker] ?? 0
+        trackersDetected[tracker] = previousCount + 1
+    }
 }
-

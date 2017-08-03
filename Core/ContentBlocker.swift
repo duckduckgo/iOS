@@ -52,29 +52,45 @@ public class ContentBlocker {
             configuration.removeFromWhitelist(domain: domain)
         }
     }
-
-    public var unique: Int {
-        return trackersBlocked.count
+    
+    public var uniqueItemsDetected: Int {
+        return trackersDetected.count
     }
     
-    public var total: Int {
+    public var uniqueItemsBlocked: Int {
+        return trackersBlocked.count
+    }
+
+    public var totalItemsDetected: Int {
+        return trackersDetected.reduce(0) { $0 + $1.value }
+    }
+    
+    public var totalItemsBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 
-    public func reset() {
+    public func resetMonitoring() {
         trackersDetected = [Tracker: Int]()
         trackersBlocked = [Tracker: Int]()
     }
     
     public func block(url: URL, forDocument documentUrl: URL) -> Bool {
-        guard let host = url.host  else { return false }
-        if let tracker = thirdPartyTracker(forUrl: url, document: documentUrl), !configuration.whitelisted(domain: host)  {
-            Logger.log(text: "ContentBlocker BLOCKED \(url.absoluteString)")
-            trackerBlocked(tracker)
-            return true
+        guard let tracker = thirdPartyTracker(forUrl: url, document: documentUrl) else {
+            return false
         }
-        Logger.log(text: "ContentBlocker did NOT block \(url.absoluteString)")
-        return false
+        
+        if !configuration.enabled {
+            return false
+        }
+        
+        guard let host = documentUrl.host  else { return false }
+        if configuration.whitelisted(domain: host) {
+            return false
+        }
+        
+        Logger.log(text: "ContentBlocker BLOCKED \(url.absoluteString)")
+        trackerBlocked(tracker)
+        return true
     }
     
     private func trackerBlocked(_ tracker: Tracker) {

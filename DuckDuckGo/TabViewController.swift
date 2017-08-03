@@ -232,7 +232,7 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        contentBlocker.reset()
+        contentBlocker.resetMonitoring()
         onContentBlockerStateChanged()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

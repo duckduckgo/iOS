@@ -23,18 +23,50 @@ import Core
 
 class ContentBlockerUserDefaultsTests: XCTestCase {
     
+    struct Constants {
+        static let userDefaultsSuit = "ContentBlockerUserDefaultsTestsSuit"
+        static let domain = "somedomain.com"
+        static let someOtherDomain = "someotherdomain.com"
+    }
+    
+    var testee: ContentBlockerConfigurationUserDefaults!
+    
+    override func setUp() {
+        UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
+        testee = ContentBlockerConfigurationUserDefaults(suitName: Constants.userDefaultsSuit)
+    }
+    
     func testWhenInitialisedThenEnableIsTrue() {
-        let testee = ContentBlockerConfigurationUserDefaults()
         XCTAssertTrue(testee.enabled)
     }
     
-    func testWhenBlockingEnabledIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        
+    func testWhenBlockingDisabledThenDisabledIsTrue() {
         testee.enabled = false
         XCTAssertFalse(testee.enabled)
+    }
 
+    
+    func testWhenBlockingEnabledThenEnabledIsTrue() {
+        // default value is true so start be setting to false to ensure test is accurate
+        testee.enabled = false
+        
         testee.enabled = true
         XCTAssertTrue(testee.enabled)
     }
+
+    func testWhenNothingInWhitelistThenWhitelistedIsFalse() {
+        XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
+    }
+    
+    func testWhenDomainAddedToWhitelistThenWhitelistedIsTrue() {
+        testee.addToWhitelist(domain: Constants.domain)
+        XCTAssertTrue(testee.whitelisted(domain: Constants.domain))
+    }
+    
+    func testWhenRemovedFromWhitelistThenWhitelistedIsFalse() {
+        testee.addToWhitelist(domain: Constants.domain)
+        testee.removeFromWhitelist(domain: Constants.domain)
+        XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
+    }
+
 }

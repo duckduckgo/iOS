@@ -22,18 +22,24 @@ import Foundation
 
 public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
     
-    private let groupName = "group.com.duckduckgo.contentblocker"
+    private struct Constants {
+        static let groupName = "group.com.duckduckgo.contentblocker"
+    }
     
     private struct Keys {
         static let enabled = "com.duckduckgo.contentblocker.enabled"
         static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
     }
     
-    private var userDefaults: UserDefaults? {
-        return UserDefaults(suiteName: groupName)
+    private let suitName: String
+    
+    public init(suitName: String = Constants.groupName) {
+        self.suitName =  suitName
     }
-
-    public init() {}
+    
+    private var userDefaults: UserDefaults? {
+        return UserDefaults(suiteName: suitName)
+    }
     
     public var enabled: Bool {
         get {
@@ -45,7 +51,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
     }
 
-    public var domainWhitelist: Set<String> {
+    private var domainWhitelist: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
             guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }

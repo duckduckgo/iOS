@@ -53,6 +53,8 @@
 		F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */; };
 		F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BF81F18CA0600814661 /* TabsModelTests.swift */; };
 		F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13B4BFA1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift */; };
+		F14208C81F3345590034198A /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19F4E0F1F3273D4000096A9 /* ContentBlockerTests.swift */; };
+		F14208C91F33457A0034198A /* MockContentBlockerConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14208C61F3344E40034198A /* MockContentBlockerConfigurationStore.swift */; };
 		F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		F143C2B31E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		F143C2B41E49D78C00CFDE3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
@@ -304,6 +306,7 @@
 		F13B4BD41F183B3600814661 /* TabsModelPersistenceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModelPersistenceExtension.swift; sourceTree = "<group>"; };
 		F13B4BF81F18CA0600814661 /* TabsModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModelTests.swift; sourceTree = "<group>"; };
 		F13B4BFA1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsModelPersistenceExtensionTests.swift; sourceTree = "<group>"; };
+		F14208C61F3344E40034198A /* MockContentBlockerConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockContentBlockerConfigurationStore.swift; sourceTree = "<group>"; };
 		F143C2B11E49D78C00CFDE3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F143C2C41E4A08C400CFDE3A /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DuckDuckGo.entitlements; sourceTree = "<group>"; };
@@ -376,6 +379,7 @@
 		F197EA3B1E6885F20029BDC1 /* TextFieldWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWithInsets.swift; sourceTree = "<group>"; };
 		F198D78D1E39762C0088DA8A /* StringExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtensionTests.swift; sourceTree = "<group>"; };
+		F19F4E0F1F3273D4000096A9 /* ContentBlockerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		F1A568391E70F98E0081082E /* AutocompleteRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteRequest.swift; sourceTree = "<group>"; };
 		F1A886771F29394E0096251E /* WebCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCacheManager.swift; sourceTree = "<group>"; };
 		F1AA545E1E48D90700223211 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -877,6 +881,7 @@
 		F16393F31ECCA83F00DDD653 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
+				F19F4E0F1F3273D4000096A9 /* ContentBlockerTests.swift */,
 				F11E231D1ED3B5C500523BC9 /* Domain */,
 				F16393F71ECCAB3A00DDD653 /* Store */,
 				F11044FE1ECFD6AF00C5E3D3 /* Parser */,
@@ -955,6 +960,7 @@
 			isa = PBXGroup;
 			children = (
 				F17669A71E412A12003D3222 /* MockBundle.swift */,
+				F14208C61F3344E40034198A /* MockContentBlockerConfigurationStore.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -1347,6 +1353,7 @@
 				F143C2E01E4A4CD400CFDE3A /* Frameworks */,
 				F143C2E11E4A4CD400CFDE3A /* Headers */,
 				F143C2E21E4A4CD400CFDE3A /* Resources */,
+				F1A945D81F29F71A004BBB01 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1575,6 +1582,21 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		F1A945D81F29F71A004BBB01 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1659,9 +1681,11 @@
 				F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
 				F11045001ECFD70E00C5E3D3 /* AppleContentBlockerParserTests.swift in Sources */,
+				F14208C81F3345590034198A /* ContentBlockerTests.swift in Sources */,
 				F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */,
 				F16393F51ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift in Sources */,
 				F1DA2F7D1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift in Sources */,
+				F14208C91F33457A0034198A /* MockContentBlockerConfigurationStore.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				F11E23201ED3B75D00523BC9 /* TrackerTests.swift in Sources */,
 				85ECA7F11F2A83190018EBEB /* MigrationTests.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ContentBlockerConfigurationStore.swift
+//  MockContentBlockerConfigurationStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,15 +18,24 @@
 //
 
 
-import Foundation
+@testable import Core
 
-public protocol ContentBlockerConfigurationStore {
+class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
     
-    var enabled: Bool { get set }
+    var enabled = true
     
-    func whitelisted(domain: String) -> Bool
+    // A very sophisticated stub, it supports a single whitelisted item ;-)
+    private var lastWhiteListedItem: String?
     
-    func addToWhitelist(domain: String)
+    func whitelisted(domain: String) -> Bool {
+        return domain == lastWhiteListedItem
+    }
     
-    func removeFromWhitelist(domain: String)
+    func addToWhitelist(domain: String) {
+        lastWhiteListedItem = domain
+    }
+    
+    func removeFromWhitelist(domain: String) {
+        lastWhiteListedItem = nil
+    }
 }

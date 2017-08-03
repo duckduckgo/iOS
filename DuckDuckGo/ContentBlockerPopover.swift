@@ -58,7 +58,7 @@ class ContentBlockerPopover: UITableViewController {
         if !contentBlocker.enabled(forDomain: domain) {
             return "!"
         }
-        return "\(contentBlocker.unique)"
+        return "\(contentBlocker.uniqueItemsBlocked)"
     }
     
     private func blockCountCircleTint() -> UIColor {
@@ -68,7 +68,7 @@ class ContentBlockerPopover: UITableViewController {
         if !contentBlocker.enabled(forDomain: domain) {
             return UIColor.contentBlockerCompletelyDisabledTint
         }
-        if contentBlocker.total > 0 {
+        if contentBlocker.uniqueItemsBlocked > 0 {
             return UIColor.contentBlockerActiveDirtySiteTint
         }
         return UIColor.contentBlockerActiveCleanSiteTint

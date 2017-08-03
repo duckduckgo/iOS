@@ -24,17 +24,16 @@ import Core
 
 class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
     
-    private lazy var contentBlocker = ContentBlocker()
     private lazy var parser = AppleContentBlockerParser()
+    private lazy var trackers = TrackerLoader().trackers
     
     enum ContentBlockerError: Error {
         case noData
     }
     
     func beginRequest(with context: NSExtensionContext) {
-        let entries = contentBlocker.blockedEntries
         do {
-            let data = try parser.toJsonData(entries: entries) as NSSecureCoding
+            let data = try parser.toJsonData(trackers: trackers) as NSSecureCoding
             let attachment = NSItemProvider(item: data, typeIdentifier: kUTTypeJSON as String)
             let item = NSExtensionItem()
             item.attachments = [attachment]

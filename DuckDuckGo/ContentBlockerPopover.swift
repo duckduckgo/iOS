@@ -22,78 +22,71 @@ import SafariServices
 import Core
 
 class ContentBlockerPopover: UITableViewController {
+
+    @IBOutlet weak var blockCountCircle: UIImageView!
+    @IBOutlet weak var blockCount: UILabel!
+    @IBOutlet weak var blockingEnabledToggle: UISwitch!
+    @IBOutlet weak var blockThisDomainToggle: UISwitch!
     
-    private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
+    private weak var contentBlocker: ContentBlocker!
+    private(set) var domain: String!
     
-    @IBOutlet weak var advertisingCountCircle: UIImageView!
-    @IBOutlet weak var advertisingCount: UILabel!
-    @IBOutlet weak var blockAdvertisingToggle: UISwitch!
-    
-    @IBOutlet weak var analyticsCountCircle: UIImageView!
-    @IBOutlet weak var analyticsCount: UILabel!
-    @IBOutlet weak var blockAnalyticsToggle: UISwitch!
-    
-    @IBOutlet weak var socialCountCircle: UIImageView!
-    @IBOutlet weak var socialCount: UILabel!
-    @IBOutlet weak var blockSocialToggle: UISwitch!
-    
-    private weak var monitor: ContentBlockerMonitor?
-    
-    static func loadFromStoryboard(withMonitor monitor: ContentBlockerMonitor) -> ContentBlockerPopover {
+    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, domain: String) -> ContentBlockerPopover {
         let storyboard = UIStoryboard.init(name: "ContentBlockerPopover", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
-        controller.monitor = monitor
+        controller.contentBlocker = contentBlocker
+        controller.domain = domain
         return controller
     }
     
     override func viewDidLoad() {
-        configureToggles()
-        refresh()
-    }
-    
-    private func configureToggles() {
-        blockAdvertisingToggle.isOn = contentBlockerStore.blockAdvertisers
-        blockAnalyticsToggle.isOn = contentBlockerStore.blockAnalytics
-        blockSocialToggle.isOn = contentBlockerStore.blockSocial
-    }
-    
-    public func updateMonitor(monitor: ContentBlockerMonitor) {
-        self.monitor = monitor
         refresh()
     }
     
     public func refresh() {
-        guard let monitor = monitor else { return }
-        advertisingCount.text = "\(monitor.totalAdvertising)"
-        analyticsCount.text = "\(monitor.totalAnalytics)"
-        socialCount.text = "\(monitor.totalSocial)"
-        advertisingCountCircle.tintColor = tint(whenEnabled: contentBlockerStore.blockAdvertisers, withBlockCount:  monitor.totalAdvertising)
-        analyticsCountCircle.tintColor = tint(whenEnabled: contentBlockerStore.blockAnalytics, withBlockCount:  monitor.totalAnalytics)
-        socialCountCircle.tintColor = tint(whenEnabled: contentBlockerStore.blockSocial, withBlockCount:  monitor.totalSocial)
+        blockingEnabledToggle.isOn = contentBlocker.enabled
+        blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: domain)
+        blockThisDomainToggle.isEnabled = blockingEnabledToggle.isOn
+        blockCount.text = blockCountText()
+        blockCountCircle.tintColor = blockCountCircleTint()
     }
-    
-    private func tint(whenEnabled enabled: Bool, withBlockCount count: Int) -> UIColor {
-        if !enabled {
-            return UIColor.contentBlockerInactiveTint
+ 
+    private func blockCountText() -> String {
+        if !contentBlocker.enabled {
+            return "!"
         }
-        return count == 0 ? UIColor.contentBlockerActiveCleanSiteTint : UIColor.contentBlockerActiveDirtySiteTint
+        if !contentBlocker.enabled(forDomain: domain) {
+            return "!"
+        }
+        return "\(contentBlocker.uniqueItemsBlocked)"
     }
     
-    @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockAdvertisers = sender.isOn
+    private func blockCountCircleTint() -> UIColor {
+        if !contentBlocker.enabled {
+            return UIColor.contentBlockerCompletelyDisabledTint
+        }
+        if !contentBlocker.enabled(forDomain: domain) {
+            return UIColor.contentBlockerCompletelyDisabledTint
+        }
+        if contentBlocker.uniqueItemsBlocked > 0 {
+            return UIColor.contentBlockerActiveDirtySiteTint
+        }
+        return UIColor.contentBlockerActiveCleanSiteTint
+    }
+    
+    @IBAction func onBlockingEnabledToggle(_ sender: UISwitch) {
+        contentBlocker.enabled = sender.isOn
+        blockThisDomainToggle.isEnabled = sender.isOn
+        refresh()
         reloadContentBlockerExtension()
     }
     
-    @IBAction func onBlockAnalyticsToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockAnalytics = sender.isOn
+    @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {
+        contentBlocker.whitelist(!sender.isOn, domain: domain)
+        refresh()
         reloadContentBlockerExtension()
     }
-    
-    @IBAction func onBlockSocialToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockSocial = sender.isOn
-        reloadContentBlockerExtension()
-    }
-    
+
     private func reloadContentBlockerExtension() {
         SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
             if let error = error {

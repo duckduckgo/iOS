@@ -1,5 +1,5 @@
 //
-//  ContentBlockerEntries.swift
+//  MockContentBlockerConfigurationStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,18 +18,24 @@
 //
 
 
-typealias CategorizedContentBlockerEntries = [String: [ContentBlockerEntry]]
+@testable import Core
 
-public enum ContentBlockerCategory: String {
+class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
     
-    case none = "None"
-    case advertising = "Advertising"
-    case analytics = "Analytics"
-    case content = "Content"
-    case social = "Social"
+    var enabled = true
     
-    public static func forKey(_ key: String?) -> ContentBlockerCategory {
-        guard let key = key else { return .none }
-        return ContentBlockerCategory.init(rawValue: key) ?? .none
+    // A very sophisticated stub, it supports a single whitelisted item ;-)
+    private var lastWhiteListedItem: String?
+    
+    func whitelisted(domain: String) -> Bool {
+        return domain == lastWhiteListedItem
+    }
+    
+    func addToWhitelist(domain: String) {
+        lastWhiteListedItem = domain
+    }
+    
+    func removeFromWhitelist(domain: String) {
+        lastWhiteListedItem = nil
     }
 }

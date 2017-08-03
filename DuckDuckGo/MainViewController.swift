@@ -36,7 +36,6 @@ class MainViewController: UIViewController {
 
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
-    private lazy var contentBlocker =  ContentBlocker()
     
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
@@ -51,7 +50,7 @@ class MainViewController: UIViewController {
     
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
-        tabManager = TabManager(model: tabsModel, contentBlocker: contentBlocker, delegate: self)
+        tabManager = TabManager(model: tabsModel, delegate: self)
     }
     
     private func loadInitialView() {
@@ -190,7 +189,6 @@ class MainViewController: UIViewController {
             return
         }
         omniBar.refreshText(forUrl: tab.link?.url)
-        omniBar.updateContentBlockerMonitor(monitor: tab.contentBlockerMonitor)
         omniBar.startBrowsing()
     }
     
@@ -340,10 +338,6 @@ extension MainViewController: TabDelegate {
     func tabLoadingStateDidChange(tab: TabViewController) {
         refreshControls()
         tabManager.updateModelFromTab(tab: tab)
-    }
-    
-    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
-        omniBar.updateContentBlockerMonitor(monitor: monitor)
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

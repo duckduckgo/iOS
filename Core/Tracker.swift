@@ -1,5 +1,5 @@
 //
-//  ContentBlockerEntry.swift
+//  Tracker.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,14 +20,19 @@
 
 import Foundation
 
-public struct ContentBlockerEntry {
-    public let category: ContentBlockerCategory
-    public let domain: String
+public struct Tracker {
     public let url: String
+    public let parentDomain: String?
 }
 
-extension ContentBlockerEntry: Equatable {}
+extension Tracker: Equatable {
+    public static func ==(first: Tracker, second: Tracker) -> Bool {
+        return first.url == second.url && first.parentDomain == second.parentDomain
+    }
+}
 
-public func ==(first: ContentBlockerEntry, second: ContentBlockerEntry) -> Bool {
-    return first.domain == second.domain && first.url == second.url && first.category == second.category
+extension Tracker: Hashable {
+    public var hashValue: Int {
+        return url.hashValue ^ (parentDomain?.hashValue ?? 0)
+    }
 }

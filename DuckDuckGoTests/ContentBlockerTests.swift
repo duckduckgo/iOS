@@ -53,7 +53,8 @@ class ContentBlockerTests: XCTestCase {
 
     override func setUp() {
         mockConifguartion = MockContentBlockerConfigurationStore()
-        testee = ContentBlocker(configuration: mockConifguartion, trackers: trackers())
+        mockConifguartion.trackers = trackers()
+        testee = ContentBlocker(configuration: mockConifguartion)
     }
 
     func testCountsAreInitiallyZero() {

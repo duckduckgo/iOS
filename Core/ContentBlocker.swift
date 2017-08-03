@@ -22,14 +22,17 @@ import Foundation
 public class ContentBlocker {
 
     private var configuration: ContentBlockerConfigurationStore
-    private let trackers: [Tracker]
+    private var trackers: [Tracker]
     private(set) var trackersDetected = [Tracker: Int]()
     private(set) var trackersBlocked = [Tracker: Int]()
     
-    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults(),
-         trackers: [Tracker]) {
-        self.trackers = trackers
+    public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
         self.configuration = configuration
+        self.trackers = configuration.trackers
+    }
+    
+    public func updateTrackers(_ trackers: [Tracker]) {
+        self.trackers = trackers
     }
     
     public var enabled: Bool {

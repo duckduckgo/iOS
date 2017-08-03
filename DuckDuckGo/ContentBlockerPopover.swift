@@ -78,22 +78,10 @@ class ContentBlockerPopover: UITableViewController {
         contentBlocker.enabled = sender.isOn
         blockThisDomainToggle.isEnabled = sender.isOn
         refresh()
-        reloadContentBlockerExtension()
     }
     
     @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {
         contentBlocker.whitelist(!sender.isOn, domain: domain)
         refresh()
-        reloadContentBlockerExtension()
-    }
-
-    private func reloadContentBlockerExtension() {
-        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
-            if let error = error {
-                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
-                return
-            }
-            Logger.log(text: "Content blocker rules for Safari reloaded")
-        }
     }
 }

@@ -1,6 +1,4 @@
-# IOS DEPENDENCIES
-
-# We are using a more recent commit for exception handling. Upgrade 
+# We are using a more recent commit for exception handling. Upgrade
 # to next release after 3.1.4, when available
 github "subsymbolic/SwiftyJSON" "4a62eb3a37e1e694a7f83d50093e803f966055ba"
 
@@ -8,4 +6,6 @@ github "subsymbolic/Kingfisher" ~> 3.10.3
 
 github "subsymbolic/Device.swift" ~> 0.5.0
 
-github "subsymbolic/Toast-Swift" ~> 2.0.0 
+github "subsymbolic/Toast-Swift" ~> 2.0.0
+
+github "subsymbolic/Alamofire" ~>  4.4.0

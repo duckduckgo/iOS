@@ -25,22 +25,35 @@ import Core
 class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
     
     private lazy var parser = AppleContentBlockerParser()
-    private lazy var trackers = TrackerLoader().trackers
     
     enum ContentBlockerError: Error {
         case noData
     }
     
     func beginRequest(with context: NSExtensionContext) {
-        do {
-            let data = try parser.toJsonData(trackers: trackers) as NSSecureCoding
-            let attachment = NSItemProvider(item: data, typeIdentifier: kUTTypeJSON as String)
-            let item = NSExtensionItem()
-            item.attachments = [attachment]
-            context.completeRequest(returningItems: [item], completionHandler: nil)
-        } catch {
-            Logger.log(items: "Could not load content blocker", error)
-            context.cancelRequest(withError: ContentBlockerError.noData)
+        
+        TrackerLoader.shared.updateTrackers { (trackers, error) in
+            
+            let trackers = trackers ?? TrackerLoader.shared.storedTrackers
+            
+            guard !trackers.isEmpty else {
+                let error = error ?? ContentBlockerError.noData
+                Logger.log(items: "Could not load content blocker", error)
+                context.cancelRequest(withError: error)
+                return
+            }
+            
+            do {
+                let data = try self.parser.toJsonData(trackers: trackers) as NSSecureCoding
+                let attachment = NSItemProvider(item: data, typeIdentifier: kUTTypeJSON as String)
+                let item = NSExtensionItem()
+                item.attachments = [attachment]
+                context.completeRequest(returningItems: [item], completionHandler: nil)
+            } catch {
+                Logger.log(items: "Could not load content blocker", error)
+                context.cancelRequest(withError: ContentBlockerError.noData)
+            }
+
         }
     }
 }

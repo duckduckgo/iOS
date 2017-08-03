@@ -26,7 +26,6 @@ struct TabManager {
     
     private var tabs = [TabViewController]()
     
-    let trackers = TrackerLoader().trackers
     private weak var delegate: TabDelegate?
     
     init(model: TabsModel, delegate: TabDelegate) {
@@ -45,7 +44,7 @@ struct TabManager {
     }
     
     private func buildTabController(request: URLRequest?) -> TabViewController {
-        let contentBlocker = ContentBlocker(trackers: trackers)
+        let contentBlocker = ContentBlocker()
         let controller = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
         controller.attachWebView(persistsData: true)
         controller.delegate = delegate

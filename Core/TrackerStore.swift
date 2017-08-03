@@ -1,5 +1,5 @@
 //
-//  MockContentBlockerConfigurationStore.swift
+//  TrackerStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,25 +18,10 @@
 //
 
 
-@testable import Core
+import Foundation
 
-class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
+public protocol TrackerStore {
     
-    var enabled = true
-    var trackers = [Tracker]()
-    
-    // A very sophisticated stub, it supports a single whitelisted item ;-)
-    private var lastWhiteListedItem: String?
-    
-    func whitelisted(domain: String) -> Bool {
-        return domain == lastWhiteListedItem
-    }
-    
-    func addToWhitelist(domain: String) {
-        lastWhiteListedItem = domain
-    }
-    
-    func removeFromWhitelist(domain: String) {
-        lastWhiteListedItem = nil
-    }
+    var trackers: [Tracker] { get set }
+
 }

@@ -1,5 +1,5 @@
 //
-//  MockContentBlockerConfigurationStore.swift
+//  SFContentBlockerManagerExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,25 +18,21 @@
 //
 
 
-@testable import Core
+import SafariServices
 
-class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
+extension SFContentBlockerManager {
     
-    var enabled = true
-    var trackers = [Tracker]()
-    
-    // A very sophisticated stub, it supports a single whitelisted item ;-)
-    private var lastWhiteListedItem: String?
-    
-    func whitelisted(domain: String) -> Bool {
-        return domain == lastWhiteListedItem
+    struct Constants {
+        static let identifier = "com.duckduckgo.DuckDuckGo.ContentBlockerExtension"
     }
     
-    func addToWhitelist(domain: String) {
-        lastWhiteListedItem = domain
-    }
-    
-    func removeFromWhitelist(domain: String) {
-        lastWhiteListedItem = nil
+    public static func reloadContentBlocker() {
+        reloadContentBlocker(withIdentifier: Constants.identifier) { error in
+            if let error = error {
+                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
+                return
+            }
+            Logger.log(text: "Content blocker rules for Safari reloaded")
+        }
     }
 }

@@ -36,7 +36,6 @@ class MainViewController: UIViewController {
 
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
-    fileprivate lazy var contentBlocker: ContentBlocker = ContentBlocker(trackers: TrackerLoader().trackers)
     
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
@@ -51,7 +50,7 @@ class MainViewController: UIViewController {
     
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
-        tabManager = TabManager(model: tabsModel, contentBlocker: contentBlocker, delegate: self)
+        tabManager = TabManager(model: tabsModel, delegate: self)
     }
     
     private func loadInitialView() {

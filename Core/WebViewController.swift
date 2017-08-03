@@ -201,8 +201,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     private func showError(message: String) {
         webView.alpha = 0
-        errorMessage.text = String(format: NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo could not load the page because..."), message.localizedLowercase)
+        errorMessage.text = String(format: UserText.webPageFailedLoad, message.localizedLowercase)
         errorMessage.alpha = 1
+        errorMessage.adjustPlainTextLineHeight(1.5)
     }
     
     private func hideErrorMessage() {

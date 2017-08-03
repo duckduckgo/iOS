@@ -70,7 +70,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or type URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxL-fx-9Iq">
-                                                                <rect key="frame" x="18" y="15.5" width="269" height="19"/>
+                                                                <rect key="frame" x="18" y="17" width="269" height="16"/>
                                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                                 <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -293,21 +293,21 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sel-Fj-CU4">
-                                <rect key="frame" x="61" y="72" width="253" height="23.5"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sel-Fj-CU4">
+                                <rect key="frame" x="69" y="101" width="237" height="16"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Sel-Fj-CU4" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leadingMargin" constant="45" id="4C0-Aa-FpL"/>
+                            <constraint firstItem="Sel-Fj-CU4" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leadingMargin" constant="53" id="4C0-Aa-FpL"/>
                             <constraint firstItem="RbM-b9-fdC" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" constant="-40" id="4pS-g7-3M5"/>
                             <constraint firstItem="9b1-jz-pNY" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leading" id="83m-pV-D21"/>
-                            <constraint firstItem="Sel-Fj-CU4" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" constant="72" id="D7X-kE-HGU"/>
+                            <constraint firstItem="Sel-Fj-CU4" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" constant="101" id="D7X-kE-HGU"/>
                             <constraint firstAttribute="trailing" secondItem="9b1-jz-pNY" secondAttribute="trailing" id="Gqq-an-IRo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Sel-Fj-CU4" secondAttribute="trailing" constant="45" id="NGI-rp-tYK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Sel-Fj-CU4" secondAttribute="trailing" constant="53" id="NGI-rp-tYK"/>
                             <constraint firstItem="9b1-jz-pNY" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" id="ZLt-SM-4aL"/>
                             <constraint firstItem="RbM-b9-fdC" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leading" id="r23-gU-PnS"/>
                             <constraint firstAttribute="trailing" secondItem="RbM-b9-fdC" secondAttribute="trailing" id="rnG-gB-xSN"/>

@@ -25,7 +25,7 @@ import Device
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet weak var disableAutocompleteToggle: UISwitch!
+    @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
 
@@ -49,7 +49,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureDisableAutocompleteToggle() {
-        disableAutocompleteToggle.isOn = appSettings.autocompleteDisabled
+        autocompleteToggle.isOn = appSettings.autocomplete
     }
     
     private func configureAuthenticationToggle() {
@@ -102,8 +102,8 @@ class SettingsViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onDisableAutocompleteToggled(_ sender: UISwitch) {
-        appSettings.autocompleteDisabled = sender.isOn
+    @IBAction func onAutocompleteToggled(_ sender: UISwitch) {
+        appSettings.autocomplete = sender.isOn
     }
 }
 

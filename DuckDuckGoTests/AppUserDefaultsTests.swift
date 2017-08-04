@@ -1,5 +1,5 @@
 //
-//  VersionTests.swift
+//  AppUserDefaultsTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -29,18 +29,18 @@ class AppUserDefaultsTests: XCTestCase {
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
     
-    func testAutocompleteDisabledSet() {
+    func testAutocompleteSet() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.autocompleteDisabled = true
-        XCTAssertTrue(appUserDefaults.autocompleteDisabled)
+        appUserDefaults.autocomplete = false
+        XCTAssertTrue(!appUserDefaults.autocomplete)
         
     }
     
-    func testAutocompleteDisabledDefault() {
+    func testAutocompleteDefault() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertTrue(!appUserDefaults.autocompleteDisabled)
+        XCTAssertTrue(appUserDefaults.autocomplete)
         
     }
 

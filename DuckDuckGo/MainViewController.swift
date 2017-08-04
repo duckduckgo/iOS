@@ -206,7 +206,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil && !appSettings.autocompleteDisabled {
+        if autocompleteController == nil && appSettings.autocomplete {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
             addChildViewController(controller)

@@ -1,5 +1,5 @@
 //
-//  InfoBundle.swift
+//  AppUserDefaults.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -25,7 +25,7 @@ public class AppUserDefaults: AppSettings {
     private let groupName: String
     
     private struct Keys {
-        static let autocompleteDisabledKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
     }
     
     private var userDefaults: UserDefaults? {
@@ -36,14 +36,18 @@ public class AppUserDefaults: AppSettings {
         self.groupName = groupName
     }
 
-    var autocompleteDisabled: Bool {
-        
+    var autocomplete: Bool {
+
         get {
-            return userDefaults?.bool(forKey: Keys.autocompleteDisabledKey) ?? false
+            guard let _ = userDefaults?.object(forKey: Keys.autocompleteKey) else {
+                return true;
+            }
+
+            return userDefaults?.bool(forKey: Keys.autocompleteKey) ?? false
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.autocompleteDisabledKey)
+            userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
         }
         
     }

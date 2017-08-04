@@ -1,5 +1,5 @@
 //
-//  WebEventsDelegate.swift
+//  UserText.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,23 +17,9 @@
 //  limitations under the License.
 //
 
-import WebKit
 
-public protocol WebEventsDelegate: class {
+import Foundation
 
-    func attached(webView: WKWebView)
-
-    func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool
-    
-    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point)
-    
-    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest)
-    
-    func webpageDidStartLoading()
-    
-    func webpageDidFinishLoading()
-    
-    func webpageDidFailToLoad()
-    
-    func faviconWasUpdated(_ favicon: URL, forUrl: URL)
+public struct UserText {
+    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo could not load the page because...")
 }

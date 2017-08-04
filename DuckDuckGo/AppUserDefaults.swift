@@ -20,7 +20,7 @@
 
 import Foundation
 
-class AppUserDefaults {
+public class AppUserDefaults: AppSettings {
     
     private let groupName: String
     
@@ -32,7 +32,7 @@ class AppUserDefaults {
         return UserDefaults(suiteName: groupName)
     }
     
-    init(groupName: String = "group.com.duckduckgo.app") {
+    init(groupName: String =  "group.com.duckduckgo.app") {
         self.groupName = groupName
     }
 

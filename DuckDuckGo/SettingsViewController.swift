@@ -25,11 +25,13 @@ import Device
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet weak var disableAutocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
 
     private lazy var versionProvider = Version()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
+    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     
     private struct TableIndex {
         static let sendFeedback = IndexPath(item: 1, section: 2)
@@ -41,8 +43,13 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDisableAutocompleteToggle()
         configureAuthenticationToggle()
         configureVersionText()
+    }
+    
+    private func configureDisableAutocompleteToggle() {
+        disableAutocompleteToggle.isOn = appSettings.autocompleteDisabled
     }
     
     private func configureAuthenticationToggle() {
@@ -93,6 +100,10 @@ class SettingsViewController: UITableViewController {
     
     @IBAction func onDonePressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func onDisableAutocompleteToggled(_ sender: UISwitch) {
+        appSettings.autocompleteDisabled = sender.isOn
     }
 }
 

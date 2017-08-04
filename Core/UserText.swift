@@ -20,6 +20,6 @@
 
 import Foundation
 
-public struct UserText {
-    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo could not load the page because...")
+public class UserText {
+    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", tableName: nil, bundle: Bundle(for: UserText.self), value: "unspecified localization value", comment: "DuckDuckGo cannot load this page because...")
 }

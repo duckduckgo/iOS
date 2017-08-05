@@ -36,8 +36,6 @@
 		F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E22F51ED31CB600523BC9 /* JsonError.swift */; };
 		F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */; };
 		F11E23091ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */; };
-		F11E231A1ED3ABFB00523BC9 /* disconnect_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = F11E23191ED3ABFB00523BC9 /* disconnect_valid.json */; };
-		F11E231C1ED3AF1D00523BC9 /* disconnect_incorrect.json in Resources */ = {isa = PBXBuildFile; fileRef = F11E231B1ED3AF1D00523BC9 /* disconnect_incorrect.json */; };
 		F11E23201ED3B75D00523BC9 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E231F1ED3B75D00523BC9 /* TrackerTests.swift */; };
 		F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669A71E412A12003D3222 /* MockBundle.swift */; };
 		F1204B7E1EE606F900969006 /* OmniNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */; };
@@ -101,6 +99,8 @@
 		F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F176699D1E40BC86003D3222 /* Settings.storyboard */; };
 		F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669AC1E413E5F003D3222 /* InfoBundle.swift */; };
 		F17669D71E43401C003D3222 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669D61E43401C003D3222 /* MainViewController.swift */; };
+		F17843E51F361AC900390DCD /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17843E41F361AC900390DCD /* OHHTTPStubs.framework */; };
+		F17843E91F36226700390DCD /* MockResponse in Resources */ = {isa = PBXBuildFile; fileRef = F17843E81F36226700390DCD /* MockResponse */; };
 		F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922D61E717AF0006E3D97 /* AutocompleteParser.swift */; };
 		F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DA1E717C8D006E3D97 /* Suggestion.swift */; };
 		F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */; };
@@ -188,6 +188,7 @@
 		F1F5337E1F26AAF400D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337D1F26AAF400D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1F533871F26ACE900D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533891F26ACE900D80D4F /* Localizable.strings */; };
+		F1FCF3B31F3550BD00C23128 /* DisconnectMeRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* DisconnectMeRequestTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,8 +295,6 @@
 		F11E22F51ED31CB600523BC9 /* JsonError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonError.swift; sourceTree = "<group>"; };
 		F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestError.swift; sourceTree = "<group>"; };
 		F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackersParserTests.swift; sourceTree = "<group>"; };
-		F11E23191ED3ABFB00523BC9 /* disconnect_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = disconnect_valid.json; sourceTree = "<group>"; };
-		F11E231B1ED3AF1D00523BC9 /* disconnect_incorrect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = disconnect_incorrect.json; sourceTree = "<group>"; };
 		F11E231F1ED3B75D00523BC9 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniNavigationBar.swift; sourceTree = "<group>"; };
 		F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurementTests.swift; sourceTree = "<group>"; };
@@ -360,6 +359,8 @@
 		F17669A71E412A12003D3222 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
 		F17669AC1E413E5F003D3222 /* InfoBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBundle.swift; sourceTree = "<group>"; };
 		F17669D61E43401C003D3222 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F17843E41F361AC900390DCD /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		F17843E81F36226700390DCD /* MockResponse */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MockResponse; sourceTree = "<group>"; };
 		F17922D61E717AF0006E3D97 /* AutocompleteParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteParser.swift; sourceTree = "<group>"; };
 		F17922DA1E717C8D006E3D97 /* Suggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
 		F17922DD1E7192E6006E3D97 /* SuggestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionTableViewCell.swift; sourceTree = "<group>"; };
@@ -463,6 +464,7 @@
 		F1F33DF01EB8B88700E462C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EnableSafariContentBlocker.storyboard; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1F5337D1F26AAF400D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
+		F1FCF3B11F354F7200C23128 /* DisconnectMeRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeRequestTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -481,6 +483,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F17843E51F361AC900390DCD /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,9 +556,9 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				85ECA7EA1F2A825C0018EBEB /* Migration */,
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				F1C5ECF31E37812900C599A4 /* Application */,
+				85ECA7EA1F2A825C0018EBEB /* Migration */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				F13B4BF31F18C73A00814661 /* Home */,
 				F13B4BF41F18C74500814661 /* Tabs */,
@@ -565,8 +568,8 @@
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
 				F1E249411EF2075C008C947A /* ContentBlocker */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
-				F1AB2B401E3F75A000868554 /* Settings */,
 				F11CEF581EBB66C80088E4D7 /* Tutorials */,
+				F1AB2B401E3F75A000868554 /* Settings */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
@@ -579,6 +582,7 @@
 			children = (
 				F12D98401F266B30003C2EE3 /* DuckDuckGo */,
 				F1E092B31E92A6B900732CCC /* Core */,
+				F17843E81F36226700390DCD /* MockResponse */,
 				F17669A91E412A17003D3222 /* Mocks */,
 				84E341AC1E2F7EFB00BDBA6F /* Info.plist */,
 			);
@@ -677,15 +681,6 @@
 			name = Loader;
 			sourceTree = "<group>";
 		};
-		F11E23181ED3ABC700523BC9 /* Json */ = {
-			isa = PBXGroup;
-			children = (
-				F11E23191ED3ABFB00523BC9 /* disconnect_valid.json */,
-				F11E231B1ED3AF1D00523BC9 /* disconnect_incorrect.json */,
-			);
-			name = Json;
-			sourceTree = "<group>";
-		};
 		F11E231D1ED3B5C500523BC9 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -723,8 +718,8 @@
 		F12D98401F266B30003C2EE3 /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				85ECA7EF1F2A82F10018EBEB /* Migration */,
 				F17669A21E411D63003D3222 /* Application */,
+				85ECA7EF1F2A82F10018EBEB /* Migration */,
 				F13B4BF71F18C9E800814661 /* Tabs */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
 				F1126DFA1EA5CA730016A6C7 /* Settings */,
@@ -895,6 +890,7 @@
 			isa = PBXGroup;
 			children = (
 				F19F4E0F1F3273D4000096A9 /* ContentBlockerTests.swift */,
+				F1FCF3B01F354F5D00C23128 /* API */,
 				F11E231D1ED3B5C500523BC9 /* Domain */,
 				F16393F71ECCAB3A00DDD653 /* Store */,
 				F11044FE1ECFD6AF00C5E3D3 /* Parser */,
@@ -1090,6 +1086,7 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F17843E41F361AC900390DCD /* OHHTTPStubs.framework */,
 				F1C81A731F33873800241DE6 /* Alamofire.framework */,
 				F17BA4391F1CD99800460FFA /* Device.framework */,
 				F17BA43A1F1CD99800460FFA /* Kingfisher.framework */,
@@ -1187,8 +1184,8 @@
 			isa = PBXGroup;
 			children = (
 				F152F55B1EFC002400A911B5 /* ContentBlocker.swift */,
-				F12ABAA01ECEEDCF0008AE50 /* TrackerLoader.swift */,
 				F1C81A711F33855D00241DE6 /* SFContentBlockerManagerExtension.swift */,
+				F12ABAA01ECEEDCF0008AE50 /* TrackerLoader.swift */,
 				F17FB1701F349B7B005B1CB6 /* API */,
 				F16393F81ECCAF0F00DDD653 /* Domain */,
 				F16956331ECC9C4A009C35C9 /* Store */,
@@ -1243,7 +1240,6 @@
 				F16393F31ECCA83F00DDD653 /* ContentBlocker */,
 				F1E092BF1E92A6EA00732CCC /* UserInterface */,
 				F198D7961E3A45C00088DA8A /* Web */,
-				F11E23181ED3ABC700523BC9 /* Json */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1299,6 +1295,14 @@
 			name = ContentBlocking;
 			sourceTree = "<group>";
 		};
+		F1FCF3B01F354F5D00C23128 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				F1FCF3B11F354F7200C23128 /* DisconnectMeRequestTest.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1344,6 +1348,7 @@
 				84E341A21E2F7EFB00BDBA6F /* Sources */,
 				84E341A31E2F7EFB00BDBA6F /* Frameworks */,
 				84E341A41E2F7EFB00BDBA6F /* Resources */,
+				F17843E61F361B3C00390DCD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1380,7 +1385,7 @@
 				F143C2E01E4A4CD400CFDE3A /* Frameworks */,
 				F143C2E11E4A4CD400CFDE3A /* Headers */,
 				F143C2E21E4A4CD400CFDE3A /* Resources */,
-				F1A945D81F29F71A004BBB01 /* ShellScript */,
+				F1FCF3BA1F35FCAB00C23128 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1543,8 +1548,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F11E231A1ED3ABFB00523BC9 /* disconnect_valid.json in Resources */,
-				F11E231C1ED3AF1D00523BC9 /* disconnect_incorrect.json in Resources */,
+				F17843E91F36226700390DCD /* MockResponse in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1587,6 +1591,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		F17843E61F361B3C00390DCD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OHHTTPStubs.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		F17BA4411F1CD9D300460FFA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1610,16 +1629,18 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		F1A945D81F29F71A004BBB01 /* ShellScript */ = {
+		F1FCF3BA1F35FCAB00C23128 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftyJSON.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1707,6 +1728,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1FCF3B31F3550BD00C23128 /* DisconnectMeRequestTest.swift in Sources */,
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */,
@@ -2088,6 +2110,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HKE973VLUW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.DuckDuckGoTests;
@@ -2103,6 +2129,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HKE973VLUW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DuckDuckGoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.DuckDuckGoTests;

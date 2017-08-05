@@ -31,9 +31,6 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="09G-Z7-JBt">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                                <connections>
-                                    <segue destination="6we-BL-hXY" kind="embed" id="kXF-ak-i8e"/>
-                                </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,12 +50,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dZ0-SG-rYP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1242" y="-1886"/>
+            <point key="canvasLocation" x="-1281" y="-1917"/>
         </scene>
         <!--Content Blocker View Controller-->
         <scene sceneID="hzb-KQ-9WL">
             <objects>
-                <tableViewController storyboardIdentifier="ContentBlockerViewController" providesPresentationContextTransitionStyle="YES" id="6we-BL-hXY" customClass="ContentBlockerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContentBlockerViewController" id="6we-BL-hXY" customClass="ContentBlockerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aX9-JS-woz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -229,13 +226,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load content blocker rules" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKe-aD-Kt1">
-                                <rect key="frame" x="24" y="44" width="319" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load content blocker rules" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKe-aD-Kt1">
+                                <rect key="frame" x="32" y="44" width="311" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DCy-0t-TjK">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DCy-0t-TjK">
                                 <rect key="frame" x="178" y="92" width="20" height="20"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIU-YM-ls2">
@@ -260,10 +257,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="DCy-0t-TjK" firstAttribute="centerX" secondItem="sIU-YM-ls2" secondAttribute="centerX" id="82v-5S-l9e"/>
-                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="leading" secondItem="v6C-iz-VNb" secondAttribute="leadingMargin" constant="8" id="Iex-ve-MD1"/>
+                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="leading" secondItem="v6C-iz-VNb" secondAttribute="leadingMargin" constant="16" id="Iex-ve-MD1"/>
                             <constraint firstItem="DCy-0t-TjK" firstAttribute="centerY" secondItem="sIU-YM-ls2" secondAttribute="centerY" id="LFm-88-5z9"/>
-                            <constraint firstItem="ajW-Nd-gqp" firstAttribute="centerX" secondItem="sIU-YM-ls2" secondAttribute="centerX" id="U7U-uq-XJs"/>
                             <constraint firstItem="sIU-YM-ls2" firstAttribute="centerX" secondItem="v6C-iz-VNb" secondAttribute="centerX" id="UKb-zK-qys"/>
+                            <constraint firstItem="ajW-Nd-gqp" firstAttribute="centerX" secondItem="v6C-iz-VNb" secondAttribute="centerX" id="W5f-bx-Ud1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EKe-aD-Kt1" secondAttribute="trailing" constant="16" id="Wje-nS-dci"/>
                             <constraint firstItem="sIU-YM-ls2" firstAttribute="top" secondItem="EKe-aD-Kt1" secondAttribute="bottom" constant="12" id="gus-uW-fmq"/>
                             <constraint firstItem="ajW-Nd-gqp" firstAttribute="top" secondItem="sIU-YM-ls2" secondAttribute="bottom" constant="12" id="lvW-iM-5uK"/>

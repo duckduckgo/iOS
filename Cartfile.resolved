@@ -1,3 +1,4 @@
+github "subsymbolic/OHHTTPStubs" "6.0.0"
 github "subsymbolic/Alamofire" "4.5.0"
 github "subsymbolic/Device.swift" "0.5"
 github "subsymbolic/Kingfisher" "3.10.3"

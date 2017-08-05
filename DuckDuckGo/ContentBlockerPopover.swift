@@ -27,7 +27,7 @@ class ContentBlockerPopover: UIViewController {
     
     private weak var contentBlocker: ContentBlocker!
     
-    private var contenBlockerViewController: ContentBlockerViewController!
+    private var contentBlockerViewController: ContentBlockerViewController?
     private var errorViewController: ContentBlockerErrorViewController?
     
     private(set) var domain: String!
@@ -42,46 +42,47 @@ class ContentBlockerPopover: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        refresh()
-    }
-    
-    public func refresh() {
         guard contentBlocker.hasData else {
             attachErrorViewController()
             return
         }
-        contenBlockerViewController.refresh()
+        attachContentBlockerViewController()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? ContentBlockerViewController {
-            controller.domain = domain
-            controller.contentBlocker = contentBlocker
-            contenBlockerViewController = controller
-        }
+    func refresh() {
+        contentBlockerViewController?.refresh()
     }
-    
+
     fileprivate func attachErrorViewController() {
         let controller = ContentBlockerErrorViewController.loadFromStoryboard(delegate: self)
-        contenBlockerViewController.willMove(toParentViewController: nil)
-        addChildViewController(controller)
-        container.addSubview(controller.view)
-        controller.didMove(toParentViewController: self)
+        addToContainer(controller: controller)
         errorViewController = controller
     }
     
-    fileprivate func displayContentBlockerViewController() {
+    fileprivate func attachContentBlockerViewController() {
+        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, domain: domain)
+        addToContainer(controller: controller)
+        contentBlockerViewController = controller
+    }
+    
+    fileprivate func addToContainer(controller: UIViewController) {
+        controller.view.frame = container.frame
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addChildViewController(controller)
+        container.addSubview(controller.view)
+        controller.didMove(toParentViewController: self)
+    }
+    
+    fileprivate func dismissError() {
         errorViewController?.willMove(toParentViewController: nil)
-        addChildViewController(contenBlockerViewController)
-        container.addSubview(contenBlockerViewController.view)
         errorViewController?.view.removeFromSuperview()
         errorViewController?.removeFromParentViewController()
-        contenBlockerViewController?.didMove(toParentViewController: self)
     }
 }
 
 extension ContentBlockerPopover: ContentBlockerErrorDelegate {
     func errorWasResolved() {
-        displayContentBlockerViewController()
+        dismissError()
+        attachContentBlockerViewController()
     }
 }

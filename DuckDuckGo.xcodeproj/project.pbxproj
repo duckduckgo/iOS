@@ -115,6 +115,9 @@
 		F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */; };
 		F17FB16F1F349B76005B1CB6 /* DisconnectMeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FB16E1F349B76005B1CB6 /* DisconnectMeRequest.swift */; };
 		F17FB1731F34F58D005B1CB6 /* TrackerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FB1721F34F58D005B1CB6 /* TrackerStore.swift */; };
+		F17FB1751F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FB1741F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift */; };
+		F17FB1771F3522EA005B1CB6 /* ContentBlockerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FB1761F3522EA005B1CB6 /* ContentBlockerViewController.swift */; };
+		F17FB1791F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17FB1781F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift */; };
 		F18326871E60542100240060 /* JavascriptLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18326861E60542100240060 /* JavascriptLoader.swift */; };
 		F18608E01E5E649400361C30 /* document.js in Resources */ = {isa = PBXBuildFile; fileRef = F18608DF1E5E649400361C30 /* document.js */; };
 		F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189AED61F18F6DE001EBAE1 /* TabTests.swift */; };
@@ -168,7 +171,7 @@
 		F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewCell.swift */; };
 		F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78591E5CD2A70058895A /* UIViewExtension.swift */; };
 		F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */; };
-		F1E2494E1EF2078D008C947A /* ContentBlockerPopover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E2494D1EF2078D008C947A /* ContentBlockerPopover.storyboard */; };
+		F1E2494E1EF2078D008C947A /* ContentBlocker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E2494D1EF2078D008C947A /* ContentBlocker.storyboard */; };
 		F1E249501EF207D4008C947A /* ContentBlockerPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */; };
 		F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4431EE89460006F2EAE /* Bookmarks.storyboard */; };
 		F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */; };
@@ -370,6 +373,9 @@
 		F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinks.swift; sourceTree = "<group>"; };
 		F17FB16E1F349B76005B1CB6 /* DisconnectMeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeRequest.swift; sourceTree = "<group>"; };
 		F17FB1721F34F58D005B1CB6 /* TrackerStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerStore.swift; sourceTree = "<group>"; };
+		F17FB1741F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerErrorViewController.swift; sourceTree = "<group>"; };
+		F17FB1761F3522EA005B1CB6 /* ContentBlockerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerViewController.swift; sourceTree = "<group>"; };
+		F17FB1781F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerErrorDelegate.swift; sourceTree = "<group>"; };
 		F18326861E60542100240060 /* JavascriptLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavascriptLoader.swift; sourceTree = "<group>"; };
 		F18608DF1E5E649400361C30 /* document.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = document.js; sourceTree = "<group>"; };
 		F18642021E949E1900B2A911 /* proximanova-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; name = "proximanova-bold.otf"; path = "licensed/proximanova-bold.otf"; sourceTree = "<group>"; };
@@ -429,7 +435,7 @@
 		F1DE78571E5CAE350058895A /* TabViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewCell.swift; sourceTree = "<group>"; };
 		F1DE78591E5CD2A70058895A /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		F1E092C01E92A72E00732CCC /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
-		F1E2494D1EF2078D008C947A /* ContentBlockerPopover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentBlockerPopover.storyboard; sourceTree = "<group>"; };
+		F1E2494D1EF2078D008C947A /* ContentBlocker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentBlocker.storyboard; sourceTree = "<group>"; };
 		F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerPopover.swift; sourceTree = "<group>"; };
 		F1E4A4441EE89460006F2EAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bookmarks.storyboard; sourceTree = "<group>"; };
 		F1E4A4461EE894CD006F2EAE /* Autocomplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Autocomplete.storyboard; sourceTree = "<group>"; };
@@ -1254,8 +1260,11 @@
 		F1E249411EF2075C008C947A /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
+				F1E2494D1EF2078D008C947A /* ContentBlocker.storyboard */,
 				F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */,
-				F1E2494D1EF2078D008C947A /* ContentBlockerPopover.storyboard */,
+				F17FB1761F3522EA005B1CB6 /* ContentBlockerViewController.swift */,
+				F17FB1741F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift */,
+				F17FB1781F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -1516,7 +1525,7 @@
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
-				F1E2494E1EF2078D008C947A /* ContentBlockerPopover.storyboard in Resources */,
+				F1E2494E1EF2078D008C947A /* ContentBlocker.storyboard in Resources */,
 				F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F11CEF661EBB66EF0088E4D7 /* FireTutorial.storyboard in Resources */,
@@ -1653,6 +1662,7 @@
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
+				F17FB1751F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift in Sources */,
 				85ECA7F51F2A95860018EBEB /* PersistenceContainer.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
@@ -1681,9 +1691,11 @@
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				F1BE54501E69DDE000FCF649 /* RealPrivacyConfiguration.swift in Sources */,
+				F17FB1791F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift in Sources */,
 				F1126DF71EA5C92E0016A6C7 /* FeedbackEmail.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
+				F17FB1771F3522EA005B1CB6 /* ContentBlockerViewController.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				F1204B7E1EE606F900969006 /* OmniNavigationBar.swift in Sources */,

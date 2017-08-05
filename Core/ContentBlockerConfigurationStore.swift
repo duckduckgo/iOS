@@ -24,7 +24,7 @@ public protocol ContentBlockerConfigurationStore {
     
     var enabled: Bool { get set }
     
-    var trackers: [Tracker] { get }
+    var trackers: [Tracker]? { get }
 
     func whitelisted(domain: String) -> Bool
     

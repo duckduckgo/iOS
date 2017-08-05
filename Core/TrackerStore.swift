@@ -22,6 +22,6 @@ import Foundation
 
 public protocol TrackerStore {
     
-    var trackers: [Tracker] { get set }
+    var trackers: [Tracker]? { get set }
 
 }

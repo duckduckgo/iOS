@@ -54,12 +54,14 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
     }
     
-    public var trackers: [Tracker] {
+    public var trackers: [Tracker]? {
         get {
-            guard let data = userDefaults?.object(forKey: Keys.trackerList) as? Data else { return [Tracker]() }
-            return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Tracker] ?? [Tracker]()
+            guard let data = userDefaults?.object(forKey: Keys.trackerList) as? Data else { return nil }
+            guard let tracker = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Tracker] else { return nil }
+            return tracker
         }
         set(newTrackers) {
+            guard let trackers = newTrackers else { return }
             let data = NSKeyedArchiver.archivedData(withRootObject: trackers)
             userDefaults?.set(data, forKey: Keys.trackerList)
             SFContentBlockerManager.reloadContentBlocker()

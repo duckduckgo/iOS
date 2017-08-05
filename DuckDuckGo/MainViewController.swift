@@ -80,6 +80,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func removeHomeScreen() {
+        homeController?.willMove(toParentViewController: nil)
         homeController?.dismiss()
         homeController = nil
     }
@@ -153,6 +154,7 @@ class MainViewController: UIViewController {
         controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(controller)
         containerView.addSubview(controller.view)
+        controller.didMove(toParentViewController: self)
     }
 
     fileprivate func remove(tabAt index: Int) {
@@ -210,6 +212,7 @@ class MainViewController: UIViewController {
             controller.delegate = self
             addChildViewController(controller)
             containerView.addSubview(controller.view)
+            controller.didMove(toParentViewController: self)
             autocompleteController = controller
         }
         guard let autocompleteController = autocompleteController else { return }
@@ -219,6 +222,7 @@ class MainViewController: UIViewController {
     fileprivate func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
         autocompleteController = nil
+        controller.willMove(toParentViewController: nil)
         controller.view.removeFromSuperview()
         controller.removeFromParentViewController()
     }

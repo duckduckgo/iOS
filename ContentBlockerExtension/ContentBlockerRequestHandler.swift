@@ -34,9 +34,7 @@ class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
         
         TrackerLoader.shared.updateTrackers { (trackers, error) in
             
-            let trackers = trackers ?? TrackerLoader.shared.storedTrackers
-            
-            guard !trackers.isEmpty else {
+            guard let trackers = trackers ?? TrackerLoader.shared.storedTrackers else {
                 let error = error ?? ContentBlockerError.noData
                 Logger.log(items: "Could not load content blocker", error)
                 context.cancelRequest(withError: error)

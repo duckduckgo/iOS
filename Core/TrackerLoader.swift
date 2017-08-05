@@ -34,21 +34,21 @@ public class TrackerLoader {
         self.trackerStore = trackerStore
     }
     
-    public var storedTrackers: [Tracker] {
+    public var storedTrackers: [Tracker]? {
         return trackerStore.trackers
     }
     
     public func updateTrackers(completion: TrackerLoaderCompletion? = nil) {
         let request = DisconnectMeRequest()
-        request.execute { trackers, error in
+        request.execute { [weak self] trackers, error in
             guard let trackers = trackers else {
                 let errorMessage = error?.localizedDescription ?? "no error"
                 Logger.log(text: "Trackers request failed update with error \(errorMessage)")
-                self.complete(completion, withTrackers: nil, error: error)
+                self?.complete(completion, withTrackers: nil, error: error)
                 return
             }
-            self.trackerStore.trackers = trackers
-            self.complete(completion, withTrackers: trackers, error: nil)
+            self?.trackerStore.trackers = trackers
+            self?.complete(completion, withTrackers: trackers, error: nil)
         }
     }
     

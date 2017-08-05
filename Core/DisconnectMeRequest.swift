@@ -34,9 +34,9 @@ public class DisconnectMeRequest {
         Logger.log(text: "Requesting trackers...")
         Alamofire.request(AppUrls.contentBlocking)
             .validate(statusCode: 200...300)
-            .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
+            .responseData(queue: DispatchQueue.global(qos: .utility)) { [weak self] response in
                 Logger.log(text: "Trackers request completed with result \(response.result)")
-                self.handleResponse(response: response, completion: completion)
+                self?.handleResponse(response: response, completion: completion)
         }
     }
     

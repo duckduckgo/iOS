@@ -22,17 +22,11 @@ import Foundation
 public class ContentBlocker {
 
     private var configuration: ContentBlockerConfigurationStore
-    private var trackers: [Tracker]
     private(set) var trackersDetected = [Tracker: Int]()
     private(set) var trackersBlocked = [Tracker: Int]()
     
     public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
         self.configuration = configuration
-        self.trackers = configuration.trackers
-    }
-    
-    public func updateTrackers(_ trackers: [Tracker]) {
-        self.trackers = trackers
     }
     
     public var enabled: Bool {
@@ -42,6 +36,13 @@ public class ContentBlocker {
         set(newValue) {
             configuration.enabled = newValue
         }
+    }
+    
+    public var hasData: Bool {
+        if let trackers = configuration.trackers {
+            return !trackers.isEmpty
+        }
+        return false
     }
     
     public func enabled(forDomain domain: String) -> Bool {
@@ -108,6 +109,7 @@ public class ContentBlocker {
      - returns: tracker if the item matches a third party url in the trackers list otherwise nil
      */
     private func thirdPartyTracker(forUrl url: URL, document documentUrl: URL) -> Tracker? {
+        guard let trackers = configuration.trackers else { return nil }
         for tracker in trackers {
             if url.absoluteString.contains(tracker.url) && documentUrl.host != url.host {
                 Logger.log(text: "ContentBlocker DETECTED tracker \(url.absoluteString)")

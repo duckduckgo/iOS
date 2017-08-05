@@ -47,4 +47,16 @@ class TrackerTests: XCTestCase {
         let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.anotherParentDomain)
         XCTAssertNotEqual(lhs, rhs)
     }
+    
+    func testThatEqualsFailsWhenTypesAreDifferent() {
+        let tracker = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
+        XCTAssertFalse(tracker.isEqual(NSObject()))
+    }
+
+    func testHashIsSameWhenItemsAreEqual() {
+        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
+        let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
+        XCTAssertEqual(lhs, rhs)
+        XCTAssertEqual(lhs.hashValue, rhs.hashValue)
+    }
 }

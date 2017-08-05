@@ -73,6 +73,15 @@ class ContentBlockerTests: XCTestCase {
         testee.enabled = false
         XCTAssertFalse(testee.enabled)
     }
+
+    func testWhenTrackersNilThenHasDataIsFalse() {
+        mockConifguartion.trackers = nil
+        XCTAssertFalse(testee.hasData)
+    }
+    
+    func testWhenTrackersExistThenHasDataIsTrue() {
+        XCTAssertTrue(testee.hasData)
+    }
     
     func testWhenTrackerUrlThenBlocked() {
         XCTAssertTrue(testee.block(url: Url.tracker, forDocument: Url.document))

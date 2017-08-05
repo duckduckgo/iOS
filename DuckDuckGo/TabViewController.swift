@@ -244,6 +244,10 @@ extension TabViewController: WebEventsDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
+    func webpageDidFailToLoad() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)

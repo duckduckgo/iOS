@@ -27,6 +27,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var errorMessage: UILabel!
     
     open private(set) var webView: WKWebView!
 
@@ -114,6 +115,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         favicon = nil
+        hideErrorMessage()
         showProgressIndicator()
         webEventsDelegate?.webpageDidStartLoading()
     }
@@ -129,8 +131,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        hideProgressIndicator()
-        webEventsDelegate?.webpageDidFinishLoading()
+        handle(error: error)
+    }
+    
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        handle(error: error)
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -187,6 +192,25 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         guard navigationController != nil else { return 0 }
         return decorHeight
     }
+    
+    private func handle(error: Error) {
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
+        showError(message: error.localizedDescription)
+    }
+    
+    private func showError(message: String) {
+        webView.alpha = 0
+        errorMessage.text = String(format: UserText.webPageFailedLoad, message.localizedLowercase)
+        errorMessage.alpha = 1
+        errorMessage.adjustPlainTextLineHeight(1.5)
+    }
+    
+    private func hideErrorMessage() {
+        errorMessage.alpha = 0
+        webView.alpha = 1
+    }
+    
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

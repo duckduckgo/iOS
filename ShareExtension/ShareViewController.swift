@@ -127,7 +127,7 @@ extension ShareViewController: WebEventsDelegate {
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
-        return contentBlocker.block(url: url, forDocument: documentUrl)
+        return !contentBlocker.block(url: url, forDocument: documentUrl)
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
@@ -143,6 +143,9 @@ extension ShareViewController: WebEventsDelegate {
     
     func webpageDidFinishLoading() {
         refreshNavigationButtons()
+    }
+    
+    func webpageDidFailToLoad() {
     }
     
     func faviconWasUpdated(_ favicon: URL, forUrl: URL) {

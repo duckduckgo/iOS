@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1y-V4-xli">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--DuckDuckGo-->
         <scene sceneID="ceB-am-kn3">
@@ -173,12 +179,21 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KoP-ys-JeG">
+                                <rect key="frame" x="69" y="101" width="237" height="16"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="OLs-l1-6pe" firstAttribute="leading" secondItem="KKG-Aq-gm0" secondAttribute="leading" id="1ZH-iG-zHW"/>
                             <constraint firstItem="OLs-l1-6pe" firstAttribute="top" secondItem="a2X-vf-Kp5" secondAttribute="bottom" id="BFv-HC-8pV"/>
+                            <constraint firstItem="KoP-ys-JeG" firstAttribute="top" secondItem="a2X-vf-Kp5" secondAttribute="bottom" constant="101" id="RbU-Nw-NoV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KoP-ys-JeG" secondAttribute="trailing" constant="53" id="TbN-tB-lhO"/>
                             <constraint firstAttribute="trailing" secondItem="OLs-l1-6pe" secondAttribute="trailing" id="Ykq-k4-lII"/>
+                            <constraint firstItem="KoP-ys-JeG" firstAttribute="leading" secondItem="KKG-Aq-gm0" secondAttribute="leadingMargin" constant="53" id="p1n-wp-gfV"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -187,12 +202,13 @@
                         <size key="landscapeSize" width="559" height="375"/>
                     </fixedSimulatedSizeMetrics>
                     <connections>
+                        <outlet property="errorMessage" destination="KoP-ys-JeG" id="ClW-f6-e6Z"/>
                         <outlet property="progressBar" destination="OLs-l1-6pe" id="WYQ-E2-IXp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhR-OH-upy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1222" y="-116"/>
+            <point key="canvasLocation" x="1221.5999999999999" y="-116.49175412293854"/>
         </scene>
     </scenes>
     <resources>

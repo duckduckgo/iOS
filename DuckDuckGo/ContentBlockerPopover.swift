@@ -21,18 +21,19 @@ import UIKit
 import SafariServices
 import Core
 
-class ContentBlockerPopover: UITableViewController {
-
-    @IBOutlet weak var blockCountCircle: UIImageView!
-    @IBOutlet weak var blockCount: UILabel!
-    @IBOutlet weak var blockingEnabledToggle: UISwitch!
-    @IBOutlet weak var blockThisDomainToggle: UISwitch!
+class ContentBlockerPopover: UIViewController {
+    
+    @IBOutlet weak var container: UIView!
     
     private weak var contentBlocker: ContentBlocker!
+    
+    private var contentBlockerViewController: ContentBlockerViewController?
+    private var errorViewController: ContentBlockerErrorViewController?
+    
     private(set) var domain: String!
     
     static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, domain: String) -> ContentBlockerPopover {
-        let storyboard = UIStoryboard.init(name: "ContentBlockerPopover", bundle: nil)
+        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
         controller.contentBlocker = contentBlocker
         controller.domain = domain
@@ -40,60 +41,48 @@ class ContentBlockerPopover: UITableViewController {
     }
     
     override func viewDidLoad() {
-        refresh()
+        super.viewDidLoad()
+        guard contentBlocker.hasData else {
+            attachErrorViewController()
+            return
+        }
+        attachContentBlockerViewController()
     }
     
-    public func refresh() {
-        blockingEnabledToggle.isOn = contentBlocker.enabled
-        blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: domain)
-        blockThisDomainToggle.isEnabled = blockingEnabledToggle.isOn
-        blockCount.text = blockCountText()
-        blockCountCircle.tintColor = blockCountCircleTint()
-    }
- 
-    private func blockCountText() -> String {
-        if !contentBlocker.enabled {
-            return "!"
-        }
-        if !contentBlocker.enabled(forDomain: domain) {
-            return "!"
-        }
-        return "\(contentBlocker.uniqueItemsBlocked)"
-    }
-    
-    private func blockCountCircleTint() -> UIColor {
-        if !contentBlocker.enabled {
-            return UIColor.contentBlockerCompletelyDisabledTint
-        }
-        if !contentBlocker.enabled(forDomain: domain) {
-            return UIColor.contentBlockerCompletelyDisabledTint
-        }
-        if contentBlocker.uniqueItemsBlocked > 0 {
-            return UIColor.contentBlockerActiveDirtySiteTint
-        }
-        return UIColor.contentBlockerActiveCleanSiteTint
-    }
-    
-    @IBAction func onBlockingEnabledToggle(_ sender: UISwitch) {
-        contentBlocker.enabled = sender.isOn
-        blockThisDomainToggle.isEnabled = sender.isOn
-        refresh()
-        reloadContentBlockerExtension()
-    }
-    
-    @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {
-        contentBlocker.whitelist(!sender.isOn, domain: domain)
-        refresh()
-        reloadContentBlockerExtension()
+    func refresh() {
+        contentBlockerViewController?.refresh()
     }
 
-    private func reloadContentBlockerExtension() {
-        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
-            if let error = error {
-                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
-                return
-            }
-            Logger.log(text: "Content blocker rules for Safari reloaded")
-        }
+    fileprivate func attachErrorViewController() {
+        let controller = ContentBlockerErrorViewController.loadFromStoryboard(delegate: self)
+        addToContainer(controller: controller)
+        errorViewController = controller
+    }
+    
+    fileprivate func attachContentBlockerViewController() {
+        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, domain: domain)
+        addToContainer(controller: controller)
+        contentBlockerViewController = controller
+    }
+    
+    fileprivate func addToContainer(controller: UIViewController) {
+        controller.view.frame = container.frame
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addChildViewController(controller)
+        container.addSubview(controller.view)
+        controller.didMove(toParentViewController: self)
+    }
+    
+    fileprivate func dismissError() {
+        errorViewController?.willMove(toParentViewController: nil)
+        errorViewController?.view.removeFromSuperview()
+        errorViewController?.removeFromParentViewController()
+    }
+}
+
+extension ContentBlockerPopover: ContentBlockerErrorDelegate {
+    func errorWasResolved() {
+        dismissError()
+        attachContentBlockerViewController()
     }
 }

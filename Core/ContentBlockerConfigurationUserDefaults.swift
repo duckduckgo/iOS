@@ -19,8 +19,9 @@
 
 
 import Foundation
+import SafariServices
 
-public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
+public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore, TrackerStore {
     
     private struct Constants {
         static let groupName = "group.com.duckduckgo.contentblocker"
@@ -29,6 +30,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
     private struct Keys {
         static let enabled = "com.duckduckgo.contentblocker.enabled"
         static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
+        static let trackerList = "com.duckduckgo.trackerList"
     }
     
     private let suitName: String
@@ -48,6 +50,21 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
         set(newValue) {
             userDefaults?.set(newValue, forKey: Keys.enabled)
+            SFContentBlockerManager.reloadContentBlocker()
+        }
+    }
+    
+    public var trackers: [Tracker]? {
+        get {
+            guard let data = userDefaults?.object(forKey: Keys.trackerList) as? Data else { return nil }
+            guard let tracker = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Tracker] else { return nil }
+            return tracker
+        }
+        set(newTrackers) {
+            guard let trackers = newTrackers else { return }
+            let data = NSKeyedArchiver.archivedData(withRootObject: trackers)
+            userDefaults?.set(data, forKey: Keys.trackerList)
+            SFContentBlockerManager.reloadContentBlocker()
         }
     }
 
@@ -60,6 +77,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         set(newWhitelistedDomain) {
             let data = NSKeyedArchiver.archivedData(withRootObject: newWhitelistedDomain)
             userDefaults?.set(data, forKey: Keys.whitelistedDomains)
+            SFContentBlockerManager.reloadContentBlocker()
         }
     }
     
@@ -71,11 +89,13 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         var whitelist = domainWhitelist
         whitelist.insert(domain)
         domainWhitelist = whitelist
+        SFContentBlockerManager.reloadContentBlocker()
     }
     
     public func removeFromWhitelist(domain: String) {
         var whitelist = domainWhitelist
         whitelist.remove(domain)
         domainWhitelist = whitelist
+        SFContentBlockerManager.reloadContentBlocker()
     }
 }

@@ -53,7 +53,8 @@ class ContentBlockerTests: XCTestCase {
 
     override func setUp() {
         mockConifguartion = MockContentBlockerConfigurationStore()
-        testee = ContentBlocker(configuration: mockConifguartion, trackers: trackers())
+        mockConifguartion.trackers = trackers()
+        testee = ContentBlocker(configuration: mockConifguartion)
     }
 
     func testCountsAreInitiallyZero() {
@@ -71,6 +72,15 @@ class ContentBlockerTests: XCTestCase {
     func testWhenDisbaledThenEnabledIsFalse() {
         testee.enabled = false
         XCTAssertFalse(testee.enabled)
+    }
+
+    func testWhenTrackersNilThenHasDataIsFalse() {
+        mockConifguartion.trackers = nil
+        XCTAssertFalse(testee.hasData)
+    }
+    
+    func testWhenTrackersExistThenHasDataIsTrue() {
+        XCTAssertTrue(testee.hasData)
     }
     
     func testWhenTrackerUrlThenBlocked() {

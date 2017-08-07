@@ -19,29 +19,43 @@
 
 
 import Foundation
+import Alamofire
+import SafariServices
+
+
+public typealias TrackerLoaderCompletion = ([Tracker]?, Error?) -> Swift.Void
 
 public class TrackerLoader {
+ 
+    public static let shared = TrackerLoader()
+    private var trackerStore: TrackerStore
     
-    private struct FileConstants {
-        static let name = "disconnectmetrackers"
-        static let ext = "json"
+    init(trackerStore: TrackerStore = ContentBlockerConfigurationUserDefaults()) {
+        self.trackerStore = trackerStore
     }
     
-    private let parser = DisconnectMeTrackersParser()
-    public private(set) var trackers = [Tracker]()
+    public var storedTrackers: [Tracker]? {
+        return trackerStore.trackers
+    }
     
-    public init() {
-        do {
-            trackers = try loadTrackers()
-        } catch {
-            Logger.log(text: "Could not load tracker entries \(error)")
+    public func updateTrackers(completion: TrackerLoaderCompletion? = nil) {
+        let request = DisconnectMeRequest()
+        request.execute { trackers, error in
+            guard let trackers = trackers else {
+                let errorMessage = error?.localizedDescription ?? "no error"
+                Logger.log(text: "Trackers request failed update with error \(errorMessage)")
+                self.complete(completion, withTrackers: nil, error: error)
+                return
+            }
+            self.trackerStore.trackers = trackers
+            self.complete(completion, withTrackers: trackers, error: nil)
         }
     }
     
-    private func loadTrackers() throws -> [Tracker] {
-        let fileLoader = FileLoader()
-        let data = try fileLoader.load(name: FileConstants.name, ext: FileConstants.ext)
-        return try parser.convert(fromJsonData: data)
+    private func complete(_ completion: TrackerLoaderCompletion?, withTrackers trackers: [Tracker]?, error: Error?) {
+        if let completion = completion {
+            completion(trackers, error)
+        }
     }
 }
 

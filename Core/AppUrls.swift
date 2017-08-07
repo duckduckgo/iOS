@@ -25,8 +25,9 @@ public struct AppUrls {
     private struct Url {
         static let base = "duckduckgo.com"
         static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
-        static let autocomplete = "https://duckduckgo.com/ac/"
         static let favicon = "https://duckduckgo.com/favicon.ico"
+        static let autocomplete = "https://duckduckgo.com/ac/"
+        static let contentBlocking = "https://duckduckgo.com/contentblocking.js"
     }
 
     private struct Param {
@@ -49,6 +50,10 @@ public struct AppUrls {
         return URL(string: Url.home)!
     }
 
+    public static var contentBlocking: URL {
+        return URL(string: Url.contentBlocking)!
+    }
+    
     public static func isDuckDuckGo(url: URL) -> Bool {
         return url.absoluteString.contains(Url.base)
     }

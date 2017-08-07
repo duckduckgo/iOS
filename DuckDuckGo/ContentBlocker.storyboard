@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6we-BL-hXY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LPZ-6f-nL3">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,9 +18,44 @@
     </customFonts>
     <scenes>
         <!--Content Blocker Popover-->
+        <scene sceneID="pKf-M6-W7c">
+            <objects>
+                <viewController id="LPZ-6f-nL3" customClass="ContentBlockerPopover" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FYu-Xi-45l"/>
+                        <viewControllerLayoutGuide type="bottom" id="nBg-oz-kPf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Uuw-aY-3wh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="09G-Z7-JBt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="09G-Z7-JBt" secondAttribute="trailing" id="47O-9B-7eA"/>
+                            <constraint firstItem="nBg-oz-kPf" firstAttribute="top" secondItem="09G-Z7-JBt" secondAttribute="bottom" id="9RG-N9-d0Z"/>
+                            <constraint firstItem="09G-Z7-JBt" firstAttribute="leading" secondItem="Uuw-aY-3wh" secondAttribute="leading" id="XSv-9D-XrU"/>
+                            <constraint firstItem="09G-Z7-JBt" firstAttribute="top" secondItem="Uuw-aY-3wh" secondAttribute="top" id="cUN-Vr-bBM"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="174"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="180"/>
+                    <connections>
+                        <outlet property="container" destination="09G-Z7-JBt" id="I0d-hj-LaU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dZ0-SG-rYP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1281" y="-1917"/>
+        </scene>
+        <!--Content Blocker View Controller-->
         <scene sceneID="hzb-KQ-9WL">
             <objects>
-                <tableViewController providesPresentationContextTransitionStyle="YES" id="6we-BL-hXY" customClass="ContentBlockerPopover" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ContentBlockerViewController" id="6we-BL-hXY" customClass="ContentBlockerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aX9-JS-woz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -161,7 +196,6 @@
                             <outlet property="delegate" destination="6we-BL-hXY" id="Y6x-tC-VVM"/>
                         </connections>
                     </tableView>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="174"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="180"/>
                     <connections>
@@ -178,7 +212,81 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1876" y="-1146"/>
+            <point key="canvasLocation" x="-1623" y="-1557"/>
+        </scene>
+        <!--Content Blocker Error View Controller-->
+        <scene sceneID="xn1-CO-vJq">
+            <objects>
+                <viewController storyboardIdentifier="ContentBlockerErrorViewController" id="lC8-oo-nUF" customClass="ContentBlockerErrorViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="puJ-yP-ySf"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lfl-Hy-sXA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="v6C-iz-VNb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load content blocker rules" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKe-aD-Kt1">
+                                <rect key="frame" x="32" y="44" width="311" height="16"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <color key="textColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DCy-0t-TjK">
+                                <rect key="frame" x="178" y="92" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIU-YM-ls2">
+                                <rect key="frame" x="158" y="72" width="60" height="60"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="WEp-pZ-WT8"/>
+                                    <constraint firstAttribute="height" constant="60" id="exD-rz-ZY3"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="Refresh"/>
+                                <connections>
+                                    <action selector="onReloadButtonPressed:" destination="lC8-oo-nUF" eventType="touchUpInside" id="QOb-KB-C3F"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-Nd-gqp" userLabel="Could not load content blocker. Tap to try again.">
+                                <rect key="frame" x="130.5" y="144" width="115" height="16"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <color key="textColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DCy-0t-TjK" firstAttribute="centerX" secondItem="sIU-YM-ls2" secondAttribute="centerX" id="82v-5S-l9e"/>
+                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="leading" secondItem="v6C-iz-VNb" secondAttribute="leadingMargin" constant="16" id="Iex-ve-MD1"/>
+                            <constraint firstItem="DCy-0t-TjK" firstAttribute="centerY" secondItem="sIU-YM-ls2" secondAttribute="centerY" id="LFm-88-5z9"/>
+                            <constraint firstItem="sIU-YM-ls2" firstAttribute="centerX" secondItem="v6C-iz-VNb" secondAttribute="centerX" id="UKb-zK-qys"/>
+                            <constraint firstItem="ajW-Nd-gqp" firstAttribute="centerX" secondItem="v6C-iz-VNb" secondAttribute="centerX" id="W5f-bx-Ud1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EKe-aD-Kt1" secondAttribute="trailing" constant="16" id="Wje-nS-dci"/>
+                            <constraint firstItem="sIU-YM-ls2" firstAttribute="top" secondItem="EKe-aD-Kt1" secondAttribute="bottom" constant="12" id="gus-uW-fmq"/>
+                            <constraint firstItem="ajW-Nd-gqp" firstAttribute="top" secondItem="sIU-YM-ls2" secondAttribute="bottom" constant="12" id="lvW-iM-5uK"/>
+                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="top" secondItem="puJ-yP-ySf" secondAttribute="bottom" constant="24" id="uvn-Bd-lvX"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="0LB-Vd-BKM" appends="YES" id="k0Q-UT-mNW"/>
+                        </connections>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="180"/>
+                    <connections>
+                        <outlet property="errorLabel" destination="EKe-aD-Kt1" id="55M-yC-0z8"/>
+                        <outlet property="reloadButton" destination="sIU-YM-ls2" id="6nT-BL-Hfp"/>
+                        <outlet property="spinner" destination="DCy-0t-TjK" id="G7U-GL-jSz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="012-Yb-KJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0LB-Vd-BKM">
+                    <connections>
+                        <action selector="onReloadButtonPressed:" destination="lC8-oo-nUF" id="RZa-L9-Dap"/>
+                        <outlet property="delegate" destination="lC8-oo-nUF" id="Od7-F9-Tdt"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-908" y="-1557"/>
         </scene>
         <!--EnableSafariContentBlocker-->
         <scene sceneID="nh5-KH-obP">
@@ -186,10 +294,11 @@
                 <viewControllerPlaceholder storyboardName="EnableSafariContentBlocker" id="jvp-Fo-UIy" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYT-bp-Gvu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1876" y="-933"/>
+            <point key="canvasLocation" x="-1623" y="-1337"/>
         </scene>
     </scenes>
     <resources>
         <image name="Circle" width="24" height="24"/>
+        <image name="Refresh" width="22" height="22"/>
     </resources>
 </document>

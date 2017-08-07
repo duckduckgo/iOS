@@ -1,5 +1,5 @@
 //
-//  ContentBlockerConfigurationStore.swift
+//  TrackerStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,15 +20,8 @@
 
 import Foundation
 
-public protocol ContentBlockerConfigurationStore {
+public protocol TrackerStore {
     
-    var enabled: Bool { get set }
-    
-    var trackers: [Tracker]? { get }
+    var trackers: [Tracker]? { get set }
 
-    func whitelisted(domain: String) -> Bool
-    
-    func addToWhitelist(domain: String)
-    
-    func removeFromWhitelist(domain: String)
 }

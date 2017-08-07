@@ -67,11 +67,11 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     }
     
     private func incorrectForTypeJson() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "disconnect_incorrect", ext: "json")
+        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/disconnect_mismatched", ext: "json")
     }
     
     private func validJson() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "disconnect_valid", ext: "json")
+        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/disconnect_valid", ext: "json")
     }
     
     private func bundle() ->Bundle {

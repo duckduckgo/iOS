@@ -1,5 +1,5 @@
 //
-//  ContentBlockerConfigurationStore.swift
+//  SFContentBlockerManagerExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,17 +18,21 @@
 //
 
 
-import Foundation
+import SafariServices
 
-public protocol ContentBlockerConfigurationStore {
+extension SFContentBlockerManager {
     
-    var enabled: Bool { get set }
+    struct Constants {
+        static let identifier = "com.duckduckgo.DuckDuckGo.ContentBlockerExtension"
+    }
     
-    var trackers: [Tracker]? { get }
-
-    func whitelisted(domain: String) -> Bool
-    
-    func addToWhitelist(domain: String)
-    
-    func removeFromWhitelist(domain: String)
+    public static func reloadContentBlocker() {
+        reloadContentBlocker(withIdentifier: Constants.identifier) { error in
+            if let error = error {
+                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
+                return
+            }
+            Logger.log(text: "Content blocker rules for Safari reloaded")
+        }
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  ContentBlockerConfigurationStore.swift
+//  ContentBlockerErrorDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,18 +17,10 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
-public protocol ContentBlockerConfigurationStore {
-    
-    var enabled: Bool { get set }
-    
-    var trackers: [Tracker]? { get }
 
-    func whitelisted(domain: String) -> Bool
-    
-    func addToWhitelist(domain: String)
-    
-    func removeFromWhitelist(domain: String)
+protocol ContentBlockerErrorDelegate: class {
+ 
+    func errorWasResolved()
 }

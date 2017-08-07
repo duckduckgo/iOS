@@ -37,14 +37,9 @@ class ShareViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureContentBlocker()
+        contentBlocker = ContentBlocker()
         webController?.attachWebView(persistsData: false)
         refreshNavigationButtons()
-    }
-    
-    private func configureContentBlocker() {
-        let trackerLoader = TrackerLoader()
-        contentBlocker = ContentBlocker(trackers: trackerLoader.trackers)
     }
     
     override func viewWillAppear(_ animated: Bool) {

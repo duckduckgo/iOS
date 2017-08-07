@@ -1,5 +1,5 @@
 //
-//  ContentBlockerRelaoder.swift
+//  ContentBlockerErrorViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.

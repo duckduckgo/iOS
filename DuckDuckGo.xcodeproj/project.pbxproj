@@ -204,13 +204,6 @@
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
 		};
-		F12810A61EB35B5300F95E4E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F128109E1EB35B5300F95E4E;
-			remoteInfo = ContentBlockerExtension;
-		};
 		F143C2E91E4A4CD400CFDE3A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -1350,7 +1343,6 @@
 			dependencies = (
 				F15A8B7D1E43A428008B8C6F /* PBXTargetDependency */,
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
-				F12810A71EB35B5300F95E4E /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
 			productName = DuckDuckGo;
@@ -1858,11 +1850,6 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 84E341A71E2F7EFB00BDBA6F /* PBXContainerItemProxy */;
-		};
-		F12810A71EB35B5300F95E4E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F128109E1EB35B5300F95E4E /* ContentBlockerExtension */;
-			targetProxy = F12810A61EB35B5300F95E4E /* PBXContainerItemProxy */;
 		};
 		F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

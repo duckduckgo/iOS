@@ -163,31 +163,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="QAm-5P-Wmg">
-                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QAm-5P-Wmg" id="zjC-1R-joV">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Content Blocking in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itx-CP-Hjc">
-                                                    <rect key="frame" x="18" y="14" width="339" height="16"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <gestureRecognizers/>
-                                            <constraints>
-                                                <constraint firstItem="Itx-CP-Hjc" firstAttribute="centerY" secondItem="zjC-1R-joV" secondAttribute="centerY" id="W6v-Sr-AXX"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Itx-CP-Hjc" secondAttribute="trailing" constant="10" id="euc-yN-LmC"/>
-                                                <constraint firstItem="Itx-CP-Hjc" firstAttribute="leading" secondItem="zjC-1R-joV" secondAttribute="leadingMargin" constant="10" id="ryW-HH-jhi"/>
-                                            </constraints>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="BIw-Od-U52" appends="YES" id="CWa-Q8-biX"/>
-                                            </connections>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -206,11 +181,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVh-Mf-9G0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="BIw-Od-U52">
-                    <connections>
-                        <segue destination="jvp-Fo-UIy" kind="presentation" animates="NO" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="Fqz-oF-lW0"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="BIw-Od-U52"/>
             </objects>
             <point key="canvasLocation" x="-1623" y="-1557"/>
         </scene>
@@ -287,14 +258,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-908" y="-1557"/>
-        </scene>
-        <!--EnableSafariContentBlocker-->
-        <scene sceneID="nh5-KH-obP">
-            <objects>
-                <viewControllerPlaceholder storyboardName="EnableSafariContentBlocker" id="jvp-Fo-UIy" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fYT-bp-Gvu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1623" y="-1337"/>
         </scene>
     </scenes>
     <resources>

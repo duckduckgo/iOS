@@ -36,7 +36,8 @@ class MainViewController: UIViewController {
 
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
-    
+    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
@@ -207,7 +208,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil {
+        if autocompleteController == nil && appSettings.autocomplete {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
             addChildViewController(controller)

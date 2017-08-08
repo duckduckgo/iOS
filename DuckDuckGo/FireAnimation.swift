@@ -37,16 +37,14 @@ struct FireAnimation {
         let nativeHeight = fireView.frame.size.height
         fireView.center.x = animationContainer.center.x
         fireView.transform.ty = animationContainer.frame.size.height
-        
-        animationContainer.isHidden = false
         animationContainer.addSubview(fireView)
         window.addSubview(animationContainer)
         
         UIView.animate(withDuration: 1.5, animations: {
             fireView.transform.ty = -nativeHeight
         }) { _ in
-            completion()
             animationContainer.removeFromSuperview()
+            completion()
         }
     }
 }

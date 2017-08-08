@@ -35,6 +35,7 @@ struct FireAnimation {
         fireView.autoStartAnimation = true
         
         let nativeHeight = fireView.frame.size.height
+        fireView.center.x = animationContainer.center.x
         fireView.transform.ty = animationContainer.frame.size.height
         
         animationContainer.isHidden = false

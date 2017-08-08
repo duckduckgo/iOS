@@ -32,7 +32,6 @@ struct FireAnimation {
         let animationContainer = UIView(frame: window.frame)
         let fireImage = APNGImage(named: "FireAnimated")!
         let fireView = APNGImageView(image: fireImage)
-        fireView.autoStartAnimation = true
         
         let nativeHeight = fireView.frame.size.height
         fireView.center.x = animationContainer.center.x
@@ -40,9 +39,11 @@ struct FireAnimation {
         animationContainer.addSubview(fireView)
         window.addSubview(animationContainer)
         
+        fireView.startAnimating()
         UIView.animate(withDuration: 1.5, animations: {
             fireView.transform.ty = -nativeHeight
         }) { _ in
+            fireView.stopAnimating()
             animationContainer.removeFromSuperview()
             completion()
         }

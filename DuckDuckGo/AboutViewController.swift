@@ -31,11 +31,6 @@ class AboutViewController: UIViewController {
     }
 
     private func updateViews() {
-        updateDescription()
-    }
-
-    private func updateDescription() {
-        descriptionText.text = UserText.aboutDescription
         descriptionText.adjustPlainTextLineHeight(1.5)
     }
 

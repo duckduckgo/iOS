@@ -104,11 +104,6 @@
 /* Bookmark saved */
 "web.url.save.done" = "Bladwijzer opgeslagen";
 
-"about.description" = "🇸🇽 What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.\n\nSee our privacy policy online.";
-
 "safari.instructions.settings" = "🇸🇽 Open <highlight>App Settings</highlight>";
 "safari.instructions.navigate" = "🇸🇽 Navigate to <highlight>Safari</highlight>, then <highlight>Search Engine</highlight>";
 "safari.instructions.select" = "🇸🇽 Select <highlight>DuckDuckGo</highlight>";
-
-
-

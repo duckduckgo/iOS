@@ -27,6 +27,8 @@ class SafariSearchInstructionsViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var descriptionText: UILabel!
     @IBOutlet weak var instructionsSettingsText: UILabel!
+    @IBOutlet weak var instructionsNavigateText: UILabel!
+    @IBOutlet weak var instructionsSelectText: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
     var descriptionLineHeight: CGFloat = 0
@@ -41,15 +43,6 @@ class SafariSearchInstructionsViewController: UIViewController {
         configureViews()
     }
  
-    private func configureViews() {
-        descriptionText.adjustPlainTextLineHeight(descriptionLineHeight)
-
-        let boldStyle = Style("highlight", {
-            $0.color = UIColor(hex: "333333", alpha: 1.0)
-        })
-        instructionsSettingsText.attributedText = UserText.safariInstructionsSettings.parse()?.render(withStyles: [boldStyle])
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !tutorialSettings.hasSeenSafariSearchInstructions {
@@ -58,15 +51,33 @@ class SafariSearchInstructionsViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        applyTopMargin()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        applyTopMargin()
+        configureViews()
+    }
+
+    @IBAction func onDonePressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+
     private func disableDoneButtonForASecond() {
         doneButton.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.doneButton.isEnabled = true
         }
     }
-    
-    override func viewDidLayoutSubviews() {
-        applyTopMargin()
+
+    private func configureViews() {
+        descriptionText.adjustPlainTextLineHeight(descriptionLineHeight)
+
+        let style = makeStyle()
+        instructionsSettingsText.attributedText = UserText.safariInstructionsSettings.parse()?.render(withStyles: [style])
+        instructionsNavigateText.attributedText = UserText.safariInstructionsNavigate.parse()?.render(withStyles: [style])
+        instructionsSelectText.attributedText = UserText.safariInstructionsSelect.parse()?.render(withStyles: [style])
     }
     
     private func applyTopMargin() {
@@ -77,9 +88,12 @@ class SafariSearchInstructionsViewController: UIViewController {
         let minimumMargin = SafariSearchInstructionsViewController.minimumTopMargin
         topMarginConstraint.constant = marginForVerticalCentering > minimumMargin ? marginForVerticalCentering : minimumMargin
     }
-    
-    @IBAction func onDonePressed(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+
+    private func makeStyle() -> Style {
+        return Style("highlight", {
+            $0.color = UIColor(hex: "#333333", alpha: 1.0)
+        })
     }
+
 }
 

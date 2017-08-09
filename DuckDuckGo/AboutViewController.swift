@@ -23,7 +23,7 @@ import Core
 
 class AboutViewController: UIViewController {
 
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionText: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,8 @@ class AboutViewController: UIViewController {
     }
 
     private func updateDescription() {
-        descriptionLabel.text = UserText.aboutDescription
-        descriptionLabel.adjustPlainTextLineHeight(1.5)
+        descriptionText.text = UserText.aboutDescription
+        descriptionText.adjustPlainTextLineHeight(1.5)
     }
 
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {

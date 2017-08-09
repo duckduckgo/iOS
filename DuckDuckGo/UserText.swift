@@ -64,4 +64,7 @@ public struct UserText {
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
+
+    public static let aboutDescription = NSLocalizedString("about.description", comment: "What you search for is your own...")
+
 }

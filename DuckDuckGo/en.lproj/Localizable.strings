@@ -57,3 +57,5 @@
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
+
+"about.description" = "What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.\n\nSee our privacy policy online.";

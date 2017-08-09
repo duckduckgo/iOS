@@ -22,7 +22,23 @@ import UIKit
 import Core
 
 class AboutViewController: UIViewController {
-    
+
+    @IBOutlet weak var descriptionLabel: UILabel!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViews()
+    }
+
+    private func updateViews() {
+        updateDescription()
+    }
+
+    private func updateDescription() {
+        descriptionLabel.text = UserText.aboutDescription
+        descriptionLabel.adjustPlainTextLineHeight(1.5)
+    }
+
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
         dismiss(animated: true) { 
             UIApplication.shared.openURL(AppDeepLinks.privacyPolicy)

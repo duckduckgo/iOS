@@ -159,7 +159,6 @@
 		F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CA3C381F045885005FADB3 /* PrivacyUserDefaults.swift */; };
 		F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CA3C3A1F045B65005FADB3 /* Authenticator.swift */; };
 		F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CDD3F11F16911700BE0581 /* AboutViewController.swift */; };
-		F1CE429F1EC9E9E70074A8DF /* EnableSafariContentBlocker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */; };
 		F1CE42A01EC9EA910074A8DF /* SafariSearchInstructions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10B06801EBB6CE000CC5910 /* SafariSearchInstructions.storyboard */; };
 		F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CE42A51ECA0A460074A8DF /* BookmarkUserDefaults.swift */; };
 		F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D477C51F2126CC0031ED49 /* OmniBarState.swift */; };
@@ -188,7 +187,6 @@
 		F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642031E949E1900B2A911 /* proximanova-light.otf */; };
 		F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642041E949E1900B2A911 /* proximanova-regular.otf */; };
 		F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F18642051E949E1900B2A911 /* proximanova-semibold.otf */; };
-		F1F33DEE1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */; };
 		F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337B1F26A9EF00D80D4F /* UserText.swift */; };
 		F1F5337E1F26AAF400D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337D1F26AAF400D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
@@ -451,7 +449,6 @@
 		F1E9C9E11F2CDD62005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F1E9C9E31F2CDD62005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		F1E9C9E91F2CDD63005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
-		F1E9C9EF1F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/EnableSafariContentBlocker.strings; sourceTree = "<group>"; };
 		F1E9C9F01F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		F1E9C9F11F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Bookmarks.strings; sourceTree = "<group>"; };
 		F1E9C9F21F2CDD64005F42C8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/TabSwitcher.strings; sourceTree = "<group>"; };
@@ -464,8 +461,6 @@
 		F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-regular.otf"; sourceTree = "<group>"; };
 		F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "proximanova-semibold.otf"; sourceTree = "<group>"; };
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
-		F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableSafariContentBlockerViewController.swift; sourceTree = "<group>"; };
-		F1F33DF01EB8B88700E462C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EnableSafariContentBlocker.storyboard; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1F5337D1F26AAF400D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1FCF3B11F354F7200C23128 /* DisconnectMeRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeRequestTest.swift; sourceTree = "<group>"; };
@@ -645,7 +640,6 @@
 			isa = PBXGroup;
 			children = (
 				F1BE54481E69DD5F00FCF649 /* Onboarding */,
-				F1F33DE11EB899D100E462C3 /* ContentBlocking */,
 				F18CA9B81E93F1FA003EA579 /* SafariSearchInstructions */,
 				F11CEF691EBB6B360088E4D7 /* FireTutorial */,
 				F186421A1E94A3F900B2A911 /* Support */,
@@ -1297,15 +1291,6 @@
 			name = Licensed;
 			sourceTree = "<group>";
 		};
-		F1F33DE11EB899D100E462C3 /* ContentBlocking */ = {
-			isa = PBXGroup;
-			children = (
-				F1F33DED1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift */,
-				F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */,
-			);
-			name = ContentBlocking;
-			sourceTree = "<group>";
-		};
 		F1FCF3B01F354F5D00C23128 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1547,7 +1532,6 @@
 				F11CEF661EBB66EF0088E4D7 /* FireTutorial.storyboard in Resources */,
 				F1CE42A01EC9EA910074A8DF /* SafariSearchInstructions.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
-				F1CE429F1EC9E9E70074A8DF /* EnableSafariContentBlocker.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
@@ -1685,7 +1669,6 @@
 				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
-				F1F33DEE1EB8B54900E462C3 /* EnableSafariContentBlockerViewController.swift in Sources */,
 				F1BE54561E69DDE000FCF649 /* TrackingConfiguration.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* OnboardingPageViewController.swift in Sources */,
 				F17669AD1E413E5F003D3222 /* InfoBundle.swift in Sources */,
@@ -1955,15 +1938,6 @@
 				F1E9C9F21F2CDD64005F42C8 /* nl */,
 			);
 			name = TabSwitcher.storyboard;
-			sourceTree = "<group>";
-		};
-		F1F33DEF1EB8B88700E462C3 /* EnableSafariContentBlocker.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F1F33DF01EB8B88700E462C3 /* Base */,
-				F1E9C9EF1F2CDD64005F42C8 /* nl */,
-			);
-			name = EnableSafariContentBlocker.storyboard;
 			sourceTree = "<group>";
 		};
 		F1F533861F26ABAC00D80D4F /* Localizable.strings */ = {

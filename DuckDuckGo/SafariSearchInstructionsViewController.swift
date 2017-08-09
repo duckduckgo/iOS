@@ -19,12 +19,14 @@
 
 
 import UIKit
+import SwiftRichString
 
 class SafariSearchInstructionsViewController: UIViewController {
     
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var descriptionText: UILabel!
+    @IBOutlet weak var instructionsSettingsText: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
     var descriptionLineHeight: CGFloat = 0
@@ -41,6 +43,11 @@ class SafariSearchInstructionsViewController: UIViewController {
  
     private func configureViews() {
         descriptionText.adjustPlainTextLineHeight(descriptionLineHeight)
+
+        let boldStyle = Style("highlight", {
+            $0.color = UIColor(hex: "333333", alpha: 1.0)
+        })
+        instructionsSettingsText.attributedText = UserText.safariInstructionsSettings.parse()?.render(withStyles: [boldStyle])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,3 +82,4 @@ class SafariSearchInstructionsViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+

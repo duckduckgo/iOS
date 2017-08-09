@@ -67,4 +67,6 @@ public struct UserText {
 
     public static let aboutDescription = NSLocalizedString("about.description", comment: "What you search for is your own...")
 
+    public static let safariInstructionsSettings = NSLocalizedString("safari.instructions.settings", comment: "Open App Settings") 
+
 }

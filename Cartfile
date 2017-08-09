@@ -11,3 +11,5 @@ github "subsymbolic/Toast-Swift" ~> 2.0.0
 github "subsymbolic/Alamofire" ~>  4.4.0
 
 github "subsymbolic/OHHTTPStubs" ~> 6.0.0
+
+github "malcommac/SwiftRichString" "tags/0.9.9"

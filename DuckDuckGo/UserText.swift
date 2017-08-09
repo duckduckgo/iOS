@@ -18,7 +18,7 @@
 //
 
 
-import Foundation
+import Core
 
 
 public struct UserText {
@@ -64,4 +64,12 @@ public struct UserText {
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
+    
+    public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
+    public static let insecureConnection = NSLocalizedString("monitoring.connection.insecure", comment: "Insecure conection")
+    
+    public static func forSiteGrade(_ grade: SiteGrade) -> String {
+        let key = "monitoring.sitegrade.\(grade.rawValue)"
+        return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")
+    }
 }

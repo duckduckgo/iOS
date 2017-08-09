@@ -23,18 +23,22 @@ import Core
 
 class ContentBlockerViewController: UITableViewController {
 
+    @IBOutlet weak var httpsBackground: UIImageView!
+    @IBOutlet weak var httpsLabel: UILabel!
     @IBOutlet weak var blockCountCircle: UIImageView!
     @IBOutlet weak var blockCount: UILabel!
     @IBOutlet weak var blockingEnabledToggle: UISwitch!
     @IBOutlet weak var blockThisDomainToggle: UISwitch!
     
-    var contentBlocker: ContentBlocker!
-    var domain: String!
+    private(set) var contentBlocker: ContentBlocker!
+    private(set) var https: Bool!
+    private(set) var domain: String!
     
-    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, domain: String) -> ContentBlockerViewController {
+    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, https: Bool, domain: String) -> ContentBlockerViewController {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerViewController") as! ContentBlockerViewController
         controller.contentBlocker = contentBlocker
+        controller.https = https
         controller.domain = domain
         return controller
     }
@@ -43,8 +47,9 @@ class ContentBlockerViewController: UITableViewController {
         super.viewDidLoad()
         refresh()
     }
-    
+
     public func refresh() {
+        refreshHttps()
         blockingEnabledToggle.isOn = contentBlocker.enabled
         blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: domain)
         blockThisDomainToggle.isEnabled = blockingEnabledToggle.isOn
@@ -52,6 +57,16 @@ class ContentBlockerViewController: UITableViewController {
         blockCountCircle.tintColor = blockCountCircleTint()
     }
  
+    private func refreshHttps() {
+        if https {
+            httpsBackground.tintColor = UIColor.monitoringPositiveTint
+            httpsLabel.text = UserText.secureConnection
+        } else {
+            httpsBackground.tintColor = UIColor.monitoringNeutralTint
+            httpsLabel.text = UserText.insecureConnection
+        }
+    }
+
     private func blockCountText() -> String {
         if !contentBlocker.enabled {
             return "!"
@@ -64,15 +79,15 @@ class ContentBlockerViewController: UITableViewController {
     
     private func blockCountCircleTint() -> UIColor {
         if !contentBlocker.enabled {
-            return UIColor.contentBlockerCompletelyDisabledTint
+            return UIColor.monitoringNegativeTint
         }
         if !contentBlocker.enabled(forDomain: domain) {
-            return UIColor.contentBlockerCompletelyDisabledTint
+            return UIColor.monitoringNegativeTint
         }
         if contentBlocker.uniqueItemsBlocked > 0 {
-            return UIColor.contentBlockerActiveDirtySiteTint
+            return UIColor.monitoringNeutralTint
         }
-        return UIColor.contentBlockerActiveCleanSiteTint
+        return UIColor.monitoringPositiveTint
     }
     
     @IBAction func onBlockingEnabledToggle(_ sender: UISwitch) {

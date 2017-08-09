@@ -35,6 +35,7 @@ class TabViewController: WebViewController {
     
     private(set) var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
+    private var siteRating: SiteRating?
     
     static func loadFromStoryboard(contentBlocker: ContentBlocker) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
@@ -67,18 +68,31 @@ class TabViewController: WebViewController {
     }
 
     func launchContentBlockerPopover() {
+        let https = url?.isHttps() ?? false
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
         guard let domain = url?.host else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard(withContentBlocker: contentBlocker, domain: domain)
+        let controller = ContentBlockerPopover.loadFromStoryboard(withContentBlocker: contentBlocker, https: https, domain: domain)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
         controller.popoverPresentationController?.backgroundColor = UIColor.white
         present(controller: controller, fromView: button)
         contentBlockerPopover = controller
     }
+
+    fileprivate func onNewPageLoad() {
+        delegate?.tab(self, siteRatingDidChange: nil)
+        siteRating = SiteRating()
+        siteRating?.https = url?.isHttps() ?? false
+        contentBlocker.resetMonitoring()
+        onContentBlockerStateChanged()
+    }
     
     fileprivate func onContentBlockerStateChanged() {
         contentBlockerPopover?.refresh()
+        siteRating?.trackers = contentBlocker.trackersDetected
+        if let siteRating = siteRating {
+            delegate?.tab(self, siteRatingDidChange: siteRating)
+        }
     }
 
     func launchBrowsingMenu() {
@@ -192,9 +206,9 @@ class TabViewController: WebViewController {
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if contentBlocker.block(url: url, forDocument: documentUrl) {
-            onContentBlockerStateChanged()
             return false
         }
+        onContentBlockerStateChanged()
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
@@ -233,8 +247,7 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        contentBlocker.resetMonitoring()
-        onContentBlockerStateChanged()
+        onNewPageLoad()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }

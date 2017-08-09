@@ -57,3 +57,10 @@
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
+
+"monitoring.connection.secure" = "Secure connection";
+"monitoring.connection.insecure" = "Insecure connection";
+"monitoring.sitegrade.a" = "A";
+"monitoring.sitegrade.b" = "B";
+"monitoring.sitegrade.c" = "C";
+"monitoring.sitegrade.d" = "D";

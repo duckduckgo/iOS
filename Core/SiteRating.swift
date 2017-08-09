@@ -22,10 +22,12 @@ import Foundation
 
 public struct SiteRating {
     
-    var https = false
-    var trackers = [Tracker]()
+    public var https = false
+    public var trackers = [Tracker: Int]()
 
-    var siteScore: Int {
+    public init() {}
+    
+    public var siteScore: Int {
         var score = 1
         score += httpsScore
         score += trackerCountScore
@@ -38,8 +40,12 @@ public struct SiteRating {
     }
     
     private var trackerCountScore: Int {
-        let baseScore = Double(trackers.count) / 10.0
+        let baseScore = Double(trackersCount) / 10.0
         return Int(ceil(baseScore))
+    }
+    
+    public var trackersCount: Int {
+        return trackers.reduce(0) { $0 + $1.value }
     }
     
     private var majorTrackerNetworkScore: Int {
@@ -47,7 +53,10 @@ public struct SiteRating {
     }
     
     private var containsMajorTracker: Bool {
-        return trackers.contains(where: { $0.fromMajorNetwork() } )
+        return trackers.contains(where: { $0.key.fromMajorNetwork() } )
     }
 
+    public var siteGrade: SiteGrade {
+        return SiteGrade.grade(fromScore: siteScore)
+    }
 }

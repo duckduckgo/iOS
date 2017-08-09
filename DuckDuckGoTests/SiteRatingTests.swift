@@ -69,13 +69,13 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(4, testee.siteScore)
     }
     
-    func trackers(qty: Int, majorQty: Int = 0) -> [Tracker] {
-        var trackers = [Tracker]()
-        for _ in 0..<qty {
-            trackers.append(tracker)
+    func trackers(qty: Int, majorQty: Int = 0) -> [Tracker: Int] {
+        var trackers = [Tracker: Int]()
+        if qty > 0 {
+            trackers[tracker] = qty
         }
-        for _ in 0..<majorQty {
-            trackers.append(majorTracker)
+        if majorQty > 0 {
+            trackers[majorTracker] = majorQty
         }
         return trackers
     }

@@ -349,14 +349,6 @@ extension MainViewController: TabDelegate {
         attachHomeScreen()
     }
     
-    func tabDidRequestTabSwitcher(tab: TabViewController) {
-        launchTabSwitcher()
-    }
-    
-    func tabDidRequestBookmarks(tab: TabViewController) {
-        launchBookmarks()
-    }
-    
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
     }
@@ -367,6 +359,10 @@ extension MainViewController: TabDelegate {
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
         loadRequestInNewTab(urlRequest)
+    }
+    
+    func tab(_ tab: TabViewController, siteRatingDidChange siteRating: SiteRating?) {
+        omniBar.updateSiteRating(siteRating)
     }
 }
 

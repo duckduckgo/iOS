@@ -77,6 +77,14 @@
                                                         <constraint firstAttribute="width" constant="24" id="SQa-fB-91I"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LockSimple" translatesAutoresizingMaskIntoConstraints="NO" id="boY-UC-k3K">
+                                                    <rect key="frame" x="22" y="13" width="16" height="16"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="hiG-c8-Bkm"/>
+                                                        <constraint firstAttribute="width" constant="16" id="iR4-y0-TdL"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Secure connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIt-4d-ynw">
                                                     <rect key="frame" x="52" y="14" width="305" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -86,6 +94,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="iIt-4d-ynw" firstAttribute="leading" secondItem="dvI-6Q-q2X" secondAttribute="trailing" constant="10" id="0gU-ub-Fmh"/>
+                                                <constraint firstItem="boY-UC-k3K" firstAttribute="centerY" secondItem="dvI-6Q-q2X" secondAttribute="centerY" id="0tp-sL-Dqu"/>
+                                                <constraint firstItem="boY-UC-k3K" firstAttribute="centerX" secondItem="dvI-6Q-q2X" secondAttribute="centerX" id="SrN-u8-Uzl"/>
                                                 <constraint firstItem="iIt-4d-ynw" firstAttribute="centerY" secondItem="xlH-6o-7Cq" secondAttribute="centerY" id="VX5-2J-1Rf"/>
                                                 <constraint firstItem="dvI-6Q-q2X" firstAttribute="centerY" secondItem="xlH-6o-7Cq" secondAttribute="centerY" id="Zhe-72-YfS"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="iIt-4d-ynw" secondAttribute="trailing" constant="10" id="gEh-bI-Ocg"/>
@@ -208,6 +218,8 @@
                         <outlet property="blockCountCircle" destination="TiT-GP-NdW" id="1QL-es-kXh"/>
                         <outlet property="blockThisDomainToggle" destination="0hX-Ht-Xzr" id="aD8-OI-7Vt"/>
                         <outlet property="blockingEnabledToggle" destination="7wa-HP-lIs" id="EaB-rp-Dlh"/>
+                        <outlet property="httpsBackground" destination="dvI-6Q-q2X" id="wFy-Fp-62n"/>
+                        <outlet property="httpsLabel" destination="iIt-4d-ynw" id="dqh-eD-UFa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVh-Mf-9G0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -292,6 +304,7 @@
     </scenes>
     <resources>
         <image name="Circle" width="24" height="24"/>
+        <image name="LockSimple" width="16" height="16"/>
         <image name="Refresh" width="22" height="22"/>
     </resources>
 </document>

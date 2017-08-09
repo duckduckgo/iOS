@@ -30,12 +30,14 @@ class ContentBlockerPopover: UIViewController {
     private var contentBlockerViewController: ContentBlockerViewController?
     private var errorViewController: ContentBlockerErrorViewController?
     
+    private(set) var https: Bool!
     private(set) var domain: String!
     
-    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, domain: String) -> ContentBlockerPopover {
+    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, https: Bool, domain: String) -> ContentBlockerPopover {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
         controller.contentBlocker = contentBlocker
+        controller.https = https
         controller.domain = domain
         return controller
     }
@@ -60,7 +62,7 @@ class ContentBlockerPopover: UIViewController {
     }
     
     fileprivate func attachContentBlockerViewController() {
-        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, domain: domain)
+        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, https: https, domain: domain)
         addToContainer(controller: controller)
         contentBlockerViewController = controller
     }

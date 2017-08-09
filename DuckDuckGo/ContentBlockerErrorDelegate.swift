@@ -23,4 +23,5 @@ import Foundation
 protocol ContentBlockerErrorDelegate: class {
  
     func errorWasResolved()
+
 }

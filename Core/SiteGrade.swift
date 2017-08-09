@@ -20,12 +20,12 @@
 
 import Foundation
 
-public enum SiteGrade  {
+public enum SiteGrade: String {
     
-    case A
-    case B
-    case C
-    case D
+    case A = "a"
+    case B = "b"
+    case C = "c"
+    case D = "d"
     
     static func grade(fromScore score: Int) -> SiteGrade {
         switch score {

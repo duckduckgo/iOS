@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-import APNGKit
 import UIKit
 
 struct FireAnimation {
-    
+
     static func animate(withCompletion completion: @escaping () -> Swift.Void) {
         
         guard let window = UIApplication.shared.keyWindow else {
@@ -30,22 +29,33 @@ struct FireAnimation {
         }
         
         let animationContainer = UIView(frame: window.frame)
-        let fireImage = APNGImage(named: "FireAnimated")!
-        let fireView = APNGImageView(image: fireImage)
-        
-        let nativeHeight = fireView.frame.size.height
+        let fireView = UIImageView(image: #imageLiteral(resourceName: "flames0001"))
+        fireView.animationImages = animatedImages
+
+        let containerHeight = animationContainer.frame.size.height
+        let fireViewHeight = fireView.frame.size.height
         fireView.center.x = animationContainer.center.x
-        fireView.transform.ty = animationContainer.frame.size.height
+        fireView.transform.ty = containerHeight - fireViewHeight * 0.15
         animationContainer.addSubview(fireView)
         window.addSubview(animationContainer)
         
         fireView.startAnimating()
-        UIView.animate(withDuration: 1.5, animations: {
-            fireView.transform.ty = -nativeHeight
+        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
+            fireView.transform.ty = -fireViewHeight
         }) { _ in
             fireView.stopAnimating()
             animationContainer.removeFromSuperview()
             completion()
         }
+    }
+    
+    private static var animatedImages: [UIImage] {
+        var images = [UIImage]()
+        for i in 1...20 {
+            let filename = String(format: "flames00%02d", i)
+            let image = #imageLiteral(resourceName: filename)
+            images.append(image)
+        }
+        return images
     }
 }

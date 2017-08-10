@@ -24,31 +24,31 @@ import XCTest
 class SiteGradeTests: XCTestCase {
 
     func testWhenScoreIsZeroThenGradeIsA() {
-        XCTAssertEqual(SiteGrade.A, SiteGrade.grade(fromScore: 0))
+        XCTAssertEqual(SiteGrade.a, SiteGrade.grade(fromScore: 0))
     }
 
     func testWhenScoreIsLessThanZeroThenGradeIsA() {
-        XCTAssertEqual(SiteGrade.A, SiteGrade.grade(fromScore: -100))
+        XCTAssertEqual(SiteGrade.a, SiteGrade.grade(fromScore: -100))
     }
     
     func testWhenScoreIsOneThenGradeIsA() {
-        XCTAssertEqual(SiteGrade.A, SiteGrade.grade(fromScore: 1))
+        XCTAssertEqual(SiteGrade.a, SiteGrade.grade(fromScore: 1))
     }
     
     func testWhenScoreIsTwoThenGradeIsB() {
-        XCTAssertEqual(SiteGrade.B, SiteGrade.grade(fromScore: 2))
+        XCTAssertEqual(SiteGrade.b, SiteGrade.grade(fromScore: 2))
     }
     
     func testWhenScoreIsThreeThenGradeIsC() {
-        XCTAssertEqual(SiteGrade.C, SiteGrade.grade(fromScore: 3))
+        XCTAssertEqual(SiteGrade.c, SiteGrade.grade(fromScore: 3))
     }
     
     func testWhenScoreIsOneThenGradeIsD() {
-        XCTAssertEqual(SiteGrade.D, SiteGrade.grade(fromScore: 4))
+        XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 4))
     }
     
     func testWhenScoreIsGreaterThan4ThenGradeIsD() {
-        XCTAssertEqual(SiteGrade.D, SiteGrade.grade(fromScore: 100))
+        XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 100))
     }
 
 }

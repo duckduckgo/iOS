@@ -128,11 +128,11 @@ class OmniBar: UIView {
     
     private func colorForSiteRating(_ siteRating: SiteRating) -> UIColor {
         switch siteRating.siteGrade {
-        case .A:
+        case .a:
             return UIColor.monitoringPositiveTint
-        case .B, .C:
+        case .b, .c:
             return UIColor.monitoringNeutralTint
-        case .D:
+        case .d:
             return UIColor.monitoringPositiveTint
         }
     }

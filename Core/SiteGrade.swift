@@ -22,18 +22,18 @@ import Foundation
 
 public enum SiteGrade: String {
     
-    case A = "a"
-    case B = "b"
-    case C = "c"
-    case D = "d"
+    case a
+    case b
+    case c
+    case d
     
     static func grade(fromScore score: Int) -> SiteGrade {
         switch score {
-        case Int.min ... 1: return .A
-        case 2: return .B
-        case 3: return .C
-        case 4: return .D
-        default: return .D
+        case Int.min ... 1: return .a
+        case 2: return .b
+        case 3: return .c
+        case 4: return .d
+        default: return .d
         }
     }
 }

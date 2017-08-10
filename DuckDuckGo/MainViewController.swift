@@ -288,7 +288,7 @@ extension MainViewController: OmniBarDelegate {
         launchBookmarks()
     }
     
-    func onContenBlockerPressed() {
+    func onContentBlockerPressed() {
         launchContentBlockerPopover()
     }
     
@@ -349,10 +349,6 @@ extension MainViewController: TabDelegate {
         attachHomeScreen()
     }
     
-    func tabDidRequestSettings(tab: TabViewController) {
-        launchSettings()
-    }
-    
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }
@@ -361,8 +357,12 @@ extension MainViewController: TabDelegate {
         loadRequestInNewTab(urlRequest)
     }
     
-    func tab(_ tab: TabViewController, siteRatingDidChange siteRating: SiteRating?) {
+    func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         omniBar.updateSiteRating(siteRating)
+    }
+    
+    func tabDidRequestSettings(tab: TabViewController) {
+        launchSettings()
     }
 }
 

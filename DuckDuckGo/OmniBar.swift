@@ -85,7 +85,7 @@ class OmniBar: UIView {
     
     private func configureContentBlocker() {
         contentBlockerContainer.tag = Tag.contentBlocker
-        refreshSiteRating()
+        refreshContentBlocker()
     }
     
     func pasteAndGo(sender: UIMenuItem) {
@@ -115,38 +115,27 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
     }
     
-    private func refreshSiteRating() {
-        refreshSiteRatingText()
-        refreshSiteRatingColor()
-    }
-
-    private func refreshSiteRatingText() {
+    private func refreshContentBlocker() {
         guard let siteRating = siteRating else {
-            contentBlockerLabel.text = ""
+            contentBlockerCircle.tintColor = UIColor.monitoringInactiveTint
+            contentBlockerLabel.text = "-"
             return
         }
         contentBlockerLabel.text = UserText.forSiteGrade(siteRating.siteGrade)
+        contentBlockerCircle.tintColor = colorForSiteRating(siteRating)
+        setVisibility(contentBlockerContainer, hidden: false)
     }
     
-    private func refreshSiteRatingColor() {
-        guard let siteRating = siteRating else {
-            contentBlockerCircle.tintColor = UIColor.monitoringNeutralTint
-            return
-        }
-        
+    private func colorForSiteRating(_ siteRating: SiteRating) -> UIColor {
         switch siteRating.siteGrade {
         case .A:
-            contentBlockerCircle.tintColor = UIColor.monitoringPositiveTint
-            break
+            return UIColor.monitoringPositiveTint
         case .B, .C:
-            contentBlockerCircle.tintColor = UIColor.monitoringNeutralTint
-            break
+            return UIColor.monitoringNeutralTint
         case .D:
-            contentBlockerCircle.tintColor = UIColor.monitoringPositiveTint
-            break
+            return UIColor.monitoringPositiveTint
         }
     }
-    
     
     /*
      Superfluous check to overcome apple bug in stack view where setting value more than
@@ -169,7 +158,7 @@ class OmniBar: UIView {
     
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
-        refreshSiteRating()
+        refreshContentBlocker()
     }
     
     func clear() {
@@ -229,7 +218,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onContentBlockerButtonPressed(_ sender: Any) {
-        omniDelegate?.onContenBlockerPressed()
+        omniDelegate?.onContentBlockerPressed()
     }
 }
 

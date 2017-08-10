@@ -22,49 +22,59 @@ import XCTest
 @testable import Core
 
 class SiteRatingTests: XCTestCase {
+
+    func testWhenUrlContainHostThenInitSucceeds() {
+        let testee = SiteRating(url: urlWithHost)
+        XCTAssertNotNil(testee)
+    }
     
-    var testee = SiteRating()
-    
-    func testWhenInitalisedThenScoreIsOne() {
-        XCTAssertEqual(1, testee.siteScore)
+    func testWhenUrlDoesNotContainHostThenInitFails() {
+        let testee = SiteRating(url: urlWithoutHost)
+        XCTAssertNil(testee)
     }
     
     func testWhenHttpThenScoreIsOne() {
-        testee.https = false
+        let testee = SiteRating(url: httpUrl)!
         XCTAssertEqual(1, testee.siteScore)
     }
     
     func testWhenHttpsThenScoreIsZero() {
-        testee.https = true
+        let testee = SiteRating(url: httpsUrl)!
         XCTAssertEqual(0, testee.siteScore)
     }
     
     func testWhenOneStandardTrackerThenScoreIsTwo() {
+        var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 1)
         XCTAssertEqual(2, testee.siteScore)
     }
     
     func testWhenOneMajorTrackerThenScoreIsThree() {
+        var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 0, majorQty: 1)
         XCTAssertEqual(3, testee.siteScore)
     }
     
     func testWhenTenStandardTrackersThenScoreIsTwo() {
+        var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 10)
         XCTAssertEqual(2, testee.siteScore)
     }
     
     func testWhenTenTrackerIncludingMajorThenScoreIsThree() {
+        var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 5, majorQty: 5)
         XCTAssertEqual(3, testee.siteScore)
     }
 
     func testWhenElevenStandardTrackersThenScoreIsThree() {
+        var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 11)
         XCTAssertEqual(3, testee.siteScore)
     }
 
     func testWhenElevenTrackersIncludingMajorThenScoreIsFour() {
+        var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 6, majorQty: 5)
         XCTAssertEqual(4, testee.siteScore)
     }
@@ -80,6 +90,22 @@ class SiteRatingTests: XCTestCase {
         return trackers
     }
     
+    var urlWithoutHost: URL {
+        return URL(string: "nohost")!
+    }
+    
+    var urlWithHost: URL {
+        return URL(string: "http://host")!
+    }
+
+    var httpUrl: URL {
+        return URL(string: "http://example.com")!
+    }
+
+    var httpsUrl: URL {
+        return URL(string: "https://example.com")!
+    }
+    
     var tracker: Tracker {
         return Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
     }
@@ -87,5 +113,4 @@ class SiteRatingTests: XCTestCase {
     var majorTracker: Tracker {
         return Tracker(url: "aurl.com", parentDomain: "facebook.com")
     }
-    
 }

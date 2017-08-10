@@ -22,17 +22,28 @@ import Foundation
 
 public struct SiteRating {
     
-    public var https = false
+    public let url: URL
+    public let domain: String
     public var trackers = [Tracker: Int]()
 
-    public init() {}
-    
+    public init?(url: URL) {
+        guard let domain = url.host else {
+            return nil
+        }
+        self.url = url
+        self.domain = domain
+   }
+
     public var siteScore: Int {
         var score = 1
         score += httpsScore
         score += trackerCountScore
         score += majorTrackerNetworkScore
         return score
+    }
+    
+    public var https: Bool {
+        return url.isHttps()
     }
     
     private var httpsScore: Int {

@@ -68,10 +68,9 @@ class TabViewController: WebViewController {
     }
 
     func launchContentBlockerPopover() {
-        let https = url?.isHttps() ?? false
+        guard let siteRating = siteRating else { return }
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
-        guard let domain = url?.host else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard(withContentBlocker: contentBlocker, https: https, domain: domain)
+        let controller = ContentBlockerPopover.loadFromStoryboard(withContentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
         controller.popoverPresentationController?.backgroundColor = UIColor.white
@@ -80,19 +79,21 @@ class TabViewController: WebViewController {
     }
 
     fileprivate func onNewPageLoad() {
-        delegate?.tab(self, siteRatingDidChange: nil)
-        siteRating = SiteRating()
-        siteRating?.https = url?.isHttps() ?? false
         contentBlocker.resetMonitoring()
-        onContentBlockerStateChanged()
+        contentBlockerPopover?.refresh()
+        if let url = url {
+            siteRating = SiteRating(url: url)
+        } else {
+            siteRating = nil
+        }
+        delegate?.tab(self, didChangeSiteRating: siteRating)
     }
     
     fileprivate func onContentBlockerStateChanged() {
         contentBlockerPopover?.refresh()
         siteRating?.trackers = contentBlocker.trackersDetected
-        if let siteRating = siteRating {
-            delegate?.tab(self, siteRatingDidChange: siteRating)
-        }
+        guard let siteRating = siteRating  else { return }
+        delegate?.tab(self, didChangeSiteRating: siteRating)
     }
 
     func launchBrowsingMenu() {
@@ -205,10 +206,11 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        if contentBlocker.block(url: url, forDocument: documentUrl) {
+        let blocked = contentBlocker.block(url: url, forDocument: documentUrl)
+        onContentBlockerStateChanged()
+        if blocked {
             return false
         }
-        onContentBlockerStateChanged()
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false

@@ -130,11 +130,14 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        handle(error: error)
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        handle(error: error)
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
+        showError(message: error.localizedDescription)
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -190,12 +193,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     fileprivate func touchesYOffset() -> CGFloat {
         guard navigationController != nil else { return 0 }
         return decorHeight
-    }
-    
-    private func handle(error: Error) {
-        hideProgressIndicator()
-        webEventsDelegate?.webpageDidFailToLoad()
-        showError(message: error.localizedDescription)
     }
     
     private func showError(message: String) {

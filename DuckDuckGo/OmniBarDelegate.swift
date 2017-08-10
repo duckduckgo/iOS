@@ -32,5 +32,5 @@ protocol OmniBarDelegate: class {
     
     func onBookmarksPressed()
     
-    func onContenBlockerPressed()
+    func onContentBlockerPressed()
 }

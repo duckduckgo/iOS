@@ -1,5 +1,5 @@
 //
-//  ContentBlockerErrorDelegate.swift
+//  SiteGrade.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,22 @@
 //  limitations under the License.
 //
 
+
 import Foundation
 
-
-protocol ContentBlockerErrorDelegate: class {
- 
-    func errorWasResolved()
-
+public enum SiteGrade: String {
+    
+    case a
+    case b
+    case c
+    case d
+    
+    static func grade(fromScore score: Int) -> SiteGrade {
+        switch score {
+        case Int.min ... 1: return .a
+        case 2: return .b
+        case 3: return .c
+        default: return .d
+        }
+    }
 }

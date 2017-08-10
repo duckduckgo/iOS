@@ -65,7 +65,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
-        
         if let url = url {
             load(url: url)
         }

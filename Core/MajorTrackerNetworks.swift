@@ -1,5 +1,5 @@
 //
-//  ContentBlockerErrorDelegate.swift
+//  MajorTrackerNetworks.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,27 @@
 //  limitations under the License.
 //
 
+
 import Foundation
 
+struct MajorTrackerNetworks {
+    static let networks = [
+        "google.com",
+        "facebook.com",
+        "twitter.com",
+        "amazon.com",
+        "appnexus.com",
+        "oracle.com"
+    ]
+}
 
-protocol ContentBlockerErrorDelegate: class {
- 
-    func errorWasResolved()
-
+extension Tracker {
+    
+    func fromMajorNetwork() -> Bool {
+        guard let parentDomain = parentDomain else {
+            return false
+        }
+        return MajorTrackerNetworks.networks.contains(parentDomain)
+    }
+    
 }

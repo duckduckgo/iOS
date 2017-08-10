@@ -38,19 +38,19 @@ extension UIColor {
         return softBlue
     }
 
-    public static var contentBlockerCompletelyDisabledTint: UIColor {
-        return dullRed
-    }
-    
-    public static var contentBlockerInactiveTint: UIColor {
+    public static var monitoringInactiveTint: UIColor {
         return midGray
     }
 
-    public static var contentBlockerActiveDirtySiteTint: UIColor {
+    public static var monitoringNeutralTint: UIColor {
         return squash
     }
     
-    public static var contentBlockerActiveCleanSiteTint: UIColor {
+    public static var monitoringNegativeTint: UIColor {
+        return dullRed
+    }
+    
+    public static var monitoringPositiveTint: UIColor {
         return nastyGreen
     }
     

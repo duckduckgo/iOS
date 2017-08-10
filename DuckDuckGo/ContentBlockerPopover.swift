@@ -26,17 +26,16 @@ class ContentBlockerPopover: UIViewController {
     @IBOutlet weak var container: UIView!
     
     private weak var contentBlocker: ContentBlocker!
+    private var siteRating: SiteRating!
     
     private var contentBlockerViewController: ContentBlockerViewController?
     private var errorViewController: ContentBlockerErrorViewController?
     
-    private(set) var domain: String!
-    
-    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, domain: String) -> ContentBlockerPopover {
+    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerPopover {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
         controller.contentBlocker = contentBlocker
-        controller.domain = domain
+        controller.siteRating = siteRating
         return controller
     }
     
@@ -60,7 +59,8 @@ class ContentBlockerPopover: UIViewController {
     }
     
     fileprivate func attachContentBlockerViewController() {
-        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, domain: domain)
+        guard let siteRating = siteRating else { return }
+        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, siteRating: siteRating)
         addToContainer(controller: controller)
         contentBlockerViewController = controller
     }

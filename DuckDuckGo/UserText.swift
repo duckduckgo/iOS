@@ -18,7 +18,7 @@
 //
 
 
-import Foundation
+import Core
 
 
 public struct UserText {
@@ -65,8 +65,15 @@ public struct UserText {
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
 
-    public static let safariInstructionsSettings = NSLocalizedString("safari.instructions.settings", comment: "Open App Settings") 
+    public static let safariInstructionsSettings = NSLocalizedString("safari.instructions.settings", comment: "Open App Settings")
     public static let safariInstructionsNavigate = NSLocalizedString("safari.instructions.navigate", comment: "Navigate to Safari, then Search Engine")
     public static let safariInstructionsSelect = NSLocalizedString("safari.instructions.select", comment: "Select DuckDuckDo")
 
+    public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
+    public static let unsecuredConnection = NSLocalizedString("monitoring.connection.unsecured", comment: "Unsecured conection")
+    
+    public static func forSiteGrade(_ grade: SiteGrade) -> String {
+        let key = "monitoring.sitegrade.\(grade.rawValue)"
+        return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")
+    }
 }

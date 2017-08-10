@@ -52,6 +52,7 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     var state: OmniBarState = HomeEmptyEditingState()
+    private var siteRating: SiteRating?
     
     static func loadFromXib() -> OmniBar {
         let omnibar = OmniBar.load(nibName: "OmniBar")
@@ -66,47 +67,10 @@ class OmniBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         menuButton.tag = Tag.menuButton
-        configureContentBlocker()
         configureTextField()
         configureEditingMenu()
+        configureContentBlocker()
         refreshState(state)
-    }
-    
-    func startBrowsing() {
-        refreshState(state.onBrowsingStartedState)
-    }
-    
-    func stopBrowsing() {
-        clear()
-        refreshState(state.onBrowsingStoppedState)
-    }
-
-    fileprivate func refreshState(_ newState: OmniBarState) {
-        if type(of: state) != type(of: newState)  {
-            Logger.log(text: "OmniBar entering \(Type.name(newState))")
-            state = newState
-        }
-        setVisibility(dismissButton, hidden: !state.showDismiss)
-        setVisibility(contentBlockerContainer, hidden: !state.showContentBlocker)
-        setVisibility(clearButton, hidden: !state.showClear)
-        setVisibility(menuButton, hidden: !state.showMenu)
-        setVisibility(bookmarksButton, hidden: !state.showBookmarks)
-    }
-
-    /*
-     Superfluous check to overcome apple bug in stack view where setting value more than
-     once causes issues, related to http://www.openradar.me/22819594
-     Kill this method when radar is fixed - burn it with fire ;-) 
-     */
-    private func setVisibility(_ view: UIView, hidden: Bool) {
-        if view.isHidden != hidden {
-            view.isHidden = hidden
-        }
-    }
-
-    private func configureContentBlocker() {
-        contentBlockerContainer.tag = Tag.contentBlocker
-        contentBlockerCircle.tintColor = UIColor.coolGray
     }
     
     private func configureTextField() {
@@ -119,10 +83,68 @@ class OmniBar: UIView {
         UIMenuController.shared.menuItems = [UIMenuItem.init(title: title, action: #selector(pasteAndGo))]
     }
     
+    private func configureContentBlocker() {
+        contentBlockerContainer.tag = Tag.contentBlocker
+        refreshContentBlocker()
+    }
+    
     func pasteAndGo(sender: UIMenuItem) {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()
+    }
+    
+    func startBrowsing() {
+        refreshState(state.onBrowsingStartedState)
+    }
+    
+    func stopBrowsing() {
+        clear()
+        refreshState(state.onBrowsingStoppedState)
+    }
+    
+    fileprivate func refreshState(_ newState: OmniBarState) {
+        if type(of: state) != type(of: newState)  {
+            Logger.log(text: "OmniBar entering \(Type.name(newState))")
+            state = newState
+        }
+        setVisibility(dismissButton, hidden: !state.showDismiss)
+        setVisibility(contentBlockerContainer, hidden: !state.showContentBlocker)
+        setVisibility(clearButton, hidden: !state.showClear)
+        setVisibility(menuButton, hidden: !state.showMenu)
+        setVisibility(bookmarksButton, hidden: !state.showBookmarks)
+    }
+    
+    private func refreshContentBlocker() {
+        guard let siteRating = siteRating else {
+            contentBlockerCircle.tintColor = UIColor.monitoringInactiveTint
+            contentBlockerLabel.text = "-"
+            return
+        }
+        contentBlockerLabel.text = UserText.forSiteGrade(siteRating.siteGrade)
+        contentBlockerCircle.tintColor = colorForSiteRating(siteRating)
+    }
+    
+    private func colorForSiteRating(_ siteRating: SiteRating) -> UIColor {
+        switch siteRating.siteGrade {
+        case .a:
+            return UIColor.monitoringPositiveTint
+        case .b, .c:
+            return UIColor.monitoringNeutralTint
+        case .d:
+            return UIColor.monitoringPositiveTint
+        }
+    }
+    
+    /*
+     Superfluous check to overcome apple bug in stack view where setting value more than
+     once causes issues, related to http://www.openradar.me/22819594
+     Kill this method when radar is fixed - burn it with fire ;-)
+     */
+    private func setVisibility(_ view: UIView, hidden: Bool) {
+        if view.isHidden != hidden {
+            view.isHidden = hidden
+        }
     }
     
     @discardableResult override func becomeFirstResponder() -> Bool {
@@ -131,6 +153,11 @@ class OmniBar: UIView {
     
     @discardableResult override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
+    }
+    
+    func updateSiteRating(_ siteRating: SiteRating?) {
+        self.siteRating = siteRating
+        refreshContentBlocker()
     }
     
     func clear() {
@@ -155,6 +182,7 @@ class OmniBar: UIView {
         
         textField.text = url.absoluteString
     }
+    
     
     @IBAction func onDismissButtonPressed() {
         resignFirstResponder()
@@ -189,7 +217,7 @@ class OmniBar: UIView {
     }
     
     @IBAction func onContentBlockerButtonPressed(_ sender: Any) {
-        omniDelegate?.onContenBlockerPressed()
+        omniDelegate?.onContentBlockerPressed()
     }
 }
 

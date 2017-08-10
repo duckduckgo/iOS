@@ -22,8 +22,8 @@ import Foundation
 public class ContentBlocker {
 
     private var configuration: ContentBlockerConfigurationStore
-    private(set) var trackersDetected = [Tracker: Int]()
-    private(set) var trackersBlocked = [Tracker: Int]()
+    public private(set) var trackersDetected = [Tracker: Int]()
+    public private(set) var trackersBlocked = [Tracker: Int]()
     
     public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
         self.configuration = configuration

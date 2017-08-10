@@ -41,7 +41,7 @@
                             <constraint firstItem="09G-Z7-JBt" firstAttribute="top" secondItem="Uuw-aY-3wh" secondAttribute="top" id="cUN-Vr-bBM"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="130"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="174"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="180"/>
                     <connections>
@@ -63,8 +63,48 @@
                         <sections>
                             <tableViewSection id="8s0-7C-gsn">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="NTd-XG-rXH">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="cSK-ag-29M">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cSK-ag-29M" id="xlH-6o-7Cq">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Circle" translatesAutoresizingMaskIntoConstraints="NO" id="dvI-6Q-q2X">
+                                                    <rect key="frame" x="18" y="9" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="D1K-ax-uW7"/>
+                                                        <constraint firstAttribute="width" constant="24" id="SQa-fB-91I"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LockSimple" translatesAutoresizingMaskIntoConstraints="NO" id="boY-UC-k3K">
+                                                    <rect key="frame" x="22" y="13" width="16" height="16"/>
+                                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="hiG-c8-Bkm"/>
+                                                        <constraint firstAttribute="width" constant="16" id="iR4-y0-TdL"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Secure connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIt-4d-ynw">
+                                                    <rect key="frame" x="52" y="14" width="305" height="16"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="iIt-4d-ynw" firstAttribute="leading" secondItem="dvI-6Q-q2X" secondAttribute="trailing" constant="10" id="0gU-ub-Fmh"/>
+                                                <constraint firstItem="boY-UC-k3K" firstAttribute="centerY" secondItem="dvI-6Q-q2X" secondAttribute="centerY" id="0tp-sL-Dqu"/>
+                                                <constraint firstItem="boY-UC-k3K" firstAttribute="centerX" secondItem="dvI-6Q-q2X" secondAttribute="centerX" id="SrN-u8-Uzl"/>
+                                                <constraint firstItem="iIt-4d-ynw" firstAttribute="centerY" secondItem="xlH-6o-7Cq" secondAttribute="centerY" id="VX5-2J-1Rf"/>
+                                                <constraint firstItem="dvI-6Q-q2X" firstAttribute="centerY" secondItem="xlH-6o-7Cq" secondAttribute="centerY" id="Zhe-72-YfS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="iIt-4d-ynw" secondAttribute="trailing" constant="10" id="gEh-bI-Ocg"/>
+                                                <constraint firstItem="dvI-6Q-q2X" firstAttribute="leading" secondItem="xlH-6o-7Cq" secondAttribute="leadingMargin" constant="10" id="wgh-SH-MZb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="NTd-XG-rXH">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NTd-XG-rXH" id="XCJ-k5-EYD">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -106,7 +146,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="w1m-eL-xXr">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w1m-eL-xXr" id="Clu-lx-Dhq">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -135,7 +175,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="7U5-UB-7Dj">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7U5-UB-7Dj" id="2eY-C8-JcF">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -178,6 +218,8 @@
                         <outlet property="blockCountCircle" destination="TiT-GP-NdW" id="1QL-es-kXh"/>
                         <outlet property="blockThisDomainToggle" destination="0hX-Ht-Xzr" id="aD8-OI-7Vt"/>
                         <outlet property="blockingEnabledToggle" destination="7wa-HP-lIs" id="EaB-rp-Dlh"/>
+                        <outlet property="httpsBackground" destination="dvI-6Q-q2X" id="wFy-Fp-62n"/>
+                        <outlet property="httpsLabel" destination="iIt-4d-ynw" id="dqh-eD-UFa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVh-Mf-9G0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -204,14 +246,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DCy-0t-TjK">
-                                <rect key="frame" x="178" y="82" width="20" height="20"/>
+                                <rect key="frame" x="178" y="92" width="20" height="20"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIU-YM-ls2">
-                                <rect key="frame" x="168" y="72" width="40" height="40"/>
+                                <rect key="frame" x="158" y="72" width="60" height="60"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="WEp-pZ-WT8"/>
-                                    <constraint firstAttribute="height" constant="40" id="exD-rz-ZY3"/>
+                                    <constraint firstAttribute="width" constant="60" id="WEp-pZ-WT8"/>
+                                    <constraint firstAttribute="height" constant="60" id="exD-rz-ZY3"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="Refresh"/>
                                 <connections>
@@ -219,7 +261,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-Nd-gqp" userLabel="Could not load content blocker. Tap to try again.">
-                                <rect key="frame" x="130.5" y="124" width="115" height="16"/>
+                                <rect key="frame" x="130.5" y="144" width="115" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -262,6 +304,7 @@
     </scenes>
     <resources>
         <image name="Circle" width="24" height="24"/>
+        <image name="LockSimple" width="16" height="16"/>
         <image name="Refresh" width="22" height="22"/>
     </resources>
 </document>

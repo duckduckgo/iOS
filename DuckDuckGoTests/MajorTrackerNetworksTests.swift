@@ -1,5 +1,5 @@
 //
-//  ContentBlockerErrorDelegate.swift
+//  MajorTrackerNetworksTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,20 @@
 //  limitations under the License.
 //
 
-import Foundation
 
+import XCTest
+@testable import Core
 
-protocol ContentBlockerErrorDelegate: class {
- 
-    func errorWasResolved()
+class MajorTrackerNetworksTests: XCTestCase {
+    
+    func testTrueWhenTrackerFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "facebook.com")
+        XCTAssertTrue(testee.fromMajorNetwork())
+    }
+
+    func testFalseWhenTrackerNotFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+        XCTAssertFalse(testee.fromMajorNetwork())
+    }
 
 }

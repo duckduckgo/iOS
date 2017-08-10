@@ -94,6 +94,7 @@
 		F16393FF1ECCB9CC00DDD653 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */; };
 		F16394051ECDFFE500DDD653 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16394041ECDFFE500DDD653 /* Tracker.swift */; };
 		F16394071ECE01E400DDD653 /* DisconnectMeContentBlockerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16394061ECE01E400DDD653 /* DisconnectMeContentBlockerParser.swift */; };
+		F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F163C1631F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift */; };
 		F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F164DDBE1F2A509200010DD2 /* FireAnimation.swift */; };
 		F165B8FD1EBBF055004496FC /* FireTutorialViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12790ED1EBBEDD8001D3AEC /* FireTutorialViewControllerTests.swift */; };
 		F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */; };
@@ -355,6 +356,7 @@
 		F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		F16394041ECDFFE500DDD653 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		F16394061ECE01E400DDD653 /* DisconnectMeContentBlockerParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeContentBlockerParser.swift; sourceTree = "<group>"; };
+		F163C1631F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerSettingsChangeDelegate.swift; sourceTree = "<group>"; };
 		F164DDBE1F2A509200010DD2 /* FireAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireAnimation.swift; sourceTree = "<group>"; };
 		F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		F169563F1ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerConfigurationStore.swift; sourceTree = "<group>"; };
@@ -1280,6 +1282,7 @@
 				F17FB1761F3522EA005B1CB6 /* ContentBlockerViewController.swift */,
 				F17FB1741F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift */,
 				F17FB1781F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift */,
+				F163C1631F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -1678,6 +1681,7 @@
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
+				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
 				F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */,
 				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,

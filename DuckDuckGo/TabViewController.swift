@@ -70,7 +70,7 @@ class TabViewController: WebViewController {
     func launchContentBlockerPopover() {
         guard let siteRating = siteRating else { return }
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard(withContentBlocker: contentBlocker, siteRating: siteRating)
+        let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
         controller.popoverPresentationController?.backgroundColor = UIColor.white
@@ -326,4 +326,8 @@ extension TabViewController: UIScrollViewDelegate {
     }
 }
 
-
+extension TabViewController: ContentBlockerSettingsChangeDelegate {
+    func contentBlockerSettingsDidChange() {
+        webView.reload()
+    }
+}

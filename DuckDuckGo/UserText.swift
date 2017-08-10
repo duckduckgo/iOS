@@ -66,7 +66,7 @@ public struct UserText {
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
     
     public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
-    public static let insecureConnection = NSLocalizedString("monitoring.connection.insecure", comment: "Insecure conection")
+    public static let unsecuredConnection = NSLocalizedString("monitoring.connection.unsecured", comment: "Unsecured conection")
     
     public static func forSiteGrade(_ grade: SiteGrade) -> String {
         let key = "monitoring.sitegrade.\(grade.rawValue)"

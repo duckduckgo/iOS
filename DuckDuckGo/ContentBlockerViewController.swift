@@ -61,7 +61,7 @@ class ContentBlockerViewController: UITableViewController {
             httpsLabel.text = UserText.secureConnection
         } else {
             httpsBackground.tintColor = UIColor.monitoringNeutralTint
-            httpsLabel.text = UserText.insecureConnection
+            httpsLabel.text = UserText.unsecuredConnection
         }
     }
 

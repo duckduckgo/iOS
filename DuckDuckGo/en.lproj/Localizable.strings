@@ -59,7 +59,7 @@
 "navigation.title.edit" = "Edit";
 
 "monitoring.connection.secure" = "Secure connection";
-"monitoring.connection.insecure" = "Insecure connection";
+"monitoring.connection.unsecured" = "Unsecured connection";
 "monitoring.sitegrade.a" = "A";
 "monitoring.sitegrade.b" = "B";
 "monitoring.sitegrade.c" = "C";

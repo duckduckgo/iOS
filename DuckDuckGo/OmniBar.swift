@@ -123,7 +123,6 @@ class OmniBar: UIView {
         }
         contentBlockerLabel.text = UserText.forSiteGrade(siteRating.siteGrade)
         contentBlockerCircle.tintColor = colorForSiteRating(siteRating)
-        setVisibility(contentBlockerContainer, hidden: false)
     }
     
     private func colorForSiteRating(_ siteRating: SiteRating) -> UIColor {

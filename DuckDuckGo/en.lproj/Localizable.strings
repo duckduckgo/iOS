@@ -24,6 +24,7 @@
 "search.hint.duckduckgo" = "Search or type URL";
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
+"web.page.load.failed" = "DuckDuckGo cannot load this page because %@";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
@@ -57,3 +58,7 @@
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
+
+"safari.instructions.settings" = "Open <highlight>Settings App</highlight>";
+"safari.instructions.navigate" = "Navigate to <highlight>Safari</highlight>, then <highlight>Search Engine</highlight>";
+"safari.instructions.select" = "Select <highlight>DuckDuckGo</highlight>";

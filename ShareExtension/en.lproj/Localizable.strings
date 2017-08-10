@@ -19,3 +19,4 @@
 
 
 "web.url.save.done" = "Bookmark saved";
+"web.page.load.failed" = "DuckDuckGo cannot load this page because %@";

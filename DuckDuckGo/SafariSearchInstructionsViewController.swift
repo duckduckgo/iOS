@@ -90,9 +90,9 @@ class SafariSearchInstructionsViewController: UIViewController {
     }
 
     private func makeStyle() -> Style {
-        return Style("highlight", {
+        return Style("highlight") {
             $0.color = UIColor(hex: "#333333", alpha: 1.0)
-        })
+        }
     }
 
 }

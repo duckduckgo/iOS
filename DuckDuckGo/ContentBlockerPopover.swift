@@ -24,6 +24,7 @@ import Core
 class ContentBlockerPopover: UIViewController {
     
     @IBOutlet weak var container: UIView!
+    weak var delegate: ContentBlockerSettingsChangeDelegate?
     
     private weak var contentBlocker: ContentBlocker!
     private var siteRating: SiteRating!
@@ -31,9 +32,10 @@ class ContentBlockerPopover: UIViewController {
     private var contentBlockerViewController: ContentBlockerViewController?
     private var errorViewController: ContentBlockerErrorViewController?
     
-    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerPopover {
+    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerPopover {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
+        controller.delegate = delegate
         controller.contentBlocker = contentBlocker
         controller.siteRating = siteRating
         return controller
@@ -60,7 +62,7 @@ class ContentBlockerPopover: UIViewController {
     
     fileprivate func attachContentBlockerViewController() {
         guard let siteRating = siteRating else { return }
-        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, siteRating: siteRating)
+        let controller = ContentBlockerViewController.loadFromStoryboard(withDelegate: delegate, contentBlocker: contentBlocker, siteRating: siteRating)
         addToContainer(controller: controller)
         contentBlockerViewController = controller
     }
@@ -85,4 +87,12 @@ extension ContentBlockerPopover: ContentBlockerErrorDelegate {
         dismissError()
         attachContentBlockerViewController()
     }
+}
+
+extension ContentBlockerPopover: ContentBlockerSettingsChangeDelegate {
+    
+    func contentBlockerSettingsDidChange() {
+        delegate?.contentBlockerSettingsDidChange()
+    }
+
 }

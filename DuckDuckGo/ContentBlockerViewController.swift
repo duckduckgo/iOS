@@ -30,12 +30,15 @@ class ContentBlockerViewController: UITableViewController {
     @IBOutlet weak var blockingEnabledToggle: UISwitch!
     @IBOutlet weak var blockThisDomainToggle: UISwitch!
     
+    weak var delegate: ContentBlockerSettingsChangeDelegate?
+
     private(set) var contentBlocker: ContentBlocker!
     private(set) var siteRating: SiteRating!
     
-    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerViewController {
+    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerViewController {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerViewController") as! ContentBlockerViewController
+        controller.delegate = delegate
         controller.contentBlocker = contentBlocker
         controller.siteRating = siteRating
         return controller
@@ -92,10 +95,12 @@ class ContentBlockerViewController: UITableViewController {
         contentBlocker.enabled = sender.isOn
         blockThisDomainToggle.isEnabled = sender.isOn
         refresh()
+        delegate?.contentBlockerSettingsDidChange()
     }
     
     @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {
         contentBlocker.whitelist(!sender.isOn, domain: siteRating.domain)
         refresh()
+        delegate?.contentBlockerSettingsDidChange()
     }
 }

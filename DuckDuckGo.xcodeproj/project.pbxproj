@@ -48,6 +48,7 @@
 		F1134ED61F40F29F00B73467 /* AnalyticsUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED41F40F15800B73467 /* AnalyticsUserDefaultsTests.swift */; };
 		F1134ED81F40F90600B73467 /* MockVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED71F40F90600B73467 /* MockVersion.swift */; };
 		F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED91F40FC3F00B73467 /* InfoBundle.swift */; };
+		F1134EDC1F40FE7400B73467 /* CampaignRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134EDB1F40FE7400B73467 /* CampaignRequestTests.swift */; };
 		F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114C55A1E66EB020018F95F /* NibLoading.swift */; };
 		F114C55E1E6717800018F95F /* OmniBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = F114C55C1E6717800018F95F /* OmniBar.xib */; };
 		F114C5611E67599C0018F95F /* SafariSearchInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114C5601E67599C0018F95F /* SafariSearchInstructionsViewController.swift */; };
@@ -321,6 +322,7 @@
 		F1134ED41F40F15800B73467 /* AnalyticsUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsUserDefaultsTests.swift; sourceTree = "<group>"; };
 		F1134ED71F40F90600B73467 /* MockVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVersion.swift; sourceTree = "<group>"; };
 		F1134ED91F40FC3F00B73467 /* InfoBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBundle.swift; sourceTree = "<group>"; };
+		F1134EDB1F40FE7400B73467 /* CampaignRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignRequestTests.swift; sourceTree = "<group>"; };
 		F114C55A1E66EB020018F95F /* NibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoading.swift; sourceTree = "<group>"; };
 		F114C55C1E6717800018F95F /* OmniBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OmniBar.xib; sourceTree = "<group>"; };
 		F114C5601E67599C0018F95F /* SafariSearchInstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariSearchInstructionsViewController.swift; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 		F1134ECA1F40E96B00B73467 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				F1134EDB1F40FE7400B73467 /* CampaignRequestTests.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1856,6 +1859,7 @@
 			files = (
 				F1FCF3B31F3550BD00C23128 /* DisconnectMeRequestTest.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
+				F1134EDC1F40FE7400B73467 /* CampaignRequestTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockAnalyticsStore.swift in Sources */,
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,

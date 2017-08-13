@@ -1,5 +1,5 @@
 //
-//  DisconnectMeRequestTests.swift
+//  CampaignRequestTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,30 +21,30 @@ import XCTest
 import OHHTTPStubs
 @testable import Core
 
-class DisconnectMeRequestTests: XCTestCase {
+class CampaignRequestTests: XCTestCase {
     
-    let host = AppUrls().contentBlocking.host!
-    var testee: DisconnectMeRequest = DisconnectMeRequest()
+    let host = AppUrls().campaign.host!
+    var testee = CampaignRequest()
     
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
-    func testWhenStatus200AndValidJsonThenRequestCompletestWithTrackersInSupportedCategories() {
+    func testWhenStatus200AndValidJsonThenRequestCompletestWithCampaign() {
         
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
         
-        let expect = expectation(description: "Valid json")
-        testee.execute { (trackers, error) in
-            XCTAssertNotNil(trackers)
-            XCTAssertEqual(trackers?.count, 6)
+        let expectation = XCTestExpectation(description: "Valid json")
+        testee.execute { (result, error) in
+            XCTAssertNotNil(result)
+            XCTAssertEqual(result?.version, "v77-5")
             XCTAssertNil(error)
-            expect.fulfill()
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
     
@@ -54,30 +54,30 @@ class DisconnectMeRequestTests: XCTestCase {
             return fixture(filePath: self.invalidJson(), status: 200, headers: nil)
         }
         
-        let expect = expectation(description: "Invalid Json")
-        testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+        let expectation = XCTestExpectation(description: "Invalid Json")
+        testee.execute { (result, error) in
+            XCTAssertNil(result)
             XCTAssertNotNil(error)
             XCTAssertEqual(error?.localizedDescription, JsonError.invalidJson.localizedDescription)
-            expect.fulfill()
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
-    func testWhenUnexpectedJsonThenRequestCompletestWithTypeMismatchError() {
+    func testWhenUnexpectationedJsonThenRequestCompletestWithTypeMismatchError() {
         
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.mismatchedJson(), status: 200, headers: nil)
         }
         
-        let expect = expectation(description: "Type mismatch")
-        testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+        let expectation = XCTestExpectation(description: "Type mismatch")
+        testee.execute { (result, error) in
+            XCTAssertNil(result)
             XCTAssertNotNil(error)
             XCTAssertEqual(error?.localizedDescription, JsonError.typeMismatch.localizedDescription)
-            expect.fulfill()
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
     func testWhenStatusIsLessThan200ThenRequestCompletesWithError() {
@@ -86,13 +86,13 @@ class DisconnectMeRequestTests: XCTestCase {
             return fixture(filePath: self.validJson(), status: 199, headers: nil)
         }
         
-        let expect = expectation(description: "Status code 199")
-        testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+        let expectation = XCTestExpectation(description: "Status code 199")
+        testee.execute { (result, error) in
+            XCTAssertNil(result)
             XCTAssertNotNil(error)
-            expect.fulfill()
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
     func testWhenStatusCodeIs300ThenRequestCompletestWithError() {
@@ -101,13 +101,13 @@ class DisconnectMeRequestTests: XCTestCase {
             return fixture(filePath: self.validJson(), status: 300, headers: nil)
         }
         
-        let expect = expectation(description: "Status code 300")
-        testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+        let expectation = XCTestExpectation(description: "Status code 300")
+        testee.execute { (result, error) in
+            XCTAssertNil(result)
             XCTAssertNotNil(error)
-            expect.fulfill()
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
     func testWhenStatusCodeIsGreaterThan300ThenRequestCompletestWithError() {
@@ -116,21 +116,21 @@ class DisconnectMeRequestTests: XCTestCase {
             return fixture(filePath: self.validJson(), status: 301, headers: nil)
         }
         
-        let expect = expectation(description: "Status code 301")
-        testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+        let expectation = XCTestExpectation(description: "Status code 301")
+        testee.execute { (result, error) in
+            XCTAssertNil(result)
             XCTAssertNotNil(error)
-            expect.fulfill()
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        wait(for: [expectation], timeout: 1)
     }
     
     func validJson() -> String {
-        return OHPathForFile("MockResponse/disconnect.json", type(of: self))!
+        return OHPathForFile("MockResponse/campaign_atb.json", type(of: self))!
     }
     
     func mismatchedJson() -> String {
-        return OHPathForFile("MockResponse/disconnect_mismatched.json", type(of: self))!
+        return OHPathForFile("MockResponse/unexpected.json", type(of: self))!
     }
     
     func invalidJson() -> String {

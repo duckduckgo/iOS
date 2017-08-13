@@ -6,6 +6,7 @@
 	<array>
 		<string>group.com.duckduckgo.bookmarks</string>
 		<string>group.com.duckduckgo.contentblocker</string>
+		<string>group.com.duckduckgo.analytics</string>
 	</array>
 </dict>
 </plist>

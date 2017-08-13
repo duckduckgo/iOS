@@ -46,7 +46,6 @@
 		F1134ECE1F40EA9C00B73467 /* CapaignParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ECC1F40EA2000B73467 /* CapaignParserTests.swift */; };
 		F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ECF1F40EBE200B73467 /* JsonTestDataLoader.swift */; };
 		F1134ED61F40F29F00B73467 /* AnalyticsUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED41F40F15800B73467 /* AnalyticsUserDefaultsTests.swift */; };
-		F1134ED81F40F90600B73467 /* MockVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED71F40F90600B73467 /* MockVersion.swift */; };
 		F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134ED91F40FC3F00B73467 /* InfoBundle.swift */; };
 		F1134EDC1F40FE7400B73467 /* CampaignRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1134EDB1F40FE7400B73467 /* CampaignRequestTests.swift */; };
 		F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114C55A1E66EB020018F95F /* NibLoading.swift */; };
@@ -320,7 +319,6 @@
 		F1134ECC1F40EA2000B73467 /* CapaignParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CapaignParserTests.swift; sourceTree = "<group>"; };
 		F1134ECF1F40EBE200B73467 /* JsonTestDataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonTestDataLoader.swift; sourceTree = "<group>"; };
 		F1134ED41F40F15800B73467 /* AnalyticsUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsUserDefaultsTests.swift; sourceTree = "<group>"; };
-		F1134ED71F40F90600B73467 /* MockVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVersion.swift; sourceTree = "<group>"; };
 		F1134ED91F40FC3F00B73467 /* InfoBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoBundle.swift; sourceTree = "<group>"; };
 		F1134EDB1F40FE7400B73467 /* CampaignRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignRequestTests.swift; sourceTree = "<group>"; };
 		F114C55A1E66EB020018F95F /* NibLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoading.swift; sourceTree = "<group>"; };
@@ -1098,7 +1096,6 @@
 			isa = PBXGroup;
 			children = (
 				F17669A71E412A12003D3222 /* MockBundle.swift */,
-				F1134ED71F40F90600B73467 /* MockVersion.swift */,
 				F14208C61F3344E40034198A /* MockContentBlockerConfigurationStore.swift */,
 				F1134EBA1F40D3D000B73467 /* MockAnalyticsStore.swift */,
 			);
@@ -1922,7 +1919,6 @@
 				F16394071ECE01E400DDD653 /* DisconnectMeContentBlockerParser.swift in Sources */,
 				F1C81A721F33855D00241DE6 /* SFContentBlockerManagerExtension.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Campaign.swift in Sources */,
-				F1134ED81F40F90600B73467 /* MockVersion.swift in Sources */,
 				85782E261F33E24900313000 /* UserText.swift in Sources */,
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
 				F143C3271E4A9A0E00CFDE3A /* Logger.swift in Sources */,

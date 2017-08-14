@@ -352,11 +352,7 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }
-    
-    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
-        loadRequestInNewTab(urlRequest)
-    }
-    
+
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         omniBar.updateSiteRating(siteRating)
     }

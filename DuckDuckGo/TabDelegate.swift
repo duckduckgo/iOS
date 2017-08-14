@@ -26,8 +26,6 @@ protocol TabDelegate: class {
     func tabDidRequestNewTab(_ tab: TabViewController)
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
-    
-    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
 
     func tabLoadingStateDidChange(tab: TabViewController)
     

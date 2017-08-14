@@ -173,6 +173,7 @@ class MainViewController: UIViewController {
             completion()
             self.tabManager.clearAll()
             self.attachHomeScreen(active: false)
+            self.view.showBottomToast(UserText.actionForgetAllDone)
         }
     }
     

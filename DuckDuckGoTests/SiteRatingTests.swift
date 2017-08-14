@@ -23,6 +23,10 @@ import XCTest
 
 class SiteRatingTests: XCTestCase {
 
+    override func setUp() {
+        SiteRatingCache.shared.reset()
+    }
+    
     func testWhenUrlContainHostThenInitSucceeds() {
         let testee = SiteRating(url: urlWithHost)
         XCTAssertNotNil(testee)
@@ -77,6 +81,12 @@ class SiteRatingTests: XCTestCase {
         var testee = SiteRating(url: httpUrl)!
         testee.trackers = trackers(qty: 6, majorQty: 5)
         XCTAssertEqual(4, testee.siteScore)
+    }
+    
+    func testWhenNewRatingIsLowerThanCachedRatingThenCachedRatingIsUsed() {
+        let _ = SiteRatingCache.shared.register(domain: httpUrl.host!, score: 100)
+        let testee = SiteRating(url: httpUrl)!
+        XCTAssertEqual(100, testee.siteScore)
     }
     
     func trackers(qty: Int, majorQty: Int = 0) -> [Tracker: Int] {

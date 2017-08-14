@@ -23,48 +23,57 @@ import Core
 
 class ContentBlockerUserDefaultsTests: XCTestCase {
     
-    func testWhenInitialisedThenBlockAdvertisersIsTrue() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        XCTAssertTrue(testee.blockAdvertisers)
+    struct Constants {
+        static let userDefaultsSuit = "ContentBlockerUserDefaultsTestsSuit"
+        static let domain = "somedomain.com"
+        static let someOtherDomain = "someotherdomain.com"
     }
     
-    func testWhenBlockAdvertisersIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        
-        testee.blockAdvertisers = false
-        XCTAssertFalse(testee.blockAdvertisers)
+    var testee: ContentBlockerConfigurationUserDefaults!
+    
+    override func setUp() {
+        UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
+        testee = ContentBlockerConfigurationUserDefaults(suitName: Constants.userDefaultsSuit)
+    }
+    
+    func testWhenInitialisedThenEnableIsTrue() {
+        XCTAssertTrue(testee.enabled)
+    }
+    
+    func testWhenBlockingDisabledThenDisabledIsTrue() {
+        testee.enabled = false
+        XCTAssertFalse(testee.enabled)
+    }
 
-        testee.blockAdvertisers = true
-        XCTAssertTrue(testee.blockAdvertisers)
+    func testWhenTrackersAreInitiallyNil() {
+        XCTAssertNil(testee.trackers)
     }
     
-    func testWhenInitialisedThenBlockAnalyticssIsTrue() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        XCTAssertTrue(testee.blockAnalytics)
+    func testWhenTrackersSetThenAreNotNil() {
+        testee.trackers = [Tracker]()
+        XCTAssertNotNil(testee.trackers)
     }
     
-    func testWhenBlockAnalyticsIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerConfigurationUserDefaults()
+    func testWhenBlockingEnabledThenEnabledIsTrue() {
+        // default value is true so start be setting to false to ensure test is accurate
+        testee.enabled = false
         
-        testee.blockAnalytics = false
-        XCTAssertFalse(testee.blockAnalytics)
-        
-        testee.blockAnalytics = true
-        XCTAssertTrue(testee.blockAnalytics)
+        testee.enabled = true
+        XCTAssertTrue(testee.enabled)
+    }
+
+    func testWhenNothingInWhitelistThenWhitelistedIsFalse() {
+        XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
     }
     
-    func testWhenInitialisedThenBlockSocialIsTrue() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        XCTAssertTrue(testee.blockSocial)
+    func testWhenDomainAddedToWhitelistThenWhitelistedIsTrue() {
+        testee.addToWhitelist(domain: Constants.domain)
+        XCTAssertTrue(testee.whitelisted(domain: Constants.domain))
     }
     
-    func testWhenBlockSocialIsSetThenValueIsUpdated() {
-        let testee = ContentBlockerConfigurationUserDefaults()
-        
-        testee.blockSocial = false
-        XCTAssertFalse(testee.blockSocial)
-        
-        testee.blockSocial = true
-        XCTAssertTrue(testee.blockSocial)
+    func testWhenRemovedFromWhitelistThenWhitelistedIsFalse() {
+        testee.addToWhitelist(domain: Constants.domain)
+        testee.removeFromWhitelist(domain: Constants.domain)
+        XCTAssertFalse(testee.whitelisted(domain: Constants.domain))
     }
 }

@@ -29,9 +29,9 @@ protocol TabDelegate: class {
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest)
 
-    func tabDidRequestSettings(tab: TabViewController)
-    
-    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor)
-    
     func tabLoadingStateDidChange(tab: TabViewController)
+    
+    func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?)
+
+    func tabDidRequestSettings(tab: TabViewController)
 }

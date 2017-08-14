@@ -21,86 +21,78 @@ import UIKit
 import SafariServices
 import Core
 
-class ContentBlockerPopover: UITableViewController {
+class ContentBlockerPopover: UIViewController {
     
-    private lazy var contentBlockerStore = ContentBlockerConfigurationUserDefaults()
+    @IBOutlet weak var container: UIView!
+    weak var delegate: ContentBlockerSettingsChangeDelegate?
     
-    @IBOutlet weak var advertisingCountCircle: UIImageView!
-    @IBOutlet weak var advertisingCount: UILabel!
-    @IBOutlet weak var blockAdvertisingToggle: UISwitch!
+    private weak var contentBlocker: ContentBlocker!
+    private var siteRating: SiteRating!
     
-    @IBOutlet weak var analyticsCountCircle: UIImageView!
-    @IBOutlet weak var analyticsCount: UILabel!
-    @IBOutlet weak var blockAnalyticsToggle: UISwitch!
+    private var contentBlockerViewController: ContentBlockerViewController?
+    private var errorViewController: ContentBlockerErrorViewController?
     
-    @IBOutlet weak var socialCountCircle: UIImageView!
-    @IBOutlet weak var socialCount: UILabel!
-    @IBOutlet weak var blockSocialToggle: UISwitch!
-    
-    private weak var monitor: ContentBlockerMonitor?
-    
-    static func loadFromStoryboard(withMonitor monitor: ContentBlockerMonitor) -> ContentBlockerPopover {
-        let storyboard = UIStoryboard.init(name: "ContentBlockerPopover", bundle: nil)
+    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerPopover {
+        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
-        controller.monitor = monitor
+        controller.delegate = delegate
+        controller.contentBlocker = contentBlocker
+        controller.siteRating = siteRating
         return controller
     }
     
     override func viewDidLoad() {
-        configureToggles()
-        refresh()
-    }
-    
-    private func configureToggles() {
-        blockAdvertisingToggle.isOn = contentBlockerStore.blockAdvertisers
-        blockAnalyticsToggle.isOn = contentBlockerStore.blockAnalytics
-        blockSocialToggle.isOn = contentBlockerStore.blockSocial
-    }
-    
-    public func updateMonitor(monitor: ContentBlockerMonitor) {
-        self.monitor = monitor
-        refresh()
-    }
-    
-    public func refresh() {
-        guard let monitor = monitor else { return }
-        advertisingCount.text = "\(monitor.totalAdvertising)"
-        analyticsCount.text = "\(monitor.totalAnalytics)"
-        socialCount.text = "\(monitor.totalSocial)"
-        advertisingCountCircle.tintColor = tint(whenEnabled: contentBlockerStore.blockAdvertisers, withBlockCount:  monitor.totalAdvertising)
-        analyticsCountCircle.tintColor = tint(whenEnabled: contentBlockerStore.blockAnalytics, withBlockCount:  monitor.totalAnalytics)
-        socialCountCircle.tintColor = tint(whenEnabled: contentBlockerStore.blockSocial, withBlockCount:  monitor.totalSocial)
-    }
-    
-    private func tint(whenEnabled enabled: Bool, withBlockCount count: Int) -> UIColor {
-        if !enabled {
-            return UIColor.contentBlockerInactiveTint
+        super.viewDidLoad()
+        guard contentBlocker.hasData else {
+            attachErrorViewController()
+            return
         }
-        return count == 0 ? UIColor.contentBlockerActiveCleanSiteTint : UIColor.contentBlockerActiveDirtySiteTint
+        attachContentBlockerViewController()
     }
     
-    @IBAction func onBlockAdvertisersToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockAdvertisers = sender.isOn
-        reloadContentBlockerExtension()
+    func refresh() {
+        contentBlockerViewController?.refresh()
+    }
+
+    fileprivate func attachErrorViewController() {
+        let controller = ContentBlockerErrorViewController.loadFromStoryboard(delegate: self)
+        addToContainer(controller: controller)
+        errorViewController = controller
     }
     
-    @IBAction func onBlockAnalyticsToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockAnalytics = sender.isOn
-        reloadContentBlockerExtension()
+    fileprivate func attachContentBlockerViewController() {
+        guard let siteRating = siteRating else { return }
+        let controller = ContentBlockerViewController.loadFromStoryboard(withDelegate: delegate, contentBlocker: contentBlocker, siteRating: siteRating)
+        addToContainer(controller: controller)
+        contentBlockerViewController = controller
     }
     
-    @IBAction func onBlockSocialToggled(_ sender: UISwitch) {
-        contentBlockerStore.blockSocial = sender.isOn
-        reloadContentBlockerExtension()
+    fileprivate func addToContainer(controller: UIViewController) {
+        controller.view.frame = container.frame
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addChildViewController(controller)
+        container.addSubview(controller.view)
+        controller.didMove(toParentViewController: self)
     }
     
-    private func reloadContentBlockerExtension() {
-        SFContentBlockerManager.reloadContentBlocker(withIdentifier: "com.duckduckgo.DuckDuckGo.ContentBlockerExtension") { (error) in
-            if let error = error {
-                Logger.log(text: "Could not reload content blocker in Safari due to \(error)")
-                return
-            }
-            Logger.log(text: "Content blocker rules for Safari reloaded")
-        }
+    fileprivate func dismissError() {
+        errorViewController?.willMove(toParentViewController: nil)
+        errorViewController?.view.removeFromSuperview()
+        errorViewController?.removeFromParentViewController()
     }
+}
+
+extension ContentBlockerPopover: ContentBlockerErrorDelegate {
+    func errorWasResolved() {
+        dismissError()
+        attachContentBlockerViewController()
+    }
+}
+
+extension ContentBlockerPopover: ContentBlockerSettingsChangeDelegate {
+    
+    func contentBlockerSettingsDidChange() {
+        delegate?.contentBlockerSettingsDidChange()
+    }
+
 }

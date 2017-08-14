@@ -27,11 +27,10 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var errorMessage: UILabel!
     
     open private(set) var webView: WKWebView!
-    
-    open private(set) lazy var pageMonitor = PageMonitor()
-    
+
     public var name: String? {
         return webView.title    
     }
@@ -66,7 +65,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
-        
         if let url = url {
             load(url: url)
         }
@@ -116,8 +114,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         favicon = nil
+        hideErrorMessage()
         showProgressIndicator()
-        pageMonitor = PageMonitor()
         webEventsDelegate?.webpageDidStartLoading()
     }
     
@@ -133,7 +131,13 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
-        webEventsDelegate?.webpageDidFinishLoading()
+        webEventsDelegate?.webpageDidFailToLoad()
+    }
+    
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
+        showError(message: error.localizedDescription)
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -146,7 +150,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
         
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
-            pageMonitor.add(url: url)
             decisionHandler(.allow)
             return
         }
@@ -191,6 +194,19 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         guard navigationController != nil else { return 0 }
         return decorHeight
     }
+    
+    private func showError(message: String) {
+        webView.alpha = 0
+        errorMessage.text = "\(UserText.webPageFailedLoad) \(message)"
+        errorMessage.alpha = 1
+        errorMessage.adjustPlainTextLineHeight(1.5)
+    }
+    
+    private func hideErrorMessage() {
+        errorMessage.alpha = 0
+        webView.alpha = 1
+    }
+    
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

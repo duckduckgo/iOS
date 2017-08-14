@@ -19,54 +19,83 @@
 
 
 import Foundation
+import SafariServices
 
-public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
+public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore, TrackerStore {
     
-    private let groupName = "group.com.duckduckgo.contentblocker"
+    private struct Constants {
+        static let groupName = "group.com.duckduckgo.contentblocker"
+    }
     
     private struct Keys {
-        static let advertising = "com.duckduckgo.contentblocker.advertising"
-        static let analytics = "com.duckduckgo.contentblocker.analytics"
-        static let social = "com.duckduckgo.contentblocker.social"
+        static let enabled = "com.duckduckgo.contentblocker.enabled"
+        static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
+        static let trackerList = "com.duckduckgo.trackerList"
+    }
+    
+    private let suitName: String
+    
+    public init(suitName: String = Constants.groupName) {
+        self.suitName =  suitName
     }
     
     private var userDefaults: UserDefaults? {
-        return UserDefaults(suiteName: groupName)
+        return UserDefaults(suiteName: suitName)
+    }
+    
+    public var enabled: Bool {
+        get {
+            guard let userDefaults = userDefaults else { return true }
+            return userDefaults.bool(forKey: Keys.enabled, defaultValue: true)
+        }
+        set(newValue) {
+            userDefaults?.set(newValue, forKey: Keys.enabled)
+            SFContentBlockerManager.reloadContentBlocker()
+        }
+    }
+    
+    public var trackers: [Tracker]? {
+        get {
+            guard let data = userDefaults?.object(forKey: Keys.trackerList) as? Data else { return nil }
+            guard let tracker = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Tracker] else { return nil }
+            return tracker
+        }
+        set(newTrackers) {
+            guard let trackers = newTrackers else { return }
+            let data = NSKeyedArchiver.archivedData(withRootObject: trackers)
+            userDefaults?.set(data, forKey: Keys.trackerList)
+            SFContentBlockerManager.reloadContentBlocker()
+        }
     }
 
-    public init() {}
-    
-    public var blockAdvertisers: Bool {
+    private var domainWhitelist: Set<String> {
         get {
-            guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.advertising, defaultValue: true)
+            guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
+            guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
+            return whitelist
         }
-        set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.advertising)
+        set(newWhitelistedDomain) {
+            let data = NSKeyedArchiver.archivedData(withRootObject: newWhitelistedDomain)
+            userDefaults?.set(data, forKey: Keys.whitelistedDomains)
+            SFContentBlockerManager.reloadContentBlocker()
         }
     }
     
-    public var blockAnalytics: Bool {
-        get {
-            guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.analytics, defaultValue: true)
-        }
-        set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.analytics)
-        }
+    public func whitelisted(domain: String) -> Bool {
+        return domainWhitelist.contains(domain)
     }
     
-    public var blockSocial: Bool {
-        get {
-            guard let userDefaults = userDefaults else { return true }
-            return userDefaults.bool(forKey: Keys.social, defaultValue: true)
-        }
-        set(newValue) {
-            userDefaults?.set(newValue, forKey: Keys.social)
-        }
+    public func addToWhitelist(domain: String) {
+        var whitelist = domainWhitelist
+        whitelist.insert(domain)
+        domainWhitelist = whitelist
+        SFContentBlockerManager.reloadContentBlocker()
     }
     
-    public var blockingEnabled: Bool {
-        return blockSocial || blockAdvertisers || blockAnalytics
+    public func removeFromWhitelist(domain: String) {
+        var whitelist = domainWhitelist
+        whitelist.remove(domain)
+        domainWhitelist = whitelist
+        SFContentBlockerManager.reloadContentBlocker()
     }
 }

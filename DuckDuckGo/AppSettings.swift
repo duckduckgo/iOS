@@ -1,5 +1,5 @@
 //
-//  ContentBlockerEntry.swift
+//  AppSettings.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,17 +17,6 @@
 //  limitations under the License.
 //
 
-
-import Foundation
-
-public struct ContentBlockerEntry {
-    public let category: ContentBlockerCategory
-    public let domain: String
-    public let url: String
-}
-
-extension ContentBlockerEntry: Equatable {}
-
-public func ==(first: ContentBlockerEntry, second: ContentBlockerEntry) -> Bool {
-    return first.domain == second.domain && first.url == second.url && first.category == second.category
+protocol AppSettings {
+    var autocomplete: Bool { get set }    
 }

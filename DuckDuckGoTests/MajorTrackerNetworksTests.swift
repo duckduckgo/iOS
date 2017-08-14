@@ -1,5 +1,5 @@
 //
-//  ContentBlockerEntries.swift
+//  MajorTrackerNetworksTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,18 +18,19 @@
 //
 
 
-typealias CategorizedContentBlockerEntries = [String: [ContentBlockerEntry]]
+import XCTest
+@testable import Core
 
-public enum ContentBlockerCategory: String {
+class MajorTrackerNetworksTests: XCTestCase {
     
-    case none = "None"
-    case advertising = "Advertising"
-    case analytics = "Analytics"
-    case content = "Content"
-    case social = "Social"
-    
-    public static func forKey(_ key: String?) -> ContentBlockerCategory {
-        guard let key = key else { return .none }
-        return ContentBlockerCategory.init(rawValue: key) ?? .none
+    func testTrueWhenTrackerFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "facebook.com")
+        XCTAssertTrue(testee.fromMajorNetwork())
     }
+
+    func testFalseWhenTrackerNotFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+        XCTAssertFalse(testee.fromMajorNetwork())
+    }
+
 }

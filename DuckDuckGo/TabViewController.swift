@@ -33,9 +33,9 @@ class TabViewController: WebViewController {
     
     weak var delegate: TabDelegate?
     
-    private var contentBlocker: ContentBlocker!
+    private(set) var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
-    private(set) var contentBlockerMonitor = ContentBlockerMonitor()
+    private var siteRating: SiteRating?
     
     static func loadFromStoryboard(contentBlocker: ContentBlocker) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
@@ -66,28 +66,34 @@ class TabViewController: WebViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
     }
-    
-    func forgetPage() {
-        WebCacheManager.clear(forHosts:pageMonitor.hosts()) {}
-    }
 
     func launchContentBlockerPopover() {
+        guard let siteRating = siteRating else { return }
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard(withMonitor: contentBlockerMonitor)
+        let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
         controller.popoverPresentationController?.backgroundColor = UIColor.white
         present(controller: controller, fromView: button)
         contentBlockerPopover = controller
     }
-    
-    fileprivate func resetContentBlockerMonitor() {
-        contentBlockerMonitor = ContentBlockerMonitor()
+
+    fileprivate func onNewPageLoad() {
+        contentBlocker.resetMonitoring()
+        contentBlockerPopover?.refresh()
+        if let url = url {
+            siteRating = SiteRating(url: url)
+        } else {
+            siteRating = nil
+        }
+        delegate?.tab(self, didChangeSiteRating: siteRating)
     }
     
-    fileprivate func notifyContentBlockerMonitorChanged() {
-        contentBlockerPopover?.updateMonitor(monitor: contentBlockerMonitor)
-        delegate?.tab(self, contentBlockerMonitorForCurrentPageDidChange: contentBlockerMonitor)
+    fileprivate func onContentBlockerStateChanged() {
+        contentBlockerPopover?.refresh()
+        siteRating?.trackers = contentBlocker.trackersDetected
+        guard let siteRating = siteRating  else { return }
+        delegate?.tab(self, didChangeSiteRating: siteRating)
     }
 
     func launchBrowsingMenu() {
@@ -200,9 +206,9 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        if let entry = contentBlocker.block(url: url, forDocument: documentUrl) {
-            contentBlockerMonitor.blocked(entry: entry)
-            notifyContentBlockerMonitorChanged()
+        let blocked = contentBlocker.block(url: url, forDocument: documentUrl)
+        onContentBlockerStateChanged()
+        if blocked {
             return false
         }
         if shouldOpenExternally(url: url) {
@@ -224,6 +230,7 @@ class TabViewController: WebViewController {
 
     func dismiss() {
         webView.scrollView.delegate = nil
+        willMove(toParentViewController: nil)
         removeFromParentViewController()
         view.removeFromSuperview()
     }
@@ -242,14 +249,17 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        resetContentBlockerMonitor()
-        notifyContentBlockerMonitorChanged()
+        onNewPageLoad()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
         delegate?.tabLoadingStateDidChange(tab: self)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    func webpageDidFailToLoad() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
@@ -276,10 +286,6 @@ extension TabViewController: UIPopoverPresentationControllerDelegate {
     
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
-    }
-    
-    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-        notifyContentBlockerMonitorChanged()
     }
 }
 
@@ -320,4 +326,8 @@ extension TabViewController: UIScrollViewDelegate {
     }
 }
 
-
+extension TabViewController: ContentBlockerSettingsChangeDelegate {
+    func contentBlockerSettingsDidChange() {
+        webView.reload()
+    }
+}

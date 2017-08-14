@@ -1,5 +1,5 @@
 //
-//  DisconnectMeContentBlockerParser.swift
+//  DisconnectMeTrackersParser.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,36 +21,52 @@
 import Foundation
 import SwiftyJSON
 
-public struct DisconnectMeContentBlockerParser {
+
+public struct DisconnectMeTrackersParser {
     
-    func convert(fromJsonData data: Data) throws -> CategorizedContentBlockerEntries {
+   enum Category: String {
+        case advertising = "Advertising"
+        case analytics = "Analytics"
+        case disconnect = "Disconnect"
+        case social = "Social"
+        case content = "Content"
+    }
+    
+    func convert(fromJsonData data: Data) throws -> [Tracker] {
         guard let json = try? JSON(data: data) else {
             throw JsonError.invalidJson
         }
         
         let jsonCategories = json["categories"]
-        var categorizedEntries = CategorizedContentBlockerEntries()
-        for (category, jsonEntries) in jsonCategories {
-            try categorizedEntries[category] = parseCategory(category, fromJson: jsonEntries)
+        var trackers = [Tracker]()
+        for (categoryName, jsonTrackers) in jsonCategories {
+            guard isSupported(categoryName: categoryName) else { continue }
+            try trackers.append(contentsOf: parseCategory(fromJson: jsonTrackers))
         }
-        return categorizedEntries
+        return trackers
     }
     
-    private func parseCategory(_ category: String, fromJson jsonEntries: JSON) throws -> [ContentBlockerEntry] {
-        var entries = [ContentBlockerEntry]()
-        let category = ContentBlockerCategory.forKey(category)
-        for jsonEntry in jsonEntries.arrayValue {
-            guard let baseUrl = jsonEntry.first?.1.first?.0 else { throw JsonError.typeMismatch }
-            guard let jsonTrackers = jsonEntry.first?.1.first?.1.arrayObject else { throw JsonError.typeMismatch }
-            let domain = parseDomain(fromUrl: baseUrl)
-            let newEntries = jsonTrackers.map({ ContentBlockerEntry(category: category, domain: domain, url: "\($0)") })
-            entries.append(contentsOf: newEntries)
+    private func parseCategory(fromJson jsonTrackers: JSON) throws -> [Tracker] {
+        var trackers = [Tracker]()
+        for jsonTracker in jsonTrackers.arrayValue {
+            guard let baseUrl = jsonTracker.first?.1.first?.0 else { throw JsonError.typeMismatch }
+            guard let jsonTrackers = jsonTracker.first?.1.first?.1.arrayObject else { throw JsonError.typeMismatch }
+            let parentDomain = parseDomain(fromUrl: baseUrl)
+            let newTrackers = jsonTrackers.map { Tracker(url: "\($0)", parentDomain: parentDomain) }
+            trackers.append(contentsOf: newTrackers)
         }
-        return entries
+        return trackers
     }
     
-    private func parseDomain(fromUrl url: String) -> String {
-        let host = URL(string: url)?.host ?? url
+    private func parseDomain(fromUrl url: String) -> String? {
+        guard let host = URL(string: url)?.host else {
+            return nil
+        }
         return host.replacingOccurrences(of: "www.", with: "")
+    }
+    
+    func isSupported(categoryName: String) -> Bool {
+        guard let category = Category.init(rawValue: categoryName) else { return false }
+        return category == .advertising || category == .analytics || category == .social
     }
 }

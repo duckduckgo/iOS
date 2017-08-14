@@ -22,8 +22,13 @@ import Foundation
 
 public protocol ContentBlockerConfigurationStore {
     
-    var blockAdvertisers: Bool { get set }
-    var blockAnalytics: Bool { get set }
-    var blockSocial: Bool { get set }
+    var enabled: Bool { get set }
     
+    var trackers: [Tracker]? { get }
+
+    func whitelisted(domain: String) -> Bool
+    
+    func addToWhitelist(domain: String)
+    
+    func removeFromWhitelist(domain: String)
 }

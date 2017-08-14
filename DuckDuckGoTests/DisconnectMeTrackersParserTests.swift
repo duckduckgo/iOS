@@ -1,5 +1,5 @@
 //
-//  DisconnectMeContentBlockerParserTests.swift
+//  DisconnectMeTrackersParserTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,9 +21,9 @@
 import XCTest
 @testable import Core
 
-class DisconnectMeContentBlockerParserTests: XCTestCase {
+class DisconnectMeTrackersParserTests: XCTestCase {
     
-    private var testee = DisconnectMeContentBlockerParser()
+    private var testee = DisconnectMeTrackersParser()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
         XCTAssertThrowsError(try testee.convert(fromJsonData: emptyData()), "") { (error) in
@@ -47,16 +47,15 @@ class DisconnectMeContentBlockerParserTests: XCTestCase {
         XCTAssertNoThrow(try testee.convert(fromJsonData: validJson()))
     }
     
-    func testWhenJsonValidThenResultParsedCorrectly() {
+    func testWhenJsonValidThenResultContainsTrackersFromSupportedCategories() {
         let result = try! testee.convert(fromJsonData: validJson())
-        XCTAssertEqual(result.count, 2)
-        XCTAssertEqual(result["Advertising"]!.count, 1)
-        XCTAssertEqual(result["Social"]!.count, 4)
-        XCTAssertEqual(result["Advertising"]![0], ContentBlockerEntry(category: .advertising, domain: "anadurl.com", url: "99anadurl.com"))
-        XCTAssertEqual(result["Social"]![0], ContentBlockerEntry(category: .social, domain: "asocialurl.com", url: "99asocialurl.com"))
-        XCTAssertEqual(result["Social"]![1], ContentBlockerEntry(category: .social, domain: "anothersocialurl.com", url: "anothersocialurl.com"))
-        XCTAssertEqual(result["Social"]![2], ContentBlockerEntry(category: .social, domain: "anothersocialurl.com", url: "55anothersocialurl.com"))
-        XCTAssertEqual(result["Social"]![3], ContentBlockerEntry(category: .social, domain: "anothersocialurl.com", url: "99anothersocialurl.com"))
+        XCTAssertEqual(result.count, 6)
+        XCTAssertEqual(result[0], Tracker(url: "analyticsurl.com", parentDomain: "analyticsurl.com"))
+        XCTAssertEqual(result[1], Tracker(url: "99anadurl.com", parentDomain: "anadurl.com"))
+        XCTAssertEqual(result[2], Tracker(url: "99asocialurl.com", parentDomain: "asocialurl.com"))
+        XCTAssertEqual(result[3], Tracker(url: "anothersocialurl.com", parentDomain: "anothersocialurl.com"))
+        XCTAssertEqual(result[4], Tracker(url: "55anothersocialurl.com", parentDomain: "anothersocialurl.com"))
+        XCTAssertEqual(result[5], Tracker(url: "99anothersocialurl.com", parentDomain: "anothersocialurl.com"))
     }
     
     private func emptyData() -> Data {
@@ -68,11 +67,11 @@ class DisconnectMeContentBlockerParserTests: XCTestCase {
     }
     
     private func incorrectForTypeJson() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "disconnect_incorrect", ext: "json")
+        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/disconnect_mismatched", ext: "json")
     }
     
     private func validJson() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "disconnect_valid", ext: "json")
+        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/disconnect_valid", ext: "json")
     }
     
     private func bundle() ->Bundle {

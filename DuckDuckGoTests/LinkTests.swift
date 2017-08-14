@@ -61,4 +61,9 @@ class LinkTests: XCTestCase {
         let rhs = Link(title: Constants.title, url: Constants.url, favicon: Constants.anotherFavicon)
         XCTAssertNotEqual(lhs, rhs)
     }
+    
+    func testWhenDifferentTypeThenEqualsFails() {
+        let link = Link(title: Constants.title, url: Constants.url, favicon: Constants.favicon)
+        XCTAssertFalse(link.isEqual(NSObject()))
+    }
 }

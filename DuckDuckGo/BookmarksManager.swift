@@ -61,4 +61,9 @@ class BookmarksManager {
             dataStore.bookmarks = newBookmarks
         }
     }
+    
+    func clear() {
+        dataStore.bookmarks = [Link]()
+    }
+    
 }

@@ -36,8 +36,8 @@ class MainViewController: UIViewController {
 
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
-    private lazy var contentBlocker =  ContentBlocker()
-    
+    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
     
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
-        tabManager = TabManager(model: tabsModel, contentBlocker: contentBlocker, delegate: self)
+        tabManager = TabManager(model: tabsModel, delegate: self)
     }
     
     private func loadInitialView() {
@@ -81,6 +81,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func removeHomeScreen() {
+        homeController?.willMove(toParentViewController: nil)
         homeController?.dismiss()
         homeController = nil
     }
@@ -154,6 +155,7 @@ class MainViewController: UIViewController {
         controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(controller)
         containerView.addSubview(controller.view)
+        controller.didMove(toParentViewController: self)
     }
 
     fileprivate func remove(tabAt index: Int) {
@@ -162,22 +164,6 @@ class MainViewController: UIViewController {
             select(tabAt: index)
         } else {
             attachHomeScreen(active: false)
-        }
-    }
-
-    fileprivate func forgetCurrentPage(animated: Bool) {
-        guard let tab = currentTab else { return }
-        tab.forgetPage()
-        
-        let completion = {
-            self.tabManager.remove(tab: tab)
-            self.attachHomeScreen(active: false)
-        }
-        
-        if animated {
-            FireAnimation.animate(withCompletion: completion)
-        } else {
-            completion()
         }
     }
     
@@ -206,7 +192,6 @@ class MainViewController: UIViewController {
             return
         }
         omniBar.refreshText(forUrl: tab.link?.url)
-        omniBar.updateContentBlockerMonitor(monitor: tab.contentBlockerMonitor)
         omniBar.startBrowsing()
     }
     
@@ -223,11 +208,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil {
+        if autocompleteController == nil && appSettings.autocomplete {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
             addChildViewController(controller)
             containerView.addSubview(controller.view)
+            controller.didMove(toParentViewController: self)
             autocompleteController = controller
         }
         guard let autocompleteController = autocompleteController else { return }
@@ -237,6 +223,7 @@ class MainViewController: UIViewController {
     fileprivate func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
         autocompleteController = nil
+        controller.willMove(toParentViewController: nil)
         controller.view.removeFromSuperview()
         controller.removeFromParentViewController()
     }
@@ -247,20 +234,11 @@ class MainViewController: UIViewController {
     
     private func launchFireMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        if currentTab != nil {
-            alert.addAction(forgetPageAction())
-        }
         alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: fireButton)
     }
-    
-    private func forgetPageAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetPage, style: .default) { [weak self] action in
-            self?.forgetCurrentPage(animated: true)
-        }
-    }
-    
+
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
             self?.forgetAll(animated: true)
@@ -310,7 +288,7 @@ extension MainViewController: OmniBarDelegate {
         launchBookmarks()
     }
     
-    func onContenBlockerPressed() {
+    func onContentBlockerPressed() {
         launchContentBlockerPopover()
     }
     
@@ -366,25 +344,9 @@ extension MainViewController: TabDelegate {
         refreshControls()
         tabManager.updateModelFromTab(tab: tab)
     }
-    
-    func tab(_ tab: TabViewController, contentBlockerMonitorForCurrentPageDidChange monitor: ContentBlockerMonitor) {
-        omniBar.updateContentBlockerMonitor(monitor: monitor)
-    }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
         attachHomeScreen()
-    }
-    
-    func tabDidRequestTabSwitcher(tab: TabViewController) {
-        launchTabSwitcher()
-    }
-    
-    func tabDidRequestBookmarks(tab: TabViewController) {
-        launchBookmarks()
-    }
-    
-    func tabDidRequestSettings(tab: TabViewController) {
-        launchSettings()
     }
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
@@ -393,6 +355,14 @@ extension MainViewController: TabDelegate {
     
     func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
         loadRequestInNewTab(urlRequest)
+    }
+    
+    func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
+        omniBar.updateSiteRating(siteRating)
+    }
+    
+    func tabDidRequestSettings(tab: TabViewController) {
+        launchSettings()
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  CacheMonitor.swift
+//  MajorTrackerNetworks.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,17 +20,24 @@
 
 import Foundation
 
-public struct PageMonitor {
-    
-    private(set) var urls = [URL]()
-    
-    mutating func add(url: URL) {
-        urls.append(url)
-    }
-    
-    public func hosts() -> [String] {
-        return urls.filter { $0.host != nil }
-                   .map { $0.host! }
+struct MajorTrackerNetworks {
+    static let networks = [
+        "google.com",
+        "facebook.com",
+        "twitter.com",
+        "amazon.com",
+        "appnexus.com",
+        "oracle.com"
+    ]
+}
 
+extension Tracker {
+    
+    func fromMajorNetwork() -> Bool {
+        guard let parentDomain = parentDomain else {
+            return false
+        }
+        return MajorTrackerNetworks.networks.contains(parentDomain)
     }
+    
 }

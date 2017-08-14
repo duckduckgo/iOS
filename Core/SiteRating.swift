@@ -41,8 +41,10 @@ public struct SiteRating {
         score += majorTrackerNetworkScore
         
         let cache =  SiteRatingCache.shared
-        cache.register(domain: domain, score: score)
-        return cache.score(forDomain: domain)!
+        if cache.add(domain: domain, score: score) {
+            return score
+        }
+        return cache.get(domain: domain)!
     }
     
     public var https: Bool {
@@ -83,22 +85,28 @@ public class SiteRatingCache {
     private var cachedScores = [String: Int]()
     
     /**
-     Registers a site score for in-memory caching. Only updates the score
-     in the cache if the new score is higher.
+     Adds a score to the cache. Only replaces a preexisting score if
+     the new score is higher
+     - returns: true if the cache was updated, otherwise false
      */
-    func register(domain: String, score current: Int) {
-        if let previous = cachedScores[domain], previous > current {
-            return
-        }
-        cachedScores[domain] = current
+    func add(domain: String, score: Int) -> Bool {
+        return compareAndSet(domain: domain, score: score)
     }
     
-    func score(forDomain domain: String) -> Int? {
+    private func compareAndSet(domain: String, score current: Int) -> Bool {
+        if let previous = cachedScores[domain], previous > current {
+            return false
+        }
+        cachedScores[domain] = current
+        return true
+    }
+    
+    func get(domain: String) -> Int? {
         return cachedScores[domain]
     }
     
     func reset() {
         cachedScores =  [String: Int]()
     }
-
+    
 }

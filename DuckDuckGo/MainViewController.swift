@@ -167,17 +167,12 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func forgetAll(animated: Bool) {
+    fileprivate func forgetAll(completion: @escaping () -> Swift.Void) {
         WebCacheManager.clear() {}
-        let completion = {
+        FireAnimation.animate() {
+            completion()
             self.tabManager.clearAll()
             self.attachHomeScreen(active: false)
-        }
-        
-        if animated {
-            FireAnimation.animate(withCompletion: completion)
-        } else {
-            completion()
         }
     }
     
@@ -241,7 +236,7 @@ class MainViewController: UIViewController {
 
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
-            self?.forgetAll(animated: true)
+            self?.forgetAll() {}
         }
     }
 
@@ -326,7 +321,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func homeDidRequestForgetAll(home: HomeViewController) {
-        forgetAll(animated: true)
+        forgetAll() {}
     }
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -381,7 +376,9 @@ extension MainViewController: TabSwitcherDelegate {
     }
     
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        forgetAll(animated: false)
+        forgetAll() {
+            tabSwitcher.dismiss(animated: false, completion:  nil)
+        }
     }
 }
 

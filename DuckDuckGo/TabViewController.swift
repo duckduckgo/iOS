@@ -264,10 +264,6 @@ extension TabViewController: WebEventsDelegate {
         return shouldLoad(url: url, forDocument: documentUrl)
     }
     
-    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
-        delegate?.tab(self, didRequestNewTabForRequest: urlRequest)
-    }
-    
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
     }

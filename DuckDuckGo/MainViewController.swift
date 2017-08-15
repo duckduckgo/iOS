@@ -312,13 +312,13 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 extension MainViewController: HomeControllerDelegate {
     
     func homeDidActivateOmniBar(home: HomeViewController) {
+        omniBar.clear()
         omniBar.becomeFirstResponder()
     }
     
     func homeDidDeactivateOmniBar(home: HomeViewController) {
         dismissAutcompleteSuggestions()
         omniBar.resignFirstResponder()
-        omniBar.clear()
     }
     
     func homeDidRequestForgetAll(home: HomeViewController) {

@@ -27,7 +27,6 @@ class ContentBlockerViewController: UITableViewController {
     @IBOutlet weak var httpsLabel: UILabel!
     @IBOutlet weak var blockCountCircle: UIImageView!
     @IBOutlet weak var blockCount: UILabel!
-    @IBOutlet weak var blockingEnabledToggle: UISwitch!
     @IBOutlet weak var blockThisDomainToggle: UISwitch!
     
     weak var delegate: ContentBlockerSettingsChangeDelegate?
@@ -51,9 +50,7 @@ class ContentBlockerViewController: UITableViewController {
 
     public func refresh() {
         refreshHttps()
-        blockingEnabledToggle.isOn = contentBlocker.enabled
         blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: siteRating.domain)
-        blockThisDomainToggle.isEnabled = blockingEnabledToggle.isOn
         blockCount.text = blockCountText()
         blockCountCircle.tintColor = blockCountCircleTint()
     }
@@ -89,13 +86,6 @@ class ContentBlockerViewController: UITableViewController {
             return UIColor.monitoringNeutralTint
         }
         return UIColor.monitoringPositiveTint
-    }
-    
-    @IBAction func onBlockingEnabledToggle(_ sender: UISwitch) {
-        contentBlocker.enabled = sender.isOn
-        blockThisDomainToggle.isEnabled = sender.isOn
-        refresh()
-        delegate?.contentBlockerSettingsDidChange()
     }
     
     @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {

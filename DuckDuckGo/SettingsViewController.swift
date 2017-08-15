@@ -27,10 +27,12 @@ class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
+    @IBOutlet weak var contentBlockingToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
 
     private lazy var versionProvider = Version()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
+    fileprivate lazy var contentBlockingStore: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     
     private struct TableIndex {
@@ -44,7 +46,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDisableAutocompleteToggle()
-        configureAuthenticationToggle()
+        configureSecurityToggles()
         configureVersionText()
     }
     
@@ -52,7 +54,8 @@ class SettingsViewController: UITableViewController {
         autocompleteToggle.isOn = appSettings.autocomplete
     }
     
-    private func configureAuthenticationToggle() {
+    private func configureSecurityToggles() {
+        contentBlockingToggle.isOn = contentBlockingStore.enabled
         authenticationToggle.isOn = privacyStore.authenticationEnabled
     }
     
@@ -92,6 +95,10 @@ class SettingsViewController: UITableViewController {
         mail.setSubject(feedback.subject)
         mail.setMessageBody(feedback.body, isHTML: false)
         present(mail, animated: true, completion: nil)
+    }
+    
+    @IBAction func onContentBlockingToggled(_ sender: UISwitch) {
+        contentBlockingStore.enabled = sender.isOn
     }
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

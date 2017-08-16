@@ -51,7 +51,8 @@ class OmniBar: UIView {
     @IBOutlet weak var menuButton: UIButton!
 
     weak var omniDelegate: OmniBarDelegate?
-    var state: OmniBarState = HomeEmptyEditingState()
+    fileprivate var state: OmniBarState = HomeEmptyEditingState()
+    private var contentBlockerConfiguration = ContentBlockerConfigurationUserDefaults()
     private var siteRating: SiteRating?
     
     static func loadFromXib() -> OmniBar {
@@ -62,6 +63,23 @@ class OmniBar: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        addUserDefaultsObserver()
+    }
+    
+    deinit {
+        removeUserDefaultsObserver()
+    }
+    
+    private func addUserDefaultsObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onUserDefaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
+    }
+    
+    private func removeUserDefaultsObserver() {
+        NotificationCenter.default.removeObserver(self, name: UserDefaults.didChangeNotification, object: nil)
+    }
+    
+    func onUserDefaultsChanged(notification: NSNotification) {
+        refreshContentBlocker()
     }
     
     override func layoutSubviews() {
@@ -114,7 +132,13 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
     }
     
-    private func refreshContentBlocker() {
+    public func refreshContentBlocker() {
+        guard contentBlockerConfiguration.enabled else {
+            contentBlockerCircle.tintColor = UIColor.monitoringNegativeTint
+            contentBlockerLabel.text = "!"
+            return
+        }
+        
         guard let siteRating = siteRating else {
             contentBlockerCircle.tintColor = UIColor.monitoringInactiveTint
             contentBlockerLabel.text = "-"
@@ -131,7 +155,7 @@ class OmniBar: UIView {
         case .b, .c:
             return UIColor.monitoringNeutralTint
         case .d:
-            return UIColor.monitoringPositiveTint
+            return UIColor.monitoringNegativeTint
         }
     }
     

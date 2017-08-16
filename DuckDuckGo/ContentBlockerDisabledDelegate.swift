@@ -1,5 +1,5 @@
 //
-//  ContentBlockerErrorDelegate.swift
+//  ContentBlockerDisabledDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,12 @@
 //  limitations under the License.
 //
 
+
 import Foundation
 
 
-protocol ContentBlockerErrorDelegate: class {
- 
-    func errorWasResolved(errorController: ContentBlockerErrorViewController)
+protocol ContentBlockerDisabledDelegate: class {
+
+    func contentBlockerWasEnabled(disabledController: ContentBlockerDisabledViewController)
 
 }

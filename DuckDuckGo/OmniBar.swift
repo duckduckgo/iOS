@@ -99,7 +99,6 @@ class OmniBar: UIView {
     }
     
     func stopBrowsing() {
-        clear()
         refreshState(state.onBrowsingStoppedState)
     }
     
@@ -165,6 +164,11 @@ class OmniBar: UIView {
     }
     
     func refreshText(forUrl url: URL?) {
+        
+        if textField.isEditing {
+            return
+        }
+        
         guard let url = url else {
             textField.text = nil
             return

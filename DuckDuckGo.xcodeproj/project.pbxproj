@@ -1351,11 +1351,12 @@
 			buildPhases = (
 				84E3418E1E2F7EFB00BDBA6F /* Sources */,
 				84E3418F1E2F7EFB00BDBA6F /* Frameworks */,
+				85F4D03A1F44A7BE0018BFD5 /* Install Fonts */,
 				84E341901E2F7EFB00BDBA6F /* Resources */,
 				F17669C31E421847003D3222 /* Embed App Extensions */,
 				F143C2F01E4A4CD400CFDE3A /* Embed Frameworks */,
 				F10307651E7D5B2C0059FEC7 /* Copy Frameworks */,
-				F17BA4411F1CD9D300460FFA /* ShellScript */,
+				F17BA4411F1CD9D300460FFA /* Cathage Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1618,6 +1619,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Install Fonts";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelse\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf $SRCROOT/fonts/licensed\nfi\n";
+		};
 		F17843E61F361B3C00390DCD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1633,7 +1648,7 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		F17BA4411F1CD9D300460FFA /* ShellScript */ = {
+		F17BA4411F1CD9D300460FFA /* Cathage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1646,6 +1661,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftRichString.framework",
 			);
+			name = "Cathage Copy Frameworks";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Device.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)//Kingfisher.framework",

@@ -28,7 +28,7 @@ extension WKWebView {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
         if #available(iOSApplicationExtension 10.0, *) {
-            configuration.dataDetectorTypes = [.link,  .address, .phoneNumber]
+            configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

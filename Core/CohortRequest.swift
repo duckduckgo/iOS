@@ -1,5 +1,5 @@
 //
-//  DisconnectMeRequest.swift
+//  CohortRequest.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -22,47 +22,47 @@ import Foundation
 import Alamofire
 
 
-public typealias DisconnectMeRequestCompletion = ([Tracker]?, Error?) -> Swift.Void
+public typealias CohortRequestCompletion = (Cohort?, Error?) -> Swift.Void
 
-public class DisconnectMeRequest {
+public class CohortRequest {
 
     private let appUrls = AppUrls()
-    private let parser = DisconnectMeTrackersParser()
+    private let parser = CohortParser()
     
     public init() {}
     
-    public func execute(completion: @escaping DisconnectMeRequestCompletion) {
-        Logger.log(text: "Requesting trackers...")
-        Alamofire.request(appUrls.contentBlocking)
+    public func execute(completion: @escaping CohortRequestCompletion) {
+        Logger.log(text: "Requesting cohort...")
+        Alamofire.request(appUrls.cohort)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
-                Logger.log(text: "Trackers request completed with result \(response.result)")
+                Logger.log(text: "Cohort request completed with result \(response.result)")
                 self.handleResponse(response: response, completion: completion)
         }
     }
     
-    private func handleResponse(response: Alamofire.DataResponse<Data>, completion: @escaping DisconnectMeRequestCompletion) {
+    private func handleResponse(response: Alamofire.DataResponse<Data>, completion: @escaping CohortRequestCompletion) {
         if let error = response.result.error {
-            complete(completion, withTrackers: nil, error: error)
+            complete(completion, withCohort: nil, error: error)
             return
         }
         
         guard let data = response.result.value else {
-            complete(completion, withTrackers: nil, error: ApiRequestError.noData)
+            complete(completion, withCohort: nil, error: ApiRequestError.noData)
             return
         }
         
         do {
-            let trackers  = try self.parser.convert(fromJsonData: data)
-            complete(completion, withTrackers: trackers, error: nil)
+            let cohort  = try self.parser.convert(fromJsonData: data)
+            complete(completion, withCohort: cohort, error: nil)
         } catch {
-            complete(completion, withTrackers: nil, error: error)
+            complete(completion, withCohort: nil, error: error)
         }
     }
     
-    private func complete(_ completion: @escaping DisconnectMeRequestCompletion, withTrackers trackers: [Tracker]?, error: Error?) {
+    private func complete(_ completion: @escaping CohortRequestCompletion, withCohort cohort: Cohort?, error: Error?) {
         DispatchQueue.main.async {
-            completion(trackers, error)
+            completion(cohort, error)
         }
     }
 }

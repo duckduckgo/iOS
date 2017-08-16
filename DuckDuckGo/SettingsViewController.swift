@@ -30,7 +30,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var contentBlockingToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
 
-    private lazy var versionProvider = Version()
+    private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var contentBlockingStore: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -60,7 +60,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureVersionText() {
-        versionText.text = versionProvider.localized()
+        versionText.text = versionProvider.localized
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -83,7 +83,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func sendFeedback() {
-        let appVersion = versionProvider.localized() ?? ""
+        let appVersion = versionProvider.localized
         let device = UIDevice.current.deviceType.displayName
         let osName = UIDevice.current.systemName
         let osVersion = UIDevice.current.systemVersion

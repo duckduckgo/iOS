@@ -1,5 +1,5 @@
 //
-//  DisconnectMeTrackersParserTests.swift
+//  CapaignParserTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,10 +21,10 @@
 import XCTest
 @testable import Core
 
-class DisconnectMeTrackersParserTests: XCTestCase {
+class CohortParserTests: XCTestCase {
     
+    private var testee = CohortParser()
     private var data = JsonTestDataLoader()
-    private var testee = DisconnectMeTrackersParser()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
         XCTAssertThrowsError(try testee.convert(fromJsonData: data.empty()), "") { (error) in
@@ -39,26 +39,21 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
-        let mismatchedJson = data.fromJsonFile("MockResponse/disconnect_mismatched")
-        XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
+        XCTAssertThrowsError(try testee.convert(fromJsonData: data.unexpected()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockResponse/disconnect")
+        let validJson = data.fromJsonFile("MockResponse/cohort_atb")
         XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
     
-    func testWhenJsonValidThenResultContainsTrackersFromSupportedCategories() {
-        let validJson = data.fromJsonFile("MockResponse/disconnect")
+    
+    func testWhenJsonValidThenResultContainsCohort() {
+        let validJson = data.fromJsonFile("MockResponse/cohort_atb")
         let result = try! testee.convert(fromJsonData: validJson)
-        XCTAssertEqual(result.count, 6)
-        XCTAssertEqual(result[0], Tracker(url: "analyticsurl.com", parentDomain: "analyticsurl.com"))
-        XCTAssertEqual(result[1], Tracker(url: "99anadurl.com", parentDomain: "anadurl.com"))
-        XCTAssertEqual(result[2], Tracker(url: "99asocialurl.com", parentDomain: "asocialurl.com"))
-        XCTAssertEqual(result[3], Tracker(url: "anothersocialurl.com", parentDomain: "anothersocialurl.com"))
-        XCTAssertEqual(result[4], Tracker(url: "55anothersocialurl.com", parentDomain: "anothersocialurl.com"))
-        XCTAssertEqual(result[5], Tracker(url: "99anothersocialurl.com", parentDomain: "anothersocialurl.com"))
+        XCTAssertEqual(result.version, "v77-5")
     }
+    
 }

@@ -28,6 +28,7 @@ class TabViewController: WebViewController {
     
     weak var delegate: TabDelegate?
     
+    private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private var siteRating: SiteRating?
@@ -173,8 +174,9 @@ class TabViewController: WebViewController {
     }
     
     private func copyAction(forUrl url: URL) -> UIAlertAction {
+        let copyText = appUrls.searchQuery(fromUrl: url) ?? url.absoluteString
         return UIAlertAction(title: UserText.actionCopy, style: .default) { (action) in
-            UIPasteboard.general.string = AppUrls.searchQuery(fromUrl: url) ?? url.absoluteString
+            UIPasteboard.general.string = copyText
         }
     }
     

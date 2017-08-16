@@ -52,6 +52,8 @@ class OmniBar: UIView {
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeEmptyEditingState()
+    
+    private lazy var appUrls: AppUrls = AppUrls()
     private var contentBlockerConfiguration = ContentBlockerConfigurationUserDefaults()
     private var siteRating: SiteRating?
     
@@ -132,7 +134,7 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
     }
     
-    public func refreshContentBlocker() {
+    private func refreshContentBlocker() {
         guard contentBlockerConfiguration.enabled else {
             contentBlockerCircle.tintColor = UIColor.monitoringNegativeTint
             contentBlockerLabel.text = "!"
@@ -198,12 +200,12 @@ class OmniBar: UIView {
             return
         }
         
-        if let query = AppUrls.searchQuery(fromUrl: url) {
+        if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
             return
         }
         
-        if AppUrls.isDuckDuckGo(url: url) {
+        if appUrls.isDuckDuckGo(url: url) {
             textField.text = nil
             return
         }

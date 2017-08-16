@@ -1,5 +1,5 @@
 //
-//  AppUserDefaults.swift
+//  StatisticsUserDefaults.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,32 +20,31 @@
 
 import Foundation
 
-public class AppUserDefaults: AppSettings {
+public class StatisticsUserDefaults: StatisticsStore {
     
     private let groupName: String
     
     private struct Keys {
-        static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let cohortVersion = "com.duckduckgo.statistics.cohortVersion.key"
     }
     
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
     
-    init(groupName: String =  "group.com.duckduckgo.app") {
+    public init(groupName: String =  "group.com.duckduckgo.statistics") {
         self.groupName = groupName
     }
-
-    var autocomplete: Bool {
+    
+    public var cohortVersion: String? {
         
         get {
-            return userDefaults?.bool(forKey: Keys.autocompleteKey, defaultValue: true) ?? true
+            return userDefaults?.string(forKey: Keys.cohortVersion)
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
+            userDefaults?.setValue(newValue, forKey: Keys.cohortVersion)
         }
-        
     }
 }
 

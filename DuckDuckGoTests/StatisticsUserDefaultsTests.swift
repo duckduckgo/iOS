@@ -26,7 +26,7 @@ class StatisticsUserDefaultsTests: XCTestCase {
     
     struct Constants {
         static let userDefaultsSuit = "StatisticsUserDefaultsTestSuit"
-        static let campaingVersion = "someAtbVersion"
+        static let cohortVersion = "someAtbVersion"
     }
     
     var testee: StatisticsUserDefaults!
@@ -41,8 +41,8 @@ class StatisticsUserDefaultsTests: XCTestCase {
     }
     
     func testWhenCohortVersionSetThenDefaultsUpdated() {
-        testee.cohortVersion = Constants.campaingVersion
-        XCTAssertEqual(testee.cohortVersion, Constants.campaingVersion)
+        testee.cohortVersion = Constants.cohortVersion
+        XCTAssertEqual(testee.cohortVersion, Constants.cohortVersion)
     }
 
 }

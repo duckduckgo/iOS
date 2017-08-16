@@ -1,5 +1,5 @@
 //
-//  AnalyticsUserDefaults.swift
+//  StatisticsUserDefaults.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,30 +20,30 @@
 
 import Foundation
 
-public class AnalyticsUserDefaults: AnalyticsStore {
+public class StatisticsUserDefaults: StatisticsStore {
     
     private let groupName: String
     
     private struct Keys {
-        static let campaignVersion = "com.duckduckgo.analytics.campaignVersion.key"
+        static let cohortVersion = "com.duckduckgo.statistics.cohortVersion.key"
     }
     
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
     
-    public init(groupName: String =  "group.com.duckduckgo.analytics") {
+    public init(groupName: String =  "group.com.duckduckgo.statistics") {
         self.groupName = groupName
     }
     
-    public var campaignVersion: String? {
+    public var cohortVersion: String? {
         
         get {
-            return userDefaults?.string(forKey: Keys.campaignVersion)
+            return userDefaults?.string(forKey: Keys.cohortVersion)
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.campaignVersion)
+            userDefaults?.setValue(newValue, forKey: Keys.cohortVersion)
         }
     }
 }

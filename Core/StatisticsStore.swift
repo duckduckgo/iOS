@@ -1,5 +1,5 @@
 //
-//  Campaign.swift
+//  StatisticsStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,6 +20,6 @@
 
 import Foundation
 
-public struct Campaign {
-    let version: String
+public protocol StatisticsStore {
+    var cohortVersion: String? { get set }
 }

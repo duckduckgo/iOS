@@ -1,5 +1,5 @@
 //
-//  CampaignRequest.swift
+//  CohortRequest.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -22,47 +22,47 @@ import Foundation
 import Alamofire
 
 
-public typealias CampaignRequestCompletion = (Campaign?, Error?) -> Swift.Void
+public typealias CohortRequestCompletion = (Cohort?, Error?) -> Swift.Void
 
-public class CampaignRequest {
+public class CohortRequest {
 
     private let appUrls = AppUrls()
-    private let parser = CampaignParser()
+    private let parser = CohortParser()
     
     public init() {}
     
-    public func execute(completion: @escaping CampaignRequestCompletion) {
-        Logger.log(text: "Requesting campaign...")
-        Alamofire.request(appUrls.campaign)
+    public func execute(completion: @escaping CohortRequestCompletion) {
+        Logger.log(text: "Requesting cohort...")
+        Alamofire.request(appUrls.cohort)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
-                Logger.log(text: "Campaign request completed with result \(response.result)")
+                Logger.log(text: "Cohort request completed with result \(response.result)")
                 self.handleResponse(response: response, completion: completion)
         }
     }
     
-    private func handleResponse(response: Alamofire.DataResponse<Data>, completion: @escaping CampaignRequestCompletion) {
+    private func handleResponse(response: Alamofire.DataResponse<Data>, completion: @escaping CohortRequestCompletion) {
         if let error = response.result.error {
-            complete(completion, withCampaign: nil, error: error)
+            complete(completion, withCohort: nil, error: error)
             return
         }
         
         guard let data = response.result.value else {
-            complete(completion, withCampaign: nil, error: ApiRequestError.noData)
+            complete(completion, withCohort: nil, error: ApiRequestError.noData)
             return
         }
         
         do {
-            let campaign  = try self.parser.convert(fromJsonData: data)
-            complete(completion, withCampaign: campaign, error: nil)
+            let cohort  = try self.parser.convert(fromJsonData: data)
+            complete(completion, withCohort: cohort, error: nil)
         } catch {
-            complete(completion, withCampaign: nil, error: error)
+            complete(completion, withCohort: nil, error: error)
         }
     }
     
-    private func complete(_ completion: @escaping CampaignRequestCompletion, withCampaign campaign: Campaign?, error: Error?) {
+    private func complete(_ completion: @escaping CohortRequestCompletion, withCohort cohort: Cohort?, error: Error?) {
         DispatchQueue.main.async {
-            completion(campaign, error)
+            completion(cohort, error)
         }
     }
 }

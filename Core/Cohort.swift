@@ -1,5 +1,5 @@
 //
-//  AnalyticsStore.swift
+//  Cohort.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,6 +20,8 @@
 
 import Foundation
 
-public protocol AnalyticsStore {
-    var campaignVersion: String? { get set }
+public struct Cohort {
+    
+    let version: String
+
 }

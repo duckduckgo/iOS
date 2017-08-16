@@ -1,5 +1,5 @@
 //
-//  CampaignRequestTests.swift
+//  CohortRequestTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,17 +21,17 @@ import XCTest
 import OHHTTPStubs
 @testable import Core
 
-class CampaignRequestTests: XCTestCase {
+class CohortRequestTests: XCTestCase {
     
-    let host = AppUrls().campaign.host!
-    var testee = CampaignRequest()
+    let host = AppUrls().cohort.host!
+    var testee = CohortRequest()
     
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
     
-    func testWhenStatus200AndValidJsonThenRequestCompletestWithCampaign() {
+    func testWhenStatus200AndValidJsonThenRequestCompletestWithCohort() {
         
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
@@ -126,7 +126,7 @@ class CampaignRequestTests: XCTestCase {
     }
     
     func validJson() -> String {
-        return OHPathForFile("MockResponse/campaign_atb.json", type(of: self))!
+        return OHPathForFile("MockResponse/cohort_atb.json", type(of: self))!
     }
     
     func mismatchedJson() -> String {

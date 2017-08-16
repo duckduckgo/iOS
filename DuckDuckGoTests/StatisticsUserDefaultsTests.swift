@@ -1,5 +1,5 @@
 //
-//  AnalyticsUserDefaultsTests.swift
+//  StatisticsUserDefaultsTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -22,27 +22,27 @@
 import XCTest
 @testable import Core
 
-class AnalyticsUserDefaultsTests: XCTestCase {
+class StatisticsUserDefaultsTests: XCTestCase {
     
     struct Constants {
-        static let userDefaultsSuit = "AnalyticsUserDefaultsTestSuit"
+        static let userDefaultsSuit = "StatisticsUserDefaultsTestSuit"
         static let campaingVersion = "someAtbVersion"
     }
     
-    var testee: AnalyticsUserDefaults!
+    var testee: StatisticsUserDefaults!
     
     override func setUp() {
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
-        testee = AnalyticsUserDefaults(groupName: Constants.userDefaultsSuit)
+        testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }
 
-    func testWhenFirstInitialisedThenCampaignVersionNil() {
-        XCTAssertNil(testee.campaignVersion)
+    func testWhenFirstInitialisedThenCohortVersionNil() {
+        XCTAssertNil(testee.cohortVersion)
     }
     
-    func testWhenCampaignVersionSetThenDefaultsUpdated() {
-        testee.campaignVersion = Constants.campaingVersion
-        XCTAssertEqual(testee.campaignVersion, Constants.campaingVersion)
+    func testWhenCohortVersionSetThenDefaultsUpdated() {
+        testee.cohortVersion = Constants.campaingVersion
+        XCTAssertEqual(testee.cohortVersion, Constants.campaingVersion)
     }
 
 }

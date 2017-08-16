@@ -28,14 +28,14 @@ public struct AppUrls {
         static let favicon = "https://duckduckgo.com/favicon.ico"
         static let autocomplete = "https://duckduckgo.com/ac/"
         static let contentBlocking = "https://duckduckgo.com/contentblocking.js"
-        static let campaign = "https://duckduckgo.com/atb.js"
+        static let cohort = "https://duckduckgo.com/atb.js"
     }
 
     private struct Param {
         static let search = "q"
         static let source = "t"
         static let appVersion = "tappv"
-        static let campaign = "atb"
+        static let cohort = "atb"
     }
 
     private struct ParamValue {
@@ -44,11 +44,11 @@ public struct AppUrls {
     }
     
     let version: AppVersion
-    let analyticsStore: AnalyticsStore
+    let statisticsStore: StatisticsStore
     
-    public init(version: AppVersion = AppVersion(), analyticsStore: AnalyticsStore = AnalyticsUserDefaults()) {
+    public init(version: AppVersion = AppVersion(), statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.version = version
-        self.analyticsStore = analyticsStore
+        self.statisticsStore = statisticsStore
     }
 
     public var base: URL {
@@ -67,8 +67,8 @@ public struct AppUrls {
         return URL(string: Url.contentBlocking)!
     }
     
-    public var campaign: URL {
-        return URL(string: Url.campaign)!
+    public var cohort: URL {
+        return URL(string: Url.cohort)!
     }
     
     public func isDuckDuckGo(url: URL) -> Bool {
@@ -88,7 +88,11 @@ public struct AppUrls {
         }
         return searchUrl(text: query)
     }
-
+    
+    /**
+     Generates a search url with the source (t) https://duck.co/help/privacy/t,
+     app version and cohort (atb) https://duck.co/help/privacy/atb
+     */
     public func searchUrl(text: String) -> URL {
         let appVersion = "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
         
@@ -97,8 +101,8 @@ public struct AppUrls {
             .addParam(name: Param.source, value: ParamValue.source)
             .addParam(name: Param.appVersion, value: appVersion)
         
-        guard let campaignVersion = analyticsStore.campaignVersion else { return searchUrl }
-        return searchUrl.addParam(name: Param.campaign, value: campaignVersion)
+        guard let cohortVersion = statisticsStore.cohortVersion else { return searchUrl }
+        return searchUrl.addParam(name: Param.cohort, value: cohortVersion)
     }
     
     public func autocompleteUrl(forText text: String) -> URL {

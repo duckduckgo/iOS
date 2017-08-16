@@ -1,5 +1,5 @@
 //
-//  AnalyticsCampaignLoader.swift
+//  StatisticsLoader.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,29 +20,28 @@
 
 import Foundation
 
-
-public class AnalyticsCampaignLoader {
+public class StatisticsLoader {
     
-    public static let shared = AnalyticsCampaignLoader()
-    private var analyticsStore: AnalyticsStore
+    public static let shared = StatisticsLoader()
+    private var statisticsStore: StatisticsStore
     
-    init(analyticsStore: AnalyticsStore = AnalyticsUserDefaults()) {
-        self.analyticsStore = analyticsStore
+    init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+        self.statisticsStore = statisticsStore
     }
     
     public func load() {
-        if analyticsStore.campaignVersion != nil {
+        if statisticsStore.cohortVersion != nil {
             return
         }
-        
-        let request = CampaignRequest()
-        request.execute { campaign, error in
-            guard let campaign = campaign else {
-                let errorMessage = error?.localizedDescription ?? "no error"
-                Logger.log(text: "Campaign atb request failed with error \(errorMessage)")
+
+        let request = CohortRequest()
+        request.execute { cohort, error in
+            guard let cohort = cohort else {
+                let errorMessage = error?.localizedDescription ?? "unspecified"
+                Logger.log(text: "Cohort atb request failed with error \(errorMessage)")
                 return
             }
-            self.analyticsStore.campaignVersion = campaign.version
+            self.statisticsStore.cohortVersion = cohort.version
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MockAnalyticsStore.swift
+//  CohortParser.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,10 +18,21 @@
 //
 
 
-@testable import Core
+import Foundation
+import SwiftyJSON
 
-struct MockAnalyticsStore: AnalyticsStore {
+
+public struct CohortParser {
     
-    var campaignVersion: String?
-
+    public init() {}
+    
+    func convert(fromJsonData data: Data) throws -> Cohort {
+        guard let json = try? JSON(data: data) else {
+            throw JsonError.invalidJson
+        }
+        guard let version = json["version"].string else {
+            throw JsonError.typeMismatch
+        }
+        return Cohort(version: version)
+    }
 }

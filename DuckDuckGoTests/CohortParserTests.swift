@@ -21,9 +21,9 @@
 import XCTest
 @testable import Core
 
-class CampaignParserTests: XCTestCase {
+class CohortParserTests: XCTestCase {
     
-    private var testee = CampaignParser()
+    private var testee = CohortParser()
     private var data = JsonTestDataLoader()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
@@ -45,13 +45,13 @@ class CampaignParserTests: XCTestCase {
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockResponse/campaign_atb")
+        let validJson = data.fromJsonFile("MockResponse/cohort_atb")
         XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
     
     
-    func testWhenJsonValidThenResultContainsCampaign() {
-        let validJson = data.fromJsonFile("MockResponse/campaign_atb")
+    func testWhenJsonValidThenResultContainsCohort() {
+        let validJson = data.fromJsonFile("MockResponse/cohort_atb")
         let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.version, "v77-5")
     }

@@ -22,9 +22,7 @@ import UIKit
 import Core
 
 class ContentBlockerDisabledViewController: UITableViewController {
-    
-    @IBOutlet weak var tutorialText: UILabel!
-    
+
     weak var delegate: ContentBlockerDisabledDelegate?
     
     static func loadFromStoryboard(withDelegate delegate: ContentBlockerDisabledDelegate) -> ContentBlockerDisabledViewController {
@@ -32,15 +30,6 @@ class ContentBlockerDisabledViewController: UITableViewController {
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerDisabledViewController") as! ContentBlockerDisabledViewController
         controller.delegate = delegate
         return controller
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureViews()
-    }
-    
-    private func configureViews() {
-        tutorialText.adjustPlainTextLineHeight(1.3)
     }
     
     @IBAction func onBlockingEnabledToggle(_ sender: UISwitch) {

@@ -34,11 +34,13 @@ public struct AppUrls {
     private struct Param {
         static let search = "q"
         static let source = "t"
+        static let appVersion = "tappv"
         static let campaign = "atb"
     }
 
     private struct ParamValue {
-        static let source = "iOS-App"
+        static let source = "ddg_ios"
+        static let appVersion = "ios"
     }
     
     let version: AppVersion
@@ -88,11 +90,12 @@ public struct AppUrls {
     }
 
     public func searchUrl(text: String) -> URL {
-        let source = "\(ParamValue.source)-\(version.versionNumber)-\(version.buildNumber)"
+        let appVersion = "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
         
         let searchUrl = home
             .addParam(name: Param.search, value: text)
-            .addParam(name: Param.source, value: source)
+            .addParam(name: Param.source, value: ParamValue.source)
+            .addParam(name: Param.appVersion, value: appVersion)
         
         guard let campaignVersion = analyticsStore.campaignVersion else { return searchUrl }
         return searchUrl.addParam(name: Param.campaign, value: campaignVersion)

@@ -38,13 +38,19 @@ class AppUrlsTests: XCTestCase {
     }
     
     func testSearchUrlCreatesUrlWithSourceParam() {
+        let testee = AppUrls(analyticsStore: mockAnalyticsStore)
+        let url = testee.searchUrl(text: "query")
+        XCTAssertEqual(url.getParam(name: "t"), "ddg_ios")
+    }
+
+    func testSearchUrlCreatesUrlWithAppVersionParam() {
         let mockBundle = MockBundle()
         mockBundle.add(name: AppVersion.Keys.buildNumber, value: "657")
         mockBundle.add(name: AppVersion.Keys.versionNumber, value: "1.2.9")
-
+        
         let testee = AppUrls(version: AppVersion(bundle: mockBundle), analyticsStore: mockAnalyticsStore)
         let url = testee.searchUrl(text: "query")
-        XCTAssertEqual(url.getParam(name: "t"), "iOS-App-1.2.9-657")
+        XCTAssertEqual(url.getParam(name: "tappv"), "ios_1.2.9_657")
     }
 
     func testSearchUrlCreatesUrlWithCampaignIfCapmaignExistsInAnalyticsStore() {

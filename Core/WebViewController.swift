@@ -158,7 +158,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        webEventsDelegate?.webView(webView, didRequestNewTabForRequest: navigationAction.request)
+        webView.load(navigationAction.request)
         return nil
     }
     

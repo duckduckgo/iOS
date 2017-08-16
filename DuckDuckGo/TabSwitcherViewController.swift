@@ -86,11 +86,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func forgetAll() {
-        FireAnimation.animate() {
-            self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
-            self.collectionView.reloadData()
-            self.refreshTitle()
-        }
+        self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
     
     func onSelected(tabAt index: Int) {
@@ -102,9 +98,6 @@ class TabSwitcherViewController: UIViewController {
         delegate.tabSwitcher(self, didRemoveTabAt: index)
         collectionView.reloadData()
         refreshTitle()
-        if tabsModel.isEmpty {
-            delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
-        }
     }
     
     fileprivate func dismiss() {

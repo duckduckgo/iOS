@@ -1,5 +1,5 @@
 //
-//  WebEventsDelegate.swift
+//  UIViewToastExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,21 +17,20 @@
 //  limitations under the License.
 //
 
-import WebKit
 
-public protocol WebEventsDelegate: class {
+import UIKit
+import ToastSwiftFramework
 
-    func attached(webView: WKWebView)
+fileprivate struct ViewConstants {
+    static let marginBottom: CGFloat = 80
+}
 
-    func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool
+extension UIView {
     
-    func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point)
+    func showBottomToast(_ text: String) {
+        let x = bounds.size.width / 2.0
+        let y = bounds.size.height - ViewConstants.marginBottom
+        makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
+    }
     
-    func webpageDidStartLoading()
-    
-    func webpageDidFinishLoading()
-    
-    func webpageDidFailToLoad()
-    
-    func faviconWasUpdated(_ favicon: URL, forUrl: URL)
 }

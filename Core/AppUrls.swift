@@ -24,7 +24,7 @@ public struct AppUrls {
 
     private struct Url {
         static let base = "duckduckgo.com"
-        static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
+        static let home = "https://www.duckduckgo.com"
         static let favicon = "https://duckduckgo.com/favicon.ico"
         static let autocomplete = "https://duckduckgo.com/ac/"
         static let contentBlocking = "https://duckduckgo.com/contentblocking.js"

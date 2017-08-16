@@ -146,16 +146,6 @@ class OmniBar: UIView {
             return
         }
         
-        if let query = appUrls.searchQuery(fromUrl: url) {
-            textField.text = query
-            return
-        }
-        
-        if appUrls.isDuckDuckGo(url: url) {
-            textField.text = nil
-            return
-        }
-        
         textField.text = url.absoluteString
     }
     

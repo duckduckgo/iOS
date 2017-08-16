@@ -28,6 +28,7 @@ class ContentBlockerViewController: UITableViewController {
     @IBOutlet weak var blockCountCircle: UIImageView!
     @IBOutlet weak var blockCount: UILabel!
     @IBOutlet weak var blockThisDomainToggle: UISwitch!
+    @IBOutlet weak var tutorialText: UILabel!
     
     weak var delegate: ContentBlockerSettingsChangeDelegate?
 
@@ -45,7 +46,12 @@ class ContentBlockerViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureViews()
         refresh()
+    }
+    
+    private func configureViews() {
+        tutorialText.adjustPlainTextLineHeight(1.3)
     }
 
     public func refresh() {

@@ -48,6 +48,7 @@
 		F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */; };
 		F12810A41EB35B5300F95E4E /* ContentBlockerRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12810A31EB35B5300F95E4E /* ContentBlockerRequestHandler.swift */; };
 		F12A123D1F43644500277CCD /* ContentBlockerDisabledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */; };
+		F12A12411F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A12401F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift */; };
 		F12ABAA11ECEEDCF0008AE50 /* TrackerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12ABAA01ECEEDCF0008AE50 /* TrackerLoader.swift */; };
 		F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F130D7391E5776C500C45811 /* OmniBarDelegate.swift */; };
 		F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BA31E6846C40062FC3C /* TabDelegate.swift */; };
@@ -312,6 +313,7 @@
 		F12810A31EB35B5300F95E4E /* ContentBlockerRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequestHandler.swift; sourceTree = "<group>"; };
 		F12810A51EB35B5300F95E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerDisabledViewController.swift; sourceTree = "<group>"; };
+		F12A12401F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerDisabledDelegate.swift; sourceTree = "<group>"; };
 		F12ABAA01ECEEDCF0008AE50 /* TrackerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerLoader.swift; sourceTree = "<group>"; };
 		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
 		F1386BA31E6846C40062FC3C /* TabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDelegate.swift; sourceTree = "<group>"; };
@@ -1286,6 +1288,7 @@
 				F1E2494F1EF207D4008C947A /* ContentBlockerPopover.swift */,
 				F17FB1761F3522EA005B1CB6 /* ContentBlockerViewController.swift */,
 				F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */,
+				F12A12401F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift */,
 				F17FB1741F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift */,
 				F17FB1781F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift */,
 				F163C1631F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift */,
@@ -1710,6 +1713,7 @@
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
+				F12A12411F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,

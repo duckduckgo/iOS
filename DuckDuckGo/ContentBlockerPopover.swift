@@ -75,6 +75,7 @@ class ContentBlockerPopover: UIViewController {
     }
     
     fileprivate func addToContainer(controller: UIViewController) {
+        preferredContentSize = controller.preferredContentSize
         controller.view.frame = container.frame
         controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(controller)

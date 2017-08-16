@@ -41,6 +41,7 @@
                             <constraint firstItem="09G-Z7-JBt" firstAttribute="top" secondItem="Uuw-aY-3wh" secondAttribute="top" id="cUN-Vr-bBM"/>
                         </constraints>
                     </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="260"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="180"/>
                     <connections>
@@ -56,9 +57,10 @@
             <objects>
                 <tableViewController storyboardIdentifier="ContentBlockerDisabledViewController" id="6we-BL-hXY" customClass="ContentBlockerDisabledViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aX9-JS-woz">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="176"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
                             <tableViewSection id="8s0-7C-gsn">
                                 <cells>
@@ -91,28 +93,28 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="132" id="hWW-k7-fiR">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="132"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="127" id="hWW-k7-fiR">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="127"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hWW-k7-fiR" id="C6G-Ad-qqM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="131.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="126.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingContentBlocking" translatesAutoresizingMaskIntoConstraints="NO" id="SqA-HB-7hG">
-                                                    <rect key="frame" x="20" y="30" width="70" height="70"/>
+                                                    <rect key="frame" x="20" y="27.5" width="70" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="70" id="5V9-sw-Nfr"/>
                                                         <constraint firstAttribute="width" constant="70" id="y8a-ho-vOC"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Block Trackers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwu-tJ-zBd">
-                                                    <rect key="frame" x="110" y="24" width="245" height="20"/>
+                                                    <rect key="frame" x="110" y="16" width="245" height="20"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qav-RW-A52">
-                                                    <rect key="frame" x="110" y="58" width="245" height="48"/>
+                                                    <rect key="frame" x="110" y="42" width="245" height="48"/>
                                                     <string key="text">Prevent advertisers and
 corporations from tracking
 you across the internet.</string>
@@ -127,9 +129,9 @@ you across the internet.</string>
                                                 <constraint firstItem="qav-RW-A52" firstAttribute="leading" secondItem="SqA-HB-7hG" secondAttribute="trailing" constant="20" id="gIA-eW-DU7"/>
                                                 <constraint firstAttribute="trailing" secondItem="Cwu-tJ-zBd" secondAttribute="trailing" constant="20" id="gjL-rf-dQs"/>
                                                 <constraint firstItem="SqA-HB-7hG" firstAttribute="centerY" secondItem="C6G-Ad-qqM" secondAttribute="centerY" id="kPq-vJ-JIP"/>
-                                                <constraint firstItem="Cwu-tJ-zBd" firstAttribute="top" secondItem="C6G-Ad-qqM" secondAttribute="topMargin" constant="16" id="ocb-ds-6i6"/>
+                                                <constraint firstItem="Cwu-tJ-zBd" firstAttribute="top" secondItem="C6G-Ad-qqM" secondAttribute="top" constant="16" id="ocb-ds-6i6"/>
                                                 <constraint firstAttribute="trailing" secondItem="qav-RW-A52" secondAttribute="trailing" constant="20" id="pEu-lu-HhW"/>
-                                                <constraint firstItem="qav-RW-A52" firstAttribute="top" secondItem="Cwu-tJ-zBd" secondAttribute="bottom" constant="14" id="pW1-ZW-0f3"/>
+                                                <constraint firstItem="qav-RW-A52" firstAttribute="top" secondItem="Cwu-tJ-zBd" secondAttribute="bottom" constant="6" id="pW1-ZW-0f3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -141,9 +143,12 @@ you across the internet.</string>
                             <outlet property="delegate" destination="6we-BL-hXY" id="Y6x-tC-VVM"/>
                         </connections>
                     </tableView>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="180"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="170"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="176"/>
+                    <size key="freeformSize" width="375" height="170"/>
+                    <connections>
+                        <outlet property="tutorialText" destination="qav-RW-A52" id="MOz-Vc-msR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVh-Mf-9G0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="BIw-Od-U52"/>
@@ -159,56 +164,57 @@ you across the internet.</string>
                         <viewControllerLayoutGuide type="bottom" id="Lfl-Hy-sXA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="v6C-iz-VNb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="170"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not load content blocker rules" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKe-aD-Kt1">
-                                <rect key="frame" x="32" y="44" width="311" height="16"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="36" y="9" width="303" height="44"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                <color key="textColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DCy-0t-TjK">
-                                <rect key="frame" x="178" y="92" width="20" height="20"/>
+                                <rect key="frame" x="178" y="85" width="20" height="20"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sIU-YM-ls2">
-                                <rect key="frame" x="158" y="72" width="60" height="60"/>
+                                <rect key="frame" x="158" y="65" width="60" height="60"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="WEp-pZ-WT8"/>
                                     <constraint firstAttribute="height" constant="60" id="exD-rz-ZY3"/>
                                 </constraints>
+                                <color key="tintColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" backgroundImage="Refresh"/>
                                 <connections>
                                     <action selector="onReloadButtonPressed:" destination="lC8-oo-nUF" eventType="touchUpInside" id="QOb-KB-C3F"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-Nd-gqp" userLabel="Could not load content blocker. Tap to try again.">
-                                <rect key="frame" x="130.5" y="144" width="115" height="16"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="134" y="137" width="107.5" height="15"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
+                                <color key="textColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sIU-YM-ls2" firstAttribute="centerY" secondItem="v6C-iz-VNb" secondAttribute="centerY" constant="10" id="2ko-G4-G2m"/>
                             <constraint firstItem="DCy-0t-TjK" firstAttribute="centerX" secondItem="sIU-YM-ls2" secondAttribute="centerX" id="82v-5S-l9e"/>
-                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="leading" secondItem="v6C-iz-VNb" secondAttribute="leadingMargin" constant="16" id="Iex-ve-MD1"/>
+                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="leading" secondItem="v6C-iz-VNb" secondAttribute="leadingMargin" constant="20" id="Iex-ve-MD1"/>
                             <constraint firstItem="DCy-0t-TjK" firstAttribute="centerY" secondItem="sIU-YM-ls2" secondAttribute="centerY" id="LFm-88-5z9"/>
                             <constraint firstItem="sIU-YM-ls2" firstAttribute="centerX" secondItem="v6C-iz-VNb" secondAttribute="centerX" id="UKb-zK-qys"/>
                             <constraint firstItem="ajW-Nd-gqp" firstAttribute="centerX" secondItem="v6C-iz-VNb" secondAttribute="centerX" id="W5f-bx-Ud1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="EKe-aD-Kt1" secondAttribute="trailing" constant="16" id="Wje-nS-dci"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EKe-aD-Kt1" secondAttribute="trailing" constant="20" id="Wje-nS-dci"/>
                             <constraint firstItem="sIU-YM-ls2" firstAttribute="top" secondItem="EKe-aD-Kt1" secondAttribute="bottom" constant="12" id="gus-uW-fmq"/>
                             <constraint firstItem="ajW-Nd-gqp" firstAttribute="top" secondItem="sIU-YM-ls2" secondAttribute="bottom" constant="12" id="lvW-iM-5uK"/>
-                            <constraint firstItem="EKe-aD-Kt1" firstAttribute="top" secondItem="puJ-yP-ySf" secondAttribute="bottom" constant="24" id="uvn-Bd-lvX"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0LB-Vd-BKM" appends="YES" id="k0Q-UT-mNW"/>
                         </connections>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="180"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="170"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="180"/>
+                    <size key="freeformSize" width="375" height="170"/>
                     <connections>
                         <outlet property="errorLabel" destination="EKe-aD-Kt1" id="55M-yC-0z8"/>
                         <outlet property="reloadButton" destination="sIU-YM-ls2" id="6nT-BL-Hfp"/>
@@ -230,9 +236,10 @@ you across the internet.</string>
             <objects>
                 <tableViewController storyboardIdentifier="ContentBlockerViewController" id="oEG-FZ-5Tm" customClass="ContentBlockerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Tup-tC-ein">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="256"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
                             <tableViewSection id="OCB-4L-Czz">
                                 <cells>
@@ -347,28 +354,28 @@ you across the internet.</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="132" id="cNf-8C-MDv">
-                                        <rect key="frame" x="0.0" y="132" width="375" height="132"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="125" id="x6F-b7-K2T">
+                                        <rect key="frame" x="0.0" y="132" width="375" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cNf-8C-MDv" id="PzV-DV-qCX">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="131.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x6F-b7-K2T" id="XaQ-S7-bBo">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="124.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingContentBlocking" translatesAutoresizingMaskIntoConstraints="NO" id="ady-am-pSv">
-                                                    <rect key="frame" x="20" y="30" width="70" height="70"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingContentBlocking" translatesAutoresizingMaskIntoConstraints="NO" id="KQI-bs-Tbn">
+                                                    <rect key="frame" x="20" y="27.5" width="70" height="70"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="70" id="4Af-3N-R34"/>
-                                                        <constraint firstAttribute="width" constant="70" id="CXW-eY-sIi"/>
+                                                        <constraint firstAttribute="height" constant="70" id="CWj-zx-eRO"/>
+                                                        <constraint firstAttribute="width" constant="70" id="nRp-A4-u32"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Block Trackers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMX-eh-TIb">
-                                                    <rect key="frame" x="110" y="24" width="245" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Block Trackers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EV3-sZ-KFA">
+                                                    <rect key="frame" x="110" y="16" width="245" height="20"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kb4-zC-a61">
-                                                    <rect key="frame" x="110" y="58" width="245" height="48"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAU-bg-Itc">
+                                                    <rect key="frame" x="110" y="42" width="245" height="48"/>
                                                     <string key="text">Prevent advertisers and
 corporations from tracking
 you across the internet.</string>
@@ -378,14 +385,14 @@ you across the internet.</string>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ady-am-pSv" firstAttribute="leading" secondItem="PzV-DV-qCX" secondAttribute="leading" constant="20" id="MAZ-Bu-0Va"/>
-                                                <constraint firstItem="VMX-eh-TIb" firstAttribute="leading" secondItem="ady-am-pSv" secondAttribute="trailing" constant="20" id="PoG-Oy-28R"/>
-                                                <constraint firstAttribute="trailing" secondItem="VMX-eh-TIb" secondAttribute="trailing" constant="20" id="Xif-Rb-3Jn"/>
-                                                <constraint firstAttribute="trailing" secondItem="Kb4-zC-a61" secondAttribute="trailing" constant="20" id="e4B-P7-9cI"/>
-                                                <constraint firstItem="Kb4-zC-a61" firstAttribute="top" secondItem="VMX-eh-TIb" secondAttribute="bottom" constant="14" id="eRU-RR-w4g"/>
-                                                <constraint firstItem="Kb4-zC-a61" firstAttribute="leading" secondItem="ady-am-pSv" secondAttribute="trailing" constant="20" id="oqi-6n-wgL"/>
-                                                <constraint firstItem="VMX-eh-TIb" firstAttribute="top" secondItem="PzV-DV-qCX" secondAttribute="topMargin" constant="16" id="scj-y8-JBE"/>
-                                                <constraint firstItem="ady-am-pSv" firstAttribute="centerY" secondItem="PzV-DV-qCX" secondAttribute="centerY" id="yht-kM-lDR"/>
+                                                <constraint firstItem="AAU-bg-Itc" firstAttribute="top" secondItem="EV3-sZ-KFA" secondAttribute="bottom" constant="6" id="071-Jx-zUQ"/>
+                                                <constraint firstItem="KQI-bs-Tbn" firstAttribute="leading" secondItem="XaQ-S7-bBo" secondAttribute="leading" constant="20" id="AMP-ob-gh4"/>
+                                                <constraint firstItem="AAU-bg-Itc" firstAttribute="leading" secondItem="KQI-bs-Tbn" secondAttribute="trailing" constant="20" id="H8E-NM-ehF"/>
+                                                <constraint firstAttribute="trailing" secondItem="AAU-bg-Itc" secondAttribute="trailing" constant="20" id="LoH-He-qnX"/>
+                                                <constraint firstItem="EV3-sZ-KFA" firstAttribute="top" secondItem="XaQ-S7-bBo" secondAttribute="top" constant="16" id="Xka-TJ-xfJ"/>
+                                                <constraint firstItem="KQI-bs-Tbn" firstAttribute="centerY" secondItem="XaQ-S7-bBo" secondAttribute="centerY" id="jHk-0T-AhL"/>
+                                                <constraint firstItem="EV3-sZ-KFA" firstAttribute="leading" secondItem="KQI-bs-Tbn" secondAttribute="trailing" constant="20" id="kvj-kJ-904"/>
+                                                <constraint firstAttribute="trailing" secondItem="EV3-sZ-KFA" secondAttribute="trailing" constant="20" id="n0R-8o-ATo"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -397,15 +404,16 @@ you across the internet.</string>
                             <outlet property="delegate" destination="oEG-FZ-5Tm" id="BDm-7k-4cn"/>
                         </connections>
                     </tableView>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="260"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="256"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="260"/>
+                    <size key="freeformSize" width="375" height="256"/>
                     <connections>
                         <outlet property="blockCount" destination="N2E-tg-MZy" id="tXw-9F-jI3"/>
                         <outlet property="blockCountCircle" destination="841-aV-GY4" id="hYC-gE-DxV"/>
                         <outlet property="blockThisDomainToggle" destination="P3g-TQ-uDI" id="CMS-xj-l0t"/>
                         <outlet property="httpsBackground" destination="7b4-0i-tUL" id="6dr-yy-MUH"/>
                         <outlet property="httpsLabel" destination="5l5-Qs-AYC" id="FQm-L0-AaN"/>
+                        <outlet property="tutorialText" destination="AAU-bg-Itc" id="iSN-j2-adw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QP9-N6-eoO" userLabel="First Responder" sceneMemberID="firstResponder"/>

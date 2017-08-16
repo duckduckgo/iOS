@@ -1,5 +1,5 @@
 //
-//  ContentBlockerErrorDelegate.swift
+//  ContentBlockerTutorialCell.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,28 @@
 //  limitations under the License.
 //
 
-import Foundation
+
+import UIKit
 
 
-protocol ContentBlockerErrorDelegate: class {
- 
-    func errorWasResolved(errorController: ContentBlockerErrorViewController)
+public class ContentBlockerTutorialCell: UITableViewCell {
+    
+    @IBOutlet weak var tutorialText: UILabel!
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        let view = Bundle.main.loadNibNamed("ContentBlockerTutorial", owner: self, options: nil)![0] as! UIView
+        self.addSubview(view)
+        view.frame = self.bounds
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        configureViews()
+    }
+    
+    private func configureViews() {
+        tutorialText.adjustPlainTextLineHeight(1.3)
+    }
 
 }

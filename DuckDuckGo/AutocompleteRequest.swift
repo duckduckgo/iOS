@@ -30,7 +30,7 @@ class AutocompleteRequest {
     private var task: URLSessionDataTask?
     
     init(query : String, parser: AutocompleteParser) {
-        self.url = AppUrls.autocompleteUrl(forText: query)!
+        self.url = AppUrls().autocompleteUrl(forText: query)
         self.autocompleteParser = parser
     }
     

@@ -20,7 +20,14 @@
 
 import Foundation
 
+
+
 extension URL {
+    
+    enum URLProtocol: String {
+        case http
+        case https
+    }
     
     private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|(([\\d]+[.]){3}[\\d]+))([\\/]?[\\/:?=&#]{1}[\\%\\da-zA-Z_\\.-]+)*[\\/\\?]?$"
     
@@ -89,8 +96,12 @@ extension URL {
         return matches.count == 1
     }
     
+    public func isHttps() -> Bool {
+        return absoluteString.hasPrefix(URLProtocol.https.rawValue)
+    }
+    
     private static func appendScheme(path: String) -> String {
-        return "http://\(path)"
+        return "\(URLProtocol.http.rawValue)://\(path)"
     }
     
     public static func decode(query: String) -> String? {

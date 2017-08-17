@@ -166,4 +166,19 @@ class URLExtensionTests: XCTestCase {
         let actual = url?.addParam(name: "firstParam", value: "newValue")
         XCTAssertEqual(actual, expected)
     }
+    
+    func testWhenUrlProtocolIsHttpThenIsHttpsIsFalse() {
+        let url = URL(string: "http://test.com")!
+        XCTAssertFalse(url.isHttps())
+    }
+    
+    func testWhenUrlProtocolIsHttpsThenIsHttpsIsTrue() {
+        let url = URL(string: "https://test.com")!
+        XCTAssertTrue(url.isHttps())
+    }
+
+    func testWhenUrlProtocolIsNonHttpThenIsHttpsIsFalse() {
+        let url = URL(string: "mailto://test.com")!
+        XCTAssertFalse(url.isHttps())
+    }
 }

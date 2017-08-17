@@ -65,7 +65,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
-        
         if let url = url {
             load(url: url)
         }
@@ -131,19 +130,30 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        handle(error: error)
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        handle(error: error)
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
+        showError(message: error.localizedDescription)
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
-        guard let delegate = webEventsDelegate,
-            let url = navigationAction.request.url,
-            let documentUrl = navigationAction.request.mainDocumentURL else {
+
+        guard let url = navigationAction.request.url else {
             decisionHandler(.allow)
+            return
+        }
+
+        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
+            decisionHandler(.cancel)
+            return
+        }
+
+        guard let delegate = webEventsDelegate,
+            let documentUrl = navigationAction.request.mainDocumentURL else {
             return
         }
         
@@ -156,7 +166,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        webEventsDelegate?.webView(webView, didRequestNewTabForRequest: navigationAction.request)
+        webView.load(navigationAction.request)
         return nil
     }
     
@@ -193,15 +203,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return decorHeight
     }
     
-    private func handle(error: Error) {
-        hideProgressIndicator()
-        webEventsDelegate?.webpageDidFailToLoad()
-        showError(message: error.localizedDescription)
-    }
-    
     private func showError(message: String) {
         webView.alpha = 0
-        errorMessage.text = String(format: UserText.webPageFailedLoad, message.localizedLowercase)
+        errorMessage.text = "\(UserText.webPageFailedLoad) \(message)"
         errorMessage.alpha = 1
         errorMessage.adjustPlainTextLineHeight(1.5)
     }

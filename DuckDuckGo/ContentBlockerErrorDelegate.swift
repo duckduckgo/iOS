@@ -22,5 +22,6 @@ import Foundation
 
 protocol ContentBlockerErrorDelegate: class {
  
-    func errorWasResolved()
+    func errorWasResolved(errorController: ContentBlockerErrorViewController)
+
 }

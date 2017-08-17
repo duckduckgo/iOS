@@ -20,8 +20,8 @@
 import UIKit
 
 struct FireAnimation {
-
-    static func animate(withCompletion completion: @escaping () -> Swift.Void) {
+    
+    static func animate(completion: @escaping () -> Swift.Void) {
         
         guard let window = UIApplication.shared.keyWindow else {
             completion()
@@ -40,12 +40,14 @@ struct FireAnimation {
         window.addSubview(animationContainer)
         
         fireView.startAnimating()
-        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.4, delay: 0, options: .curveEaseOut, animations: {
             fireView.transform.ty = -fireViewHeight
         }) { _ in
-            fireView.stopAnimating()
-            animationContainer.removeFromSuperview()
             completion()
+            UIView.animate(withDuration: 0.1, animations: {
+            }) { _ in
+                animationContainer.removeFromSuperview()
+            }
         }
     }
     

@@ -1,5 +1,5 @@
 //
-//  InfoBundle.swift
+//  MajorTrackerNetworksTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,11 +18,19 @@
 //
 
 
-import Foundation
+import XCTest
+@testable import Core
 
-protocol InfoBundle {
-    func object(forInfoDictionaryKey key: String) -> Any?
-}
+class MajorTrackerNetworksTests: XCTestCase {
+    
+    func testTrueWhenTrackerFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "facebook.com")
+        XCTAssertTrue(testee.fromMajorNetwork())
+    }
 
-extension Bundle: InfoBundle {
+    func testFalseWhenTrackerNotFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+        XCTAssertFalse(testee.fromMajorNetwork())
+    }
+
 }

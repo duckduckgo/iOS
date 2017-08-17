@@ -27,8 +27,6 @@ public protocol WebEventsDelegate: class {
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point)
     
-    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest)
-    
     func webpageDidStartLoading()
     
     func webpageDidFinishLoading()

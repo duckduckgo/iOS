@@ -24,6 +24,7 @@
 "search.hint.duckduckgo" = "Search or type URL";
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
+"web.page.load.failed" = "DuckDuckGo cannot load this page.";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
@@ -33,14 +34,15 @@
 "action.title.cancel" = "Cancel";
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
-"action.title.forgetAll" = "Forget All";
+"action.title.forgetAll" = "Clear Tabs and Data";
+"action.title.forgetAllDone" = "Tabs and data cleared";
 "action.title.open" = "Open";
 "action.title.refresh" = "Refresh";
 "action.title.readingList" = "Add to Reading List";
 "action.title.copy" = "Copy";
 "action.title.share"= "Share...";
 "action.title.save.bookmark" = "Add to Bookmarks";
-"action.title.settings" = "Settings";
+"action.title.settings" = "Settings...";
 "alert.title.save.bookmark" = "Save Bookmark";
 "alert.title.edit.bookmark" = "Edit Bookmark";
 
@@ -57,3 +59,14 @@
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
+
+"safari.instructions.settings" = "Open <highlight>Settings App</highlight>";
+"safari.instructions.navigate" = "Navigate to <highlight>Safari</highlight>, then <highlight>Search Engine</highlight>";
+"safari.instructions.select" = "Select <highlight>DuckDuckGo</highlight>";
+
+"monitoring.connection.secure" = "Secure connection";
+"monitoring.connection.unsecured" = "Unsecured connection";
+"monitoring.sitegrade.a" = "A";
+"monitoring.sitegrade.b" = "B";
+"monitoring.sitegrade.c" = "C";
+"monitoring.sitegrade.d" = "D";

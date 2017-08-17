@@ -24,19 +24,19 @@ import Core
 class ContentBlockerPopover: UIViewController {
     
     @IBOutlet weak var container: UIView!
+    weak var delegate: ContentBlockerSettingsChangeDelegate?
     
-    private weak var contentBlocker: ContentBlocker!
+    fileprivate weak var contentBlocker: ContentBlocker!
+    private var siteRating: SiteRating!
     
     private var contentBlockerViewController: ContentBlockerViewController?
-    private var errorViewController: ContentBlockerErrorViewController?
     
-    private(set) var domain: String!
-    
-    static func loadFromStoryboard(withContentBlocker contentBlocker: ContentBlocker, domain: String) -> ContentBlockerPopover {
+    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerPopover {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
+        controller.delegate = delegate
         controller.contentBlocker = contentBlocker
-        controller.domain = domain
+        controller.siteRating = siteRating
         return controller
     }
     
@@ -44,6 +44,10 @@ class ContentBlockerPopover: UIViewController {
         super.viewDidLoad()
         guard contentBlocker.hasData else {
             attachErrorViewController()
+            return
+        }
+        guard contentBlocker.enabled else {
+            attachDisabledViewController()
             return
         }
         attachContentBlockerViewController()
@@ -56,16 +60,22 @@ class ContentBlockerPopover: UIViewController {
     fileprivate func attachErrorViewController() {
         let controller = ContentBlockerErrorViewController.loadFromStoryboard(delegate: self)
         addToContainer(controller: controller)
-        errorViewController = controller
+    }
+    
+    fileprivate func attachDisabledViewController() {
+        let controller = ContentBlockerDisabledViewController.loadFromStoryboard(withDelegate: self)
+        addToContainer(controller: controller)
     }
     
     fileprivate func attachContentBlockerViewController() {
-        let controller = ContentBlockerViewController.loadFromStoryboard(withContentBlocker: contentBlocker, domain: domain)
+        guard let siteRating = siteRating else { return }
+        let controller = ContentBlockerViewController.loadFromStoryboard(withDelegate: delegate, contentBlocker: contentBlocker, siteRating: siteRating)
         addToContainer(controller: controller)
         contentBlockerViewController = controller
     }
     
     fileprivate func addToContainer(controller: UIViewController) {
+        preferredContentSize = controller.preferredContentSize
         controller.view.frame = container.frame
         controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(controller)
@@ -73,16 +83,33 @@ class ContentBlockerPopover: UIViewController {
         controller.didMove(toParentViewController: self)
     }
     
-    fileprivate func dismissError() {
-        errorViewController?.willMove(toParentViewController: nil)
-        errorViewController?.view.removeFromSuperview()
-        errorViewController?.removeFromParentViewController()
+    fileprivate func dismiss(viewController: UIViewController) {
+        viewController.willMove(toParentViewController: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParentViewController()
     }
 }
 
 extension ContentBlockerPopover: ContentBlockerErrorDelegate {
-    func errorWasResolved() {
-        dismissError()
+    func errorWasResolved(errorController: ContentBlockerErrorViewController) {
+        dismiss(viewController: errorController)
         attachContentBlockerViewController()
     }
+}
+
+extension ContentBlockerPopover: ContentBlockerDisabledDelegate {
+    func contentBlockerWasEnabled(disabledController: ContentBlockerDisabledViewController) {
+        dismiss(viewController: disabledController)
+        contentBlocker.enabled = true
+        delegate?.contentBlockerSettingsDidChange()
+        attachContentBlockerViewController()
+    }
+}
+
+extension ContentBlockerPopover: ContentBlockerSettingsChangeDelegate {
+    
+    func contentBlockerSettingsDidChange() {
+        delegate?.contentBlockerSettingsDidChange()
+    }
+
 }

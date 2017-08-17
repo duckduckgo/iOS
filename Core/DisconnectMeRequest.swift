@@ -25,14 +25,15 @@ import Alamofire
 public typealias DisconnectMeRequestCompletion = ([Tracker]?, Error?) -> Swift.Void
 
 public class DisconnectMeRequest {
-    
+
+    private let appUrls = AppUrls()
     private let parser = DisconnectMeTrackersParser()
     
     public init() {}
     
     public func execute(completion: @escaping DisconnectMeRequestCompletion) {
         Logger.log(text: "Requesting trackers...")
-        Alamofire.request(AppUrls.contentBlocking)
+        Alamofire.request(appUrls.contentBlocking)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
                 Logger.log(text: "Trackers request completed with result \(response.result)")

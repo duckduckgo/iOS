@@ -18,7 +18,7 @@
 //
 
 
-import Foundation
+import Core
 
 
 public struct UserText {
@@ -53,7 +53,8 @@ public struct UserText {
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", comment: "Open in New Tab action")
-    public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", comment: "Forget All action")
+    public static let actionForgetAll = NSLocalizedString("action.title.forgetAll", comment: "Clear Tabs and Data action")
+    public static let actionForgetAllDone = NSLocalizedString("action.title.forgetAllDone", comment: "Tabs and Data Cleared")
     public static let actionOpen = NSLocalizedString("action.title.open", comment: "Open action")
     public static let actionReadingList = NSLocalizedString("action.title.readingList", comment: "Reading List action")
     public static let actionCopy = NSLocalizedString("action.title.copy", comment: "Copy action")
@@ -64,4 +65,16 @@ public struct UserText {
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
+
+    public static let safariInstructionsSettings = NSLocalizedString("safari.instructions.settings", comment: "Open App Settings")
+    public static let safariInstructionsNavigate = NSLocalizedString("safari.instructions.navigate", comment: "Navigate to Safari, then Search Engine")
+    public static let safariInstructionsSelect = NSLocalizedString("safari.instructions.select", comment: "Select DuckDuckDo")
+
+    public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
+    public static let unsecuredConnection = NSLocalizedString("monitoring.connection.unsecured", comment: "Unsecured conection")
+    
+    public static func forSiteGrade(_ grade: SiteGrade) -> String {
+        let key = "monitoring.sitegrade.\(grade.rawValue)"
+        return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")
+    }
 }

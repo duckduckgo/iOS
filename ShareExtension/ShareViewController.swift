@@ -30,7 +30,7 @@ class ShareViewController: UIViewController {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
-    
+
     private var webController: WebViewController?
     private lazy var bookmarkStore = BookmarkUserDefaults()
     fileprivate var contentBlocker: ContentBlocker!
@@ -78,7 +78,7 @@ class ShareViewController: UIViewController {
     private func loadText(textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: textIdentifier, options: nil, completionHandler: { [weak self] (item, error) in
             guard let text = item as? String else { return }
-            guard let queryUrl = AppUrls.url(forQuery: text) else { return }
+            let queryUrl = AppUrls().url(forQuery: text)
             self?.webController?.load(url: queryUrl)
         })
     }
@@ -132,10 +132,6 @@ extension ShareViewController: WebEventsDelegate {
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         webView.load(URLRequest(url: url))
-    }
-
-    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
-        webView.load(urlRequest)
     }
     
     func webpageDidStartLoading() {

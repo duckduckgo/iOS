@@ -24,7 +24,7 @@ struct FireAnimation {
     struct Constants {
         static let animationDuration = 1.4
         static let endAnimationDuration = 0.1
-        static let initialFirePeekPercentage: CGFloat = 0.15
+        static let initialFirePeekPortion: CGFloat = 0.15
     }
     
     static func animate(completion: @escaping () -> Swift.Void) {
@@ -60,7 +60,7 @@ struct FireAnimation {
         let fireSize = CGSize(width: fireView.frame.width*fireScale, height: fireView.frame.height*fireScale)
         fireView.frame = CGRect(origin: fireView.frame.origin, size: fireSize)
         fireView.center.x = container.center.x
-        fireView.transform.ty = containerHeight - fireView.frame.height * Constants.initialFirePeekPercentage
+        fireView.transform.ty = containerHeight - fireView.frame.height * Constants.initialFirePeekPortion
         fireView.startAnimating()
         
         return fireView

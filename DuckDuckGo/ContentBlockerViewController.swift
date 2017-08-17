@@ -46,18 +46,25 @@ class ContentBlockerViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        siteRatingView.update(siteRating: siteRating)
         refresh()
     }
-    
+
+    public func updateSiteRating(siteRating: SiteRating) {
+        self.siteRating = siteRating
+        siteRatingView.update(siteRating: siteRating)
+        refresh()
+    }
+
     public func refresh() {
-        refreshSiteRating()
+        siteRatingView.refresh()
+        refreshHttps()
         blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: siteRating.domain)
         blockCount.text = blockCountText()
         blockCountCircle.tintColor = blockCountCircleTint()
     }
     
-    private func refreshSiteRating() {
-        siteRatingView.update(siteRating: siteRating)
+    public func refreshHttps() {
         if siteRating.https {
             httpsBackground.tintColor = UIColor.monitoringPositiveTint
             httpsLabel.text = UserText.secureConnection
@@ -66,24 +73,19 @@ class ContentBlockerViewController: UITableViewController {
             httpsLabel.text = UserText.unsecuredConnection
         }
     }
-
-    public func updateSiteRating(siteRating: SiteRating) {
-        self.siteRating = siteRating
-        refreshSiteRating()
-    }
     
     private func blockCountText() -> String {
         if !contentBlocker.enabled(forDomain: siteRating.domain) {
             return "!"
         }
-        return "\(contentBlocker.uniqueItemsBlocked)"
+        return "\(siteRating.uniqueItemsBlocked)"
     }
     
     private func blockCountCircleTint() -> UIColor {
         if !contentBlocker.enabled(forDomain: siteRating.domain) {
             return UIColor.monitoringNegativeTint
         }
-        if contentBlocker.uniqueItemsBlocked > 0 {
+        if siteRating.uniqueItemsBlocked > 0 {
             return UIColor.monitoringNeutralTint
         }
         return UIColor.monitoringPositiveTint

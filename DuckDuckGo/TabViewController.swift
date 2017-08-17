@@ -75,22 +75,19 @@ class TabViewController: WebViewController {
     }
 
     fileprivate func onNewPageLoad() {
-        contentBlocker.resetMonitoring()
         if let url = url {
             siteRating = SiteRating(url: url)
             contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
         } else {
+            contentBlockerPopover?.dismiss(animated: false, completion: nil)
             siteRating = nil
         }
-        contentBlockerPopover?.refresh()
         delegate?.tab(self, didChangeSiteRating: siteRating)
     }
     
-    fileprivate func onContentBlockerStateChanged() {
-        contentBlockerPopover?.refresh()
-        siteRating?.trackers = contentBlocker.trackersDetected
-        guard let siteRating = siteRating  else { return }
+    fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
+        contentBlockerPopover?.refresh()
     }
 
     func launchBrowsingMenu() {
@@ -204,11 +201,17 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        let blocked = contentBlocker.block(url: url, forDocument: documentUrl)
-        onContentBlockerStateChanged()
-        if blocked {
+        let policy = contentBlocker.policy(forUrl: url, document: documentUrl)
+        
+        if let tracker = policy.tracker {
+            siteRating?.trackerDetected(tracker, blocked: policy.block)
+            onSiteRatingChanged()
+        }
+
+        if policy.block {
             return false
         }
+        
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
@@ -220,8 +223,6 @@ class TabViewController: WebViewController {
         return SupportedExternalURLScheme.isSupported(url: url)
     }
     
-
-
     func dismiss() {
         webView.scrollView.delegate = nil
         willMove(toParentViewController: nil)

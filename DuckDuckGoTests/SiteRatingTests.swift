@@ -22,105 +22,75 @@ import XCTest
 @testable import Core
 
 class SiteRatingTests: XCTestCase {
-
-    override func setUp() {
-        SiteRatingCache.shared.reset()
+    
+    struct Url {
+        static let noHost = URL(string: "nohost")!
+        static let withHost = URL(string: "http://host")!
+        static let http = URL(string: "http://example.com")!
+        static let https = URL(string: "https://example.com")!
+        static let tracker = "http://www.atracker.com"
+        static let differentTracker = "http://www.anothertracker.com"
+    }
+    
+    struct TrackerMock {
+        static let tracker = Tracker(url: Url.tracker, parentDomain: Url.tracker)
+        static let differentTracker = Tracker(url: Url.differentTracker, parentDomain: Url.differentTracker)
     }
     
     func testWhenUrlContainHostThenInitSucceeds() {
-        let testee = SiteRating(url: urlWithHost)
+        let testee = SiteRating(url: Url.withHost)
         XCTAssertNotNil(testee)
     }
     
     func testWhenUrlDoesNotContainHostThenInitFails() {
-        let testee = SiteRating(url: urlWithoutHost)
+        let testee = SiteRating(url: Url.noHost)
         XCTAssertNil(testee)
     }
     
-    func testWhenHttpThenScoreIsOne() {
-        let testee = SiteRating(url: httpUrl)!
-        XCTAssertEqual(1, testee.siteScore)
+    func testWhenHttpThenHttpsIsFalse() {
+        let testee = SiteRating(url: Url.http)!
+        XCTAssertFalse(testee.https)
     }
     
-    func testWhenHttpsThenScoreIsZero() {
-        let testee = SiteRating(url: httpsUrl)!
-        XCTAssertEqual(0, testee.siteScore)
+    func testWhenHttpsThenHttpsIsTrue() {
+        let testee = SiteRating(url: Url.https)!
+        XCTAssertTrue(testee.https)
     }
     
-    func testWhenOneStandardTrackerThenScoreIsTwo() {
-        var testee = SiteRating(url: httpUrl)!
-        testee.trackers = trackers(qty: 1)
-        XCTAssertEqual(2, testee.siteScore)
+    func testCountsAreInitiallyZero() {
+        let testee = SiteRating(url: Url.https)!
+        XCTAssertEqual(testee.totalItemsDetected, 0)
+        XCTAssertEqual(testee.uniqueItemsBlocked, 0)
+        XCTAssertEqual(testee.totalItemsBlocked, 0)
+        XCTAssertEqual(testee.uniqueItemsBlocked, 0)
     }
     
-    func testWhenOneMajorTrackerThenScoreIsThree() {
-        var testee = SiteRating(url: httpUrl)!
-        testee.trackers = trackers(qty: 0, majorQty: 1)
-        XCTAssertEqual(3, testee.siteScore)
+    func testWhenUniqueTrackersAreBlockedThenAllDetectionAndBlockCountsIncremenet() {
+        let testee = SiteRating(url: Url.https)!
+        testee.trackerDetected(TrackerMock.tracker, blocked: true)
+        testee.trackerDetected(TrackerMock.differentTracker, blocked: true)
+        XCTAssertEqual(testee.totalItemsDetected, 2)
+        XCTAssertEqual(testee.uniqueItemsDetected, 2)
+        XCTAssertEqual(testee.totalItemsBlocked, 2)
+        XCTAssertEqual(testee.uniqueItemsBlocked, 2)
     }
     
-    func testWhenTenStandardTrackersThenScoreIsTwo() {
-        var testee = SiteRating(url: httpUrl)!
-        testee.trackers = trackers(qty: 10)
-        XCTAssertEqual(2, testee.siteScore)
+    func testWhenRepeatTrackersAreBlockedThenUniqueCountsOnlyIncrementOnce() {
+        let testee = SiteRating(url: Url.https)!
+        testee.trackerDetected(TrackerMock.tracker, blocked: true)
+        testee.trackerDetected(TrackerMock.tracker, blocked: true)
+        XCTAssertEqual(testee.totalItemsDetected, 2)
+        XCTAssertEqual(testee.uniqueItemsDetected, 1)
+        XCTAssertEqual(testee.totalItemsBlocked, 2)
+        XCTAssertEqual(testee.uniqueItemsBlocked, 1)
     }
     
-    func testWhenTenTrackerIncludingMajorThenScoreIsThree() {
-        var testee = SiteRating(url: httpUrl)!
-        testee.trackers = trackers(qty: 5, majorQty: 5)
-        XCTAssertEqual(3, testee.siteScore)
-    }
-
-    func testWhenElevenStandardTrackersThenScoreIsThree() {
-        var testee = SiteRating(url: httpUrl)!
-        testee.trackers = trackers(qty: 11)
-        XCTAssertEqual(3, testee.siteScore)
-    }
-
-    func testWhenElevenTrackersIncludingMajorThenScoreIsFour() {
-        var testee = SiteRating(url: httpUrl)!
-        testee.trackers = trackers(qty: 6, majorQty: 5)
-        XCTAssertEqual(4, testee.siteScore)
-    }
-    
-    func testWhenNewRatingIsLowerThanCachedRatingThenCachedRatingIsUsed() {
-        _ = SiteRatingCache.shared.add(domain: httpUrl.host!, score: 100)
-        let testee = SiteRating(url: httpUrl)!
-        XCTAssertEqual(100, testee.siteScore)
-    }
-    
-    func trackers(qty: Int, majorQty: Int = 0) -> [Tracker: Int] {
-        var trackers = [Tracker: Int]()
-        if qty > 0 {
-            trackers[tracker] = qty
-        }
-        if majorQty > 0 {
-            trackers[majorTracker] = majorQty
-        }
-        return trackers
-    }
-    
-    var urlWithoutHost: URL {
-        return URL(string: "nohost")!
-    }
-    
-    var urlWithHost: URL {
-        return URL(string: "http://host")!
-    }
-
-    var httpUrl: URL {
-        return URL(string: "http://example.com")!
-    }
-
-    var httpsUrl: URL {
-        return URL(string: "https://example.com")!
-    }
-    
-    var tracker: Tracker {
-        return Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
-    }
-    
-    var majorTracker: Tracker {
-        return Tracker(url: "aurl.com", parentDomain: "facebook.com")
+    func testWhenNotBlockerThenDetectedCountsIncrementButBlockCountsDoNot() {
+        let testee = SiteRating(url: Url.https)!
+        testee.trackerDetected(TrackerMock.tracker, blocked: false)
+        XCTAssertEqual(testee.totalItemsDetected, 1)
+        XCTAssertEqual(testee.uniqueItemsDetected, 1)
+        XCTAssertEqual(testee.totalItemsBlocked, 0)
+        XCTAssertEqual(testee.uniqueItemsBlocked, 0)
     }
 }

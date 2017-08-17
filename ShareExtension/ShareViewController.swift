@@ -127,7 +127,7 @@ extension ShareViewController: WebEventsDelegate {
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
-        return !contentBlocker.block(url: url, forDocument: documentUrl)
+        return !contentBlocker.policy(forUrl: url, document: documentUrl).block
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {

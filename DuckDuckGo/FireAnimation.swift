@@ -60,7 +60,7 @@ struct FireAnimation {
         let fireSize = CGSize(width: fireView.frame.width*fireScale, height: fireView.frame.height*fireScale)
         fireView.frame = CGRect(origin: fireView.frame.origin, size: fireSize)
         fireView.center.x = container.center.x
-        fireView.transform.ty = containerHeight - fireView.frame.height * Constants.initialPeekPercentage
+        fireView.transform.ty = containerHeight - fireView.frame.height * Constants.initialFirePeekPercentage
         fireView.startAnimating()
         
         return fireView

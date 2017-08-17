@@ -21,15 +21,21 @@ import UIKit
 import WebKit
 
 open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-    
+
     private static let estimatedProgressKeyPath = "estimatedProgress"
-    
+
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var errorMessage: UILabel!
     
     open private(set) var webView: WKWebView!
+    private var waitingForLoadAfterPolicyAllowDecision = false
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(onAppBackgrounded), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+    }
 
     public var name: String? {
         return webView.title    
@@ -111,15 +117,17 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
         }
     }
-    
+
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        waitingForLoadAfterPolicyAllowDecision = false
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()
         webEventsDelegate?.webpageDidStartLoading()
     }
-    
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        waitingForLoadAfterPolicyAllowDecision = false
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
             if let favicon = favicon {
@@ -130,11 +138,13 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        waitingForLoadAfterPolicyAllowDecision = false
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        waitingForLoadAfterPolicyAllowDecision = false
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
         showError(message: error.localizedDescription)
@@ -143,6 +153,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         guard let url = navigationAction.request.url else {
+            waitingForLoadAfterPolicyAllowDecision = true
             decisionHandler(.allow)
             return
         }
@@ -154,11 +165,13 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
+            waitingForLoadAfterPolicyAllowDecision = true
             decisionHandler(.allow)
             return
         }
         
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
+            waitingForLoadAfterPolicyAllowDecision = true
             decisionHandler(.allow)
             return
         }
@@ -215,7 +228,24 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         errorMessage.alpha = 0
         webView.alpha = 1
     }
+
+    @objc private func onAppBackgrounded() {
+        handleUniversalLinkAppLaunch()
+    }
+
+    private func handleUniversalLinkAppLaunch() {
+        if waitingForLoadAfterPolicyAllowDecision {
+            // a policy decision was asked for, and allow was the result, but since then
+            //  the application has gone in to the background, which probably means
+            //  a universal link app was launched
+            goBack()
+        }
+    }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

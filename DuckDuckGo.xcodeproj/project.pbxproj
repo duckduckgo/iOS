@@ -520,7 +520,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F144846C1F3A308000F6AD2D /* APNGKit.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				F17BA43D1F1CD99800460FFA /* Device.framework in Frameworks */,
 				F17BA43E1F1CD99800460FFA /* Kingfisher.framework in Frameworks */,
@@ -1755,14 +1754,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Device.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ToastSwiftFramework.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/APNGKit.framework",
-			);
-			outputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
 			);
 			outputPaths = (

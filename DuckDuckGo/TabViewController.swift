@@ -65,7 +65,7 @@ class TabViewController: WebViewController {
 
     func launchContentBlockerPopover() {
         guard let siteRating = siteRating else { return }
-        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
+        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.siteRating) else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
@@ -76,12 +76,13 @@ class TabViewController: WebViewController {
 
     fileprivate func onNewPageLoad() {
         contentBlocker.resetMonitoring()
-        contentBlockerPopover?.refresh()
         if let url = url {
             siteRating = SiteRating(url: url)
+            contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
         } else {
             siteRating = nil
         }
+        contentBlockerPopover?.refresh()
         delegate?.tab(self, didChangeSiteRating: siteRating)
     }
     

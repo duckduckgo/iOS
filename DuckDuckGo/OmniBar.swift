@@ -37,25 +37,20 @@ class OmniBar: UIView {
     }
     
     struct Tag {
-        static let contentBlocker = 100
+        static let siteRating = 100
         static let menuButton = 200
     }
     
     @IBOutlet weak var dismissButton: UIButton!
-    @IBOutlet weak var contentBlockerContainer: UIView!
-    @IBOutlet weak var contentBlockerCircle: UIImageView!
-    @IBOutlet weak var contentBlockerLabel: UILabel!
+    @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
 
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: OmniBarState = HomeEmptyEditingState()
-    
+    fileprivate var state: OmniBarState = HomeEmptyEditingState()    
     private lazy var appUrls: AppUrls = AppUrls()
-    private var contentBlockerConfiguration = ContentBlockerConfigurationUserDefaults()
-    private var siteRating: SiteRating?
     
     static func loadFromXib() -> OmniBar {
         let omnibar = OmniBar.load(nibName: "OmniBar")
@@ -63,33 +58,12 @@ class OmniBar: UIView {
         return omnibar
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addUserDefaultsObserver()
-    }
-    
-    deinit {
-        removeUserDefaultsObserver()
-    }
-    
-    private func addUserDefaultsObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onUserDefaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
-    }
-    
-    private func removeUserDefaultsObserver() {
-        NotificationCenter.default.removeObserver(self, name: UserDefaults.didChangeNotification, object: nil)
-    }
-    
-    func onUserDefaultsChanged(notification: NSNotification) {
-        refreshContentBlocker()
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         menuButton.tag = Tag.menuButton
         configureTextField()
         configureEditingMenu()
-        configureContentBlocker()
+        configureSiteRating()
         refreshState(state)
     }
     
@@ -103,9 +77,9 @@ class OmniBar: UIView {
         UIMenuController.shared.menuItems = [UIMenuItem.init(title: title, action: #selector(pasteAndGo))]
     }
     
-    private func configureContentBlocker() {
-        contentBlockerContainer.tag = Tag.contentBlocker
-        refreshContentBlocker()
+    private func configureSiteRating() {
+        siteRatingView.tag = Tag.siteRating
+        siteRatingView.refresh()
     }
     
     func pasteAndGo(sender: UIMenuItem) {
@@ -128,37 +102,10 @@ class OmniBar: UIView {
             state = newState
         }
         setVisibility(dismissButton, hidden: !state.showDismiss)
-        setVisibility(contentBlockerContainer, hidden: !state.showContentBlocker)
+        setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
-    }
-    
-    private func refreshContentBlocker() {
-        guard contentBlockerConfiguration.enabled else {
-            contentBlockerCircle.tintColor = UIColor.monitoringNegativeTint
-            contentBlockerLabel.text = "!"
-            return
-        }
-        
-        guard let siteRating = siteRating else {
-            contentBlockerCircle.tintColor = UIColor.monitoringInactiveTint
-            contentBlockerLabel.text = "-"
-            return
-        }
-        contentBlockerLabel.text = UserText.forSiteGrade(siteRating.siteGrade)
-        contentBlockerCircle.tintColor = colorForSiteRating(siteRating)
-    }
-    
-    private func colorForSiteRating(_ siteRating: SiteRating) -> UIColor {
-        switch siteRating.siteGrade {
-        case .a:
-            return UIColor.monitoringPositiveTint
-        case .b, .c:
-            return UIColor.monitoringNeutralTint
-        case .d:
-            return UIColor.monitoringNegativeTint
-        }
     }
     
     /*
@@ -181,8 +128,7 @@ class OmniBar: UIView {
     }
     
     func updateSiteRating(_ siteRating: SiteRating?) {
-        self.siteRating = siteRating
-        refreshContentBlocker()
+        siteRatingView.update(siteRating: siteRating)
     }
     
     func clear() {
@@ -238,16 +184,16 @@ class OmniBar: UIView {
         refreshState(state.onTextClearedState)
     }
     
-    @IBAction func onBookmarksButtonPressed(_ sender: Any) {
-        omniDelegate?.onBookmarksPressed()
+    @IBAction func onSiteRatingPressed(_ sender: Any) {
+        omniDelegate?.onSiteRatingPressed()
     }
     
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
         omniDelegate?.onMenuPressed()
     }
     
-    @IBAction func onContentBlockerButtonPressed(_ sender: Any) {
-        omniDelegate?.onContentBlockerPressed()
+    @IBAction func onBookmarksButtonPressed(_ sender: Any) {
+        omniDelegate?.onBookmarksPressed()
     }
 }
 

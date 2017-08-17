@@ -53,6 +53,10 @@ class ContentBlockerPopover: UIViewController {
         attachContentBlockerViewController()
     }
     
+    func updateSiteRating(siteRating: SiteRating) {
+        contentBlockerViewController?.updateSiteRating(siteRating: siteRating)
+    }
+    
     func refresh() {
         contentBlockerViewController?.refresh()
     }
@@ -107,9 +111,7 @@ extension ContentBlockerPopover: ContentBlockerDisabledDelegate {
 }
 
 extension ContentBlockerPopover: ContentBlockerSettingsChangeDelegate {
-    
     func contentBlockerSettingsDidChange() {
         delegate?.contentBlockerSettingsDidChange()
     }
-
 }

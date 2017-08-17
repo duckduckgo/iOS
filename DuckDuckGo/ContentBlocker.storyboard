@@ -199,15 +199,45 @@
             <objects>
                 <tableViewController storyboardIdentifier="ContentBlockerViewController" id="oEG-FZ-5Tm" customClass="ContentBlockerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Tup-tC-ein">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="256"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
                             <tableViewSection id="OCB-4L-Czz">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="GzM-3f-FfM">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="qu0-Rz-iuT">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qu0-Rz-iuT" id="ZEq-iV-wvg">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YE-3E-cVv">
+                                                    <rect key="frame" x="18" y="14" width="100" height="16"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YvN-Qd-VNU" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="126" y="9" width="24" height="24"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="iqJ-B9-dJC"/>
+                                                        <constraint firstAttribute="width" constant="24" id="vRN-Rs-p9T"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YvN-Qd-VNU" firstAttribute="centerY" secondItem="ZEq-iV-wvg" secondAttribute="centerY" id="bTz-R7-5N4"/>
+                                                <constraint firstItem="2YE-3E-cVv" firstAttribute="leading" secondItem="ZEq-iV-wvg" secondAttribute="leadingMargin" constant="10" id="kau-Jw-xy1"/>
+                                                <constraint firstItem="YvN-Qd-VNU" firstAttribute="leading" secondItem="2YE-3E-cVv" secondAttribute="trailing" constant="8" id="pub-7b-cyX"/>
+                                                <constraint firstItem="2YE-3E-cVv" firstAttribute="centerY" secondItem="ZEq-iV-wvg" secondAttribute="centerY" id="uIK-kF-cEn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="GzM-3f-FfM">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GzM-3f-FfM" id="KOz-yL-tLL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -247,7 +277,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="nMe-XL-Ohr">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nMe-XL-Ohr" id="640-lj-eop">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -289,7 +319,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="QhO-lo-CCT">
-                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QhO-lo-CCT" id="UV9-va-Tyb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -318,7 +348,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="125" id="x6F-b7-K2T" customClass="ContentBlockerTutorialCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="132" width="375" height="125"/>
+                                        <rect key="frame" x="0.0" y="176" width="375" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x6F-b7-K2T" id="XaQ-S7-bBo">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="124.5"/>
@@ -333,21 +363,22 @@
                             <outlet property="delegate" destination="oEG-FZ-5Tm" id="BDm-7k-4cn"/>
                         </connections>
                     </tableView>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="256"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="300"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="256"/>
+                    <size key="freeformSize" width="375" height="300"/>
                     <connections>
                         <outlet property="blockCount" destination="N2E-tg-MZy" id="tXw-9F-jI3"/>
                         <outlet property="blockCountCircle" destination="841-aV-GY4" id="hYC-gE-DxV"/>
                         <outlet property="blockThisDomainToggle" destination="P3g-TQ-uDI" id="CMS-xj-l0t"/>
                         <outlet property="httpsBackground" destination="7b4-0i-tUL" id="6dr-yy-MUH"/>
                         <outlet property="httpsLabel" destination="5l5-Qs-AYC" id="FQm-L0-AaN"/>
+                        <outlet property="siteRatingView" destination="YvN-Qd-VNU" id="AJy-1l-jpp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QP9-N6-eoO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="gbh-iw-ohO"/>
             </objects>
-            <point key="canvasLocation" x="-1972" y="-1618"/>
+            <point key="canvasLocation" x="-1972" y="-1618.2908545727137"/>
         </scene>
     </scenes>
     <resources>

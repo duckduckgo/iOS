@@ -20,7 +20,7 @@
 
 import Foundation
 
-public struct SiteRating {
+public class SiteRating {
     
     public let url: URL
     public let domain: String

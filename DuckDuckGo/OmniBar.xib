@@ -8,9 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="proximanova-regular.otf">
-            <string>ProximaNova-Regular</string>
-        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -64,32 +61,9 @@
                                         <action selector="onClearButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="khX-3z-LQK"/>
                                     </connections>
                                 </button>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
                                     <rect key="frame" x="275" y="0.0" width="30" height="40"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Circle" translatesAutoresizingMaskIntoConstraints="NO" id="4st-FL-wOt">
-                                            <rect key="frame" x="2" y="7" width="26" height="26"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="26" id="QzQ-x3-35F"/>
-                                                <constraint firstAttribute="width" constant="26" id="bxN-FM-ubH"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="C" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="UdM-O6-IQF">
-                                            <rect key="frame" x="5" y="10" width="20" height="20"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="20" id="Asb-bt-unG"/>
-                                                <constraint firstAttribute="height" constant="20" id="N7n-0u-GQu"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                     <constraints>
-                                        <constraint firstItem="UdM-O6-IQF" firstAttribute="centerY" secondItem="tlF-fr-tSl" secondAttribute="centerY" id="KW2-S3-O6l"/>
-                                        <constraint firstItem="4st-FL-wOt" firstAttribute="centerX" secondItem="tlF-fr-tSl" secondAttribute="centerX" id="Mvw-H6-zqt"/>
-                                        <constraint firstItem="UdM-O6-IQF" firstAttribute="centerX" secondItem="tlF-fr-tSl" secondAttribute="centerX" id="Vsi-60-Qsb"/>
-                                        <constraint firstItem="4st-FL-wOt" firstAttribute="centerY" secondItem="tlF-fr-tSl" secondAttribute="centerY" id="oZC-Hu-ki7"/>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="vqc-wd-f2C"/>
                                     </constraints>
                                     <connections>
@@ -167,25 +141,22 @@
             <connections>
                 <outlet property="bookmarksButton" destination="arc-SR-Ric" id="S4A-dB-wqa"/>
                 <outlet property="clearButton" destination="Dt8-We-5tV" id="6d0-LL-4OJ"/>
-                <outlet property="contentBlockerCircle" destination="4st-FL-wOt" id="7Iu-Ek-1g6"/>
-                <outlet property="contentBlockerContainer" destination="tlF-fr-tSl" id="ftV-0G-8yw"/>
-                <outlet property="contentBlockerLabel" destination="UdM-O6-IQF" id="j5s-DN-tsP"/>
                 <outlet property="dismissButton" destination="SiJ-OY-KKg" id="07f-JA-Ria"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
+                <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
             </connections>
             <point key="canvasLocation" x="39" y="-97"/>
         </view>
         <tapGestureRecognizer id="qXd-RO-1cS">
             <connections>
-                <action selector="onContentBlockerButtonPressed:" destination="ojX-nM-dyN" id="qgA-Xd-Oe7"/>
+                <action selector="onSiteRatingPressed:" destination="ojX-nM-dyN" id="aWb-03-h7C"/>
             </connections>
         </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="Bookmarks" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
-        <image name="Circle" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
         <image name="clear" width="22" height="22"/>
     </resources>

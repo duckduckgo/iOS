@@ -23,6 +23,7 @@ import Core
 
 class ContentBlockerViewController: UITableViewController {
 
+    @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var httpsBackground: UIImageView!
     @IBOutlet weak var httpsLabel: UILabel!
     @IBOutlet weak var blockCountCircle: UIImageView!
@@ -31,8 +32,8 @@ class ContentBlockerViewController: UITableViewController {
     
     weak var delegate: ContentBlockerSettingsChangeDelegate?
 
-    private(set) var contentBlocker: ContentBlocker!
-    private(set) var siteRating: SiteRating!
+    private var contentBlocker: ContentBlocker!
+    private var siteRating: SiteRating!
     
     static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerViewController {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
@@ -47,15 +48,16 @@ class ContentBlockerViewController: UITableViewController {
         super.viewDidLoad()
         refresh()
     }
-
+    
     public func refresh() {
-        refreshHttps()
+        refreshSiteRating()
         blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: siteRating.domain)
         blockCount.text = blockCountText()
         blockCountCircle.tintColor = blockCountCircleTint()
     }
- 
-    private func refreshHttps() {
+    
+    private func refreshSiteRating() {
+        siteRatingView.update(siteRating: siteRating)
         if siteRating.https {
             httpsBackground.tintColor = UIColor.monitoringPositiveTint
             httpsLabel.text = UserText.secureConnection
@@ -65,10 +67,12 @@ class ContentBlockerViewController: UITableViewController {
         }
     }
 
+    public func updateSiteRating(siteRating: SiteRating) {
+        self.siteRating = siteRating
+        refreshSiteRating()
+    }
+    
     private func blockCountText() -> String {
-        if !contentBlocker.enabled {
-            return "!"
-        }
         if !contentBlocker.enabled(forDomain: siteRating.domain) {
             return "!"
         }
@@ -76,9 +80,6 @@ class ContentBlockerViewController: UITableViewController {
     }
     
     private func blockCountCircleTint() -> UIColor {
-        if !contentBlocker.enabled {
-            return UIColor.monitoringNegativeTint
-        }
         if !contentBlocker.enabled(forDomain: siteRating.domain) {
             return UIColor.monitoringNegativeTint
         }

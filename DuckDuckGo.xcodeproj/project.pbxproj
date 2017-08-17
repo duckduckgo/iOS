@@ -65,7 +65,7 @@
 		F12A123D1F43644500277CCD /* ContentBlockerDisabledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */; };
 		F12A12411F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A12401F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift */; };
 		F12A12451F4491D300277CCD /* ContentBlockerTutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A12441F4491D300277CCD /* ContentBlockerTutorialCell.swift */; };
-		F12A12471F4493B200277CCD /* ContentBlockerTutorial.xib in Resources */ = {isa = PBXBuildFile; fileRef = F12A12461F4493B200277CCD /* ContentBlockerTutorial.xib */; };
+		F12A12471F4493B200277CCD /* ContentBlockerTutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F12A12461F4493B200277CCD /* ContentBlockerTutorialCell.xib */; };
 		F12ABAA11ECEEDCF0008AE50 /* TrackerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12ABAA01ECEEDCF0008AE50 /* TrackerLoader.swift */; };
 		F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F130D7391E5776C500C45811 /* OmniBarDelegate.swift */; };
 		F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BA31E6846C40062FC3C /* TabDelegate.swift */; };
@@ -96,6 +96,8 @@
 		F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */; };
 		F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
 		F144846A1F39E3B500F6AD2D /* SiteRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14484691F39E3B500F6AD2D /* SiteRating.swift */; };
+		F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F14513521F45FAAE00710C46 /* SiteRatingView.xib */; };
+		F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14513541F45FBFD00710C46 /* SiteRatingView.swift */; };
 		F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E491E1E391CE900DC037C /* URLExtensionTests.swift */; };
 		F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */; };
 		F152F55C1EFC002400A911B5 /* ContentBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F152F55B1EFC002400A911B5 /* ContentBlocker.swift */; };
@@ -345,7 +347,7 @@
 		F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerDisabledViewController.swift; sourceTree = "<group>"; };
 		F12A12401F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerDisabledDelegate.swift; sourceTree = "<group>"; };
 		F12A12441F4491D300277CCD /* ContentBlockerTutorialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerTutorialCell.swift; sourceTree = "<group>"; };
-		F12A12461F4493B200277CCD /* ContentBlockerTutorial.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentBlockerTutorial.xib; sourceTree = "<group>"; };
+		F12A12461F4493B200277CCD /* ContentBlockerTutorialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentBlockerTutorialCell.xib; sourceTree = "<group>"; };
 		F12ABAA01ECEEDCF0008AE50 /* TrackerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerLoader.swift; sourceTree = "<group>"; };
 		F130D7391E5776C500C45811 /* OmniBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBarDelegate.swift; sourceTree = "<group>"; };
 		F1386BA31E6846C40062FC3C /* TabDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabDelegate.swift; sourceTree = "<group>"; };
@@ -375,6 +377,8 @@
 		F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtension.swift; sourceTree = "<group>"; };
 		F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarExtension.swift; sourceTree = "<group>"; };
 		F14484691F39E3B500F6AD2D /* SiteRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteRating.swift; sourceTree = "<group>"; };
+		F14513521F45FAAE00710C46 /* SiteRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiteRatingView.xib; sourceTree = "<group>"; };
+		F14513541F45FBFD00710C46 /* SiteRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteRatingView.swift; sourceTree = "<group>"; };
 		F14E491E1E391CE900DC037C /* URLExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtensionTests.swift; sourceTree = "<group>"; };
 		F14E6EE71E773BA9001A184E /* InterfaceMeasurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurement.swift; sourceTree = "<group>"; };
 		F152F55B1EFC002400A911B5 /* ContentBlocker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlocker.swift; sourceTree = "<group>"; };
@@ -613,7 +617,7 @@
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
-				F1E249411EF2075C008C947A /* ContentBlocker */,
+				F1E249411EF2075C008C947A /* Site Monitoring */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1AB2B401E3F75A000868554 /* Settings */,
@@ -1396,7 +1400,7 @@
 			name = UserInterface;
 			sourceTree = "<group>";
 		};
-		F1E249411EF2075C008C947A /* ContentBlocker */ = {
+		F1E249411EF2075C008C947A /* Site Monitoring */ = {
 			isa = PBXGroup;
 			children = (
 				F1E2494D1EF2078D008C947A /* ContentBlocker.storyboard */,
@@ -1408,9 +1412,11 @@
 				F17FB1781F3536FB005B1CB6 /* ContentBlockerErrorDelegate.swift */,
 				F163C1631F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift */,
 				F12A12441F4491D300277CCD /* ContentBlockerTutorialCell.swift */,
-				F12A12461F4493B200277CCD /* ContentBlockerTutorial.xib */,
+				F12A12461F4493B200277CCD /* ContentBlockerTutorialCell.xib */,
+				F14513541F45FBFD00710C46 /* SiteRatingView.swift */,
+				F14513521F45FAAE00710C46 /* SiteRatingView.xib */,
 			);
-			name = ContentBlocker;
+			name = "Site Monitoring";
 			sourceTree = "<group>";
 		};
 		F1EEAC461EAFC708006128D9 /* Fonts */ = {
@@ -1524,6 +1530,7 @@
 				F143C2E01E4A4CD400CFDE3A /* Frameworks */,
 				F143C2E11E4A4CD400CFDE3A /* Headers */,
 				F143C2E21E4A4CD400CFDE3A /* Resources */,
+				F14FE6151F450FA8003DA736 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1666,11 +1673,12 @@
 				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
 				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
+				F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
 				F1E2494E1EF2078D008C947A /* ContentBlocker.storyboard in Resources */,
-				F12A12471F4493B200277CCD /* ContentBlockerTutorial.xib in Resources */,
+				F12A12471F4493B200277CCD /* ContentBlockerTutorialCell.xib in Resources */,
 				F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F11CEF661EBB66EF0088E4D7 /* FireTutorial.storyboard in Resources */,
@@ -1743,6 +1751,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelse\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf $SRCROOT/fonts/licensed\nfi\n";
+		};
+		F14FE6151F450FA8003DA736 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		F17843E61F361B3C00390DCD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1824,6 +1849,7 @@
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				F17FB1751F3510B5005B1CB6 /* ContentBlockerErrorViewController.swift in Sources */,
+				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				85ECA7F51F2A95860018EBEB /* PersistenceContainer.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,

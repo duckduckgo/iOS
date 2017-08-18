@@ -40,16 +40,12 @@ public extension SiteRating {
     }
     
     private var trackerCountScore: Int {
-        let baseScore = Double(trackersCount) / 10.0
+        let baseScore = Double(totalItemsDetected) / 10.0
         return Int(ceil(baseScore))
     }
     
     private var majorTrackerNetworkScore: Int {
         return containsMajorTracker ? 1 : 0
-    }
-    
-    private var trackersCount: Int {
-        return trackersDetected.reduce(0) { $0 + $1.value }
     }
     
     public var siteGrade: SiteGrade {

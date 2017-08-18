@@ -24,8 +24,8 @@ public class SiteRating {
     
     public let url: URL
     public let domain: String
-    public private(set) var trackersDetected = [Tracker: Int]()
-    public private(set) var trackersBlocked = [Tracker: Int]()
+    private var trackersDetected = [Tracker: Int]()
+    private var trackersBlocked = [Tracker: Int]()
     
     public init?(url: URL) {
         guard let domain = url.host else {

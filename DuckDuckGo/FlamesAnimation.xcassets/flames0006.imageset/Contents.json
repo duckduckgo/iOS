@@ -9,19 +9,8 @@
       "scale" : "2x"
     },
     {
-      "resizing" : {
-        "mode" : "3-part-vertical",
-        "center" : {
-          "mode" : "stretch",
-          "height" : 9
-        },
-        "cap-insets" : {
-          "top" : 1338,
-          "bottom" : 0
-        }
-      },
       "idiom" : "universal",
-      "filename" : "FireLarge.png",
+      "filename" : "flames0006.png",
       "scale" : "3x"
     }
   ],

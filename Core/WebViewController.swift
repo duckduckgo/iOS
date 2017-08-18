@@ -154,6 +154,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
+            decisionHandler(.allow)
             return
         }
         

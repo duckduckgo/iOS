@@ -277,16 +277,16 @@ extension MainViewController: OmniBarDelegate {
         loadQuery(query)
     }
     
+    func onSiteRatingPressed() {
+        launchContentBlockerPopover()
+    }
+    
     func onMenuPressed() {
         launchBrowsingMenu()
     }
     
     func onBookmarksPressed() {
         launchBookmarks()
-    }
-    
-    func onContentBlockerPressed() {
-        launchContentBlockerPopover()
     }
     
     func onDismissButtonPressed() {

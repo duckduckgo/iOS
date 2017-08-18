@@ -27,7 +27,7 @@ public class ContentBlockerTutorialCell: UITableViewCell {
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        let view = Bundle.main.loadNibNamed("ContentBlockerTutorial", owner: self, options: nil)![0] as! UIView
+        let view = Bundle.main.loadNibNamed("ContentBlockerTutorialCell", owner: self, options: nil)![0] as! UIView
         self.addSubview(view)
         view.frame = self.bounds
     }

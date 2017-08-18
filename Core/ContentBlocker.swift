@@ -22,8 +22,6 @@ import Foundation
 public class ContentBlocker {
 
     private var configuration: ContentBlockerConfigurationStore
-    public private(set) var trackersDetected = [Tracker: Int]()
-    public private(set) var trackersBlocked = [Tracker: Int]()
     
     public init(configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
         self.configuration = configuration
@@ -57,49 +55,22 @@ public class ContentBlocker {
         }
     }
     
-    public var uniqueItemsDetected: Int {
-        return trackersDetected.count
-    }
-    
-    public var uniqueItemsBlocked: Int {
-        return trackersBlocked.count
-    }
-
-    public var totalItemsDetected: Int {
-        return trackersDetected.reduce(0) { $0 + $1.value }
-    }
-    
-    public var totalItemsBlocked: Int {
-        return trackersBlocked.reduce(0) { $0 + $1.value }
-    }
-
-    public func resetMonitoring() {
-        trackersDetected = [Tracker: Int]()
-        trackersBlocked = [Tracker: Int]()
-    }
-    
-    public func block(url: URL, forDocument documentUrl: URL) -> Bool {
+    public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
         guard let tracker = thirdPartyTracker(forUrl: url, document: documentUrl) else {
-            return false
+            return (nil, false)
         }
         
         if !configuration.enabled {
-            return false
+            return (tracker, false)
         }
         
-        guard let host = documentUrl.host  else { return false }
+        guard let host = documentUrl.host  else { return (tracker, false) }
         if configuration.whitelisted(domain: host) {
-            return false
+            return (tracker, false)
         }
         
         Logger.log(text: "ContentBlocker BLOCKED \(url.absoluteString)")
-        trackerBlocked(tracker)
-        return true
-    }
-    
-    private func trackerBlocked(_ tracker: Tracker) {
-        let previousCount = trackersBlocked[tracker] ?? 0
-        trackersBlocked[tracker] = previousCount + 1
+        return (tracker, true)
     }
     
     /**
@@ -113,7 +84,6 @@ public class ContentBlocker {
         for tracker in trackers {
             if url.absoluteString.contains(tracker.url) && documentUrl.host != url.host {
                 Logger.log(text: "ContentBlocker DETECTED tracker \(url.absoluteString)")
-                trackerDetected(tracker)
                 return tracker
             }
         }
@@ -121,8 +91,4 @@ public class ContentBlocker {
         return nil
     }
     
-    private func trackerDetected(_ tracker: Tracker) {
-        let previousCount = trackersDetected[tracker] ?? 0
-        trackersDetected[tracker] = previousCount + 1
-    }
 }

@@ -35,6 +35,8 @@ struct FireAnimation {
         }
         
         let animationContainer = UIView(frame: window.frame)
+        animationContainer.autoresizingMask = .flexibleWidth
+
         let fireView = animatedFire(forContainer: animationContainer)
         animationContainer.addSubview(fireView)
         window.addSubview(animationContainer)
@@ -59,6 +61,7 @@ struct FireAnimation {
         let fireScale = fillWidthScale(view: fireView, container: container)
         let fireSize = CGSize(width: fireView.frame.width*fireScale, height: fireView.frame.height*fireScale)
         fireView.frame = CGRect(origin: fireView.frame.origin, size: fireSize)
+        fireView.autoresizingMask = .flexibleWidth
         fireView.center.x = container.center.x
         fireView.transform.ty = containerHeight - fireView.frame.height * Constants.initialFirePeekPortion
         fireView.startAnimating()

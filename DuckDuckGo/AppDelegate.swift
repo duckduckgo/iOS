@@ -45,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         startMigration()
+        StatisticsLoader.shared.load()
         TrackerLoader.shared.updateTrackers()
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {

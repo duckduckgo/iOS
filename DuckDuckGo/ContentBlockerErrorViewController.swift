@@ -21,6 +21,7 @@
 import UIKit
 import Core
 
+
 class ContentBlockerErrorViewController: UIViewController {
     
     @IBOutlet weak var errorLabel: UILabel!
@@ -57,6 +58,6 @@ class ContentBlockerErrorViewController: UIViewController {
     }
     
     private func onSuccess() {
-        delegate?.errorWasResolved()
+        delegate?.errorWasResolved(errorController: self)
     }
 }

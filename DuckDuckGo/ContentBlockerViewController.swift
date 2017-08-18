@@ -23,17 +23,17 @@ import Core
 
 class ContentBlockerViewController: UITableViewController {
 
+    @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var httpsBackground: UIImageView!
     @IBOutlet weak var httpsLabel: UILabel!
     @IBOutlet weak var blockCountCircle: UIImageView!
     @IBOutlet weak var blockCount: UILabel!
-    @IBOutlet weak var blockingEnabledToggle: UISwitch!
     @IBOutlet weak var blockThisDomainToggle: UISwitch!
     
     weak var delegate: ContentBlockerSettingsChangeDelegate?
 
-    private(set) var contentBlocker: ContentBlocker!
-    private(set) var siteRating: SiteRating!
+    private var contentBlocker: ContentBlocker!
+    private var siteRating: SiteRating!
     
     static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerViewController {
         let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
@@ -43,22 +43,28 @@ class ContentBlockerViewController: UITableViewController {
         controller.siteRating = siteRating
         return controller
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        siteRatingView.update(siteRating: siteRating)
+        refresh()
+    }
+
+    public func updateSiteRating(siteRating: SiteRating) {
+        self.siteRating = siteRating
+        siteRatingView.update(siteRating: siteRating)
         refresh()
     }
 
     public func refresh() {
+        siteRatingView.refresh()
         refreshHttps()
-        blockingEnabledToggle.isOn = contentBlocker.enabled
         blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: siteRating.domain)
-        blockThisDomainToggle.isEnabled = blockingEnabledToggle.isOn
         blockCount.text = blockCountText()
         blockCountCircle.tintColor = blockCountCircleTint()
     }
- 
-    private func refreshHttps() {
+    
+    public func refreshHttps() {
         if siteRating.https {
             httpsBackground.tintColor = UIColor.monitoringPositiveTint
             httpsLabel.text = UserText.secureConnection
@@ -67,35 +73,22 @@ class ContentBlockerViewController: UITableViewController {
             httpsLabel.text = UserText.unsecuredConnection
         }
     }
-
+    
     private func blockCountText() -> String {
-        if !contentBlocker.enabled {
-            return "!"
-        }
         if !contentBlocker.enabled(forDomain: siteRating.domain) {
             return "!"
         }
-        return "\(contentBlocker.uniqueItemsBlocked)"
+        return "\(siteRating.uniqueItemsBlocked)"
     }
     
     private func blockCountCircleTint() -> UIColor {
-        if !contentBlocker.enabled {
-            return UIColor.monitoringNegativeTint
-        }
         if !contentBlocker.enabled(forDomain: siteRating.domain) {
             return UIColor.monitoringNegativeTint
         }
-        if contentBlocker.uniqueItemsBlocked > 0 {
+        if siteRating.uniqueItemsBlocked > 0 {
             return UIColor.monitoringNeutralTint
         }
         return UIColor.monitoringPositiveTint
-    }
-    
-    @IBAction func onBlockingEnabledToggle(_ sender: UISwitch) {
-        contentBlocker.enabled = sender.isOn
-        blockThisDomainToggle.isEnabled = sender.isOn
-        refresh()
-        delegate?.contentBlockerSettingsDidChange()
     }
     
     @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {

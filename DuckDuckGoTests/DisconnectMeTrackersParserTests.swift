@@ -23,32 +23,36 @@ import XCTest
 
 class DisconnectMeTrackersParserTests: XCTestCase {
     
+    private var data = JsonTestDataLoader()
     private var testee = DisconnectMeTrackersParser()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
-        XCTAssertThrowsError(try testee.convert(fromJsonData: emptyData()), "") { (error) in
+        XCTAssertThrowsError(try testee.convert(fromJsonData: data.empty()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
     
     func testWhenJsonInvalidThenInvalidJsonErrorThrown() {
-        XCTAssertThrowsError(try testee.convert(fromJsonData: invalidJson()), "") { (error) in
+        XCTAssertThrowsError(try testee.convert(fromJsonData: data.invalid()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
-        XCTAssertThrowsError(try testee.convert(fromJsonData: incorrectForTypeJson()), "") { (error) in
+        let mismatchedJson = data.fromJsonFile("MockResponse/disconnect_mismatched")
+        XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        XCTAssertNoThrow(try testee.convert(fromJsonData: validJson()))
+        let validJson = data.fromJsonFile("MockResponse/disconnect")
+        XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
     
     func testWhenJsonValidThenResultContainsTrackersFromSupportedCategories() {
-        let result = try! testee.convert(fromJsonData: validJson())
+        let validJson = data.fromJsonFile("MockResponse/disconnect")
+        let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.count, 6)
         XCTAssertEqual(result[0], Tracker(url: "analyticsurl.com", parentDomain: "analyticsurl.com"))
         XCTAssertEqual(result[1], Tracker(url: "99anadurl.com", parentDomain: "anadurl.com"))
@@ -56,25 +60,5 @@ class DisconnectMeTrackersParserTests: XCTestCase {
         XCTAssertEqual(result[3], Tracker(url: "anothersocialurl.com", parentDomain: "anothersocialurl.com"))
         XCTAssertEqual(result[4], Tracker(url: "55anothersocialurl.com", parentDomain: "anothersocialurl.com"))
         XCTAssertEqual(result[5], Tracker(url: "99anothersocialurl.com", parentDomain: "anothersocialurl.com"))
-    }
-    
-    private func emptyData() -> Data {
-        return "".data(using: .utf16)!
-    }
-    
-    private func invalidJson() -> Data {
-        return "{[}".data(using: .utf16)!
-    }
-    
-    private func incorrectForTypeJson() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/disconnect_mismatched", ext: "json")
-    }
-    
-    private func validJson() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/disconnect_valid", ext: "json")
-    }
-    
-    private func bundle() ->Bundle {
-        return Bundle(for: type(of: self))
     }
 }

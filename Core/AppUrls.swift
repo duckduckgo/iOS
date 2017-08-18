@@ -28,58 +28,84 @@ public struct AppUrls {
         static let favicon = "https://duckduckgo.com/favicon.ico"
         static let autocomplete = "https://duckduckgo.com/ac/"
         static let contentBlocking = "https://duckduckgo.com/contentblocking.js"
+        static let cohort = "https://duckduckgo.com/atb.js"
     }
 
     private struct Param {
         static let search = "q"
+        static let source = "t"
+        static let appVersion = "tappv"
+        static let cohort = "atb"
     }
 
     private struct ParamValue {
-        static let safeSearchOff = "-1"
+        static let source = "ddg_ios"
+        static let appVersion = "ios"
+    }
+    
+    let version: AppVersion
+    let statisticsStore: StatisticsStore
+    
+    public init(version: AppVersion = AppVersion(), statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
+        self.version = version
+        self.statisticsStore = statisticsStore
     }
 
-    public static var base: URL {
+    public var base: URL {
         return URL(string: Url.base)!
     }
 
-    public static var favicon: URL {
+    public var favicon: URL {
         return URL(string: Url.favicon)!
     }
 
-    public static var home: URL {
+    public var home: URL {
         return URL(string: Url.home)!
     }
 
-    public static var contentBlocking: URL {
+    public var contentBlocking: URL {
         return URL(string: Url.contentBlocking)!
     }
     
-    public static func isDuckDuckGo(url: URL) -> Bool {
+    public var cohort: URL {
+        return URL(string: Url.cohort)!
+    }
+    
+    public func isDuckDuckGo(url: URL) -> Bool {
         return url.absoluteString.contains(Url.base)
     }
 
-    public static func searchQuery(fromUrl url: URL) -> String? {
+    public func searchQuery(fromUrl url: URL) -> String? {
         if !isDuckDuckGo(url: url) {
             return nil
         }
         return url.getParam(name: Param.search)
     }
 
-    public static func url(forQuery query: String) -> URL? {
+    public func url(forQuery query: String) -> URL {
         if let url = URL.webUrl(fromText: query) {
             return url
         }
-        if let searchUrl = searchUrl(text: query) {
-            return searchUrl
-        }
-        return nil
+        return searchUrl(text: query)
     }
-
-    public static func searchUrl(text: String) -> URL? {
-        return home.addParam(name: Param.search, value: text)
+    
+    /**
+     Generates a search url with the source (t) https://duck.co/help/privacy/t,
+     app version and cohort (atb) https://duck.co/help/privacy/atb
+     */
+    public func searchUrl(text: String) -> URL {
+        let appVersion = "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
+        
+        let searchUrl = home
+            .addParam(name: Param.search, value: text)
+            .addParam(name: Param.source, value: ParamValue.source)
+            .addParam(name: Param.appVersion, value: appVersion)
+        
+        guard let cohortVersion = statisticsStore.cohortVersion else { return searchUrl }
+        return searchUrl.addParam(name: Param.cohort, value: cohortVersion)
     }
-
-    public static func autocompleteUrl(forText text: String) -> URL? {
-        return URL(string: Url.autocomplete)?.addParam(name: Param.search, value: text)
+    
+    public func autocompleteUrl(forText text: String) -> URL {
+        return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
 }

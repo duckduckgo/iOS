@@ -86,11 +86,7 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func forgetAll() {
-        FireAnimation.animate() {
-            self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
-            self.collectionView.reloadData()
-            self.refreshTitle()
-        }
+        self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
     
     func onSelected(tabAt index: Int) {

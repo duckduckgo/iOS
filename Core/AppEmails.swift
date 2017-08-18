@@ -21,5 +21,5 @@
 import Foundation
 
 public struct AppEmails {
-    public static let feedback = "help@duckduckgo.com"
+    public static let feedback = "ios@duckduckgo.com"
 }

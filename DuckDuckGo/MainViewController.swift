@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
 
+    private lazy var appUrls: AppUrls = AppUrls()
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -107,7 +108,7 @@ class MainViewController: UIViewController {
     }
     
     func loadQueryInNewTab(_ query: String) {
-        guard let url = AppUrls.url(forQuery: query) else { return }
+        let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
     }
     
@@ -122,7 +123,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func loadQuery(_ query: String) {
-        guard let queryUrl = AppUrls.url(forQuery: query) else { return }
+        let queryUrl = appUrls.url(forQuery: query)
         loadUrl(queryUrl)
     }
     
@@ -167,17 +168,13 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func forgetAll(animated: Bool) {
+    fileprivate func forgetAll(completion: @escaping () -> Swift.Void) {
         WebCacheManager.clear() {}
-        let completion = {
+        FireAnimation.animate() {
+            completion()
             self.tabManager.clearAll()
             self.attachHomeScreen(active: false)
-        }
-        
-        if animated {
-            FireAnimation.animate(withCompletion: completion)
-        } else {
-            completion()
+            self.view.showBottomToast(UserText.actionForgetAllDone)
         }
     }
     
@@ -241,7 +238,7 @@ class MainViewController: UIViewController {
 
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
-            self?.forgetAll(animated: true)
+            self?.forgetAll() {}
         }
     }
 
@@ -280,16 +277,16 @@ extension MainViewController: OmniBarDelegate {
         loadQuery(query)
     }
     
+    func onSiteRatingPressed() {
+        launchContentBlockerPopover()
+    }
+    
     func onMenuPressed() {
         launchBrowsingMenu()
     }
     
     func onBookmarksPressed() {
         launchBookmarks()
-    }
-    
-    func onContentBlockerPressed() {
-        launchContentBlockerPopover()
     }
     
     func onDismissButtonPressed() {
@@ -316,17 +313,17 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 extension MainViewController: HomeControllerDelegate {
     
     func homeDidActivateOmniBar(home: HomeViewController) {
+        omniBar.clear()
         omniBar.becomeFirstResponder()
     }
     
     func homeDidDeactivateOmniBar(home: HomeViewController) {
         dismissAutcompleteSuggestions()
         omniBar.resignFirstResponder()
-        omniBar.clear()
     }
     
     func homeDidRequestForgetAll(home: HomeViewController) {
-        forgetAll(animated: true)
+        forgetAll() {}
     }
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
@@ -352,11 +349,7 @@ extension MainViewController: TabDelegate {
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }
-    
-    func tab(_ tab: TabViewController, didRequestNewTabForRequest urlRequest: URLRequest) {
-        loadRequestInNewTab(urlRequest)
-    }
-    
+
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         omniBar.updateSiteRating(siteRating)
     }
@@ -381,7 +374,9 @@ extension MainViewController: TabSwitcherDelegate {
     }
     
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController) {
-        forgetAll(animated: false)
+        forgetAll() {
+            tabSwitcher.dismiss(animated: false, completion:  nil)
+        }
     }
 }
 

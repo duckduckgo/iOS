@@ -141,9 +141,18 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+
+        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
+            decisionHandler(.cancel)
+            return
+        }
+
         guard let delegate = webEventsDelegate,
-            let url = navigationAction.request.url,
             let documentUrl = navigationAction.request.mainDocumentURL else {
             decisionHandler(.allow)
             return
@@ -158,7 +167,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        webEventsDelegate?.webView(webView, didRequestNewTabForRequest: navigationAction.request)
+        webView.load(navigationAction.request)
         return nil
     }
     

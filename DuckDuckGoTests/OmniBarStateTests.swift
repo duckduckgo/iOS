@@ -28,7 +28,7 @@ class OmniBarStateTests: XCTestCase {
     func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeEmptyEditingState()
         XCTAssertTrue(testee.showDismiss)
-        XCTAssertFalse(testee.showContentBlocker)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertTrue(testee.showBookmarks)
@@ -67,7 +67,7 @@ class OmniBarStateTests: XCTestCase {
     func testWhenInHomeTextEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeTextEditingState()
         XCTAssertTrue(testee.showDismiss)
-        XCTAssertFalse(testee.showContentBlocker)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
@@ -106,7 +106,7 @@ class OmniBarStateTests: XCTestCase {
     func testWhenInHomeNonEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeNonEditingState()
         XCTAssertFalse(testee.showDismiss)
-        XCTAssertFalse(testee.showContentBlocker)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertTrue(testee.showBookmarks)
@@ -145,7 +145,7 @@ class OmniBarStateTests: XCTestCase {
     func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingEmptyEditingState()
         XCTAssertTrue(testee.showDismiss)
-        XCTAssertFalse(testee.showContentBlocker)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
@@ -184,7 +184,7 @@ class OmniBarStateTests: XCTestCase {
     func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingTextEditingState()
         XCTAssertTrue(testee.showDismiss)
-        XCTAssertFalse(testee.showContentBlocker)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
@@ -223,7 +223,7 @@ class OmniBarStateTests: XCTestCase {
     func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingNonEditingState()
         XCTAssertFalse(testee.showDismiss)
-        XCTAssertTrue(testee.showContentBlocker)
+        XCTAssertTrue(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertTrue(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)

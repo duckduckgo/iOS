@@ -37,13 +37,9 @@ public class AppUserDefaults: AppSettings {
     }
 
     var autocomplete: Bool {
-
+        
         get {
-            guard let _ = userDefaults?.object(forKey: Keys.autocompleteKey) else {
-                return true;
-            }
-
-            return userDefaults?.bool(forKey: Keys.autocompleteKey) ?? false
+            return userDefaults?.bool(forKey: Keys.autocompleteKey, defaultValue: true) ?? true
         }
         
         set {
@@ -51,6 +47,5 @@ public class AppUserDefaults: AppSettings {
         }
         
     }
-        
 }
 

@@ -25,7 +25,7 @@ class FeedbackEmailTests: XCTestCase {
     
     var testee: FeedbackEmail!
     
-    let expectedEmail = "help@duckduckgo.com"
+    let expectedEmail = "ios@duckduckgo.com"
     let expectedSubject = "DuckDuckGo for iOS feedback"
     let expectedBody = "I'm running DuckDuckGo 7 (567) on an iPhone 6 (iOS 10.6). Here's my feedback:\n"
     

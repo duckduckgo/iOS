@@ -20,19 +20,15 @@
 
 import WebKit
 import SafariServices
-import ToastSwiftFramework
 import Core
 
 class TabViewController: WebViewController {
-    
-    private struct ViewConstants {
-        static let toastBottomMargin: CGFloat = 80
-    }
-    
+        
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
     
+    private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private var siteRating: SiteRating?
@@ -69,7 +65,7 @@ class TabViewController: WebViewController {
 
     func launchContentBlockerPopover() {
         guard let siteRating = siteRating else { return }
-        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }
+        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.siteRating) else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
@@ -79,21 +75,19 @@ class TabViewController: WebViewController {
     }
 
     fileprivate func onNewPageLoad() {
-        contentBlocker.resetMonitoring()
-        contentBlockerPopover?.refresh()
         if let url = url {
             siteRating = SiteRating(url: url)
+            contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
         } else {
+            contentBlockerPopover?.dismiss(animated: false, completion: nil)
             siteRating = nil
         }
         delegate?.tab(self, didChangeSiteRating: siteRating)
     }
     
-    fileprivate func onContentBlockerStateChanged() {
-        contentBlockerPopover?.refresh()
-        siteRating?.trackers = contentBlocker.trackersDetected
-        guard let siteRating = siteRating  else { return }
+    fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
+        contentBlockerPopover?.refresh()
     }
 
     func launchBrowsingMenu() {
@@ -141,7 +135,7 @@ class TabViewController: WebViewController {
             bookmark: bookmark,
             saveCompletion: { [weak self] updatedBookmark in
                 BookmarksManager().save(bookmark: updatedBookmark)
-                self?.makeToast(text: UserText.webSaveLinkDone)
+                self?.view.showBottomToast(UserText.webSaveLinkDone)
             },
             cancelCompletion: {})
         present(alert, animated: true, completion: nil)
@@ -178,8 +172,9 @@ class TabViewController: WebViewController {
     }
     
     private func copyAction(forUrl url: URL) -> UIAlertAction {
+        let copyText = appUrls.searchQuery(fromUrl: url) ?? url.absoluteString
         return UIAlertAction(title: UserText.actionCopy, style: .default) { (action) in
-            UIPasteboard.general.string = AppUrls.searchQuery(fromUrl: url) ?? url.absoluteString
+            UIPasteboard.general.string = copyText
         }
     }
     
@@ -206,11 +201,17 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        let blocked = contentBlocker.block(url: url, forDocument: documentUrl)
-        onContentBlockerStateChanged()
-        if blocked {
+        let policy = contentBlocker.policy(forUrl: url, document: documentUrl)
+        
+        if let tracker = policy.tracker {
+            siteRating?.trackerDetected(tracker, blocked: policy.block)
+            onSiteRatingChanged()
+        }
+
+        if policy.block {
             return false
         }
+        
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
@@ -222,12 +223,6 @@ class TabViewController: WebViewController {
         return SupportedExternalURLScheme.isSupported(url: url)
     }
     
-    private func makeToast(text: String) {
-        let x = view.bounds.size.width / 2.0
-        let y = view.bounds.size.height - ViewConstants.toastBottomMargin
-        view.makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
-    }
-
     func dismiss() {
         webView.scrollView.delegate = nil
         willMove(toParentViewController: nil)
@@ -271,10 +266,6 @@ extension TabViewController: WebEventsDelegate {
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
         return shouldLoad(url: url, forDocument: documentUrl)
-    }
-    
-    func webView(_ webView: WKWebView, didRequestNewTabForRequest urlRequest: URLRequest) {
-        delegate?.tab(self, didRequestNewTabForRequest: urlRequest)
     }
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {

@@ -17,12 +17,17 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 struct FireAnimation {
     
-    static func animate(withCompletion completion: @escaping () -> Swift.Void) {
+    struct Constants {
+        static let animationDuration = 1.4
+        static let endAnimationDuration = 0.1
+        static let initialFirePeekPortion: CGFloat = 0.15
+    }
+    
+    static func animate(completion: @escaping () -> Swift.Void) {
         
         guard let window = UIApplication.shared.keyWindow else {
             completion()
@@ -30,19 +35,56 @@ struct FireAnimation {
         }
         
         let animationContainer = UIView(frame: window.frame)
-        let fireView = UIImageView(image: #imageLiteral(resourceName: "FireLargeStretchable"))
-        let nativeHeight = fireView.frame.size.height
-        let stretchedHeight = nativeHeight + animationContainer.frame.size.height
-        fireView.frame.size = CGSize(width: animationContainer.frame.width, height: stretchedHeight)
-        fireView.transform.ty = animationContainer.frame.size.height
+        animationContainer.autoresizingMask = .flexibleWidth
+
+        let fireView = animatedFire(forContainer: animationContainer)
         animationContainer.addSubview(fireView)
         window.addSubview(animationContainer)
         
-        UIView.animate(withDuration: 1.5, animations: {
-            fireView.transform.ty = -nativeHeight
+        let fireViewHeight = fireView.frame.size.height
+        UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseOut, animations: {
+            fireView.transform.ty = -fireViewHeight
         }) { _ in
             completion()
-            animationContainer.removeFromSuperview()
+            UIView.animate(withDuration: Constants.endAnimationDuration, animations: {
+            }) { _ in
+                animationContainer.removeFromSuperview()
+            }
         }
+    }
+    
+    private static func animatedFire(forContainer container: UIView) -> UIView {
+        let fireView = UIImageView(image: #imageLiteral(resourceName: "flames0001"))
+        fireView.animationImages = animatedImages
+        
+        let containerHeight = container.frame.size.height
+        let fireScale = fillWidthScale(view: fireView, container: container)
+        let fireSize = CGSize(width: fireView.frame.width*fireScale, height: fireView.frame.height*fireScale)
+        fireView.frame = CGRect(origin: fireView.frame.origin, size: fireSize)
+        fireView.autoresizingMask = .flexibleWidth
+        fireView.center.x = container.center.x
+        fireView.transform.ty = containerHeight - fireView.frame.height * Constants.initialFirePeekPortion
+        fireView.startAnimating()
+        
+        return fireView
+    }
+    
+    private static var animatedImages: [UIImage] {
+        var images = [UIImage]()
+        for i in 1...20 {
+            let filename = String(format: "flames00%02d", i)
+            let image = #imageLiteral(resourceName: filename)
+            images.append(image)
+        }
+        return images
+    }
+    
+    private static func fillWidthScale(view: UIView, container: UIView) -> CGFloat {
+        let fillWidth = container.frame.width
+        let width = view.frame.width
+        if width < fillWidth {
+            return fillWidth / width
+        }
+        return 1
     }
 }

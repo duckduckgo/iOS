@@ -20,93 +20,53 @@
 
 import Foundation
 
-public struct SiteRating {
+public class SiteRating {
     
     public let url: URL
     public let domain: String
-    public var trackers = [Tracker: Int]()
-
+    private var trackersDetected = [Tracker: Int]()
+    private var trackersBlocked = [Tracker: Int]()
+    
     public init?(url: URL) {
         guard let domain = url.host else {
             return nil
         }
         self.url = url
         self.domain = domain
-   }
-
-    public var siteScore: Int {
-        var score = 1
-        score += httpsScore
-        score += trackerCountScore
-        score += majorTrackerNetworkScore
-        
-        let cache =  SiteRatingCache.shared
-        if cache.add(domain: domain, score: score) {
-            return score
-        }
-        return cache.get(domain: domain)!
     }
     
     public var https: Bool {
         return url.isHttps()
     }
     
-    private var httpsScore: Int {
-        return https ? -1 : 0
+    public var containsMajorTracker: Bool {
+        return trackersDetected.contains(where: { $0.key.fromMajorNetwork() } )
     }
     
-    private var trackerCountScore: Int {
-        let baseScore = Double(trackersCount) / 10.0
-        return Int(ceil(baseScore))
-    }
-    
-    public var trackersCount: Int {
-        return trackers.reduce(0) { $0 + $1.value }
-    }
-    
-    private var majorTrackerNetworkScore: Int {
-        return containsMajorTracker ? 1 : 0
-    }
-    
-    private var containsMajorTracker: Bool {
-        return trackers.contains(where: { $0.key.fromMajorNetwork() } )
-    }
-
-    public var siteGrade: SiteGrade {
-        return SiteGrade.grade(fromScore: siteScore)
-    }
-}
-
-
-public class SiteRatingCache {
-    
-    public static let shared = SiteRatingCache()
-    
-    private var cachedScores = [String: Int]()
-    
-    /**
-     Adds a score to the cache. Only replaces a preexisting score if
-     the new score is higher
-     - returns: true if the cache was updated, otherwise false
-     */
-    func add(domain: String, score: Int) -> Bool {
-        return compareAndSet(domain: domain, score: score)
-    }
-    
-    private func compareAndSet(domain: String, score current: Int) -> Bool {
-        if let previous = cachedScores[domain], previous > current {
-            return false
+    public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
+        
+        let detectedCount = trackersDetected[tracker] ?? 0
+        trackersDetected[tracker] = detectedCount + 1
+        
+        if blocked{
+            let blockCount = trackersBlocked[tracker] ?? 0
+            trackersBlocked[tracker] = blockCount + 1
         }
-        cachedScores[domain] = current
-        return true
     }
     
-    func get(domain: String) -> Int? {
-        return cachedScores[domain]
+    public var uniqueItemsDetected: Int {
+        return trackersDetected.count
     }
     
-    func reset() {
-        cachedScores =  [String: Int]()
+    public var uniqueItemsBlocked: Int {
+        return trackersBlocked.count
     }
     
+    public var totalItemsDetected: Int {
+        return trackersDetected.reduce(0) { $0 + $1.value }
+    }
+    
+    public var totalItemsBlocked: Int {
+        return trackersBlocked.reduce(0) { $0 + $1.value }
+    }
 }

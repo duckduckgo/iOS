@@ -22,7 +22,7 @@ import Foundation
 
 public class SiteRating {
     
-    public let url: URL
+    public var url: URL
     public let domain: String
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()

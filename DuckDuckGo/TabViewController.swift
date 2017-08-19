@@ -73,21 +73,28 @@ class TabViewController: WebViewController {
         present(controller: controller, fromView: button)
         contentBlockerPopover = controller
     }
-
-    fileprivate func onNewPageLoad() {
+    
+    fileprivate func resetSiteRating() {
         if let url = url {
             siteRating = SiteRating(url: url)
-            contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
         } else {
-            contentBlockerPopover?.dismiss(animated: false, completion: nil)
             siteRating = nil
         }
-        delegate?.tab(self, didChangeSiteRating: siteRating)
+        onSiteRatingChanged()
+    }
+    
+    fileprivate func updateSiteRating() {
+        if let url = url {
+            siteRating?.url = url
+        } else {
+            siteRating = nil
+        }
+        onSiteRatingChanged()
     }
     
     fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
-        contentBlockerPopover?.refresh()
+        contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
     }
 
     func launchBrowsingMenu() {
@@ -244,12 +251,13 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        onNewPageLoad()
+        resetSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
+        updateSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }

@@ -56,10 +56,6 @@ class ContentBlockerPopover: UIViewController {
     func updateSiteRating(siteRating: SiteRating) {
         contentBlockerViewController?.updateSiteRating(siteRating: siteRating)
     }
-    
-    func refresh() {
-        contentBlockerViewController?.refresh()
-    }
 
     fileprivate func attachErrorViewController() {
         let controller = ContentBlockerErrorViewController.loadFromStoryboard(delegate: self)

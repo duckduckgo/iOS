@@ -23,7 +23,7 @@ import SafariServices
 extension SFContentBlockerManager {
     
     struct Constants {
-        static let identifier = "com.duckduckgo.DuckDuckGo.ContentBlockerExtension"
+        static let identifier = "com.duckduckgo.mobile.ios.ContentBlockerExtension"
     }
     
     public static func reloadContentBlocker() {

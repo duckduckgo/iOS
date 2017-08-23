@@ -56,7 +56,7 @@ class ContentBlockerViewController: UITableViewController {
         refresh()
     }
 
-    public func refresh() {
+    private func refresh() {
         siteRatingView.refresh()
         refreshHttps()
         blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: siteRating.domain)
@@ -64,7 +64,7 @@ class ContentBlockerViewController: UITableViewController {
         blockCountCircle.tintColor = blockCountCircleTint()
     }
     
-    public func refreshHttps() {
+    private func refreshHttps() {
         if siteRating.https {
             httpsBackground.tintColor = UIColor.monitoringPositiveTint
             httpsLabel.text = UserText.secureConnection

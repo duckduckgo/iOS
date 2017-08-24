@@ -157,18 +157,32 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             decisionHandler(.allow)
             return
         }
-        
+
+        let appUrls = AppUrls()
+        if (appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasMobileStatsParams(url: url)) {
+            reissueSearchWithStatsParams(url)
+            decisionHandler(.cancel)
+            return
+        }
+
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
             decisionHandler(.allow)
             return
         }
-        
+
         decisionHandler(.cancel)
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         webView.load(navigationAction.request)
         return nil
+    }
+
+    private func reissueSearchWithStatsParams(_ url: URL) {
+        let appUrls = AppUrls()
+        guard let search = appUrls.searchQuery(fromUrl: url) else { return }
+        let mobileSearch = appUrls.searchUrl(text: search)
+        load(url: mobileSearch)
     }
     
     private func showProgressIndicator() {

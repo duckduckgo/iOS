@@ -72,7 +72,8 @@ public struct AppUrls {
     }
     
     public func isDuckDuckGo(url: URL) -> Bool {
-        return url.absoluteString.contains(Url.base)
+        guard let host = url.host else { return false }
+        return host == Url.base || host.hasSuffix(".\(Url.base)")
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {
@@ -108,4 +109,16 @@ public struct AppUrls {
     public func autocompleteUrl(forText text: String) -> URL {
         return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
+
+    public func isDuckDuckGoSearch(url: URL) -> Bool {
+        if !isDuckDuckGo(url: url) { return false }
+        guard let _ = url.getParam(name: Param.search) else { return false }
+        return true
+    }
+
+    public func hasMobileStatsParams(url: URL) -> Bool {
+        guard let cohort = url.getParam(name: Param.cohort), cohort == statisticsStore.cohortVersion else { return false }
+        return true
+    }
+
 }

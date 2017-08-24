@@ -31,6 +31,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     open private(set) var webView: WKWebView!
 
+    private lazy var appUrls: AppUrls = AppUrls()
+
     public var name: String? {
         return webView.title    
     }
@@ -158,9 +160,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             return
         }
 
-        let appUrls = AppUrls()
-        if (appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasMobileStatsParams(url: url)) {
-            reissueSearchWithStatsParams(url)
+        if (shouldReissueSearch(for: url)) {
+            reissueSearchWithStatsParams(for: url)
             decisionHandler(.cancel)
             return
         }
@@ -178,8 +179,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return nil
     }
 
-    private func reissueSearchWithStatsParams(_ url: URL) {
-        let appUrls = AppUrls()
+    private func shouldReissueSearch(for url: URL) -> Bool {
+        return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasMobileStatsParams(url: url)
+    }
+
+    private func reissueSearchWithStatsParams(for url: URL) {
         guard let search = appUrls.searchQuery(fromUrl: url) else { return }
         let mobileSearch = appUrls.searchUrl(text: search)
         load(url: mobileSearch)

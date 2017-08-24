@@ -21,7 +21,15 @@
 import XCTest
 
 class URLExtensionTests: XCTestCase {
-    
+
+    func testUrlWithUserIsFalse() {
+        XCTAssertFalse(URL.isWebUrl(text: "http://example.com@sample.com"))
+    }
+
+    func testBug1() {
+        XCTAssertTrue(URL.isWebUrl(text: "http://www.veganchic.com/products/Camo-High-Top-Sneaker-by-The-Critical-Slide-Societ+80758-0180.html"))
+    }
+
     func testWhenHostIsValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "test.com"))
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11"))
@@ -63,13 +71,6 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl(text: "test.com?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "https://m.facebook.com/?refsrc=https%3A%2F%2Fwww.facebook.com%2F&_rdr"))
-    }
-    
-    func testWhenParamsAreInvalidThenIsWebUrlIsFalse() {
-        XCTAssertFalse(URL.isWebUrl(text: "http://test.com?s=!"))
-        XCTAssertFalse(URL.isWebUrl(text: "http://121.33.2.11?s=!"))
-        XCTAssertFalse(URL.isWebUrl(text: "test.com?s=!"))
-        XCTAssertFalse(URL.isWebUrl(text: "121.33.2.11?s=!"))
     }
     
     func testWhenGivenSimpleStringThenIsWebUrlIsFalse() {

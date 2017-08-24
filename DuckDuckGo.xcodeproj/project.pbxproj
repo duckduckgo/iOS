@@ -1760,7 +1760,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelse\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf $SRCROOT/fonts/licensed\nfi\n";
+			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelse\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\nfi\n";
 		};
 		F14FE6151F450FA8003DA736 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

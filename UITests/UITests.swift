@@ -29,6 +29,8 @@ class UITests: XCTestCase {
         app = XCUIApplication()
         setupSnapshot(app)
         app.launch()
+
+        skipOnboarding()
         clearTabsAndData()
 
         continueAfterFailure = false
@@ -64,8 +66,20 @@ class UITests: XCTestCase {
 
     // MARK: private
 
+    private func skipOnboarding() {
+        guard app.staticTexts["Real Privacy"].exists else { return  }
+
+        XCUIApplication().children(matching: .window)
+            .element(boundBy: 0).children(matching: .other)
+            .element.children(matching: .other)
+            .element.children(matching: .other)
+            .element(boundBy: 1).children(matching: .button)
+            .element.tap()
+
+    }
+
     private func tapSiteRating() {
-        let bar = XCUIApplication().navigationBars["DuckDuckGo.MainView"]
+        let bar = app.navigationBars["DuckDuckGo.MainView"]
         if bar.staticTexts["A"].exists {
             bar.staticTexts["A"].tap()
         } else if bar.staticTexts["B"].exists {

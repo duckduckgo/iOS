@@ -47,7 +47,15 @@ class UITests: XCTestCase {
 
         addTab()
         enterSearch("bars in portland")
+        Snapshot.waitForLoadingIndicatorToDisappear()
         snapshot("Search Results")
+
+
+        addTab()
+        enterSearch("https://nytimes.com")
+        Snapshot.waitForLoadingIndicatorToDisappear()
+        XCUIApplication().navigationBars["DuckDuckGo.MainView"].staticTexts["A"].tap()
+        snapshot("Tracker Blocking")
 
     }
 

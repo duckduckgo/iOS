@@ -22,11 +22,11 @@ import XCTest
 
 class URLExtensionTests: XCTestCase {
 
-    func testUrlWithUserIsFalse() {
+    func testWhenUserIsPresentThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http://example.com@sample.com"))
     }
 
-    func testBug1() {
+    func testWhenGivenLongWellFormedUrlThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://www.veganchic.com/products/Camo-High-Top-Sneaker-by-The-Critical-Slide-Societ+80758-0180.html"))
     }
 

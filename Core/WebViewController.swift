@@ -184,8 +184,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
 
     private func reissueSearchWithStatsParams(for url: URL) {
-        guard let search = appUrls.searchQuery(fromUrl: url) else { return }
-        let mobileSearch = appUrls.searchUrl(text: search)
+        let mobileSearch = appUrls.fixStatsParams(for: url)
         load(url: mobileSearch)
     }
     

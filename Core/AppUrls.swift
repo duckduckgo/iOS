@@ -95,15 +95,18 @@ public struct AppUrls {
      app version and cohort (atb) https://duck.co/help/privacy/atb
      */
     public func searchUrl(text: String) -> URL {
-        let searchUrl = home
-            .addParam(name: Param.search, value: text)
-            .addParam(name: Param.source, value: ParamValue.source)
+        let searchUrl = home.addParam(name: Param.search, value: text)
+        return fixStatsParams(for: searchUrl)
+    }
+
+    public func fixStatsParams(for url: URL) -> URL {
+        let searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
             .addParam(name: Param.appVersion, value: appVersion)
-        
+
         guard let cohortVersion = statisticsStore.cohortVersion else { return searchUrl }
         return searchUrl.addParam(name: Param.cohort, value: cohortVersion)
     }
-    
+
     private var appVersion: String {
         return "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
     }

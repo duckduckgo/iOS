@@ -125,13 +125,10 @@ class UITests: XCTestCase {
     }
 
     func screenshotSearchResults() {
-        var url = AppUrls().searchUrl(text: "bars in portland")
-        url = url.addParam(name: "kl", value: "us-en")
-        url = url.addParam(name: "k1", value: "-1")
-        enterSearch(url.absoluteString)
+        enterSearch("https://duckduckgo.com?q=bars%20in%20portland&kl=us-en&k1=-1")
         Snapshot.waitForLoadingIndicatorToDisappear()
+        sleep(3)
         snapshot("Search Results")
-        sleep(10)
     }
 
     func screenshotAutoComplete() {

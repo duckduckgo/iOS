@@ -43,13 +43,23 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "857AEF7E1F4F2AE9003B84A1"
+               BuildableName = "UITests.xctest"
+               BlueprintName = "UITests"
+               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F128109E1EB35B5300F95E4E"
-            BuildableName = "ContentBlockerExtension.appex"
-            BlueprintName = "ContentBlockerExtension"
+            BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
+            BuildableName = "DuckDuckGo.app"
+            BlueprintName = "DuckDuckGo"
             ReferencedContainer = "container:DuckDuckGo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

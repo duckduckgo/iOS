@@ -21,30 +21,77 @@ import XCTest
 @testable import Core
 
 class AppUrlsTests: XCTestCase {
-    
-    var mockStatisticsStore: MockStatisticsStore!
 
+    var mockStatisticsStore: MockStatisticsStore!
+    
     override func setUp() {
         super.setUp()
         mockStatisticsStore = MockStatisticsStore()
     }
+    
+    private var versionWithMockBundle: AppVersion {
+        let mockBundle = MockBundle()
+        mockBundle.add(name: AppVersion.Keys.versionNumber, value: "7")
+        mockBundle.add(name: AppVersion.Keys.buildNumber, value: "900")
+        return AppVersion(bundle: mockBundle)
+    }
 
     func testHasMobileStatsParamsWithMatchingCohort() {
         mockStatisticsStore.cohortVersion = "y"
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let actual = testee.hasMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y")!)
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios&tappv=ios_7_900")!)
         let expected = true
         XCTAssertEqual(actual, expected)
     }
 
-    func testHasMobileStatsParamsWithMismatchingCohort() {
+    func testHasMobileStatsParamsWithMismatchedCohort() {
         mockStatisticsStore.cohortVersion = "y"
-        let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let actual = testee.hasMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x")!)
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios&tappv=ios_7_900")!)
         let expected = false
         XCTAssertEqual(actual, expected)
     }
 
+    func testHasMobileStatsParamsWithNoCohort() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?t=ddg_ios&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithMismatchedSource() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_desktop&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithNoSource() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithMismatchedVersion() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios&tappv=ios_1_100")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithNoVersion() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
     func testIsSearchUrl() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://duckduckgo.com?q=hello")!)

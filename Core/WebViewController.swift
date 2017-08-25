@@ -180,7 +180,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
 
     private func shouldReissueSearch(for url: URL) -> Bool {
-        return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasMobileStatsParams(url: url)
+        return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasCorrectMobileStatsParams(url: url)
     }
 
     private func reissueSearchWithStatsParams(for url: URL) {

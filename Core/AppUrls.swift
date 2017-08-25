@@ -95,8 +95,6 @@ public struct AppUrls {
      app version and cohort (atb) https://duck.co/help/privacy/atb
      */
     public func searchUrl(text: String) -> URL {
-        let appVersion = "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
-        
         let searchUrl = home
             .addParam(name: Param.search, value: text)
             .addParam(name: Param.source, value: ParamValue.source)
@@ -104,6 +102,10 @@ public struct AppUrls {
         
         guard let cohortVersion = statisticsStore.cohortVersion else { return searchUrl }
         return searchUrl.addParam(name: Param.cohort, value: cohortVersion)
+    }
+    
+    private var appVersion: String {
+        return "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
     }
     
     public func autocompleteUrl(forText text: String) -> URL {
@@ -116,8 +118,10 @@ public struct AppUrls {
         return true
     }
 
-    public func hasMobileStatsParams(url: URL) -> Bool {
+    public func hasCorrectMobileStatsParams(url: URL) -> Bool {
         guard let cohort = url.getParam(name: Param.cohort), cohort == statisticsStore.cohortVersion else { return false }
+        guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
+        guard let version = url.getParam(name: Param.appVersion), version == appVersion else { return false }
         return true
     }
 

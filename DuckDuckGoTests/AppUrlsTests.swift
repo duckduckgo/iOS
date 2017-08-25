@@ -22,7 +22,77 @@ import XCTest
 
 class AppUrlsTests: XCTestCase {
     
-    var mockStatisticsStore = MockStatisticsStore()
+    var mockStatisticsStore: MockStatisticsStore!
+
+    override func setUp() {
+        super.setUp()
+        mockStatisticsStore = MockStatisticsStore()
+    }
+
+    func testHasMobileStatsParamsWithMatchingCohort() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.hasMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testHasMobileStatsParamsWithMismatchingCohort() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.hasMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsSearchUrl() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://duckduckgo.com?q=hello")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsSearchUrlWithDDGURLNoSearchParams() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://duckduckgo.com?test=hello")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsSearchUrlWithNonDDGURL() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://www.example.com")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURLAsParam() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "http://www.example.com?x=duckduckgo.com")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURLHttps() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "https://duckduckgo.com")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURLWithSubdomain() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "http://www.duckduckgo.com")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURL() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "http://duckduckgo.com")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
     
     func testAutocompleteUrlCreatesCorrectUrlWithParams() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)

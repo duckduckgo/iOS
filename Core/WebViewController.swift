@@ -31,6 +31,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     open private(set) var webView: WKWebView!
 
+    private lazy var appUrls: AppUrls = AppUrls()
+
     public var name: String? {
         return webView.title    
     }
@@ -157,18 +159,34 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             decisionHandler(.allow)
             return
         }
-        
+
+        if shouldReissueSearch(for: url) {
+            reissueSearchWithStatsParams(for: url)
+            decisionHandler(.cancel)
+            return
+        }
+
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
             decisionHandler(.allow)
             return
         }
-        
+
         decisionHandler(.cancel)
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         webView.load(navigationAction.request)
         return nil
+    }
+
+    private func shouldReissueSearch(for url: URL) -> Bool {
+        return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasMobileStatsParams(url: url)
+    }
+
+    private func reissueSearchWithStatsParams(for url: URL) {
+        guard let search = appUrls.searchQuery(fromUrl: url) else { return }
+        let mobileSearch = appUrls.searchUrl(text: search)
+        load(url: mobileSearch)
     }
     
     private func showProgressIndicator() {

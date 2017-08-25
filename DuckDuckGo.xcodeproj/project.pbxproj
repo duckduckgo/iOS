@@ -12,8 +12,6 @@
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
 		85782E261F33E24900313000 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85782E251F33E24900313000 /* UserText.swift */; };
 		857A07A91F3AE3800035EFF4 /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */; };
-		857AEF821F4F2AE9003B84A1 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857AEF811F4F2AE9003B84A1 /* UITests.swift */; };
-		857AEF8A1F4F2C66003B84A1 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857AEF891F4F2C66003B84A1 /* SnapshotHelper.swift */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
 		85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */; };
 		85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58591F3506AE00C6E8CA /* AppSettings.swift */; };
@@ -21,6 +19,9 @@
 		85ECA7EE1F2A82C20018EBEB /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7ED1F2A82C20018EBEB /* Migration.swift */; };
 		85ECA7F11F2A83190018EBEB /* MigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7F01F2A83190018EBEB /* MigrationTests.swift */; };
 		85ECA7F51F2A95860018EBEB /* PersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7F41F2A95860018EBEB /* PersistenceContainer.swift */; };
+		85ED11231F50B58C00A7FBCE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85ED11201F50B58C00A7FBCE /* Info.plist */; };
+		85ED11271F50B6FB00A7FBCE /* AppScreenshotsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */; };
+		85ED11281F50B6FB00A7FBCE /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
 		F10307681E7D67BA0059FEC7 /* favicon.js in Resources */ = {isa = PBXBuildFile; fileRef = F10307671E7D67BA0059FEC7 /* favicon.js */; };
@@ -301,10 +302,7 @@
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85782E251F33E24900313000 /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
-		857AEF7F1F4F2AE9003B84A1 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		857AEF811F4F2AE9003B84A1 /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
-		857AEF831F4F2AE9003B84A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		857AEF891F4F2C66003B84A1 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaultsTests.swift; sourceTree = "<group>"; };
 		85BA58591F3506AE00C6E8CA /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -314,6 +312,9 @@
 		85ECA7ED1F2A82C20018EBEB /* Migration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Migration.swift; path = Migration/Migration.swift; sourceTree = "<group>"; };
 		85ECA7F01F2A83190018EBEB /* MigrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MigrationTests.swift; path = Migration/MigrationTests.swift; sourceTree = "<group>"; };
 		85ECA7F41F2A95860018EBEB /* PersistenceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistenceContainer.swift; path = Migration/PersistenceContainer.swift; sourceTree = "<group>"; };
+		85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppScreenshotsUITests.swift; path = AppScreenshots/AppScreenshotsUITests.swift; sourceTree = SOURCE_ROOT; };
+		85ED11201F50B58C00A7FBCE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AppScreenshots/Info.plist; sourceTree = SOURCE_ROOT; };
+		85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = AppScreenshots/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		F10307671E7D67BA0059FEC7 /* favicon.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = favicon.js; sourceTree = "<group>"; };
@@ -612,7 +613,7 @@
 				F15A8B751E43A428008B8C6F /* ShareExtension */,
 				F12810A01EB35B5300F95E4E /* ContentBlockerExtension */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
-				857AEF801F4F2AE9003B84A1 /* UITests */,
+				857AEF801F4F2AE9003B84A1 /* AppScreenshots */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
 			);
@@ -627,7 +628,7 @@
 				F1AA545E1E48D90700223211 /* TodayExtension.appex */,
 				F143C2E41E4A4CD400CFDE3A /* Core.framework */,
 				F128109F1EB35B5300F95E4E /* ContentBlockerExtension.appex */,
-				857AEF7F1F4F2AE9003B84A1 /* UITests.xctest */,
+				857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -682,14 +683,15 @@
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
 		};
-		857AEF801F4F2AE9003B84A1 /* UITests */ = {
+		857AEF801F4F2AE9003B84A1 /* AppScreenshots */ = {
 			isa = PBXGroup;
 			children = (
-				857AEF811F4F2AE9003B84A1 /* UITests.swift */,
-				857AEF831F4F2AE9003B84A1 /* Info.plist */,
-				857AEF891F4F2C66003B84A1 /* SnapshotHelper.swift */,
+				85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */,
+				85ED11201F50B58C00A7FBCE /* Info.plist */,
+				85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */,
 			);
-			path = UITests;
+			name = AppScreenshots;
+			path = AppScreenshots;
 			sourceTree = "<group>";
 		};
 		85ECA7EA1F2A825C0018EBEB /* Migration */ = {
@@ -1546,9 +1548,9 @@
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		857AEF7E1F4F2AE9003B84A1 /* UITests */ = {
+		857AEF7E1F4F2AE9003B84A1 /* AppScreenshots */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 857AEF881F4F2AE9003B84A1 /* Build configuration list for PBXNativeTarget "UITests" */;
+			buildConfigurationList = 857AEF881F4F2AE9003B84A1 /* Build configuration list for PBXNativeTarget "AppScreenshots" */;
 			buildPhases = (
 				857AEF7B1F4F2AE9003B84A1 /* Sources */,
 				857AEF7C1F4F2AE9003B84A1 /* Frameworks */,
@@ -1559,9 +1561,9 @@
 			dependencies = (
 				857AEF851F4F2AE9003B84A1 /* PBXTargetDependency */,
 			);
-			name = UITests;
-			productName = UITests;
-			productReference = 857AEF7F1F4F2AE9003B84A1 /* UITests.xctest */;
+			name = AppScreenshots;
+			productName = AppScreenshots;
+			productReference = 857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		F128109E1EB35B5300F95E4E /* ContentBlockerExtension */ = {
@@ -1721,7 +1723,7 @@
 				84E341911E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E31E4A4CD400CFDE3A /* Core */,
 				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
-				857AEF7E1F4F2AE9003B84A1 /* UITests */,
+				857AEF7E1F4F2AE9003B84A1 /* AppScreenshots */,
 				F15A8B731E43A428008B8C6F /* ShareExtension */,
 				F1AA545D1E48D90700223211 /* TodayExtension */,
 				F128109E1EB35B5300F95E4E /* ContentBlockerExtension */,
@@ -1742,6 +1744,7 @@
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
 				F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
+				85ED11231F50B58C00A7FBCE /* Info.plist in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
 				F1E2494E1EF2078D008C947A /* ContentBlocker.storyboard in Resources */,
@@ -2015,8 +2018,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				857AEF821F4F2AE9003B84A1 /* UITests.swift in Sources */,
-				857AEF8A1F4F2C66003B84A1 /* SnapshotHelper.swift in Sources */,
+				85ED11271F50B6FB00A7FBCE /* AppScreenshotsUITests.swift in Sources */,
+				85ED11281F50B6FB00A7FBCE /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2415,10 +2418,10 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = HKE973VLUW;
-				INFOPLIST_FILE = UITests/Info.plist;
+				INFOPLIST_FILE = AppScreenshots/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.AppScreenshots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = DuckDuckGo;
@@ -2430,10 +2433,10 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = HKE973VLUW;
-				INFOPLIST_FILE = UITests/Info.plist;
+				INFOPLIST_FILE = AppScreenshots/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.AppScreenshots;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = DuckDuckGo;
@@ -2641,13 +2644,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		857AEF881F4F2AE9003B84A1 /* Build configuration list for PBXNativeTarget "UITests" */ = {
+		857AEF881F4F2AE9003B84A1 /* Build configuration list for PBXNativeTarget "AppScreenshots" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				857AEF861F4F2AE9003B84A1 /* Debug */,
 				857AEF871F4F2AE9003B84A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F12810B61EB35B5300F95E4E /* Build configuration list for PBXNativeTarget "ContentBlockerExtension" */ = {
 			isa = XCConfigurationList;

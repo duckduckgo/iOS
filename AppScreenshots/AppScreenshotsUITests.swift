@@ -19,7 +19,7 @@
 
 import XCTest
 
-class UITests: XCTestCase {
+class AppScreenshotsUITests: XCTestCase {
 
     var app: XCUIApplication!
         

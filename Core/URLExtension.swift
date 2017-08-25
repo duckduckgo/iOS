@@ -29,8 +29,6 @@ extension URL {
         case https
     }
     
-    private static let webUrlRegex = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|(([\\d]+[.]){3}[\\d]+))([\\/]?[\\/:?=&#]{1}[\\%\\da-zA-Z_\\.-]+)*[\\/\\?]?$"
-    
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
         guard let encodedQuery = components.percentEncodedQuery else { return nil }
@@ -68,7 +66,11 @@ extension URL {
         components.queryItems = query
         return components.url ?? self
     }
-    
+
+    public func isHttps() -> Bool {
+        return absoluteString.hasPrefix(URLProtocol.https.rawValue)
+    }
+
     // Encodes plus symbols in a string. iOS does not automatically encode plus symbols so it
     // is often necessary to do so manually to avoid them being treated as spaces on the web
     private func encodePluses(text: String) -> String {
@@ -80,7 +82,9 @@ extension URL {
     private func switchWebSpacesToSystemEncoding(text: String) -> String {
         return text.replacingOccurrences(of: "+", with: "%20")
     }
-    
+
+    // MARK: static
+
     public static func webUrl(fromText text: String) -> URL? {
         guard isWebUrl(text: text) else {
             return nil
@@ -90,21 +94,33 @@ extension URL {
     }
     
     public static func isWebUrl(text: String) -> Bool {
-        let pattern = webUrlRegex
-        let webRegex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-        let matches = webRegex.matches(in: text, options: .anchored, range:NSMakeRange(0, text.characters.count))
-        return matches.count == 1
+        guard let url = URL(string: text) else { return false }
+        guard let scheme = url.scheme else { return isWebUrl(text: appendScheme(path: text)) }
+        guard scheme == "http" || scheme == "https" else { return false }
+        guard url.user == nil else { return false }
+        guard let host = url.host else { return false }
+        guard isValidHost(host) else { return false }
+        return true
     }
-    
-    public func isHttps() -> Bool {
-        return absoluteString.hasPrefix(URLProtocol.https.rawValue)
+
+    public static func decode(query: String) -> String? {
+        return query.removingPercentEncoding
     }
-    
+
     private static func appendScheme(path: String) -> String {
         return "\(URLProtocol.http.rawValue)://\(path)"
     }
     
-    public static func decode(query: String) -> String? {
-        return query.removingPercentEncoding
+    private static func isValidHost(_ host: String) -> Bool {
+        // from https://stackoverflow.com/a/25717506/73479
+        let hostNameRegex = "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6})"
+
+        // from https://stackoverflow.com/a/30023010/73479
+        let hostNumberRegex = "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
+
+        let hostRegex = "^\(hostNameRegex)|\(hostNumberRegex)$"
+        return host.matches(pattern: hostRegex)
     }
+
 }
+

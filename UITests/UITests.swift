@@ -18,7 +18,6 @@
 //
 
 import XCTest
-@testable import Core
 
 class UITests: XCTestCase {
 
@@ -36,12 +35,12 @@ class UITests: XCTestCase {
 
     }
 
-    func testStartScreen() {
-        sleep(6) // wait for toast to go away
+    func testTakeStartScreenShot() {
+        waitForToastToDisappear()
         snapshot("Start Screen")
     }
 
-    func testTakeReleaseScreenshots() {
+    func testTakeTabSwitcherSearchResultsAndAutoCompleteScreenshots() {
 
         screenshotTabSwitcher()
 
@@ -62,7 +61,9 @@ class UITests: XCTestCase {
         snapshot("Tracker Blocking")
     }
 
-    func tapSiteRating() {
+    // MARK: private
+
+    private func tapSiteRating() {
         let bar = XCUIApplication().navigationBars["DuckDuckGo.MainView"]
         if bar.staticTexts["A"].exists {
             bar.staticTexts["A"].tap()
@@ -73,20 +74,20 @@ class UITests: XCTestCase {
         }
     }
 
-    func showTabs() {
+    private func showTabs() {
         app.toolbars.buttons["Tabs"].tap()
     }
 
-    func addTab() {
+    private func addTab() {
         app.toolbars.containing(.button, identifier:"Add").buttons["Add"].tap()
     }
 
-    func newTab() {
+    private func newTab() {
         showTabs()
         addTab()
     }
 
-    func enterSearch(_ text: String, submit: Bool = true) {
+    private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
 
         let searchOrTypeUrlTextField = app.navigationBars["DuckDuckGo.MainView"].textFields["Search or type URL"]
@@ -97,43 +98,51 @@ class UITests: XCTestCase {
         }
     }
 
-    func saveBookmark() {
+    private func saveBookmark() {
         let app = XCUIApplication()
         app.navigationBars["DuckDuckGo.MainView"].buttons["Menu"].tap()
         app.sheets.buttons["Add to Bookmarks"].tap()
         app.alerts["Save Bookmark"].buttons["Save"].tap()
     }
 
-    func clearTabsAndData() {
+    private func clearTabsAndData() {
         let app = XCUIApplication()
         let toolbarsQuery = app.toolbars
         toolbarsQuery.children(matching: .button).element(boundBy: 2).tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
     }
 
-    func screenshotTabSwitcher() {
+    private func screenshotTabSwitcher() {
         app.staticTexts["Search or type URL"].tap()
         enterSearch("https://twitter.com/duckduckgo")
         Snapshot.waitForLoadingIndicatorToDisappear()
-        sleep(2)
+        waitForPageTitle()
         newTab()
         enterSearch("https://dribbble.com/duckduckgo")
         Snapshot.waitForLoadingIndicatorToDisappear()
-        sleep(2)
+        waitForPageTitle()
         showTabs()
         snapshot("Tab Switcher")
     }
 
-    func screenshotSearchResults() {
+    private func screenshotSearchResults() {
         enterSearch("https://duckduckgo.com?q=bars%20in%20portland&kl=us-en&k1=-1")
         Snapshot.waitForLoadingIndicatorToDisappear()
-        sleep(3)
+        waitForPageTitle()
         snapshot("Search Results")
     }
 
-    func screenshotAutoComplete() {
+    private func screenshotAutoComplete() {
         enterSearch("tycho", submit: false)
         snapshot("Autocomplete")
+    }
+
+    private func waitForPageTitle() {
+        sleep(2)
+    }
+
+    private func waitForToastToDisappear() {
+        sleep(6)
     }
 
 }

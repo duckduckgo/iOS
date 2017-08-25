@@ -160,7 +160,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             return
         }
 
-        if (shouldReissueSearch(for: url)) {
+        if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
             decisionHandler(.cancel)
             return

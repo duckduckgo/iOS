@@ -56,6 +56,7 @@ class UITests: XCTestCase {
     func testScreenshotSiteRating() {
         newTab()
         enterSearch("https://nytimes.com/2017/08/24/books/review/10-new-books-we-recommend-this-week.html")
+        sleep(5)
         Snapshot.waitForLoadingIndicatorToDisappear()
         tapSiteRating()
         snapshot("Tracker Blocking")

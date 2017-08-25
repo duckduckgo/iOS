@@ -1,6 +1,3 @@
-# More documentation about how to customize your build
-# can be found here:
-# https://docs.fastlane.tools
 fastlane_version "1.109.0"
 
 # This value helps us track success metrics for Fastfiles
@@ -17,7 +14,7 @@ lane :screenshots do
     export_method: "development"
   )
 
-  snapshot
-  # pilot(skip_waiting_for_build_processing: true)
+   reset_simulators
+   snapshot
 end
 

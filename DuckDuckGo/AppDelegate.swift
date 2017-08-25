@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
 
+    private var isUITest = false
     private var appIsLaunching = false
     var authWindow: UIWindow?
     var window: UIWindow?
@@ -36,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var bookmarkStore = BookmarkUserDefaults()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        checkForUITestArg()
+
         if let shortcutItem = launchOptions?[.shortcutItem] {
             handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
         }
@@ -47,7 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startMigration()
         StatisticsLoader.shared.load()
         TrackerLoader.shared.updateTrackers()
-        startOnboardingFlowIfNotSeenBefore()
+
+        if !isUITest {
+            startOnboardingFlowIfNotSeenBefore()
+        }
+
         if appIsLaunching {
             appIsLaunching = false
             displayAuthenticationWindow()
@@ -62,7 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayAuthenticationWindow()
     }
-    
+
+    private func checkForUITestArg() {
+        isUITest = ProcessInfo.processInfo.arguments.contains("-ui_testing")
+    }
+
     private func displayAuthenticationWindow() {
         let privacyStore = PrivacyUserDefaults()
         guard authWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }

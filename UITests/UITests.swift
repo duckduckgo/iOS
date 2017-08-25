@@ -18,6 +18,7 @@
 //
 
 import XCTest
+@testable import Core
 
 class UITests: XCTestCase {
 
@@ -31,32 +32,45 @@ class UITests: XCTestCase {
         app.launch()
         clearTabsAndData()
 
+        continueAfterFailure = false
+
+    }
+
+    func testStartScreen() {
+        sleep(6) // wait for toast to go away
+        snapshot("Start Screen")
     }
 
     func testTakeReleaseScreenshots() {
-        snapshot("Start Screen")
 
-        app.staticTexts["Search or type URL"].tap()
-        enterSearch("https://dribbble.com/duckduckgo")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        screenshotTabSwitcher()
+
+        addTab()
+
+        screenshotSearchResults()
+
         newTab()
-        enterSearch("https://twitter.com/duckduckgo")
-        Snapshot.waitForLoadingIndicatorToDisappear()
-        showTabs()
-        snapshot("Tab Switcher")
 
-        addTab()
-        enterSearch("bars in portland")
-        Snapshot.waitForLoadingIndicatorToDisappear()
-        snapshot("Search Results")
+        screenshotAutoComplete()
+    }
 
-
-        addTab()
-        enterSearch("https://nytimes.com")
+    func testScreenshotSiteRating() {
+        newTab()
+        enterSearch("https://nytimes.com/2017/08/24/books/review/10-new-books-we-recommend-this-week.html")
         Snapshot.waitForLoadingIndicatorToDisappear()
-        XCUIApplication().navigationBars["DuckDuckGo.MainView"].staticTexts["A"].tap()
+        tapSiteRating()
         snapshot("Tracker Blocking")
+    }
 
+    func tapSiteRating() {
+        let bar = XCUIApplication().navigationBars["DuckDuckGo.MainView"]
+        if bar.staticTexts["A"].exists {
+            bar.staticTexts["A"].tap()
+        } else if bar.staticTexts["B"].exists {
+            bar.staticTexts["B"].tap()
+        } else if bar.staticTexts["C"].exists {
+            bar.staticTexts["C"].tap()
+        }
     }
 
     func showTabs() {
@@ -72,13 +86,15 @@ class UITests: XCTestCase {
         addTab()
     }
 
-    func enterSearch(_ text: String) {
+    func enterSearch(_ text: String, submit: Bool = true) {
+        print("enterSearch text:", text, "submit:", submit)
 
         let searchOrTypeUrlTextField = app.navigationBars["DuckDuckGo.MainView"].textFields["Search or type URL"]
-        searchOrTypeUrlTextField.tap()
-
         searchOrTypeUrlTextField.typeText(text)
-        app.typeText("\n")
+
+        if submit {
+            app.typeText("\n")
+        }
     }
 
     func saveBookmark() {
@@ -93,6 +109,34 @@ class UITests: XCTestCase {
         let toolbarsQuery = app.toolbars
         toolbarsQuery.children(matching: .button).element(boundBy: 2).tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
+    }
+
+    func screenshotTabSwitcher() {
+        app.staticTexts["Search or type URL"].tap()
+        enterSearch("https://twitter.com/duckduckgo")
+        Snapshot.waitForLoadingIndicatorToDisappear()
+        sleep(2)
+        newTab()
+        enterSearch("https://dribbble.com/duckduckgo")
+        Snapshot.waitForLoadingIndicatorToDisappear()
+        sleep(2)
+        showTabs()
+        snapshot("Tab Switcher")
+    }
+
+    func screenshotSearchResults() {
+        var url = AppUrls().searchUrl(text: "bars in portland")
+        url = url.addParam(name: "kl", value: "us-en")
+        url = url.addParam(name: "k1", value: "-1")
+        enterSearch(url.absoluteString)
+        Snapshot.waitForLoadingIndicatorToDisappear()
+        snapshot("Search Results")
+        sleep(10)
+    }
+
+    func screenshotAutoComplete() {
+        enterSearch("tycho", submit: false)
+        snapshot("Autocomplete")
     }
 
 }

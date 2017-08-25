@@ -22,7 +22,7 @@ import XCTest
 
 class AppUrlsTests: XCTestCase {
     
-    var mockStatisticsStore = MockStatisticsStore()
+    var mockStatisticsStore: MockStatisticsStore!
 
     override func setUp() {
         super.setUp()

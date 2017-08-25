@@ -96,10 +96,10 @@ public struct AppUrls {
      */
     public func searchUrl(text: String) -> URL {
         let searchUrl = home.addParam(name: Param.search, value: text)
-        return fixStatsParams(for: searchUrl)
+        return applyStatsParams(for: searchUrl)
     }
 
-    public func fixStatsParams(for url: URL) -> URL {
+    public func applyStatsParams(for url: URL) -> URL {
         let searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
             .addParam(name: Param.appVersion, value: appVersion)
 

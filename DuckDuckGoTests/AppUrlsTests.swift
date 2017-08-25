@@ -36,10 +36,10 @@ class AppUrlsTests: XCTestCase {
         return AppVersion(bundle: mockBundle)
     }
 
-    func testFixMobileStatsParams() {
+    func testApplyMobileStatsParamsToURL() {
         mockStatisticsStore.cohortVersion = "001"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
-        let actual = testee.fixStatsParams(for: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong&tappv=wrong")!)
+        let actual = testee.applyStatsParams(for: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong&tappv=wrong")!)
         XCTAssertEqual(actual.getParam(name: "atb"), "001")
         XCTAssertEqual(actual.getParam(name: "t"), "ddg_ios")
         XCTAssertEqual(actual.getParam(name: "tappv"), "ios_7_900")

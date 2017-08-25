@@ -1,2 +1,2 @@
-carthage bootstrap --platform iOS;
+carthage bootstrap --platform iOS --cache-builds;
 xcodebuild test -project DuckDuckGo.xcodeproj -scheme DuckDuckGo CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -destination 'platform=iOS Simulator,name=iPhone 6s';

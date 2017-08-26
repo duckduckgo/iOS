@@ -161,7 +161,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem systemItem="add" id="nYf-xs-PE7">
+                                    <barButtonItem tag="1" systemItem="add" id="nYf-xs-PE7">
                                         <connections>
                                             <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
                                         </connections>

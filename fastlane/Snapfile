@@ -11,7 +11,7 @@ languages([
   "en-US",
 ])
 
-scheme "UITests"
+scheme "AppScreenshots"
 
 output_directory "./fastlane/screenshots"
 

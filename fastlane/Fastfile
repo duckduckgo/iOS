@@ -10,7 +10,7 @@ default_platform :ios
 lane :screenshots do
 
   gym(
-    scheme: "UITests",
+    scheme: "AppScreenshots",
     export_method: "development"
   )
 

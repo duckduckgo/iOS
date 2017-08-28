@@ -7,6 +7,24 @@ generated_fastfile_id "c7ddc28b-25d3-424d-b688-e693165a4521"
 
 default_platform :ios
 
+lane :release do 
+
+  # if signing fails then check we have certificate and provisioning profiles installed
+  gym(
+    scheme: "DuckDuckGo",
+    export_method: "app-store"
+  )
+
+  # don't submit for review until we're happy the build job works
+  deliver(
+    submit_for_review: false,
+    automatic_release: false, 
+    phased_release: true,
+    screenshots_path: "screenshots"
+  )
+
+end
+
 lane :screenshots do
 
   gym(
@@ -16,5 +34,6 @@ lane :screenshots do
 
    reset_simulators
    snapshot
+
 end
 

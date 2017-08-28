@@ -29,6 +29,11 @@ xcode-select --install
 </table>
 
 # Available Actions
+### release
+```
+fastlane release
+```
+
 ### screenshots
 ```
 fastlane screenshots

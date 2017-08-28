@@ -1606,7 +1606,6 @@
 				F143C2E01E4A4CD400CFDE3A /* Frameworks */,
 				F143C2E11E4A4CD400CFDE3A /* Headers */,
 				F143C2E21E4A4CD400CFDE3A /* Resources */,
-				F14FE6151F450FA8003DA736 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1843,23 +1842,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelse\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf $SRCROOT/fonts/licensed\nfi\n";
-		};
-		F14FE6151F450FA8003DA736 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		F17843E61F361B3C00390DCD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

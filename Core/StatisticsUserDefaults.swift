@@ -25,7 +25,7 @@ public class StatisticsUserDefaults: StatisticsStore {
     private let groupName: String
     
     private struct Keys {
-        static let cohortVersion = "com.duckduckgo.statistics.cohortVersion.key"
+        static let cohortVersion = "com.duckduckgo.statistics.cohortVersion.v2.key"
     }
     
     private var userDefaults: UserDefaults? {

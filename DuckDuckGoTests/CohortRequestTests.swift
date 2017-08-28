@@ -31,7 +31,7 @@ class CohortRequestTests: XCTestCase {
         super.tearDown()
     }
     
-    func testWhenStatus200AndValidJsonThenRequestCompletestWithCohort() {
+    func testWhenStatus200AndValidJsonThenRequestCompletestWithCohortWithPlatformSuffix() {
         
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
@@ -40,7 +40,7 @@ class CohortRequestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Valid json")
         testee.execute { (result, error) in
             XCTAssertNotNil(result)
-            XCTAssertEqual(result?.version, "v77-5")
+            XCTAssertEqual(result?.version, "v77-5mi")
             XCTAssertNil(error)
             expectation.fulfill()
         }

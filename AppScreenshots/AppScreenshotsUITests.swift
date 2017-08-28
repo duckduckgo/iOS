@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import SimulatorStatusMagiciOS
 
 class AppScreenshotsUITests: XCTestCase {
 
@@ -25,6 +26,8 @@ class AppScreenshotsUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
+
+        SDStatusBarManager.sharedInstance().enableOverrides()
 
         app = XCUIApplication()
         setupSnapshot(app)
@@ -35,6 +38,12 @@ class AppScreenshotsUITests: XCTestCase {
 
         continueAfterFailure = false
 
+    }
+
+    override func tearDown() {
+        super.tearDown()
+
+        SDStatusBarManager.sharedInstance().disableOverrides()
     }
 
     func testTakeStartScreenShot() {

@@ -20,7 +20,8 @@ lane :release do
     submit_for_review: false,
     automatic_release: false, 
     phased_release: true,
-    screenshots_path: "screenshots"
+    screenshots_path: "screenshots",
+    username: "office@duckduckgo.com"
   )
 
 end

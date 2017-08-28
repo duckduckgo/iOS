@@ -9,13 +9,11 @@ default_platform :ios
 
 lane :release do 
 
-  # if signing fails then check we have certificate and provisioning profiles installed
   gym(
     scheme: "DuckDuckGo",
     export_method: "app-store"
   )
 
-  # don't submit for review until we're happy the build job works
   deliver(
     submit_for_review: false,
     automatic_release: false, 

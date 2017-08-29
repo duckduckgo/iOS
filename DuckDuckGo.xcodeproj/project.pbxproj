@@ -1585,7 +1585,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F12810B61EB35B5300F95E4E /* Build configuration list for PBXNativeTarget "ContentBlockerExtension" */;
 			buildPhases = (
-				859152111F55A40F00F5FB53 /* Set Build Number */,
 				F128109B1EB35B5300F95E4E /* Sources */,
 				F128109C1EB35B5300F95E4E /* Frameworks */,
 				F128109D1EB35B5300F95E4E /* Resources */,
@@ -1621,7 +1620,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F15A8B7F1E43A428008B8C6F /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
-				8591520F1F55A37600F5FB53 /* Set Build Number */,
 				F15A8B701E43A428008B8C6F /* Sources */,
 				F15A8B711E43A428008B8C6F /* Frameworks */,
 				F15A8B721E43A428008B8C6F /* Resources */,
@@ -1639,7 +1637,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F1AA546E1E48D90700223211 /* Build configuration list for PBXNativeTarget "TodayExtension" */;
 			buildPhases = (
-				859152101F55A3FD00F5FB53 /* Set Build Number */,
 				F1AA545A1E48D90700223211 /* Sources */,
 				F1AA545B1E48D90700223211 /* Frameworks */,
 				F1AA545C1E48D90700223211 /* Resources */,
@@ -1832,48 +1829,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8591520F1F55A37600F5FB53 /* Set Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Set Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/DuckDuckGo/Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
-		859152101F55A3FD00F5FB53 /* Set Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Set Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/DuckDuckGo/Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
-		859152111F55A40F00F5FB53 /* Set Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Set Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/DuckDuckGo/Info.plist\")\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
 		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

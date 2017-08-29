@@ -9,17 +9,17 @@ default_platform :ios
 
 lane :release do 
 
-  gym(
-    scheme: "DuckDuckGo",
-    export_method: "app-store"
-  )
-
   increment_build_number({
       build_number: latest_testflight_build_number(
         username: 'office@duckduckgo.com',
         app_identifier: "663592361"
       ) + 1
     })
+
+  gym(
+    scheme: "DuckDuckGo",
+    export_method: "app-store"
+  )
 
   deliver(
     submit_for_review: false,

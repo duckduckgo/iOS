@@ -19,46 +19,26 @@
 
 
 import UIKit
-import Core
 
-class OnboardingPageViewController: UIViewController {
+protocol OnboardingPageViewController {
     
-    @IBOutlet weak var pageTitle: UILabel!
-    @IBOutlet weak var pageDescription: UILabel!
-    @IBOutlet weak var image: UIImageView!
+    var onboardingImage: UIImageView { get }
     
-    var descriptionLineHeight: CGFloat = 0
+    var preferredBackgroundColor: UIColor { get }
     
-    var configuration: OnboardingPageConfiguration!
-    var isLastPage = false
+    func resetImage()
     
-    var preferredBackgroundColor: UIColor {
-        return configuration.background
+    func scaleImage(_ scale: CGFloat)
+
+}
+
+extension OnboardingPageViewController where Self: UIViewController {
+    
+    func scaleImage(_ scale: CGFloat) {
+        onboardingImage.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
     
-    static func loadFromStoryboard(storyboard: UIStoryboard, withConfiguartion configuration: OnboardingPageConfiguration) -> OnboardingPageViewController {
-        let controller = storyboard.instantiateViewController(withIdentifier: "OnboardingPageViewController") as! OnboardingPageViewController
-        controller.configuration = configuration
-        return controller
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureViews()
-    }
-    
-    private func configureViews() {
-        pageTitle.text = configuration.title
-        image.image = configuration.image
-        pageDescription.text = configuration.description
-        pageDescription.adjustPlainTextLineHeight(descriptionLineHeight)
-    }
-    
-    public func scaleImage(_ scale: CGFloat) {
-        image.transform = CGAffineTransform(scaleX: scale, y: scale)
-    }
-    
-    public func resetImage() {
-        image.transform = CGAffineTransform(scaleX: 1, y: 1)
+    func resetImage() {
+        onboardingImage.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
 }

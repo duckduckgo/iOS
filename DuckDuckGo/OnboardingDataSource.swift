@@ -28,13 +28,10 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
         return pages.count
     }
     
-    init(storyboard: UIStoryboard) {
-        let first = OnboardingPageViewController.loadFromStoryboard(storyboard: storyboard, withConfiguartion: RealPrivacyConfiguration())
-        let second = OnboardingPageViewController.loadFromStoryboard(storyboard: storyboard, withConfiguartion: ContentBlockingConfiguration())
-        let third = OnboardingPageViewController.loadFromStoryboard(storyboard: storyboard, withConfiguartion: TrackingConfiguration())
-        let fourth =  OnboardingPageViewController.loadFromStoryboard(storyboard: storyboard, withConfiguartion: PrivacyRightConfiguration())
-        fourth.isLastPage = true
-        self.pages = [first, second, third, fourth]
+    override init() {
+        let first = FeaturesViewController.loadFromStoryboard()
+        let second = UseDuckDuckGoInSafariViewController.loadFromStoryboard()
+        self.pages = [first, second]
         super.init()
     }
     
@@ -63,12 +60,19 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
     func previousIndex(_ index: Int) -> Int? {
         return pages.index(index, offsetBy: -1, limitedBy: 0)
     }
-    
+
     func nextIndex(_ index: Int) -> Int? {
         return pages.index(index, offsetBy: +1, limitedBy: pages.count-1)
     }
     
-    func lastIndex() -> Int {
+    var lastIndex: Int {
         return pages.count - 1
+    }
+    
+    func isLastPage(controller: UIViewController) -> Bool {
+        guard let index = index(of: controller), index == lastIndex else {
+            return false
+        }
+        return true
     }
 }

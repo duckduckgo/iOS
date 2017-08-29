@@ -34,15 +34,6 @@ public struct UserText {
     
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
-
-    public static let onboardingRealPrivacyTitle = NSLocalizedString("onboarding.realprivacy.title", comment: "Onboarding real privacy title")
-    public static let onboardingRealPrivacyDescription = NSLocalizedString("onboarding.realprivacy.description", comment: "Onboarding real privacy description")
-    public static let onboardingContentBlockingTitle = NSLocalizedString("onboarding.contentblocking.title", comment: "Onboarding content blocking title")
-    public static let onboardingContentBlockingDescription = NSLocalizedString("onboarding.contentblocking.description", comment: "Onboarding content blocking description")
-    public static let onboardingTrackingTitle = NSLocalizedString("onboarding.tracking.title", comment: "Onboarding tracking title")
-    public static let onboardingTrackingDescription = NSLocalizedString("onboarding.tracking.description", comment: "Onboarding tracking description")
-    public static let onboardingPrivacyRightTitle = NSLocalizedString("onboarding.privacyright.title", comment: "Onboarding privacy is a right title")
-    public static let onboardingPrivacyRightDescription = NSLocalizedString("onboarding.privacyright.description", comment: "Onboarding privacy is a right description")
     
     public static let feedbackEmailSubject = NSLocalizedString("feedbackemail.subject", comment: "Feedback email subject text ")
     public static let feedbackEmailBody = NSLocalizedString("feedbackemail.body", comment: "Feedback email body text")

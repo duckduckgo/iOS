@@ -25,19 +25,14 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
-    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
     
     private weak var pageController: UIPageViewController!
     private var transitioningToPage: OnboardingPageViewController?
-    fileprivate var dataSource: OnboardingDataSource!
-    
-    private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
-    
+    fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
+
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        let controller = storyboard.instantiateInitialViewController() as! OnboardingViewController
-        controller.dataSource = OnboardingDataSource(storyboard: storyboard)
-        return controller
+        return storyboard.instantiateInitialViewController() as! OnboardingViewController
     }
     
     override func viewDidLoad() {
@@ -54,16 +49,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     private func configureScrollView() {
         let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
         scrollView?.delegate = self
-    }
-
-    override func viewDidLayoutSubviews() {
-        configureDisplayForVerySmallHandsets()
-    }
-    
-    private func configureDisplayForVerySmallHandsets() {
-        if interfaceMeasurement.hasiPhone4ScreenSize {
-            bottomMarginConstraint?.constant = 0
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -87,11 +72,11 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
                             previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if !completed {
-            guard let previous = previousViewControllers.first as? OnboardingPageViewController else { return }
+            guard let previous = previousViewControllers.first else { return }
             guard let index = dataSource.index(of: previous) else { return }
             configureDisplay(forPage: index)
         } else {
-            guard let current = transitioningToPage else { return }
+            guard let current = transitioningToPage as? UIViewController else { return }
             guard let index = dataSource.index(of: current) else { return }
             configureDisplay(forPage: index)
         }
@@ -100,8 +85,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     private func configureDisplay(forPage index: Int) {
         pageControl.currentPage = index
-        currentPageController().resetImage()
-        view.backgroundColor = currentPageController().preferredBackgroundColor
+        currentPage.resetImage()
+        view.backgroundColor = currentPage.preferredBackgroundColor
     }
     
     fileprivate func transition(withRatio ratio: CGFloat) {
@@ -111,15 +96,15 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     private func transitionBackgroundColor(withRatio ratio: CGFloat) {
         guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
-        let currentColor = currentPageController().preferredBackgroundColor
+        let currentColor = currentPage.preferredBackgroundColor
         view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
     }
     
     private func shrinkImages(withRatio ratio: CGFloat) {
-        let currentImageScale = 1 - (0.2 * (1 - ratio))
-        currentPageController().scaleImage(currentImageScale)
-        
-        let nextImageScale = 1 - (0.2 * ratio)
+        let currentImageScale = 1 - (0.3 * (1 - ratio))
+        currentPage.scaleImage(currentImageScale)
+
+        let nextImageScale = 1 - (0.3 * ratio)
         transitioningToPage?.scaleImage(nextImageScale)
     }
     
@@ -133,10 +118,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         goToPage(index: sender.currentPage)
     }
     
-    @IBAction func onDonePressed(_ sender: UIButton) {
-        finishOnboardingFlow()
-    }
-    
     @IBAction func onLastPageSwiped(_ sender: Any) {
         finishOnboardingFlow()
     }
@@ -144,9 +125,13 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     private func finishOnboardingFlow() {
         dismiss(animated: true, completion: nil)
     }
+
+    fileprivate var currentController: UIViewController {
+        return dataSource.controller(forIndex: pageControl.currentPage)
+    }
     
-    fileprivate func currentPageController() -> OnboardingPageViewController {
-        return dataSource.controller(forIndex: pageControl.currentPage) as! OnboardingPageViewController
+    fileprivate var currentPage: OnboardingPageViewController {
+        return currentController as! OnboardingPageViewController
     }
 }
 
@@ -159,9 +144,9 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
         return true
     }
     
-    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if currentPageController().isLastPage {
+        
+        if dataSource.isLastPage(controller: currentController) {
             return true
         }
         return false

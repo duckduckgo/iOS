@@ -41,6 +41,7 @@ class FireAnimation: UIView {
 
         let anim = FireAnimation.load(nibName: "FireAnimation")
         anim.image.animationImages = animatedImages
+        anim.image.contentMode = window.frame.width > anim.image.animationImages![0].size.width ? .scaleAspectFill : .center
         anim.image.startAnimating()
 
         anim.frame = window.frame

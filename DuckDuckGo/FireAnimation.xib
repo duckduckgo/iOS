@@ -40,6 +40,7 @@
             </constraints>
             <connections>
                 <outlet property="image" destination="7lt-A3-arj" id="hxl-MO-X96"/>
+                <outlet property="offset" destination="FVZ-Sw-D2I" id="CXs-dt-vSI"/>
             </connections>
         </view>
     </objects>

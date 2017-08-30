@@ -76,15 +76,8 @@ class AppScreenshotsUITests: XCTestCase {
     // MARK: private
 
     private func skipOnboarding() {
-        guard app.staticTexts["Real Privacy"].exists else { return  }
-
-        XCUIApplication().children(matching: .window)
-            .element(boundBy: 0).children(matching: .other)
-            .element.children(matching: .other)
-            .element.children(matching: .other)
-            .element(boundBy: 1).children(matching: .button)
-            .element.tap()
-
+        guard app.staticTexts["Search Anonymously"].exists else { return  }
+        app.buttons["Get Started"].tap()
     }
 
     private func tapSiteRating() {

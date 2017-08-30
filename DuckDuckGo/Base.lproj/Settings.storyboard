@@ -287,7 +287,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GOv-tl-CEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1100" y="54"/>
+            <point key="canvasLocation" x="1207" y="53"/>
         </scene>
         <!--UseDuckDuckGoInSafari-->
         <scene sceneID="8YY-rV-1E3">

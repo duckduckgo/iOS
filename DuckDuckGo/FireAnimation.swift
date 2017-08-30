@@ -28,7 +28,8 @@ class FireAnimation: UIView {
 
     struct Constants {
         static let animationDuration = 1.9
-        static let endAnimationDuration = 0.3
+        static let endDelayDuration = animationDuration + 0.2
+        static let endAnimationDuration = 0.9
     }
 
     static func animate(completion: @escaping () -> Swift.Void) {
@@ -52,7 +53,7 @@ class FireAnimation: UIView {
             completion()
         }
 
-        UIView.animate(withDuration: Constants.endAnimationDuration, delay: Constants.animationDuration, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: Constants.endAnimationDuration, delay: Constants.endDelayDuration, options: .curveEaseOut, animations: {
             anim.alpha = 0
         }) { _ in
             anim.removeFromSuperview()

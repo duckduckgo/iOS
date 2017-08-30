@@ -65,6 +65,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterActiveModeAnimated() {
+        hideSafariButton()
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.moveSearchBarUp()
         }, completion: { _ in
@@ -94,13 +95,13 @@ class HomeViewController: UIViewController {
     
     private func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
+        adjustSafariButtonVisibility(forHeight: view.frame.height)
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
     }
     
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        useSafariContainer.isHidden = size.height < Constants.minHeightForSafariButton
+        adjustSafariButtonVisibility(forHeight: size.height)
     }
     
     private func moveSearchBarUp() {
@@ -125,6 +126,14 @@ class HomeViewController: UIViewController {
         searchBarContent.transform = CGAffineTransform.identity
         searchText.transform = CGAffineTransform.identity
         searchImage.alpha = 1
+    }
+    
+    private func adjustSafariButtonVisibility(forHeight height: CGFloat) {
+        useSafariContainer.isHidden = height < Constants.minHeightForSafariButton
+    }
+    
+    private func hideSafariButton() {
+        useSafariContainer.isHidden = true
     }
     
     func load(url: URL) {

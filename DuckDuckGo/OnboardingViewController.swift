@@ -145,11 +145,7 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
     }
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        
-        if dataSource.isLastPage(controller: currentController) {
-            return true
-        }
-        return false
+        return dataSource.isLastPage(controller: currentController)
     }
 }
 

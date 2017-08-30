@@ -15,9 +15,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKG-Zf-JJr">
-                    <rect key="frame" x="0.0" y="100" width="375" height="767"/>
+                    <rect key="frame" x="0.0" y="110" width="375" height="777"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aOO-XP-9Ye">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="767"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="777"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <blurEffect style="dark"/>
@@ -31,8 +31,8 @@
             </subviews>
             <constraints>
                 <constraint firstItem="OKG-Zf-JJr" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="8qr-QV-wvN"/>
-                <constraint firstItem="OKG-Zf-JJr" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" constant="100" id="9SW-7e-H4g"/>
-                <constraint firstItem="OKG-Zf-JJr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="FVZ-Sw-D2I"/>
+                <constraint firstItem="OKG-Zf-JJr" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" constant="110" id="9SW-7e-H4g"/>
+                <constraint firstItem="OKG-Zf-JJr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="110" id="FVZ-Sw-D2I"/>
                 <constraint firstItem="7lt-A3-arj" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="MpC-dM-87i"/>
                 <constraint firstItem="7lt-A3-arj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="NGR-TL-J5U"/>
                 <constraint firstItem="OKG-Zf-JJr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="NpR-Sh-vgh"/>

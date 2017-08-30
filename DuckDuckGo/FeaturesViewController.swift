@@ -36,7 +36,7 @@ class FeaturesViewController: UIViewController {
     
     static func loadFromStoryboard() -> FeaturesViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "FeaturesViewController") as! FeaturesViewController
+        return storyboard.instantiateViewController(withIdentifier: "Features") as! FeaturesViewController
     }
     
     override func viewDidLoad() {

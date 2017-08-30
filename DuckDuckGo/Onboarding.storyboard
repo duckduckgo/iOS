@@ -81,7 +81,7 @@
         <!--Features View Controller-->
         <scene sceneID="7tn-qm-MpF">
             <objects>
-                <viewController storyboardIdentifier="FeaturesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="64K-kw-HvE" customClass="FeaturesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Features" useStoryboardIdentifierAsRestorationIdentifier="YES" id="64K-kw-HvE" customClass="FeaturesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jIu-4u-iue"/>
                         <viewControllerLayoutGuide type="bottom" id="KeP-xV-Aki"/>
@@ -219,6 +219,7 @@ and minimize ad targeting.</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Igk-T8-aUE" secondAttribute="trailing" priority="900" constant="14" id="ALU-Be-S6N"/>
                             <constraint firstItem="s7j-qp-d9v" firstAttribute="top" secondItem="jIu-4u-iue" secondAttribute="bottom" id="BSi-8y-wty"/>
@@ -252,7 +253,7 @@ and minimize ad targeting.</string>
         <!--Use Duck Duck Go In Safari View Controller-->
         <scene sceneID="HbI-ac-Saj">
             <objects>
-                <viewController storyboardIdentifier="UseDuckDuckGoInSafariViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TzW-nQ-tOq" customClass="UseDuckDuckGoInSafariViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UseDuckDuckGoInSafari" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TzW-nQ-tOq" customClass="UseDuckDuckGoInSafariViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8Er-Oo-YSJ"/>
                         <viewControllerLayoutGuide type="bottom" id="Qow-8K-itx"/>
@@ -440,6 +441,7 @@ and minimize ad targeting.</string>
                                 </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" red="0.3921568627" green="0.68235294120000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="mzD-uQ-cZD" firstAttribute="top" secondItem="8Er-Oo-YSJ" secondAttribute="bottom" id="AHe-oo-HJd"/>
                             <constraint firstItem="Qow-8K-itx" firstAttribute="top" secondItem="ngj-u5-HYd" secondAttribute="bottom" constant="40" id="Jub-ky-pyn"/>

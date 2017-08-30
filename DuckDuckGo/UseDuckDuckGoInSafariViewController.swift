@@ -35,7 +35,7 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
     
     static func loadFromStoryboard() -> UseDuckDuckGoInSafariViewController {
         let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "UseDuckDuckGoInSafariViewController") as! UseDuckDuckGoInSafariViewController
+        return storyboard.instantiateViewController(withIdentifier: "UseDuckDuckGoInSafari") as! UseDuckDuckGoInSafariViewController
     }
     
     var onboaringImage: UIImageView {

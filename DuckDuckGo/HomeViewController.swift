@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
     
     private struct Constants {
         static let animationDuration = 0.25
+        static let minHeightForSafariButton: CGFloat = 500
     }
     
     @IBOutlet weak var passiveContent: UIView!
@@ -32,6 +33,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var searchBarContent: UIView!
     @IBOutlet weak var searchImage: UIImageView!
     @IBOutlet weak var searchText: UILabel!
+    @IBOutlet weak var useSafariContainer: UIView!
     
     weak var delegate: HomeControllerDelegate?
     
@@ -95,7 +97,12 @@ class HomeViewController: UIViewController {
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
     }
-
+    
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        useSafariContainer.isHidden = size.height < Constants.minHeightForSafariButton
+    }
+    
     private func moveSearchBarUp() {
         let frame = searchBar.superview!.convert(searchBar.frame.origin, to: passiveContent)
         let xScale = OmniBar.Measurement.width / searchBar.frame.size.width

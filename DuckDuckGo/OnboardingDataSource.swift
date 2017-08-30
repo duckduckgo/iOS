@@ -31,6 +31,8 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
     override init() {
         let first = FeaturesViewController.loadFromStoryboard()
         let second = UseDuckDuckGoInSafariViewController.loadFromStoryboard()
+        first.view.backgroundColor = UIColor.clear
+        second.view.backgroundColor = UIColor.clear
         self.pages = [first, second]
         super.init()
     }

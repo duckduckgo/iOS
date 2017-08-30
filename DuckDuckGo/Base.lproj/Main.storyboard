@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -26,7 +26,7 @@
                         <color key="barTintColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="a8m-qV-BIW">
-                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="692" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -48,35 +48,35 @@
                         <viewControllerLayoutGuide type="bottom" id="MHq-pJ-zx8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mqM-R6-tI8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPw-xt-wy9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Xuj-kZ-ete">
-                                        <rect key="frame" x="20" y="174.5" width="335" height="250"/>
+                                        <rect key="frame" x="20" y="209" width="374" height="250"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
-                                                <rect key="frame" x="67" y="0.0" width="201" height="160"/>
+                                                <rect key="frame" x="86.666666666666686" y="0.0" width="201" height="160"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="160" id="Abe-Zs-OQV"/>
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qi3-F2-882" customClass="RoundedRectangleView" customModule="Core">
-                                                <rect key="frame" x="0.0" y="200" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="200" width="374" height="50"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="etZ-6L-2TM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or type URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxL-fx-9Iq">
-                                                                <rect key="frame" x="18" y="17" width="269" height="16"/>
+                                                                <rect key="frame" x="18" y="17" width="308" height="16"/>
                                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                                 <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="dsk-K1-r3i">
-                                                                <rect key="frame" x="295" y="14" width="22" height="22"/>
+                                                                <rect key="frame" x="334" y="14" width="22" height="22"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="22" id="AyC-Sf-lsN"/>
                                                                     <constraint firstAttribute="width" constant="22" id="dDV-pC-oUh"/>
@@ -126,7 +126,7 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qk1-U5-j9v">
-                                        <rect key="frame" x="327" y="35" width="24" height="24"/>
+                                        <rect key="frame" x="366" y="35" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Ksg-mn-7x7"/>
                                             <constraint firstAttribute="width" constant="24" id="iOA-C8-1i8"/>
@@ -136,12 +136,31 @@
                                             <segue destination="VKX-Zt-u98" kind="presentation" modalPresentationStyle="currentContext" id="8Ae-00-ntC"/>
                                         </connections>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="cfZ-Bk-vM2">
+                                        <rect key="frame" x="113.33333333333334" y="646" width="188.66666666666666" height="60"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Safari" translatesAutoresizingMaskIntoConstraints="NO" id="Rc8-BM-iey">
+                                                <rect key="frame" x="79.333333333333329" y="0.0" width="30" height="30"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNF-ZC-Jvk">
+                                                <rect key="frame" x="0.0" y="44" width="188.66666666666669" height="16"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="L15-z4-Bxs" appends="YES" id="E63-Rc-OWd"/>
+                                        </connections>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Xuj-kZ-ete" secondAttribute="trailing" constant="20" id="BXb-Jp-dJK"/>
+                                    <constraint firstItem="cfZ-Bk-vM2" firstAttribute="centerX" secondItem="DPw-xt-wy9" secondAttribute="centerX" id="EDj-rt-8ch"/>
                                     <constraint firstItem="Xuj-kZ-ete" firstAttribute="centerY" secondItem="DPw-xt-wy9" secondAttribute="centerY" constant="-34" id="Hv2-JJ-Cvc"/>
                                     <constraint firstItem="Xuj-kZ-ete" firstAttribute="leading" secondItem="DPw-xt-wy9" secondAttribute="leading" constant="20" id="M67-mO-TIM"/>
                                     <constraint firstAttribute="trailing" secondItem="qk1-U5-j9v" secondAttribute="trailing" constant="24" id="gpH-3g-CfC"/>
+                                    <constraint firstAttribute="bottom" secondItem="cfZ-Bk-vM2" secondAttribute="bottom" constant="30" id="oMN-Ml-Ste"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -166,9 +185,15 @@
                         <outlet property="searchBarContent" destination="etZ-6L-2TM" id="C46-mj-H9w"/>
                         <outlet property="searchImage" destination="dsk-K1-r3i" id="tCX-28-QO6"/>
                         <outlet property="searchText" destination="lxL-fx-9Iq" id="1ym-sx-6FC"/>
+                        <outlet property="useSafariContainer" destination="cfZ-Bk-vM2" id="ghd-e1-B3Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="whO-FE-jZt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="L15-z4-Bxs">
+                    <connections>
+                        <segue destination="n05-NP-OQe" kind="presentation" id="ZEp-Yk-qol"/>
+                    </connections>
+                </tapGestureRecognizer>
                 <tapGestureRecognizer id="oev-g9-mfz" userLabel="TapToEnterPassiveMode">
                     <connections>
                         <action selector="onEnterPassiveModeTapped:" destination="V6g-Vt-ptZ" id="Ko9-k0-Ep3"/>
@@ -182,6 +207,14 @@
             </objects>
             <point key="canvasLocation" x="1182" y="-331"/>
         </scene>
+        <!--UseDuckDuckGoInSafari-->
+        <scene sceneID="kmu-jO-4T8">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="UseDuckDuckGoInSafari" id="n05-NP-OQe" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aPq-8D-3dV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1182" y="82"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="DKA-ax-iTU">
             <objects>
@@ -191,11 +224,11 @@
                         <viewControllerLayoutGuide type="bottom" id="p3W-es-khp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
-                        <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                        <rect key="frame" x="0.0" y="64" width="414" height="628"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -221,7 +254,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
                         <barButtonItem style="plain" id="Q2d-xq-trS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" id="Vgi-dy-nQB">
-                                <rect key="frame" x="158" y="-8" width="60" height="60"/>
+                                <rect key="frame" x="177" y="-8" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="bff-Gp-3Uk"/>
@@ -294,7 +327,7 @@
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sel-Fj-CU4">
-                                <rect key="frame" x="69" y="101" width="237" height="19"/>
+                                <rect key="frame" x="69" y="101" width="237" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -345,6 +378,7 @@
         <image name="Fire" width="22" height="29"/>
         <image name="FireBackground" width="60" height="60"/>
         <image name="LogoWithText" width="201" height="160"/>
+        <image name="Safari" width="30" height="30"/>
         <image name="SearchLoupe" width="22" height="22"/>
         <image name="Settings" width="23" height="22"/>
         <image name="Tabs" width="22" height="22"/>

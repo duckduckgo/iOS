@@ -2,8 +2,6 @@
 devices([
   "iPhone 6",
   "iPhone 7 Plus",
-  "iPhone 7",
-  "iPad Pro (12.9 inch)",
   "iPad Pro (9.7 inch)"
 ])
 

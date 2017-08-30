@@ -22,7 +22,7 @@
                     </view>
                     <blurEffect style="dark"/>
                 </visualEffectView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flames0001" translatesAutoresizingMaskIntoConstraints="NO" id="7lt-A3-arj">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flames0001" translatesAutoresizingMaskIntoConstraints="NO" id="7lt-A3-arj">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="128" id="uhQ-9V-1Ye"/>

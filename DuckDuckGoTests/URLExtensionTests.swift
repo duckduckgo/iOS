@@ -140,6 +140,13 @@ class URLExtensionTests: XCTestCase {
         XCTAssertEqual(actual, url)
     }
     
+    func testWhenRemovingAParamThenRemainingUrlWebPlusesAreEncodedToEnsureTheyAreMaintainedAsSpaces_bugFix() {
+        let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=45+%2B+5")
+        let expected = URL(string: "http://test.com?secondParam=45%20+%205")
+        let actual = url?.removeParam(name: "firstParam")
+        XCTAssertEqual(actual, expected)
+    }
+    
     func testWhenNoParamsThenAddingAppendsQuery() {
         let url = URL(string: "http://test.com")
         let expected = URL(string: "http://test.com?aParam=aValue")

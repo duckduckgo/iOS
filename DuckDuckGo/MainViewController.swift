@@ -176,7 +176,7 @@ class MainViewController: UIViewController {
             self.attachHomeScreen(active: false)
         }
         let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1.2)
+        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
     
     fileprivate func refreshControls() {

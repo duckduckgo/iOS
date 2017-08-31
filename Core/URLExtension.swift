@@ -57,10 +57,13 @@ extension URL {
     
     public func removeParam(name: String) -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
+        guard let encodedQuery = components.percentEncodedQuery else { return self }
+        components.percentEncodedQuery = switchWebSpacesToSystemEncoding(text: encodedQuery)
         guard var query = components.queryItems else { return self }
         for (index, param) in query.enumerated() {
             if param.name == name {
                 query.remove(at: index)
+                break
             }
         }
         components.queryItems = query

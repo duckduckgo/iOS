@@ -14,6 +14,7 @@
 		857A07A91F3AE3800035EFF4 /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */; };
 		859151E91F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */; };
 		859151EB1F543F5600F5FB53 /* SimulatorStatusMagiciOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
 		85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */; };
 		85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58591F3506AE00C6E8CA /* AppSettings.swift */; };
@@ -311,6 +312,7 @@
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
 		857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagiciOS.framework; path = Carthage/Build/iOS/SimulatorStatusMagiciOS.framework; sourceTree = "<group>"; };
+		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaultsTests.swift; sourceTree = "<group>"; };
 		85BA58591F3506AE00C6E8CA /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -694,6 +696,15 @@
 				85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */,
 			);
 			path = AppScreenshots;
+			sourceTree = "<group>";
+		};
+		859872221F5743AF00041CB8 /* FireAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				F164DDBE1F2A509200010DD2 /* FireAnimation.swift */,
+				859872231F5743D800041CB8 /* FireAnimation.xib */,
+			);
+			name = FireAnimation;
 			sourceTree = "<group>";
 		};
 		85ECA7EA1F2A825C0018EBEB /* Migration */ = {
@@ -1397,7 +1408,7 @@
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1126E241EA749A30016A6C7 /* BlurAnimatedTransitioning.swift */,
 				F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */,
-				F164DDBE1F2A509200010DD2 /* FireAnimation.swift */,
+				859872221F5743AF00041CB8 /* FireAnimation */,
 				F194FAEC1F14E2B3009B4DF8 /* UIFontExtension.swift */,
 			);
 			name = UserInterface;
@@ -1732,6 +1743,7 @@
 				F1E2494E1EF2078D008C947A /* ContentBlocker.storyboard in Resources */,
 				F12A12471F4493B200277CCD /* ContentBlockerTutorialCell.xib in Resources */,
 				F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */,
+				859872241F5743D800041CB8 /* FireAnimation.xib in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,

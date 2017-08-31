@@ -152,7 +152,7 @@ class OmniBar: UIView {
     
     @IBAction func onDismissButtonPressed() {
         resignFirstResponder()
-        omniDelegate?.onDismissButtonPressed()
+        omniDelegate?.onDismissed()
     }
     
     @IBAction func onTextEntered(_ sender: Any) {
@@ -210,6 +210,9 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text.isEmpty {
+            omniDelegate?.onDismissed()
+        }
         refreshState(state.onEditingStoppedState)
     }
 }

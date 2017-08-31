@@ -289,7 +289,7 @@ extension MainViewController: OmniBarDelegate {
         launchBookmarks()
     }
     
-    func onDismissButtonPressed() {
+    func onDismissed() {
         dismissOmniBar()
     }
 }

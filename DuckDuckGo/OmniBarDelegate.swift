@@ -26,7 +26,7 @@ protocol OmniBarDelegate: class {
 
     func onOmniQuerySubmitted(_ query: String)
             
-    func onDismissButtonPressed()
+    func onDismissed()
     
     func onSiteRatingPressed()
 

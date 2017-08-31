@@ -27,9 +27,9 @@ class FireAnimation: UIView {
     @IBOutlet var offset:NSLayoutConstraint!
 
     struct Constants {
-        static let animationDuration = 1.9
+        static let animationDuration = 1.2
         static let endDelayDuration = animationDuration + 0.2
-        static let endAnimationDuration = 0.9
+        static let endAnimationDuration = 0.2
     }
 
     static func animate(completion: @escaping () -> Swift.Void) {

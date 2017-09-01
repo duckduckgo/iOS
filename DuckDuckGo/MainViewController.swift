@@ -247,6 +247,9 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabSwitcher() {
+        if let currentTab = currentTab {
+            tabManager.updateModelFromTab(tab: currentTab)
+        }
         let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext

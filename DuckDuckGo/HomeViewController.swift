@@ -95,7 +95,7 @@ class HomeViewController: UIViewController {
     
     private func enterPassiveMode() {
         navigationController?.isNavigationBarHidden = true
-        adjustSafariButtonVisibility(forHeight: view.frame.height)
+        adjustSafariButtonVisibility()
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
     }
@@ -128,7 +128,7 @@ class HomeViewController: UIViewController {
         searchImage.alpha = 1
     }
     
-    private func adjustSafariButtonVisibility(forHeight height: CGFloat) {
+    private func adjustSafariButtonVisibility(forHeight height: CGFloat = UIScreen.main.bounds.size.height) {
         useSafariContainer.isHidden = height < Constants.minHeightForSafariButton
     }
     

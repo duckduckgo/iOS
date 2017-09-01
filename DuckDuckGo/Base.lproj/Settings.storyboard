@@ -287,12 +287,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GOv-tl-CEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1100" y="54"/>
+            <point key="canvasLocation" x="1207" y="53"/>
         </scene>
-        <!--SafariSearchInstructionsViewController-->
+        <!--UseDuckDuckGoInSafari-->
         <scene sceneID="8YY-rV-1E3">
             <objects>
-                <viewControllerPlaceholder storyboardName="SafariSearchInstructions" referencedIdentifier="SafariSearchInstructionsViewController" id="VNm-a5-bBg" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="UseDuckDuckGoInSafari" id="VNm-a5-bBg" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mkU-kG-PHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1931" y="524"/>

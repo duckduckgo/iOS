@@ -24,7 +24,7 @@ public struct AppUrls {
 
     private struct Url {
         static let base = "duckduckgo.com"
-        static let home = "https://www.duckduckgo.com/?ko=-1&kl=wt-wt"
+        static let home = "https://www.duckduckgo.com"
         static let favicon = "https://duckduckgo.com/favicon.ico"
         static let autocomplete = "https://duckduckgo.com/ac/"
         static let contentBlocking = "https://duckduckgo.com/contentblocking.js"
@@ -72,7 +72,8 @@ public struct AppUrls {
     }
     
     public func isDuckDuckGo(url: URL) -> Bool {
-        return url.absoluteString.contains(Url.base)
+        guard let host = url.host else { return false }
+        return host == Url.base || host.hasSuffix(".\(Url.base)")
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {
@@ -94,18 +95,37 @@ public struct AppUrls {
      app version and cohort (atb) https://duck.co/help/privacy/atb
      */
     public func searchUrl(text: String) -> URL {
-        let appVersion = "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
-        
-        let searchUrl = home
-            .addParam(name: Param.search, value: text)
-            .addParam(name: Param.source, value: ParamValue.source)
+        let searchUrl = home.addParam(name: Param.search, value: text)
+        return applyStatsParams(for: searchUrl)
+    }
+
+    public func applyStatsParams(for url: URL) -> URL {
+        let searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
             .addParam(name: Param.appVersion, value: appVersion)
-        
+
         guard let cohortVersion = statisticsStore.cohortVersion else { return searchUrl }
         return searchUrl.addParam(name: Param.cohort, value: cohortVersion)
+    }
+
+    private var appVersion: String {
+        return "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
     }
     
     public func autocompleteUrl(forText text: String) -> URL {
         return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
+
+    public func isDuckDuckGoSearch(url: URL) -> Bool {
+        if !isDuckDuckGo(url: url) { return false }
+        guard let _ = url.getParam(name: Param.search) else { return false }
+        return true
+    }
+
+    public func hasCorrectMobileStatsParams(url: URL) -> Bool {
+        guard let cohort = url.getParam(name: Param.cohort), cohort == statisticsStore.cohortVersion else { return false }
+        guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
+        guard let version = url.getParam(name: Param.appVersion), version == appVersion else { return false }
+        return true
+    }
+
 }

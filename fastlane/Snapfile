@@ -1,0 +1,18 @@
+
+devices([
+  "iPhone 6",
+  "iPhone 7 Plus",
+  "iPad Pro (12.9 inch)",
+  "iPad Pro (9.7 inch)",
+])
+
+languages([
+  "en-US",
+])
+
+scheme "AppScreenshots"
+
+output_directory "./fastlane/screenshots"
+
+clear_previous_screenshots true
+

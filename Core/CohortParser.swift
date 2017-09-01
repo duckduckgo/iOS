@@ -24,6 +24,8 @@ import SwiftyJSON
 
 public struct CohortParser {
     
+    public static let versionPlatformSuffix = "mi"
+    
     public init() {}
     
     func convert(fromJsonData data: Data) throws -> Cohort {
@@ -33,6 +35,6 @@ public struct CohortParser {
         guard let version = json["version"].string else {
             throw JsonError.typeMismatch
         }
-        return Cohort(version: version)
+        return Cohort(version: version + CohortParser.versionPlatformSuffix)
     }
 }

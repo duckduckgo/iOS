@@ -179,7 +179,7 @@ class TabViewController: WebViewController {
     }
     
     private func copyAction(forUrl url: URL) -> UIAlertAction {
-        let copyText = appUrls.searchQuery(fromUrl: url) ?? url.absoluteString
+        let copyText = url.absoluteString
         return UIAlertAction(title: UserText.actionCopy, style: .default) { (action) in
             UIPasteboard.general.string = copyText
         }

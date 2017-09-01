@@ -30,4 +30,10 @@ extension String {
         return characters.count
     }
 
+    public func matches(pattern: String) -> Bool {
+        let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let matches = regex.matches(in: self, options: .anchored, range:NSMakeRange(0, characters.count))
+        return matches.count == 1
+    }
+
 }

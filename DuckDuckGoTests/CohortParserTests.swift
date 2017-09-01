@@ -50,10 +50,10 @@ class CohortParserTests: XCTestCase {
     }
     
     
-    func testWhenJsonValidThenResultContainsCohort() {
+    func testWhenJsonValidThenResultContainsCohortWithPlatformSuffix() {
         let validJson = data.fromJsonFile("MockResponse/cohort_atb")
         let result = try! testee.convert(fromJsonData: validJson)
-        XCTAssertEqual(result.version, "v77-5")
+        XCTAssertEqual(result.version, "v77-5mi")
     }
     
 }

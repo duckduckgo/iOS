@@ -174,8 +174,9 @@ class MainViewController: UIViewController {
             completion()
             self.tabManager.clearAll()
             self.attachHomeScreen(active: false)
-            self.view.showBottomToast(UserText.actionForgetAllDone)
         }
+        let window = UIApplication.shared.keyWindow
+        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
     
     fileprivate func refreshControls() {
@@ -247,6 +248,9 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabSwitcher() {
+        if let currentTab = currentTab {
+            tabManager.updateModelFromTab(tab: currentTab)
+        }
         let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
@@ -289,7 +293,7 @@ extension MainViewController: OmniBarDelegate {
         launchBookmarks()
     }
     
-    func onDismissButtonPressed() {
+    func onDismissed() {
         dismissOmniBar()
     }
 }

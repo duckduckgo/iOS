@@ -1,0 +1,46 @@
+fastlane_version "1.109.0"
+
+# This value helps us track success metrics for Fastfiles
+# we automatically generate. Feel free to remove this line
+# once you get things running smoothly!
+generated_fastfile_id "c7ddc28b-25d3-424d-b688-e693165a4521"
+
+default_platform :ios
+
+lane :release do 
+
+  increment_build_number({
+      build_number: latest_testflight_build_number(
+        username: 'office@duckduckgo.com',
+        app_identifier: "com.duckduckgo.mobile.ios"
+      ) + 1
+    })
+
+  gym(
+    scheme: "DuckDuckGo",
+    export_method: "app-store"
+  )
+
+  deliver(
+    submit_for_review: false,
+    automatic_release: false, 
+    phased_release: true,
+    screenshots_path: "fastlane/screenshots",
+    username: "office@duckduckgo.com",
+    force: true
+  )
+
+end
+
+lane :screenshots do
+
+  gym(
+    scheme: "AppScreenshots",
+    export_method: "development"
+  )
+
+   reset_simulators
+   snapshot
+
+end
+

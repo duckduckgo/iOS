@@ -21,8 +21,134 @@ import XCTest
 @testable import Core
 
 class AppUrlsTests: XCTestCase {
+
+    var mockStatisticsStore: MockStatisticsStore!
     
-    var mockStatisticsStore = MockStatisticsStore()
+    override func setUp() {
+        super.setUp()
+        mockStatisticsStore = MockStatisticsStore()
+    }
+    
+    private var versionWithMockBundle: AppVersion {
+        let mockBundle = MockBundle()
+        mockBundle.add(name: AppVersion.Keys.versionNumber, value: "7")
+        mockBundle.add(name: AppVersion.Keys.buildNumber, value: "900")
+        return AppVersion(bundle: mockBundle)
+    }
+
+    func testApplyMobileStatsParamsToURL() {
+        mockStatisticsStore.cohortVersion = "001"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.applyStatsParams(for: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong&tappv=wrong")!)
+        XCTAssertEqual(actual.getParam(name: "atb"), "001")
+        XCTAssertEqual(actual.getParam(name: "t"), "ddg_ios")
+        XCTAssertEqual(actual.getParam(name: "tappv"), "ios_7_900")
+    }
+
+    func testHasMobileStatsParamsWithMatchingCohort() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios&tappv=ios_7_900")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testHasMobileStatsParamsWithMismatchedCohort() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testHasMobileStatsParamsWithNoCohort() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?t=ddg_ios&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithMismatchedSource() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_desktop&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithNoSource() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&tappv=ios_7_900")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithMismatchedVersion() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios&tappv=ios_1_100")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testHasMobileStatsParamsWithNoVersion() {
+        mockStatisticsStore.cohortVersion = "y"
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        let actual = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testIsSearchUrl() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://duckduckgo.com?q=hello")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsSearchUrlWithDDGURLNoSearchParams() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://duckduckgo.com?test=hello")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsSearchUrlWithNonDDGURL() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGoSearch(url: URL(string: "http://www.example.com")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURLAsParam() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "http://www.example.com?x=duckduckgo.com")!)
+        let expected = false
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURLHttps() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "https://duckduckgo.com")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURLWithSubdomain() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "http://www.duckduckgo.com")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testIsDuckDuckGoURL() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let actual = testee.isDuckDuckGo(url: URL(string: "http://duckduckgo.com")!)
+        let expected = true
+        XCTAssertEqual(actual, expected)
+    }
     
     func testAutocompleteUrlCreatesCorrectUrlWithParams() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)

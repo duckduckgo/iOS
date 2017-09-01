@@ -46,15 +46,6 @@
 "alert.title.save.bookmark" = "Save Bookmark";
 "alert.title.edit.bookmark" = "Edit Bookmark";
 
-"onboarding.realprivacy.title" = "Real Privacy";
-"onboarding.realprivacy.description" = "We never store or share your\npersonal information. Ever.";
-"onboarding.contentblocking.title" = "Content Blocking";
-"onboarding.contentblocking.description" = "We block trackers and annoying\nads that follow you around.";
-"onboarding.tracking.title" = "No Tracking";
-"onboarding.tracking.description" = "Other search engines track you even\nwhen you’re in ‘private browsing mode’. We don’t track you — period.";
-"onboarding.privacyright.title" = "Privacy is a Right!";
-"onboarding.privacyright.description" = "Use DuckDuckGo and take\nback your privacy!";
-
 "feedbackemail.subject" = "DuckDuckGo for iOS feedback";
 "feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
 

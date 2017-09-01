@@ -146,23 +146,13 @@ class OmniBar: UIView {
             return
         }
         
-        if let query = appUrls.searchQuery(fromUrl: url) {
-            textField.text = query
-            return
-        }
-        
-        if appUrls.isDuckDuckGo(url: url) {
-            textField.text = nil
-            return
-        }
-        
         textField.text = url.absoluteString
     }
     
     
     @IBAction func onDismissButtonPressed() {
         resignFirstResponder()
-        omniDelegate?.onDismissButtonPressed()
+        omniDelegate?.onDismissed()
     }
     
     @IBAction func onTextEntered(_ sender: Any) {
@@ -220,6 +210,9 @@ extension OmniBar: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, text.isEmpty {
+            omniDelegate?.onDismissed()
+        }
         refreshState(state.onEditingStoppedState)
     }
 }

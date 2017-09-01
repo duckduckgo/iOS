@@ -26,11 +26,11 @@ fileprivate struct ViewConstants {
 }
 
 extension UIView {
-    
-    func showBottomToast(_ text: String) {
+
+    func showBottomToast(_ text: String, duration: TimeInterval = ToastManager.shared.duration) {
         let x = bounds.size.width / 2.0
         let y = bounds.size.height - ViewConstants.marginBottom
-        makeToast(text, duration: ToastManager.shared.duration, position: CGPoint(x: x, y: y))
+        makeToast(text, duration: duration, position: CGPoint(x: x, y: y))
     }
     
 }

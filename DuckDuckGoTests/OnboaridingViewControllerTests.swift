@@ -1,5 +1,5 @@
 //
-//  FireTutorialViewControllerTests.swift
+//  OnboaridingViewControllerTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -23,10 +23,10 @@ import XCTest
 @testable import Core
 
 
-class FireTutorialViewControllerTests: XCTestCase {
+class OnboardingViewControllerTests: XCTestCase {
 
     func testLoadFromStoryboardIsNonNull() {
-        let testee = FireTutorialViewController.loadFromStoryboard()
+        let testee = OnboardingViewController.loadFromStoryboard()
         XCTAssertNotNil(testee)
     }
 }

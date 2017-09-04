@@ -65,30 +65,6 @@
 /* Navbar Edit button title */
 "navigation.title.edit" = "Aanpassen";
 
-/* Onboarding content blocking description */
-"onboarding.contentblocking.description" = "Wij blokkeren trackers en vervelende advertenties die je proberen te volgen.";
-
-/* Onboarding content blocking title */
-"onboarding.contentblocking.title" = "Inhoud blokkeren";
-
-/* Onboarding privacy is a right description */
-"onboarding.privacyright.description" = "Gebruik DuckDuckGo en krijg je privacy terug!";
-
-/* Onboarding privacy is a right title */
-"onboarding.privacyright.title" = "Privacy is een recht!";
-
-/* Onboarding real privacy description */
-"onboarding.realprivacy.description" = "Wij zullen nooit jouw persoonlijke informatie opslaan of delen. Nooit.";
-
-/* Onboarding real privacy title */
-"onboarding.realprivacy.title" = "Echte privacy";
-
-/* Onboarding tracking description */
-"onboarding.tracking.description" = "Andere zoekmachines volgen je zelfs als je in ‘privémodus’ surft. Wij volgen je niet — punt.";
-
-/* Onboarding tracking title */
-"onboarding.tracking.title" = "Niet gevolgd worden";
-
 /* Search or type URL */
 "search.hint.duckduckgo" = "Zoek of typ een URL";
 
@@ -103,7 +79,3 @@
 
 /* Bookmark saved */
 "web.url.save.done" = "Bladwijzer opgeslagen";
-
-"safari.instructions.settings" = "🇸🇽 Open <highlight>App Settings</highlight>";
-"safari.instructions.navigate" = "🇸🇽 Navigate to <highlight>Safari</highlight>, then <highlight>Search Engine</highlight>";
-"safari.instructions.select" = "🇸🇽 Select <highlight>DuckDuckGo</highlight>";

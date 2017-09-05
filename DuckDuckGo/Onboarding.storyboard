@@ -91,7 +91,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7j-qp-d9v">
-                                <rect key="frame" x="0.0" y="20" width="320" height="378"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="426"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Igk-T8-aUE">
                                         <rect key="frame" x="14" y="40" width="292" height="428"/>
@@ -198,47 +198,18 @@ and minimize ad targeting.</string>
                                     </mask>
                                 </variation>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJl-UV-8Sn">
-                                <rect key="frame" x="14" y="400" width="292" height="40"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Mxn-mF-a6d"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="480" id="SUl-qj-aSU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <state key="normal" title="Get Started">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="onGetStartedPressed:" destination="64K-kw-HvE" eventType="touchUpInside" id="TWn-hR-Lxp"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Igk-T8-aUE" secondAttribute="trailing" priority="900" constant="14" id="ALU-Be-S6N"/>
                             <constraint firstItem="s7j-qp-d9v" firstAttribute="top" secondItem="jIu-4u-iue" secondAttribute="bottom" id="BSi-8y-wty"/>
                             <constraint firstItem="Igk-T8-aUE" firstAttribute="leading" secondItem="TPY-2e-0Je" secondAttribute="leading" priority="900" constant="14" id="CqU-pU-KrS"/>
-                            <constraint firstItem="dJl-UV-8Sn" firstAttribute="top" secondItem="s7j-qp-d9v" secondAttribute="bottom" constant="2" id="Rau-lm-4HX"/>
-                            <constraint firstAttribute="trailing" secondItem="dJl-UV-8Sn" secondAttribute="trailing" priority="800" constant="14" id="Swh-Rh-1Mx"/>
-                            <constraint firstItem="KeP-xV-Aki" firstAttribute="top" secondItem="dJl-UV-8Sn" secondAttribute="bottom" constant="40" id="ZxA-Fk-WKs"/>
-                            <constraint firstItem="dJl-UV-8Sn" firstAttribute="leading" secondItem="TPY-2e-0Je" secondAttribute="leading" priority="800" constant="14" id="fZk-65-vqr"/>
-                            <constraint firstItem="dJl-UV-8Sn" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="hFV-mr-F1j"/>
+                            <constraint firstItem="KeP-xV-Aki" firstAttribute="top" secondItem="s7j-qp-d9v" secondAttribute="bottom" constant="34" id="S1U-lB-33a"/>
                             <constraint firstItem="s7j-qp-d9v" firstAttribute="leading" secondItem="TPY-2e-0Je" secondAttribute="leading" id="nAA-Bb-jS6"/>
                             <constraint firstAttribute="trailing" secondItem="s7j-qp-d9v" secondAttribute="trailing" id="vGn-sV-O0m"/>
                         </constraints>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="descriptionLineHeight">
-                            <real key="value" value="1.375"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="blockingDescription" destination="zQF-Hi-8du" id="kiK-yJ-SPQ"/>
                         <outlet property="image" destination="LSH-V5-dFX" id="61H-Ub-21z"/>
@@ -456,11 +427,6 @@ and minimize ad targeting.</string>
                         </constraints>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="descriptionLineHeight">
-                            <real key="value" value="1.375"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="descriptionText" destination="9C2-Kn-9Ho" id="ebh-LA-AaY"/>
                         <outlet property="image" destination="aKf-ss-fKw" id="CM0-Y4-4MG"/>

@@ -58,11 +58,6 @@ class FeaturesViewController: UIViewController {
             topMarginConstraint.constant = 0
         }
     }
-    
-    @IBAction func onGetStartedPressed(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
-
 }
 
 extension FeaturesViewController: OnboardingPageViewController {

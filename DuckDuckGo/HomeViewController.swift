@@ -36,28 +36,27 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var useSafariContainer: UIView!
     
     weak var delegate: HomeControllerDelegate?
+    private var active = false
     
-    static func loadFromStoryboard() -> HomeViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+    static func loadFromStoryboard(active: Bool) -> HomeViewController {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        controller.active = active
+        return controller
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        resetNavigationBar()
-        enterPassiveMode()
         super.viewWillAppear(animated)
-    }
-    
-    private func resetNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.hidesBarsOnSwipe = false
-    }
-    
-    func refreshMode(active: Bool) {
+        resetNavigationBar()
         if active {
             enterActiveMode()
         } else {
             enterPassiveMode()
         }
+    }
+    
+    private func resetNavigationBar() {
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.hidesBarsOnSwipe = false
     }
     
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {

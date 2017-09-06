@@ -32,7 +32,8 @@ class OmniBar: UIView {
         static let topMargin: CGFloat = 4
         static let height: CGFloat = 40
         static var width: CGFloat {
-            return  UIApplication.shared.keyWindow?.bounds.width ?? InterfaceMeasurement.screenWidth - leftMargin - rightMargin
+            let appWidth = UIApplication.shared.keyWindow?.rootViewController?.view.bounds.width ?? InterfaceMeasurement.screenWidth
+            return appWidth - leftMargin - rightMargin
         }
     }
     

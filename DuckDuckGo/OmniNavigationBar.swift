@@ -23,6 +23,6 @@ import Core
 
 class OmniNavigationBar: UINavigationBar {
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: InterfaceMeasurement.screenWidth, height: OmniBar.Measurement.barHeight)
+        return CGSize(width: super.sizeThatFits(size).width, height: OmniBar.Measurement.barHeight)
     }
 }

@@ -25,22 +25,13 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
     
-    struct Measurement {
-        static let barHeight: CGFloat = 52
-        static let leftMargin: CGFloat = 8
-        static let rightMargin: CGFloat = 8
-        static let topMargin: CGFloat = 4
-        static let height: CGFloat = 40
-        static var width: CGFloat {
-            return InterfaceMeasurement.screenWidth - leftMargin - rightMargin
-        }
-    }
-    
     struct Tag {
-        static let siteRating = 100
-        static let menuButton = 200
+        static let searchContainer = 100
+        static let siteRating = 200
+        static let menuButton = 300
     }
-    
+
+    @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
@@ -53,13 +44,13 @@ class OmniBar: UIView {
     private lazy var appUrls: AppUrls = AppUrls()
     
     static func loadFromXib() -> OmniBar {
-        let omnibar = OmniBar.load(nibName: "OmniBar")
-        omnibar.frame = CGRect(x: Measurement.leftMargin, y: Measurement.topMargin, width: Measurement.width, height: Measurement.height)
-        return omnibar
+        return OmniBar.load(nibName: "OmniBar")
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        searchContainer.tag = Tag.searchContainer
+        siteRatingView.tag = Tag.siteRating
         menuButton.tag = Tag.menuButton
         configureTextField()
         configureEditingMenu()
@@ -78,7 +69,6 @@ class OmniBar: UIView {
     }
     
     private func configureSiteRating() {
-        siteRatingView.tag = Tag.siteRating
         siteRatingView.refresh()
     }
     

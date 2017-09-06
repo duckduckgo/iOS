@@ -65,9 +65,12 @@ class MainViewController: UIViewController {
     }
     
     private func attachOmniBar() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
-        navigationController?.navigationBar.addSubview(omniBar)
+        omniBar.frame = navigationBar.bounds
+        navigationBar.addSubview(omniBar)
+        navigationBar.addEqualSizeConstraints(subView: omniBar)
     }
     
     fileprivate func attachHomeScreen(active: Bool = true)  {

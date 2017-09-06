@@ -119,7 +119,7 @@ class TabViewController: WebViewController {
         alert.addAction(openAction(forUrl: url))
         alert.addAction(readingAction(forUrl: url))
         alert.addAction(copyAction(forUrl: url))
-        alert.addAction(shareAction(forUrl: url))
+        alert.addAction(shareAction(forUrl: url, atPoint: point))
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: webView, atPoint: point)
     }
@@ -187,15 +187,15 @@ class TabViewController: WebViewController {
     
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
-            guard let webView = self?.webView else { return }
-            self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: webView)
+            guard let menu = self?.navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
+            self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: menu)
         }
     }
     
-    private func shareAction(forUrl url: URL) -> UIAlertAction {
+    private func shareAction(forUrl url: URL, atPoint point: Point) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let webView = self?.webView else { return }
-            self?.presentShareSheet(withItems: [url], fromView: webView)
+            self?.presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
         }
     }
     

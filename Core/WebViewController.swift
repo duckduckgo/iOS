@@ -64,14 +64,19 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
+
         view.insertSubview(webView, at: 0)
-        view.addEqualSizeConstraints(subView: webView)
+        NSLayoutConstraint(item: webView, attribute: .top, relatedBy: .equal, toItem: progressBar, attribute: .top, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: webView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: webView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: webView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0).isActive = true
+
         webEventsDelegate?.attached(webView: webView)
         if let url = url {
             load(url: url)
         }
     }
-    
+
     private func attachLongPressHandler(webView: WKWebView) {
         let handler = WebLongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
         handler.delegate = self

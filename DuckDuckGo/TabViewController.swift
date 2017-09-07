@@ -32,7 +32,9 @@ class TabViewController: WebViewController {
     private(set) var contentBlocker: ContentBlocker!
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private var siteRating: SiteRating?
-    
+
+    var decelerationOffset: CGPoint?
+
     static func loadFromStoryboard(contentBlocker: ContentBlocker) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
@@ -56,13 +58,13 @@ class TabViewController: WebViewController {
         
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
         showBars()
+        let y = webView.scrollView.contentOffset.y + InterfaceMeasurement.defaultToolbarHeight + InterfaceMeasurement.defaultToolbarHeight
+        webView.scrollView.setContentOffset(CGPoint(x:0, y: y), animated: true)
     }
     
     fileprivate func showBars() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
-        let offset = webView.scrollView.contentOffset
-        webView.scrollView.setContentOffset(CGPoint(x:0, y:offset.y + InterfaceMeasurement.defaultToolbarHeight + InterfaceMeasurement.defaultToolbarHeight), animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setToolbarHidden(false, animated: true)
     }
 
     func launchContentBlockerPopover() {
@@ -325,6 +327,28 @@ extension TabViewController: UIScrollViewDelegate {
         }
         return true
     }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 && navigationController?.isToolbarHidden == true {
+            showBars()
+            return;
+        }
+
+        guard let offset = decelerationOffset else {
+            return;
+        }
+
+        decelerationOffset = nil
+        if offset.y - scrollView.contentOffset.y > 0  && navigationController?.isToolbarHidden == true {
+            showBars()
+        }
+        
+    }
+
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        decelerationOffset = scrollView.contentOffset
+    }
+
 }
 
 extension TabViewController: ContentBlockerSettingsChangeDelegate {

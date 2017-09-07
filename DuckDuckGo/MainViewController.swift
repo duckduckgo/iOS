@@ -75,12 +75,11 @@ class MainViewController: UIViewController {
     
     fileprivate func attachHomeScreen(active: Bool = true)  {
         removeHomeScreen()
-        let controller = HomeViewController.loadFromStoryboard()
+        let controller = HomeViewController.loadFromStoryboard(active: active)
         homeController = controller
         controller.delegate = self
         addToView(controller: controller)
         tabManager.clearSelection()
-        controller.refreshMode(active: active)
         refreshControls()
     }
     
@@ -124,6 +123,11 @@ class MainViewController: UIViewController {
         addTab(forUrlRequest: request)
         refreshOmniBar()
     }
+
+    func launchNewSearch() {
+        loadViewIfNeeded()
+        attachHomeScreen()
+    }
     
     fileprivate func loadQuery(_ query: String) {
         let queryUrl = appUrls.url(forQuery: query)
@@ -140,6 +144,7 @@ class MainViewController: UIViewController {
     
     private func addTab(forUrlRequest urlRequest: URLRequest) {
         let tab = tabManager.add(request: urlRequest)
+        omniBar.resignFirstResponder()
         addToView(tab: tab)
     }
     

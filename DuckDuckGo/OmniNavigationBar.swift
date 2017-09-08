@@ -22,7 +22,12 @@ import UIKit
 import Core
 
 class OmniNavigationBar: UINavigationBar {
+    
+    struct Measurement {
+        static let barHeight: CGFloat = 52
+    }
+    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
-        return CGSize(width: InterfaceMeasurement.screenWidth, height: OmniBar.Measurement.barHeight)
+        return CGSize(width: super.sizeThatFits(size).width, height: Measurement.barHeight)
     }
 }

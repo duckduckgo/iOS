@@ -36,9 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var bookmarkStore = BookmarkUserDefaults()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        if let shortcutItem = launchOptions?[.shortcutItem] {
-            handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
-        }
         appIsLaunching = true
         return true
     }
@@ -114,8 +111,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
+        clearNavigationStack()
         if shortcutItem.type ==  ShortcutKey.search {
-            clearNavigationStack()
+            mainViewController?.launchNewSearch()
         }
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
@@ -141,7 +139,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func clearNavigationStack() {
-        rootViewController?.popToRootViewController(animated: false)
+        rootViewController?.topViewController?.dismiss(animated: false) {
+            self.rootViewController?.popToRootViewController(animated: false)
+        }
     }
 }
 

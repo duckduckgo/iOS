@@ -51,10 +51,6 @@
 
 "navigation.title.edit" = "Edit";
 
-"safari.instructions.settings" = "Open <highlight>Settings App</highlight>";
-"safari.instructions.navigate" = "Navigate to <highlight>Safari</highlight>, then <highlight>Search Engine</highlight>";
-"safari.instructions.select" = "Select <highlight>DuckDuckGo</highlight>";
-
 "monitoring.connection.secure" = "Secure connection";
 "monitoring.connection.unsecured" = "Unsecured connection";
 "monitoring.sitegrade.a" = "A";

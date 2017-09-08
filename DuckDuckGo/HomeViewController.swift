@@ -36,28 +36,27 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var useSafariContainer: UIView!
     
     weak var delegate: HomeControllerDelegate?
+    private var active = false
     
-    static func loadFromStoryboard() -> HomeViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+    static func loadFromStoryboard(active: Bool) -> HomeViewController {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        controller.active = active
+        return controller
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        resetNavigationBar()
-        enterPassiveMode()
         super.viewWillAppear(animated)
-    }
-    
-    private func resetNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.hidesBarsOnSwipe = false
-    }
-    
-    func refreshMode(active: Bool) {
+        resetNavigationBar()
         if active {
             enterActiveMode()
         } else {
             enterPassiveMode()
         }
+    }
+    
+    private func resetNavigationBar() {
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.hidesBarsOnSwipe = false
     }
     
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {
@@ -105,11 +104,13 @@ class HomeViewController: UIViewController {
     }
     
     private func moveSearchBarUp() {
-        let frame = searchBar.superview!.convert(searchBar.frame.origin, to: passiveContent)
-        let xScale = OmniBar.Measurement.width / searchBar.frame.size.width
-        let yScale = OmniBar.Measurement.height / searchBar.frame.size.height
-        let xIdentityScale = searchBar.frame.size.width / OmniBar.Measurement.width
-        let yIdentityScale = searchBar.frame.size.height / OmniBar.Measurement.height
+        guard let omniSearch = navigationController?.navigationBar.viewWithTag(OmniBar.Tag.searchContainer) else { return }
+        guard let frame = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
+        
+        let xScale = omniSearch.frame.size.width / searchBar.frame.size.width
+        let yScale = omniSearch.frame.size.height / searchBar.frame.size.height
+        let xIdentityScale = searchBar.frame.size.width / omniSearch.frame.size.width
+        let yIdentityScale = searchBar.frame.size.height / omniSearch.frame.size.height
         let searchBarToOmniTextRatio: CGFloat = 0.875
         let searchTextMarginChange: CGFloat = -12
         passiveContent.transform.ty = statusBarSize - frame.y

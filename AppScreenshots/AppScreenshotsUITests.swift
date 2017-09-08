@@ -63,7 +63,7 @@ class AppScreenshotsUITests: XCTestCase {
 
         screenshotAutoComplete()
     }
-
+    
     func testScreenshotSiteRating() {
         newTab()
         enterSearch("https://nytimes.com/2017/08/24/books/review/10-new-books-we-recommend-this-week.html")
@@ -77,7 +77,8 @@ class AppScreenshotsUITests: XCTestCase {
 
     private func skipOnboarding() {
         guard app.staticTexts["Search Anonymously"].exists else { return  }
-        app.buttons["Get Started"].tap()
+        app.pageIndicators["page 1 of 2"].tap()
+        app.buttons["Done"].tap()
     }
 
     private func tapSiteRating() {

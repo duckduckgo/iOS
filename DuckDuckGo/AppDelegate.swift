@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        startMigration()
+        startMigration(application: application)
         StatisticsLoader.shared.load()
         TrackerLoader.shared.updateTrackers()
         startOnboardingFlowIfNotSeenBefore()
@@ -90,11 +90,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func startMigration() {
+    private func startMigration(application: UIApplication) {
         // This should happen so fast that it's complete by the time the user finishes onboarding.  
         //  On subsequent calls there won't be anything to do anyway so will finish pretty much instantly.
-        Migration().start { storiesMigrated, bookmarksMigrated in
-            Logger.log(items: "Migration completed", storiesMigrated, bookmarksMigrated)
+        Migration().start { occurred, storiesMigrated, bookmarksMigrated in
+            Logger.log(items: "Migration completed", occurred, storiesMigrated, bookmarksMigrated)
+            if occurred {
+                application.shortcutItems = []
+            }
         }
     }
     

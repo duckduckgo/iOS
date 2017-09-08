@@ -22,28 +22,40 @@ import CoreData
 import Core
 
 class Migration {
-    
-    public static let oldBookmarksKey = "bookmarks"
-    
+
+    struct Constants {
+        static let oldBookmarksKey = "bookmarks"
+        static let migrationOccurredKey = "com.duckduckgo.migration.occurred"
+    }
+
     private var container: PersistenceContainer
+    private var userDefaults: UserDefaults
     
-    init(container: PersistenceContainer = PersistenceContainer(name: "Stories")!) {
+    init(container: PersistenceContainer = PersistenceContainer(name: "Stories")!, userDefaults: UserDefaults = UserDefaults.standard) {
         self.container = container
+        self.userDefaults = userDefaults
     }
     
-    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping (_ stories: Int, _ bookmarks: Int) -> ()) {
+    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping (_ occured: Bool, _ stories: Int, _ bookmarks: Int) -> ()) {
+
+        if userDefaults.bool(forKey: Constants.migrationOccurredKey) {
+            completion(false, 0, 0)
+            return
+        }
+
         queue.async {
             let bookmarks = BookmarksManager()
             let bookmarksMigrated = self.migrateBookmarks(into: bookmarks)
             let storiesMigrated = self.migrateStories(into: bookmarks)
-            completion(storiesMigrated, bookmarksMigrated)
+            self.userDefaults.set(true, forKey: Constants.migrationOccurredKey)
+            completion(true, storiesMigrated, bookmarksMigrated)
         }
+        
     }
     
     private func migrateBookmarks(into bookmarks: BookmarksManager) -> Int {
         
-        let defaults = UserDefaults.standard
-        guard let oldBookmarks = defaults.array(forKey: Migration.oldBookmarksKey) else {
+        guard let oldBookmarks = userDefaults.array(forKey: Constants.oldBookmarksKey) else {
             return 0
         }
         
@@ -59,7 +71,7 @@ class Migration {
             bookmarkCount += 1
         }
         
-        defaults.removeObject(forKey: Migration.oldBookmarksKey)
+        userDefaults.removeObject(forKey: Constants.oldBookmarksKey)
         return bookmarkCount
     }
     

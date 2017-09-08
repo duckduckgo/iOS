@@ -25,24 +25,48 @@ import XCTest
 class MigrationTests: XCTestCase {
 
     var container: PersistenceContainer!
-    
+    var userDefaults: UserDefaults!
+
     override func setUp() {
         container = PersistenceContainer(name: "test_stories")
         BookmarksManager().clear()
+        userDefaults = UserDefaults(suiteName: "test")
+        userDefaults.removeSuite(named: "test")
+        userDefaults.removePersistentDomain(forName: "test")
+        userDefaults.synchronize()
     }
     
     override func tearDown() {
         container.clear()
         BookmarksManager().clear()
         clearOldBookmarks()
+        userDefaults.removeSuite(named: "test")
+        userDefaults.removePersistentDomain(forName: "test")
+        userDefaults.synchronize()
     }
-    
+
+    func testWhenMigrationHasOccuredCompletionReturnsFalse() {
+
+        let expectation = XCTestExpectation(description: "testWhenMigrationHasOccuredCompletionReturnsFalse")
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrationed in
+            XCTAssertTrue(occurred)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrationed in
+            XCTAssertFalse(occurred)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+
+    }
+
     func testMigrateBothTypes() {
         
-        let defaults = UserDefaults.standard
-        defaults.setValue([[ "title": "example1.com", "url": "http://www.example1.com" ],
-                           [ "title": "example2.com", "url": "http://www.example2.com" ]], forKeyPath: Migration.oldBookmarksKey)
-        defaults.synchronize()
+        userDefaults.setValue([[ "title": "example1.com", "url": "http://www.example1.com" ],
+                           [ "title": "example2.com", "url": "http://www.example2.com" ]], forKeyPath: Migration.Constants.oldBookmarksKey)
+        userDefaults.synchronize()
 
         let feed = initialise(feed: container.createFeed())
         let _ = createStory(in: feed)
@@ -50,7 +74,9 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testMigrateBothTypes")
-        Migration(container: container).start { storiesMigrated, bookmarksMigrated in
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+
+            XCTAssertTrue(occurred)
             XCTAssertEqual(2, storiesMigrated)
             XCTAssertEqual(2, bookmarksMigrated)
             
@@ -65,19 +91,19 @@ class MigrationTests: XCTestCase {
     
     func testOldBookmarksDeletedAfterMigration() {
         testSingleFavouriteSearchesMigratedToBookmarks()
-        XCTAssertNil(UserDefaults.standard.array(forKey: Migration.oldBookmarksKey))
+        XCTAssertNil(UserDefaults.standard.array(forKey: Migration.Constants.oldBookmarksKey))
     }
     
     func testSeveralFavouriteSearchesMigratedToBookmarks() {
         
-        let defaults = UserDefaults.standard
-        defaults.setValue([[ "title": "example1.com", "url": "http://www.example1.com" ],
+        userDefaults.setValue([[ "title": "example1.com", "url": "http://www.example1.com" ],
                            [ "title": "example2.com", "url": "http://www.example2.com" ],
-                           [ "title": "example3.com", "url": "http://www.example3.com" ]], forKeyPath: Migration.oldBookmarksKey)
-        defaults.synchronize()
+                           [ "title": "example3.com", "url": "http://www.example3.com" ]], forKeyPath: Migration.Constants.oldBookmarksKey)
+        userDefaults.synchronize()
         
         let expectation = XCTestExpectation(description: "testSeveralFavouriteSearchesMigratedToBookmarks")
-        Migration(container: container).start { storiesMigrated, bookmarksMigrated in
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+            XCTAssertTrue(occurred)
             XCTAssertEqual(0, storiesMigrated)
             XCTAssertEqual(3, bookmarksMigrated)
             
@@ -92,12 +118,12 @@ class MigrationTests: XCTestCase {
 
     func testSingleFavouriteSearchesMigratedToBookmarks() {
         
-        let defaults = UserDefaults.standard
-        defaults.setValue([[ "title": "example.com", "url": "http://www.example.com" ]], forKeyPath: Migration.oldBookmarksKey)
-        defaults.synchronize()
+        userDefaults.setValue([[ "title": "example.com", "url": "http://www.example.com" ]], forKeyPath: Migration.Constants.oldBookmarksKey)
+        userDefaults.synchronize()
         
         let expectation = XCTestExpectation(description: "testSingleFavouriteSearchesMigratedToBookmarks")
-        Migration(container: container).start { storiesMigrated, bookmarksMigrated in
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+            XCTAssertTrue(occurred)
             XCTAssertEqual(0, storiesMigrated)
             XCTAssertEqual(1, bookmarksMigrated)
             
@@ -130,8 +156,9 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testSeveralFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container).start { storiesMigrated, bookmarksMigrated in
-            
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+
+            XCTAssertTrue(occurred)
             XCTAssertEqual(2, storiesMigrated)
             XCTAssertEqual(2, BookmarksManager().count)
             expectation.fulfill()
@@ -149,8 +176,9 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container).start { storiesMigrated, bookmarksMigrated in
-            
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+
+            XCTAssertTrue(occurred)
             XCTAssertEqual(1, storiesMigrated)
             XCTAssertEqual(1, BookmarksManager().count)
             expectation.fulfill()
@@ -168,7 +196,8 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container).start { storiesMigrated, bookmarksMigrated in
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+            XCTAssertTrue(occurred)
             XCTAssertEqual(1, storiesMigrated)
 
             let bookmarksManager = BookmarksManager()
@@ -187,8 +216,11 @@ class MigrationTests: XCTestCase {
     func testWhenNoMigrationRequiredCompletionIsCalled() {
         
         let expectation = XCTestExpectation(description: "testWhenNoMigrationRequiredCompletionIsCalled")
-        Migration().start { storiesMigrated, bookmarksMigrated in
-            
+        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+
+            print("testWhenNoMigrationRequiredCompletionIsCalled:completion", occurred, storiesMigrated, bookmarksMigrated)
+
+            XCTAssertTrue(occurred)
             XCTAssertEqual(0, storiesMigrated)
             expectation.fulfill()
             
@@ -220,9 +252,8 @@ class MigrationTests: XCTestCase {
     }
     
     private func clearOldBookmarks() {
-        let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: Migration.oldBookmarksKey)
-        defaults.synchronize()
+        userDefaults.removeObject(forKey: Migration.Constants.oldBookmarksKey)
+        userDefaults.synchronize()
     }
     
     struct Story {

@@ -21,24 +21,31 @@ import Foundation
 
 import XCTest
 @testable import DuckDuckGo
+@testable import Core
 
 class MigrationTests: XCTestCase {
 
     var container: PersistenceContainer!
     var userDefaults: UserDefaults!
+    var bookmarksManager: BookmarksManager!
+    var migration: Migration!
 
     override func setUp() {
         container = PersistenceContainer(name: "test_stories")
-        BookmarksManager().clear()
         userDefaults = UserDefaults(suiteName: "test")
         userDefaults.removeSuite(named: "test")
         userDefaults.removePersistentDomain(forName: "test")
         userDefaults.synchronize()
+
+        bookmarksManager = BookmarksManager(dataStore: BookmarkUserDefaults(userDefaults: userDefaults))
+        bookmarksManager.clear()
+
+        migration = Migration(container: container, userDefaults: userDefaults, bookmarks: bookmarksManager)
     }
     
     override func tearDown() {
         container.clear()
-        BookmarksManager().clear()
+        bookmarksManager.clear()
         clearOldBookmarks()
         userDefaults.removeSuite(named: "test")
         userDefaults.removePersistentDomain(forName: "test")
@@ -48,13 +55,13 @@ class MigrationTests: XCTestCase {
     func testWhenMigrationHasOccuredCompletionReturnsFalse() {
 
         let expectation = XCTestExpectation(description: "testWhenMigrationHasOccuredCompletionReturnsFalse")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrationed in
+        migration.start { occurred, storiesMigrated, bookmarksMigrationed in
             XCTAssertTrue(occurred)
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)
 
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrationed in
+        migration.start { occurred, storiesMigrated, bookmarksMigrationed in
             XCTAssertFalse(occurred)
             expectation.fulfill()
         }
@@ -74,14 +81,13 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testMigrateBothTypes")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
 
             XCTAssertTrue(occurred)
             XCTAssertEqual(2, storiesMigrated)
             XCTAssertEqual(2, bookmarksMigrated)
             
-            let bookmarksManager = BookmarksManager()
-            XCTAssertEqual(4, bookmarksManager.count)
+            XCTAssertEqual(4, self.bookmarksManager.count)
             
             expectation.fulfill()
         }
@@ -102,13 +108,12 @@ class MigrationTests: XCTestCase {
         userDefaults.synchronize()
         
         let expectation = XCTestExpectation(description: "testSeveralFavouriteSearchesMigratedToBookmarks")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
             XCTAssertTrue(occurred)
             XCTAssertEqual(0, storiesMigrated)
             XCTAssertEqual(3, bookmarksMigrated)
             
-            let bookmarksManager = BookmarksManager()
-            XCTAssertEqual(3, bookmarksManager.count)
+            XCTAssertEqual(3, self.bookmarksManager.count)
             
             expectation.fulfill()
         }
@@ -122,15 +127,14 @@ class MigrationTests: XCTestCase {
         userDefaults.synchronize()
         
         let expectation = XCTestExpectation(description: "testSingleFavouriteSearchesMigratedToBookmarks")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
             XCTAssertTrue(occurred)
             XCTAssertEqual(0, storiesMigrated)
             XCTAssertEqual(1, bookmarksMigrated)
             
-            let bookmarksManager = BookmarksManager()
-            XCTAssertEqual(1, bookmarksManager.count)
+            XCTAssertEqual(1, self.bookmarksManager.count)
             
-            let link = bookmarksManager.bookmark(atIndex: 0)
+            let link = self.self.bookmarksManager.bookmark(atIndex: 0)
             XCTAssertEqual("example.com", link.title)
             XCTAssertEqual("http://www.example.com", link.url.absoluteString)
             XCTAssertNil(link.favicon)
@@ -156,11 +160,11 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testSeveralFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
 
             XCTAssertTrue(occurred)
             XCTAssertEqual(2, storiesMigrated)
-            XCTAssertEqual(2, BookmarksManager().count)
+            XCTAssertEqual(2, self.self.bookmarksManager.count)
             expectation.fulfill()
             
         }
@@ -176,11 +180,11 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
 
             XCTAssertTrue(occurred)
             XCTAssertEqual(1, storiesMigrated)
-            XCTAssertEqual(1, BookmarksManager().count)
+            XCTAssertEqual(1, self.bookmarksManager.count)
             expectation.fulfill()
             
         }
@@ -196,14 +200,13 @@ class MigrationTests: XCTestCase {
         XCTAssert(container.save())
         
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
             XCTAssertTrue(occurred)
             XCTAssertEqual(1, storiesMigrated)
 
-            let bookmarksManager = BookmarksManager()
-            XCTAssertEqual(1, bookmarksManager.count)
+            XCTAssertEqual(1, self.bookmarksManager.count)
             
-            let link = bookmarksManager.bookmark(atIndex: 0)
+            let link = self.bookmarksManager.bookmark(atIndex: 0)
             XCTAssertEqual(story.title, link.title)
             XCTAssertEqual(story.urlString, link.url.absoluteString)
             
@@ -216,7 +219,7 @@ class MigrationTests: XCTestCase {
     func testWhenNoMigrationRequiredCompletionIsCalled() {
         
         let expectation = XCTestExpectation(description: "testWhenNoMigrationRequiredCompletionIsCalled")
-        Migration(container: container, userDefaults: userDefaults).start { occurred, storiesMigrated, bookmarksMigrated in
+        migration.start { occurred, storiesMigrated, bookmarksMigrated in
 
             print("testWhenNoMigrationRequiredCompletionIsCalled:completion", occurred, storiesMigrated, bookmarksMigrated)
 

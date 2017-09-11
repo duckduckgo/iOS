@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var authWindow: UIWindow?
     var window: UIWindow?
     
-    private lazy var bookmarkStore = BookmarkUserDefaults()
+    private lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         appIsLaunching = true
@@ -92,7 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func startMigration(application: UIApplication) {
         // This should happen so fast that it's complete by the time the user finishes onboarding.  
-        //  On subsequent calls there won't be anything to do anyway so will finish pretty much instantly.
         Migration().start { occurred, storiesMigrated, bookmarksMigrated in
             Logger.log(items: "Migration completed", occurred, storiesMigrated, bookmarksMigrated)
             if occurred {

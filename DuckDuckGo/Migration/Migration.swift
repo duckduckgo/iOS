@@ -28,12 +28,16 @@ class Migration {
         static let migrationOccurredKey = "com.duckduckgo.migration.occurred"
     }
 
+    private let bookmarks: BookmarksManager
     private var container: PersistenceContainer
     private var userDefaults: UserDefaults
     
-    init(container: PersistenceContainer = PersistenceContainer(name: "Stories")!, userDefaults: UserDefaults = UserDefaults.standard) {
+    init(container: PersistenceContainer = PersistenceContainer(name: "Stories")!,
+         userDefaults: UserDefaults = UserDefaults.standard,
+         bookmarks: BookmarksManager = BookmarksManager()) {
         self.container = container
         self.userDefaults = userDefaults
+        self.bookmarks = bookmarks
     }
     
     func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping (_ occured: Bool, _ stories: Int, _ bookmarks: Int) -> ()) {
@@ -44,9 +48,8 @@ class Migration {
         }
 
         queue.async {
-            let bookmarks = BookmarksManager()
-            let bookmarksMigrated = self.migrateBookmarks(into: bookmarks)
-            let storiesMigrated = self.migrateStories(into: bookmarks)
+            let bookmarksMigrated = self.migrateBookmarks(into: self.bookmarks)
+            let storiesMigrated = self.migrateStories(into: self.bookmarks)
             self.userDefaults.set(true, forKey: Constants.migrationOccurredKey)
             completion(true, storiesMigrated, bookmarksMigrated)
         }

@@ -32,7 +32,7 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var forwardButton: UIButton!
 
     private var webController: WebViewController?
-    private lazy var bookmarkStore = BookmarkUserDefaults()
+    private lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate var contentBlocker: ContentBlocker!
 
     override func viewDidLoad() {

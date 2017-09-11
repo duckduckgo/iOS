@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
 
     private lazy var appUrls: AppUrls = AppUrls()
     fileprivate var tabManager: TabManager!
-    fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
+    fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
 
     fileprivate var currentTab: TabViewController? {

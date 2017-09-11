@@ -21,22 +21,24 @@
 import Foundation
 
 public class BookmarkUserDefaults: BookmarkStore {
-    
-    private let groupName = "group.com.duckduckgo.bookmarks"
+
+    private struct Constants {
+        static let groupName = "group.com.duckduckgo.bookmarks"
+    }
     
     private struct Keys {
         static let bookmarkKey = "com.duckduckgo.bookmarks.bookmarkKey"
     }
-    
-    private var userDefaults: UserDefaults? {
-        return UserDefaults(suiteName: groupName)
+
+    private let userDefaults: UserDefaults
+
+    public init(userDefaults: UserDefaults = UserDefaults(suiteName: Constants.groupName)!) {
+        self.userDefaults = userDefaults
     }
-    
-    public init() {}
     
     public var bookmarks: [Link]? {
         get {
-            if let data = userDefaults?.data(forKey: Keys.bookmarkKey) {
+            if let data = userDefaults.data(forKey: Keys.bookmarkKey) {
                 return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
             }
             return nil
@@ -44,7 +46,7 @@ public class BookmarkUserDefaults: BookmarkStore {
         set(newBookmarks) {
             if let newBookmarks = newBookmarks {
                 let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
-                userDefaults?.set(data, forKey: Keys.bookmarkKey)
+                userDefaults.set(data, forKey: Keys.bookmarkKey)
             }
         }
     }

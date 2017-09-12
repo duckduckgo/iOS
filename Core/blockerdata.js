@@ -17,14 +17,8 @@
 //  limitations under the License.
 //
 
-
 var duckduckgoBlockerData = {
 
-	// The disconnectme variable is injected by the nativelayer and is a JSON object with the following structure:
-	//
-	//  { "host": "parent" }
-	//
-	// See disconnect me for implemntation logic
 	disconnectme: ${disconnectme}
 
 }

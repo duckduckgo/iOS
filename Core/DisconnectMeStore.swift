@@ -27,6 +27,7 @@ class DisconnectMeStore {
     }
 
     private init() {
+        _ = try? parse(data: Data(contentsOf: persistenceLocation))
     }
 
     func persist(data: Data) throws -> Int {
@@ -42,6 +43,6 @@ class DisconnectMeStore {
             self.jsonString = jsonString
         }
         return trackers.count
-    }
+    }   
 
 }

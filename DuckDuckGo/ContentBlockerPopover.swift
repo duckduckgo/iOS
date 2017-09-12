@@ -42,6 +42,10 @@ class ContentBlockerPopover: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard BlockerListsLoader().hasData else {
+            attachErrorViewController()
+            return
+        }
         guard contentBlocker.enabled else {
             attachDisabledViewController()
             return

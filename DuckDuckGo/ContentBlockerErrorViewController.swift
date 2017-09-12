@@ -40,13 +40,16 @@ class ContentBlockerErrorViewController: UIViewController {
     @IBAction func onReloadButtonPressed(_ sender: Any) {
         startSpinner()
 
-        // TODO 
-//        TrackerLoader.shared.updateTrackers { [weak self] (trackers, _) in
-//            self?.stopSpinner()
-//            if trackers != nil {
-//                self?.onSuccess()
-//            }
-//        }
+        let loader = BlockerListsLoader()
+        loader.start() { [weak self] in
+            DispatchQueue.main.async {
+                self?.stopSpinner()
+                if loader.hasData {
+                    self?.onSuccess()
+                }
+            }
+        }
+
     }
     
     private func startSpinner() {

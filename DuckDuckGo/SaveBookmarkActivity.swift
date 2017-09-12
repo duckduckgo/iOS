@@ -23,7 +23,7 @@ import Core
 
 class SaveBookmarkActivity: UIActivity {
     
-    private lazy var bookmarksManager = BookmarksManager()
+    private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private var bookmark: Link?
     
     override var activityTitle: String? {

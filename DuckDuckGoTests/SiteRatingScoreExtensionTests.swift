@@ -27,20 +27,26 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         SiteRatingCache.shared.reset()
     }
     
-    func testWhenHttpThenScoreIsOne() {
-        let testee = SiteRating(url: httpUrl)!
-        XCTAssertEqual(1, testee.siteScore)
-    }
-    
     func testWhenHttpsThenScoreIsZero() {
         let testee = SiteRating(url: httpsUrl)!
         XCTAssertEqual(0, testee.siteScore)
+    }
+    
+    func testWhenHttpThenScoreIsOne() {
+        let testee = SiteRating(url: httpUrl)!
+        XCTAssertEqual(1, testee.siteScore)
     }
     
     func testWhenOneStandardTrackerThenScoreIsTwo() {
         let testee = SiteRating(url: httpUrl)!
         addTrackers(siteRating: testee, qty: 1)
         XCTAssertEqual(2, testee.siteScore)
+    }
+    
+    func testWhenOneIpTrackerThenScoreIsThree() {
+        let testee = SiteRating(url: httpUrl)!
+        addTrackers(siteRating: testee, qty: 0, majorQty: 0, ipQty: 1)
+        XCTAssertEqual(3, testee.siteScore)
     }
     
     func testWhenOneMajorTrackerThenScoreIsThree() {
@@ -55,9 +61,15 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(2, testee.siteScore)
     }
     
-    func testWhenTenTrackerIncludingMajorThenScoreIsThree() {
+    func testWhenTenTrackersIncludingMajorThenScoreIsThree() {
         let testee = SiteRating(url: httpUrl)!
         addTrackers(siteRating: testee, qty: 5, majorQty: 5)
+        XCTAssertEqual(3, testee.siteScore)
+    }
+    
+    func testWhenTenTrackersIncludingiPThenScoreIsThree() {
+        let testee = SiteRating(url: httpUrl)!
+        addTrackers(siteRating: testee, qty: 5, majorQty: 0, ipQty: 5)
         XCTAssertEqual(3, testee.siteScore)
     }
 
@@ -73,18 +85,27 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(4, testee.siteScore)
     }
     
+    func testWhenElevenTrackersIncludingiPThenScoreIsFour() {
+        let testee = SiteRating(url: httpUrl)!
+        addTrackers(siteRating: testee, qty: 6, majorQty: 0, ipQty: 5)
+        XCTAssertEqual(4, testee.siteScore)
+    }
+    
     func testWhenNewRatingIsLowerThanCachedRatingThenCachedRatingIsUsed() {
         _ = SiteRatingCache.shared.add(domain: httpUrl.host!, score: 100)
         let testee = SiteRating(url: httpUrl)!
         XCTAssertEqual(100, testee.siteScore)
     }
     
-    func addTrackers(siteRating: SiteRating, qty: Int, majorQty: Int = 0) {
+    func addTrackers(siteRating: SiteRating, qty: Int, majorQty: Int = 0, ipQty : Int = 0) {
         for _ in 0..<qty {
             siteRating.trackerDetected(tracker, blocked: true)
         }
         for _ in 0..<majorQty {
             siteRating.trackerDetected(majorTracker, blocked: true)
+        }
+        for _ in 0..<ipQty {
+            siteRating.trackerDetected(ipTracker, blocked: true)
         }
     }
 
@@ -98,6 +119,10 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     
     var tracker: Tracker {
         return Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+    }
+    
+    var ipTracker: Tracker {
+        return Tracker(url: "http://192.168.5.10/abcd", parentDomain: "someSmallAdNetwork.com")
     }
     
     var majorTracker: Tracker {

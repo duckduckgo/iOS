@@ -39,5 +39,4 @@ extension Tracker {
         }
         return MajorTrackerNetworks.networks.contains(parentDomain)
     }
-    
 }

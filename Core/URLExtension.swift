@@ -21,7 +21,6 @@
 import Foundation
 
 
-
 extension URL {
     
     enum URLProtocol: String {
@@ -119,19 +118,23 @@ extension URL {
     }
     
     private static func isValidHost(_ host: String) -> Bool {
-
+        return isValidHostname(host) || isValidIpHost(host)
+    }
+    
+    public static func isValidHostname(_ host: String) -> Bool {
         if host == Host.localhost.rawValue {
             return true
         }
         
         // from https://stackoverflow.com/a/25717506/73479
-        let hostNameRegex = "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6})"
-
+        let hostNameRegex = "^(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6})$"
+        return host.matches(pattern: hostNameRegex)
+    }
+    
+    public static func isValidIpHost(_ host: String) -> Bool {
         // from https://stackoverflow.com/a/30023010/73479
-        let hostNumberRegex = "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
-
-        let hostRegex = "^\(hostNameRegex)|\(hostNumberRegex)$"
-        return host.matches(pattern: hostRegex)
+        let ipRegex = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+        return host.matches(pattern: ipRegex)
     }
 
 }

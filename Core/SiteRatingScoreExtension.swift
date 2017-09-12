@@ -27,6 +27,7 @@ public extension SiteRating {
         score += httpsScore
         score += trackerCountScore
         score += majorTrackerNetworkScore
+        score += ipTrackerkScore
         
         let cache =  SiteRatingCache.shared
         if cache.add(domain: domain, score: score) {
@@ -46,6 +47,10 @@ public extension SiteRating {
     
     private var majorTrackerNetworkScore: Int {
         return containsMajorTracker ? 1 : 0
+    }
+    
+    private var ipTrackerkScore: Int {
+        return contrainsIpTracker ? 1 : 0
     }
     
     public var siteGrade: SiteGrade {

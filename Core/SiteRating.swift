@@ -20,6 +20,8 @@
 
 import Foundation
 
+
+//TODO validate that url uniqueness is ok
 public class SiteRating {
     
     public var url: URL
@@ -43,13 +45,17 @@ public class SiteRating {
         return trackersDetected.contains(where: { $0.key.fromMajorNetwork() } )
     }
     
+    public var contrainsIpTracker: Bool {
+        return trackersDetected.contains(where: { $0.key.isIpTracker() } )
+    }
+    
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
         
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         
         if blocked{
-            let blockCount = trackersBlocked[tracker] ?? 0
+            let blockCount = trackersBlocked[tracker] ?? 0  
             trackersBlocked[tracker] = blockCount + 1
         }
     }

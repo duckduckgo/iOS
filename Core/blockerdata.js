@@ -1,5 +1,5 @@
 //
-//  TrackerStore.swift
+//  blockerdata.js
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,10 +18,13 @@
 //
 
 
-import Foundation
+var duckduckgoBlockerData = {
 
-public protocol TrackerStore {
-    
-    var trackers: [Tracker]? { get set }
+	// The disconnectme variable is injected by the nativelayer and is a JSON object with the following structure:
+	//
+	//  { "host": "parent" }
+	//
+	// See disconnect me for implemntation logic
+	disconnectme: ${disconnectme}
 
 }

@@ -23,7 +23,6 @@
 class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
     
     var enabled = true
-    var trackers: [Tracker]?
     
     // A very sophisticated stub, it supports a single whitelisted item ;-)
     private var lastWhiteListedItem: String?

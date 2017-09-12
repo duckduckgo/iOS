@@ -40,11 +40,13 @@ public class SiteRating {
     }
     
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.fromMajorNetwork() } )
+        return trackersDetected.contains(where: { $0.key.parent != nil && MajorTrackerNetworks.networks.contains($0.key.parent!) })
     }
     
-    public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
-        
+    public func trackerDetected(_ tracker: String, parent: String? = nil, blocked: Bool) {
+
+        let tracker = Tracker(url: tracker, parent: parent)
+
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         
@@ -69,4 +71,25 @@ public class SiteRating {
     public var totalItemsBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
+
+    struct Tracker: Hashable, Equatable {
+
+        var url: String
+        var parent: String?
+
+        func isMajorTrackerNetwork() -> Bool {
+            guard let network = parent else { return false }
+            return MajorTrackerNetworks.networks.contains(network)
+        }
+
+        public var hashValue: Int {
+            return url.hashValue ^ (parent?.hashValue ?? 0)
+        }
+
+        static func == (lhs: Tracker, rhs: Tracker) -> Bool {
+            return lhs.url == rhs.url && lhs.parent == rhs.parent
+        }
+
+    }
+
 }

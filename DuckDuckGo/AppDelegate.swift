@@ -43,7 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         startMigration(application: application)
         StatisticsLoader.shared.load()
-        TrackerLoader.shared.updateTrackers()
+
+        // TODO load block lists
+        
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false

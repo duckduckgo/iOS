@@ -81,10 +81,10 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     
     func addTrackers(siteRating: SiteRating, qty: Int, majorQty: Int = 0) {
         for _ in 0..<qty {
-            siteRating.trackerDetected(tracker, blocked: true)
+            siteRating.trackerDetected(tracker[0], parent: tracker[1], blocked: true)
         }
         for _ in 0..<majorQty {
-            siteRating.trackerDetected(majorTracker, blocked: true)
+            siteRating.trackerDetected(majorTracker[0], parent: majorTracker[1], blocked: true)
         }
     }
 
@@ -96,11 +96,12 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         return URL(string: "https://example.com")!
     }
     
-    var tracker: Tracker {
-        return Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+    var tracker: [String] {
+        return [ "aurl.com", "smallAdNetwork.com" ]
     }
     
-    var majorTracker: Tracker {
-        return Tracker(url: "aurl.com", parentDomain: "facebook.com")
+    var majorTracker: [String] {
+        return [ "aurl.com", "facebook.com" ]
     }
+
 }

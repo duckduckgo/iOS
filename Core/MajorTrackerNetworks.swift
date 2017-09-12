@@ -30,14 +30,3 @@ struct MajorTrackerNetworks {
         "oracle.com"
     ]
 }
-
-extension Tracker {
-    
-    func fromMajorNetwork() -> Bool {
-        guard let parentDomain = parentDomain else {
-            return false
-        }
-        return MajorTrackerNetworks.networks.contains(parentDomain)
-    }
-    
-}

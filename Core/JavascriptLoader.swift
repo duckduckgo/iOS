@@ -27,11 +27,17 @@ public class JavascriptLoader {
     public enum Script: String {
         case document
         case favicon
+        case blockerdata
+    }
+
+    class func path(for jsFile: String) -> String {
+        let bundle = Bundle(for: JavascriptLoader.self)
+        let path = bundle.path(forResource: jsFile, ofType: "js")!
+        return path
     }
     
     public func load(_ script: Script, withController controller: WKUserContentController) {
-        let bundle = Bundle(for: JavascriptLoader.self)
-        let path = bundle.path(forResource: script.rawValue, ofType: "js")!
+        let path = JavascriptLoader.path(for: script.rawValue)
         let scriptString = try! String(contentsOfFile: path)
         let script = WKUserScript(source: scriptString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         controller.addUserScript(script)

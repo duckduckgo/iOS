@@ -23,7 +23,7 @@ import Core
 
 class BookmarksDataSource: NSObject, UITableViewDataSource {
     
-    private lazy var bookmarksManager = BookmarksManager()
+    private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
     var isEmpty: Bool {
         return bookmarksManager.isEmpty

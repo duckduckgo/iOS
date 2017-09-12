@@ -21,8 +21,12 @@ import Core
 
 class BookmarksManager {
     
-    private lazy var dataStore = BookmarkUserDefaults()
-    
+    private let dataStore: BookmarkUserDefaults
+
+    init(dataStore: BookmarkUserDefaults = BookmarkUserDefaults()) {
+        self.dataStore = dataStore
+    }
+
     var isEmpty: Bool {
         return dataStore.bookmarks?.isEmpty ?? true
     }

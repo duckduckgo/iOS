@@ -33,43 +33,53 @@ class URLExtensionTests: XCTestCase {
     func testWhenHostIsValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "test.com"))
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11"))
+        XCTAssertTrue(URL.isWebUrl(text: "localhost"))
     }
     
     func testWhenHostIsInvalidThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "t est.com"))
         XCTAssertFalse(URL.isWebUrl(text: "test!com.com"))
         XCTAssertFalse(URL.isWebUrl(text: "121.33.33."))
+        XCTAssertFalse(URL.isWebUrl(text: "localhostt"))
     }
     
     func testWhenSchemeIsValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com"))
         XCTAssertTrue(URL.isWebUrl(text: "http://121.33.2.11"))
+        XCTAssertTrue(URL.isWebUrl(text: "http://localhost"))
     }
     
     func testWhenSchemeIsInvalidThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "asdas://test.com"))
         XCTAssertFalse(URL.isWebUrl(text: "asdas://121.33.2.11"))
+        XCTAssertFalse(URL.isWebUrl(text: "asdas://localhost"))
     }
     
     func testWhenPathIsValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com/path"))
         XCTAssertTrue(URL.isWebUrl(text: "http://121.33.2.11/path"))
+        XCTAssertTrue(URL.isWebUrl(text: "http://localhost/path"))
         XCTAssertTrue(URL.isWebUrl(text: "test.com/path"))
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11/path"))
+        XCTAssertTrue(URL.isWebUrl(text: "localhost/path"))
     }
     
     func testWhenPathIsInvalidThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http://test.com/pa th"))
         XCTAssertFalse(URL.isWebUrl(text: "http://121.33.2.11/pa th"))
+        XCTAssertFalse(URL.isWebUrl(text: "http://localhost/pa th"))
         XCTAssertFalse(URL.isWebUrl(text: "test.com/pa th"))
         XCTAssertFalse(URL.isWebUrl(text: "121.33.2.11/pa th"))
+        XCTAssertFalse(URL.isWebUrl(text: "localhost/pa th"))
     }
     
     func testWhenParamsAreValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "http://121.33.2.11?s=dafas&d=342"))
+        XCTAssertTrue(URL.isWebUrl(text: "http://localhost?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "test.com?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11?s=dafas&d=342"))
+        XCTAssertTrue(URL.isWebUrl(text: "localhost?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "https://m.facebook.com/?refsrc=https%3A%2F%2Fwww.facebook.com%2F&_rdr"))
     }
     

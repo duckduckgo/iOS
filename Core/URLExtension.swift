@@ -29,6 +29,10 @@ extension URL {
         case https
     }
     
+    enum Host: String {
+        case localhost
+    }
+    
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
         guard let encodedQuery = components.percentEncodedQuery else { return nil }
@@ -92,14 +96,14 @@ extension URL {
         guard isWebUrl(text: text) else {
             return nil
         }
-        let urlText = text.hasPrefix("http") ? text : appendScheme(path: text)
+        let urlText = text.hasPrefix(URLProtocol.http.rawValue) ? text : appendScheme(path: text)
         return URL(string: urlText)
     }
     
     public static func isWebUrl(text: String) -> Bool {
         guard let url = URL(string: text) else { return false }
         guard let scheme = url.scheme else { return isWebUrl(text: appendScheme(path: text)) }
-        guard scheme == "http" || scheme == "https" else { return false }
+        guard scheme == URLProtocol.http.rawValue || scheme == URLProtocol.https.rawValue else { return false }
         guard url.user == nil else { return false }
         guard let host = url.host else { return false }
         guard isValidHost(host) else { return false }
@@ -115,6 +119,11 @@ extension URL {
     }
     
     private static func isValidHost(_ host: String) -> Bool {
+
+        if host == Host.localhost.rawValue {
+            return true
+        }
+        
         // from https://stackoverflow.com/a/25717506/73479
         let hostNameRegex = "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6})"
 

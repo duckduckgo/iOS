@@ -36,38 +36,34 @@ var duckduckgoContentBlocking = function() {
 			block(event)
 		}
 
+		return blocked ? "blocked" : "skipped"
 	}
 
 	// private
-	function toURL(url) {
+	function toURL(url, protocol) {
 		try {
-			return new URL(url)
+			return new URL(url.startsWith("//") ? protocol + url : url)
 		} catch(error) {
 			return null
 		}
 	}
 
+	// private 
+	function getTopLevelURL() {
+		return new URL(top.location.href)
+	}
+
 	// private
 	function disconnectMeMatch(event) {
-		var topLevelUrl = new URL(top.location.href)
-
-		var eventUrl = event.url
-		if (eventUrl.startsWith("//")) {
-			console.log("fixing URL " + eventUrl)
-			eventUrl = topLevelUrl.protocol + eventUrl
-		}
-
-		var url = toURL(eventUrl)
+		var topLevelUrl = getTopLevelURL()
+		var url = toURL(event.url, topLevelUrl.protocol)
 		if (!url) {
-			console.log(eventUrl + " is not fully qualified")
 			return
 		}
 
 		var parent = DisconnectMe.parentTracker(url, top.location.href)
 		if (parent) {
-			console.log("DisconnectMe matched " + eventUrl)
-			handleDetection(event, parent, "disconnectme")
-			return true
+			return handleDetection(event, parent, "disconnectme")
 		}		
 	}
 
@@ -90,30 +86,61 @@ var duckduckgoContentBlocking = function() {
   		return hash;
 	}
 
-	var cache = {}
+	var statuses = {}
 
 	// private
-	function seenBefore(url) {
-		return cache[hashCode(event.url)]
+	function getStatus(url) {
+		return statuses[hashCode(event.url)]
 	}
 
 	// private 
-	function remember(url) {
-		cache[hashCode(event.url)] = true
+	function setStatus(url, status) {
+		console.log(status + " : " + url)	
+		statuses[hashCode(event.url)] = status
+	}
+
+	// private
+	function isFirstPartyRequest(hostname1, hostname2) {
+		// TODO discuss - only works for single item TLDs
+	    hostname1 = hostname1.split('.').slice(-2).join('.')
+    	hostname2 = hostname2.split('.').slice(-2).join('.')
+    	return hostname1 == hostname2
+	}
+
+	// private
+	function isDuckDuckGo(url) {
+		return url.hostname.endsWith("duckduckgo.com")
+	}
+
+	// private
+	function shouldSkip(event) {
+		var topLevelUrl = getTopLevelURL()	
+		var url = toURL(event.url, topLevelUrl.protocol)
+		return url != null && (isDuckDuckGo(url) || isFirstPartyRequest(url.hostname, topLevelUrl.hostname))
 	}
 
 	// public
 	function install(document) {
 		document.addEventListener("beforeload", function(event) {
-			if (seenBefore(event.url)) {
+			var status = getStatus(event.url)
+			if (status == "blocked") {
 				console.info("DuckDuckGo blocking again: " + event.url)
+				block(event)
 				return
+			} else if (status == "skipped") {
+				console.log("DuckDuckGo is skipping " + event.url)				
+				return;
 			}
 
 			console.log("DuckDuckGo checking " + event.url)
 
-			if (disconnectMeMatch(event)) {
-				remember(event.url)
+			if (shouldSkip(event)) {
+				setStatus(event.url, "skipped")
+				return
+			}
+		
+			if (status = disconnectMeMatch(event)) {
+				setStatus(event.url, status)
 				return
 			}
 

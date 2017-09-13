@@ -309,6 +309,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8325A1201F68AFD900FF31B5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -631,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */,
+				8325A1201F68AFD900FF31B5 /* README.md */,
 				836B6B711F67F1590061ECFB /* TrackerPageMocks */,
 				836B6B6B1F67F11E0061ECFB /* Info.plist */,
 			);
@@ -1536,6 +1538,7 @@
 				836B6B631F67F11E0061ECFB /* Sources */,
 				836B6B641F67F11E0061ECFB /* Frameworks */,
 				836B6B651F67F11E0061ECFB /* Resources */,
+				8325A11E1F68A95800FF31B5 /* Run Server for Mocks */,
 			);
 			buildRules = (
 			);
@@ -1870,6 +1873,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8325A11E1F68A95800FF31B5 /* Run Server for Mocks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Server for Mocks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "cd IntegrationTests/TrackerPageMocks;\nnohup python -m SimpleHTTPServer 8000 </dev/null >/dev/null 2>&1 &";
+		};
 		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

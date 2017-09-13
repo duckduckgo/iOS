@@ -27,7 +27,8 @@ public class JavascriptLoader {
     public enum Script: String {
         case document
         case favicon
-        case blockerdata
+        case disconnectme
+        case contentblocker
     }
 
     class func path(for jsFile: String) -> String {
@@ -36,7 +37,7 @@ public class JavascriptLoader {
         return path
     }
     
-    public func load(_ script: Script, withController controller: WKUserContentController) {
+    public func load(_ script: Script, withController controller: WKUserContentController, forMainFrameOnly: Bool) {
         let path = JavascriptLoader.path(for: script.rawValue)
         let scriptString = try! String(contentsOfFile: path)
         let script = WKUserScript(source: scriptString, injectionTime: .atDocumentStart, forMainFrameOnly: true)

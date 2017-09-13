@@ -19,6 +19,6 @@
 
 var duckduckgoBlockerData = {
 
-	disconnectme: ${disconnectme}
+	disconnectme: ${disconnectme} 
 
 }

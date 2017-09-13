@@ -13,6 +13,8 @@
 		85047B821F6827AD002A95D8 /* blockerdata.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B811F6827AD002A95D8 /* blockerdata.js */; };
 		85047B841F682E85002A95D8 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B831F682E85002A95D8 /* DisconnectMeStore.swift */; };
 		85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */; };
+		85047B881F6966ED002A95D8 /* disconnectme.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B871F6966ED002A95D8 /* disconnectme.js */; };
+		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
 		85782E261F33E24900313000 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85782E251F33E24900313000 /* UserText.swift */; };
 		857A07A91F3AE3800035EFF4 /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */; };
 		859151E91F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */; };
@@ -305,6 +307,8 @@
 		85047B811F6827AD002A95D8 /* blockerdata.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = blockerdata.js; sourceTree = "<group>"; };
 		85047B831F682E85002A95D8 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
 		85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListsLoader.swift; sourceTree = "<group>"; };
+		85047B871F6966ED002A95D8 /* disconnectme.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = disconnectme.js; sourceTree = "<group>"; };
+		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
 		85782E251F33E24900313000 /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
 		857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1198,6 +1202,8 @@
 				F18608DF1E5E649400361C30 /* document.js */,
 				F10307671E7D67BA0059FEC7 /* favicon.js */,
 				85047B811F6827AD002A95D8 /* blockerdata.js */,
+				85047B871F6966ED002A95D8 /* disconnectme.js */,
+				85047B891F69692C002A95D8 /* contentblocker.js */,
 			);
 			name = Javascript;
 			sourceTree = "<group>";
@@ -1763,6 +1769,8 @@
 			files = (
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
+				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
+				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
 				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

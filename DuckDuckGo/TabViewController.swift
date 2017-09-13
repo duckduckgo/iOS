@@ -234,13 +234,24 @@ class TabViewController: WebViewController {
     }
 }
 
+extension TabViewController: WKScriptMessageHandler {
+
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "trackerDetectedMessage" {
+            print("trackerDetectedMessage:", message.body)
+        }
+    }
+
+}
+
 extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
         webView.loadScripts()
         webView.scrollView.delegate = self
+        webView.configuration.userContentController.add(self, name: "trackerDetectedMessage")
     }
-    
+
     func webpageDidStartLoading() {
         resetSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)

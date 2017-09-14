@@ -40,7 +40,7 @@ public class SiteRating {
     }
     
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.parent != nil && MajorTrackerNetworks.networks.contains($0.key.parent!) })
+        return trackersDetected.contains(where: { $0.key.isMajorTrackerNetwork() })
     }
     
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {

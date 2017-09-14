@@ -1538,7 +1538,6 @@
 				836B6B631F67F11E0061ECFB /* Sources */,
 				836B6B641F67F11E0061ECFB /* Frameworks */,
 				836B6B651F67F11E0061ECFB /* Resources */,
-				8325A11E1F68A95800FF31B5 /* Run Server for Mocks */,
 			);
 			buildRules = (
 			);
@@ -1873,20 +1872,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8325A11E1F68A95800FF31B5 /* Run Server for Mocks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Server for Mocks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "cd IntegrationTests/TrackerPageMocks;\nnohup python -m SimpleHTTPServer 8000 </dev/null >/dev/null 2>&1 &";
-		};
 		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

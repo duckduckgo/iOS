@@ -31,22 +31,23 @@ class SiteGradeTests: XCTestCase {
         XCTAssertEqual(SiteGrade.a, SiteGrade.grade(fromScore: -100))
     }
     
-    func testWhenScoreIsOneThenGradeIsA() {
-        XCTAssertEqual(SiteGrade.a, SiteGrade.grade(fromScore: 1))
+    func testWhenScoreIsOneThenGradeIsB() {
+        XCTAssertEqual(SiteGrade.b, SiteGrade.grade(fromScore: 1))
     }
     
-    func testWhenScoreIsTwoThenGradeIsB() {
-        XCTAssertEqual(SiteGrade.b, SiteGrade.grade(fromScore: 2))
+    func testWhenScoreIsTwoThenGradeIsC() {
+        XCTAssertEqual(SiteGrade.c, SiteGrade.grade(fromScore: 2))
     }
     
-    func testWhenScoreIsThreeThenGradeIsC() {
-        XCTAssertEqual(SiteGrade.c, SiteGrade.grade(fromScore: 3))
+    func testWhenScoreIsThreeThenGradeIsD() {
+        XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 3))
     }
     
-    func testWhenScoreIsOneThenGradeIsD() {
+    func testWhenScoreIsFourThenGradeIsD() {
         XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 4))
     }
     
+
     func testWhenScoreIsGreaterThan4ThenGradeIsD() {
         XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 100))
     }

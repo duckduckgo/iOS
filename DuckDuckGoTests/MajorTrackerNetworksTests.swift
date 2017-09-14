@@ -1,5 +1,5 @@
 //
-//  MajorTrackerNetworks.swift
+//  MajorTrackerNetworksTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,26 +18,19 @@
 //
 
 
-import Foundation
+import XCTest
+@testable import Core
 
-struct MajorTrackerNetworks {
-    static let networks = [
-        "google.com",
-        "facebook.com",
-        "twitter.com",
-        "amazon.com",
-        "appnexus.com",
-        "oracle.com"
-    ]
-}
-
-extension Tracker {
+class MajorTrackerNetworksTests: XCTestCase {
     
-    func fromMajorNetwork() -> Bool {
-        guard let parentDomain = parentDomain else {
-            return false
-        }
-        return MajorTrackerNetworks.networks.contains(parentDomain)
+    func testTrueWhenTrackerFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "facebook.com")
+        XCTAssertTrue(testee.fromMajorNetwork())
     }
-    
+
+    func testFalseWhenTrackerNotFromMajorNetwork() {
+        let testee = Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+        XCTAssertFalse(testee.fromMajorNetwork())
+    }
+
 }

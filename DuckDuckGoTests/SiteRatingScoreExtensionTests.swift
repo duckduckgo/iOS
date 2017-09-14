@@ -22,7 +22,7 @@ import XCTest
 @testable import Core
 
 class SiteRatingScoreExtensionTests: XCTestCase {
-    
+
     override func setUp() {
         SiteRatingCache.shared.reset()
     }
@@ -96,7 +96,11 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         return URL(string: "https://example.com")!
     }
     
-    let tracker = SiteRating.Tracker(url: "aurl.com", parent: "smallAdNetwork.com")
-    let majorTracker = SiteRating.Tracker(url: "aurl.com", parent: "facebook.com")
-
+    var tracker: Tracker {
+        return Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+    }
+    
+    var majorTracker: Tracker {
+        return Tracker(url: "aurl.com", parentDomain: "facebook.com")
+    }
 }

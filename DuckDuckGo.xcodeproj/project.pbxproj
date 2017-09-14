@@ -15,6 +15,9 @@
 		85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */; };
 		85047B881F6966ED002A95D8 /* disconnectme.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B871F6966ED002A95D8 /* disconnectme.js */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
+		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
+		8570656D1F6AAE270044DCB1 /* MajorTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065691F6AADDF0044DCB1 /* MajorTrackerNetworksTests.swift */; };
+		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		85782E261F33E24900313000 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85782E251F33E24900313000 /* UserText.swift */; };
 		857A07A91F3AE3800035EFF4 /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */; };
 		859151E91F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */; };
@@ -309,6 +312,9 @@
 		85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListsLoader.swift; sourceTree = "<group>"; };
 		85047B871F6966ED002A95D8 /* disconnectme.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = disconnectme.js; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
+		857065691F6AADDF0044DCB1 /* MajorTrackerNetworksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MajorTrackerNetworksTests.swift; sourceTree = "<group>"; };
+		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		85782E251F33E24900313000 /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
 		857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -848,6 +854,8 @@
 		F11E231D1ED3B5C500523BC9 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				857065691F6AADDF0044DCB1 /* MajorTrackerNetworksTests.swift */,
+				8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */,
 				F14513581F4664E900710C46 /* SiteRatingTests.swift */,
 				F1B88A0D1F3B9D51000263D6 /* SiteRatingScoreExtensionTests.swift */,
 				F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */,
@@ -1080,6 +1088,7 @@
 		F16393F81ECCAF0F00DDD653 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				857065671F6AADC40044DCB1 /* Tracker.swift */,
 				F14513561F46388F00710C46 /* SiteRating.swift */,
 				F14484691F39E3B500F6AD2D /* SiteRatingScoreExtension.swift */,
 				F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */,
@@ -1936,6 +1945,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8570656D1F6AAE270044DCB1 /* MajorTrackerNetworksTests.swift in Sources */,
+				8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */,
 				F1FCF3B31F3550BD00C23128 /* DisconnectMeRequestTest.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
 				F1134EDC1F40FE7400B73467 /* CohortRequestTests.swift in Sources */,
@@ -2034,6 +2045,7 @@
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				F1B88A0C1F3B6C0E000263D6 /* MajorTrackerNetworks.swift in Sources */,
 				F1D934031E610DCE00A6F0D6 /* Point.swift in Sources */,
+				857065681F6AADC40044DCB1 /* Tracker.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
 				F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,

@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Test: iFrame Trackers</title>
+        <link rel="stylesheet" type="text/css" media="all" href="stylesheet.css"/>
+        <script type="text/javascript" src="script.js"></script>
+    </head>
+    
+    <body>
+        
+        <h1>Test: iFrame Trackers</h1>
+        Unique trackers: <div>5</div>
+        Total trackers: <div>5</div>
+        
+        <!-- Test that an iframe that is a tracker is blocked -->
+        <iframe src="https://secure-gl.imrworldwide.com/storageframe.html"></iframe>
+
+        <!-- Test that trackers within an iframe are blocked -->
+        <iframe src="resourcetrackers.html"></iframe>
+        
+    </body>
+</html>

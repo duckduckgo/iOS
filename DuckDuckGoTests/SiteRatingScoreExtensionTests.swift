@@ -22,7 +22,7 @@ import XCTest
 @testable import Core
 
 class SiteRatingScoreExtensionTests: XCTestCase {
-
+    
     override func setUp() {
         SiteRatingCache.shared.reset()
     }
@@ -81,10 +81,10 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     
     func addTrackers(siteRating: SiteRating, qty: Int, majorQty: Int = 0) {
         for _ in 0..<qty {
-            siteRating.trackerDetected(tracker[0], parent: tracker[1], blocked: true)
+            siteRating.trackerDetected(tracker, blocked: true)
         }
         for _ in 0..<majorQty {
-            siteRating.trackerDetected(majorTracker[0], parent: majorTracker[1], blocked: true)
+            siteRating.trackerDetected(majorTracker, blocked: true)
         }
     }
 
@@ -96,12 +96,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         return URL(string: "https://example.com")!
     }
     
-    var tracker: [String] {
-        return [ "aurl.com", "smallAdNetwork.com" ]
-    }
-    
-    var majorTracker: [String] {
-        return [ "aurl.com", "facebook.com" ]
-    }
+    let tracker = SiteRating.Tracker(url: "aurl.com", parent: "smallAdNetwork.com")
+    let majorTracker = SiteRating.Tracker(url: "aurl.com", parent: "facebook.com")
 
 }

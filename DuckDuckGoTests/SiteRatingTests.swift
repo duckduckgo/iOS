@@ -33,8 +33,8 @@ class SiteRatingTests: XCTestCase {
     }
     
     struct TrackerMock {
-        static let tracker = Url.tracker
-        static let differentTracker = Url.differentTracker
+        static let tracker = SiteRating.Tracker(url: Url.tracker, parent: nil)
+        static let differentTracker = SiteRating.Tracker(url: Url.differentTracker, parent: nil)
     }
 
     func testWhenUrlContainHostThenInitSucceeds() {

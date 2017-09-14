@@ -31,7 +31,7 @@ class TabViewController: WebViewController {
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var contentBlockerPopover: ContentBlockerPopover?
-    private var siteRating: SiteRating?
+    fileprivate var siteRating: SiteRating?
     
     static func loadFromStoryboard(contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController

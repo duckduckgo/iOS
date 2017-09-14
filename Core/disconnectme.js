@@ -22,10 +22,6 @@ var DisconnectMe = function() {
 	// private
 	function isCurrentDomain(parentDomain, currentDomain) {
 
-		if (!currentDomain) {
-			return false
-		}
-
 		if (parentDomain == currentDomain) {
 			return true
 		}

@@ -61,7 +61,7 @@ var duckduckgoContentBlocking = function() {
 			return
 		}
 
-		var parent = DisconnectMe.parentTracker(url, top.location.href)
+		var parent = DisconnectMe.parentTracker(url, topLevelUrl)
 		if (parent) {
 			return handleDetection(event, parent, "disconnectme")
 		}		

@@ -33,7 +33,7 @@ public class DisconnectMeRequest {
     
     public func execute(completion: @escaping DisconnectMeRequestCompletion) {
         Logger.log(text: "Requesting trackers...")
-        Alamofire.request(appUrls.contentBlocking)
+        Alamofire.request(appUrls.disconnectMeBlockList)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
                 Logger.log(text: "Trackers request completed with result \(response.result)")

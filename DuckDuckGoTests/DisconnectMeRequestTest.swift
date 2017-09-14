@@ -23,7 +23,7 @@ import OHHTTPStubs
 
 class DisconnectMeRequestTests: XCTestCase {
     
-    let host = AppUrls().contentBlocking.host!
+    let host = AppUrls().disconnectMeBlockList.host!
     var testee: DisconnectMeRequest = DisconnectMeRequest()
     
     override func tearDown() {

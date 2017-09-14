@@ -27,7 +27,7 @@ public struct AppUrls {
         static let home = "https://www.duckduckgo.com"
         static let favicon = "https://duckduckgo.com/favicon.ico"
         static let autocomplete = "https://duckduckgo.com/ac/"
-        static let contentBlocking = "https://duckduckgo.com/contentblocking.js"
+        static let disconnectMeBlockList = "https://duckduckgo.com/contentblocking.js?l=disconnect"
         static let cohort = "https://duckduckgo.com/atb.js"
     }
 
@@ -63,8 +63,8 @@ public struct AppUrls {
         return URL(string: Url.home)!
     }
 
-    public var contentBlocking: URL {
-        return URL(string: Url.contentBlocking)!
+    public var disconnectMeBlockList: URL {
+        return URL(string: Url.disconnectMeBlockList)!
     }
     
     public var cohort: URL {

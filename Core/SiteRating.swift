@@ -41,12 +41,16 @@ public class SiteRating {
         return url.isHttps()
     }
     
+    var partOfMajorTrackingNetwork: MajorTrackingNetwork? {
+        return url.majorTrackerNetwork
+    }
+    
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.fromMajorNetwork() } )
+        return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
     }
     
     public var contrainsIpTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.isIpTracker() } )
+        return trackersDetected.contains(where: { $0.key.isIpTracker } )
     }
     
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {

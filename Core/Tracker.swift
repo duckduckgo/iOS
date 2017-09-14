@@ -55,7 +55,7 @@ public class Tracker: NSObject, NSCoding {
         return url.hashValue ^ (parentDomain?.hashValue ?? 0)
     }
     
-    public func isIpTracker() -> Bool {
+    public var isIpTracker: Bool {
         if let host = URL(string: url)?.host {
             return URL.isValidIpHost(host)
         }

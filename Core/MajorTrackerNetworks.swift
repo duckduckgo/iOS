@@ -20,23 +20,39 @@
 
 import Foundation
 
-struct MajorTrackerNetworks {
-    static let networks = [
-        "google.com",
-        "facebook.com",
-        "twitter.com",
-        "amazon.com",
-        "appnexus.com",
-        "oracle.com"
+struct MajorTrackingNetwork {
+    
+    let domain: String
+    let perentageOfPages: Int
+    
+    static let all = [
+        MajorTrackingNetwork(domain: "google.com",    perentageOfPages: 55),
+        MajorTrackingNetwork(domain: "amazon.com",    perentageOfPages: 23),
+        MajorTrackingNetwork(domain: "facebook.com",  perentageOfPages: 20),
+        MajorTrackingNetwork(domain: "comscore.com",  perentageOfPages: 19),
+        MajorTrackingNetwork(domain: "twitter.com",   perentageOfPages: 11),
+        MajorTrackingNetwork(domain: "criteo.com",    perentageOfPages: 9),
+        MajorTrackingNetwork(domain: "quantcast.com", perentageOfPages: 9),
+        MajorTrackingNetwork(domain: "adobe.com",     perentageOfPages: 8),
+        MajorTrackingNetwork(domain: "newrelic.com",  perentageOfPages: 7),
+        MajorTrackingNetwork(domain: "appnexus.com",  perentageOfPages: 7)
     ]
 }
 
 extension Tracker {
     
-    func fromMajorNetwork() -> Bool {
+    var fromMajorNetwork: Bool {
         guard let parentDomain = parentDomain else {
             return false
         }
-        return MajorTrackerNetworks.networks.contains(parentDomain)
+        return !MajorTrackingNetwork.all.filter( {$0.domain == parentDomain } ).isEmpty
+    }
+}
+
+extension URL {
+    
+    var majorTrackerNetwork: MajorTrackingNetwork? {
+        guard let host = host else { return nil }
+        return MajorTrackingNetwork.all.filter( { $0.domain == host } ).first
     }
 }

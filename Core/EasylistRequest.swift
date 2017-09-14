@@ -1,5 +1,5 @@
 //
-//  DisconnectMeRequest.swift
+//  EasylistRequest.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,35 +17,30 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
-public typealias DisconnectMeRequestCompletion = (Int, Error?) -> Swift.Void
+public typealias EasylistRequestCompletion = (Error?) -> Swift.Void
 
-public class DisconnectMeRequest: BaseAPIRequest {
+public class EasylistRequest: BaseAPIRequest {
 
-    private var completion: DisconnectMeRequestCompletion?
+    private var completion: EasylistRequestCompletion?
 
     init() {
-        super.init(url: AppUrls().disconnectMeBlockList)
+        super.init(url: AppUrls().easylistBlockList)
     }
 
-    public func execute(completion: @escaping DisconnectMeRequestCompletion) {
+    public func execute(completion: @escaping EasylistRequestCompletion) {
         self.completion = completion
-        super.execute()
+        execute()
     }
 
     override func completed(with data: Data) {
-        do {
-            let count = try DisconnectMeStore.shared.persist(data: data)
-            completion?(count, nil)
-        } catch {
-            completion?(0, error)
-        }
+        EasylistStore.shared.persistEasylist(data: data)
+        completion?(nil)
     }
 
     override func completed(with error: Error) {
-        completion?(0, error)
+        completion?(error)
     }
-
+    
 }

@@ -28,6 +28,8 @@ public struct AppUrls {
         static let favicon = "https://duckduckgo.com/favicon.ico"
         static let autocomplete = "https://duckduckgo.com/ac/"
         static let disconnectMeBlockList = "https://duckduckgo.com/contentblocking.js?l=disconnect"
+        static let easylistBlockList = "https://duckduckgo.com/contentblocking.js?l=easylist"
+        static let easylistPrivacyBlockList = "https://duckduckgo.com/contentblocking.js?l=easyprivacy"
         static let cohort = "https://duckduckgo.com/atb.js"
     }
 
@@ -66,7 +68,15 @@ public struct AppUrls {
     public var disconnectMeBlockList: URL {
         return URL(string: Url.disconnectMeBlockList)!
     }
-    
+
+    public var easylistBlockList: URL {
+        return URL(string: Url.easylistBlockList)!
+    }
+
+    public var easylistPrivacyBlockList: URL {
+        return URL(string: Url.easylistPrivacyBlockList)!
+    }
+
     public var cohort: URL {
         return URL(string: Url.cohort)!
     }

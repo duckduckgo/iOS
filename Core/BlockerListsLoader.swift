@@ -25,7 +25,7 @@ public class BlockerListsLoader {
 
     public var hasData: Bool {
         get {
-            return DisconnectMeStore.shared.hasData
+            return DisconnectMeStore.shared.hasData && EasylistStore.shared.hasData
         }
     }
 
@@ -40,10 +40,22 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
+        EasylistRequest().execute { (error) in
+            Logger.log(items: "EasylistRequest", "\(String(describing: error))")
+            semaphore.signal()
+        }
+
+        EasylistPrivacyRequest().execute { (error) in
+            Logger.log(items: "EasylistPrivacyRequest", "\(String(describing: error))")
+            semaphore.signal()
+        }
+
         DispatchQueue.global(qos: .background).async {
 
-            // Use a wait per signal that is being expected
-            semaphore.wait()
+            for _ in 0 ..< 3 {
+                semaphore.wait()
+            }
+
             Logger.log(items: "BlockerListsLoader", "completed")
             completion?()
         }

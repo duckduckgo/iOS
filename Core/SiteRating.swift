@@ -20,8 +20,6 @@
 
 import Foundation
 
-
-//TODO validate url uniqueness
 public class SiteRating {
     
     public var url: URL

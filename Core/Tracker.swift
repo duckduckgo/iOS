@@ -54,4 +54,11 @@ public class Tracker: NSObject, NSCoding {
     public override var hashValue: Int {
         return url.hashValue ^ (parentDomain?.hashValue ?? 0)
     }
+    
+    public var isIpTracker: Bool {
+        if let host = URL(string: url)?.host {
+            return URL.isValidIpHost(host)
+        }
+        return false
+    }
 }

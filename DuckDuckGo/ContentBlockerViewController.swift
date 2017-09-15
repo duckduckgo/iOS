@@ -78,14 +78,14 @@ class ContentBlockerViewController: UITableViewController {
         if contentBlocker.whitelisted(domain: siteRating.domain) {
             return "!"
         }
-        return "\(siteRating.uniqueItemsBlocked)"
+        return "\(siteRating.uniqueTrackersBlocked)"
     }
     
     private func blockCountCircleTint() -> UIColor {
         if contentBlocker.whitelisted(domain: siteRating.domain) {
             return UIColor.monitoringNegativeTint
         }
-        if siteRating.uniqueItemsBlocked > 0 {
+        if siteRating.uniqueTrackersBlocked > 0 {
             return UIColor.monitoringNeutralTint
         }
         return UIColor.monitoringPositiveTint

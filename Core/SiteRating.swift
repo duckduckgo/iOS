@@ -39,8 +39,16 @@ public class SiteRating {
         return url.isHttps()
     }
     
+    var partOfMajorTrackingNetwork: MajorTrackerNetwork? {
+        return url.majorTrackerNetwork
+    }
+    
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.fromMajorNetwork() } )
+        return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
+    }
+
+    public var contrainsIpTracker: Bool {
+        return trackersDetected.contains(where: { $0.key.isIpTracker } )
     }
     
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
@@ -49,24 +57,24 @@ public class SiteRating {
         trackersDetected[tracker] = detectedCount + 1
         
         if blocked{
-            let blockCount = trackersBlocked[tracker] ?? 0
+            let blockCount = trackersBlocked[tracker] ?? 0  
             trackersBlocked[tracker] = blockCount + 1
         }
     }
     
-    public var uniqueItemsDetected: Int {
+    public var uniqueTrackersDetected: Int {
         return trackersDetected.count
     }
     
-    public var uniqueItemsBlocked: Int {
+    public var uniqueTrackersBlocked: Int {
         return trackersBlocked.count
     }
     
-    public var totalItemsDetected: Int {
+    public var totalTrackersDetected: Int {
         return trackersDetected.reduce(0) { $0 + $1.value }
     }
     
-    public var totalItemsBlocked: Int {
+    public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 }

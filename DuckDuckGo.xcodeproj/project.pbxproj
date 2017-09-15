@@ -225,7 +225,7 @@
 		F1F5337E1F26AAF400D80D4F /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5337D1F26AAF400D80D4F /* UserText.swift */; };
 		F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533861F26ABAC00D80D4F /* Localizable.strings */; };
 		F1F533871F26ACE900D80D4F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1F533891F26ACE900D80D4F /* Localizable.strings */; };
-		F1FCF3B31F3550BD00C23128 /* APIRequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTest.swift */; };
+		F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -557,7 +557,7 @@
 		F1EEAC4C1EAFC708006128D9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		F1F5337B1F26A9EF00D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		F1F5337D1F26AAF400D80D4F /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
-		F1FCF3B11F354F7200C23128 /* APIRequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTest.swift; sourceTree = "<group>"; };
+		F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1521,7 +1521,7 @@
 		F1FCF3B01F354F5D00C23128 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				F1FCF3B11F354F7200C23128 /* APIRequestTest.swift */,
+				F1FCF3B11F354F7200C23128 /* APIRequestTests.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2035,7 +2035,7 @@
 			files = (
 				8570656D1F6AAE270044DCB1 /* MajorTrackerNetworksTests.swift in Sources */,
 				8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */,
-				F1FCF3B31F3550BD00C23128 /* APIRequestTest.swift in Sources */,
+				F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
 				F1134EDC1F40FE7400B73467 /* CohortRequestTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,

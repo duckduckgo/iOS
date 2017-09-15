@@ -36,14 +36,24 @@ class EasylistStore {
     var easylist: String = ""
     var easylistPrivacy: String = ""
 
+    private init() {
+        easylist = (try? Data(contentsOf: persistenceLocation(type: .easylist)).base64EncodedString()) ?? ""
+        easylistPrivacy = (try? Data(contentsOf: persistenceLocation(type: .easylistPrivacy)).base64EncodedString()) ?? ""
+    }
+
     func persistEasylist(data: Data) {
-        easylist = String(data: data, encoding: .utf8)!
+        easylist = data.base64EncodedString()
         try! data.write(to: persistenceLocation(type: .easylist), options: .atomic)
     }
 
     func persistEasylistPrivacy(data: Data) {
-        easylistPrivacy = String(data: data, encoding: .utf8)!
+        easylistPrivacy = data.base64EncodedString()
         try! data.write(to: persistenceLocation(type: .easylistPrivacy), options: .atomic)
+    }
+
+    private func decodeEncode(data: Data) -> String {
+        let string = String(data: data, encoding: .utf8)!
+        return string.data(using: .utf8)!.base64EncodedString()
     }
 
     private func persistenceLocation(type: Easylist) -> URL {

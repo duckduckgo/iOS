@@ -50,15 +50,18 @@ extension WKWebView {
     }   
 
     private func loadBlockerData() {
-        let blockerDataJS = try! String(contentsOfFile: JavascriptLoader.path(for: "blockerdata"))
-            .replacingOccurrences(of: "${disconnectme}", with: disconnectMeJson())
-
-        let script = WKUserScript(source: blockerDataJS, injectionTime: .atDocumentStart, forMainFrameOnly: false)
-        configuration.userContentController.addUserScript(script)
+        loadBlockerJS(file: "blockerdata", replaceVar: "${disconnectme}", withValue: DisconnectMeStore.shared.jsonString)
+        loadBlockerJS(file: "easylist", replaceVar: "${easylist}", withValue: EasylistStore.shared.easylist)
+        loadBlockerJS(file: "easylistprivacy", replaceVar: "${easylist_privacy}", withValue: EasylistStore.shared.easylistPrivacy)
     }
 
-    private func disconnectMeJson() -> String {
-        return DisconnectMeStore.shared.jsonString
+    private func loadBlockerJS(file: String, replaceVar: String, withValue value: String) {
+
+        let contents = try! String(contentsOfFile: JavascriptLoader.path(for: file))
+        let js = contents.replacingOccurrences(of: replaceVar, with: value)
+        let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        configuration.userContentController.addUserScript(script)
+
     }
 
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {

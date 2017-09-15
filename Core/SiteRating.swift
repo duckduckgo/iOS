@@ -62,19 +62,19 @@ public class SiteRating {
         }
     }
     
-    public var uniqueItemsDetected: Int {
+    public var uniqueTrackersDetected: Int {
         return trackersDetected.count
     }
     
-    public var uniqueItemsBlocked: Int {
+    public var uniqueTrackersBlocked: Int {
         return trackersBlocked.count
     }
     
-    public var totalItemsDetected: Int {
+    public var totalTrackersDetected: Int {
         return trackersDetected.reduce(0) { $0 + $1.value }
     }
     
-    public var totalItemsBlocked: Int {
+    public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 }

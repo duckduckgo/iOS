@@ -30,6 +30,8 @@ public extension SiteRating {
         score += containsMajorTrackerScore
         score += ipTrackerkScore
         
+        Logger.log(text: "Site Calculation: { https: \(httpsScore), isMajorTrackerScore \(isMajorTrackerScore), totalTrackersDetected: \(totalTrackersDetected), uniqueTrackersDetected: \(uniqueTrackersDetected), containsMajorTracker: \(containsMajorTracker), ipTrackerkScore: \(ipTrackerkScore)")
+
         let cache =  SiteRatingCache.shared
         if cache.add(domain: domain, score: score) {
             return score
@@ -42,7 +44,7 @@ public extension SiteRating {
     }
     
     private var trackerCountScore: Int {
-        let baseScore = Double(totalItemsDetected) / 10.0
+        let baseScore = Double(totalTrackersDetected) / 10.0
         return Int(ceil(baseScore))
     }
     

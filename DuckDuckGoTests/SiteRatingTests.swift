@@ -59,38 +59,38 @@ class SiteRatingTests: XCTestCase {
     
     func testCountsAreInitiallyZero() {
         let testee = SiteRating(url: Url.https)!
-        XCTAssertEqual(testee.totalItemsDetected, 0)
-        XCTAssertEqual(testee.uniqueItemsBlocked, 0)
-        XCTAssertEqual(testee.totalItemsBlocked, 0)
-        XCTAssertEqual(testee.uniqueItemsBlocked, 0)
+        XCTAssertEqual(testee.totalTrackersDetected, 0)
+        XCTAssertEqual(testee.uniqueTrackersDetected, 0)
+        XCTAssertEqual(testee.totalTrackersBlocked, 0)
+        XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
     
     func testWhenUniqueTrackersAreBlockedThenAllDetectionAndBlockCountsIncremenet() {
         let testee = SiteRating(url: Url.https)!
         testee.trackerDetected(TrackerMock.tracker, blocked: true)
         testee.trackerDetected(TrackerMock.differentTracker, blocked: true)
-        XCTAssertEqual(testee.totalItemsDetected, 2)
-        XCTAssertEqual(testee.uniqueItemsDetected, 2)
-        XCTAssertEqual(testee.totalItemsBlocked, 2)
-        XCTAssertEqual(testee.uniqueItemsBlocked, 2)
+        XCTAssertEqual(testee.totalTrackersDetected, 2)
+        XCTAssertEqual(testee.uniqueTrackersDetected, 2)
+        XCTAssertEqual(testee.totalTrackersBlocked, 2)
+        XCTAssertEqual(testee.uniqueTrackersBlocked, 2)
     }
     
     func testWhenRepeatTrackersAreBlockedThenUniqueCountsOnlyIncrementOnce() {
         let testee = SiteRating(url: Url.https)!
         testee.trackerDetected(TrackerMock.tracker, blocked: true)
         testee.trackerDetected(TrackerMock.tracker, blocked: true)
-        XCTAssertEqual(testee.totalItemsDetected, 2)
-        XCTAssertEqual(testee.uniqueItemsDetected, 1)
-        XCTAssertEqual(testee.totalItemsBlocked, 2)
-        XCTAssertEqual(testee.uniqueItemsBlocked, 1)
+        XCTAssertEqual(testee.totalTrackersDetected, 2)
+        XCTAssertEqual(testee.uniqueTrackersDetected, 1)
+        XCTAssertEqual(testee.totalTrackersBlocked, 2)
+        XCTAssertEqual(testee.uniqueTrackersBlocked, 1)
     }
     
     func testWhenNotBlockerThenDetectedCountsIncrementButBlockCountsDoNot() {
         let testee = SiteRating(url: Url.https)!
         testee.trackerDetected(TrackerMock.tracker, blocked: false)
-        XCTAssertEqual(testee.totalItemsDetected, 1)
-        XCTAssertEqual(testee.uniqueItemsDetected, 1)
-        XCTAssertEqual(testee.totalItemsBlocked, 0)
-        XCTAssertEqual(testee.uniqueItemsBlocked, 0)
+        XCTAssertEqual(testee.totalTrackersDetected, 1)
+        XCTAssertEqual(testee.uniqueTrackersDetected, 1)
+        XCTAssertEqual(testee.totalTrackersBlocked, 0)
+        XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
 }

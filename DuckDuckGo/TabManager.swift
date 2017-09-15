@@ -44,7 +44,7 @@ struct TabManager {
     }
     
     private func buildTabController(request: URLRequest?) -> TabViewController {
-        let contentBlocker = ContentBlocker()
+        let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let controller = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
         controller.attachWebView(persistsData: true)
         controller.delegate = delegate

@@ -23,7 +23,7 @@ import OHHTTPStubs
 
 class DisconnectMeRequestTests: XCTestCase {
     
-    let host = AppUrls().contentBlocking.host!
+    let host = AppUrls().disconnectMeBlockList.host!
     var testee: DisconnectMeRequest = DisconnectMeRequest()
     
     override func tearDown() {
@@ -39,8 +39,7 @@ class DisconnectMeRequestTests: XCTestCase {
         
         let expect = expectation(description: "Valid json")
         testee.execute { (trackers, error) in
-            XCTAssertNotNil(trackers)
-            XCTAssertEqual(trackers?.count, 6)
+            XCTAssertEqual(trackers, 6)
             XCTAssertNil(error)
             expect.fulfill()
         }
@@ -56,7 +55,7 @@ class DisconnectMeRequestTests: XCTestCase {
         
         let expect = expectation(description: "Invalid Json")
         testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+            XCTAssertEqual(trackers, 0)
             XCTAssertNotNil(error)
             XCTAssertEqual(error?.localizedDescription, JsonError.invalidJson.localizedDescription)
             expect.fulfill()
@@ -72,7 +71,7 @@ class DisconnectMeRequestTests: XCTestCase {
         
         let expect = expectation(description: "Type mismatch")
         testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+            XCTAssertEqual(trackers, 0)
             XCTAssertNotNil(error)
             XCTAssertEqual(error?.localizedDescription, JsonError.typeMismatch.localizedDescription)
             expect.fulfill()
@@ -88,7 +87,7 @@ class DisconnectMeRequestTests: XCTestCase {
         
         let expect = expectation(description: "Status code 199")
         testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+            XCTAssertEqual(trackers, 0)
             XCTAssertNotNil(error)
             expect.fulfill()
         }
@@ -103,7 +102,7 @@ class DisconnectMeRequestTests: XCTestCase {
         
         let expect = expectation(description: "Status code 300")
         testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+            XCTAssertEqual(trackers, 0)
             XCTAssertNotNil(error)
             expect.fulfill()
         }
@@ -118,7 +117,7 @@ class DisconnectMeRequestTests: XCTestCase {
         
         let expect = expectation(description: "Status code 301")
         testee.execute { (trackers, error) in
-            XCTAssertNil(trackers)
+            XCTAssertEqual(trackers, 0)
             XCTAssertNotNil(error)
             expect.fulfill()
         }

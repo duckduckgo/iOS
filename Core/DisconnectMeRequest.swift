@@ -22,7 +22,7 @@ import Foundation
 import Alamofire
 
 
-public typealias DisconnectMeRequestCompletion = ([Tracker]?, Error?) -> Swift.Void
+public typealias DisconnectMeRequestCompletion = (Int, Error?) -> Swift.Void
 
 public class DisconnectMeRequest {
 
@@ -33,7 +33,7 @@ public class DisconnectMeRequest {
     
     public func execute(completion: @escaping DisconnectMeRequestCompletion) {
         Logger.log(text: "Requesting trackers...")
-        Alamofire.request(appUrls.contentBlocking)
+        Alamofire.request(appUrls.disconnectMeBlockList)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
                 Logger.log(text: "Trackers request completed with result \(response.result)")
@@ -43,26 +43,26 @@ public class DisconnectMeRequest {
     
     private func handleResponse(response: Alamofire.DataResponse<Data>, completion: @escaping DisconnectMeRequestCompletion) {
         if let error = response.result.error {
-            complete(completion, withTrackers: nil, error: error)
+            complete(completion, count: 0, error: error)
             return
         }
         
         guard let data = response.result.value else {
-            complete(completion, withTrackers: nil, error: ApiRequestError.noData)
+            complete(completion, count: 0, error: ApiRequestError.noData)
             return
         }
-        
+
         do {
-            let trackers  = try self.parser.convert(fromJsonData: data)
-            complete(completion, withTrackers: trackers, error: nil)
+            let count = try DisconnectMeStore.shared.persist(data: data)
+            complete(completion, count: count, error: nil)
         } catch {
-            complete(completion, withTrackers: nil, error: error)
+            complete(completion, count: 0, error: error)
         }
     }
     
-    private func complete(_ completion: @escaping DisconnectMeRequestCompletion, withTrackers trackers: [Tracker]?, error: Error?) {
+    private func complete(_ completion: @escaping DisconnectMeRequestCompletion, count: Int, error: Error?) {
         DispatchQueue.main.async {
-            completion(trackers, error)
+            completion(count, error)
         }
     }
 }

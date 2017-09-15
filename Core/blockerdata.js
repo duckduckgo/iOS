@@ -1,5 +1,5 @@
 //
-//  TrackerStore.swift
+//  blockerdata.js
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,8 @@
 //  limitations under the License.
 //
 
+var duckduckgoBlockerData = {
 
-import Foundation
-
-public protocol TrackerStore {
-    
-    var trackers: [Tracker]? { get set }
+	disconnectme: ${disconnectme} 
 
 }

@@ -29,11 +29,11 @@ class TabViewController: WebViewController {
     weak var delegate: TabDelegate?
     
     private lazy var appUrls: AppUrls = AppUrls()
-    private(set) var contentBlocker: ContentBlocker!
+    private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var contentBlockerPopover: ContentBlockerPopover?
-    private var siteRating: SiteRating?
+    fileprivate var siteRating: SiteRating?
     
-    static func loadFromStoryboard(contentBlocker: ContentBlocker) -> TabViewController {
+    static func loadFromStoryboard(contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
         return controller
@@ -210,17 +210,6 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        let policy = contentBlocker.policy(forUrl: url, document: documentUrl)
-        
-        if let tracker = policy.tracker {
-            siteRating?.trackerDetected(tracker, blocked: policy.block)
-            onSiteRatingChanged()
-        }
-
-        if policy.block {
-            return false
-        }
-        
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
@@ -245,13 +234,24 @@ class TabViewController: WebViewController {
     }
 }
 
+extension TabViewController: WKScriptMessageHandler {
+
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "trackerDetectedMessage" {
+            print("trackerDetectedMessage:", message.body)
+        }
+    }
+
+}
+
 extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
         webView.loadScripts()
         webView.scrollView.delegate = self
+        webView.configuration.userContentController.add(self, name: "trackerDetectedMessage")
     }
-    
+
     func webpageDidStartLoading() {
         resetSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)

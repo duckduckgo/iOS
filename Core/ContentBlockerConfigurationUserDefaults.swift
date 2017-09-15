@@ -21,7 +21,7 @@
 import Foundation
 import SafariServices
 
-public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore, TrackerStore {
+public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
     
     private struct Constants {
         static let groupName = "group.com.duckduckgo.contentblocker"
@@ -54,20 +54,6 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
     }
     
-    public var trackers: [Tracker]? {
-        get {
-            guard let data = userDefaults?.object(forKey: Keys.trackerList) as? Data else { return nil }
-            guard let tracker = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Tracker] else { return nil }
-            return tracker
-        }
-        set(newTrackers) {
-            guard let trackers = newTrackers else { return }
-            let data = NSKeyedArchiver.archivedData(withRootObject: trackers)
-            userDefaults?.set(data, forKey: Keys.trackerList)
-            SFContentBlockerManager.reloadContentBlocker()
-        }
-    }
-
     private var domainWhitelist: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }

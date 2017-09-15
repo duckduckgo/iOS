@@ -235,10 +235,26 @@ class TabViewController: WebViewController {
 }
 
 extension TabViewController: WKScriptMessageHandler {
+    
+    struct MessageName {
+        static let trackerDetected = "trackerDetectedMessage"
+    }
+    
+    struct TrackerDetectedKey {
+        static let blocked = "blocked"
+        static let parentDomain = "parentDomain"
+        static let url = "url"
+    }
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "trackerDetectedMessage" {
-            print("trackerDetectedMessage:", message.body)
+        if message.name == MessageName.trackerDetected {
+            Logger.log(text: "\(MessageName.trackerDetected) \(message.body)")
+            guard let dict = message.body as? Dictionary<String, Any> else { return }
+            guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
+            guard let url = dict[TrackerDetectedKey.url] as? String else { return }
+            let parent = dict[ TrackerDetectedKey.parentDomain] as? String
+            siteRating?.trackerDetected(Tracker(url: url, parentDomain: parent), blocked: blocked)
+            onSiteRatingChanged()
         }
     }
 

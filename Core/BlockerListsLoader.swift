@@ -33,19 +33,32 @@ public class BlockerListsLoader {
 
     public func start(completion: BlockerListsLoaderCompletion?) {
 
+        let urls = AppUrls()
+
         let semaphore = DispatchSemaphore(value: 0)
 
-        DisconnectMeRequest().execute { (trackerCount, error) in
-            Logger.log(items: "DisconnectMeRequest", trackerCount, "\(String(describing: error))")
+        APIRequest(url: urls.disconnectMeBlockList).execute { (data, error) in
+            if let data = data {
+                try? DisconnectMeStore.shared.persist(data: data)
+            }
+            Logger.log(items: "DisconnectMeRequest", DisconnectMeStore.shared.trackers.count, "\(String(describing: error))")
             semaphore.signal()
         }
 
-        EasylistRequest().execute { (error) in
+        APIRequest(url: urls.easylistBlockList).execute { (data, error) in
+            if let data = data {
+                EasylistStore.shared.persistEasylist(data: data)
+            }
+
             Logger.log(items: "EasylistRequest", "\(String(describing: error))")
             semaphore.signal()
         }
 
-        EasylistPrivacyRequest().execute { (error) in
+        APIRequest(url: urls.easylistPrivacyBlockList).execute { (data, error) in
+            if let data = data {
+                EasylistStore.shared.persistEasylistPrivacy(data: data)
+            }
+
             Logger.log(items: "EasylistPrivacyRequest", "\(String(describing: error))")
             semaphore.signal()
         }

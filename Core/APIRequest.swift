@@ -21,9 +21,9 @@
 import Foundation
 import Alamofire
 
-public typealias APIRequestCompletion = (Int, Error?) -> Swift.Void
+public typealias APIRequestCompletion = (Data?, Error?) -> Swift.Void
 
-public class BaseAPIRequest {
+public class APIRequest {
 
     let url: URL
 
@@ -31,36 +31,16 @@ public class BaseAPIRequest {
         self.url = url
     }
 
-    func execute() {
+    func execute(completion: @escaping APIRequestCompletion) {
 
-        Logger.log(text: "Requesting trackers...")
+        Logger.log(text: "Requesting \(url) ...")
         Alamofire.request(url)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
                 Logger.log(text: "Request for \(self.url) completed with result \(response.result)")
-                self.handleResponse(response: response)
+                completion(response.data, response.error)
         }
 
-    }
-
-    private func handleResponse(response: Alamofire.DataResponse<Data>) {
-        if let error = response.result.error {
-            completed(with: error)
-            return
-        }
-
-        guard let data = response.result.value else {
-            completed(with: ApiRequestError.noData)
-            return
-        }
-
-        completed(with: data)
-    }
-
-    func completed(with data: Data) {
-    }
-
-    func completed(with error: Error) {
     }
 
 }

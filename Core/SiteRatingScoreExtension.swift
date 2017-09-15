@@ -25,8 +25,9 @@ public extension SiteRating {
     public var siteScore: Int {
         var score = 1
         score += httpsScore
+        score += isMajorTrackerScore
         score += trackerCountScore
-        score += majorTrackerNetworkScore
+        score += containsMajorTrackerScore
         score += ipTrackerkScore
         
         let cache =  SiteRatingCache.shared
@@ -45,8 +46,14 @@ public extension SiteRating {
         return Int(ceil(baseScore))
     }
     
-    private var majorTrackerNetworkScore: Int {
+    private var containsMajorTrackerScore: Int {
         return containsMajorTracker ? 1 : 0
+    }
+    
+    private var isMajorTrackerScore: Int {
+        guard let network = url.majorTrackerNetwork else { return 0 }
+        let baseScore = Double(network.perentageOfPages) / 10.0
+        return Int(ceil(baseScore))
     }
     
     private var ipTrackerkScore: Int {

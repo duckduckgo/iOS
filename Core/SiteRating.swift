@@ -21,7 +21,7 @@
 import Foundation
 
 
-//TODO validate that url uniqueness is ok
+//TODO validate url uniqueness
 public class SiteRating {
     
     public var url: URL
@@ -41,14 +41,14 @@ public class SiteRating {
         return url.isHttps()
     }
     
-    var partOfMajorTrackingNetwork: MajorTrackingNetwork? {
+    var partOfMajorTrackingNetwork: MajorTrackerNetwork? {
         return url.majorTrackerNetwork
     }
     
     public var containsMajorTracker: Bool {
         return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
     }
-    
+
     public var contrainsIpTracker: Bool {
         return trackersDetected.contains(where: { $0.key.isIpTracker } )
     }

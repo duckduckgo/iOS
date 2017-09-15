@@ -25,12 +25,24 @@ class MajorTrackerNetworksTests: XCTestCase {
     
     func testTrueWhenTrackerFromMajorNetwork() {
         let testee = Tracker(url: "aurl.com", parentDomain: "facebook.com")
-        XCTAssertTrue(testee.fromMajorNetwork())
+        XCTAssertTrue(testee.fromMajorNetwork)
     }
 
     func testFalseWhenTrackerNotFromMajorNetwork() {
         let testee = Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
-        XCTAssertFalse(testee.fromMajorNetwork())
+        XCTAssertFalse(testee.fromMajorNetwork)
     }
 
+    func testWhenUrlIsMajorNetworkThenNetworkAndPercentageExist() {
+        let testee = URL(string: "https://www.google.com")!.majorTrackerNetwork
+        XCTAssertNotNil(testee)
+        XCTAssertEqual(testee?.domain, "google.com")
+        XCTAssertEqual(testee?.perentageOfPages, 55)
+    }
+    
+    func testWhenUrlIsNotMajorNetworkThenNetworkIsNil() {
+        let testee = URL(string: "www.abcd.com")!.majorTrackerNetwork
+        XCTAssertNil(testee)
+    }
+    
 }

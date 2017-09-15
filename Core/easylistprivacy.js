@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
-duckduckgoBlockerData.easylistPrivacy = decodeBase64("${easylist_privacy}")
-
-console.log("Easylist Privacy: " + duckduckgoBlockerData.easylistPrivacy.substring(0, 100))
+var easylistData = decodeBase64("${easylist_privacy}")
+ABPFilterParser.parse(easylistData, duckduckgoBlockerData.easylist)  
+console.log("Easylist Privacy: " + easylistData.substring(0, 100))
+easylistData = null

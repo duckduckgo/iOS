@@ -29,6 +29,7 @@ public class JavascriptLoader {
         case favicon
         case disconnectme
         case contentblocker
+        case apbfilter = "abp-filter-parser-packed-es2015"
     }
 
     class func path(for jsFile: String) -> String {

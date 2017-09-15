@@ -119,6 +119,21 @@ var duckduckgoContentBlocking = function() {
 		return url != null && (isDuckDuckGo(url) || isFirstPartyRequest(url.hostname, topLevelUrl.hostname))
 	}
 
+	// private
+	function easylistMatch(event) {
+
+		var config = {
+			domain: document.location.hostname,
+			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
+		}
+
+		if (ABPFilterParser.matches(duckduckgoBlockerData.easylist, event.url, config)) {
+			return handleDetection(event, null, "easylist")
+		}
+
+		return null
+	}
+
 	// public
 	function install(document) {
 		document.addEventListener("beforeload", function(event) {
@@ -144,7 +159,10 @@ var duckduckgoContentBlocking = function() {
 				return
 			}
 
-			// TODO other blockers here
+			if (status = easylistMatch(event)) {
+				setStatus(event.url, status)
+				return
+			}
 
 		}, true)
 		console.info("DuckDuckGo Content Blocker installed")

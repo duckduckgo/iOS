@@ -37,17 +37,22 @@ extension WKWebView {
     
     public func loadScripts() {
         loadDocumentLevelScripts()
+        loadContentBlockerDependencyScripts()
         loadBlockerData()
-        loadContentBlockingScripts()
+        loadContentBlockerScripts()
     }
 
-    private func loadContentBlockingScripts() {
+    private func loadContentBlockerScripts() {
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+    }
+
+    private func loadContentBlockerDependencyScripts() {
+        load(scripts: [ .apbfilter ], forMainFrameOnly: false)
     }
 
     private func loadDocumentLevelScripts() {
         load(scripts: [ .document, .favicon ])
-    }   
+    }
 
     private func loadBlockerData() {
         loadBlockerJS(file: "blockerdata", replaceVar: "${disconnectme}", withValue: DisconnectMeStore.shared.jsonString)

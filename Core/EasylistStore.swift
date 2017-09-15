@@ -33,8 +33,8 @@ class EasylistStore {
         return easylist != "" && easylistPrivacy != ""
     }
 
-    var easylist: String = ""
-    var easylistPrivacy: String = ""
+    private(set) var easylist: String = ""
+    private(set) var easylistPrivacy: String = ""
 
     private init() {
         easylist = (try? Data(contentsOf: persistenceLocation(type: .easylist)).base64EncodedString()) ?? ""

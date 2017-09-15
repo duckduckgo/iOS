@@ -44,15 +44,6 @@ class ContentBlockerUserDefaultsTests: XCTestCase {
         testee.enabled = false
         XCTAssertFalse(testee.enabled)
     }
-
-    func testWhenTrackersAreInitiallyNil() {
-        XCTAssertNil(testee.trackers)
-    }
-    
-    func testWhenTrackersSetThenAreNotNil() {
-        testee.trackers = [Tracker]()
-        XCTAssertNotNil(testee.trackers)
-    }
     
     func testWhenBlockingEnabledThenEnabledIsTrue() {
         // default value is true so start be setting to false to ensure test is accurate

@@ -63,6 +63,9 @@
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
                                     <rect key="frame" x="259" y="0.0" width="30" height="40"/>
+                                    <accessibility key="accessibilityConfiguration" identifier="siteRating">
+                                        <bool key="isElement" value="YES"/>
+                                    </accessibility>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="vqc-wd-f2C"/>
                                     </constraints>

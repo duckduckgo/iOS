@@ -36,13 +36,35 @@ extension WKWebView {
     }
     
     public func loadScripts() {
-        load(scripts: [.document, .favicon])
+        loadDocumentLevelScripts()
+        loadBlockerData()
+        loadContentBlockingScripts()
     }
-    
-    private func load(scripts: [JavascriptLoader.Script]) {
+
+    private func loadContentBlockingScripts() {
+        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+    }
+
+    private func loadDocumentLevelScripts() {
+        load(scripts: [ .document, .favicon ])
+    }   
+
+    private func loadBlockerData() {
+        let blockerDataJS = try! String(contentsOfFile: JavascriptLoader.path(for: "blockerdata"))
+            .replacingOccurrences(of: "${disconnectme}", with: disconnectMeJson())
+
+        let script = WKUserScript(source: blockerDataJS, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        configuration.userContentController.addUserScript(script)
+    }
+
+    private func disconnectMeJson() -> String {
+        return DisconnectMeStore.shared.jsonString
+    }
+
+    private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {
-            javascriptLoader.load(script, withController: configuration.userContentController)
+            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
     

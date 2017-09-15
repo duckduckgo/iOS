@@ -54,11 +54,11 @@ class DisconnectMeTrackersParserTests: XCTestCase {
         let validJson = data.fromJsonFile("MockResponse/disconnect")
         let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.count, 6)
-        XCTAssertEqual(result[0], Tracker(url: "analyticsurl.com", parentDomain: "analyticsurl.com"))
-        XCTAssertEqual(result[1], Tracker(url: "99anadurl.com", parentDomain: "anadurl.com"))
-        XCTAssertEqual(result[2], Tracker(url: "99asocialurl.com", parentDomain: "asocialurl.com"))
-        XCTAssertEqual(result[3], Tracker(url: "anothersocialurl.com", parentDomain: "anothersocialurl.com"))
-        XCTAssertEqual(result[4], Tracker(url: "55anothersocialurl.com", parentDomain: "anothersocialurl.com"))
-        XCTAssertEqual(result[5], Tracker(url: "99anothersocialurl.com", parentDomain: "anothersocialurl.com"))
+        XCTAssertEqual(result["analyticsurl.com"], "analyticsurl.com")
+        XCTAssertEqual(result["99anadurl.com"], "anadurl.com")
+        XCTAssertEqual(result["99asocialurl.com"], "asocialurl.com")
+        XCTAssertEqual(result["anothersocialurl.com"], "anothersocialurl.com")
+        XCTAssertEqual(result["55anothersocialurl.com"], "anothersocialurl.com")
+        XCTAssertEqual(result["99anothersocialurl.com"], "anothersocialurl.com")
     }
 }

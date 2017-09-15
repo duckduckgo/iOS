@@ -52,7 +52,7 @@ extension Tracker {
 extension URL {
     
     var majorTrackerNetwork: MajorTrackerNetwork? {
-        // TODO after integration check disconnect list for associated url level well
+        // TODO after integration check disconnect list for associated url
         guard let host = host else { return nil }
         return MajorTrackerNetwork.all.filter( { host.hasSuffix($0.domain) } ).first
     }

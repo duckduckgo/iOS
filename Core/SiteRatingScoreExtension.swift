@@ -82,12 +82,12 @@ public extension SiteRating {
     public func logCalculation() {
         Logger.log(text: "Site Score: { " +
             "host: \(url.host ?? ""), " +
-            "https: \(https)-\(httpsScore), " +
-            "isMajorTracker \(majorTrackingNetwork != nil)-\(isMajorTrackerScore), " +
-            "trackersDetected: \(totalTrackersDetected)-\(trackerCountScore), " +
-            "containsMajorTracker: \(containsMajorTracker)-\(containsMajorTrackerScore), " +
+            "https: \(https)_\(httpsScore), " +
+            "isMajorTracker \(majorTrackingNetwork != nil)_\(isMajorTrackerScore), " +
+            "trackersDetected: \(totalTrackersDetected)_\(trackerCountScore), " +
+            "containsMajorTracker: \(containsMajorTracker)_\(containsMajorTrackerScore), " +
             "ipTracker: \(contrainsIpTracker)-\(ipTrackerScore), " +
-            "tos: \(termsOfService?.classification.rawValue ?? "none")-\(termsOfServiceScore) }"
+            "tos: \(termsOfService?.classification.rawValue ?? "none")_\(termsOfServiceScore) }"
         )
     }
 }

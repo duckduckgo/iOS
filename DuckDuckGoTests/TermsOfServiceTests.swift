@@ -44,7 +44,7 @@ class TermsOfServiceTests: XCTestCase {
         XCTAssertEqual(TermsOfService.Classification.c, testee.classification)
     }
     
-    func testWhenSiteContainsTwoMoreGoodTermsThanGoodTermsThenClassificationIsA() {
+    func testWhenSiteContainsTwoMoreGoodTermsThanBadTermsThenClassificationIsA() {
         let testee = TermsOfService(classification: nil, goodTerms: ["goodTerm1","goodTerm2","goodTerm3"], badTerms: ["badTerm1"])
         XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
     }

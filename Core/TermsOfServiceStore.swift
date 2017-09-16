@@ -27,7 +27,7 @@ class TermsOfServiceStore {
     
     private(set) lazy var terms = TermsOfServiceStore.load()
     
-    static func load() -> [String: TermsOfService] {
+    private static func load() -> [String: TermsOfService] {
         let parser = TermsOfServiceListParser()
         let bundle = Bundle(for: TermsOfServiceStore.self)
         let fileLoader = FileLoader()

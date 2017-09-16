@@ -39,19 +39,19 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
-        let mismatchedJson = data.fromJsonFile("MockResponse/disconnect_mismatched")
+        let mismatchedJson = data.fromJsonFile("MockJson/disconnect_mismatched.json")
         XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockResponse/disconnect")
+        let validJson = data.fromJsonFile("MockJson/disconnect.json")
         XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
     
     func testWhenJsonValidThenResultContainsTrackersFromSupportedCategories() {
-        let validJson = data.fromJsonFile("MockResponse/disconnect")
+        let validJson = data.fromJsonFile("MockJson/disconnect.json")
         let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.count, 6)
         XCTAssertEqual(result["analyticsurl.com"], "analyticsurl.com")

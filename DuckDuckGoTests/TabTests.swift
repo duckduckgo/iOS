@@ -26,7 +26,7 @@ class TabTests: XCTestCase {
     
     struct Constants {
         static let title = "A title"
-        static let url = URL(string: "https://aurl.com")!
+        static let url = URL(string: "https://example.com")!
         static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
     

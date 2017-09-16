@@ -27,7 +27,7 @@ class LinkTests: XCTestCase {
     struct Constants {
         static let title = "A title"
         static let anotherTitle = "Another title"
-        static let url = URL(string: "https://aurl.com")!
+        static let url = URL(string: "https://example.com")!
         static let anotherUrl = URL(string: "https://anothertUrl.com")!
         static let favicon = URL(string: "https://afavicon.com")!
         static let anotherFavicon = URL(string: "https://anothertfavicon.com")!

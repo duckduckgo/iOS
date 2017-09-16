@@ -88,7 +88,7 @@ extension URL {
     private func switchWebSpacesToSystemEncoding(text: String) -> String {
         return text.replacingOccurrences(of: "+", with: "%20")
     }
-
+    
     // MARK: static
 
     public static func webUrl(fromText text: String) -> URL? {

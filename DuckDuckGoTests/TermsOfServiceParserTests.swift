@@ -1,5 +1,5 @@
 //
-//  CapaignParserTests.swift
+//  TermsOfServiceListParserTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,10 +21,10 @@
 import XCTest
 @testable import Core
 
-class CohortParserTests: XCTestCase {
+class TermsOfServiceListParserTests: XCTestCase {
     
-    private var testee = CohortParser()
     private var data = JsonTestDataLoader()
+    private var testee = TermsOfServiceListParser()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
         XCTAssertThrowsError(try testee.convert(fromJsonData: data.empty()), "") { (error) in
@@ -39,21 +39,24 @@ class CohortParserTests: XCTestCase {
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
-        XCTAssertThrowsError(try testee.convert(fromJsonData: data.unexpected()), "") { (error) in
+        let mismatchedJson = data.fromJsonFile("MockJson/tosdr_mismatched.json")
+        XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockJson/cohort_atb.json")
-        XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
+        XCTAssertNoThrow(try testee.convert(fromJsonData: data.fromJsonFile("MockJson/tosdr.json")))
     }
     
-    
-    func testWhenJsonValidThenResultContainsCohortWithPlatformSuffix() {
-        let validJson = data.fromJsonFile("MockJson/cohort_atb.json")
-        let result = try! testee.convert(fromJsonData: validJson)
-        XCTAssertEqual(result.version, "v77-5mi")
+    func testWhenJsonValidThenResultContainsTerms() {
+        let result = try! testee.convert(fromJsonData: data.fromJsonFile("MockJson/tosdr.json"))
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result["example"]?.goodTerms[0], "you can request access and deletion of personal data")
+        XCTAssertEqual(result["example"]?.badTerms[0], "targeted third-party advertising")
+        XCTAssertEqual(result["example"]?.classification, TermsOfService.Classification.c)
+        XCTAssertEqual(result["anotherexample"]?.goodTerms[0], "no third-party access without a warrant")
+        XCTAssertTrue(result["anotherexample"]!.badTerms.isEmpty)
+        XCTAssertEqual(result["anotherexample"]?.classification, TermsOfService.Classification.b)
     }
-    
 }

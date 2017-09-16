@@ -26,6 +26,7 @@ public class SiteRating {
     public let domain: String
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
+    private var termsOfServiceStore = TermsOfServiceStore()
     
     public init?(url: URL) {
         guard let domain = url.host else {
@@ -39,8 +40,10 @@ public class SiteRating {
         return url.isHttps()
     }
     
-    var partOfMajorTrackingNetwork: MajorTrackerNetwork? {
-        return url.majorTrackerNetwork
+    var majorTrackingNetwork: MajorTrackerNetwork? {
+        // TODO after integration check disconnect list for associated url
+        guard let host = url.host else { return nil }
+        return MajorTrackerNetwork.all.filter( { host.hasSuffix($0.domain) } ).first
     }
     
     public var containsMajorTracker: Bool {
@@ -51,8 +54,12 @@ public class SiteRating {
         return trackersDetected.contains(where: { $0.key.isIpTracker } )
     }
     
+    public var termsOfService: TermsOfService? {
+        let hostSld = url.hostSLD.lowercased()
+        return termsOfServiceStore.terms.filter( { $0.0 == hostSld } ).first?.value
+    }
+
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
-        
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         

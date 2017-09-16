@@ -26,7 +26,7 @@ class TabsModelPersistenceExtensionTests: XCTestCase {
     
     struct Constants {
         static let firstTitle = "a title"
-        static let firstUrl = "http://aurl.com"
+        static let firstUrl = "http://example.com"
         static let secondTitle = "another title"
         static let secondUrl = "http://anotherurl.com"
     }

@@ -125,14 +125,14 @@ class DisconnectMeRequestTests: XCTestCase {
     }
     
     func validJson() -> String {
-        return OHPathForFile("MockResponse/disconnect.json", type(of: self))!
+        return OHPathForFile("MockJson/disconnect.json", type(of: self))!
     }
     
     func mismatchedJson() -> String {
-        return OHPathForFile("MockResponse/disconnect_mismatched.json", type(of: self))!
+        return OHPathForFile("MockJson/disconnect_mismatched.json", type(of: self))!
     }
     
     func invalidJson() -> String {
-        return OHPathForFile("MockResponse/invalid.json", type(of: self))!
+        return OHPathForFile("MockJson/invalid.json", type(of: self))!
     }
 }

@@ -32,10 +32,10 @@ public extension SiteRating {
         score += termsOfServiceScore
         
         let cache =  SiteRatingCache.shared
-        if cache.add(domain: domain, score: score) {
+        if cache.add(url:url, score: score) {
             return score
         }
-        return cache.get(domain: domain)!
+        return cache.get(url: url)!
     }
     
     private var httpsScore: Int {
@@ -103,24 +103,33 @@ public class SiteRatingCache {
      the new score is higher
      - returns: true if the cache was updated, otherwise false
      */
-    func add(domain: String, score: Int) -> Bool {
-        return compareAndSet(domain: domain, score: score)
+    func add(url: URL, score: Int) -> Bool {
+        return compareAndSet(url: url, score: score)
     }
     
-    private func compareAndSet(domain: String, score current: Int) -> Bool {
-        if let previous = cachedScores[domain], previous > current {
+    private func compareAndSet(url: URL, score current: Int) -> Bool {
+        let key = cacheKey(forUrl: url)
+        if let previous = cachedScores[key], previous > current {
             return false
         }
-        cachedScores[domain] = current
+        cachedScores[key] = current
         return true
     }
     
-    func get(domain: String) -> Int? {
-        return cachedScores[domain]
+    func get(url: URL) -> Int? {
+        let key = cacheKey(forUrl: url)
+        return cachedScores[key]
     }
     
     func reset() {
         cachedScores =  [String: Int]()
     }
     
+    private func cacheKey(forUrl url: URL) -> String {
+        let scheme = url.scheme ?? URL.URLProtocol.http.rawValue
+        guard let domain = url.host else {
+            return url.absoluteString
+        }
+        return "\(scheme)_\(domain)"
+    }
 }

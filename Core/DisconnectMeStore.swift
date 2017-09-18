@@ -36,6 +36,9 @@ class DisconnectMeStore {
 
     func persist(data: Data) throws  {
         try parse(data: data)
+
+        let location = persistenceLocation()
+        print("DisconnectMeStore", location)
         try data.write(to: persistenceLocation(), options: .atomic)
     }
 
@@ -48,9 +51,8 @@ class DisconnectMeStore {
     }
 
     private func persistenceLocation() -> URL {
-        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-        let path = URL(fileURLWithPath: documentPath, isDirectory: true)
-        return path.appendingPathComponent("disconnectme.json")
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: StoreConstants.groupName)
+        return path!.appendingPathComponent("disconnectme.json")
     }
 
 }

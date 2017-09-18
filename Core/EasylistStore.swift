@@ -22,6 +22,10 @@ class EasylistStore {
 
     static let shared = EasylistStore()
 
+    private struct Constants {
+        static let group = "group.com.duckduckgo.contentblocker"
+    }
+
     enum Easylist: String {
 
         case easylist
@@ -57,9 +61,8 @@ class EasylistStore {
     }
 
     private func persistenceLocation(type: Easylist) -> URL {
-        let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-        let path = URL(fileURLWithPath: documentPath, isDirectory: true)
-        return path.appendingPathComponent("\(type.rawValue).txt")
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: StoreConstants.groupName)
+        return path!.appendingPathComponent("\(type.rawValue).txt")
     }
 
 }

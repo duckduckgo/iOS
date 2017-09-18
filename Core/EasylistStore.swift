@@ -22,10 +22,6 @@ class EasylistStore {
 
     static let shared = EasylistStore()
 
-    private struct Constants {
-        static let group = "group.com.duckduckgo.contentblocker"
-    }
-
     enum Easylist: String {
 
         case easylist

@@ -57,7 +57,7 @@ class EasylistStore {
     }
 
     private func persistenceLocation(type: Easylist) -> URL {
-        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: StoreConstants.groupName)
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
         return path!.appendingPathComponent("\(type.rawValue).txt")
     }
 

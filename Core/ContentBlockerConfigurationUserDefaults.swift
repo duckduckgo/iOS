@@ -31,7 +31,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
     
     private let suitName: String
     
-    public init(suitName: String = StoreConstants.groupName) {
+    public init(suitName: String = ContentBlockerStoreConstants.groupName) {
         self.suitName =  suitName
     }
     

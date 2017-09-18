@@ -1,5 +1,5 @@
 //
-//  StoreConstants.swift
+//  ContentBlockerStoreConstants.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 
 import Foundation
 
-struct StoreConstants {
+struct ContentBlockerStoreConstants {
 
     static let groupName = "group.com.duckduckgo.contentblocker"
 

@@ -19,6 +19,9 @@
 
 var duckduckgoContentBlocking = function() {
 
+	// private	
+	var statuses = {}
+
 	// private
 	function handleDetection(event, parent, detectionMethod) {
 		
@@ -86,8 +89,6 @@ var duckduckgoContentBlocking = function() {
   		return hash;
 	}
 
-	var statuses = {}
-
 	// private
 	function getStatus(url) {
 		return statuses[hashCode(event.url)]
@@ -119,17 +120,48 @@ var duckduckgoContentBlocking = function() {
 		return url != null && (isDuckDuckGo(url) || isFirstPartyRequest(url.hostname, topLevelUrl.hostname))
 	}
 
+	function checkEasylist(event, easylist, name) {
+		var config = {
+			domain: document.location.hostname,
+			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
+		}
+
+		if (ABPFilterParser.matches(easylist, event.url, config)) {
+			return handleDetection(event, null, name)
+		}
+
+		return null		
+	}
+
+	// private
+	function easylistPrivacyMatch(event) {
+		return checkEasylist(event, duckduckgoBlockerData.easylistPrivacy, "easylist-privacy")
+	}
+
+	// private
+	function easylistMatch(event) {
+		return checkEasylist(event, duckduckgoBlockerData.easylist, "easylist")
+	}
+
+	// private
+	function alreadyChecked(event) {
+		var status = getStatus(event.url)
+		if (status == "blocked") {
+			console.info("DuckDuckGo blocking again: " + event.url)
+			block(event)
+			return true
+		} else if (status == "skipped") {
+			console.log("DuckDuckGo is skipping " + event.url)				
+			return true
+		}		
+		return false
+	}
+
 	// public
 	function install(document) {
 		document.addEventListener("beforeload", function(event) {
-			var status = getStatus(event.url)
-			if (status == "blocked") {
-				console.info("DuckDuckGo blocking again: " + event.url)
-				block(event)
+			if (alreadyChecked(event)) {
 				return
-			} else if (status == "skipped") {
-				console.log("DuckDuckGo is skipping " + event.url)				
-				return;
 			}
 
 			console.log("DuckDuckGo checking " + event.url)
@@ -144,7 +176,15 @@ var duckduckgoContentBlocking = function() {
 				return
 			}
 
-			// TODO other blockers here
+			if (status = easylistPrivacyMatch(event)) {
+				setStatus(event.url, status)
+				return
+			}
+
+			if (status = easylistMatch(event)) {
+				setStatus(event.url, status)
+				return
+			}
 
 		}, true)
 		console.info("DuckDuckGo Content Blocker installed")

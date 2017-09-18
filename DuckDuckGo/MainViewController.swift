@@ -198,6 +198,7 @@ class MainViewController: UIViewController {
             return
         }
         omniBar.refreshText(forUrl: tab.link?.url)
+        omniBar.updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
     }
     
@@ -363,7 +364,9 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating)
+        if currentTab == tab {
+            omniBar.updateSiteRating(siteRating)
+        }
     }
     
     func tabDidRequestSettings(tab: TabViewController) {

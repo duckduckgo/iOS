@@ -17,7 +17,8 @@
 //  limitations under the License.
 //
 
-decodeBase64 = function(s) {
+
+duckduckgo_decodeBase64 = function(s) {
     var e={},i,b=0,c,x,l=0,a,r='',w=String.fromCharCode,L=s.length;
     var A="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     for(i=0;i<64;i++){e[A.charAt(i)]=i;}
@@ -28,10 +29,11 @@ decodeBase64 = function(s) {
     return r;
 };
 
+
 var duckduckgoBlockerData = {
 
 	disconnectme: ${disconnectme},
-
-    easylist: {}
+    easylist: {},
+    easylistPrivacy: {}
 
 }

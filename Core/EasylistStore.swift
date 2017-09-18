@@ -43,12 +43,12 @@ class EasylistStore {
 
     func persistEasylist(data: Data) {
         easylist = data.base64EncodedString()
-        try! data.write(to: persistenceLocation(type: .easylist), options: .atomic)
+        try? data.write(to: persistenceLocation(type: .easylist), options: .atomic)
     }
 
     func persistEasylistPrivacy(data: Data) {
         easylistPrivacy = data.base64EncodedString()
-        try! data.write(to: persistenceLocation(type: .easylistPrivacy), options: .atomic)
+        try? data.write(to: persistenceLocation(type: .easylistPrivacy), options: .atomic)
     }
 
     private func decodeEncode(data: Data) -> String {

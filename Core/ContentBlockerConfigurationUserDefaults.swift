@@ -23,10 +23,6 @@ import SafariServices
 
 public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
     
-    private struct Constants {
-        static let groupName = "group.com.duckduckgo.contentblocker"
-    }
-    
     private struct Keys {
         static let enabled = "com.duckduckgo.contentblocker.enabled"
         static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
@@ -35,7 +31,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
     
     private let suitName: String
     
-    public init(suitName: String = Constants.groupName) {
+    public init(suitName: String = ContentBlockerStoreConstants.groupName) {
         self.suitName =  suitName
     }
     

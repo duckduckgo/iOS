@@ -25,7 +25,7 @@ public class BlockerListsLoader {
 
     public var hasData: Bool {
         get {
-            return DisconnectMeStore.shared.hasData
+            return DisconnectMeStore.shared.hasData && EasylistStore.shared.hasData
         }
     }
 
@@ -33,17 +33,42 @@ public class BlockerListsLoader {
 
     public func start(completion: BlockerListsLoaderCompletion?) {
 
+        let urls = AppUrls()
+
         let semaphore = DispatchSemaphore(value: 0)
 
-        DisconnectMeRequest().execute { (trackerCount, error) in
-            Logger.log(items: "DisconnectMeRequest", trackerCount, "\(String(describing: error))")
+        APIRequest(url: urls.disconnectMeBlockList).execute { (data, error) in
+            if let data = data {
+                try? DisconnectMeStore.shared.persist(data: data)
+            }
+            Logger.log(items: "DisconnectMeRequest", DisconnectMeStore.shared.trackers.count, "\(String(describing: error))")
+            semaphore.signal()
+        }
+
+        APIRequest(url: urls.easylistBlockList).execute { (data, error) in
+            if let data = data {
+                EasylistStore.shared.persistEasylist(data: data)
+            }
+
+            Logger.log(items: "EasylistRequest", "\(String(describing: error))")
+            semaphore.signal()
+        }
+
+        APIRequest(url: urls.easylistPrivacyBlockList).execute { (data, error) in
+            if let data = data {
+                EasylistStore.shared.persistEasylistPrivacy(data: data)
+            }
+
+            Logger.log(items: "EasylistPrivacyRequest", "\(String(describing: error))")
             semaphore.signal()
         }
 
         DispatchQueue.global(qos: .background).async {
 
-            // Use a wait per signal that is being expected
-            semaphore.wait()
+            for _ in 0 ..< 3 {
+                semaphore.wait()
+            }
+
             Logger.log(items: "BlockerListsLoader", "completed")
             completion?()
         }

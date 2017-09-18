@@ -1,5 +1,5 @@
 //
-//  JsonTestDataLoader.swift
+//  TermsOfServiceStore.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,30 +17,22 @@
 //  limitations under the License.
 //
 
-
 import Foundation
-@testable import Core
 
-
-class JsonTestDataLoader {
+class TermsOfServiceStore {
     
-    func empty() -> Data {
-        return "".data(using: .utf16)!
+    struct Constansts {
+        static let fileName = "tosdr.json"
     }
     
-    func invalid() -> Data {
-        return "{[}".data(using: .utf16)!
-    }
+    private(set) lazy var terms = TermsOfServiceStore.load()
     
-    func unexpected() -> Data {
-        return try! FileLoader().load(fileName: "MockJson/unexpected.json", fromBundle: bundle)
-    }
-    
-    func fromJsonFile(_ fileName: String) -> Data {
-        return try! FileLoader().load(fileName: fileName, fromBundle: bundle)
-    }
-    
-    private var bundle: Bundle {
-        return Bundle(for: type(of: self))
+    private static func load() -> [String: TermsOfService] {
+        let parser = TermsOfServiceListParser()
+        let bundle = Bundle(for: TermsOfServiceStore.self)
+        let fileLoader = FileLoader()
+        let data = try! fileLoader.load(fileName: Constansts.fileName, fromBundle: bundle)
+        let terms = try! parser.convert(fromJsonData: data)
+        return terms
     }
 }

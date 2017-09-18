@@ -28,6 +28,7 @@ class SiteRatingTests: XCTestCase {
         static let withHost = URL(string: "http://host")!
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
+        static let google = URL(string: "https://google.com")!
         static let tracker = "http://www.atracker.com"
         static let differentTracker = "http://www.anothertracker.com"
     }
@@ -92,5 +93,27 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.uniqueTrackersDetected, 1)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
         XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
+    }
+    
+    func testWhenUrlIsAMajorNetworkThenMajorNetworkReturned() {
+        let testee = SiteRating(url: Url.google)!
+        XCTAssertNotNil(testee.majorTrackingNetwork)
+        XCTAssertEqual(testee.majorTrackingNetwork?.domain, "google.com")
+        XCTAssertEqual(testee.majorTrackingNetwork?.perentageOfPages, 55)
+    }
+    
+    func testWhenUrlHasTosThenTosReturned() {
+        let testee = SiteRating(url: Url.google)!
+        XCTAssertNotNil(testee.termsOfService)
+    }
+    
+    func testWhenUrlDoeNotHaveTosThenTosIsNil() {
+        let testee = SiteRating(url: Url.http)!
+        XCTAssertNil(testee.termsOfService)
+    }
+    
+    func testWhenUrlIsNotAMajorNetworkThenMajorNetworkIsNil() {
+        let testee = SiteRating(url: Url.http)!
+        XCTAssertNil(testee.majorTrackingNetwork)
     }
 }

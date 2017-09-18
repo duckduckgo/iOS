@@ -38,22 +38,3 @@ struct MajorTrackerNetwork {
         MajorTrackerNetwork(domain: "appnexus.com",  perentageOfPages: 7)
     ]
 }
-
-extension Tracker {
-    
-    var fromMajorNetwork: Bool {
-        guard let parentDomain = parentDomain else {
-            return false
-        }
-        return !MajorTrackerNetwork.all.filter( {$0.domain == parentDomain } ).isEmpty
-    }
-}
-
-extension URL {
-    
-    var majorTrackerNetwork: MajorTrackerNetwork? {
-        // TODO after integration check disconnect list for associated url
-        guard let host = host else { return nil }
-        return MajorTrackerNetwork.all.filter( { host.hasSuffix($0.domain) } ).first
-    }
-}

@@ -28,12 +28,14 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
         static let googleNetwork = URL(string: "http://google.com")!
+        static let delicious = URL(string: "http://delicious.com")!
+        static let steam = URL(string: "http://steam.com")!
     }
     
     struct MockTracker {
-        static let standard = Tracker(url: "aurl.com", parentDomain: "someSmallAdNetwork.com")
+        static let standard = Tracker(url: "example.com", parentDomain: "someSmallAdNetwork.com")
         static let ipTracker = Tracker(url: "http://192.168.5.10/abcd", parentDomain: "someSmallAdNetwork.com")
-        static let network = Tracker(url: "aurl.com", parentDomain: "facebook.com")
+        static let network = Tracker(url: "example.com", parentDomain: "facebook.com")
     }
     
     override func setUp() {
@@ -48,6 +50,21 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     func testWhenHttpThenScoreIsOne() {
         let testee = SiteRating(url: Url.http)!
         XCTAssertEqual(1, testee.siteScore)
+    }
+    
+    func testWhenUrlHasTermsHasClassificationOfAThenScoreIsDecrementedToZero() {
+        let testee = SiteRating(url: Url.steam)!
+        XCTAssertEqual(0, testee.siteScore)
+    }
+
+    func testWhenUrlHasTermsHasClassificationOfBThenScoreIsDecrementedToZero() {
+        let testee = SiteRating(url: Url.steam)!
+        XCTAssertEqual(0, testee.siteScore)
+    }
+    
+    func testWhenUrlHasTermsClassificationOfDThenScoreIsIncrementedToTwo() {
+        let testee = SiteRating(url: Url.delicious)!
+        XCTAssertEqual(2, testee.siteScore)
     }
     
     func testWhenUrlIsInGoogleNetworkThenScoreIsSix() {

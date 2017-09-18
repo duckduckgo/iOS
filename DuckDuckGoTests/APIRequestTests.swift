@@ -79,7 +79,7 @@ class APIRequestTests: XCTestCase {
     }
 
     func validJson() -> String {
-        return OHPathForFile("MockResponse/disconnect.json", type(of: self))!
+        return OHPathForFile("MockJson/disconnect.json", type(of: self))!
     }
     
 }

@@ -28,10 +28,9 @@ public extension SiteRating {
         score += isMajorTrackerScore
         score += trackerCountScore
         score += containsMajorTrackerScore
-        score += ipTrackerkScore
+        score += ipTrackerScore
+        score += termsOfServiceScore
         
-        Logger.log(text: "Site Calculation: { https: \(httpsScore), isMajorTrackerScore \(isMajorTrackerScore), totalTrackersDetected: \(totalTrackersDetected), uniqueTrackersDetected: \(uniqueTrackersDetected), containsMajorTracker: \(containsMajorTracker), ipTrackerkScore: \(ipTrackerkScore)")
-
         let cache =  SiteRatingCache.shared
         if cache.add(domain: domain, score: score) {
             return score
@@ -53,17 +52,43 @@ public extension SiteRating {
     }
     
     private var isMajorTrackerScore: Int {
-        guard let network = url.majorTrackerNetwork else { return 0 }
+        guard let network = majorTrackingNetwork else { return 0 }
         let baseScore = Double(network.perentageOfPages) / 10.0
         return Int(ceil(baseScore))
     }
     
-    private var ipTrackerkScore: Int {
+    private var ipTrackerScore: Int {
         return contrainsIpTracker ? 1 : 0
     }
     
+    private var termsOfServiceScore: Int {
+        guard let termsOfService = termsOfService else {
+            return 0
+        }
+        switch termsOfService.classification {
+        case TermsOfService.Classification.a: return -1
+        case TermsOfService.Classification.b: return 0
+        case TermsOfService.Classification.c: return 0
+        case TermsOfService.Classification.d: return 1
+        case TermsOfService.Classification.e: return 2
+        }
+    }
+    
     public var siteGrade: SiteGrade {
+        logCalculation()
         return SiteGrade.grade(fromScore: siteScore)
+    }
+    
+    public func logCalculation() {
+        Logger.log(text: "Site Score: { " +
+            "host: \(url.host ?? ""), " +
+            "https: \(https)_\(httpsScore), " +
+            "isMajorTracker \(majorTrackingNetwork != nil)_\(isMajorTrackerScore), " +
+            "trackersDetected: \(totalTrackersDetected)_\(trackerCountScore), " +
+            "containsMajorTracker: \(containsMajorTracker)_\(containsMajorTrackerScore), " +
+            "ipTracker: \(contrainsIpTracker)-\(ipTrackerScore), " +
+            "tos: \(termsOfService?.classification.rawValue ?? "none")_\(termsOfServiceScore) }"
+        )
     }
 }
 

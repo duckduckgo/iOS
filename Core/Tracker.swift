@@ -20,12 +20,7 @@
 
 import Foundation
 
-public class Tracker: NSObject, NSCoding {
-    
-    private struct NSCodingKeys {
-        static let url = "url"
-        static let parentDomain = "parentdomain"
-    }
+public class Tracker: NSObject {
     
     public let url: String
     public let parentDomain: String?
@@ -34,18 +29,7 @@ public class Tracker: NSObject, NSCoding {
         self.url = url
         self.parentDomain = parentDomain
     }
-    
-    public convenience required init?(coder decoder: NSCoder) {
-        guard let url = decoder.decodeObject(forKey: NSCodingKeys.url) as? String else { return nil }
-        let parentDomain = decoder.decodeObject(forKey: NSCodingKeys.parentDomain) as? String
-        self.init(url: url, parentDomain: parentDomain)
-    }
-    
-    public func encode(with coder: NSCoder) {
-        coder.encode(url, forKey: NSCodingKeys.url)
-        coder.encode(parentDomain, forKey: NSCodingKeys.parentDomain)
-    }
-    
+
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Tracker else { return false }
         return url == other.url && parentDomain == other.parentDomain
@@ -60,5 +44,12 @@ public class Tracker: NSObject, NSCoding {
             return URL.isValidIpHost(host)
         }
         return false
+    }
+    
+    var fromMajorNetwork: Bool {
+        guard let parentDomain = parentDomain else {
+            return false
+        }
+        return !MajorTrackerNetwork.all.filter( {$0.domain == parentDomain } ).isEmpty
     }
 }

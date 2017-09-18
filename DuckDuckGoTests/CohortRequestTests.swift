@@ -126,14 +126,14 @@ class CohortRequestTests: XCTestCase {
     }
     
     func validJson() -> String {
-        return OHPathForFile("MockResponse/cohort_atb.json", type(of: self))!
+        return OHPathForFile("MockJson/cohort_atb.json", type(of: self))!
     }
     
     func mismatchedJson() -> String {
-        return OHPathForFile("MockResponse/unexpected.json", type(of: self))!
+        return OHPathForFile("MockJson/unexpected.json", type(of: self))!
     }
     
     func invalidJson() -> String {
-        return OHPathForFile("MockResponse/invalid.json", type(of: self))!
+        return OHPathForFile("MockJson/invalid.json", type(of: self))!
     }
 }

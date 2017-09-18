@@ -27,10 +27,6 @@ enum FileError: Error {
 
 class FileLoader {
 
-    func load(fileName: String) throws -> Data {
-        let bundle = Bundle.init(for: FileLoader.self)
-        return try load(fileName: fileName, fromBundle: bundle)
-    }
     
     func load(fileName: String, fromBundle bundle: Bundle) throws -> Data {
         
@@ -43,6 +39,4 @@ class FileLoader {
         guard let data = try? Data(contentsOf: url, options: [.mappedIfSafe]) else { throw  FileError.invalidFileContents }
         return data
     }
-    
-
 }

@@ -24,12 +24,8 @@ import Foundation
 public struct TermsOfService {
 
     let classification: Classification
-    let goodTerms: [String]
-    let badTerms: [String]
     
     init(classification: Classification?, goodTerms: [String], badTerms: [String]) {
-        self.goodTerms = goodTerms
-        self.badTerms = badTerms
         self.classification = classification ?? Classification.forCounts(good: goodTerms.count, bad: badTerms.count)
     }
     

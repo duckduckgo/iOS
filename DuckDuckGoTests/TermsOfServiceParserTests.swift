@@ -52,11 +52,7 @@ class TermsOfServiceListParserTests: XCTestCase {
     func testWhenJsonValidThenResultContainsTerms() {
         let result = try! testee.convert(fromJsonData: data.fromJsonFile("MockJson/tosdr.json"))
         XCTAssertEqual(result.count, 2)
-        XCTAssertEqual(result["example"]?.goodTerms[0], "you can request access and deletion of personal data")
-        XCTAssertEqual(result["example"]?.badTerms[0], "targeted third-party advertising")
         XCTAssertEqual(result["example"]?.classification, TermsOfService.Classification.c)
-        XCTAssertEqual(result["anotherexample"]?.goodTerms[0], "no third-party access without a warrant")
-        XCTAssertTrue(result["anotherexample"]!.badTerms.isEmpty)
         XCTAssertEqual(result["anotherexample"]?.classification, TermsOfService.Classification.b)
     }
 }

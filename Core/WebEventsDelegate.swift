@@ -22,6 +22,8 @@ import WebKit
 public protocol WebEventsDelegate: class {
 
     func attached(webView: WKWebView)
+    
+    func detached(webView: WKWebView)
 
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool
     

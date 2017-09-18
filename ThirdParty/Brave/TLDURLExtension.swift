@@ -2,6 +2,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+
+/* This file is an extraction/adaptation of the host tld logic in:
+       • https://github.com/brave/browser-ios/blob/1d90342d0f066a0b2d90932fd1c4764d0ce0bf3d/Shared/Extensions/NSURLExtensions.swift
+    and the supporting method in
+       • https://github.com/brave/browser-ios/blob/1d90342d0f066a0b2d90932fd1c4764d0ce0bf3d/Shared/Extensions/NSStringExtensions.swift
+*/
+
 import UIKit
 
 private struct ETLDEntry: CustomStringConvertible {
@@ -27,7 +34,7 @@ private typealias TLDEntryMap = [String:ETLDEntry]
 private func loadEntriesFromDisk() -> TLDEntryMap? {
     // Brave override, should isolate
     
-    let bundle = Bundle(for: SiteRating.self)
+    let bundle = Bundle(for: BundleIdentifier.self)
     if let data = String.contentsOfFileWithResourceName("effective_tld_names", ofType: "dat", fromBundle: bundle, encoding: String.Encoding.utf8, error: nil) {
         let lines = data.components(separatedBy: "\n")
         let trimmedLines = lines.filter { !$0.hasPrefix("//") && $0 != "\n" && $0 != "" }
@@ -221,8 +228,6 @@ private extension URL {
     }
 }
 
-// Originally from
-// https://github.com/brave/browser-ios/blob/1d90342d0f066a0b2d90932fd1c4764d0ce0bf3d/Shared/Extensions/NSStringExtensions.swift
 fileprivate extension String {
 
     static func contentsOfFileWithResourceName(_ name: String, ofType type: String, fromBundle bundle: Bundle, encoding: String.Encoding, error: NSErrorPointer) -> String? {
@@ -237,3 +242,5 @@ fileprivate extension String {
         }
     }
 }
+
+private class BundleIdentifier {}

@@ -263,7 +263,6 @@ extension TabViewController: WKScriptMessageHandler {
 extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
-        webView.loadScripts()
         webView.scrollView.delegate = self
         webView.configuration.userContentController.add(self, name: "trackerDetectedMessage")
     }

@@ -24,8 +24,7 @@ var duckduckgoContentBlocking = function() {
 
 	// private
 	function handleDetection(event, parent, detectionMethod) {
-		
-		var blocked = true // TODO check whitelist
+		var blocked = block(event)
 
 		webkit.messageHandlers.trackerDetectedMessage.postMessage({
 			url: event.url,
@@ -33,11 +32,6 @@ var duckduckgoContentBlocking = function() {
 			blocked: blocked,
 			method: detectionMethod
 		});
-
-		if (blocked) {
-			console.info("DuckDuckGo is blocking: " + event.url)
-			block(event)
-		}
 
 		return blocked ? "blocked" : "skipped"
 	}
@@ -71,9 +65,30 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
+	function currentDomainIsWhitelisted() {
+		if (!duckduckgoBlockerData.whitelist[getTopLevelURL().host]) {
+			return false
+		}
+
+		return true
+	}
+
+	// private
 	function block(event) {
-		event.preventDefault();
-		event.stopPropagation();
+		if (!duckduckgoBlockerData.blockingEnabled) {
+			console.warn("DuckDuckGo blocking is disabled")
+			return false
+		}
+
+		if (currentDomainIsWhitelisted()) {
+			console.warn("DuckDuckGo blocking is disabled for this domain")
+			return false
+		}
+
+		console.info("DuckDuckGo is blocking: " + event.url)
+		event.preventDefault()
+		event.stopPropagation()
+		return true
 	}
 
 	// from https://stackoverflow.com/a/7616484/73479

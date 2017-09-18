@@ -32,7 +32,9 @@ duckduckgo_decodeBase64 = function(s) {
 
 var duckduckgoBlockerData = {
 
+    blockingEnabled: ${blockingEnabled},
 	disconnectme: ${disconnectme},
+    whitelist: ${whitelist},
     easylist: {},
     easylistPrivacy: {}
 

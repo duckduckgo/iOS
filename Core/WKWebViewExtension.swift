@@ -35,10 +35,16 @@ extension WKWebView {
         return webView
     }
     
-    public func loadScripts() {
+    public func loadScripts(contentBlocker: ContentBlockerConfigurationStore) {
+        let whitelist = contentBlocker.domainWhitelist.reduce("{", { (result, next) -> String in
+            let separator = result != "{" ? ", " : ""
+            return "\(result)\(separator) \"\(next)\" : true"
+        }).appending("}")
+        print("whitelist:", whitelist)
+
         loadDocumentLevelScripts()
         loadContentBlockerDependencyScripts()
-        loadBlockerData()
+        loadBlockerData(with: whitelist, and: contentBlocker.enabled)
         loadContentBlockerScripts()
     }
 
@@ -54,16 +60,21 @@ extension WKWebView {
         load(scripts: [ .document, .favicon ])
     }
 
-    private func loadBlockerData() {
-        loadBlockerJS(file: "blockerdata", replaceVar: "${disconnectme}", withValue: DisconnectMeStore.shared.jsonString)
-        loadBlockerJS(file: "easylist", replaceVar: "${easylist}", withValue: EasylistStore.shared.easylist)
-        loadBlockerJS(file: "easylistprivacy", replaceVar: "${easylist_privacy}", withValue: EasylistStore.shared.easylistPrivacy)
+    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+        loadBlockerJS(file: "blockerdata", vars: [
+            "${disconnectme}": DisconnectMeStore.shared.jsonString,
+            "${whitelist}": whitelist,
+            "${blockingEnabled}": "\(blockingEnabled)"])
+        loadBlockerJS(file: "easylist", vars: ["${easylist}": EasylistStore.shared.easylist])
+        loadBlockerJS(file: "easylistprivacy", vars: ["${easylist_privacy}": EasylistStore.shared.easylistPrivacy])
     }
 
-    private func loadBlockerJS(file: String, replaceVar: String, withValue value: String) {
+    private func loadBlockerJS(file: String, vars: [String: String], dump: Bool = false) {
 
-        let contents = try! String(contentsOfFile: JavascriptLoader.path(for: file))
-        let js = contents.replacingOccurrences(of: replaceVar, with: value)
+        var js = try! String(contentsOfFile: JavascriptLoader.path(for: file))
+        for (key, value) in vars {
+            js = js.replacingOccurrences(of: key, with: value)
+        }
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         configuration.userContentController.addUserScript(script)
 

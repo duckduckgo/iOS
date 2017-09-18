@@ -21,7 +21,11 @@
 import Foundation
 
 public protocol ContentBlockerConfigurationStore {
-    
+
+    var domainWhitelist: Set<String> {
+        get
+    }
+
     var enabled: Bool { get set }
     
     func whitelisted(domain: String) -> Bool

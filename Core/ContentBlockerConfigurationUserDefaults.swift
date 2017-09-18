@@ -50,7 +50,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
     }
     
-    private var domainWhitelist: Set<String> {
+    public private(set) var domainWhitelist: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
             guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }

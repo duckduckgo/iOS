@@ -115,6 +115,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        let contentBlocker = ContentBlockerConfigurationUserDefaults()
+        webView.configuration.userContentController.removeAllUserScripts()
+        webView.loadScripts(contentBlocker: contentBlocker)
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()

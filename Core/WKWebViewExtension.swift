@@ -51,7 +51,7 @@ extension WKWebView {
     }
 
     private func loadContentBlockerDependencyScripts() {
-        load(scripts: [ .apbfilter ], forMainFrameOnly: false)
+        load(scripts: [ .apbfilter, .tlds ], forMainFrameOnly: false)
     }
 
     private func loadDocumentLevelScripts() {

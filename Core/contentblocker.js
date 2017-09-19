@@ -82,6 +82,12 @@ var duckduckgoContentBlocking = function() {
 	function block(event) {
 		if (currentDomainIsWhitelisted()) {
 			console.warn("DuckDuckGo blocking is disabled for this domain")
+			setStatus(event.url, "skipped")
+			return false
+		}
+
+		if (isFirstParty(event)) {
+			setStatus(event.url, "skipped")
 			return false
 		}
 
@@ -116,11 +122,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function isFirstPartyRequest(hostname1, hostname2) {
-		// TODO discuss - only works for single item TLDs
-	    hostname1 = hostname1.split('.').slice(-2).join('.')
-    	hostname2 = hostname2.split('.').slice(-2).join('.')
-    	return hostname1 == hostname2
+	function domainsMatch(url1, url2) {
+		return duckduckgoTLDParser.extractDomain(url1) == duckduckgoTLDParser.extractDomain(url2)
 	}
 
 	// private
@@ -129,10 +132,15 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function shouldSkip(event) {
+	function isFirstParty(event) {
 		var topLevelUrl = getTopLevelURL()	
 		var url = toURL(event.url, topLevelUrl.protocol)
-		return url != null && (isDuckDuckGo(url) || isFirstPartyRequest(url.hostname, topLevelUrl.hostname))
+		if (url != null && domainsMatch(url, topLevelUrl)) {
+			console.log("skipping, is first party")
+			return true
+		} 
+
+		return false
 	}
 
 	function checkEasylist(event, easylist, name) {
@@ -181,11 +189,6 @@ var duckduckgoContentBlocking = function() {
 
 			console.log("DuckDuckGo checking " + event.url)
 
-			if (shouldSkip(event)) {
-				setStatus(event.url, "skipped")
-				return
-			}
-		
 			if (status = disconnectMeMatch(event)) {
 				setStatus(event.url, status)
 				return

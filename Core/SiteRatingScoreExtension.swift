@@ -126,10 +126,10 @@ public class SiteRatingCache {
     }
     
     private func cacheKey(forUrl url: URL) -> String {
-        let scheme = url.scheme ?? URL.URLProtocol.http.rawValue
         guard let domain = url.host else {
             return url.absoluteString
         }
+        let scheme = url.scheme ?? URL.URLProtocol.http.rawValue
         return "\(scheme)_\(domain)"
     }
 }

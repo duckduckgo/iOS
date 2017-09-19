@@ -36,18 +36,17 @@ extension WKWebView {
     }
     
     public func loadScripts(contentBlocker: ContentBlockerConfigurationStore) {
-        let whitelist = contentBlocker.domainWhitelist.reduce("{", { (result, next) -> String in
-            let separator = result != "{" ? ", " : ""
-            return "\(result)\(separator) \"\(next)\" : true"
-        }).appending("}")
 
         loadDocumentLevelScripts()
-        loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelist, and: contentBlocker.enabled)
-        loadContentBlockerScripts()
+
+        if contentBlocker.enabled {
+            loadContentBlockerScripts(with: contentBlocker.domainWhitelist)
+        }
     }
 
-    private func loadContentBlockerScripts() {
+    private func loadContentBlockerScripts(with whitelistedDomains: Set<String>) {
+        loadContentBlockerDependencyScripts()
+        loadBlockerData(with: whitelistedDomains.toJsonLookupString())
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
 
@@ -59,14 +58,12 @@ extension WKWebView {
         load(scripts: [ .document, .favicon ])
     }
 
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+    private func loadBlockerData(with whitelist: String) {
         loadBlockerJS(file: "blockerdata", with: [
             "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
             "${easylist_privacy}": EasylistStore.shared.easylistPrivacy,
             "${easylist_general}": EasylistStore.shared.easylist,
-            "${whitelist}": whitelist,
-            "${blockingEnabled}": "\(blockingEnabled)" ])
-
+            "${whitelist}": whitelist ])
     }
 
     private func loadBlockerJS(file: String, with replacements: [String: String]) {
@@ -125,3 +122,16 @@ extension WKWebView {
         }
     }
 }
+
+fileprivate extension Set where Element == String {
+
+    func toJsonLookupString() -> String {
+        return reduce("{", { (result, next) -> String in
+            let separator = result != "{" ? ", " : ""
+            return "\(result)\(separator) \"\(next)\" : true"
+        }).appending("}")
+    }
+
+}
+
+

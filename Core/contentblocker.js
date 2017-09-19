@@ -80,11 +80,6 @@ var duckduckgoContentBlocking = function() {
 
 	// private
 	function block(event) {
-		if (!duckduckgoBlockerData.blockingEnabled) {
-			console.warn("DuckDuckGo blocking is disabled")
-			return false
-		}
-
 		if (currentDomainIsWhitelisted()) {
 			console.warn("DuckDuckGo blocking is disabled for this domain")
 			return false

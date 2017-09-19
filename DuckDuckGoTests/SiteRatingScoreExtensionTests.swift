@@ -116,7 +116,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     }
     
     func testWhenNewRatingIsLowerThanCachedRatingThenCachedRatingIsUsed() {
-        _ = SiteRatingCache.shared.add(domain: Url.http.host!, score: 100)
+        _ = SiteRatingCache.shared.add(url: Url.http, score: 100)
         let testee = SiteRating(url: Url.http)!
         XCTAssertEqual(100, testee.siteScore)
     }

@@ -31,7 +31,7 @@ class TabViewController: WebViewController {
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var contentBlockerPopover: ContentBlockerPopover?
-    fileprivate var siteRating: SiteRating?
+    private(set) var siteRating: SiteRating?
     
     static func loadFromStoryboard(contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
@@ -261,10 +261,18 @@ extension TabViewController: WKScriptMessageHandler {
 }
 
 extension TabViewController: WebEventsDelegate {
-    
+
+    struct Constants {
+        static let trackerDetectedMessage = "trackerDetectedMessage"
+    }
+
     func attached(webView: WKWebView) {
         webView.scrollView.delegate = self
-        webView.configuration.userContentController.add(self, name: "trackerDetectedMessage")
+        webView.configuration.userContentController.add(self, name: Constants.trackerDetectedMessage)
+    }
+    
+    func detached(webView: WKWebView) {
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: Constants.trackerDetectedMessage)
     }
 
     func webpageDidStartLoading() {

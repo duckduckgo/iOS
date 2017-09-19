@@ -37,4 +37,8 @@ struct MajorTrackerNetwork {
         MajorTrackerNetwork(domain: "newrelic.com",  perentageOfPages: 7),
         MajorTrackerNetwork(domain: "appnexus.com",  perentageOfPages: 7)
     ]
+    
+    static func network(forDomain domain: String) -> MajorTrackerNetwork? {
+        return MajorTrackerNetwork.all.filter( { domain.hasSuffix($0.domain) } ).first
+    }
 }

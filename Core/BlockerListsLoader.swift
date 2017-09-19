@@ -41,7 +41,7 @@ public class BlockerListsLoader {
             if let data = data {
                 try? DisconnectMeStore.shared.persist(data: data)
             }
-            Logger.log(items: "DisconnectMeRequest", DisconnectMeStore.shared.trackers.count, "\(String(describing: error))")
+            Logger.log(items: "DisconnectMeRequest", DisconnectMeStore.shared.allTrackers.count, "\(String(describing: error))")
             semaphore.signal()
         }
 

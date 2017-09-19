@@ -55,7 +55,7 @@ extension WKWebView {
     }
 
     private func loadBlockerData() {
-        loadBlockerJS(file: "blockerdata", replaceVar: "${disconnectme}", withValue: DisconnectMeStore.shared.jsonString)
+        loadBlockerJS(file: "blockerdata", replaceVar: "${disconnectme}", withValue: DisconnectMeStore.shared.bannedTrackersJson)
         loadBlockerJS(file: "easylist", replaceVar: "${easylist}", withValue: EasylistStore.shared.easylist)
         loadBlockerJS(file: "easylistprivacy", replaceVar: "${easylist_privacy}", withValue: EasylistStore.shared.easylistPrivacy)
     }

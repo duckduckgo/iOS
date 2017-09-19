@@ -31,7 +31,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
 
     static func loadFromStoryboard() -> OnboardingViewController {
-        let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
+        let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
         return storyboard.instantiateInitialViewController() as! OnboardingViewController
     }
     

@@ -41,9 +41,17 @@ public class SiteRating {
     }
     
     var majorTrackingNetwork: MajorTrackerNetwork? {
-        // TODO after integration check disconnect list for associated url
-        guard let host = url.host else { return nil }
-        return MajorTrackerNetwork.all.filter( { host.hasSuffix($0.domain) } ).first
+       
+        if let network = MajorTrackerNetwork.network(forDomain: domain) {
+            return network
+        }
+        
+        let trackers = DisconnectMeStore.shared.allTrackers
+        if let associatedDomain = trackers.filter( { domain.hasSuffix($0.key) } ).first?.value {
+            return MajorTrackerNetwork.network(forDomain: associatedDomain)
+        }
+            
+        return nil
     }
     
     public var containsMajorTracker: Bool {

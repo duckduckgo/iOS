@@ -40,7 +40,6 @@ extension WKWebView {
             let separator = result != "{" ? ", " : ""
             return "\(result)\(separator) \"\(next)\" : true"
         }).appending("}")
-        print("whitelist:", whitelist)
 
         loadDocumentLevelScripts()
         loadContentBlockerDependencyScripts()

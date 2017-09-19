@@ -46,7 +46,7 @@ public class SiteRating {
             return network
         }
         
-        let trackers = DisconnectMeStore.shared.trackers
+        let trackers = DisconnectMeStore.shared.allTrackers
         if let associatedDomain = trackers.filter( { domain.hasSuffix($0.key) } ).first?.value {
             return MajorTrackerNetwork.network(forDomain: associatedDomain)
         }

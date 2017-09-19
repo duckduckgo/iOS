@@ -24,35 +24,37 @@ class DisconnectMeStore {
     static let shared = DisconnectMeStore()
 
     var hasData: Bool {
-        return jsonString != "[]"
+        return !allTrackers.isEmpty
     }
 
-    private(set) var jsonString = "[]"
-    private(set) var trackers = [String: String]()
-
+    private(set) var allTrackers = [String: String]()
+    private(set) var bannedTrackersJson = "[]"
+    
     private init() {
-        try? parse(data: Data(contentsOf: persistenceLocation()))
+        try? load(data: Data(contentsOf: persistenceLocation()))
     }
-
+    
     func persist(data: Data) throws  {
-        try parse(data: data)
+        try load(data: data)
 
         let location = persistenceLocation()
-        print("DisconnectMeStore", location)
+        Logger.log(items: "DisconnectMeStore", location)
         try data.write(to: persistenceLocation(), options: .atomic)
     }
 
-    private func parse(data: Data) throws {
-        trackers = try DisconnectMeTrackersParser().convert(fromJsonData: data)
-        let json = try JSONSerialization.data(withJSONObject: trackers, options: .prettyPrinted) 
+    private func load(data: Data) throws {
+        let parser = DisconnectMeTrackersParser()
+        allTrackers = try parser.convert(fromJsonData: data, categoryFilter: nil)
+        
+        let bannedTrackers = try parser.convert(fromJsonData: data, categoryFilter: DisconnectMeTrackersParser.bannedCategoryFilter)
+        let json = try JSONSerialization.data(withJSONObject: bannedTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {
-            self.jsonString = jsonString
+            bannedTrackersJson = jsonString
         }
     }
-
+    
     private func persistenceLocation() -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
         return path!.appendingPathComponent("disconnectme.json")
     }
-
 }

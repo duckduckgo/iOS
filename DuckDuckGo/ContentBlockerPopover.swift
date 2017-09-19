@@ -32,7 +32,7 @@ class ContentBlockerPopover: UIViewController {
     fileprivate var contentBlocker: ContentBlockerConfigurationStore!
 
     static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlockerConfigurationStore, siteRating: SiteRating) -> ContentBlockerPopover {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
         controller.delegate = delegate
         controller.contentBlocker = contentBlocker

@@ -29,7 +29,7 @@ class AuthenticationViewController: UIViewController {
     private var completion: (() -> Void)?
     
     static func loadFromStoryboard() -> AuthenticationViewController {
-        let storyboard = UIStoryboard.init(name: "Authentication", bundle: nil)
+        let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! AuthenticationViewController
         return controller
     }

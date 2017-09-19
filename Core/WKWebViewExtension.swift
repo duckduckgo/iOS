@@ -62,7 +62,7 @@ extension WKWebView {
 
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
         loadBlockerJS(file: "blockerdata", with: [
-            "${disconnectme}": DisconnectMeStore.shared.jsonString,
+            "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
             "${easylist_privacy}": EasylistStore.shared.easylistPrivacy,
             "${easylist_general}": EasylistStore.shared.easylist,
             "${whitelist}": whitelist,

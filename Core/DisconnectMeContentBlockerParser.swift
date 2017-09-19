@@ -32,7 +32,9 @@ public struct DisconnectMeTrackersParser {
         case content = "Content"
     }
     
-    func convert(fromJsonData data: Data) throws -> [String: String] {
+    static let bannedCategoryFilter: [Category] = [.analytics, .advertising, .social]
+    
+    func convert(fromJsonData data: Data, categoryFilter: [Category]?) throws -> [String: String] {
         guard let json = try? JSON(data: data) else {
             throw JsonError.invalidJson
         }
@@ -40,7 +42,7 @@ public struct DisconnectMeTrackersParser {
         let jsonCategories = json["categories"]
         var trackers = [String: String]()
         for (categoryName, jsonTrackers) in jsonCategories {
-            guard isSupported(categoryName: categoryName) else { continue }
+            guard categoryFilter == nil || category(name: categoryName, isIn: categoryFilter!) else { continue }
             try parseCategory(fromJson: jsonTrackers, into: &trackers)
         }
         return trackers
@@ -66,10 +68,9 @@ public struct DisconnectMeTrackersParser {
         return host.replacingOccurrences(of: "www.", with: "")
     }
     
-    func isSupported(categoryName: String) -> Bool {
-        guard let category = Category.init(rawValue: categoryName) else { return false }
-        return category == .advertising || category == .analytics || category == .social
+    func category(name: String, isIn categories: [Category]) -> Bool {
+        guard let category = Category(rawValue: name) else { return false }
+        return categories.filter({ $0 == category }).first != nil
     }
-    
 }
 

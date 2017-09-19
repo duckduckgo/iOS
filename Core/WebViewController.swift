@@ -214,6 +214,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         guard let webView = webView else { return }
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeFromSuperview()
+        webEventsDelegate?.detached(webView: webView)
     }
     
     fileprivate func touchesYOffset() -> CGFloat {

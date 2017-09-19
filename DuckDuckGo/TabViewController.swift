@@ -261,11 +261,19 @@ extension TabViewController: WKScriptMessageHandler {
 }
 
 extension TabViewController: WebEventsDelegate {
-    
+
+    struct Constants {
+        static let trackerDetectedMessage = "trackerDetectedMessage"
+    }
+
     func attached(webView: WKWebView) {
         webView.loadScripts()
         webView.scrollView.delegate = self
-        webView.configuration.userContentController.add(self, name: "trackerDetectedMessage")
+        webView.configuration.userContentController.add(self, name: Constants.trackerDetectedMessage)
+    }
+    
+    func detached(webView: WKWebView) {
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: Constants.trackerDetectedMessage)
     }
 
     func webpageDidStartLoading() {

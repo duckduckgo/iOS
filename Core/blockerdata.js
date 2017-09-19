@@ -33,7 +33,33 @@ duckduckgo_decodeBase64 = function(s) {
 var duckduckgoBlockerData = {
 
 	disconnectme: ${disconnectme},
+    whitelist: ${whitelist},
     easylist: {},
     easylistPrivacy: {}
+
+}
+
+try {
+
+    ABPFilterParser.parse(function() {
+
+        var easylistData = duckduckgo_decodeBase64("${easylist_general}")
+        console.log("Easylist: " + easylistData.substring(0, 100))
+        return easylistData
+        
+    }(), duckduckgoBlockerData.easylist)  
+
+    ABPFilterParser.parse(function() {
+
+        var easylistData = duckduckgo_decodeBase64("${easylist_privacy}")
+        console.log("Easylist Privacy: " + easylistData.substring(0, 100))
+        return easylistData
+
+    }(), duckduckgoBlockerData.easylistPrivacy)
+
+} catch (error) {
+
+    console.warn("DuckDuckGo: Unable to find ABPFilterParser - some content blocking might not work")
+    console.log(error + ", document location: " + document.location)
 
 }

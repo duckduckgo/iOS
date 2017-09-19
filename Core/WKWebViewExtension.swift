@@ -35,14 +35,18 @@ extension WKWebView {
         return webView
     }
     
-    public func loadScripts() {
+    public func loadScripts(contentBlocker: ContentBlockerConfigurationStore) {
+
         loadDocumentLevelScripts()
-        loadContentBlockerDependencyScripts()
-        loadBlockerData()
-        loadContentBlockerScripts()
+
+        if contentBlocker.enabled {
+            loadContentBlockerScripts(with: contentBlocker.domainWhitelist)
+        }
     }
 
-    private func loadContentBlockerScripts() {
+    private func loadContentBlockerScripts(with whitelistedDomains: Set<String>) {
+        loadContentBlockerDependencyScripts()
+        loadBlockerData(with: whitelistedDomains.toJsonLookupString())
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
 
@@ -54,16 +58,20 @@ extension WKWebView {
         load(scripts: [ .document, .favicon ])
     }
 
-    private func loadBlockerData() {
-        loadBlockerJS(file: "blockerdata", replaceVar: "${disconnectme}", withValue: DisconnectMeStore.shared.bannedTrackersJson)
-        loadBlockerJS(file: "easylist", replaceVar: "${easylist}", withValue: EasylistStore.shared.easylist)
-        loadBlockerJS(file: "easylistprivacy", replaceVar: "${easylist_privacy}", withValue: EasylistStore.shared.easylistPrivacy)
+    private func loadBlockerData(with whitelist: String) {
+        loadBlockerJS(file: "blockerdata", with: [
+            "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
+            "${easylist_privacy}": EasylistStore.shared.easylistPrivacy,
+            "${easylist_general}": EasylistStore.shared.easylist,
+            "${whitelist}": whitelist ])
     }
 
-    private func loadBlockerJS(file: String, replaceVar: String, withValue value: String) {
+    private func loadBlockerJS(file: String, with replacements: [String: String]) {
 
-        let contents = try! String(contentsOfFile: JavascriptLoader.path(for: file))
-        let js = contents.replacingOccurrences(of: replaceVar, with: value)
+        var js = try! String(contentsOfFile: JavascriptLoader.path(for: file))
+        for (key, value) in replacements {
+            js = js.replacingOccurrences(of: key, with: value)
+        }
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         configuration.userContentController.addUserScript(script)
 
@@ -114,3 +122,16 @@ extension WKWebView {
         }
     }
 }
+
+fileprivate extension Set where Element == String {
+
+    func toJsonLookupString() -> String {
+        return reduce("{", { (result, next) -> String in
+            let separator = result != "{" ? ", " : ""
+            return "\(result)\(separator) \"\(next)\" : true"
+        }).appending("}")
+    }
+
+}
+
+

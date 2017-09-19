@@ -267,7 +267,6 @@ extension TabViewController: WebEventsDelegate {
     }
 
     func attached(webView: WKWebView) {
-        webView.loadScripts()
         webView.scrollView.delegate = self
         webView.configuration.userContentController.add(self, name: Constants.trackerDetectedMessage)
     }
@@ -277,12 +276,14 @@ extension TabViewController: WebEventsDelegate {
     }
 
     func webpageDidStartLoading() {
+        Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
+        Logger.log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
         updateSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false

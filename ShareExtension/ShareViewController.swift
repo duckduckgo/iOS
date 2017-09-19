@@ -121,7 +121,6 @@ class ShareViewController: UIViewController {
 extension ShareViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
-        webView.loadScripts()
     }
     
     func detached(webView: WKWebView) {

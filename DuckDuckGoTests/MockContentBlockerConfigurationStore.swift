@@ -21,7 +21,13 @@
 @testable import Core
 
 class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
-    
+
+    var domainWhitelist: Set<String> {
+        get {
+            return Set<String>()
+        }
+    }
+
     var enabled = true
     
     // A very sophisticated stub, it supports a single whitelisted item ;-)

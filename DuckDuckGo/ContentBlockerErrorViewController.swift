@@ -31,7 +31,7 @@ class ContentBlockerErrorViewController: UIViewController {
     weak var delegate: ContentBlockerErrorDelegate?
     
     static func loadFromStoryboard(delegate: ContentBlockerErrorDelegate) -> ContentBlockerErrorViewController {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerErrorViewController") as! ContentBlockerErrorViewController
         controller.delegate = delegate
         return controller

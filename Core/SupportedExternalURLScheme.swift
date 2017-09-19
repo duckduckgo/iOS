@@ -29,6 +29,6 @@ public enum SupportedExternalURLScheme: String {
     
     public static func isSupported(url: URL) -> Bool {
         guard let scheme = url.scheme else { return false }
-        return SupportedExternalURLScheme.init(rawValue: scheme) != nil
+        return SupportedExternalURLScheme(rawValue: scheme) != nil
     }
 }

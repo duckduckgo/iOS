@@ -36,7 +36,7 @@ class ContentBlockerViewController: UITableViewController {
     private var siteRating: SiteRating!
     
     static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlockerConfigurationStore, siteRating: SiteRating) -> ContentBlockerViewController {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerViewController") as! ContentBlockerViewController
         controller.delegate = delegate
         controller.contentBlocker = contentBlocker

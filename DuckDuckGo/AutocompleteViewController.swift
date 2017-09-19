@@ -38,7 +38,7 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     static func loadFromStoryboard() -> AutocompleteViewController {
-        let storyboard = UIStoryboard.init(name: "Autocomplete", bundle: nil)
+        let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         return storyboard.instantiateInitialViewController() as! AutocompleteViewController
     }
     

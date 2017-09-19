@@ -69,7 +69,7 @@ public struct DisconnectMeTrackersParser {
     }
     
     func category(name: String, isIn categories: [Category]) -> Bool {
-        guard let category = Category.init(rawValue: name) else { return false }
+        guard let category = Category(rawValue: name) else { return false }
         return categories.filter({ $0 == category }).first != nil
     }
 }

@@ -61,18 +61,19 @@ extension WKWebView {
     }
 
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
-        loadBlockerJS(file: "blockerdata", vars: [
+        loadBlockerJS(file: "blockerdata", with: [
             "${disconnectme}": DisconnectMeStore.shared.jsonString,
+            "${easylist_privacy}": EasylistStore.shared.easylistPrivacy,
+            "${easylist_general}": EasylistStore.shared.easylist,
             "${whitelist}": whitelist,
-            "${blockingEnabled}": "\(blockingEnabled)"])
-        loadBlockerJS(file: "easylist", vars: ["${easylist}": EasylistStore.shared.easylist])
-        loadBlockerJS(file: "easylistprivacy", vars: ["${easylist_privacy}": EasylistStore.shared.easylistPrivacy])
+            "${blockingEnabled}": "\(blockingEnabled)" ])
+
     }
 
-    private func loadBlockerJS(file: String, vars: [String: String], dump: Bool = false) {
+    private func loadBlockerJS(file: String, with replacements: [String: String]) {
 
         var js = try! String(contentsOfFile: JavascriptLoader.path(for: file))
-        for (key, value) in vars {
+        for (key, value) in replacements {
             js = js.replacingOccurrences(of: key, with: value)
         }
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)

@@ -26,12 +26,17 @@ var duckduckgoContentBlocking = function() {
 	function handleDetection(event, parent, detectionMethod) {
 		var blocked = block(event)
 
-		webkit.messageHandlers.trackerDetectedMessage.postMessage({
-			url: event.url,
-			parentDomain: parent,
-			blocked: blocked,
-			method: detectionMethod
-		});
+		try {
+			webkit.messageHandlers.trackerDetectedMessage.postMessage({
+				url: event.url,
+				parentDomain: parent,
+				blocked: blocked,
+				method: detectionMethod
+			});
+		} catch(error) {
+			// ShareExtension has no message handles, so webkit variable never gets declared
+			console.log(error + " while messaging to app")
+		}
 
 		return blocked ? "blocked" : "skipped"
 	}

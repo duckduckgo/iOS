@@ -71,7 +71,7 @@ class MainViewController: UIViewController {
     
     private func showiOS11Popup() {
         var settings = TutorialSettings()
-        if settings.hasSeeniOS11Popup {
+        if !settings.hasSeenOnboarding, settings.hasSeeniOS11Popup {
             return
         }
         

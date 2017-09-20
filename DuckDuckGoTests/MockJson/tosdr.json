@@ -1,5 +1,5 @@
 {
-    "example": {
+    "example.com": {
         "score": -20,
         "all": {
             "bad": [
@@ -28,7 +28,7 @@
         },
         "class": false
     },
-    "anotherexample": {
+    "anotherexample.com": {
         "score": -50,
         "all": {
             "bad": [

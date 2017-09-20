@@ -22,14 +22,14 @@ import XCTest
 @testable import Core
 
 class SiteRatingScoreExtensionTests: XCTestCase {
-    
-    
+
     struct Url {
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
         static let googleNetwork = URL(string: "http://google.com")!
+        static let wikipedia = URL(string: "http://wikipedia.org")!
+        static let soundcloud = URL(string: "http://soundcloud.com")!
         static let delicious = URL(string: "http://delicious.com")!
-        static let steam = URL(string: "http://steam.com")!
     }
     
     struct MockTracker {
@@ -52,14 +52,14 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(1, testee.siteScore)
     }
     
-    func testWhenUrlHasTermsHasClassificationOfAThenScoreIsDecrementedToZero() {
-        let testee = SiteRating(url: Url.steam)!
+    func testWhenUrlHasTermsClassificationOfAThenScoreIsDecrementedToZero() {
+        let testee = SiteRating(url: Url.wikipedia)!
         XCTAssertEqual(0, testee.siteScore)
     }
 
-    func testWhenUrlHasTermsHasClassificationOfBThenScoreIsDecrementedToZero() {
-        let testee = SiteRating(url: Url.steam)!
-        XCTAssertEqual(0, testee.siteScore)
+    func testWhenUrlHasTermsHasClassificationOfBThenScoreIsUnchangedAtOne() {
+        let testee = SiteRating(url: Url.soundcloud)!
+        XCTAssertEqual(1, testee.siteScore)
     }
     
     func testWhenUrlHasTermsClassificationOfDThenScoreIsIncrementedToTwo() {

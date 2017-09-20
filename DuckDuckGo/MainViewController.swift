@@ -75,12 +75,14 @@ class MainViewController: UIViewController {
             return
         }
         
-        let title = "iOS 11 Update Coming Soon"
-        let message = "If you are using iOS 11, you may notice that our app looks a little odd in places. Never fear, an update is coming soon!"
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
-        present(alert, animated: true, completion: nil)
-        settings.hasSeeniOS11Popup = true
+        if #available(iOS 11.0, *) {
+            let title = "iOS 11 Update Coming Soon"
+            let message = "You may notice that our app looks a little odd on iOS 11. Never fear, an update is coming soon!"
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+            present(alert, animated: true, completion: nil)
+            settings.hasSeeniOS11Popup = true
+        }
     }
 
     private func attachOmniBar() {

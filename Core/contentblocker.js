@@ -19,9 +19,6 @@
 
 var duckduckgoContentBlocking = function() {
 
-	// private	
-	var statuses = {}
-
 	// private
 	function handleDetection(event, parent, detectionMethod) {
 		var blocked = block(event)
@@ -37,8 +34,6 @@ var duckduckgoContentBlocking = function() {
 			// ShareExtension has no message handles, so webkit variable never gets declared
 			console.log(error + " while messaging to app")
 		}
-
-		return blocked ? "blocked" : "skipped"
 	}
 
 	// private
@@ -65,8 +60,11 @@ var duckduckgoContentBlocking = function() {
 
 		var parent = DisconnectMe.parentTracker(url, topLevelUrl)
 		if (parent) {
-			return handleDetection(event, parent, "disconnectme")
+			handleDetection(event, parent, "disconnectme")
+			return true
 		}		
+
+		return false
 	}
 
 	// private
@@ -78,18 +76,15 @@ var duckduckgoContentBlocking = function() {
 	function block(event) {
 		if (!duckduckgoBlockerData.blockingEnabled) {
 			console.warn("DuckDuckGo blocking is disabled")
-			setStatus(event.url, "skipped")
 			return false
 		}
 
 		if (currentDomainIsWhitelisted()) {
 			console.warn("DuckDuckGo blocking is disabled for this domain")
-			setStatus(event.url, "skipped")
 			return false
 		}
 
 		if (isFirstParty(event)) {
-			setStatus(event.url, "skipped")
 			return false
 		}
 
@@ -115,12 +110,6 @@ var duckduckgoContentBlocking = function() {
 	// private
 	function getStatus(url) {
 		return statuses[hashCode(event.url)]
-	}
-
-	// private 
-	function setStatus(url, status) {
-		console.log(status + " : " + url)	
-		statuses[hashCode(event.url)] = status
 	}
 
 	// private
@@ -152,10 +141,11 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (ABPFilterParser.matches(easylist, event.url, config)) {
-			return handleDetection(event, null, name)
+			handleDetection(event, null, name)
+			return true
 		}
 
-		return null		
+		return false
 	}
 
 	// private
@@ -168,44 +158,11 @@ var duckduckgoContentBlocking = function() {
 		return checkEasylist(event, duckduckgoBlockerData.easylist, "easylist")
 	}
 
-	// private
-	function alreadyChecked(event) {
-		var status = getStatus(event.url)
-		if (status == "blocked") {
-			console.info("DuckDuckGo blocking again: " + event.url)
-			block(event)
-			return true
-		} else if (status == "skipped") {
-			console.log("DuckDuckGo is skipping " + event.url)				
-			return true
-		}		
-		return false
-	}
-
 	// public
 	function install(document) {
 		document.addEventListener("beforeload", function(event) {
-			if (alreadyChecked(event)) {
-				return
-			}
-
-			console.log("DuckDuckGo checking " + event.url)
-
-			if (status = disconnectMeMatch(event)) {
-				setStatus(event.url, status)
-				return
-			}
-
-			if (status = easylistPrivacyMatch(event)) {
-				setStatus(event.url, status)
-				return
-			}
-
-			if (status = easylistMatch(event)) {
-				setStatus(event.url, status)
-				return
-			}
-
+			console.log("DuckDuckGo checking " + event.url)	
+			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
 		console.info("DuckDuckGo Content Blocker installed")
 	}

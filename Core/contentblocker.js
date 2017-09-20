@@ -127,7 +127,6 @@ var duckduckgoContentBlocking = function() {
 		var topLevelUrl = getTopLevelURL()	
 		var url = toURL(event.url, topLevelUrl.protocol)
 		if (url != null && domainsMatch(url, topLevelUrl)) {
-			console.log("skipping, is first party")
 			return true
 		} 
 

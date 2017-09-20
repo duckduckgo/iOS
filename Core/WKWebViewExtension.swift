@@ -36,30 +36,27 @@ extension WKWebView {
     }
     
     public func loadScripts(contentBlocker: ContentBlockerConfigurationStore) {
-
         loadDocumentLevelScripts()
-
-        if contentBlocker.enabled {
-            loadContentBlockerScripts(with: contentBlocker.domainWhitelist)
-        }
+        loadContentBlockerScripts(with: contentBlocker.domainWhitelist, and: contentBlocker.enabled)
     }
 
-    private func loadContentBlockerScripts(with whitelistedDomains: Set<String>) {
+    private func loadContentBlockerScripts(with whitelistedDomains: Set<String>, and blockingEnabled: Bool) {
         loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelistedDomains.toJsonLookupString())
+        loadBlockerData(with: whitelistedDomains.toJsonLookupString(), and: blockingEnabled)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {
-        load(scripts: [ .apbfilter ], forMainFrameOnly: false)
+        load(scripts: [ .apbfilter, .tlds ], forMainFrameOnly: false)
     }
 
     private func loadDocumentLevelScripts() {
         load(scripts: [ .document, .favicon ])
     }
 
-    private func loadBlockerData(with whitelist: String) {
+    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
         loadBlockerJS(file: "blockerdata", with: [
+            "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
             "${easylist_privacy}": EasylistStore.shared.easylistPrivacy,
             "${easylist_general}": EasylistStore.shared.easylist,

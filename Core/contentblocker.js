@@ -19,9 +19,6 @@
 
 var duckduckgoContentBlocking = function() {
 
-	// private	
-	var statuses = {}
-
 	// private
 	function handleDetection(event, parent, detectionMethod) {
 		var blocked = block(event)
@@ -37,8 +34,6 @@ var duckduckgoContentBlocking = function() {
 			// ShareExtension has no message handles, so webkit variable never gets declared
 			console.log(error + " while messaging to app")
 		}
-
-		return blocked ? "blocked" : "skipped"
 	}
 
 	// private
@@ -65,23 +60,31 @@ var duckduckgoContentBlocking = function() {
 
 		var parent = DisconnectMe.parentTracker(url, topLevelUrl)
 		if (parent) {
-			return handleDetection(event, parent, "disconnectme")
+			handleDetection(event, parent, "disconnectme")
+			return true
 		}		
+
+		return false
 	}
 
 	// private
 	function currentDomainIsWhitelisted() {
-		if (!duckduckgoBlockerData.whitelist[getTopLevelURL().host]) {
-			return false
-		}
-
-		return true
+		return duckduckgoBlockerData.whitelist[getTopLevelURL().host]
 	}
 
 	// private
 	function block(event) {
+		if (!duckduckgoBlockerData.blockingEnabled) {
+			console.warn("DuckDuckGo blocking is disabled")
+			return false
+		}
+
 		if (currentDomainIsWhitelisted()) {
 			console.warn("DuckDuckGo blocking is disabled for this domain")
+			return false
+		}
+
+		if (isFirstParty(event)) {
 			return false
 		}
 
@@ -109,18 +112,9 @@ var duckduckgoContentBlocking = function() {
 		return statuses[hashCode(event.url)]
 	}
 
-	// private 
-	function setStatus(url, status) {
-		console.log(status + " : " + url)	
-		statuses[hashCode(event.url)] = status
-	}
-
 	// private
-	function isFirstPartyRequest(hostname1, hostname2) {
-		// TODO discuss - only works for single item TLDs
-	    hostname1 = hostname1.split('.').slice(-2).join('.')
-    	hostname2 = hostname2.split('.').slice(-2).join('.')
-    	return hostname1 == hostname2
+	function domainsMatch(url1, url2) {
+		return duckduckgoTLDParser.extractDomain(url1) == duckduckgoTLDParser.extractDomain(url2)
 	}
 
 	// private
@@ -129,10 +123,14 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function shouldSkip(event) {
+	function isFirstParty(event) {
 		var topLevelUrl = getTopLevelURL()	
 		var url = toURL(event.url, topLevelUrl.protocol)
-		return url != null && (isDuckDuckGo(url) || isFirstPartyRequest(url.hostname, topLevelUrl.hostname))
+		if (url != null && domainsMatch(url, topLevelUrl)) {
+			return true
+		} 
+
+		return false
 	}
 
 	function checkEasylist(event, easylist, name) {
@@ -142,10 +140,11 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (ABPFilterParser.matches(easylist, event.url, config)) {
-			return handleDetection(event, null, name)
+			handleDetection(event, null, name)
+			return true
 		}
 
-		return null		
+		return false
 	}
 
 	// private
@@ -158,49 +157,11 @@ var duckduckgoContentBlocking = function() {
 		return checkEasylist(event, duckduckgoBlockerData.easylist, "easylist")
 	}
 
-	// private
-	function alreadyChecked(event) {
-		var status = getStatus(event.url)
-		if (status == "blocked") {
-			console.info("DuckDuckGo blocking again: " + event.url)
-			block(event)
-			return true
-		} else if (status == "skipped") {
-			console.log("DuckDuckGo is skipping " + event.url)				
-			return true
-		}		
-		return false
-	}
-
 	// public
 	function install(document) {
 		document.addEventListener("beforeload", function(event) {
-			if (alreadyChecked(event)) {
-				return
-			}
-
-			console.log("DuckDuckGo checking " + event.url)
-
-			if (shouldSkip(event)) {
-				setStatus(event.url, "skipped")
-				return
-			}
-		
-			if (status = disconnectMeMatch(event)) {
-				setStatus(event.url, status)
-				return
-			}
-
-			if (status = easylistPrivacyMatch(event)) {
-				setStatus(event.url, status)
-				return
-			}
-
-			if (status = easylistMatch(event)) {
-				setStatus(event.url, status)
-				return
-			}
-
+			console.log("DuckDuckGo checking " + event.url)	
+			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
 		console.info("DuckDuckGo Content Blocker installed")
 	}

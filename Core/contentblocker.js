@@ -71,15 +71,17 @@ var duckduckgoContentBlocking = function() {
 
 	// private
 	function currentDomainIsWhitelisted() {
-		if (!duckduckgoBlockerData.whitelist[getTopLevelURL().host]) {
-			return false
-		}
-
-		return true
+		return duckduckgoBlockerData.whitelist[getTopLevelURL().host]
 	}
 
 	// private
 	function block(event) {
+		if (!duckduckgoBlockerData.blockingEnabled) {
+			console.warn("DuckDuckGo blocking is disabled")
+			setStatus(event.url, "skipped")
+			return false
+		}
+
 		if (currentDomainIsWhitelisted()) {
 			console.warn("DuckDuckGo blocking is disabled for this domain")
 			setStatus(event.url, "skipped")

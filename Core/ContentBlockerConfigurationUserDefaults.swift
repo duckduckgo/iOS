@@ -47,6 +47,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         set(newValue) {
             userDefaults?.set(newValue, forKey: Keys.enabled)
             SFContentBlockerManager.reloadContentBlocker()
+            onStoreChanged()
         }
     }
     
@@ -59,7 +60,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         set(newWhitelistedDomain) {
             let data = NSKeyedArchiver.archivedData(withRootObject: newWhitelistedDomain)
             userDefaults?.set(data, forKey: Keys.whitelistedDomains)
-            SFContentBlockerManager.reloadContentBlocker()
+            onStoreChanged()
         }
     }
     
@@ -71,13 +72,17 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         var whitelist = domainWhitelist
         whitelist.insert(domain)
         domainWhitelist = whitelist
-        SFContentBlockerManager.reloadContentBlocker()
+        onStoreChanged()
     }
     
     public func removeFromWhitelist(domain: String) {
         var whitelist = domainWhitelist
         whitelist.remove(domain)
         domainWhitelist = whitelist
-        SFContentBlockerManager.reloadContentBlocker()
+        onStoreChanged()
+    }
+    
+    private func onStoreChanged() {
+        NotificationCenter.default.post(name: ContentBlockerConfigurationChangedNotification.name , object: nil)
     }
 }

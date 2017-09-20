@@ -20,11 +20,13 @@
 
 import Foundation
 
-public protocol ContentBlockerConfigurationStore {
+public struct ContentBlockerConfigurationChangedNotification {
+    public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
+}
 
-    var domainWhitelist: Set<String> {
-        get
-    }
+public protocol ContentBlockerConfigurationStore {
+    
+    var domainWhitelist: Set<String> { get }
 
     var enabled: Bool { get set }
     

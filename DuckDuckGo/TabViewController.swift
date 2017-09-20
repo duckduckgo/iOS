@@ -43,10 +43,23 @@ class TabViewController: WebViewController {
         super.init(coder: aDecoder)
         webEventsDelegate = self
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addContentBlockerConfigurationObserver()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         resetNavigationBar()
+    }
+    
+    private func addContentBlockerConfigurationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
+    }
+
+    func onContentBlockerConfigurationChanged() {
+        webView?.reload()
     }
     
     private func resetNavigationBar() {

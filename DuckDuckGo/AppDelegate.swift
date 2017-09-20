@@ -44,7 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startMigration()
         StatisticsLoader.shared.load()
         TrackerLoader.shared.updateTrackers()
-        startOnboardingFlowIfNotSeenBefore()
+        
+        var tutorialSettings = TutorialSettings()
+        if !tutorialSettings.hasSeenOnboarding {
+            startOnboardingFlow()
+        }
+
         if appIsLaunching {
             appIsLaunching = false
             displayAuthenticationWindow()
@@ -81,15 +86,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         authWindow = nil
     }
     
-    private func startOnboardingFlowIfNotSeenBefore() {
-        
-        var settings = TutorialSettings()
-        if !settings.hasSeenOnboarding {
-            startOnboardingFlow()
-            settings.hasSeenOnboarding = true
-        }
-    }
-    
     private func startMigration() {
         // This should happen so fast that it's complete by the time the user finishes onboarding.  
         //  On subsequent calls there won't be anything to do anyway so will finish pretty much instantly.
@@ -102,7 +98,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let main = mainViewController else { return }
         let onboardingController = OnboardingViewController.loadFromStoryboard()
         onboardingController.modalTransitionStyle = .flipHorizontal
-        main.present(onboardingController, animated: false, completion: nil)
+        main.present(onboardingController, animated: false) {
+            var settings = TutorialSettings()
+            settings.hasSeenOnboarding = true
+        }
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {

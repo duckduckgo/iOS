@@ -23,24 +23,15 @@ import Foundation
 
 public struct TermsOfService {
 
-    let classification: Classification
+    let classification: Classification?
+    let score: Int
     
-    init(classification: Classification?, goodTerms: [String], badTerms: [String]) {
-        self.classification = classification ?? Classification.forCounts(good: goodTerms.count, bad: badTerms.count)
+    init(classification: Classification?, score: Int) {
+        self.classification = classification
+        self.score = score
     }
     
     enum Classification: String {
         case a, b, c, d, e
-        
-        static func forCounts(good goodCount: Int, bad badCount: Int) -> Classification {
-            let count = badCount - goodCount
-            switch count {
-            case Int.min ... 0: return .a
-            case 1: return .b
-            case 2: return .c
-            case 3: return .d
-            default: return .e
-            }
-        }
     }
 }

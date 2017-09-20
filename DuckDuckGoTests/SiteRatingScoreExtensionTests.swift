@@ -27,9 +27,13 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
         static let googleNetwork = URL(string: "http://google.com")!
-        static let wikipedia = URL(string: "http://wikipedia.org")!
+        
+        static let duckduckgo = URL(string: "http://duckduckgo.com")!
         static let soundcloud = URL(string: "http://soundcloud.com")!
         static let delicious = URL(string: "http://delicious.com")!
+        static let steampowered = URL(string: "http://steampowered.com")!
+        static let wikipedia = URL(string: "http://wikipedia.org")!
+        static let spotify = URL(string: "http://spotify.com")!
     }
     
     struct MockTracker {
@@ -53,7 +57,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     }
     
     func testWhenUrlHasTermsClassificationOfAThenScoreIsDecrementedToZero() {
-        let testee = SiteRating(url: Url.wikipedia)!
+        let testee = SiteRating(url: Url.duckduckgo)!
         XCTAssertEqual(0, testee.siteScore)
     }
 
@@ -67,6 +71,21 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(2, testee.siteScore)
     }
     
+    func testWhenUrlHasNoTermsClassificationAndNegativeTermsScoreThenScoreIsDecrementedToZero() {
+        let testee = SiteRating(url: Url.steampowered)!
+        XCTAssertEqual(0, testee.siteScore)
+    }
+
+    func testWhenUrlHasNoTermsClassificationAndZeroTermsScoreThenScoreIsUnchangedAtOne() {
+        let testee = SiteRating(url: Url.wikipedia)!
+        XCTAssertEqual(1, testee.siteScore)
+    }
+    
+    func testWhenUrlHasNoTermsClassificationAndPositiveTermsScoreThenScoreIsIncremenetedToTwo() {
+        let testee = SiteRating(url: Url.spotify)!
+        XCTAssertEqual(2, testee.siteScore)
+    }
+
     func testWhenUrlIsInGoogleNetworkThenScoreIsSix() {
         let testee = SiteRating(url: Url.googleNetwork)!
         XCTAssertEqual(7, testee.siteScore)

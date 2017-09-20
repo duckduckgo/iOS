@@ -52,7 +52,9 @@ class TermsOfServiceListParserTests: XCTestCase {
     func testWhenJsonValidThenResultContainsTerms() {
         let result = try! testee.convert(fromJsonData: data.fromJsonFile("MockJson/tosdr.json"))
         XCTAssertEqual(result.count, 2)
-        XCTAssertEqual(result["example.com"]?.classification, TermsOfService.Classification.c)
+        XCTAssertNil(result["example.com"]?.classification)
+        XCTAssertEqual(result["example.com"]?.score, -20)
         XCTAssertEqual(result["anotherexample.com"]?.classification, TermsOfService.Classification.b)
+        XCTAssertEqual(result["anotherexample.com"]?.score, 50)
     }
 }

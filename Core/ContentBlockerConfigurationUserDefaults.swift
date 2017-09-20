@@ -72,14 +72,12 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         var whitelist = domainWhitelist
         whitelist.insert(domain)
         domainWhitelist = whitelist
-        onStoreChanged()
     }
     
     public func removeFromWhitelist(domain: String) {
         var whitelist = domainWhitelist
         whitelist.remove(domain)
         domainWhitelist = whitelist
-        onStoreChanged()
     }
     
     private func onStoreChanged() {

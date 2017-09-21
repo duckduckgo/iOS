@@ -65,12 +65,21 @@ public extension SiteRating {
         guard let termsOfService = termsOfService else {
             return 0
         }
-        switch termsOfService.classification {
-        case TermsOfService.Classification.a: return -1
-        case TermsOfService.Classification.b: return 0
-        case TermsOfService.Classification.c: return 0
-        case TermsOfService.Classification.d: return 1
-        case TermsOfService.Classification.e: return 2
+        
+        guard let classification = termsOfService.classification else {
+            let score = termsOfService.score
+            if score == 0 {
+                return 0
+            }
+            return score > 0 ? 1 : -1
+        }
+        
+        switch classification {
+            case TermsOfService.Classification.a: return -1
+            case TermsOfService.Classification.b: return 0
+            case TermsOfService.Classification.c: return 0
+            case TermsOfService.Classification.d: return 1
+            case TermsOfService.Classification.e: return 2
         }
     }
     
@@ -80,6 +89,7 @@ public extension SiteRating {
     }
     
     public func logCalculation() {
+        let tos = termsOfService?.classification?.rawValue ?? termsOfService?.score.description ?? "none"
         Logger.log(text: "Site Score: { " +
             "host: \(url.host ?? ""), " +
             "https: \(https)_\(httpsScore), " +
@@ -87,7 +97,7 @@ public extension SiteRating {
             "trackersDetected: \(totalTrackersDetected)_\(trackerCountScore), " +
             "containsMajorTracker: \(containsMajorTracker)_\(containsMajorTrackerScore), " +
             "ipTracker: \(contrainsIpTracker)-\(ipTrackerScore), " +
-            "tos: \(termsOfService?.classification.rawValue ?? "none")_\(termsOfServiceScore) }"
+            "tos: \(tos)_\(termsOfServiceScore) }"
         )
     }
 }

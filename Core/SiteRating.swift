@@ -63,8 +63,7 @@ public class SiteRating {
     }
     
     public var termsOfService: TermsOfService? {
-        let hostSld = url.hostSLD.lowercased()
-        return termsOfServiceStore.terms.filter( { $0.0 == hostSld } ).first?.value
+        return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
     }
 
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {

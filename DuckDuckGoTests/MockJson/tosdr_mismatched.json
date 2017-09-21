@@ -1,6 +1,5 @@
 {
-    "somedom": {
-        "score": 0,
+    "somedomain.com": {
         "match": {
         },
         "class": false

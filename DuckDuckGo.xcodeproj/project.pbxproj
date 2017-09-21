@@ -13,8 +13,6 @@
 		830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */; };
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
-		8372C4FF1F6C977400B0B76B /* effective_tld_names.dat in Resources */ = {isa = PBXBuildFile; fileRef = 8372C4FD1F6C977400B0B76B /* effective_tld_names.dat */; };
-		8372C5001F6C977400B0B76B /* TLDURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8372C4FE1F6C977400B0B76B /* TLDURLExtension.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
@@ -328,8 +326,6 @@
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
-		8372C4FD1F6C977400B0B76B /* effective_tld_names.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = effective_tld_names.dat; path = ThirdParty/Brave/effective_tld_names.dat; sourceTree = "<group>"; };
-		8372C4FE1F6C977400B0B76B /* TLDURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TLDURLExtension.swift; path = ThirdParty/Brave/TLDURLExtension.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
 		84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckDuckGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -653,24 +649,6 @@
 				836B6B6B1F67F11E0061ECFB /* Info.plist */,
 			);
 			path = IntegrationTests;
-			sourceTree = "<group>";
-		};
-		8372C4F41F6C936500B0B76B /* ThirdParty */ = {
-			isa = PBXGroup;
-			children = (
-				8372C5011F6C977F00B0B76B /* TLD */,
-			);
-			name = ThirdParty;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		8372C5011F6C977F00B0B76B /* TLD */ = {
-			isa = PBXGroup;
-			children = (
-				8372C4FE1F6C977400B0B76B /* TLDURLExtension.swift */,
-				8372C4FD1F6C977400B0B76B /* effective_tld_names.dat */,
-			);
-			name = TLD;
 			sourceTree = "<group>";
 		};
 		84E341891E2F7EFB00BDBA6F = {
@@ -1037,7 +1015,6 @@
 				F143C32A1E4A9A2700CFDE3A /* UserInterface */,
 				F143C3311E4A9A6A00CFDE3A /* Web */,
 				F18608DE1E5E648100361C30 /* Javascript */,
-				8372C4F41F6C936500B0B76B /* ThirdParty */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
 			);
@@ -1881,7 +1858,6 @@
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
-				8372C4FF1F6C977400B0B76B /* effective_tld_names.dat in Resources */,
 				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
@@ -2122,7 +2098,6 @@
 				F16956401ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift in Sources */,
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
 				F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */,
-				8372C5001F6C977400B0B76B /* TLDURLExtension.swift in Sources */,
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
 				F1B29E1F1E9A5DA1007F5046 /* UILabelExtension.swift in Sources */,
 				857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */,

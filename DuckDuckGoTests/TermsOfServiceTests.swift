@@ -23,39 +23,15 @@ import XCTest
 
 class TermsOfServiceTests: XCTestCase {
     
-
-    func testWhenNoPreClassificationOrTermsThenClassificationIsA() {
-        let testee = TermsOfService(classification: nil, goodTerms: [], badTerms: [])
+    func testWhenInitWithClassificationthenClassification() {
+        let testee = TermsOfService(classification: .a, score: 10)
         XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
+        XCTAssertEqual(10, testee.score)
     }
     
-    func testWhenSiteContainsAGoodTermThenClassificationIsA() {
-        let testee = TermsOfService(classification: nil, goodTerms: ["goodTerm"], badTerms: [])
-        XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
-    }
-    
-    func testWhenSiteContainsABadTermThenClassificationIsB() {
-        let testee = TermsOfService(classification: nil, goodTerms: [], badTerms: ["badTerm1"])
-        XCTAssertEqual(TermsOfService.Classification.b, testee.classification)
-    }
-    
-    func testWhenSiteContainsTwoMoreBadTermsThanGoodTermsThenClassificationIsC() {
-        let testee = TermsOfService(classification: nil, goodTerms: ["goodTerm1"], badTerms: ["badTerm1","badTerm2","badTerm3"])
-        XCTAssertEqual(TermsOfService.Classification.c, testee.classification)
-    }
-    
-    func testWhenSiteContainsTwoMoreGoodTermsThanBadTermsThenClassificationIsA() {
-        let testee = TermsOfService(classification: nil, goodTerms: ["goodTerm1","goodTerm2","goodTerm3"], badTerms: ["badTerm1"])
-        XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
-    }
-    
-    func testWhenSiteContainsEqualGoodAndBadTermsThenClassificationIsA() {
-        let testee = TermsOfService(classification: nil, goodTerms: ["goodTerm1","goodTerm2","goodTerm3"], badTerms: ["badTerm1","badTerm2","badTerm3"])
-        XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
-    }
-    
-    func testWhenInitialisedWithPreClassificationThenClassificationIsThatValue() {
-        let testee = TermsOfService(classification: .a, goodTerms: [], badTerms: ["badTerm1","badTerm2","badTerm3"])
-        XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
+    func testWhenInitWithoutClassificationthenClassificationIsNil() {
+        let testee = TermsOfService(classification: nil, score: 10)
+        XCTAssertNil(testee.classification)
+        XCTAssertEqual(10, testee.score)
     }
 }

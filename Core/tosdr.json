@@ -1,27 +1,15 @@
 {
-    "zoosk": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "youtube": {
+    "youtube.com": {
         "score": 0,
         "all": {
             "bad": [
-                "broader than necessary",
-                "user needs to check tosback.org",
-                "reduction of legal period for cause of action"
-            ],
+                    "broader than necessary",
+                    "user needs to check tosback.org",
+                    "reduction of legal period for cause of action"
+                    ],
             "good": [
-                "help you deal with take-down notices"
-            ]
+                     "help you deal with take-down notices"
+                     ]
         },
         "match": {
             "bad": [],
@@ -29,17 +17,17 @@
         },
         "class": "D"
     },
-    "yahoo": {
+    "yahoo.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org",
-                "pseudonym not allowed (not because of user-to-user trust)"
-            ],
+                    "user needs to check tosback.org",
+                    "pseudonym not allowed (not because of user-to-user trust)"
+                    ],
             "good": [
-                "limited for purpose of same service",
-                "limited for purpose of same service"
-            ]
+                     "limited for purpose of same service",
+                     "limited for purpose of same service"
+                     ]
         },
         "match": {
             "bad": [],
@@ -47,12 +35,12 @@
         },
         "class": false
     },
-    "xing": {
+    "xing.com": {
         "score": 0,
         "all": {
             "bad": [
-                "pseudonym not allowed (not because of user-to-user trust)"
-            ],
+                    "pseudonym not allowed (not because of user-to-user trust)"
+                    ],
             "good": []
         },
         "match": {
@@ -61,39 +49,15 @@
         },
         "class": false
     },
-    "xfire": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "world-of-warcraft": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "wordpress-com": {
+    "wordpress.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
+                    "user needs to check tosback.org"
+                    ],
             "good": [
-                "limited for purpose of same service"
-            ]
+                     "limited for purpose of same service"
+                     ]
         },
         "match": {
             "bad": [],
@@ -101,28 +65,16 @@
         },
         "class": false
     },
-    "wordfeud": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "wikipedia": {
+    "wikipedia.org": {
         "score": 0,
         "all": {
             "bad": [],
             "good": [
-                "suspension will be fair and proportionate",
-                "you publish under a free license, not a bilateral one",
-                "user feedback is invited",
-                "only temporary session cookies"
-            ]
+                     "suspension will be fair and proportionate",
+                     "you publish under a free license, not a bilateral one",
+                     "user feedback is invited",
+                     "only temporary session cookies"
+                     ]
         },
         "match": {
             "bad": [],
@@ -130,58 +82,32 @@
         },
         "class": false
     },
-    "whatsapp": {
+    "vbulletin.com": {
+        "score": 0,
+        "all": {
+            "bad": [],
+            "good": []
+        },
+        "match": {
+            "bad": [],
+            "good": []
+        },
+        "class": false
+    },
+    "twitter.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "videobb": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "vbulletin": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "twitter": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "little involvement",
-                "sets third-party cookies and/or ads",
-                "your content stays licensed",
-                "very broad"
-            ],
+                    "little involvement",
+                    "sets third-party cookies and/or ads",
+                    "your content stays licensed",
+                    "very broad"
+                    ],
             "good": [
-                "you can get your data back",
-                "tracking data deleted after 10 days and opt-out",
-                "archives provided"
-            ]
+                     "you can get your data back",
+                     "tracking data deleted after 10 days and opt-out",
+                     "archives provided"
+                     ]
         },
         "match": {
             "bad": [],
@@ -189,36 +115,36 @@
         },
         "class": false
     },
-    "twitpic": {
+    "twitpic.com": {
         "score": 85,
         "all": {
             "bad": [
-                "they can license to third parties",
-                "reduction of legal period for cause of action",
-                "responsible and indemnify"
-            ],
+                    "they can license to third parties",
+                    "reduction of legal period for cause of action",
+                    "responsible and indemnify"
+                    ],
             "good": []
         },
         "match": {
             "bad": [
-                "they can license to third parties"
-            ],
+                    "they can license to third parties"
+                    ],
             "good": []
         },
         "class": "E"
     },
-    "tumblr": {
+    "tumblr.com": {
         "score": 0,
         "all": {
             "bad": [
-                "sets third-party cookies and/or ads",
-                "keep a license even after you close your account"
-            ],
+                    "sets third-party cookies and/or ads",
+                    "keep a license even after you close your account"
+                    ],
             "good": [
-                "archives provided",
-                "third parties are bound by confidentiality obligations",
-                "they state that you own your data"
-            ]
+                     "archives provided",
+                     "third parties are bound by confidentiality obligations",
+                     "they state that you own your data"
+                     ]
         },
         "match": {
             "bad": [],
@@ -226,93 +152,93 @@
         },
         "class": false
     },
-    "steam": {
+    "steampowered.com": {
         "score": -65,
         "all": {
             "bad": [
-                "they can delete your account without prior notice and without a reason",
-                "class action waiver",
-                "personal data is given to third parties",
-                "defend, indemnify, hold harmless; survives termination"
-            ],
+                    "they can delete your account without prior notice and without a reason",
+                    "class action waiver",
+                    "personal data is given to third parties",
+                    "defend, indemnify, hold harmless; survives termination"
+                    ],
             "good": [
-                "pseudonyms allowed",
-                "you can leave at any time",
-                "personal data is not sold",
-                "you can request access and deletion of personal data",
-                "user is notified a month or more in advance"
-            ]
+                     "pseudonyms allowed",
+                     "you can leave at any time",
+                     "personal data is not sold",
+                     "you can request access and deletion of personal data",
+                     "user is notified a month or more in advance"
+                     ]
         },
         "match": {
             "bad": [
-                "personal data is given to third parties"
-            ],
+                    "personal data is given to third parties"
+                    ],
             "good": [
-                "personal data is not sold",
-                "you can request access and deletion of personal data"
-            ]
+                     "personal data is not sold",
+                     "you can request access and deletion of personal data"
+                     ]
         },
         "class": false
     },
-    "spotify": {
+    "spotify.com": {
         "score": 10,
         "all": {
             "bad": [
-                "no promise to inform/notify",
-                "they can delete your account without prior notice and without a reason",
-                "no quality guarantee",
-                "no quality guarantee",
-                "third parties may be involved in operating the service",
-                "personal data is given to third parties"
-            ],
+                    "no promise to inform/notify",
+                    "they can delete your account without prior notice and without a reason",
+                    "no quality guarantee",
+                    "no quality guarantee",
+                    "third parties may be involved in operating the service",
+                    "personal data is given to third parties"
+                    ],
             "good": [
-                "you can leave at any time",
-                "info given about what personal data they collect",
-                "info given about intended use of your information",
-                "info given about risk of publishing your info online",
-                "they educate you about the risks"
-            ]
+                     "you can leave at any time",
+                     "info given about what personal data they collect",
+                     "info given about intended use of your information",
+                     "info given about risk of publishing your info online",
+                     "they educate you about the risks"
+                     ]
         },
         "match": {
             "bad": [
-                "personal data is given to third parties"
-            ],
+                    "personal data is given to third parties"
+                    ],
             "good": []
         },
         "class": false
     },
-    "soundcloud": {
+    "soundcloud.com": {
         "score": 20,
         "all": {
             "bad": [
-                "may sell your data in merger",
-                "responsible and indemnify",
-                "third-party cookies, but with opt-out instructions"
-            ],
+                    "may sell your data in merger",
+                    "responsible and indemnify",
+                    "third-party cookies, but with opt-out instructions"
+                    ],
             "good": [
-                "user is notified a month or more in advance",
-                "your personal data is used for limited purposes",
-                "you have control over licensing options",
-                "easy to read",
-                "you can leave at any time",
-                "pseudonyms allowed"
-            ]
+                     "user is notified a month or more in advance",
+                     "your personal data is used for limited purposes",
+                     "you have control over licensing options",
+                     "easy to read",
+                     "you can leave at any time",
+                     "pseudonyms allowed"
+                     ]
         },
         "match": {
             "bad": [
-                "may sell your data in merger"
-            ],
+                    "may sell your data in merger"
+                    ],
             "good": []
         },
         "class": "B"
     },
-    "sonic-net": {
+    "sonic.net": {
         "score": 0,
         "all": {
             "bad": [],
             "good": [
-                "logs are deleted after two weeks"
-            ]
+                     "logs are deleted after two weeks"
+                     ]
         },
         "match": {
             "bad": [],
@@ -320,13 +246,13 @@
         },
         "class": false
     },
-    "skype": {
+    "skype.com": {
         "score": 0,
         "all": {
             "bad": [
-                "you may not express negative opinions about them",
-                "user needs to check tosback.org"
-            ],
+                    "you may not express negative opinions about them",
+                    "user needs to check tosback.org"
+                    ],
             "good": []
         },
         "match": {
@@ -335,15 +261,15 @@
         },
         "class": false
     },
-    "seenthis": {
+    "seenthis.net": {
         "score": 0,
         "all": {
             "bad": [],
             "good": [
-                "you can get your data back",
-                "you can leave at any time",
-                "you have control over licensing options"
-            ]
+                     "you can get your data back",
+                     "you can leave at any time",
+                     "you have control over licensing options"
+                     ]
         },
         "match": {
             "bad": [],
@@ -351,7 +277,7 @@
         },
         "class": "A"
     },
-    "runescape": {
+    "phpbb.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -363,220 +289,96 @@
         },
         "class": false
     },
-    "rapidshare": {
-        "score": -50,
-        "all": {
-            "bad": [],
-            "good": [
-                "user is notified a month or more in advance",
-                "your personal data is used for limited purposes",
-                "they do not index or open files",
-                "99.X% availability",
-                "no third-party access without a warrant"
-            ]
-        },
-        "match": {
-            "bad": [],
-            "good": [
-                "no third-party access without a warrant"
-            ]
-        },
-        "class": false
-    },
-    "phpbb": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "owncube": {
+    "owncube.com": {
         "score": -25,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
+                    "user needs to check tosback.org"
+                    ],
             "good": [
-                "personal data is not sold"
-            ]
+                     "personal data is not sold"
+                     ]
         },
         "match": {
             "bad": [],
             "good": [
-                "personal data is not sold"
-            ]
+                     "personal data is not sold"
+                     ]
         },
         "class": false
     },
-    "olx": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "netflix": {
+    "netflix.com": {
         "score": -20,
         "all": {
             "bad": [
-                "they can delete your account without prior notice and without a reason",
-                "class action waiver",
-                "targeted third-party advertising",
-                "no promise to inform/notify",
-                "sets third-party cookies and/or ads",
-                "no liability for unauthorized access",
-                "user needs to check tosback.org"
-            ],
+                    "they can delete your account without prior notice and without a reason",
+                    "class action waiver",
+                    "targeted third-party advertising",
+                    "no promise to inform/notify",
+                    "sets third-party cookies and/or ads",
+                    "no liability for unauthorized access",
+                    "user needs to check tosback.org"
+                    ],
             "good": [
-                "easy to read",
-                "you can request access and deletion of personal data"
-            ]
+                     "easy to read",
+                     "you can request access and deletion of personal data"
+                     ]
         },
         "match": {
             "bad": [
-                "targeted third-party advertising"
-            ],
+                    "targeted third-party advertising"
+                    ],
             "good": [
-                "you can request access and deletion of personal data"
-            ]
+                     "you can request access and deletion of personal data"
+                     ]
         },
         "class": false
     },
-    "nabble": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "user needs to check tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "mint.com": {
-        "score": 20,
-        "all": {
-            "bad": [
-                "may sell your data in merger",
-                "user needs to rely on tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [
-                "may sell your data in merger"
-            ],
-            "good": []
-        },
-        "class": false
-    },
-    "microsoft-store": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "user needs to check tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "microsoft": {
+    "microsoft.com": {
         "score": 60,
         "all": {
             "bad": [
-                "tracks you on other websites",
-                "your data may be stored anywhere in the world",
-                "no promise to inform/notify",
-                "class action waiver",
-                "user needs to check tosback.org"
-            ],
+                    "tracks you on other websites",
+                    "your data may be stored anywhere in the world",
+                    "no promise to inform/notify",
+                    "class action waiver",
+                    "user needs to check tosback.org"
+                    ],
             "good": [
-                "personalized ads are opt-out"
-            ]
+                     "personalized ads are opt-out"
+                     ]
         },
         "match": {
             "bad": [
-                "tracks you on other websites"
-            ],
+                    "tracks you on other websites"
+                    ],
             "good": []
         },
         "class": false
     },
-    "lastpass": {
-        "score": -50,
-        "all": {
-            "bad": [
-                "no quality guarantee",
-                "promotional communications are not opt-out",
-                "no quality guarantee",
-                "user needs to check tosback.org",
-                "they can delete your account without prior notice and without a reason",
-                "responsible and indemnify",
-                "they become the owner of ideas you give them"
-            ],
-            "good": [
-                "pseudonyms allowed",
-                "info given about security practices",
-                "no third-party access without a warrant",
-                "only necessary logs are kept",
-                "only temporary session cookies",
-                "legal documents published under reusable license"
-            ]
-        },
-        "match": {
-            "bad": [],
-            "good": [
-                "no third-party access without a warrant"
-            ]
-        },
-        "class": "B"
-    },
-    "kolabnow": {
-        "score": -125,
-        "all": {
-            "bad": [],
-            "good": [
-                "no third-party access without a warrant",
-                "free software; you can run your own instance",
-                "only necessary logs are kept",
-                "no third-party access without a warrant",
-                "suspension will be fair and proportionate",
-                "personal data is not sold"
-            ]
-        },
-        "match": {
-            "bad": [],
-            "good": [
-                "no third-party access without a warrant",
-                "no third-party access without a warrant",
-                "personal data is not sold"
-            ]
-        },
-        "class": "A"
-    },
-    "kippt": {
+    "instagram.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to rely on tosback.org"
-            ],
+                    "class action waiver",
+                    "very broad"
+                    ],
+            "good": [
+                     "user is notified a week or more in advance"
+                     ]
+        },
+        "match": {
+            "bad": [],
+            "good": []
+        },
+        "class": false
+    },
+    "ifttt.com": {
+        "score": 0,
+        "all": {
+            "bad": [
+                    "user needs to check tosback.org"
+                    ],
             "good": []
         },
         "match": {
@@ -585,13 +387,13 @@
         },
         "class": false
     },
-    "jagex": {
+    "identi.ca": {
         "score": 0,
         "all": {
             "bad": [],
             "good": [
-                "user is notified a week or more in advance"
-            ]
+                     "you publish under a free license, not a bilateral one"
+                     ]
         },
         "match": {
             "bad": [],
@@ -599,29 +401,36 @@
         },
         "class": false
     },
-    "instagram": {
+    "hypster.com": {
+        "score": 0,
+        "all": {
+            "bad": [],
+            "good": []
+        },
+        "match": {
+            "bad": [],
+            "good": []
+        },
+        "class": false
+    },
+    "habbo.com": {
+        "score": 0,
+        "all": {
+            "bad": [],
+            "good": []
+        },
+        "match": {
+            "bad": [],
+            "good": []
+        },
+        "class": false
+    },
+    "gravatar.com": {
         "score": 0,
         "all": {
             "bad": [
-                "class action waiver",
-                "very broad"
-            ],
-            "good": [
-                "user is notified a week or more in advance"
-            ]
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "informe": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "user needs to check tosback.org"
-            ],
+                    "broader than necessary"
+                    ],
             "good": []
         },
         "match": {
@@ -630,134 +439,68 @@
         },
         "class": false
     },
-    "ifttt": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "user needs to check tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "identi-ca": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": [
-                "you publish under a free license, not a bilateral one"
-            ]
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "hypster": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "habbo": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "gravatar": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "broader than necessary"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "grammarly": {
+    "grammarly.com": {
         "score": 20,
         "all": {
             "bad": [
-                "no promise to inform/notify",
-                "no pricing info given before you sign up",
-                "may sell your data in merger",
-                "your use is throttled"
-            ],
+                    "no promise to inform/notify",
+                    "no pricing info given before you sign up",
+                    "may sell your data in merger",
+                    "your use is throttled"
+                    ],
             "good": []
         },
         "match": {
             "bad": [
-                "may sell your data in merger"
-            ],
+                    "may sell your data in merger"
+                    ],
             "good": []
         },
         "class": false
     },
-    "google": {
+    "google.com": {
         "score": 220,
         "all": {
             "bad": [
-                "your content stays licensed",
-                "tracks you on other websites",
-                "third-party access without a warrant",
-                "they can use your content for all their existing and future services",
-                "they may stop providing the service at any time",
-                "logs are kept forever"
-            ],
+                    "your content stays licensed",
+                    "tracks you on other websites",
+                    "third-party access without a warrant",
+                    "they can use your content for all their existing and future services",
+                    "they may stop providing the service at any time",
+                    "logs are kept forever"
+                    ],
             "good": [
-                "user is notified a week or more in advance",
-                "they provide a way to export your data",
-                "archives provided",
-                "limited for purpose across broad platform"
-            ]
+                     "user is notified a week or more in advance",
+                     "they provide a way to export your data",
+                     "archives provided",
+                     "limited for purpose across broad platform"
+                     ]
         },
         "match": {
             "bad": [
-                "tracks you on other websites",
-                "they can use your content for all their existing and future services",
-                "logs are kept forever"
-            ],
+                    "tracks you on other websites",
+                    "they can use your content for all their existing and future services",
+                    "logs are kept forever"
+                    ],
             "good": []
         },
         "class": "C"
     },
-    "github": {
+    "github.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org",
-                "defend, indemnify, hold harmless",
-                "they can delete your account without prior notice and without a reason",
-                "pseudonym not allowed (not because of user-to-user trust)"
-            ],
+                    "user needs to check tosback.org",
+                    "defend, indemnify, hold harmless",
+                    "they can delete your account without prior notice and without a reason",
+                    "pseudonym not allowed (not because of user-to-user trust)"
+                    ],
             "good": [
-                "info given about security practices",
-                "will notify before merger",
-                "you publish under a free license, not a bilateral one",
-                "your personal data is used for limited purposes"
-            ]
+                     "info given about security practices",
+                     "will notify before merger",
+                     "you publish under a free license, not a bilateral one",
+                     "your personal data is used for limited purposes"
+                     ]
         },
         "match": {
             "bad": [],
@@ -765,12 +508,12 @@
         },
         "class": "B"
     },
-    "freeforums": {
+    "freeforums.org": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
+                    "user needs to check tosback.org"
+                    ],
             "good": []
         },
         "match": {
@@ -779,15 +522,15 @@
         },
         "class": false
     },
-    "flickr": {
+    "flickr.com": {
         "score": 0,
         "all": {
             "bad": [],
             "good": [
-                "you can choose the copyright license",
-                "limited for purpose of same service",
-                "you can choose with whom you share content"
-            ]
+                     "you can choose the copyright license",
+                     "limited for purpose of same service",
+                     "you can choose with whom you share content"
+                     ]
         },
         "match": {
             "bad": [],
@@ -795,12 +538,12 @@
         },
         "class": false
     },
-    "flattr": {
+    "flattr.com": {
         "score": 0,
         "all": {
             "bad": [
-                "sets third-party cookies and/or ads"
-            ],
+                    "sets third-party cookies and/or ads"
+                    ],
             "good": []
         },
         "match": {
@@ -809,46 +552,32 @@
         },
         "class": false
     },
-    "faranow": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "user needs to check tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "facebook": {
+    "facebook.com": {
         "score": 100,
         "all": {
             "bad": [
-                "tracks you on other websites",
-                "the (mobile) app of this service requires very broad permissions at install-time",
-                "your data is used for many purposes",
-                "very broad",
-                "pseudonym not allowed (not because of user-to-user trust)",
-                "many third parties are involved in operating the service"
-            ],
+                    "tracks you on other websites",
+                    "the (mobile) app of this service requires very broad permissions at install-time",
+                    "your data is used for many purposes",
+                    "very broad",
+                    "pseudonym not allowed (not because of user-to-user trust)",
+                    "many third parties are involved in operating the service"
+                    ],
             "good": [
-                "user feedback is invited",
-                "they state that you own your data"
-            ]
+                     "user feedback is invited",
+                     "they state that you own your data"
+                     ]
         },
         "match": {
             "bad": [
-                "tracks you on other websites",
-                "your data is used for many purposes"
-            ],
+                    "tracks you on other websites",
+                    "your data is used for many purposes"
+                    ],
             "good": []
         },
         "class": false
     },
-    "evernote": {
+    "evernote.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -860,7 +589,7 @@
         },
         "class": false
     },
-    "envato": {
+    "ebuddy.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -872,35 +601,23 @@
         },
         "class": false
     },
-    "ebuddy": {
-        "score": 0,
-        "all": {
-            "bad": [],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "duckduckgo": {
+    "duckduckgo.com": {
         "score": -100,
         "all": {
             "bad": [],
             "good": [
-                "no tracking"
-            ]
+                     "no tracking"
+                     ]
         },
         "match": {
             "bad": [],
             "good": [
-                "no tracking"
-            ]
+                     "no tracking"
+                     ]
         },
         "class": "A"
     },
-    "dropbox": {
+    "dropbox.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -912,15 +629,15 @@
         },
         "class": false
     },
-    "disqus": {
+    "disqus.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
+                    "user needs to check tosback.org"
+                    ],
             "good": [
-                "they will help you react to others infringing on your copyright"
-            ]
+                     "they will help you react to others infringing on your copyright"
+                     ]
         },
         "match": {
             "bad": [],
@@ -928,92 +645,78 @@
         },
         "class": false
     },
-    "delicious": {
+    "delicious.com": {
         "score": 20,
         "all": {
             "bad": [
-                "only for your individual and non-commercial use",
-                "sets third-party cookies and/or ads",
-                "may sell your data in merger",
-                "broad license including right to distribute through any media"
-            ],
+                    "only for your individual and non-commercial use",
+                    "sets third-party cookies and/or ads",
+                    "may sell your data in merger",
+                    "broad license including right to distribute through any media"
+                    ],
             "good": [
-                "third parties are bound by confidentiality obligations"
-            ]
+                     "third parties are bound by confidentiality obligations"
+                     ]
         },
         "match": {
             "bad": [
-                "may sell your data in merger"
-            ],
+                    "may sell your data in merger"
+                    ],
             "good": []
         },
         "class": "D"
     },
-    "coursera": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "user needs to rely on tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "couchsurfing": {
+    "couchsurfing.org": {
         "score": 20,
         "all": {
             "bad": [
-                "keep a license even after you close your account",
-                "they can delete your account without prior notice and without a reason",
-                "they become the owner of ideas you give them",
-                "user needs to check tosback.org",
-                "third-party cookies, but with opt-out instructions",
-                "broader than necessary",
-                "your content stays licensed",
-                "may sell your data in merger"
-            ],
+                    "keep a license even after you close your account",
+                    "they can delete your account without prior notice and without a reason",
+                    "they become the owner of ideas you give them",
+                    "user needs to check tosback.org",
+                    "third-party cookies, but with opt-out instructions",
+                    "broader than necessary",
+                    "your content stays licensed",
+                    "may sell your data in merger"
+                    ],
             "good": []
         },
         "match": {
             "bad": [
-                "may sell your data in merger"
-            ],
+                    "may sell your data in merger"
+                    ],
             "good": []
         },
         "class": false
     },
-    "cloudant": {
+    "cloudant.com": {
         "score": 20,
         "all": {
             "bad": [
-                "sets third-party cookies and/or ads",
-                "no liability for unauthorized access",
-                "user needs to check tosback.org",
-                "may sell your data in merger",
-                "defend, indemnify, hold harmless"
-            ],
+                    "sets third-party cookies and/or ads",
+                    "no liability for unauthorized access",
+                    "user needs to check tosback.org",
+                    "may sell your data in merger",
+                    "defend, indemnify, hold harmless"
+                    ],
             "good": [
-                "refund policy",
-                "they provide a way to export your data",
-                "you publish under a free license, not a bilateral one",
-                "limited for purpose of same service",
-                "will warn about maintenance",
-                "they give 30 days notice before closing your account"
-            ]
+                     "refund policy",
+                     "they provide a way to export your data",
+                     "you publish under a free license, not a bilateral one",
+                     "limited for purpose of same service",
+                     "will warn about maintenance",
+                     "they give 30 days notice before closing your account"
+                     ]
         },
         "match": {
             "bad": [
-                "may sell your data in merger"
-            ],
+                    "may sell your data in merger"
+                    ],
             "good": []
         },
         "class": "B"
     },
-    "bit-ly": {
+    "bitly.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -1025,7 +728,7 @@
         },
         "class": false
     },
-    "bearshare": {
+    "bearshare.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -1037,7 +740,7 @@
         },
         "class": false
     },
-    "apple-icloud": {
+    "icloud.com": {
         "score": 0,
         "all": {
             "bad": [],
@@ -1049,12 +752,12 @@
         },
         "class": false
     },
-    "apple": {
+    "apple.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
+                    "user needs to check tosback.org"
+                    ],
             "good": []
         },
         "match": {
@@ -1063,21 +766,21 @@
         },
         "class": false
     },
-    "app-net": {
+    "app.net": {
         "score": 0,
         "all": {
             "bad": [
-                "defend, indemnify, hold harmless",
-                "you may not scrape",
-                "user needs to rely on tosback.org"
-            ],
+                    "defend, indemnify, hold harmless",
+                    "you may not scrape",
+                    "user needs to rely on tosback.org"
+                    ],
             "good": [
-                "archives provided",
-                "user feedback is invited",
-                "easy to read",
-                "you can delete your content",
-                "pseudonyms allowed"
-            ]
+                     "archives provided",
+                     "user feedback is invited",
+                     "easy to read",
+                     "you can delete your content",
+                     "pseudonyms allowed"
+                     ]
         },
         "match": {
             "bad": [],
@@ -1085,54 +788,40 @@
         },
         "class": false
     },
-    "amazon": {
+    "amazon.com": {
         "score": 110,
         "all": {
             "bad": [
-                "may sell your data in merger",
-                "tracks you on other websites",
-                "targeted third-party advertising",
-                "user needs to check tosback.org"
-            ],
+                    "may sell your data in merger",
+                    "tracks you on other websites",
+                    "targeted third-party advertising",
+                    "user needs to check tosback.org"
+                    ],
             "good": []
         },
         "match": {
             "bad": [
-                "may sell your data in merger",
-                "tracks you on other websites",
-                "targeted third-party advertising"
-            ],
+                    "may sell your data in merger",
+                    "tracks you on other websites",
+                    "targeted third-party advertising"
+                    ],
             "good": []
         },
         "class": false
     },
-    "allrecipes": {
+    "500px.com": {
         "score": 0,
         "all": {
             "bad": [
-                "user needs to check tosback.org"
-            ],
-            "good": []
-        },
-        "match": {
-            "bad": [],
-            "good": []
-        },
-        "class": false
-    },
-    "500px": {
-        "score": 0,
-        "all": {
-            "bad": [
-                "class action waiver",
-                "broader than necessary",
-                "they can delete your account without prior notice and without a reason",
-                "responsible and indemnify"
-            ],
+                    "class action waiver",
+                    "broader than necessary",
+                    "they can delete your account without prior notice and without a reason",
+                    "responsible and indemnify"
+                    ],
             "good": [
-                "pseudonyms allowed",
-                "easy to read"
-            ]
+                     "pseudonyms allowed",
+                     "easy to read"
+                     ]
         },
         "match": {
             "bad": [],

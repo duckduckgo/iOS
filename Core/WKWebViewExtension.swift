@@ -68,6 +68,8 @@ extension WKWebView {
         let cache = StringCache()
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist), let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy) {
 
+            Logger.log(text: "using cached easylist")
+
             javascriptLoader.load(.bloom, withController: configuration.userContentController, forMainFrameOnly: true)
 
             javascriptLoader.load(script: .cachedEasylist, withReplacements: [
@@ -77,6 +79,9 @@ extension WKWebView {
                 forMainFrameOnly: true)
 
         } else {
+
+            Logger.log(text: "parsing easylist")
+
             let easylistStore = EasylistStore()
 
             javascriptLoader.load(script: .easylistParsing, withReplacements: [

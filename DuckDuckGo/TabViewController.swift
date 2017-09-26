@@ -280,6 +280,7 @@ extension TabViewController: WKScriptMessageHandler {
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         StringCache().put(name: name, value: data)
+        reloadScripts()
     }
 
     struct TrackerDetectedKey {

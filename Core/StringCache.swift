@@ -21,21 +21,28 @@ import Foundation
 
 public class StringCache {
 
-    // TEMP in memory variable!
-    private static var cache = [String: String]()
+    struct Constants {
+        static let groupName = "group.com.duckduckgo.contentblocker"
+    }
 
     public init() { }
 
     public func get(named name: String) -> String? {
-        return StringCache.cache[name]
+        return try? String(contentsOf: persistenceLocation(for: name), encoding: .utf8)
     }
 
     public func put(name: String, value: String) {
-        StringCache.cache[name] = value
+        try? value.write(to: persistenceLocation(for: name), atomically: true, encoding: .utf8)
     }
 
     public func remove(named name: String) {
-        StringCache.cache[name] = nil
+        try? FileManager.default.removeItem(at: persistenceLocation(for: name))
+    }
+
+    private func persistenceLocation(for name: String) -> URL {
+        let cacheDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!.appendingPathComponent("string-cache")
+        try? FileManager.default.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
+        return cacheDir.appendingPathComponent(name)
     }
 
 }

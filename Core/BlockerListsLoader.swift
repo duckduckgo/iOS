@@ -35,7 +35,7 @@ public class BlockerListsLoader {
 
     public func start(completion: BlockerListsLoaderCompletion?) {
 
-        DispatchQueue.global(qos: .utility).async {
+        DispatchQueue.global(qos: .background).async {
             let semaphore = DispatchSemaphore(value: 0)
             let numberOfRequests = self.startRequests(with: semaphore)
 

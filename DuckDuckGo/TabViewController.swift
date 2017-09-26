@@ -59,6 +59,7 @@ class TabViewController: WebViewController {
     }
 
     func onContentBlockerConfigurationChanged() {
+        reloadScripts()
         webView?.reload()
     }
     

@@ -23,9 +23,11 @@ public typealias BlockerListsLoaderCompletion = () -> Swift.Void
 
 public class BlockerListsLoader {
 
+    private var easylistStore = EasylistStore()
+
     public var hasData: Bool {
         get {
-            return DisconnectMeStore.shared.hasData && EasylistStore.shared.hasData
+            return DisconnectMeStore.shared.hasData && easylistStore.hasData
         }
     }
 
@@ -33,9 +35,23 @@ public class BlockerListsLoader {
 
     public func start(completion: BlockerListsLoaderCompletion?) {
 
-        let urls = AppUrls()
+        DispatchQueue.global(qos: .utility).async {
+            let semaphore = DispatchSemaphore(value: 0)
+            let numberOfRequests = self.startRequests(with: semaphore)
 
-        let semaphore = DispatchSemaphore(value: 0)
+            for _ in 0 ..< numberOfRequests {
+                semaphore.wait()
+            }
+
+            Logger.log(items: "BlockerListsLoader", "completed")
+            completion?()
+        }
+
+    }
+
+    private func startRequests(with semaphore: DispatchSemaphore) -> Int {
+
+        let urls = AppUrls()
 
         APIRequest(url: urls.disconnectMeBlockList).execute { (data, error) in
             if let data = data {
@@ -47,7 +63,7 @@ public class BlockerListsLoader {
 
         APIRequest(url: urls.easylistBlockList).execute { (data, error) in
             if let data = data {
-                EasylistStore.shared.persistEasylist(data: data)
+                self.easylistStore.persistEasylist(data: data)
             }
 
             Logger.log(items: "EasylistRequest", "\(String(describing: error))")
@@ -56,23 +72,14 @@ public class BlockerListsLoader {
 
         APIRequest(url: urls.easylistPrivacyBlockList).execute { (data, error) in
             if let data = data {
-                EasylistStore.shared.persistEasylistPrivacy(data: data)
+                self.easylistStore.persistEasylistPrivacy(data: data)
             }
 
             Logger.log(items: "EasylistPrivacyRequest", "\(String(describing: error))")
             semaphore.signal()
         }
 
-        DispatchQueue.global(qos: .background).async {
-
-            for _ in 0 ..< 3 {
-                semaphore.wait()
-            }
-
-            Logger.log(items: "BlockerListsLoader", "completed")
-            completion?()
-        }
-
+        return 3
     }
 
 }

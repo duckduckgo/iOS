@@ -247,45 +247,69 @@ class TabViewController: WebViewController {
     }
 }
 
+fileprivate struct MessageHandlerNames {
+    static let trackerDetected = "trackerDetectedMessage"
+    static let cache = "cacheMessage"
+}
+
 extension TabViewController: WKScriptMessageHandler {
     
-    struct MessageName {
-        static let trackerDetected = "trackerDetectedMessage"
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
+        switch(message.name) {
+
+        case MessageHandlerNames.cache:
+            handleCache(message: message)
+            break
+
+        case MessageHandlerNames.trackerDetected:
+            handleTrackerDetected(message: message)
+            break
+
+        default:
+            assertionFailure("Unhandled message: \(message.name)")
+            break
+        }
+
     }
-    
+
+    private func handleCache(message: WKScriptMessage) {
+        Logger.log(text: "\(MessageHandlerNames.cache)")
+        guard let dict = message.body as? Dictionary<String, Any> else { return }
+        guard let name = dict["name"] as? String else { return }
+        guard let data = dict["data"] as? String else { return }
+        StringCache().put(name: name, value: data)
+    }
+
     struct TrackerDetectedKey {
         static let blocked = "blocked"
         static let parentDomain = "parentDomain"
         static let url = "url"
     }
 
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == MessageName.trackerDetected {
-            Logger.log(text: "\(MessageName.trackerDetected) \(message.body)")
-            guard let dict = message.body as? Dictionary<String, Any> else { return }
-            guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
-            guard let url = dict[TrackerDetectedKey.url] as? String else { return }
-            let parent = dict[ TrackerDetectedKey.parentDomain] as? String
-            siteRating?.trackerDetected(Tracker(url: url, parentDomain: parent), blocked: blocked)
-            onSiteRatingChanged()
-        }
+    private func handleTrackerDetected(message: WKScriptMessage) {
+        Logger.log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
+        guard let dict = message.body as? Dictionary<String, Any> else { return }
+        guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
+        guard let url = dict[TrackerDetectedKey.url] as? String else { return }
+        let parent = dict[ TrackerDetectedKey.parentDomain] as? String
+        siteRating?.trackerDetected(Tracker(url: url, parentDomain: parent), blocked: blocked)
+        onSiteRatingChanged()
     }
 
 }
 
 extension TabViewController: WebEventsDelegate {
 
-    struct Constants {
-        static let trackerDetectedMessage = "trackerDetectedMessage"
-    }
-
     func attached(webView: WKWebView) {
         webView.scrollView.delegate = self
-        webView.configuration.userContentController.add(self, name: Constants.trackerDetectedMessage)
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
     }
     
     func detached(webView: WKWebView) {
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: Constants.trackerDetectedMessage)
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
     }
 
     func webpageDidStartLoading() {

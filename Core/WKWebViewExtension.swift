@@ -43,11 +43,11 @@ extension WKWebView {
     private func loadContentBlockerScripts(with whitelistedDomains: Set<String>, and blockingEnabled: Bool) {
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelistedDomains.toJsonLookupString(), and: blockingEnabled)
-        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+        load(scripts: [ .disconnectme, .contentblocker ])
     }
 
     private func loadContentBlockerDependencyScripts() {
-        load(scripts: [ .apbfilter, .tlds ], forMainFrameOnly: false)
+        load(scripts: [ .messaging, .apbfilter, .tlds ])
     }
 
     private func loadDocumentLevelScripts() {
@@ -55,29 +55,44 @@ extension WKWebView {
     }
 
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
-        loadBlockerJS(file: "blockerdata", with: [
+
+        let javascriptLoader = JavascriptLoader()
+
+        javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
-            "${easylist_privacy}": EasylistStore.shared.easylistPrivacy,
-            "${easylist_general}": EasylistStore.shared.easylist,
-            "${whitelist}": whitelist ])
-    }
+            "${whitelist}": whitelist ],
+             andController:configuration.userContentController,
+             forMainFrameOnly: true)
 
-    private func loadBlockerJS(file: String, with replacements: [String: String]) {
+        let cache = StringCache()
+        if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist), let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy) {
 
-        var js = try! String(contentsOfFile: JavascriptLoader.path(for: file))
-        for (key, value) in replacements {
-            js = js.replacingOccurrences(of: key, with: value)
+            javascriptLoader.load(.bloom, withController: configuration.userContentController, forMainFrameOnly: true)
+
+            javascriptLoader.load(script: .cachedEasylist, withReplacements: [
+                "${easylist_privacy_json}": cachedEasylistPrivacy,
+                "${easylist_general_json}": cachedEasylist ],
+                andController: configuration.userContentController,
+                forMainFrameOnly: true)
+
+        } else {
+            let easylistStore = EasylistStore()
+
+            javascriptLoader.load(script: .easylistParsing, withReplacements: [
+                "${easylist_privacy}": easylistStore.easylistPrivacy,
+                "${easylist_general}": easylistStore.easylist ],
+                andController: configuration.userContentController,
+                forMainFrameOnly: true)
+
         }
-        let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
-        configuration.userContentController.addUserScript(script)
 
     }
 
-    private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
+    private func load(scripts: [JavascriptLoader.Script]) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {
-            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: forMainFrameOnly)
+            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: true)
         }
     }
     

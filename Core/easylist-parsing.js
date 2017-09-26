@@ -1,5 +1,5 @@
 //
-//  blockerdata.js
+//  easylist-parsing.js
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,12 +17,14 @@
 //  limitations under the License.
 //
 
-var duckduckgoBlockerData = {
+try {
 
-    blockingEnabled: ${blocking_enabled},
-	disconnectme: ${disconnectme},
-    whitelist: ${whitelist},
-    easylist: {},
-    easylistPrivacy: {}
+    ABPFilterParser.parse(`${easylist_privacy}`, duckduckgoBlockerData.easylistPrivacy)
+    duckduckgoMessaging.cache("easylist-privacy", JSON.stringify(duckduckgoBlockerData.easylistPrivacy))
 
+    ABPFilterParser.parse(`${easylist_general}`, duckduckgoBlockerData.easylist)
+    duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist))
+
+} catch (error) {
+    // no-op
 }

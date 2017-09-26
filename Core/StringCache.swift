@@ -1,5 +1,5 @@
 //
-//  blockerdata.js
+//  StringCache.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,12 +17,25 @@
 //  limitations under the License.
 //
 
-var duckduckgoBlockerData = {
+import Foundation
 
-    blockingEnabled: ${blocking_enabled},
-	disconnectme: ${disconnectme},
-    whitelist: ${whitelist},
-    easylist: {},
-    easylistPrivacy: {}
+public class StringCache {
+
+    // TEMP in memory variable!
+    private static var cache = [String: String]()
+
+    public init() { }
+
+    public func get(named name: String) -> String? {
+        return StringCache.cache[name]
+    }
+
+    public func put(name: String, value: String) {
+        StringCache.cache[name] = value
+    }
+
+    public func remove(named name: String) {
+        StringCache.cache[name] = nil
+    }
 
 }

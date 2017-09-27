@@ -279,7 +279,7 @@ extension TabViewController: WKScriptMessageHandler {
         guard let dict = message.body as? Dictionary<String, Any> else { return }
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
-        StringCache().put(name: name, value: data)
+        ContentBlockerStringCache().put(name: name, value: data)
         reloadScripts()
     }
 

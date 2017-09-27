@@ -65,7 +65,7 @@ class EasylistStore {
         guard let s = String(data: data, encoding: .utf8)?.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "`", with: "\\`") else { return nil }
         do {
             try s.write(to: persistenceLocation(type: type), atomically: true, encoding: .utf8)
-            StringCache().remove(named: cacheName)
+            ContentBlockerStringCache().remove(named: cacheName)
             return s
         } catch {
             Logger.log(text: "failed to write \(type): \(error)")

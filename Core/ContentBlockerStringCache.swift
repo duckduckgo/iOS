@@ -1,5 +1,5 @@
 //
-//  StringCache.swift
+//  ContentBlockerStringCache.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-public class StringCache {
+public class ContentBlockerStringCache {
 
     struct Constants {
         static let groupName = "group.com.duckduckgo.contentblocker"

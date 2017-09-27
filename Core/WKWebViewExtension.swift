@@ -43,11 +43,11 @@ extension WKWebView {
     private func loadContentBlockerScripts(with whitelistedDomains: Set<String>, and blockingEnabled: Bool) {
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelistedDomains.toJsonLookupString(), and: blockingEnabled)
-        load(scripts: [ .disconnectme, .contentblocker ])
+        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {
-        load(scripts: [ .messaging, .apbfilter, .tlds ])
+        load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
     }
 
     private func loadDocumentLevelScripts() {
@@ -63,20 +63,20 @@ extension WKWebView {
             "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
             "${whitelist}": whitelist ],
              andController:configuration.userContentController,
-             forMainFrameOnly: true)
+             forMainFrameOnly: false)
 
-        let cache = StringCache()
+        let cache = ContentBlockerStringCache()
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist), let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy) {
 
             Logger.log(text: "using cached easylist")
 
-            javascriptLoader.load(.bloom, withController: configuration.userContentController, forMainFrameOnly: true)
+            javascriptLoader.load(.bloom, withController: configuration.userContentController, forMainFrameOnly: false)
 
             javascriptLoader.load(script: .cachedEasylist, withReplacements: [
                 "${easylist_privacy_json}": cachedEasylistPrivacy,
                 "${easylist_general_json}": cachedEasylist ],
                 andController: configuration.userContentController,
-                forMainFrameOnly: true)
+                forMainFrameOnly: false)
 
         } else {
 
@@ -88,16 +88,16 @@ extension WKWebView {
                 "${easylist_privacy}": easylistStore.easylistPrivacy,
                 "${easylist_general}": easylistStore.easylist ],
                 andController: configuration.userContentController,
-                forMainFrameOnly: true)
+                forMainFrameOnly: false)
 
         }
 
     }
 
-    private func load(scripts: [JavascriptLoader.Script]) {
+    private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {
-            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: true)
+            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
     

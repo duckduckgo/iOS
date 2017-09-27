@@ -1,5 +1,5 @@
 //
-//  StringCacheTests.swift
+//  ContentBlockerStringCacheTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -24,7 +24,7 @@ import XCTest
 class StringCacheTests: XCTestCase {
 
     func testWhenItemRemovedGetReturnsNil() {
-        let cache = StringCache()
+        let cache = ContentBlockerStringCache()
         cache.put(name: "value", value: "some value")
         cache.remove(named: "value")
         XCTAssertNil(cache.get(named: "value"))
@@ -32,13 +32,13 @@ class StringCacheTests: XCTestCase {
 
     func testWhenAddItemGetReturnsIt() {
         let expected = UUID.init().uuidString
-        let cache = StringCache()
+        let cache = ContentBlockerStringCache()
         cache.put(name: "uuid", value: expected)
         XCTAssertEqual(expected, cache.get(named: "uuid"))
     }
 
     func testWhenGetUnknownItemReturnsNil() {
-        XCTAssertNil(StringCache().get(named: "nonesense"))
+        XCTAssertNil(ContentBlockerStringCache().get(named: "nonesense"))
     }
 
 }

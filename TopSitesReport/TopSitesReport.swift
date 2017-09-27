@@ -55,7 +55,7 @@ class TopSitesReport: XCTestCase {
     
     func evaluateSite(_ site: String) {
         mainController.loadUrl(URL(string: site)!)
-        wait(for: 8)
+        wait(for: 5)
         let siteRating = mainController.siteRating
         XCTAssertNotNil(siteRating, "\(site) did not load")
         if let siteRating = siteRating {

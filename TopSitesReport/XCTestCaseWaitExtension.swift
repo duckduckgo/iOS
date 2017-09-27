@@ -25,11 +25,9 @@ extension XCTestCase {
     func wait(for duration: TimeInterval) {
         let waitExpectation = expectation(description: "Wait expectation")
         let when = DispatchTime.now() + duration
-        let buffer = 1.0
         DispatchQueue.main.asyncAfter(deadline: when) {
             waitExpectation.fulfill()
         }
-        waitForExpectations(timeout: duration + buffer)
+        waitForExpectations(timeout: TimeInterval(duration * 2))
     }
-    
 }

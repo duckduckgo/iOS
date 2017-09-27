@@ -28,6 +28,8 @@ extension XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: when) {
             waitExpectation.fulfill()
         }
-        waitForExpectations(timeout: TimeInterval(duration * 2))
+        
+        let distantFutue = Date.distantFuture.timeIntervalSinceNow
+        waitForExpectations(timeout: distantFutue)
     }
 }

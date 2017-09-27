@@ -110,6 +110,10 @@ class TabViewController: WebViewController {
     fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
         contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
+        
+        if let siteRating = siteRating {
+            Logger.log(text: "SiteRating: \(siteRating.scoreDescription)")
+        }
     }
 
     func launchBrowsingMenu() {

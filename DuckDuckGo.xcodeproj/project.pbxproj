@@ -14,6 +14,9 @@
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
+		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
+		83DBCA841F7BBB7E00DFD170 /* top500_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 83DBCA821F7BBB7E00DFD170 /* top500_sites.json */; };
+		83DBCA871F7BBB8800DFD170 /* XCTestCseWaitExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA861F7BBB8800DFD170 /* XCTestCseWaitExtension.swift */; };
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
@@ -240,6 +243,13 @@
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
 		};
+		83DBCA7D1F7BBB5000DFD170 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
+			remoteInfo = DuckDuckGo;
+		};
 		84E341A71E2F7EFB00BDBA6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -327,6 +337,11 @@
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
+		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSitesReport.swift; sourceTree = "<group>"; };
+		83DBCA7C1F7BBB5000DFD170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83DBCA821F7BBB7E00DFD170 /* top500_sites.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = top500_sites.json; sourceTree = "<group>"; };
+		83DBCA861F7BBB8800DFD170 /* XCTestCseWaitExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestCseWaitExtension.swift; sourceTree = "<group>"; };
 		84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckDuckGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E3419A1E2F7EFB00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -574,6 +589,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83DBCA751F7BBB5000DFD170 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E3418F1E2F7EFB00BDBA6F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -651,6 +673,17 @@
 			path = IntegrationTests;
 			sourceTree = "<group>";
 		};
+		83DBCA791F7BBB5000DFD170 /* TopSitesReport */ = {
+			isa = PBXGroup;
+			children = (
+				83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */,
+				83DBCA861F7BBB8800DFD170 /* XCTestCseWaitExtension.swift */,
+				83DBCA821F7BBB7E00DFD170 /* top500_sites.json */,
+				83DBCA7C1F7BBB5000DFD170 /* Info.plist */,
+			);
+			path = TopSitesReport;
+			sourceTree = "<group>";
+		};
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +695,7 @@
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
 				857AEF801F4F2AE9003B84A1 /* AppScreenshots */,
 				836B6B681F67F11E0061ECFB /* IntegrationTests */,
+				83DBCA791F7BBB5000DFD170 /* TopSitesReport */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
 			);
@@ -678,6 +712,7 @@
 				F128109F1EB35B5300F95E4E /* ContentBlockerExtension.appex */,
 				857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */,
 				836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */,
+				83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1558,6 +1593,24 @@
 			productReference = 836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		83DBCA771F7BBB5000DFD170 /* TopSitesReport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83DBCA7F1F7BBB5000DFD170 /* Build configuration list for PBXNativeTarget "TopSitesReport" */;
+			buildPhases = (
+				83DBCA741F7BBB5000DFD170 /* Sources */,
+				83DBCA751F7BBB5000DFD170 /* Frameworks */,
+				83DBCA761F7BBB5000DFD170 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				83DBCA7E1F7BBB5000DFD170 /* PBXTargetDependency */,
+			);
+			name = TopSitesReport;
+			productName = TopSitesReport;
+			productReference = 83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84E341911E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84E341BA1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGo" */;
@@ -1705,6 +1758,12 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
+					83DBCA771F7BBB5000DFD170 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = HKE973VLUW;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 84E341911E2F7EFB00BDBA6F;
+					};
 					84E341911E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = HKE973VLUW;
@@ -1784,6 +1843,7 @@
 				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
 				836B6B661F67F11E0061ECFB /* IntegrationTests */,
 				857AEF7E1F4F2AE9003B84A1 /* AppScreenshots */,
+				83DBCA771F7BBB5000DFD170 /* TopSitesReport */,
 				F15A8B731E43A428008B8C6F /* ShareExtension */,
 				F1AA545D1E48D90700223211 /* TodayExtension */,
 				F128109E1EB35B5300F95E4E /* ContentBlockerExtension */,
@@ -1796,6 +1856,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83DBCA761F7BBB5000DFD170 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83DBCA841F7BBB7E00DFD170 /* top500_sites.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1950,6 +2018,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83DBCA741F7BBB5000DFD170 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */,
+				83DBCA871F7BBB8800DFD170 /* XCTestCseWaitExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2178,6 +2255,11 @@
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 836B6B6C1F67F11E0061ECFB /* PBXContainerItemProxy */;
 		};
+		83DBCA7E1F7BBB5000DFD170 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
+			targetProxy = 83DBCA7D1F7BBB5000DFD170 /* PBXContainerItemProxy */;
+		};
 		84E341A81E2F7EFB00BDBA6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
@@ -2320,6 +2402,38 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = DuckDuckGo;
+			};
+			name = Release;
+		};
+		83DBCA801F7BBB5000DFD170 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = HKE973VLUW;
+				INFOPLIST_FILE = TopSitesReport/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.TopSitesReport;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DuckDuckGo.app/DuckDuckGo";
+			};
+			name = Debug;
+		};
+		83DBCA811F7BBB5000DFD170 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = HKE973VLUW;
+				INFOPLIST_FILE = TopSitesReport/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.TopSitesReport;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DuckDuckGo.app/DuckDuckGo";
 			};
 			name = Release;
 		};
@@ -2720,6 +2834,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		83DBCA7F1F7BBB5000DFD170 /* Build configuration list for PBXNativeTarget "TopSitesReport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83DBCA801F7BBB5000DFD170 /* Debug */,
+				83DBCA811F7BBB5000DFD170 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo" */ = {
 			isa = XCConfigurationList;

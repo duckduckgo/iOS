@@ -109,6 +109,10 @@ class MainViewController: UIViewController {
         launchTabSwitcher()
     }
     
+    public var siteRating: SiteRating? {
+        return currentTab?.siteRating
+    }
+    
     func loadQueryInNewTab(_ query: String) {
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)

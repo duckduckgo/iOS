@@ -28,6 +28,10 @@ extension XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: when) {
             waitExpectation.fulfill()
         }
-        waitForExpectations(timeout: TimeInterval(duration * 3))
+        
+        // We use a large timeout buffer as jenkins stalls. This doesn't impact test
+        // speed as the expectation is fulfilled soon after the duration
+        let timeoutBuffer = 1800.0
+        waitForExpectations(timeout: duration + timeoutBuffer)
     }
 }

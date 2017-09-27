@@ -49,13 +49,13 @@ class TopSitesReport: XCTestCase {
         let data = try! FileLoader().load(fileName: Constants.sitesFile, fromBundle: Bundle(for: TopSitesReport.self))
         let sites = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String]
         for site in sites {
-            evaluateSite("http://\(site)")
+            evaluateSite(site)
         }
     }
     
     func evaluateSite(_ site: String) {
         mainController.loadUrl(URL(string: site)!)
-        wait(for: 5)
+        wait(for: 10)
         let siteRating = mainController.siteRating
         XCTAssertNotNil(siteRating, "\(site) did not load")
         if let siteRating = siteRating {

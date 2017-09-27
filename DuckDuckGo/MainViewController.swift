@@ -138,7 +138,7 @@ class MainViewController: UIViewController {
         loadUrl(queryUrl)
     }
     
-    fileprivate func loadUrl(_ url: URL) {
+    func loadUrl(_ url: URL) {
         if let currentTab = currentTab {
             currentTab.load(url: url)
         } else {

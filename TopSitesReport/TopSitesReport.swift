@@ -42,6 +42,7 @@ class TopSitesReport: XCTestCase {
     
     override func tearDown() {
         saveResults()
+        TabsModel.clear()
     }
     
     func testTopSites() {
@@ -53,7 +54,7 @@ class TopSitesReport: XCTestCase {
     }
     
     func evaluateSite(_ site: String) {
-        mainController.loadUrlInNewTab(URL(string: site)!)
+        mainController.loadUrl(URL(string: site)!)
         wait(for: 8)
         let siteRating = mainController.siteRating
         XCTAssertNotNil(siteRating, "\(site) did not load")

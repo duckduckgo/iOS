@@ -1,5 +1,5 @@
 //
-//  blockerdata.js
+//  easylist-cached.js
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,12 +17,13 @@
 //  limitations under the License.
 //
 
-var duckduckgoBlockerData = {
+duckduckgoBlockerData.easylist = ${easylist_general_json}
+duckduckgoBlockerData.easylistPrivacy = ${easylist_privacy_json}
 
-    blockingEnabled: ${blocking_enabled},
-	disconnectme: ${disconnectme},
-    whitelist: ${whitelist},
-    easylist: {},
-    easylistPrivacy: {}
-
+function duckduckgoEasylistRepair(parserData) {
+	parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
+	parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionFilter)
 }
+
+duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)
+duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)

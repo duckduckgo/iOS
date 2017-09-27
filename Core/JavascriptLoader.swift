@@ -31,6 +31,11 @@ public class JavascriptLoader {
         case contentblocker
         case apbfilter = "abp-filter-parser-packed-es2015"
         case tlds
+        case messaging
+        case bloom = "bloom-es2015"
+        case cachedEasylist = "easylist-cached"
+        case easylistParsing = "easylist-parsing"
+        case blockerData = "blockerdata"
     }
 
     class func path(for jsFile: String) -> String {
@@ -40,9 +45,17 @@ public class JavascriptLoader {
     }
     
     public func load(_ script: Script, withController controller: WKUserContentController, forMainFrameOnly: Bool) {
-        let path = JavascriptLoader.path(for: script.rawValue)
-        let scriptString = try! String(contentsOfFile: path)
-        let script = WKUserScript(source: scriptString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+        load(script: script, withReplacements: [:], andController: controller, forMainFrameOnly: forMainFrameOnly)
+    }
+
+    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:], andController controller: WKUserContentController, forMainFrameOnly: Bool) {
+
+        var js = try! String(contentsOfFile: JavascriptLoader.path(for: script.rawValue))
+        for (key, value) in replacements {
+            js = js.replacingOccurrences(of: key, with: value)
+        }
+        let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
         controller.addUserScript(script)
     }
+
 }

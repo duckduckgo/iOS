@@ -1,5 +1,5 @@
 //
-//  blockerdata.js
+//  messaging.js
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,12 +17,31 @@
 //  limitations under the License.
 //
 
-var duckduckgoBlockerData = {
+var duckduckgoMessaging = function() {
 
-    blockingEnabled: ${blocking_enabled},
-	disconnectme: ${disconnectme},
-    whitelist: ${whitelist},
-    easylist: {},
-    easylistPrivacy: {}
+	function cache(name, value) {
+		try {
+			webkit.messageHandlers.cacheMessage.postMessage({
+				name: name, 
+				data: value
+			});
+		} catch(error) {
+			// webkit might not be defined
+		}
+	}
 
-}
+	function trackerDetected(data) {
+		try {
+			webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
+		} catch(error) {
+			// webkit might not be defined
+		}
+	}
+
+	return {
+
+		cache: cache,
+		trackerDetected: trackerDetected
+
+	}
+}()

@@ -67,6 +67,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
+        reloadScripts()
         if let url = url {
             load(url: url)
         }
@@ -115,9 +116,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        let contentBlocker = ContentBlockerConfigurationUserDefaults()
-        webView.configuration.userContentController.removeAllUserScripts()
-        webView.loadScripts(contentBlocker: contentBlocker)
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()
@@ -236,7 +234,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         errorMessage.alpha = 0
         webView.alpha = 1
     }
-    
+
+    open func reloadScripts() {
+        webView.configuration.userContentController.removeAllUserScripts()
+        webView.loadScripts(contentBlocker: ContentBlockerConfigurationUserDefaults())
+    }
+
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

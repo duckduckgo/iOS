@@ -59,6 +59,7 @@ class TopSitesReport: XCTestCase {
         let siteRating = mainController.siteRating
         XCTAssertNotNil(siteRating, "\(site) did not load")
         if let siteRating = siteRating {
+            print("SiteRating: \(siteRating.scoreDescription)")
             results.append(siteRating.scoreDict)
         }
     }

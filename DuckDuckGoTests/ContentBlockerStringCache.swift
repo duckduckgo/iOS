@@ -23,6 +23,13 @@ import XCTest
 
 class StringCacheTests: XCTestCase {
 
+    func testWhenItemAddedDifferentInstanceReturnsIt() {
+        let expected = UUID.init().uuidString
+        let cache = ContentBlockerStringCache()
+        cache.put(name: "uuid", value: expected)
+        XCTAssertEqual(expected, ContentBlockerStringCache().get(named: "uuid"))
+    }
+
     func testWhenItemRemovedGetReturnsNil() {
         let cache = ContentBlockerStringCache()
         cache.put(name: "value", value: "some value")

@@ -49,6 +49,7 @@
 		85F1C3C81F7A4C7500161346 /* messaging.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C51F7A4C7500161346 /* messaging.js */; };
 		85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */; };
 		85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */; };
+		85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */; };
 		85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
@@ -374,6 +375,7 @@
 		85F1C3C51F7A4C7500161346 /* messaging.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = messaging.js; sourceTree = "<group>"; };
 		85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerStringCache.swift; sourceTree = "<group>"; };
 		85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerStringCache.swift; sourceTree = "<group>"; };
+		85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasylistStoreTests.swift; sourceTree = "<group>"; };
 		85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "abp-filter-parser-packed-es2015.js"; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
@@ -1131,6 +1133,7 @@
 			children = (
 				85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */,
 				F16393F41ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift */,
+				85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -2084,6 +2087,7 @@
 				F14513591F4664E900710C46 /* SiteRatingTests.swift in Sources */,
 				F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */,
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
+				85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* OmniBarStateTests.swift in Sources */,
 				F16BB6601F56494C00B47A42 /* FeaturesViewControllerTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,

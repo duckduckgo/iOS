@@ -54,19 +54,19 @@ class EasylistStore {
     }
 
     func persistEasylist(data: Data) {
-        easylist = persist(data: data, as: .easylist, cacheName: CacheNames.easylist) ?? ""
+        easylist = persistAndPrepareForInjection(data: data, as: .easylist, withCacheName: CacheNames.easylist) ?? ""
     }
 
     func persistEasylistPrivacy(data: Data) {
-        easylistPrivacy = persist(data: data, as: .easylistPrivacy, cacheName: CacheNames.easylistPrivacy) ?? ""
+        easylistPrivacy = persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy) ?? ""
     }
 
-    private func persist(data: Data, as type: Easylist, cacheName: String) -> String? {
-        guard let s = String(data: data, encoding: .utf8)?.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "`", with: "\\`") else { return nil }
+    private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) -> String? {
+        guard let escapedEasylist = escapedString(from: data) else { return nil }
         do {
-            try s.write(to: persistenceLocation(type: type), atomically: true, encoding: .utf8)
-            ContentBlockerStringCache().remove(named: cacheName)
-            return s
+            try persist(escapedEasylist: escapedEasylist, to: persistenceLocation(type: type))
+            invalidateCache(named: cacheName)
+            return escapedEasylist
         } catch {
             Logger.log(text: "failed to write \(type): \(error)")
         }
@@ -77,5 +77,18 @@ class EasylistStore {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
         return path!.appendingPathComponent("\(type.rawValue).txt")
     }
-    
+
+    private func invalidateCache(named name: String) {
+        ContentBlockerStringCache().remove(named: name)
+    }
+
+    private func persist(escapedEasylist: String, to: URL) throws {
+        try escapedEasylist.write(to: to, atomically: true, encoding: .utf8)
+    }
+
+    private func escapedString(from data: Data) -> String? {
+        return String(data: data, encoding: .utf8)?.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "`", with: "\\`")
+    }
+
 }
+

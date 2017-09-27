@@ -20,7 +20,12 @@ import Foundation
 
 class EasylistStore {
 
-    static let shared = EasylistStore()
+    struct CacheNames {
+
+        static let easylist = "easylist"
+        static let easylistPrivacy = "easylist-privacy"
+
+    }
 
     enum Easylist: String {
 
@@ -36,24 +41,36 @@ class EasylistStore {
     private(set) var easylist: String = ""
     private(set) var easylistPrivacy: String = ""
 
-    private init() {
-        easylist = (try? Data(contentsOf: persistenceLocation(type: .easylist)).base64EncodedString()) ?? ""
-        easylistPrivacy = (try? Data(contentsOf: persistenceLocation(type: .easylistPrivacy)).base64EncodedString()) ?? ""
+    public init() {
+        easylist = load(.easylist) ?? ""
+        easylistPrivacy = load(.easylistPrivacy) ?? ""
+    }
+
+    func load(_ type: Easylist) -> String? {
+        guard let data = try? Data(contentsOf: persistenceLocation(type: type)) else {
+            return nil
+        }
+        return String(data: data, encoding: .utf8)
     }
 
     func persistEasylist(data: Data) {
-        easylist = data.base64EncodedString()
-        try? data.write(to: persistenceLocation(type: .easylist), options: .atomic)
+        easylist = persistAndPrepareForInjection(data: data, as: .easylist, withCacheName: CacheNames.easylist) ?? ""
     }
 
     func persistEasylistPrivacy(data: Data) {
-        easylistPrivacy = data.base64EncodedString()
-        try? data.write(to: persistenceLocation(type: .easylistPrivacy), options: .atomic)
+        easylistPrivacy = persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy) ?? ""
     }
 
-    private func decodeEncode(data: Data) -> String {
-        let string = String(data: data, encoding: .utf8)!
-        return string.data(using: .utf8)!.base64EncodedString()
+    private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) -> String? {
+        guard let escapedEasylist = escapedString(from: data) else { return nil }
+        do {
+            try persist(escapedEasylist: escapedEasylist, to: persistenceLocation(type: type))
+            invalidateCache(named: cacheName)
+            return escapedEasylist
+        } catch {
+            Logger.log(text: "failed to write \(type): \(error)")
+        }
+        return nil
     }
 
     private func persistenceLocation(type: Easylist) -> URL {
@@ -61,4 +78,17 @@ class EasylistStore {
         return path!.appendingPathComponent("\(type.rawValue).txt")
     }
 
+    private func invalidateCache(named name: String) {
+        ContentBlockerStringCache().remove(named: name)
+    }
+
+    private func persist(escapedEasylist: String, to: URL) throws {
+        try escapedEasylist.write(to: to, atomically: true, encoding: .utf8)
+    }
+
+    private func escapedString(from data: Data) -> String? {
+        return String(data: data, encoding: .utf8)?.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "`", with: "\\`")
+    }
+
 }
+

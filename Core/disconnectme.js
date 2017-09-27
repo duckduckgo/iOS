@@ -46,9 +46,7 @@ var DisconnectMe = function() {
 			var parent = duckduckgoBlockerData.disconnectme[hostname]
 
 			if (parent) {
-				console.log("DisconnectMe matched " + domainToCheck + " with " + parent)
  				if (isCurrentDomain(parent, currentDomain)) {
-					console.log("DisconnectMe skipping " + domainToCheck + " as " + parent + " matches " + currentDomain)
  					return false
  				}
 				return parent

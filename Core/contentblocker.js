@@ -22,18 +22,12 @@ var duckduckgoContentBlocking = function() {
 	// private
 	function handleDetection(event, parent, detectionMethod) {
 		var blocked = block(event)
-
-		try {
-			webkit.messageHandlers.trackerDetectedMessage.postMessage({
-				url: event.url,
-				parentDomain: parent,
-				blocked: blocked,
-				method: detectionMethod
-			});
-		} catch(error) {
-			// ShareExtension has no message handles, so webkit variable never gets declared
-			console.log(error + " while messaging to app")
-		}
+        duckduckgoMessaging.trackerDetected({
+	        url: event.url,
+	        parentDomain: parent,
+	        blocked: blocked,
+	        method: detectionMethod
+        })
 	}
 
 	// private
@@ -75,12 +69,10 @@ var duckduckgoContentBlocking = function() {
 	// private
 	function block(event) {
 		if (!duckduckgoBlockerData.blockingEnabled) {
-			console.warn("DuckDuckGo blocking is disabled")
 			return false
 		}
 
 		if (currentDomainIsWhitelisted()) {
-			console.warn("DuckDuckGo blocking is disabled for this domain")
 			return false
 		}
 
@@ -88,7 +80,6 @@ var duckduckgoContentBlocking = function() {
 			return false
 		}
 
-		console.info("DuckDuckGo is blocking: " + event.url)
 		event.preventDefault()
 		event.stopPropagation()
 		return true
@@ -160,10 +151,8 @@ var duckduckgoContentBlocking = function() {
 	// public
 	function install(document) {
 		document.addEventListener("beforeload", function(event) {
-			console.log("DuckDuckGo checking " + event.url)	
 			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
-		console.info("DuckDuckGo Content Blocker installed")
 	}
 
 	return { 

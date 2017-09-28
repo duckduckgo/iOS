@@ -53,15 +53,22 @@ class TopSitesReport: XCTestCase {
         }
     }
     
-    func evaluateSite(_ site: String) {
+    func evaluateSite(_ site: String, isRetry: Bool = false) {
+        
         mainController.loadUrl(URL(string: site)!)
         wait(for: 10)
+        
         let siteRating = mainController.siteRating
-        XCTAssertNotNil(siteRating, "\(site) did not load")
         if let siteRating = siteRating {
             print("SiteRating: \(siteRating.scoreDescription)")
             results.append(siteRating.scoreDict)
+        } else if !isRetry {
+            print("\(site) not loaded, retrying")
+            evaluateSite(site, isRetry: true)
+        } else {
+            print("\(site) did not load")
         }
+        
     }
 
     func loadStoryboard() {

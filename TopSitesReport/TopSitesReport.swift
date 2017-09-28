@@ -59,14 +59,14 @@ class TopSitesReport: XCTestCase {
         wait(for: 10)
         
         let siteRating = mainController.siteRating
-        if let siteRating = siteRating {
+        if let siteRating = siteRating, siteRating.finishedLoading {
             print("SiteRating: \(siteRating.scoreDescription)")
             results.append(siteRating.scoreDict)
         } else if !isRetry {
             print("\(site) not loaded, retrying")
             evaluateSite(site, isRetry: true)
         } else {
-            print("\(site) did not load")
+            print("\(site) did not load after retry")
         }
         
     }

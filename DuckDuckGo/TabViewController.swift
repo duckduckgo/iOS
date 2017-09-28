@@ -323,6 +323,7 @@ extension TabViewController: WebEventsDelegate {
     
     func webpageDidFinishLoading() {
         Logger.log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
+        siteRating?.finishedLoading = true
         updateSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false

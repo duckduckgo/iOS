@@ -89,8 +89,8 @@ public extension SiteRating {
     
     public var scoreDict: [String : Any] {
         return [
-            "url": domain,
             "score":  [
+                "domain": domain,
                 "hasHttps": https,
                 "isAMajorTrackingNetwork": isMajorTrackerScore,
                 "containsMajorTrackingNetwork": containsMajorTracker,

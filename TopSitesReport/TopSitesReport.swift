@@ -30,9 +30,14 @@ class TopSitesReport: XCTestCase {
     private var results = [Any]()
     private var mainController: MainViewController!
     
-    struct Constants {
-        static let sitesFile = "top500_sites.json"
-        static let reportFile = "top500_grades_\(TopSitesReport.dateString()).json"
+    struct Filename {
+        static let sites = "top500_sites.json"
+        static let report = "top500_grades_\(TopSitesReport.dateString()).json"
+    }
+    
+    struct Timeout {
+        static let pageLoad = 30.0
+        static let postLoadBuffer: UInt32 = 2
     }
     
     override func setUp() {
@@ -46,31 +51,45 @@ class TopSitesReport: XCTestCase {
     }
     
     func testTopSites() {
-        let data = try! FileLoader().load(fileName: Constants.sitesFile, fromBundle: Bundle(for: TopSitesReport.self))
+        let data = try! FileLoader().load(fileName: Filename.sites, fromBundle: Bundle(for: TopSitesReport.self))
         let sites = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String]
         for site in sites {
             evaluateSite(site)
         }
     }
     
-    func evaluateSite(_ site: String, isRetry: Bool = false) {
+    func evaluateSite(_ site: String) {
         
         mainController.loadUrl(URL(string: site)!)
-        wait(for: 10)
+        waitForPageLoad()
         
-        let siteRating = mainController.siteRating
-        if let siteRating = siteRating, siteRating.finishedLoading {
+        if let siteRating = mainController.siteRating, siteRating.finishedLoading {
             print("SiteRating: \(siteRating.scoreDescription)")
-            results.append(siteRating.scoreDict)
-        } else if !isRetry {
-            print("\(site) not loaded, retrying")
-            evaluateSite(site, isRetry: true)
+            var result = siteRating.scoreDict
+            result["url"] = site
+            results.append(result)
         } else {
-            print("\(site) did not load after retry")
+            print("\(site) failed to load")
+        }
+    }
+    
+    func waitForPageLoad() {
+        let waitExpectation = expectation(description: "Wait expectation")
+        
+        DispatchQueue.global(qos: .background).async {
+            while(true) {
+                if let siteRating = self.mainController.siteRating, siteRating.finishedLoading {
+                    sleep(Timeout.postLoadBuffer)
+                    waitExpectation.fulfill()
+                    break
+                }
+                usleep(100000)
+            }
         }
         
+        waitForExpectations(timeout: Timeout.pageLoad)
     }
-
+    
     func loadStoryboard() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
@@ -81,10 +100,11 @@ class TopSitesReport: XCTestCase {
     }
     
     func saveResults() {
-        let fileName = Constants.reportFile
+        let fileName = Filename.report
         let fileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!.appendingPathComponent(fileName)
         let jsonResults = try! JSONSerialization.data(withJSONObject: results, options: .prettyPrinted)
-        let stringResults = String(data: jsonResults, encoding: .utf8)!
+        var stringResults = String(data: jsonResults, encoding: .utf8)!
+        stringResults = stringResults.replacingOccurrences(of: "\\/", with: "/")
         try! stringResults.write(to: fileUrl, atomically: true, encoding: .utf8)
         print("Saving results to \(fileUrl)")
     }

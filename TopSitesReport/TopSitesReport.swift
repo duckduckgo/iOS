@@ -36,9 +36,9 @@ class TopSitesReport: XCTestCase {
     }
     
     struct Timeout {
-        static let pageLoad = 30.0
-        static let preLoadBuffer: UInt32 = 2
-        static let postLoadBuffer: UInt32 = 2
+        static let pageLoad = 20.0
+        static let preLoadBuffer = 2.0
+        static let postLoadBuffer = 2.0
     }
     
     override func setUp() {
@@ -72,24 +72,16 @@ class TopSitesReport: XCTestCase {
         } else {
             print("\(site) failed to load")
         }
+        
     }
     
     func waitForPageLoad() {
-        let waitExpectation = expectation(description: "Wait expectation")
-        
-        DispatchQueue.global(qos: .background).async {
-            sleep(Timeout.preLoadBuffer)
-            while(true) {
-                if let siteRating = self.mainController.siteRating, siteRating.finishedLoading {
-                    sleep(Timeout.postLoadBuffer)
-                    waitExpectation.fulfill()
-                    break
-                }
-                usleep(100000)
-            }
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: Timeout.preLoadBuffer))
+        let pageTimeout = Date(timeIntervalSinceNow: Timeout.pageLoad)
+        while (mainController.siteRating == nil || !mainController.siteRating!.finishedLoading) && Date() < pageTimeout {
+            RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
         }
-        
-        wait(for: [waitExpectation], timeout: Timeout.pageLoad)
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: Timeout.postLoadBuffer))
     }
     
     func loadStoryboard() {

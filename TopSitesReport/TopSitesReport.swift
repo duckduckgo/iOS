@@ -37,6 +37,7 @@ class TopSitesReport: XCTestCase {
     
     struct Timeout {
         static let pageLoad = 30.0
+        static let preLoadBuffer: UInt32 = 2
         static let postLoadBuffer: UInt32 = 2
     }
     
@@ -77,6 +78,7 @@ class TopSitesReport: XCTestCase {
         let waitExpectation = expectation(description: "Wait expectation")
         
         DispatchQueue.global(qos: .background).async {
+            sleep(Timeout.preLoadBuffer)
             while(true) {
                 if let siteRating = self.mainController.siteRating, siteRating.finishedLoading {
                     sleep(Timeout.postLoadBuffer)
@@ -87,7 +89,7 @@ class TopSitesReport: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: Timeout.pageLoad)
+        wait(for: [waitExpectation], timeout: Timeout.pageLoad)
     }
     
     func loadStoryboard() {

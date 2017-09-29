@@ -67,7 +67,7 @@ public class SiteRatingView: UIView {
             return
         }
         
-        guard let siteRating = siteRating else {
+        guard let siteRating = siteRating, siteRating.finishedLoading else {
             circleIndicator.tintColor = UIColor.monitoringInactiveTint
             gradeLabel.text = "-"
             return

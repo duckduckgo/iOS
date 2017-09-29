@@ -24,6 +24,7 @@ public class SiteRating {
     
     public var url: URL
     public let domain: String
+    public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
     private var termsOfServiceStore = TermsOfServiceStore()

@@ -84,21 +84,27 @@ public extension SiteRating {
     }
     
     public var siteGrade: SiteGrade {
-        logCalculation()
         return SiteGrade.grade(fromScore: siteScore)
     }
     
-    public func logCalculation() {
-        let tos = termsOfService?.classification?.rawValue ?? termsOfService?.score.description ?? "none"
-        Logger.log(text: "Site Score: { " +
-            "host: \(url.host ?? ""), " +
-            "https: \(https)_\(httpsScore), " +
-            "isMajorTracker \(majorTrackingNetwork != nil)_\(isMajorTrackerScore), " +
-            "trackersDetected: \(totalTrackersDetected)_\(trackerCountScore), " +
-            "containsMajorTracker: \(containsMajorTracker)_\(containsMajorTrackerScore), " +
-            "ipTracker: \(contrainsIpTracker)-\(ipTrackerScore), " +
-            "tos: \(tos)_\(termsOfServiceScore) }"
-        )
+    public var scoreDict: [String : Any] {
+        return [
+            "score":  [
+                "domain": domain,
+                "hasHttps": https,
+                "isAMajorTrackingNetwork": isMajorTrackerScore,
+                "containsMajorTrackingNetwork": containsMajorTracker,
+                "totalBlocked": totalTrackersBlocked,
+                "hasObscureTracker": contrainsIpTracker,
+                "tosdr": termsOfServiceScore
+            ],
+            "grade": siteGrade.rawValue.uppercased()
+        ]
+    }
+    
+    public var scoreDescription: String {
+        let json = try! JSONSerialization.data(withJSONObject: scoreDict, options: .prettyPrinted)
+        return String(data: json, encoding: .utf8)!
     }
 }
 

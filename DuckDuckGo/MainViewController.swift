@@ -109,6 +109,10 @@ class MainViewController: UIViewController {
         launchTabSwitcher()
     }
     
+    public var siteRating: SiteRating? {
+        return currentTab?.siteRating
+    }
+    
     func loadQueryInNewTab(_ query: String) {
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
@@ -134,7 +138,7 @@ class MainViewController: UIViewController {
         loadUrl(queryUrl)
     }
     
-    fileprivate func loadUrl(_ url: URL) {
+    func loadUrl(_ url: URL) {
         if let currentTab = currentTab {
             currentTab.load(url: url)
         } else {

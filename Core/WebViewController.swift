@@ -21,15 +21,23 @@ import UIKit
 import WebKit
 
 open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-    
+
     private static let estimatedProgressKeyPath = "estimatedProgress"
-    
+
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var errorMessage: UILabel!
     
     open private(set) var webView: WKWebView!
+
+    private var waitingForLoadAfterPolicyAllowDecision = false
+    private var lastRequestFinishedWithError = true
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(onAppBackgrounded), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+    }
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -114,15 +122,18 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
         }
     }
-    
+
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        waitingForLoadAfterPolicyAllowDecision = false
+        lastRequestFinishedWithError = false
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()
         webEventsDelegate?.webpageDidStartLoading()
     }
-    
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        waitingForLoadAfterPolicyAllowDecision = false
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
             if let favicon = favicon {
@@ -133,11 +144,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        waitingForLoadAfterPolicyAllowDecision = false
+        lastRequestFinishedWithError = true
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        waitingForLoadAfterPolicyAllowDecision = false
+        lastRequestFinishedWithError = true
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
         showError(message: error.localizedDescription)
@@ -146,6 +161,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         guard let url = navigationAction.request.url else {
+            waitingForLoadAfterPolicyAllowDecision = true
             decisionHandler(.allow)
             return
         }
@@ -157,6 +173,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
+            waitingForLoadAfterPolicyAllowDecision = true
             decisionHandler(.allow)
             return
         }
@@ -168,6 +185,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
 
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
+            waitingForLoadAfterPolicyAllowDecision = true
             decisionHandler(.allow)
             return
         }
@@ -238,6 +256,20 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     open func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
         webView.loadScripts(contentBlocker: ContentBlockerConfigurationUserDefaults())
+    }
+
+    @objc private func onAppBackgrounded() {
+        print("*** \(#function)", waitingForLoadAfterPolicyAllowDecision, lastRequestFinishedWithError)
+
+        if waitingForLoadAfterPolicyAllowDecision {
+            // This is the DDG scenario, in which it navigates to a new page which creates an iframe from which to launch the search link
+            goBack()
+        } else if lastRequestFinishedWithError {
+            // This scenario occurs when the user clicks a link which results in a redirect (302) that launches a universal app link.  
+            // Because the page never fully loads the webview thinks we're stil on the page on which the link was clicked.
+            reload()
+        }
+        
     }
 
 }

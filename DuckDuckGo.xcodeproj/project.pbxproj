@@ -24,6 +24,8 @@
 		85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */; };
 		85047B881F6966ED002A95D8 /* disconnectme.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B871F6966ED002A95D8 /* disconnectme.js */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
+		852388701F824267006DEA96 /* UniversalAppLinkRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8523886F1F824267006DEA96 /* UniversalAppLinkRecovery.swift */; };
+		852388721F82429D006DEA96 /* UniversalAppLinkRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852388711F82429D006DEA96 /* UniversalAppLinkRecoveryTests.swift */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -359,6 +361,8 @@
 		85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListsLoader.swift; sourceTree = "<group>"; };
 		85047B871F6966ED002A95D8 /* disconnectme.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = disconnectme.js; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		8523886F1F824267006DEA96 /* UniversalAppLinkRecovery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalAppLinkRecovery.swift; sourceTree = "<group>"; };
+		852388711F82429D006DEA96 /* UniversalAppLinkRecoveryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalAppLinkRecoveryTests.swift; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -1121,6 +1125,7 @@
 				F1A886771F29394E0096251E /* WebCacheManager.swift */,
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
 				F18326861E60542100240060 /* JavascriptLoader.swift */,
+				8523886F1F824267006DEA96 /* UniversalAppLinkRecovery.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -1357,6 +1362,7 @@
 			isa = PBXGroup;
 			children = (
 				F198D7971E3A45D90088DA8A /* WKWebViewExtensionTests.swift */,
+				852388711F82429D006DEA96 /* UniversalAppLinkRecoveryTests.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -2131,6 +2137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				852388721F82429D006DEA96 /* UniversalAppLinkRecoveryTests.swift in Sources */,
 				85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */,
 				8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */,
 				F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */,
@@ -2249,6 +2256,7 @@
 				F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */,
 				F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */,
 				F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */,
+				852388701F824267006DEA96 /* UniversalAppLinkRecovery.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 			);

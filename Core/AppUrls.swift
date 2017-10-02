@@ -23,14 +23,16 @@ import Foundation
 public struct AppUrls {
 
     private struct Url {
+
+        // You can change the base to use a subdomain for testing, but the unit tests will fail
         static let base = "duckduckgo.com"
-        static let home = "https://www.duckduckgo.com"
-        static let favicon = "https://duckduckgo.com/favicon.ico"
-        static let autocomplete = "https://duckduckgo.com/ac/"
-        static let disconnectMeBlockList = "https://duckduckgo.com/contentblocking.js?l=disconnect"
-        static let easylistBlockList = "https://duckduckgo.com/contentblocking.js?l=easylist"
-        static let easylistPrivacyBlockList = "https://duckduckgo.com/contentblocking.js?l=easyprivacy"
-        static let cohort = "https://duckduckgo.com/atb.js"
+        static let home = "https://\(base)"
+        static let favicon = "\(home)/favicon.ico"
+        static let autocomplete = "\(home)/ac/"
+        static let disconnectMeBlockList = "\(home)/contentblocking.js?l=disconnect"
+        static let easylistBlockList = "\(home)/contentblocking.js?l=easylist"
+        static let easylistPrivacyBlockList = "\(home)/contentblocking.js?l=easyprivacy"
+        static let cohort = "\(home)/atb.js"
     }
 
     private struct Param {

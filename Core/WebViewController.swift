@@ -226,10 +226,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
     }
 
-    open override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
     public func reload() {
         webView.reload()
     }

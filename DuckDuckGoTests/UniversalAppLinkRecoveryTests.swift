@@ -31,7 +31,6 @@ class UniversalAppLinkRecoveryTests: XCTestCase {
 
     func testWhenAppBackgroundedAfterWebpageDidStartLoadingBehaviorIsNone() {
 
-        testee.waitingForLoadAfterAllowPolicyDecision = true
         testee.finishedWithError = true
         testee.webpageDidStartLoading()
         XCTAssertEqual(testee.appBackgrounded(), UniversalAppLinkRecovery.Behavior.none)
@@ -42,13 +41,6 @@ class UniversalAppLinkRecoveryTests: XCTestCase {
 
         testee.finishedWithError = true
         XCTAssertEqual(testee.appBackgrounded(), UniversalAppLinkRecovery.Behavior.reload)
-
-    }
-
-    func testWhenAppBackgroundedWhileWaitingForLoadAfterPolicyAllowDecisionBehaviorIsGoBack() {
-
-        testee.waitingForLoadAfterAllowPolicyDecision = true
-        XCTAssertEqual(testee.appBackgrounded(), UniversalAppLinkRecovery.Behavior.goBack)
 
     }
 

@@ -24,24 +24,19 @@ class UniversalAppLinkRecovery {
     enum Behavior {
 
         case none
-        case goBack
         case reload
 
     }
 
-    var waitingForLoadAfterAllowPolicyDecision = false
     var finishedWithError = false
 
     func webpageDidStartLoading() {
-        waitingForLoadAfterAllowPolicyDecision = false
         finishedWithError = false
     }
 
     func appBackgrounded() -> Behavior {
 
-        if waitingForLoadAfterAllowPolicyDecision {
-            return .goBack
-        } else if finishedWithError {
+        if finishedWithError {
             return .reload
         } else {
             return .none

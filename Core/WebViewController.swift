@@ -62,27 +62,14 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     open override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(onAppBackgrounded), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onAppDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-    }
-
-    func onAppDidBecomeActive() {
-        if goBackWhenAppDidBecomeActive {
-            goBack()
-            goBackWhenAppDidBecomeActive = false
-        }
     }
 
     @objc private func onAppBackgrounded() {
 
-        goBackWhenAppDidBecomeActive = false
         switch(universalAppLinkRecovery.appBackgrounded()) {
 
         case .reload:
             reload()
-            break
-
-        case .goBack:
-            goBackWhenAppDidBecomeActive = true
             break
 
         case .none:
@@ -160,7 +147,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        universalAppLinkRecovery.waitingForLoadAfterAllowPolicyDecision = false
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
             if let favicon = favicon {
@@ -171,14 +157,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        universalAppLinkRecovery.waitingForLoadAfterAllowPolicyDecision = false
         universalAppLinkRecovery.finishedWithError = true
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        universalAppLinkRecovery.waitingForLoadAfterAllowPolicyDecision = false
         universalAppLinkRecovery.finishedWithError = true
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
@@ -186,15 +170,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
-        decidePolicyFor(navigationAction: navigationAction) { policy in
-            self.universalAppLinkRecovery.waitingForLoadAfterAllowPolicyDecision = policy == .allow
-            decisionHandler(policy)
-        }
-
-    }
-
-    private func decidePolicyFor(navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         guard let url = navigationAction.request.url else {
             decisionHandler(.allow)
@@ -222,8 +197,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             decisionHandler(.allow)
             return
         }
-        
+
         decisionHandler(.cancel)
+
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {

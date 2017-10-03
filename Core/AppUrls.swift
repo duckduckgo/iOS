@@ -24,8 +24,10 @@ public struct AppUrls {
 
     private struct Url {
 
-        // You can change the base to use a subdomain for testing, but the unit tests will fail
-        static let base = "duckduckgo.com"
+        // You can change this to use a subdomain for testing (e.g. "test.")
+        static let subdomain = ""
+        static let domain = "duckduckgo.com"
+        static let base = "\(subdomain)\(domain)"
         static let home = "https://\(base)"
         static let favicon = "\(home)/favicon.ico"
         static let autocomplete = "\(home)/ac/"
@@ -85,7 +87,7 @@ public struct AppUrls {
     
     public func isDuckDuckGo(url: URL) -> Bool {
         guard let host = url.host else { return false }
-        return host == Url.base || host.hasSuffix(".\(Url.base)")
+        return host == Url.domain || host.hasSuffix(".\(Url.domain)")
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {

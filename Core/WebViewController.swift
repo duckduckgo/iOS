@@ -32,7 +32,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     open private(set) var webView: WKWebView!
 
     private let universalAppLinkRecovery = UniversalAppLinkRecovery()
-    private var goBackWhenAppDidBecomeActive = false
 
     private lazy var appUrls: AppUrls = AppUrls()
 

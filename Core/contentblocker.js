@@ -132,7 +132,7 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		var result = DisconnectMe.parentTracker(urlToCheck)
-		if (result && domainsMatch(result.parent, topLevelUrl)) {
+		if (result && domainsMatch(new URL(topLevelUrl.protocol + result.parent), topLevelUrl)) {
 			return true
 		}
 

@@ -36,6 +36,13 @@ class AppUrlsTests: XCTestCase {
         return AppVersion(bundle: mockBundle)
     }
 
+    func testBaseUrlDoesNotHaveSubDomain() {
+
+        let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
+        XCTAssertEqual(testee.base, URL(string: "duckduckgo.com"))
+
+    }
+
     func testApplyMobileStatsParamsToURL() {
         mockStatisticsStore.cohortVersion = "001"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
@@ -152,9 +159,10 @@ class AppUrlsTests: XCTestCase {
     
     func testAutocompleteUrlCreatesCorrectUrlWithParams() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let actual = testee.autocompleteUrl(forText: "a term").absoluteString
-        let expected = "https://duckduckgo.com/ac/?q=a%20term"
-        XCTAssertEqual(actual, expected)
+        let actual = testee.autocompleteUrl(forText: "a term")
+        XCTAssertTrue(testee.isDuckDuckGo(url: actual))
+        XCTAssertEqual("/ac", actual.path)
+        XCTAssertEqual("a term", actual.getParam(name: "q"))
     }
 
     func testSearchUrlCreatesUrlWithQueryParam() {

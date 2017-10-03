@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appIsLaunching = true
         return true
     }
-    
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         startMigration(application: application)
         StatisticsLoader.shared.load()

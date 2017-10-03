@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
 
     fileprivate var currentTab: TabViewController? {
-        return tabManager.current()
+        return tabManager.current
     }
     
     override func viewDidLoad() {
@@ -188,7 +188,7 @@ class MainViewController: UIViewController {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
             completion()
-            self.tabManager.clearAll()
+            self.tabManager.removeAll()
             self.attachHomeScreen(active: false)
         }
         let window = UIApplication.shared.keyWindow
@@ -284,7 +284,9 @@ class MainViewController: UIViewController {
     }
     
     override func didReceiveMemoryWarning() {
-        Logger.log(text: "MEMORY: Warning received")
+        Logger.log(text: "Memory warning received, reducing memory")
+        super.didReceiveMemoryWarning()
+        tabManager.reduceMemory()
     }
 }
 
@@ -380,6 +382,11 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
+    }
+    
+    func tabDidRequestMemoryReduction(tab: TabViewController) {
+        Logger.log(text: "Memory reduction requested, reducing memory")
+        tabManager.reduceMemory()
     }
 }
 

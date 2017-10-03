@@ -316,6 +316,10 @@ extension TabViewController: WebEventsDelegate {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
     }
+    
+    func webViewDidTerminate(webView: WKWebView) {
+        delegate?.tabDidRequestMemoryReduction(tab: self)
+    }
 
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)

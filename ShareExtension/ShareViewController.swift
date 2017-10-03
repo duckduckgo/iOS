@@ -125,6 +125,10 @@ extension ShareViewController: WebEventsDelegate {
     
     func detached(webView: WKWebView) {
     }
+
+    func webViewDidTerminate(webView: WKWebView) {
+        webView.reload()
+    }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {
         return true

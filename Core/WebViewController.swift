@@ -180,6 +180,10 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return nil
     }
 
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        Logger.log(text: "MEMORY: Webview did terminate")
+    }
+    
     private func shouldReissueSearch(for url: URL) -> Bool {
         return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasCorrectMobileStatsParams(url: url)
     }

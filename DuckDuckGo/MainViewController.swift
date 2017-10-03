@@ -40,7 +40,7 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
 
     fileprivate var currentTab: TabViewController? {
-        return tabManager.current
+        return tabManager.current()
     }
     
     override func viewDidLoad() {
@@ -153,8 +153,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func select(tabAt index: Int) {
-        let selectedTab = tabManager.select(tabAt: index)
-        addToView(tab: selectedTab)
+        let tab = tabManager.select(tabAt: index)
+        select(tab: tab)
+    }
+    
+    fileprivate func select(tab: TabViewController) {
+        addToView(tab: tab)
         refreshControls()
     }
     
@@ -173,8 +177,8 @@ class MainViewController: UIViewController {
 
     fileprivate func remove(tabAt index: Int) {
         tabManager.remove(at: index)
-        if let index = tabManager.currentIndex {
-            select(tabAt: index)
+        if let currentTab = currentTab {
+            select(tab: currentTab)
         } else {
             attachHomeScreen(active: false)
         }
@@ -261,10 +265,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabSwitcher() {
-        if let currentTab = currentTab {
-            tabManager.updateModelFromTab(tab: currentTab)
-        }
-        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
+            let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
@@ -280,6 +281,10 @@ class MainViewController: UIViewController {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        Logger.log(text: "MEMORY: Warning received")
     }
 }
 
@@ -356,7 +361,7 @@ extension MainViewController: TabDelegate {
     
     func tabLoadingStateDidChange(tab: TabViewController) {
         refreshControls()
-        tabManager.updateModelFromTab(tab: tab)
+        tabManager.save()
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

@@ -24,64 +24,71 @@ struct TabManager {
     
     private(set) var model: TabsModel
     
-    private var tabs = [TabViewController]()
+    private var tabControllerCache = [TabViewController]()
     
     private weak var delegate: TabDelegate?
     
     init(model: TabsModel, delegate: TabDelegate) {
         self.model = model
         self.delegate = delegate
-        for tabEntity in model.tabs {
-            let url = tabEntity.link?.url
-            let controller = buildTabController(url: url)
-            tabs.append(controller)
+        if let index = model.currentIndex {
+            let tab = model.tabs[index]
+            let controller = buildController(forTab: tab)
+            tabControllerCache.append(controller)
         }
     }
- 
-    private func buildTabController(url: URL?) -> TabViewController {
+
+    private func buildController(forTab tab: Tab) -> TabViewController {
+        let url = tab.link?.url
         let request = url == nil ? nil : URLRequest(url: url!)
-        return buildTabController(request: request)
+        return buildController(forTab: tab, request: request)
     }
     
-    private func buildTabController(request: URLRequest?) -> TabViewController {
+    private func buildController(forTab tab: Tab, request: URLRequest?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
-        let controller = TabViewController.loadFromStoryboard(contentBlocker: contentBlocker)
+        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
         controller.attachWebView(persistsData: true)
         controller.delegate = delegate
+        
         if let request = request {
             controller.load(urlRequest: request)
         }
+        
         return controller
     }
     
-    var current: TabViewController? {
+    mutating func current() -> TabViewController? {
         guard let index = model.currentIndex else { return nil }
-        return tabs[index]
-    }
-    
-    var currentIndex: Int? {
-        return model.currentIndex
+        
+        let tab = model.tabs[index]
+        if let controller = cachedController(forTab: tab) {
+            return controller
+        }
+        
+        let controller = buildController(forTab: tab)
+        tabControllerCache.append(controller)
+        return controller
     }
 
     var isEmpty: Bool {
-        return tabs.isEmpty
+        return tabControllerCache.isEmpty
     }
     
     var count: Int {
-        return tabs.count
+        return tabControllerCache.count
     }
     
     mutating func clearSelection() {
-        current?.dismiss()
+        current()?.dismiss()
         model.clearSelection()
         save()
     }
     
     mutating func select(tabAt index: Int) -> TabViewController {
-        current?.dismiss()
+        current()?.dismiss()
         model.select(tabAt: index)
         save()
-        return current!
+        return current()!
     }
 
     mutating func add(url: URL?) -> TabViewController {
@@ -90,45 +97,43 @@ struct TabManager {
     }
     
     mutating func add(request: URLRequest?) -> TabViewController {
-        current?.dismiss()
-        let tab = buildTabController(request: request)
-        tabs.append(tab)
-        model.add(tab: Tab(link: tab.link))
+        current()?.dismiss()
+        let url = request?.url
+        let link = url == nil ? nil : Link(title: nil, url: url!)
+        let tab = Tab(link: link)
+        let controller = buildController(forTab: tab, request: request)
+        tabControllerCache.append(controller)
+        model.add(tab: tab)
         save()
-        return tab
+        return controller
     }
 
     mutating func remove(at index: Int) {
-        let tab = tabs.remove(at: index)
-        tab.destroy()
-        model.remove(at: index)
+        let tab = model.get(tabAt: index)
+        model.remove(tab: tab)
+        if let controller = cachedController(forTab: tab), let index = tabControllerCache.index(of: controller) {
+            tabControllerCache.remove(at: index)
+            controller.destroy()
+        }
         save()
     }
     
-    mutating func remove(tab: TabViewController) {
-        guard let index = indexOf(tab: tab) else { return }
-        remove(at: index)
-    }
-    
-    func indexOf(tab: TabViewController) -> Int? {
-        for (index, current) in tabs.enumerated() {
-            if current === tab {
-                return index
-            }
+    mutating func remove(tabController: TabViewController) {
+        model.remove(tab: tabController.tabModel)
+        if let index = tabControllerCache.index(of: tabController) {
+            let tabController = tabControllerCache.remove(at: index)
+            tabController.destroy()
         }
-        return nil
+        save()
     }
     
+    private func cachedController(forTab tab: Tab) -> TabViewController? {
+       return tabControllerCache.filter( { $0.tabModel === tab } ).first
+    }
+
     mutating func clearAll() {
-        for tab in tabs {
-            remove(tab: tab)
-        }
-        save()
-    }
-    
-    func updateModelFromTab(tab: TabViewController) {
-        if let index = indexOf(tab: tab) {
-            model.get(tabAt: index).link = tab.link
+        for controller in tabControllerCache {
+            remove(tabController: controller)
         }
         save()
     }

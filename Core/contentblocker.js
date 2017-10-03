@@ -41,7 +41,12 @@ var duckduckgoContentBlocking = function() {
 
 	// private 
 	function getTopLevelURL() {
-		return new URL(top.location.href)
+		// can throw a security exception if called from a frame with document loaded from different url to top (mainly when blocking is disabled)
+		try {
+			return new URL(top.location.href)
+		} catch(error) {
+			return null
+		}
 	}
 
 	// private
@@ -52,9 +57,9 @@ var duckduckgoContentBlocking = function() {
 			return
 		}
 
-		var parent = DisconnectMe.parentTracker(url, topLevelUrl)
-		if (parent) {
-			handleDetection(event, parent, "disconnectme")
+		var result = DisconnectMe.parentTracker(url)
+		if (result && result.banned) {
+			handleDetection(event, result.parent, "disconnectme")
 			return true
 		}		
 
@@ -76,7 +81,7 @@ var duckduckgoContentBlocking = function() {
 			return false
 		}
 
-		if (isFirstParty(event)) {
+		if (isAssociatedFirstPartyDomain(event)) {
 			return false
 		}
 
@@ -114,12 +119,22 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function isFirstParty(event) {
+	function isAssociatedFirstPartyDomain(event) {
 		var topLevelUrl = getTopLevelURL()	
-		var url = toURL(event.url, topLevelUrl.protocol)
-		if (url != null && domainsMatch(url, topLevelUrl)) {
+
+		var urlToCheck = toURL(event.url, topLevelUrl.protocol)
+		if (urlToCheck == null) {
+			return false
+		}
+
+		if (domainsMatch(urlToCheck, topLevelUrl)) {
 			return true
-		} 
+		}
+
+		var result = DisconnectMe.parentTracker(urlToCheck)
+		if (result && domainsMatch(result.parent, topLevelUrl)) {
+			return true
+		}
 
 		return false
 	}

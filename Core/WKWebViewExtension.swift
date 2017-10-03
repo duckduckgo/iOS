@@ -60,7 +60,8 @@ extension WKWebView {
 
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
-            "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
+            "${disconnectmeBanned}": DisconnectMeStore.shared.bannedTrackersJson,
+            "${disconnectmeAllowed}": DisconnectMeStore.shared.allowedTrackersJson,
             "${whitelist}": whitelist ],
              andController:configuration.userContentController,
              forMainFrameOnly: false)

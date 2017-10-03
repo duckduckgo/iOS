@@ -20,7 +20,8 @@
 var duckduckgoBlockerData = {
 
     blockingEnabled: ${blocking_enabled},
-	disconnectme: ${disconnectme},
+	disconnectmeBanned: ${disconnectmeBanned},
+    disconnectmeAllowed: ${disconnectmeAllowed},
     whitelist: ${whitelist},
     easylist: {},
     easylistPrivacy: {}

@@ -25,15 +25,16 @@ import SwiftyJSON
 public struct DisconnectMeTrackersParser {
     
    enum Category: String {
-        case advertising = "Advertising"
         case analytics = "Analytics"
-        case disconnect = "Disconnect"
+        case advertising = "Advertising"
         case social = "Social"
+        case disconnect = "Disconnect"
         case content = "Content"
     }
     
     static let bannedCategoryFilter: [Category] = [.analytics, .advertising, .social]
-    
+    static let allowedCategoryFilter: [Category] = [ .disconnect, .content ]
+
     func convert(fromJsonData data: Data, categoryFilter: [Category]?) throws -> [String: String] {
         guard let json = try? JSON(data: data) else {
             throw JsonError.invalidJson

@@ -31,8 +31,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     open private(set) var webView: WKWebView!
 
-    private let universalAppLinkRecovery = UniversalAppLinkRecovery()
-
+    private var shouldReloadOnError = false
     private lazy var appUrls: AppUrls = AppUrls()
 
     public var name: String? {
@@ -60,22 +59,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(onAppBackgrounded), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
 
-    @objc private func onAppBackgrounded() {
-
-        switch(universalAppLinkRecovery.appBackgrounded()) {
-
-        case .reload:
-            reload()
-            break
-
-        case .none:
-            break
-            
-        }
-        
+    func onApplicationWillResignActive() {
+        shouldReloadOnError = true
     }
 
     public func attachWebView(persistsData: Bool) {
@@ -138,7 +126,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
 
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        universalAppLinkRecovery.webpageDidStartLoading()
+        shouldReloadOnError = false
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()
@@ -156,18 +144,24 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        universalAppLinkRecovery.finishedWithError = true
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
+        checkForReloadOnError()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        universalAppLinkRecovery.finishedWithError = true
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
         showError(message: error.localizedDescription)
+        checkForReloadOnError()
     }
-    
+
+    private func checkForReloadOnError() {
+        guard shouldReloadOnError else { return }
+        shouldReloadOnError = false
+        reload()
+    }
+
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         guard let url = navigationAction.request.url else {

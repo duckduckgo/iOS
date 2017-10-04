@@ -36,7 +36,7 @@ class ShareViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        webController?.attachWebView(configuration: WKWebViewConfiguration.nonPersistant())
+        webController?.attachWebView(configuration: WKWebViewConfiguration.nonPersistent())
         refreshNavigationButtons()
     }
     

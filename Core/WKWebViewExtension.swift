@@ -22,12 +22,12 @@ import WebKit
 
 extension WKWebViewConfiguration {
     
-    public static func persistant() -> WKWebViewConfiguration {
+    public static func persistent() -> WKWebViewConfiguration {
         return configuration(persistsData: true)
     }
     
-    public static func nonPersistant() -> WKWebViewConfiguration {
-        return configuration(persistsData: true)
+    public static func nonPersistent() -> WKWebViewConfiguration {
+        return configuration(persistsData: false)
     }
     
     private static func configuration(persistsData: Bool) -> WKWebViewConfiguration {

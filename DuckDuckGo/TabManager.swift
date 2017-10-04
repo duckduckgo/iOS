@@ -68,6 +68,7 @@ class TabManager {
             tabControllerCache.append(controller)
             return controller
         } else {
+            Logger.log(text: "Tab not in cache, creating")
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
             return controller

@@ -23,14 +23,18 @@ import Foundation
 public struct AppUrls {
 
     private struct Url {
-        static let base = "duckduckgo.com"
-        static let home = "https://www.duckduckgo.com"
-        static let favicon = "https://duckduckgo.com/favicon.ico"
-        static let autocomplete = "https://duckduckgo.com/ac/"
-        static let disconnectMeBlockList = "https://duckduckgo.com/contentblocking.js?l=disconnect"
-        static let easylistBlockList = "https://duckduckgo.com/contentblocking.js?l=easylist"
-        static let easylistPrivacyBlockList = "https://duckduckgo.com/contentblocking.js?l=easyprivacy"
-        static let cohort = "https://duckduckgo.com/atb.js"
+
+        // You can change this to use a subdomain for testing (e.g. "test.")
+        static let subdomain = ""
+        static let domain = "duckduckgo.com"
+        static let base = "\(subdomain)\(domain)"
+        static let home = "https://\(base)"
+        static let favicon = "\(home)/favicon.ico"
+        static let autocomplete = "\(home)/ac/"
+        static let disconnectMeBlockList = "\(home)/contentblocking.js?l=disconnect"
+        static let easylistBlockList = "\(home)/contentblocking.js?l=easylist"
+        static let easylistPrivacyBlockList = "\(home)/contentblocking.js?l=easyprivacy"
+        static let cohort = "\(home)/atb.js"
     }
 
     private struct Param {
@@ -83,7 +87,7 @@ public struct AppUrls {
     
     public func isDuckDuckGo(url: URL) -> Bool {
         guard let host = url.host else { return false }
-        return host == Url.base || host.hasSuffix(".\(Url.base)")
+        return host == Url.domain || host.hasSuffix(".\(Url.domain)")
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {

@@ -12,7 +12,5 @@ github "subsymbolic/Alamofire" ~>  4.4.0
 
 github "subsymbolic/OHHTTPStubs" ~> 6.0.0
 
-github "subsymbolic/SwiftRichString" "tags/0.9.9"
-
 github "subsymbolic/SimulatorStatusMagic" "tags/1.9.5"
 

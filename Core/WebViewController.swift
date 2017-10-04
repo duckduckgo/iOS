@@ -56,8 +56,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return webView.canGoForward
     }
     
-    public func attachWebView(persistsData: Bool) {
-        webView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData)
+    open func attachWebView(configuration: WKWebViewConfiguration) {
+        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -67,7 +68,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
-        reloadScripts()
+        
         if let url = url {
             load(url: url)
         }
@@ -241,7 +242,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
     open func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.loadScripts(contentBlocker: ContentBlockerConfigurationUserDefaults())
+        webView.configuration.loadScripts()
     }
 
 }

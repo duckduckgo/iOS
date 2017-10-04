@@ -19,11 +19,11 @@
 
 
 import Core
+import WebKit
 
 class TabManager {
     
     private(set) var model: TabsModel
-    
     private var tabControllerCache = [TabViewController]()
     
     private weak var delegate: TabDelegate?
@@ -46,8 +46,9 @@ class TabManager {
     
     private func buildController(forTab tab: Tab, request: URLRequest?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
+        let configuration =  WKWebViewConfiguration.persistant()
         let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
-        controller.attachWebView(persistsData: true)
+        controller.attachWebView(configuration: configuration)
         controller.delegate = delegate
         
         if let request = request {
@@ -148,7 +149,11 @@ class TabManager {
     
     func reduceMemory() {
         
-        let itemsToClear = 2
+        if tabControllerCache.count < 3 {
+            return
+        }
+        
+        let itemsToClear = tabControllerCache.count / 2
         var itemsCleared = 0
         
         for controller in tabControllerCache {

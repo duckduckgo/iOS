@@ -20,9 +20,17 @@
 
 import WebKit
 
-extension WKWebView {
-
-    public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
+extension WKWebViewConfiguration {
+    
+    public static func persistant() -> WKWebViewConfiguration {
+        return configuration(persistsData: true)
+    }
+    
+    public static func nonPersistant() -> WKWebViewConfiguration {
+        return configuration(persistsData: true)
+    }
+    
+    private static func configuration(persistsData: Bool) -> WKWebViewConfiguration {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
@@ -30,76 +38,80 @@ extension WKWebView {
         if #available(iOSApplicationExtension 10.0, *) {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
-        let webView = WKWebView(frame: frame, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        return webView
+        configuration.loadScripts()
+        return configuration
     }
     
-    public func loadScripts(contentBlocker: ContentBlockerConfigurationStore) {
+    public func loadScripts() {
         loadDocumentLevelScripts()
+        let contentBlocker = ContentBlockerConfigurationUserDefaults()
         loadContentBlockerScripts(with: contentBlocker.domainWhitelist, and: contentBlocker.enabled)
     }
-
+    
     private func loadContentBlockerScripts(with whitelistedDomains: Set<String>, and blockingEnabled: Bool) {
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelistedDomains.toJsonLookupString(), and: blockingEnabled)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
-
+    
     private func loadContentBlockerDependencyScripts() {
         load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
     }
-
+    
     private func loadDocumentLevelScripts() {
         load(scripts: [ .document, .favicon ])
     }
-
+    
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
-
+        
         let javascriptLoader = JavascriptLoader()
-
+        
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectme}": DisconnectMeStore.shared.bannedTrackersJson,
             "${whitelist}": whitelist ],
-             andController:configuration.userContentController,
+             andController:userContentController,
              forMainFrameOnly: false)
-
+        
         let cache = ContentBlockerStringCache()
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist), let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy) {
-
+            
             Logger.log(text: "using cached easylist")
-
-            javascriptLoader.load(.bloom, withController: configuration.userContentController, forMainFrameOnly: false)
-
+            
+            javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
+            
             javascriptLoader.load(script: .cachedEasylist, withReplacements: [
                 "${easylist_privacy_json}": cachedEasylistPrivacy,
                 "${easylist_general_json}": cachedEasylist ],
-                andController: configuration.userContentController,
+                andController: userContentController,
                 forMainFrameOnly: false)
-
+            
         } else {
-
+            
             Logger.log(text: "parsing easylist")
-
+            
             let easylistStore = EasylistStore()
-
+            
             javascriptLoader.load(script: .easylistParsing, withReplacements: [
                 "${easylist_privacy}": easylistStore.easylistPrivacy,
                 "${easylist_general}": easylistStore.easylist ],
-                andController: configuration.userContentController,
+                andController: userContentController,
                 forMainFrameOnly: false)
-
+            
         }
-
+        
     }
-
+    
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {
-            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: forMainFrameOnly)
+            javascriptLoader.load(script, withController: userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
+    
+}
+
+extension WKWebView {
     
     public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Swift.Void) {
         let javascript = "duckduckgoDocument.getHrefFromPoint(\(x), \(y))"
@@ -141,14 +153,14 @@ extension WKWebView {
 }
 
 fileprivate extension Set where Element == String {
-
+    
     func toJsonLookupString() -> String {
         return reduce("{", { (result, next) -> String in
             let separator = result != "{" ? ", " : ""
             return "\(result)\(separator) \"\(next)\" : true"
         }).appending("}")
     }
-
+    
 }
 
 

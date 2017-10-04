@@ -52,6 +52,7 @@
 		85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */; };
 		85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */; };
 		85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */; };
+		85F45B1C1F85406B00DB1978 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1AA545E1E48D90700223211 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
@@ -260,6 +261,13 @@
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
 		};
+		85F45B1D1F85406B00DB1978 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1AA545D1E48D90700223211;
+			remoteInfo = TodayExtension;
+		};
 		F143C2E91E4A4CD400CFDE3A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -307,6 +315,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				85F45B1C1F85406B00DB1978 /* TodayExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1577,6 +1586,7 @@
 			);
 			dependencies = (
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
+				85F45B1E1F85406B00DB1978 /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
 			productName = DuckDuckGo;
@@ -2131,6 +2141,11 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 857AEF841F4F2AE9003B84A1 /* PBXContainerItemProxy */;
+		};
+		85F45B1E1F85406B00DB1978 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1AA545D1E48D90700223211 /* TodayExtension */;
+			targetProxy = 85F45B1D1F85406B00DB1978 /* PBXContainerItemProxy */;
 		};
 		F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

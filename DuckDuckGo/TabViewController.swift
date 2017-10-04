@@ -32,14 +32,17 @@ class TabViewController: WebViewController {
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private(set) var siteRating: SiteRating?
+    private(set) var tabModel: Tab
     
-    static func loadFromStoryboard(contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
+        controller.tabModel = model
         return controller
     }
     
     required init?(coder aDecoder: NSCoder) {
+        tabModel = Tab(link: nil)
         super.init(coder: aDecoder)
         webEventsDelegate = self
     }
@@ -313,10 +316,15 @@ extension TabViewController: WebEventsDelegate {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
     }
+    
+    func webViewDidTerminate(webView: WKWebView) {
+        delegate?.tabDidRequestMemoryReduction(tab: self)
+    }
 
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
@@ -325,6 +333,7 @@ extension TabViewController: WebEventsDelegate {
         Logger.log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
         siteRating?.finishedLoading = true
         updateSiteRating()
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
@@ -336,6 +345,7 @@ extension TabViewController: WebEventsDelegate {
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
     }
     

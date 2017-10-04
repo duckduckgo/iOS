@@ -25,6 +25,8 @@ public protocol WebEventsDelegate: class {
     
     func detached(webView: WKWebView)
 
+    func webViewDidTerminate(webView: WKWebView)
+    
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point)

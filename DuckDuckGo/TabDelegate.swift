@@ -32,4 +32,6 @@ protocol TabDelegate: class {
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?)
 
     func tabDidRequestSettings(tab: TabViewController)
+    
+    func tabDidRequestMemoryReduction(tab: TabViewController)
 }

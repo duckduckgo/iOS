@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */; };
 		830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375B1F6C06BF00E317A7 /* TermsOfService.swift */; };
 		830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */; };
 		830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */; };
@@ -332,6 +333,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewConfigurationExtension.swift; sourceTree = "<group>"; };
 		830C375B1F6C06BF00E317A7 /* TermsOfService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceStore.swift; sourceTree = "<group>"; };
 		830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceListParser.swift; sourceTree = "<group>"; };
@@ -1118,6 +1120,7 @@
 				F143C3391E4A9A9200CFDE3A /* WebViewController.swift */,
 				F143C3381E4A9A9200CFDE3A /* WebEventsDelegate.swift */,
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
+				830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */,
 				F1A886771F29394E0096251E /* WebCacheManager.swift */,
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
 				F18326861E60542100240060 /* JavascriptLoader.swift */,
@@ -2216,6 +2219,7 @@
 				F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
+				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,

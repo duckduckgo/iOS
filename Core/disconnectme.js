@@ -19,38 +19,18 @@
 
 var DisconnectMe = function() {
 
-	// private
-	function isCurrentDomain(parentDomain, currentDomain) {
-
-		if (parentDomain == currentDomain) {
-			return true
-		}
-
-		if (currentDomain.endsWith("." + parentDomain)) {
-			return true
-		}
-
-		return false
-	}
-
 	// public
-	function parentTracker(urlToCheck, topLevelUrl) {
-		var domainToCheck = urlToCheck.hostname
-		var currentDomain = topLevelUrl.hostname		
+	function parentTracker(url) {
+		var domain = duckduckgoTLDParser.extractDomain(url)
+		
+		var parentBlocked = duckduckgoBlockerData.disconnectmeBanned[domain]
+		if (parentBlocked) {
+			return { parent: parentBlocked, banned: true }
+		}
 
-		var domainNameParts = domainToCheck.split(".")
-		var max = domainNameParts.length;
-
-		for (var i = max - 2; i >= 0; i--) {
-			var hostname = domainNameParts.slice(i, max).join(".");
-			var parent = duckduckgoBlockerData.disconnectme[hostname]
-
-			if (parent) {
- 				if (isCurrentDomain(parent, currentDomain)) {
- 					return false
- 				}
-				return parent
-			}		
+		var parentAllowed = duckduckgoBlockerData.disconnectmeAllowed[domain]
+		if (parentAllowed) {
+			return { parent: parentAllowed, banned: false }
 		}
 
 		return null

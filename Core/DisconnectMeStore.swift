@@ -28,8 +28,9 @@ class DisconnectMeStore {
     }
 
     private(set) var allTrackers = [String: String]()
-    private(set) var bannedTrackersJson = "[]"
-    
+    private(set) var bannedTrackersJson = "{}"
+    private(set) var allowedTrackersJson = "{}"
+
     private init() {
         try? load(data: Data(contentsOf: persistenceLocation()))
     }
@@ -46,13 +47,19 @@ class DisconnectMeStore {
         let parser = DisconnectMeTrackersParser()
         allTrackers = try parser.convert(fromJsonData: data, categoryFilter: nil)
         
-        let bannedTrackers = try parser.convert(fromJsonData: data, categoryFilter: DisconnectMeTrackersParser.bannedCategoryFilter)
-        let json = try JSONSerialization.data(withJSONObject: bannedTrackers, options: .prettyPrinted)
-        if let jsonString = String(data: json, encoding: .utf8) {
-            bannedTrackersJson = jsonString
-        }
+        bannedTrackersJson = (try? convertToInjectableJson(data, using: parser, filteringBy: DisconnectMeTrackersParser.bannedCategoryFilter)) ?? "{}"
+        allowedTrackersJson = (try? convertToInjectableJson(data, using: parser, filteringBy: DisconnectMeTrackersParser.allowedCategoryFilter)) ?? "{}"
     }
-    
+
+    private func convertToInjectableJson(_ data: Data, using parser: DisconnectMeTrackersParser, filteringBy filter: [DisconnectMeTrackersParser.Category]) throws -> String {
+        let trackers = try parser.convert(fromJsonData: data, categoryFilter: filter)
+        let json = try JSONSerialization.data(withJSONObject: trackers, options: .prettyPrinted)
+        if let jsonString = String(data: json, encoding: .utf8) {
+            return jsonString
+        }
+        return ""
+    }
+
     private func persistenceLocation() -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
         return path!.appendingPathComponent("disconnectme.json")

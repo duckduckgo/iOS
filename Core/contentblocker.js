@@ -19,6 +19,9 @@
 
 var duckduckgoContentBlocking = function() {
 
+	var parentEntityUrl = null
+	var topLevelUrl = null
+
 	// private
 	function handleDetection(event, parent, detectionMethod) {
 		var blocked = block(event)
@@ -41,20 +44,24 @@ var duckduckgoContentBlocking = function() {
 
 	// private 
 	function getTopLevelURL() {
-		return new URL(top.location.href)
+		// can throw a security exception if called from a frame with document loaded from different url to top (mainly when blocking is disabled)
+		try {
+			return new URL(top.location.href)
+		} catch(error) {
+			return new URL(location.href)
+		}
 	}
 
 	// private
 	function disconnectMeMatch(event) {
-		var topLevelUrl = getTopLevelURL()
 		var url = toURL(event.url, topLevelUrl.protocol)
 		if (!url) {
-			return
+			return false
 		}
 
-		var parent = DisconnectMe.parentTracker(url, topLevelUrl)
-		if (parent) {
-			handleDetection(event, parent, "disconnectme")
+		var result = DisconnectMe.parentTracker(url)
+		if (result && result.banned) {
+			handleDetection(event, result.parent, "disconnectme")
 			return true
 		}		
 
@@ -63,7 +70,7 @@ var duckduckgoContentBlocking = function() {
 
 	// private
 	function currentDomainIsWhitelisted() {
-		return duckduckgoBlockerData.whitelist[getTopLevelURL().host]
+		return duckduckgoBlockerData.whitelist[topLevelUrl.host]
 	}
 
 	// private
@@ -76,7 +83,7 @@ var duckduckgoContentBlocking = function() {
 			return false
 		}
 
-		if (isFirstParty(event)) {
+		if (isAssociatedFirstPartyDomain(event)) {
 			return false
 		}
 
@@ -114,12 +121,52 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function isFirstParty(event) {
-		var topLevelUrl = getTopLevelURL()	
-		var url = toURL(event.url, topLevelUrl.protocol)
-		if (url != null && domainsMatch(url, topLevelUrl)) {
+	function urlBelongsToThisSite(urlToCheck) {
+		return domainsMatch(urlToCheck, topLevelUrl)
+	}
+
+	// private
+	function urlBelongsToSiteParent(urlToCheck) {
+		return parentEntityUrl && domainsMatch(parentEntityUrl, urlToCheck)
+	}
+
+	// private
+	function urlBelongsToRelatedSite(urlToCheck) {
+		if (!parentEntityUrl) {
+			return false
+		}
+
+		var related = DisconnectMe.parentTracker(urlToCheck)	
+		if (!related) {
+			return false
+		}
+
+		var relatedUrl = new URL(topLevelUrl.protocol + related.parent);
+		if (!domainsMatch(relatedUrl, parentEntityUrl)) {
+			return false
+		}
+
+		return true
+	}
+
+	// private
+	function isAssociatedFirstPartyDomain(event) {
+		var urlToCheck = toURL(event.url, topLevelUrl.protocol)
+		if (urlToCheck == null) {
+			return false
+		}
+
+		if (urlBelongsToThisSite(urlToCheck)) {
 			return true
-		} 
+		}
+
+		if (urlBelongsToSiteParent(urlToCheck)) { 
+			return true
+		}
+
+		if (urlBelongsToRelatedSite(urlToCheck)) {
+			return true
+		}
 
 		return false
 	}
@@ -148,8 +195,20 @@ var duckduckgoContentBlocking = function() {
 		return checkEasylist(event, duckduckgoBlockerData.easylist, "easylist")
 	}
 
+	// private
+	function getParentEntityUrl() {
+		var parentEntity = DisconnectMe.parentTracker(topLevelUrl)
+		if (parentEntity) {
+			return new URL(topLevelUrl.protocol + parentEntity.parent)
+		}
+		return null
+	}
+
 	// public
 	function install(document) {
+		topLevelUrl = getTopLevelURL()
+		parentEntityUrl = getParentEntityUrl()
+
 		document.addEventListener("beforeload", function(event) {
 			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)

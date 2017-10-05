@@ -75,7 +75,7 @@ public class BlockerListsLoader {
 
         }
 
-        return 1
+        return 3
     }
 
     private class func handleResponseAndSignalCompletion(data: Data?, error: Error?, semaphore: DispatchSemaphore, dataHandler: (Data) -> Void) -> APIRequestCompleteionResult {

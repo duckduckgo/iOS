@@ -57,7 +57,7 @@ public class APIRequest {
 
                 Logger.log(text: "Request for \(self.url) completed with response code: \(String(describing: response.response?.statusCode)) and headers \(String(describing: response.response?.allHeaderFields))")
 
-                guard nil == etag, etag != response.response?.headerValue(for: HeaderNames.etag) else {
+                if etag != nil && etag == response.response?.headerValue(for: HeaderNames.etag) {
                     Logger.log(text: "Using cached version of \(self.url) with etag: \(String(describing: etag))")
                     _ = completion(nil, nil)
                     return
@@ -86,7 +86,7 @@ class UserDefaultsETagStorage: APIRequestETagStorage {
 
     func etag(for url: URL) -> String? {
         let etag = defaults?.string(forKey: url.absoluteString)
-        print("*** etag for ", url, etag)
+        Logger.log(items: "stored etag for ", url, etag as Any)
         return etag
     }
 

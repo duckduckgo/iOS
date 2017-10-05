@@ -25,9 +25,11 @@ class APIRequestTests: XCTestCase {
     
     let host = AppUrls().disconnectMeBlockList.host!
     var testee: APIRequest!
+    fileprivate var mockETagStorage: MockAPIRequestETagStorage!
 
     override func setUp() {
-        testee = APIRequest(url: AppUrls().disconnectMeBlockList)
+        mockETagStorage = MockAPIRequestETagStorage()
+        testee = APIRequest(url: AppUrls().disconnectMeBlockList, etagStorage: mockETagStorage)
     }
 
     override func tearDown() {
@@ -35,16 +37,72 @@ class APIRequestTests: XCTestCase {
         super.tearDown()
     }
 
-    func testWhenStatus200ThenRequestCompletesWithData() {
+    func testWhen304AndMatchingEtagThenRequestCompletesWithNoDataAndNoError() {
+        let etag = UUID().uuidString
+        mockETagStorage.etagToReturn = etag
         stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.validJson(), status: 200, headers: nil)
+            return fixture(filePath: self.validJson(), status: 304, headers: [ "ETag": etag ])
         }
 
-        let expect = expectation(description: "testWhenStatus200ThenRequestCompletesWithData")
+        let expect = expectation(description: "testWhen304AndMatchingEtagThenRequestCompletesWithNoDataAndNoError")
+        testee.execute { (data, error) in
+            XCTAssertNil(data)
+            XCTAssertNil(error)
+            expect.fulfill()
+            return .errorHandled
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+
+    func testWhen200AndMatchingEtagThenRequestCompletesWithNoDataOrError() {
+        let etag = UUID().uuidString
+        mockETagStorage.etagToReturn = etag
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": etag ])
+        }
+
+        let expect = expectation(description: "testWhen200AndMatchingEtagThenRequestCompletesWithNoDataOrError")
+        testee.execute { (data, error) in
+            XCTAssertNil(data)
+            XCTAssertNil(error)
+            expect.fulfill()
+            return .errorHandled
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+
+    func testWhen200AndNotMatchingEtagThenRequestCompletesWithDataAndNoError() {
+        let etag = UUID().uuidString
+        mockETagStorage.etagToReturn = etag
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": "not the etag" ])
+        }
+
+        let expect = expectation(description: "testWhen200AndNotMatchingEtagThenRequestCompletesWithDataAndNoError")
         testee.execute { (data, error) in
             XCTAssertNotNil(data)
             XCTAssertNil(error)
             expect.fulfill()
+            return .errorHandled
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+
+
+    func testWhenStatus200AndNoEtagThenRequestCompletesWithData() {
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: nil)
+        }
+
+        let expect = expectation(description: "testWhenStatus200AndNoEtagThenRequestCompletesWithData")
+        testee.execute { (data, error) in
+            XCTAssertNotNil(data)
+            XCTAssertNil(error)
+            expect.fulfill()
+            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
 
@@ -60,6 +118,7 @@ class APIRequestTests: XCTestCase {
         testee.execute { (data, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
+            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -74,6 +133,7 @@ class APIRequestTests: XCTestCase {
         testee.execute { (data, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
+            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -83,3 +143,19 @@ class APIRequestTests: XCTestCase {
     }
     
 }
+
+fileprivate class MockAPIRequestETagStorage: APIRequestETagStorage {
+
+    var etagToReturn: String?
+    var lastEtagSet: String?
+
+    func set(etag: String?, for url: URL) {
+        lastEtagSet = etag
+    }
+
+    func etag(for url: URL) -> String? {
+        return etagToReturn
+    }
+
+}
+

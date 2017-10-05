@@ -22,26 +22,71 @@ import Foundation
 
 public class StatisticsLoader {
     
+
     public static let shared = StatisticsLoader()
+    
     private var statisticsStore: StatisticsStore
+    private let appUrls = AppUrls()
+    private let parser = AtbParser()
     
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
     }
     
     public func load() {
-        if statisticsStore.cohortVersion != nil {
+        if statisticsStore.hasInstallStatistics {
             return
         }
-
-        let request = CohortRequest()
-        request.execute { cohort, error in
-            guard let cohort = cohort else {
-                let errorMessage = error?.localizedDescription ?? "unspecified"
-                Logger.log(text: "Cohort atb request failed with error \(errorMessage)")
+        requestInstallStatistics()
+    }
+    
+    private func  requestInstallStatistics() {
+        let request = APIRequest(url: appUrls.atb)
+        request.execute { data, error in
+            guard let data = data else {
+                Logger.log(text: "Initial atb request failed with error \(error?.localizedDescription ?? "")")
                 return
             }
-            self.statisticsStore.cohortVersion = cohort.version
+            
+            if let atb  = try? self.parser.convert(fromJsonData: data) {
+                self.requestExti(atb: atb)
+            }
+        }
+    }
+    
+    private func requestExti(atb: Atb) {
+
+        let installAtb = atb.version + Atb.variant
+        let retentionAtb = atb.version
+        let request = APIRequest(url: appUrls.exti(forAtb: installAtb))
+        
+        request.execute { _, error in
+            if let error = error {
+                Logger.log(text: "Exti request failed with error \(error.localizedDescription)")
+                return
+            }
+            self.statisticsStore.atb = installAtb
+            self.statisticsStore.retentionAtb = retentionAtb
+        }
+    }
+    
+    public func refreshRetentionAtb() {
+        
+        guard statisticsStore.hasInstallStatistics else {
+            requestInstallStatistics()
+            return
+        }
+        
+        let request = APIRequest(url: appUrls.atb)
+        request.execute { data, error in
+            guard let data = data else {
+                Logger.log(text: "Atb request failed with error \(error?.localizedDescription ?? "")")
+                return
+            }
+            
+            if let atb  = try? self.parser.convert(fromJsonData: data) {
+                self.statisticsStore.retentionAtb = atb.version
+            }
         }
     }
 }

@@ -25,7 +25,8 @@ public class StatisticsUserDefaults: StatisticsStore {
     private let groupName: String
     
     private struct Keys {
-        static let cohortVersion = "com.duckduckgo.statistics.cohortVersion.v2.key"
+        static let atb = "com.duckduckgo.statistics.atb.key"
+        static let retentionAtb = "com.duckduckgo.statistics.retentionatb.key"
     }
     
     private var userDefaults: UserDefaults? {
@@ -36,14 +37,25 @@ public class StatisticsUserDefaults: StatisticsStore {
         self.groupName = groupName
     }
     
-    public var cohortVersion: String? {
-        
+    public var hasInstallStatistics: Bool {
+        return atb != nil && retentionAtb != nil
+    }
+    
+    public var atb: String? {
         get {
-            return userDefaults?.string(forKey: Keys.cohortVersion)
+            return userDefaults?.string(forKey: Keys.atb)
         }
-        
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.cohortVersion)
+            userDefaults?.setValue(newValue, forKey: Keys.atb)
+        }
+    }
+
+    public var retentionAtb: String? {
+        get {
+            return userDefaults?.string(forKey: Keys.retentionAtb)
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.retentionAtb)
         }
     }
 }

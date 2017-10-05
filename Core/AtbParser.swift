@@ -1,5 +1,5 @@
 //
-//  Cohort.swift
+//  AtbParser.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,9 +19,20 @@
 
 
 import Foundation
+import SwiftyJSON
 
-public struct Cohort {
+
+public struct AtbParser {
+
+    public init() {}
     
-    let version: String
-
+    func convert(fromJsonData data: Data) throws -> Atb {
+        guard let json = try? JSON(data: data) else {
+            throw JsonError.invalidJson
+        }
+        guard let version = json["version"].string else {
+            throw JsonError.typeMismatch
+        }
+        return Atb(version: version)
+    }
 }

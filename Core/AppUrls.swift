@@ -34,14 +34,16 @@ public struct AppUrls {
         static let disconnectMeBlockList = "\(home)/contentblocking.js?l=disconnect"
         static let easylistBlockList = "\(home)/contentblocking.js?l=easylist"
         static let easylistPrivacyBlockList = "\(home)/contentblocking.js?l=easyprivacy"
-        static let cohort = "\(home)/atb.js"
+        static let atb = "\(home)/atb.js"
+        static let exti = "\(home)/exti/"
     }
 
     private struct Param {
         static let search = "q"
         static let source = "t"
         static let appVersion = "tappv"
-        static let cohort = "atb"
+        static let atb = "atb"
+        static let setAtb = "set_atb"
     }
 
     private struct ParamValue {
@@ -81,8 +83,13 @@ public struct AppUrls {
         return URL(string: Url.easylistPrivacyBlockList)!
     }
 
-    public var cohort: URL {
-        return URL(string: Url.cohort)!
+    public var atb: URL {
+        var url = URL(string: Url.atb)!
+        if let atb = statisticsStore.atb, let setAtb = statisticsStore.retentionAtb {
+            url = url.addParam(name: Param.atb, value: atb)
+            url = url.addParam(name: Param.setAtb, value: setAtb)
+        }
+        return url
     }
     
     public func isDuckDuckGo(url: URL) -> Bool {
@@ -104,6 +111,11 @@ public struct AppUrls {
         return searchUrl(text: query)
     }
     
+    public func exti(forAtb atb: String) -> URL {
+        let extiUrl = URL(string: Url.exti)!
+        return extiUrl.addParam(name: Param.atb, value: atb)
+    }
+    
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t,
      app version and cohort (atb) https://duck.co/help/privacy/atb
@@ -114,11 +126,14 @@ public struct AppUrls {
     }
 
     public func applyStatsParams(for url: URL) -> URL {
-        let searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
-            .addParam(name: Param.appVersion, value: appVersion)
+        var searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
+        searchUrl = searchUrl.addParam(name: Param.appVersion, value: appVersion)
 
-        guard let cohortVersion = statisticsStore.cohortVersion else { return searchUrl }
-        return searchUrl.addParam(name: Param.cohort, value: cohortVersion)
+        if let atb = statisticsStore.atb {
+            searchUrl = searchUrl.addParam(name: Param.atb, value: atb)
+        }
+        
+        return searchUrl
     }
 
     private var appVersion: String {
@@ -136,7 +151,7 @@ public struct AppUrls {
     }
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
-        guard let cohort = url.getParam(name: Param.cohort), cohort == statisticsStore.cohortVersion else { return false }
+        guard let atb = url.getParam(name: Param.atb), atb == statisticsStore.atb else { return false }
         guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
         guard let version = url.getParam(name: Param.appVersion), version == appVersion else { return false }
         return true

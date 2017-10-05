@@ -1,5 +1,5 @@
 //
-//  CapaignParserTests.swift
+//  AtbParserTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,9 +21,9 @@
 import XCTest
 @testable import Core
 
-class CohortParserTests: XCTestCase {
+class AtbParserTests: XCTestCase {
     
-    private var testee = CohortParser()
+    private var testee = AtbParser()
     private var data = JsonTestDataLoader()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
@@ -45,15 +45,14 @@ class CohortParserTests: XCTestCase {
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockJson/cohort_atb.json")
+        let validJson = data.fromJsonFile("MockJson/atb.json")
         XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
     
-    
-    func testWhenJsonValidThenResultContainsCohortWithPlatformSuffix() {
-        let validJson = data.fromJsonFile("MockJson/cohort_atb.json")
+    func testWhenJsonValidThenResultContainsAtb() {
+        let validJson = data.fromJsonFile("MockJson/atb.json")
         let result = try! testee.convert(fromJsonData: validJson)
-        XCTAssertEqual(result.version, "v77-5mi")
+        XCTAssertEqual(result.version, "v77-5")
     }
     
 }

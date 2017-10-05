@@ -21,7 +21,12 @@
 @testable import Core
 
 struct MockStatisticsStore: StatisticsStore {
-    
-    var cohortVersion: String?
 
+    var atb: String?
+    var retentionAtb: String?
+    
+    var hasInstallStatistics: Bool {
+        return atb != nil && retentionAtb != nil
+    }
+    
 }

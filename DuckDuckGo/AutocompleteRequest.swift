@@ -23,7 +23,7 @@ import Core
 
 class AutocompleteRequest {
     
-    typealias Completion = ([Suggestion]?, Error?) -> Swift.Void
+    typealias Completion = ([Suggestion]?, Error?) -> Void
     
     private let url: URL
     private let autocompleteParser: AutocompleteParser

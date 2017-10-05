@@ -184,7 +184,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate func forgetAll(completion: @escaping () -> Swift.Void) {
+    fileprivate func forgetAll(completion: @escaping () -> Void) {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
             completion()

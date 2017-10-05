@@ -21,7 +21,7 @@
 import Foundation
 import Alamofire
 
-public typealias APIRequestCompletion = (Data?, Error?) -> Swift.Void
+public typealias APIRequestCompletion = (Data?, Error?) -> Void
 
 public class APIRequest {
 

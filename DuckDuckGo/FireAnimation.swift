@@ -32,7 +32,7 @@ class FireAnimation: UIView {
         static let endAnimationDuration = 0.2
     }
 
-    static func animate(completion: @escaping () -> Swift.Void) {
+    static func animate(completion: @escaping () -> Void) {
         
         guard let window = UIApplication.shared.keyWindow else {
             completion()

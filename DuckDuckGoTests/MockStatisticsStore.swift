@@ -20,7 +20,7 @@
 
 @testable import Core
 
-struct MockStatisticsStore: StatisticsStore {
+class MockStatisticsStore: StatisticsStore {
 
     var atb: String?
     var retentionAtb: String?

@@ -23,8 +23,8 @@ import Core
 
 class EditBookmarkAlert {
     
-    typealias SaveCompletion = (Link) -> Swift.Void
-    typealias CancelCompletion = () -> Swift.Void
+    typealias SaveCompletion = (Link) -> Void
+    typealias CancelCompletion = () -> Void
     
     static func buildAlert(title: String,
                            bookmark: Link,

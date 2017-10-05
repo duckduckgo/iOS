@@ -22,9 +22,9 @@ import Foundation
 
 public class StatisticsLoader {
     
-
-    public static let shared = StatisticsLoader()
+    public typealias Completion =  (() -> ())
     
+    public static let shared = StatisticsLoader()
     private var statisticsStore: StatisticsStore
     private let appUrls = AppUrls()
     private let parser = AtbParser()
@@ -33,28 +33,33 @@ public class StatisticsLoader {
         self.statisticsStore = statisticsStore
     }
     
-    public func load() {
+    public func load(completion: @escaping Completion = {}) {
         if statisticsStore.hasInstallStatistics {
+            completion()
             return
         }
-        requestInstallStatistics()
+        requestInstallStatistics(completion: completion)
     }
     
-    private func  requestInstallStatistics() {
+    private func  requestInstallStatistics(completion: @escaping Completion = {}) {
         let request = APIRequest(url: appUrls.atb)
         request.execute { data, error in
-            guard let data = data else {
-                Logger.log(text: "Initial atb request failed with error \(error?.localizedDescription ?? "")")
+            
+            if let error = error {
+                Logger.log(text: "Initial atb request failed with error \(error.localizedDescription)")
+                completion()
                 return
             }
             
-            if let atb  = try? self.parser.convert(fromJsonData: data) {
-                self.requestExti(atb: atb)
+            if let data = data, let atb  = try? self.parser.convert(fromJsonData: data) {
+                self.requestExti(atb: atb, completion: completion)
+            } else {
+                completion()
             }
         }
     }
     
-    private func requestExti(atb: Atb) {
+    private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
 
         let installAtb = atb.version + Atb.variant
         let retentionAtb = atb.version
@@ -63,14 +68,16 @@ public class StatisticsLoader {
         request.execute { _, error in
             if let error = error {
                 Logger.log(text: "Exti request failed with error \(error.localizedDescription)")
+                completion()
                 return
             }
             self.statisticsStore.atb = installAtb
             self.statisticsStore.retentionAtb = retentionAtb
+            completion()
         }
     }
     
-    public func refreshRetentionAtb() {
+    public func refreshRetentionAtb(completion: @escaping Completion = {}) {
         
         guard statisticsStore.hasInstallStatistics else {
             requestInstallStatistics()
@@ -79,14 +86,17 @@ public class StatisticsLoader {
         
         let request = APIRequest(url: appUrls.atb)
         request.execute { data, error in
-            guard let data = data else {
-                Logger.log(text: "Atb request failed with error \(error?.localizedDescription ?? "")")
+            if let error = error {
+                Logger.log(text: "Atb request failed with error \(error.localizedDescription)")
+                completion()
                 return
             }
             
-            if let atb  = try? self.parser.convert(fromJsonData: data) {
+            if let data = data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.retentionAtb = atb.version
             }
+            
+            completion()
         }
     }
 }

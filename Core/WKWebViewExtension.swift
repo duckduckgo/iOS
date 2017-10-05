@@ -22,7 +22,7 @@ import WebKit
 
 extension WKWebView {
     
-    public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Swift.Void) {
+    public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Void) {
         let javascript = "duckduckgoDocument.getHrefFromPoint(\(x), \(y))"
         evaluateJavaScript(javascript) { (result, error) in
             if let text = result as? String {
@@ -51,7 +51,7 @@ extension WKWebView {
         return url
     }
     
-    public func getFavicon(completion: @escaping (URL?) -> Swift.Void) {
+    public func getFavicon(completion: @escaping (URL?) -> Void) {
         let javascript = "duckduckgoFavicon.getFavicon()"
         evaluateJavaScript(javascript) { (result, error) in
             guard let urlString = result as? String else { completion(nil); return }

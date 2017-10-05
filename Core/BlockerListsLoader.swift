@@ -54,32 +54,38 @@ public class BlockerListsLoader {
         let urls = AppUrls()
 
         APIRequest(url: urls.disconnectMeBlockList).execute { (data, error) in
-            if let data = data {
+            Logger.log(items: "DisconnectMe request completion", "\(String(describing: error))")
+           return BlockerListsLoader.handleResponseAndSignalCompletion(data: data, error: error, semaphore: semaphore, dataHandler: { (data) in
                 try? DisconnectMeStore.shared.persist(data: data)
-            }
-            Logger.log(items: "DisconnectMeRequest", DisconnectMeStore.shared.allTrackers.count, "\(String(describing: error))")
-            semaphore.signal()
+            })
         }
 
         APIRequest(url: urls.easylistBlockList).execute { (data, error) in
-            if let data = data {
+            Logger.log(items: "Easylist request completion", "\(String(describing: error))")
+            return BlockerListsLoader.handleResponseAndSignalCompletion(data: data, error: error, semaphore: semaphore, dataHandler: { (data) in
                 self.easylistStore.persistEasylist(data: data)
-            }
-
-            Logger.log(items: "EasylistRequest", "\(String(describing: error))")
-            semaphore.signal()
+            })
         }
 
         APIRequest(url: urls.easylistPrivacyBlockList).execute { (data, error) in
-            if let data = data {
+            Logger.log(items: "EasylistPrivate request completion", "\(String(describing: error))")
+            return BlockerListsLoader.handleResponseAndSignalCompletion(data: data, error: error, semaphore: semaphore, dataHandler: { (data) in
                 self.easylistStore.persistEasylistPrivacy(data: data)
-            }
+            })
 
-            Logger.log(items: "EasylistPrivacyRequest", "\(String(describing: error))")
-            semaphore.signal()
         }
 
-        return 3
+        return 1
+    }
+
+    private class func handleResponseAndSignalCompletion(data: Data?, error: Error?, semaphore: DispatchSemaphore, dataHandler: (Data) -> Void) -> APIRequestCompleteionResult {
+        var result: APIRequestCompleteionResult = .errorHandled
+        if data != nil && error == nil {
+            dataHandler(data!)
+            result = .dataPersisted
+        }
+        semaphore.signal()
+        return result
     }
 
 }

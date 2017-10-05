@@ -21,26 +21,87 @@
 import Foundation
 import Alamofire
 
-public typealias APIRequestCompletion = (Data?, Error?) -> Swift.Void
+public enum APIRequestCompleteionResult {
+
+    case dataPersisted
+    case errorHandled
+
+}
+
+public typealias APIRequestCompletion = (Data?, Error?) -> APIRequestCompleteionResult
 
 public class APIRequest {
 
-    let url: URL
+    struct HeaderNames {
 
-    init(url: URL) {
+        static let etag = "ETag"
+
+    }
+
+    let url: URL
+    var etagStorage: APIRequestETagStorage
+
+    init(url: URL, etagStorage: APIRequestETagStorage = UserDefaultsETagStorage()) {
         self.url = url
+        self.etagStorage = etagStorage
     }
 
     func execute(completion: @escaping APIRequestCompletion) {
+        let etag = etagStorage.etag(for: url)
 
-        Logger.log(text: "Requesting \(url) ...")
+        Logger.log(text: "Requesting \(url)")
+
         Alamofire.request(url)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
-                Logger.log(text: "Request for \(self.url) completed with result \(response.result)")
-                completion(response.data, response.error)
-        }
+
+                Logger.log(text: "Request for \(self.url) completed with response code: \(String(describing: response.response?.statusCode)) and headers \(String(describing: response.response?.allHeaderFields))")
+
+                guard nil == etag, etag != response.response?.headerValue(for: HeaderNames.etag) else {
+                    Logger.log(text: "Using cached version of \(self.url) with etag: \(String(describing: etag))")
+                    _ = completion(nil, nil)
+                    return
+                }
+
+                if completion(response.data, response.error) == .dataPersisted {
+                    self.etagStorage.set(etag: response.response?.headerValue(for: HeaderNames.etag), for: self.url)
+                }
+            }
 
     }
 
 }
+
+protocol APIRequestETagStorage {
+
+    func set(etag: String?, for url: URL)
+
+    func etag(for url: URL) -> String?
+
+}
+
+class UserDefaultsETagStorage: APIRequestETagStorage {
+
+    lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.api.etags")
+
+    func etag(for url: URL) -> String? {
+        let etag = defaults?.string(forKey: url.absoluteString)
+        print("*** etag for ", url, etag)
+        return etag
+    }
+
+    func set(etag: String?, for url: URL) {
+        defaults?.set(etag, forKey: url.absoluteString)
+    }
+
+}
+
+fileprivate extension HTTPURLResponse {
+
+    func headerValue(for name: String) -> String? {
+        let lname = name.lowercased()
+        return allHeaderFields.filter { ($0.key as? String)?.lowercased() == lname }.first?.value as? String
+    }
+
+}
+

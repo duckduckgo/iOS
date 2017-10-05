@@ -63,7 +63,8 @@ extension WKWebViewConfiguration {
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
-        
+        let easylistStore = EasylistStore()
+
         let javascriptLoader = JavascriptLoader()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
@@ -87,15 +88,14 @@ extension WKWebViewConfiguration {
                                   andController: userContentController,
                                   forMainFrameOnly: false)
             
-        } else {
+        } else if let easylist = easylistStore.easylist,
+            let easylistPrivacy = easylistStore.easylistPrivacy {
             
             Logger.log(text: "parsing easylist")
-            
-            let easylistStore = EasylistStore()
-            
+
             javascriptLoader.load(script: .easylistParsing, withReplacements: [
-                "${easylist_privacy}": easylistStore.easylistPrivacy,
-                "${easylist_general}": easylistStore.easylist ],
+                "${easylist_privacy}": easylistPrivacy,
+                "${easylist_general}": easylist ],
                                   andController: userContentController,
                                   forMainFrameOnly: false)
             

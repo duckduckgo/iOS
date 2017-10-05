@@ -168,10 +168,10 @@ class MainViewController: UIViewController {
     }
 
     private func addToView(controller: UIViewController) {
-        controller.view.frame = containerView.frame
-        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(controller)
         containerView.addSubview(controller.view)
+        controller.view.frame = containerView.frame
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.didMove(toParentViewController: self)
     }
 

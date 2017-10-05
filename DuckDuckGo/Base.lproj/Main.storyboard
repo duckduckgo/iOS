@@ -239,6 +239,7 @@
                             <constraint firstAttribute="bottomMargin" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" id="urL-18-moV"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems>
                         <barButtonItem enabled="NO" image="BrowsePrevious" id="Kc6-IR-lKx">
                             <connections>

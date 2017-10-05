@@ -78,8 +78,6 @@ class TabViewController: WebViewController {
     fileprivate func showBars() {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
-        let offset = webView.scrollView.contentOffset
-        webView.scrollView.setContentOffset(CGPoint(x:0, y:offset.y + InterfaceMeasurement.defaultToolbarHeight + InterfaceMeasurement.defaultToolbarHeight), animated: true)
     }
 
     func launchContentBlockerPopover() {

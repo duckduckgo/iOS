@@ -41,7 +41,7 @@ class AppUrlsTests: XCTestCase {
         XCTAssertEqual(testee.base, URL(string: "duckduckgo.com"))
     }
 
-    func testWhenMobileStatsParamsAreAppliedTheyReturnUpdatedUrl() {
+    func testWhenMobileStatsParamsAreAppliedThenTheyReturnAnUpdatedUrl() {
         mockStatisticsStore.atb = "x"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
         let actual = testee.applyStatsParams(for: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong&tappv=wrong")!)
@@ -57,14 +57,14 @@ class AppUrlsTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    func testWhenAtbIsMistmatchedThenHasMobileStatsParamsIsFalse() {
+    func testWhenAtbIsMismatchedThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "y"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
         let result = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios&tappv=ios_7_900")!)
         XCTAssertFalse(result)
     }
 
-    func testWhenNoAtbParamThenHasMobileStatsParamsIsFalse() {
+    func testWhenAtbIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
         let result = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?t=ddg_ios&tappv=ios_7_900")!)
@@ -78,7 +78,7 @@ class AppUrlsTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func testWhenSourceMissingThenHasMobileStatsParamsIsFalse() {
+    func testWhenSourceIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
         let result = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&tappv=ios_7_900")!)
@@ -92,7 +92,7 @@ class AppUrlsTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func testWhenVersionMissingThenHasMobileStatsParamsIsFalse() {
+    func testWhenVersionIsMissingThenHasMobileStatsParamsIsFalse() {
         mockStatisticsStore.atb = "x"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
         let result = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=y&t=ddg_ios")!)

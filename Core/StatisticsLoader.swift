@@ -22,7 +22,7 @@ import Foundation
 
 public class StatisticsLoader {
     
-    public typealias Completion =  (() -> ())
+    public typealias Completion =  (() -> Void)
     
     public static let shared = StatisticsLoader()
     private var statisticsStore: StatisticsStore

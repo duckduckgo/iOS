@@ -35,15 +35,21 @@ class EasylistStore {
     }
 
     var hasData: Bool {
-        return easylist != "" && easylistPrivacy != ""
+        get {
+            return exists(type: .easylist) && exists(type: .easylistPrivacy)
+        }
     }
 
-    private(set) var easylist: String = ""
-    private(set) var easylistPrivacy: String = ""
+    var easylistPrivacy: String? {
+        get {
+            return load(.easylistPrivacy)
+        }
+    }
 
-    public init() {
-        easylist = load(.easylist) ?? ""
-        easylistPrivacy = load(.easylistPrivacy) ?? ""
+    var easylist: String? {
+        get {
+            return load(.easylist)
+        }
     }
 
     func load(_ type: Easylist) -> String? {
@@ -54,23 +60,25 @@ class EasylistStore {
     }
 
     func persistEasylist(data: Data) {
-        easylist = persistAndPrepareForInjection(data: data, as: .easylist, withCacheName: CacheNames.easylist) ?? ""
+        persistAndPrepareForInjection(data: data, as: .easylist, withCacheName: CacheNames.easylist)
     }
 
     func persistEasylistPrivacy(data: Data) {
-        easylistPrivacy = persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy) ?? ""
+        persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy)
     }
 
-    private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) -> String? {
-        guard let escapedEasylist = escapedString(from: data) else { return nil }
+    private func exists(type: Easylist) -> Bool {
+        return (try? persistenceLocation(type: type).checkResourceIsReachable()) ?? false
+    }
+
+    private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) {
+        guard let escapedEasylist = escapedString(from: data) else { return }
         do {
             try persist(escapedEasylist: escapedEasylist, to: persistenceLocation(type: type))
             invalidateCache(named: cacheName)
-            return escapedEasylist
         } catch {
             Logger.log(text: "failed to write \(type): \(error)")
         }
-        return nil
     }
 
     private func persistenceLocation(type: Easylist) -> URL {

@@ -34,7 +34,11 @@ class EasylistStore {
 
     }
 
-    var hasData = false
+    var hasData: Bool {
+        get {
+            return exists(type: .easylist) && exists(type: .easylistPrivacy)
+        }
+    }
 
     var easylistPrivacy: String? {
         get {
@@ -46,13 +50,6 @@ class EasylistStore {
         get {
             return load(.easylist)
         }
-    }
-
-    public init() {
-        let cache = ContentBlockerStringCache()
-
-        hasData = nil != cache.get(named: CacheNames.easylist) &&
-            nil != cache.get(named: CacheNames.easylistPrivacy)
     }
 
     func load(_ type: Easylist) -> String? {
@@ -68,6 +65,10 @@ class EasylistStore {
 
     func persistEasylistPrivacy(data: Data) {
         persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy)
+    }
+
+    private func exists(type: Easylist) -> Bool {
+        return (try? persistenceLocation(type: type).checkResourceIsReachable()) ?? false
     }
 
     private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) {

@@ -42,8 +42,7 @@ public class StatisticsLoader {
     }
     
     private func  requestInstallStatistics(completion: @escaping Completion = {}) {
-        let request = APIRequest(url: appUrls.atb)
-        request.execute { data, error in
+        APIRequest.request(url: appUrls.atb) { response, error in
             
             if let error = error {
                 Logger.log(text: "Initial atb request failed with error \(error.localizedDescription)")
@@ -51,7 +50,7 @@ public class StatisticsLoader {
                 return
             }
             
-            if let data = data, let atb  = try? self.parser.convert(fromJsonData: data) {
+            if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.requestExti(atb: atb, completion: completion)
             } else {
                 completion()
@@ -63,9 +62,8 @@ public class StatisticsLoader {
 
         let installAtb = atb.version + Atb.variant
         let retentionAtb = atb.version
-        let request = APIRequest(url: appUrls.exti(forAtb: installAtb))
         
-        request.execute { _, error in
+        APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in
             if let error = error {
                 Logger.log(text: "Exti request failed with error \(error.localizedDescription)")
                 completion()
@@ -84,15 +82,14 @@ public class StatisticsLoader {
             return
         }
         
-        let request = APIRequest(url: appUrls.atb)
-        request.execute { data, error in
+        APIRequest.request(url: appUrls.atb) { response, error in
             if let error = error {
                 Logger.log(text: "Atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
             
-            if let data = data, let atb  = try? self.parser.convert(fromJsonData: data) {
+            if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.retentionAtb = atb.version
             }
             

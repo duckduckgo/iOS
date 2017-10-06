@@ -24,16 +24,28 @@ import OHHTTPStubs
 class APIRequestTests: XCTestCase {
     
     let host = AppUrls().disconnectMeBlockList.host!
-    var testee: APIRequest!
-
-    override func setUp() {
-        testee = APIRequest(url: AppUrls().disconnectMeBlockList)
-    }
+    let url = AppUrls().disconnectMeBlockList
 
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
+
+    func testWhenStatus200WithEtagThenRequestCompletesWithEtag() {
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": "an etag"] )
+        }
+
+        let expect = expectation(description: "testWhenStatus200WithEtagThenRequestCompletesWithEtag")
+        APIRequest.request(url: url) { (data, error) in
+            XCTAssertNotNil(data?.etag)
+            XCTAssertNil(error)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+
+    }
+    
 
     func testWhenStatus200ThenRequestCompletesWithData() {
         stub(condition: isHost(host)) { _ in
@@ -41,7 +53,7 @@ class APIRequestTests: XCTestCase {
         }
 
         let expect = expectation(description: "testWhenStatus200ThenRequestCompletesWithData")
-        testee.execute { (data, error) in
+        APIRequest.request(url: url) { (data, error) in
             XCTAssertNotNil(data)
             XCTAssertNil(error)
             expect.fulfill()
@@ -57,7 +69,7 @@ class APIRequestTests: XCTestCase {
         }
         
         let expect = expectation(description: "testWhenStatusCodeIs300ThenRequestCompletestWithError")
-        testee.execute { (data, error) in
+        APIRequest.request(url: url) { (data, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
         }
@@ -71,7 +83,7 @@ class APIRequestTests: XCTestCase {
         }
 
         let expect = expectation(description: "testWhenStatusCodeIsGreaterThan300ThenRequestCompletestWithError")
-        testee.execute { (data, error) in
+        APIRequest.request(url: url) { (data, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
         }
@@ -83,3 +95,5 @@ class APIRequestTests: XCTestCase {
     }
     
 }
+
+

@@ -21,26 +21,51 @@
 import Foundation
 import Alamofire
 
-public typealias APIRequestCompletion = (Data?, Error?) -> Void
+
+public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 
 public class APIRequest {
 
-    let url: URL
+    public struct Response {
 
-    init(url: URL) {
-        self.url = url
+        var data: Data?
+        var etag: String?
+
     }
 
-    func execute(completion: @escaping APIRequestCompletion) {
+    struct HeaderNames {
 
-        Logger.log(text: "Requesting \(url) ...")
+        static let etag = "ETag"
+
+    }
+
+    static func request(url: URL, completion: @escaping APIRequestCompletion) {
+        Logger.log(text: "Requesting \(url)")
+
         Alamofire.request(url)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
-                Logger.log(text: "Request for \(self.url) completed with result \(response.result)")
-                completion(response.data, response.error)
-        }
+
+                Logger.log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode)) and headers \(String(describing: response.response?.allHeaderFields))")
+
+                if let error = response.error {
+                    completion(nil, error)
+                } else {
+                    let etag = response.response?.headerValue(for: HeaderNames.etag)
+                    completion(Response(data: response.data, etag: etag), nil)
+                }
+            }
 
     }
 
 }
+
+fileprivate extension HTTPURLResponse {
+
+    func headerValue(for name: String) -> String? {
+        let lname = name.lowercased()
+        return allHeaderFields.filter { ($0.key as? String)?.lowercased() == lname }.first?.value as? String
+    }
+
+}
+

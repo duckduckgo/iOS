@@ -21,5 +21,8 @@
 import Foundation
 
 public protocol StatisticsStore {
-    var cohortVersion: String? { get set }
+    
+    var hasInstallStatistics: Bool { get }
+    var atb: String? { get set }
+    var retentionAtb: String? { get set }
 }

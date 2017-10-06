@@ -180,6 +180,10 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
                 decisionHandler(.allow)
                 return
         }
+        
+        if appUrls.isDuckDuckGoSearch(url: url) {
+            StatisticsLoader.shared.refreshRetentionAtb()
+        }
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)

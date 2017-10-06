@@ -37,7 +37,7 @@ public class WebCacheManager {
     /**
      Provides a summary of the external (non-duckduckgo) cached data
      */
-    public static func summary(completionHandler: @escaping (_ summary: WebCacheSummary) -> Swift.Void) {
+    public static func summary(completionHandler: @escaping (_ summary: WebCacheSummary) -> Void) {
          dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
             let count = records.reduce(0) { (count, record) in
                 if record.displayName == Constants.internalCache {
@@ -53,7 +53,7 @@ public class WebCacheManager {
     /**
      Clears the cache of all external (non-duckduckgo) data
      */
-    public static func clear(completionHandler: @escaping () -> Swift.Void) {
+    public static func clear(completionHandler: @escaping () -> Void) {
         dataStore.fetchDataRecords(ofTypes: allData) { records in
             let externalRecords = records.filter { $0.displayName != Constants.internalCache }
             dataStore.removeData(ofTypes: allData, for: externalRecords) {

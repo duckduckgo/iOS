@@ -19,7 +19,7 @@
 
 import Foundation
 
-public typealias BlockerListsLoaderCompletion = () -> Swift.Void
+public typealias BlockerListsLoaderCompletion = () -> Void
 
 public class BlockerListsLoader {
 

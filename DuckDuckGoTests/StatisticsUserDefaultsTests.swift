@@ -26,7 +26,8 @@ class StatisticsUserDefaultsTests: XCTestCase {
     
     struct Constants {
         static let userDefaultsSuit = "StatisticsUserDefaultsTestSuit"
-        static let cohortVersion = "someAtbVersion"
+        static let atb = "atb"
+        static let retentionAtb = "retentionAtb"
     }
     
     var testee: StatisticsUserDefaults!
@@ -36,13 +37,33 @@ class StatisticsUserDefaultsTests: XCTestCase {
         testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }
 
-    func testWhenFirstInitialisedThenCohortVersionNil() {
-        XCTAssertNil(testee.cohortVersion)
+    func testWhenFirstInitialisedThenHasStatisticsIsFalseAndAtbValuesNil() {
+        XCTAssertNil(testee.atb)
+        XCTAssertNil(testee.retentionAtb)
+        XCTAssertFalse(testee.hasInstallStatistics)
+    }
+
+    func testWhenAtbValuesBothSetThenHasStatisticsIsTrue() {
+        testee.atb = Constants.atb
+        testee.retentionAtb = Constants.retentionAtb
+        XCTAssertTrue(testee.hasInstallStatistics)
     }
     
-    func testWhenCohortVersionSetThenDefaultsUpdated() {
-        testee.cohortVersion = Constants.cohortVersion
-        XCTAssertEqual(testee.cohortVersion, Constants.cohortVersion)
+    func testWhenAtbNotSetThenHasStatisticsIsFalse() {
+        testee.atb = Constants.atb
+        XCTAssertFalse(testee.hasInstallStatistics)
+    }
+    
+    func testWhenRetentionAtbNotSetThenHasStatisticsIsFalse() {
+        testee.retentionAtb = Constants.retentionAtb
+        XCTAssertFalse(testee.hasInstallStatistics)
+    }
+    
+    func testWhenAtbValuesSetThenDefaultsUpdated() {
+        testee.atb = Constants.atb
+        testee.retentionAtb = Constants.retentionAtb
+        XCTAssertEqual(testee.atb, Constants.atb)
+        XCTAssertEqual(testee.retentionAtb, Constants.retentionAtb)
     }
 
 }

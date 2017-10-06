@@ -24,85 +24,39 @@ import OHHTTPStubs
 class APIRequestTests: XCTestCase {
     
     let host = AppUrls().disconnectMeBlockList.host!
-    var testee: APIRequest!
-    fileprivate var mockETagStorage: MockAPIRequestETagStorage!
-
-    override func setUp() {
-        mockETagStorage = MockAPIRequestETagStorage()
-        testee = APIRequest(url: AppUrls().disconnectMeBlockList, etagStorage: mockETagStorage)
-    }
+    let url = AppUrls().disconnectMeBlockList
 
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
-    func testWhen304AndMatchingEtagThenRequestCompletesWithNoDataAndNoError() {
-        let etag = UUID().uuidString
-        mockETagStorage.etagToReturn = etag
+    func testWhenStatus200WithEtagThenRequestCompletesWithEtag() {
         stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.validJson(), status: 304, headers: [ "ETag": etag ])
+            return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": "an etag"] )
         }
 
-        let expect = expectation(description: "testWhen304AndMatchingEtagThenRequestCompletesWithNoDataAndNoError")
-        testee.execute { (data, error) in
-            XCTAssertNil(data)
+        let expect = expectation(description: "testWhenStatus200WithEtagThenRequestCompletesWithEtag")
+        APIRequest.request(url: url) { (data, error) in
+            XCTAssertNotNil(data?.etag)
             XCTAssertNil(error)
             expect.fulfill()
-            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
 
     }
+    
 
-    func testWhen200AndMatchingEtagThenRequestCompletesWithNoDataOrError() {
-        let etag = UUID().uuidString
-        mockETagStorage.etagToReturn = etag
-        stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": etag ])
-        }
-
-        let expect = expectation(description: "testWhen200AndMatchingEtagThenRequestCompletesWithNoDataOrError")
-        testee.execute { (data, error) in
-            XCTAssertNil(data)
-            XCTAssertNil(error)
-            expect.fulfill()
-            return .errorHandled
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
-
-    }
-
-    func testWhen200AndNotMatchingEtagThenRequestCompletesWithDataAndNoError() {
-        let etag = UUID().uuidString
-        mockETagStorage.etagToReturn = etag
-        stub(condition: isHost(host)) { _ in
-            return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": "not the etag" ])
-        }
-
-        let expect = expectation(description: "testWhen200AndNotMatchingEtagThenRequestCompletesWithDataAndNoError")
-        testee.execute { (data, error) in
-            XCTAssertNotNil(data)
-            XCTAssertNil(error)
-            expect.fulfill()
-            return .errorHandled
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
-
-    }
-
-
-    func testWhenStatus200AndNoEtagThenRequestCompletesWithData() {
+    func testWhenStatus200ThenRequestCompletesWithData() {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
 
-        let expect = expectation(description: "testWhenStatus200AndNoEtagThenRequestCompletesWithData")
-        testee.execute { (data, error) in
+        let expect = expectation(description: "testWhenStatus200ThenRequestCompletesWithData")
+        APIRequest.request(url: url) { (data, error) in
             XCTAssertNotNil(data)
             XCTAssertNil(error)
             expect.fulfill()
-            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
 
@@ -115,10 +69,9 @@ class APIRequestTests: XCTestCase {
         }
         
         let expect = expectation(description: "testWhenStatusCodeIs300ThenRequestCompletestWithError")
-        testee.execute { (data, error) in
+        APIRequest.request(url: url) { (data, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
-            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -130,10 +83,9 @@ class APIRequestTests: XCTestCase {
         }
 
         let expect = expectation(description: "testWhenStatusCodeIsGreaterThan300ThenRequestCompletestWithError")
-        testee.execute { (data, error) in
+        APIRequest.request(url: url) { (data, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
-            return .errorHandled
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -144,18 +96,4 @@ class APIRequestTests: XCTestCase {
     
 }
 
-fileprivate class MockAPIRequestETagStorage: APIRequestETagStorage {
-
-    var etagToReturn: String?
-    var lastEtagSet: String?
-
-    func set(etag: String?, for url: URL) {
-        lastEtagSet = etag
-    }
-
-    func etag(for url: URL) -> String? {
-        return etagToReturn
-    }
-
-}
 

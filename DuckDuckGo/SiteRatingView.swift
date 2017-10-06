@@ -61,7 +61,7 @@ public class SiteRatingView: UIView {
     
     public func refresh() {
         
-        guard contentBlockerConfiguration.enabled else {
+        guard contentBlockerConfiguration.enabled, BlockerListsLoader().hasData else {
             circleIndicator.tintColor = UIColor.monitoringNegativeTint
             gradeLabel.text = "!"
             return

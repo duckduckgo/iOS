@@ -34,7 +34,7 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
     private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
     
     static func loadFromStoryboard() -> UseDuckDuckGoInSafariViewController {
-        let storyboard = UIStoryboard.init(name: "Onboarding", bundle: nil)
+        let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
         return storyboard.instantiateViewController(withIdentifier: "UseDuckDuckGoInSafari") as! UseDuckDuckGoInSafariViewController
     }
     

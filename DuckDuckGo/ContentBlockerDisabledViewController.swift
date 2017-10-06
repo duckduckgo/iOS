@@ -26,7 +26,7 @@ class ContentBlockerDisabledViewController: UITableViewController {
     weak var delegate: ContentBlockerDisabledDelegate?
     
     static func loadFromStoryboard(withDelegate delegate: ContentBlockerDisabledDelegate) -> ContentBlockerDisabledViewController {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerDisabledViewController") as! ContentBlockerDisabledViewController
         controller.delegate = delegate
         return controller

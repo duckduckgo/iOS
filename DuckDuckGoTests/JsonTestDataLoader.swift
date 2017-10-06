@@ -33,14 +33,14 @@ class JsonTestDataLoader {
     }
     
     func unexpected() -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: "MockResponse/unexpected", ext: "json")
+        return try! FileLoader().load(fileName: "MockJson/unexpected.json", fromBundle: bundle)
     }
     
     func fromJsonFile(_ fileName: String) -> Data {
-        return try! FileLoader().load(bundle: bundle(), name: fileName, ext: "json")
+        return try! FileLoader().load(fileName: fileName, fromBundle: bundle)
     }
     
-    private func bundle() -> Bundle {
+    private var bundle: Bundle {
         return Bundle(for: type(of: self))
     }
 }

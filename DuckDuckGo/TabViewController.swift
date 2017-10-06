@@ -29,24 +29,41 @@ class TabViewController: WebViewController {
     weak var delegate: TabDelegate?
     
     private lazy var appUrls: AppUrls = AppUrls()
-    private(set) var contentBlocker: ContentBlocker!
+    private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var contentBlockerPopover: ContentBlockerPopover?
-    private var siteRating: SiteRating?
+    private(set) var siteRating: SiteRating?
+    private(set) var tabModel: Tab
     
-    static func loadFromStoryboard(contentBlocker: ContentBlocker) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
+        controller.tabModel = model
         return controller
     }
     
     required init?(coder aDecoder: NSCoder) {
+        tabModel = Tab(link: nil)
         super.init(coder: aDecoder)
         webEventsDelegate = self
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addContentBlockerConfigurationObserver()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         resetNavigationBar()
+    }
+    
+    private func addContentBlockerConfigurationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
+    }
+
+    func onContentBlockerConfigurationChanged() {
+        reloadScripts()
+        webView?.reload()
     }
     
     private func resetNavigationBar() {
@@ -61,8 +78,6 @@ class TabViewController: WebViewController {
     fileprivate func showBars() {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
-        let offset = webView.scrollView.contentOffset
-        webView.scrollView.setContentOffset(CGPoint(x:0, y:offset.y + InterfaceMeasurement.defaultToolbarHeight + InterfaceMeasurement.defaultToolbarHeight), animated: true)
     }
 
     func launchContentBlockerPopover() {
@@ -210,17 +225,6 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        let policy = contentBlocker.policy(forUrl: url, document: documentUrl)
-        
-        if let tracker = policy.tracker {
-            siteRating?.trackerDetected(tracker, blocked: policy.block)
-            onSiteRatingChanged()
-        }
-
-        if policy.block {
-            return false
-        }
-        
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
@@ -245,21 +249,89 @@ class TabViewController: WebViewController {
     }
 }
 
-extension TabViewController: WebEventsDelegate {
+fileprivate struct MessageHandlerNames {
+    static let trackerDetected = "trackerDetectedMessage"
+    static let cache = "cacheMessage"
+}
+
+extension TabViewController: WKScriptMessageHandler {
     
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
+        switch(message.name) {
+
+        case MessageHandlerNames.cache:
+            handleCache(message: message)
+            break
+
+        case MessageHandlerNames.trackerDetected:
+            handleTrackerDetected(message: message)
+            break
+
+        default:
+            assertionFailure("Unhandled message: \(message.name)")
+            break
+        }
+
+    }
+
+    private func handleCache(message: WKScriptMessage) {
+        Logger.log(text: "\(MessageHandlerNames.cache)")
+        guard let dict = message.body as? Dictionary<String, Any> else { return }
+        guard let name = dict["name"] as? String else { return }
+        guard let data = dict["data"] as? String else { return }
+        ContentBlockerStringCache().put(name: name, value: data)
+        reloadScripts()
+    }
+
+    struct TrackerDetectedKey {
+        static let blocked = "blocked"
+        static let parentDomain = "parentDomain"
+        static let url = "url"
+    }
+
+    private func handleTrackerDetected(message: WKScriptMessage) {
+        Logger.log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
+        guard let dict = message.body as? Dictionary<String, Any> else { return }
+        guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
+        guard let url = dict[TrackerDetectedKey.url] as? String else { return }
+        let parent = dict[ TrackerDetectedKey.parentDomain] as? String
+        siteRating?.trackerDetected(Tracker(url: url, parentDomain: parent), blocked: blocked)
+        onSiteRatingChanged()
+    }
+
+}
+
+extension TabViewController: WebEventsDelegate {
+
     func attached(webView: WKWebView) {
-        webView.loadScripts()
         webView.scrollView.delegate = self
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
     }
     
+    func detached(webView: WKWebView) {
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
+    }
+    
+    func webViewDidTerminate(webView: WKWebView) {
+        delegate?.tabDidRequestMemoryReduction(tab: self)
+    }
+
     func webpageDidStartLoading() {
+        Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     func webpageDidFinishLoading() {
+        Logger.log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
+        siteRating?.finishedLoading = true
         updateSiteRating()
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
@@ -271,6 +343,7 @@ extension TabViewController: WebEventsDelegate {
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -329,6 +402,6 @@ extension TabViewController: UIScrollViewDelegate {
 
 extension TabViewController: ContentBlockerSettingsChangeDelegate {
     func contentBlockerSettingsDidChange() {
-        webView.reload()
+        onContentBlockerConfigurationChanged()
     }
 }

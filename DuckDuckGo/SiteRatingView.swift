@@ -38,27 +38,19 @@ public class SiteRatingView: UIView {
         let view = Bundle.main.loadNibNamed("SiteRatingView", owner: self, options: nil)![0] as! UIView
         self.addSubview(view)
         view.frame = self.bounds
-        addUserDefaultsObserver()
-    }
-    
-    deinit {
-        removeUserDefaultsObserver()
+        addContentBlockerConfigurationObserver()
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
         refresh()
     }
-    
-    private func addUserDefaultsObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onUserDefaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
+
+    private func addContentBlockerConfigurationObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
     
-    private func removeUserDefaultsObserver() {
-        NotificationCenter.default.removeObserver(self, name: UserDefaults.didChangeNotification, object: nil)
-    }
-    
-    func onUserDefaultsChanged(notification: NSNotification) {
+    func onContentBlockerConfigurationChanged() {
         refresh()
     }
 
@@ -69,13 +61,13 @@ public class SiteRatingView: UIView {
     
     public func refresh() {
         
-        guard contentBlockerConfiguration.enabled else {
+        guard contentBlockerConfiguration.enabled, BlockerListsLoader().hasData else {
             circleIndicator.tintColor = UIColor.monitoringNegativeTint
             gradeLabel.text = "!"
             return
         }
         
-        guard let siteRating = siteRating else {
+        guard let siteRating = siteRating, siteRating.finishedLoading else {
             circleIndicator.tintColor = UIColor.monitoringInactiveTint
             gradeLabel.text = "-"
             return

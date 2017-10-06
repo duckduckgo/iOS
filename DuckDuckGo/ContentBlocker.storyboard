@@ -292,6 +292,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="N2E-tg-MZy">
                                                     <rect key="frame" x="19.5" y="10.5" width="22" height="22"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="trackerCount"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="XkV-Kn-ibo"/>
                                                         <constraint firstAttribute="height" constant="22" id="nuz-Ft-MrD"/>

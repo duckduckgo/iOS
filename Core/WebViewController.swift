@@ -21,9 +21,9 @@ import UIKit
 import WebKit
 
 open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
-    
+
     private static let estimatedProgressKeyPath = "estimatedProgress"
-    
+
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
@@ -31,6 +31,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     open private(set) var webView: WKWebView!
 
+    private var shouldReloadOnError = false
     private lazy var appUrls: AppUrls = AppUrls()
 
     public var name: String? {
@@ -55,9 +56,19 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public var canGoForward: Bool {
         return webView.canGoForward
     }
-    
-    public func attachWebView(persistsData: Bool) {
-        webView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData)
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+    }
+
+    func onApplicationWillResignActive() {
+        shouldReloadOnError = true
+    }
+
+    open func attachWebView(configuration: WKWebViewConfiguration) {
+        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -67,6 +78,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
+        
         if let url = url {
             load(url: url)
         }
@@ -113,14 +125,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
         }
     }
-    
+
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        shouldReloadOnError = false
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()
         webEventsDelegate?.webpageDidStartLoading()
     }
-    
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
@@ -134,14 +147,22 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
+        checkForReloadOnError()
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
         showError(message: error.localizedDescription)
+        checkForReloadOnError()
     }
-    
+
+    private func checkForReloadOnError() {
+        guard shouldReloadOnError else { return }
+        shouldReloadOnError = false
+        reload()
+    }
+
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         guard let url = navigationAction.request.url else {
@@ -156,8 +177,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
-            decisionHandler(.allow)
-            return
+                decisionHandler(.allow)
+                return
+        }
+        
+        if appUrls.isDuckDuckGoSearch(url: url) {
+            StatisticsLoader.shared.refreshRetentionAtb()
         }
 
         if shouldReissueSearch(for: url) {
@@ -172,6 +197,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
 
         decisionHandler(.cancel)
+
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -179,6 +205,10 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         return nil
     }
 
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        webEventsDelegate?.webViewDidTerminate(webView: webView)
+    }
+    
     private func shouldReissueSearch(for url: URL) -> Bool {
         return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasCorrectMobileStatsParams(url: url)
     }
@@ -197,7 +227,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             self.progressBar.alpha = 0
         }
     }
-    
+
     public func reload() {
         webView.reload()
     }
@@ -214,6 +244,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         guard let webView = webView else { return }
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeFromSuperview()
+        webEventsDelegate?.detached(webView: webView)
     }
     
     fileprivate func touchesYOffset() -> CGFloat {
@@ -232,7 +263,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         errorMessage.alpha = 0
         webView.alpha = 1
     }
-    
+
+    open func reloadScripts() {
+        webView.configuration.userContentController.removeAllUserScripts()
+        webView.configuration.loadScripts()
+    }
+
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

@@ -24,7 +24,7 @@ import XCTest
 class TrackerTests: XCTestCase {
     
     private struct Constants {
-        static let aUrl = "www.aurl.com"
+        static let aUrl = "www.example.com"
         static let anotherUrl = "www.anotherurl.com"
         static let aParentDomain = "adomain.com"
         static let anotherParentDomain = "anotherdomain.com"
@@ -58,5 +58,20 @@ class TrackerTests: XCTestCase {
         let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
         XCTAssertEqual(lhs, rhs)
         XCTAssertEqual(lhs.hashValue, rhs.hashValue)
+    }
+    
+    func testMajorNetworkTrueWhenTrackerFromMajorNetwork() {
+        let testee = Tracker(url: "example.com", parentDomain: "facebook.com")
+        XCTAssertTrue(testee.fromMajorNetwork)
+    }
+    
+    func testMajorNetworkFalseWhenTrackerNotFromMajorNetwork() {
+        let testee = Tracker(url: "example.com", parentDomain: "someSmallAdNetwork.com")
+        XCTAssertFalse(testee.fromMajorNetwork)
+    }
+    
+    func testMajorNetworkFalseWhenTrackerHasNoParentDomain() {
+        let testee = Tracker(url: "example.com", parentDomain: nil)
+        XCTAssertFalse(testee.fromMajorNetwork)
     }
 }

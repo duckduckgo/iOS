@@ -47,9 +47,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84E341B01E2F7EFC00BDBA6F"
-               BuildableName = "DuckDuckGoUITests.xctest"
-               BlueprintName = "DuckDuckGoUITests"
+               BlueprintIdentifier = "836B6B661F67F11E0061ECFB"
+               BuildableName = "IntegrationTests.xctest"
+               BlueprintName = "IntegrationTests"
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>

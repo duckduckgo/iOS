@@ -31,7 +31,7 @@ class ContentBlockerErrorViewController: UIViewController {
     weak var delegate: ContentBlockerErrorDelegate?
     
     static func loadFromStoryboard(delegate: ContentBlockerErrorDelegate) -> ContentBlockerErrorViewController {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerErrorViewController") as! ContentBlockerErrorViewController
         controller.delegate = delegate
         return controller
@@ -39,12 +39,17 @@ class ContentBlockerErrorViewController: UIViewController {
     
     @IBAction func onReloadButtonPressed(_ sender: Any) {
         startSpinner()
-        TrackerLoader.shared.updateTrackers { [weak self] (trackers, _) in
-            self?.stopSpinner()
-            if trackers != nil {
-                self?.onSuccess()
+
+        let loader = BlockerListsLoader()
+        loader.start() { [weak self] in
+            DispatchQueue.main.async {
+                self?.stopSpinner()
+                if loader.hasData {
+                    self?.onSuccess()
+                }
             }
         }
+
     }
     
     private func startSpinner() {

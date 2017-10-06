@@ -26,13 +26,13 @@ class ContentBlockerPopover: UIViewController {
     @IBOutlet weak var container: UIView!
     weak var delegate: ContentBlockerSettingsChangeDelegate?
     
-    fileprivate weak var contentBlocker: ContentBlocker!
     private var siteRating: SiteRating!
     
     private var contentBlockerViewController: ContentBlockerViewController?
-    
-    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerPopover {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+    fileprivate var contentBlocker: ContentBlockerConfigurationStore!
+
+    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlockerConfigurationStore, siteRating: SiteRating) -> ContentBlockerPopover {
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateInitialViewController() as! ContentBlockerPopover
         controller.delegate = delegate
         controller.contentBlocker = contentBlocker
@@ -42,7 +42,7 @@ class ContentBlockerPopover: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard contentBlocker.hasData else {
+        guard BlockerListsLoader().hasData else {
             attachErrorViewController()
             return
         }
@@ -94,6 +94,7 @@ extension ContentBlockerPopover: ContentBlockerErrorDelegate {
     func errorWasResolved(errorController: ContentBlockerErrorViewController) {
         dismiss(viewController: errorController)
         attachContentBlockerViewController()
+        contentBlockerSettingsDidChange()
     }
 }
 

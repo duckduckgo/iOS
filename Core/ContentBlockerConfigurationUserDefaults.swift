@@ -21,11 +21,7 @@
 import Foundation
 import SafariServices
 
-public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore, TrackerStore {
-    
-    private struct Constants {
-        static let groupName = "group.com.duckduckgo.contentblocker"
-    }
+public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
     
     private struct Keys {
         static let enabled = "com.duckduckgo.contentblocker.enabled"
@@ -35,7 +31,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
     
     private let suitName: String
     
-    public init(suitName: String = Constants.groupName) {
+    public init(suitName: String = ContentBlockerStoreConstants.groupName) {
         self.suitName =  suitName
     }
     
@@ -51,24 +47,11 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         set(newValue) {
             userDefaults?.set(newValue, forKey: Keys.enabled)
             SFContentBlockerManager.reloadContentBlocker()
+            onStoreChanged()
         }
     }
     
-    public var trackers: [Tracker]? {
-        get {
-            guard let data = userDefaults?.object(forKey: Keys.trackerList) as? Data else { return nil }
-            guard let tracker = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Tracker] else { return nil }
-            return tracker
-        }
-        set(newTrackers) {
-            guard let trackers = newTrackers else { return }
-            let data = NSKeyedArchiver.archivedData(withRootObject: trackers)
-            userDefaults?.set(data, forKey: Keys.trackerList)
-            SFContentBlockerManager.reloadContentBlocker()
-        }
-    }
-
-    private var domainWhitelist: Set<String> {
+    public private(set) var domainWhitelist: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
             guard let whitelist = NSKeyedUnarchiver.unarchiveObject(with: data) as? Set<String> else { return Set<String>() }
@@ -77,7 +60,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         set(newWhitelistedDomain) {
             let data = NSKeyedArchiver.archivedData(withRootObject: newWhitelistedDomain)
             userDefaults?.set(data, forKey: Keys.whitelistedDomains)
-            SFContentBlockerManager.reloadContentBlocker()
+            onStoreChanged()
         }
     }
     
@@ -89,13 +72,15 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         var whitelist = domainWhitelist
         whitelist.insert(domain)
         domainWhitelist = whitelist
-        SFContentBlockerManager.reloadContentBlocker()
     }
     
     public func removeFromWhitelist(domain: String) {
         var whitelist = domainWhitelist
         whitelist.remove(domain)
         domainWhitelist = whitelist
-        SFContentBlockerManager.reloadContentBlocker()
+    }
+    
+    private func onStoreChanged() {
+        NotificationCenter.default.post(name: ContentBlockerConfigurationChangedNotification.name , object: nil)
     }
 }

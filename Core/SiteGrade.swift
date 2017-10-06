@@ -29,9 +29,9 @@ public enum SiteGrade: String {
     
     static func grade(fromScore score: Int) -> SiteGrade {
         switch score {
-        case Int.min ... 1: return .a
-        case 2: return .b
-        case 3: return .c
+        case Int.min ... 0: return .a
+        case 1: return .b
+        case 2: return .c
         default: return .d
         }
     }

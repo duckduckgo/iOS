@@ -25,37 +25,41 @@ import SwiftyJSON
 public struct DisconnectMeTrackersParser {
     
    enum Category: String {
-        case advertising = "Advertising"
         case analytics = "Analytics"
-        case disconnect = "Disconnect"
+        case advertising = "Advertising"
         case social = "Social"
+        case disconnect = "Disconnect"
         case content = "Content"
     }
     
-    func convert(fromJsonData data: Data) throws -> [Tracker] {
+    static let bannedCategoryFilter: [Category] = [.analytics, .advertising, .social]
+    static let allowedCategoryFilter: [Category] = [ .disconnect, .content ]
+
+    func convert(fromJsonData data: Data, categoryFilter: [Category]?) throws -> [String: String] {
         guard let json = try? JSON(data: data) else {
             throw JsonError.invalidJson
         }
         
         let jsonCategories = json["categories"]
-        var trackers = [Tracker]()
+        var trackers = [String: String]()
         for (categoryName, jsonTrackers) in jsonCategories {
-            guard isSupported(categoryName: categoryName) else { continue }
-            try trackers.append(contentsOf: parseCategory(fromJson: jsonTrackers))
+            guard categoryFilter == nil || category(name: categoryName, isIn: categoryFilter!) else { continue }
+            try parseCategory(fromJson: jsonTrackers, into: &trackers)
         }
         return trackers
     }
     
-    private func parseCategory(fromJson jsonTrackers: JSON) throws -> [Tracker] {
-        var trackers = [Tracker]()
+    private func parseCategory(fromJson jsonTrackers: JSON, into trackers: inout [String: String]) throws {
         for jsonTracker in jsonTrackers.arrayValue {
             guard let baseUrl = jsonTracker.first?.1.first?.0 else { throw JsonError.typeMismatch }
             guard let jsonTrackers = jsonTracker.first?.1.first?.1.arrayObject else { throw JsonError.typeMismatch }
             let parentDomain = parseDomain(fromUrl: baseUrl)
-            let newTrackers = jsonTrackers.map { Tracker(url: "\($0)", parentDomain: parentDomain) }
-            trackers.append(contentsOf: newTrackers)
+            for url in jsonTrackers {
+                if let url = url as? String {
+                    trackers[url] = parentDomain
+                }
+            }
         }
-        return trackers
     }
     
     private func parseDomain(fromUrl url: String) -> String? {
@@ -65,8 +69,9 @@ public struct DisconnectMeTrackersParser {
         return host.replacingOccurrences(of: "www.", with: "")
     }
     
-    func isSupported(categoryName: String) -> Bool {
-        guard let category = Category.init(rawValue: categoryName) else { return false }
-        return category == .advertising || category == .analytics || category == .social
+    func category(name: String, isIn categories: [Category]) -> Bool {
+        guard let category = Category(rawValue: name) else { return false }
+        return categories.filter({ $0 == category }).first != nil
     }
 }
+

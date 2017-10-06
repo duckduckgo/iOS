@@ -36,7 +36,7 @@ class MainViewController: UIViewController {
 
     private lazy var appUrls: AppUrls = AppUrls()
     fileprivate var tabManager: TabManager!
-    fileprivate lazy var bookmarkStore = BookmarkUserDefaults()
+    fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
 
     fileprivate var currentTab: TabViewController? {
@@ -109,6 +109,10 @@ class MainViewController: UIViewController {
         launchTabSwitcher()
     }
     
+    public var siteRating: SiteRating? {
+        return currentTab?.siteRating
+    }
+    
     func loadQueryInNewTab(_ query: String) {
         let url = appUrls.url(forQuery: query)
         loadUrlInNewTab(url)
@@ -134,7 +138,7 @@ class MainViewController: UIViewController {
         loadUrl(queryUrl)
     }
     
-    fileprivate func loadUrl(_ url: URL) {
+    func loadUrl(_ url: URL) {
         if let currentTab = currentTab {
             currentTab.load(url: url)
         } else {
@@ -149,8 +153,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func select(tabAt index: Int) {
-        let selectedTab = tabManager.select(tabAt: index)
-        addToView(tab: selectedTab)
+        let tab = tabManager.select(tabAt: index)
+        select(tab: tab)
+    }
+    
+    fileprivate func select(tab: TabViewController) {
+        addToView(tab: tab)
         refreshControls()
     }
     
@@ -160,27 +168,27 @@ class MainViewController: UIViewController {
     }
 
     private func addToView(controller: UIViewController) {
-        controller.view.frame = containerView.frame
-        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addChildViewController(controller)
         containerView.addSubview(controller.view)
+        controller.view.frame = containerView.frame
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         controller.didMove(toParentViewController: self)
     }
 
     fileprivate func remove(tabAt index: Int) {
         tabManager.remove(at: index)
-        if let index = tabManager.currentIndex {
-            select(tabAt: index)
+        if let currentTab = currentTab {
+            select(tab: currentTab)
         } else {
             attachHomeScreen(active: false)
         }
     }
     
-    fileprivate func forgetAll(completion: @escaping () -> Swift.Void) {
+    fileprivate func forgetAll(completion: @escaping () -> Void) {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
             completion()
-            self.tabManager.clearAll()
+            self.tabManager.removeAll()
             self.attachHomeScreen(active: false)
         }
         let window = UIApplication.shared.keyWindow
@@ -198,6 +206,7 @@ class MainViewController: UIViewController {
             return
         }
         omniBar.refreshText(forUrl: tab.link?.url)
+        omniBar.updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
     }
     
@@ -256,10 +265,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchTabSwitcher() {
-        if let currentTab = currentTab {
-            tabManager.updateModelFromTab(tab: currentTab)
-        }
-        let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
+            let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
         controller.transitioningDelegate = self
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
@@ -275,6 +281,12 @@ class MainViewController: UIViewController {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        Logger.log(text: "Memory warning received, reducing memory")
+        super.didReceiveMemoryWarning()
+        tabManager.reduceMemory()
     }
 }
 
@@ -350,8 +362,10 @@ extension MainViewController: HomeControllerDelegate {
 extension MainViewController: TabDelegate {
     
     func tabLoadingStateDidChange(tab: TabViewController) {
-        refreshControls()
-        tabManager.updateModelFromTab(tab: tab)
+        if currentTab == tab {
+            refreshControls()
+            tabManager.save()
+        }
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
@@ -363,11 +377,18 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating)
+        if currentTab == tab {
+            omniBar.updateSiteRating(siteRating)
+        }
     }
     
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
+    }
+    
+    func tabDidRequestMemoryReduction(tab: TabViewController) {
+        Logger.log(text: "Memory reduction requested, reducing memory")
+        tabManager.reduceMemory()
     }
 }
 

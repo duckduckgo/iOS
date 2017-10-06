@@ -24,8 +24,10 @@ public class SiteRating {
     
     public var url: URL
     public let domain: String
+    public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
+    private var termsOfServiceStore = TermsOfServiceStore()
     
     public init?(url: URL) {
         guard let domain = url.host else {
@@ -39,34 +41,55 @@ public class SiteRating {
         return url.isHttps()
     }
     
-    public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.fromMajorNetwork() } )
+    var majorTrackingNetwork: MajorTrackerNetwork? {
+       
+        if let network = MajorTrackerNetwork.network(forDomain: domain) {
+            return network
+        }
+        
+        let trackers = DisconnectMeStore.shared.allTrackers
+        if let associatedDomain = trackers.filter( { domain.hasSuffix($0.key) } ).first?.value {
+            return MajorTrackerNetwork.network(forDomain: associatedDomain)
+        }
+            
+        return nil
     }
     
+    public var containsMajorTracker: Bool {
+        return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
+    }
+
+    public var contrainsIpTracker: Bool {
+        return trackersDetected.contains(where: { $0.key.isIpTracker } )
+    }
+    
+    public var termsOfService: TermsOfService? {
+        return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
+    }
+
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
-        
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         
         if blocked{
-            let blockCount = trackersBlocked[tracker] ?? 0
+            let blockCount = trackersBlocked[tracker] ?? 0  
             trackersBlocked[tracker] = blockCount + 1
         }
     }
     
-    public var uniqueItemsDetected: Int {
+    public var uniqueTrackersDetected: Int {
         return trackersDetected.count
     }
     
-    public var uniqueItemsBlocked: Int {
+    public var uniqueTrackersBlocked: Int {
         return trackersBlocked.count
     }
     
-    public var totalItemsDetected: Int {
+    public var totalTrackersDetected: Int {
         return trackersDetected.reduce(0) { $0 + $1.value }
     }
     
-    public var totalItemsBlocked: Int {
+    public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 }

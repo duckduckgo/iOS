@@ -33,7 +33,7 @@ public class Authenticator {
         return canAuthenticate
     }
     
-    public func authenticate(reply: @escaping (Bool, Error?) -> Swift.Void) {
+    public func authenticate(reply: @escaping (Bool, Error?) -> Void) {
         let context = LAContext()
         let reason = UserText.appUnlock
         context.evaluatePolicy(policy, localizedReason: reason) { (success, error) in

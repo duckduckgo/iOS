@@ -32,11 +32,11 @@ class ContentBlockerViewController: UITableViewController {
     
     weak var delegate: ContentBlockerSettingsChangeDelegate?
 
-    private var contentBlocker: ContentBlocker!
+    private var contentBlocker: ContentBlockerConfigurationStore!
     private var siteRating: SiteRating!
     
-    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlocker, siteRating: SiteRating) -> ContentBlockerViewController {
-        let storyboard = UIStoryboard.init(name: "ContentBlocker", bundle: nil)
+    static func loadFromStoryboard(withDelegate delegate: ContentBlockerSettingsChangeDelegate?, contentBlocker: ContentBlockerConfigurationStore, siteRating: SiteRating) -> ContentBlockerViewController {
+        let storyboard = UIStoryboard(name: "ContentBlocker", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "ContentBlockerViewController") as! ContentBlockerViewController
         controller.delegate = delegate
         controller.contentBlocker = contentBlocker
@@ -59,7 +59,7 @@ class ContentBlockerViewController: UITableViewController {
     private func refresh() {
         siteRatingView.refresh()
         refreshHttps()
-        blockThisDomainToggle.isOn = contentBlocker.enabled(forDomain: siteRating.domain)
+        blockThisDomainToggle.isOn = !contentBlocker.whitelisted(domain: siteRating.domain)
         blockCount.text = blockCountText()
         blockCountCircle.tintColor = blockCountCircleTint()
     }
@@ -75,24 +75,30 @@ class ContentBlockerViewController: UITableViewController {
     }
     
     private func blockCountText() -> String {
-        if !contentBlocker.enabled(forDomain: siteRating.domain) {
+        if contentBlocker.whitelisted(domain: siteRating.domain) {
             return "!"
         }
-        return "\(siteRating.uniqueItemsBlocked)"
+        return "\(siteRating.uniqueTrackersBlocked)"
     }
     
     private func blockCountCircleTint() -> UIColor {
-        if !contentBlocker.enabled(forDomain: siteRating.domain) {
+        if contentBlocker.whitelisted(domain: siteRating.domain) {
             return UIColor.monitoringNegativeTint
         }
-        if siteRating.uniqueItemsBlocked > 0 {
+        if siteRating.uniqueTrackersBlocked > 0 {
             return UIColor.monitoringNeutralTint
         }
         return UIColor.monitoringPositiveTint
     }
     
     @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {
-        contentBlocker.whitelist(!sender.isOn, domain: siteRating.domain)
+
+        if (contentBlocker.whitelisted(domain: siteRating.domain)) {
+            contentBlocker.removeFromWhitelist(domain: siteRating.domain)
+        } else {
+            contentBlocker.addToWhitelist(domain: siteRating.domain)
+        }
+
         refresh()
         delegate?.contentBlockerSettingsDidChange()
     }

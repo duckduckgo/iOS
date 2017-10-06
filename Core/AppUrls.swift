@@ -151,9 +151,11 @@ public struct AppUrls {
     }
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
-        guard let atb = url.getParam(name: Param.atb), atb == statisticsStore.atb else { return false }
         guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
         guard let version = url.getParam(name: Param.appVersion), version == appVersion else { return false }
+        if let atb = statisticsStore.atb {
+            return atb == url.getParam(name: Param.atb)
+        }
         return true
     }
 

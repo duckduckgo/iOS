@@ -402,6 +402,6 @@ extension TabViewController: UIScrollViewDelegate {
 
 extension TabViewController: ContentBlockerSettingsChangeDelegate {
     func contentBlockerSettingsDidChange() {
-        webView.reload()
+        onContentBlockerConfigurationChanged()
     }
 }

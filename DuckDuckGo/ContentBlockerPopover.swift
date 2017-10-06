@@ -94,6 +94,7 @@ extension ContentBlockerPopover: ContentBlockerErrorDelegate {
     func errorWasResolved(errorController: ContentBlockerErrorViewController) {
         dismiss(viewController: errorController)
         attachContentBlockerViewController()
+        contentBlockerSettingsDidChange()
     }
 }
 

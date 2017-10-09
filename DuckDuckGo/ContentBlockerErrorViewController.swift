@@ -41,7 +41,9 @@ class ContentBlockerErrorViewController: UIViewController {
         startSpinner()
 
         let loader = BlockerListsLoader()
-        loader.start() { [weak self] in
+        loader.start() { [weak self]
+            newData in
+
             DispatchQueue.main.async {
                 self?.stopSpinner()
                 if loader.hasData {

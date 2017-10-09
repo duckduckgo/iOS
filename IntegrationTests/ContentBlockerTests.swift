@@ -39,6 +39,7 @@ class ContentBlockerTests: XCTestCase {
         super.setUp()
         app = XCUIApplication()
         app.launch()
+        waitForLaunch()
         skipOnboarding()
         clearTabsAndData()
         continueAfterFailure = true
@@ -66,7 +67,7 @@ class ContentBlockerTests: XCTestCase {
         
         enterSearch(url)
         
-        waitForPageTitle()
+        waitForPageLoad()
         
         openContentBlocker()
         
@@ -119,9 +120,13 @@ class ContentBlockerTests: XCTestCase {
         let navBar = app.navigationBars["DuckDuckGo.MainView"]
         navBar.otherElements["siteRating"].tap()
     }
+ 
+    private func waitForLaunch() {
+        sleep(10)
+    }
     
-    private func waitForPageTitle() {
-        sleep(2)
+    private func waitForPageLoad() {
+        sleep(6)
     }
 }
 

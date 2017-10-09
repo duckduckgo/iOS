@@ -34,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
-    
+
+    // MARK: lifecycle
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         appIsLaunching = true
         return true
@@ -43,12 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         startMigration(application: application)
         StatisticsLoader.shared.load()
-        BlockerListsLoader().start(completion: nil)
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
+            BlockerListsLoader().start(completion: nil)
             displayAuthenticationWindow()
             beginAuthentication()
+            initialiseBackgroundFetch(application)
         }
     }
     
@@ -59,7 +62,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayAuthenticationWindow()
     }
-    
+
+
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        handleShortCutItem(shortcutItem)
+    }
+
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        Logger.log(text: "App launched with url \(url.absoluteString)")
+        clearNavigationStack()
+        if AppDeepLinks.isQuickLink(url: url) {
+            let query = AppDeepLinks.query(fromQuickLink: url)
+            mainViewController?.loadQueryInNewTab(query)
+        }
+        return true
+    }
+
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+
+        Logger.log(items: #function)
+
+        BlockerListsLoader().start { newData in
+            completionHandler(newData ? .newData : .noData)
+        }
+
+    }
+
+    // MARK: prvate
+
+    private func initialiseBackgroundFetch(_ application: UIApplication) {
+        application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
+    }
+
     private func displayAuthenticationWindow() {
         let privacyStore = PrivacyUserDefaults()
         guard authWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }
@@ -106,11 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         onboardingController.modalTransitionStyle = .flipHorizontal
         main.present(onboardingController, animated: false, completion: nil)
     }
-    
-    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        handleShortCutItem(shortcutItem)
-    }
-    
+
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         clearNavigationStack()
@@ -120,16 +150,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
         }
-    }
-    
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        Logger.log(text: "App launched with url \(url.absoluteString)")
-        clearNavigationStack()
-        if AppDeepLinks.isQuickLink(url: url) {
-            let query = AppDeepLinks.query(fromQuickLink: url)
-            mainViewController?.loadQueryInNewTab(query)
-        }
-        return true
     }
     
     private var rootViewController: UINavigationController? {

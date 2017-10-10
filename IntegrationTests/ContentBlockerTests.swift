@@ -32,8 +32,13 @@ class ContentBlockerTests: XCTestCase {
         static let uniqueTrackerCount = 2
     }
     
-    var app: XCUIApplication!
+    struct Timeout {
+        static let postFirstLaunch: UInt32 = 10
+        static let pageLoad = 20
+        static let postPageLoad: UInt32 = 1
+    }
     
+    var app: XCUIApplication!
     
     override func setUp() {
         super.setUp()
@@ -66,7 +71,7 @@ class ContentBlockerTests: XCTestCase {
         
         enterSearch(url)
         
-        waitForPageTitle()
+        waitForPageLoad()
         
         openContentBlocker()
         
@@ -92,9 +97,10 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        guard app.staticTexts["Search Anonymously"].exists else { return  }
+        guard app.staticTexts["Search Anonymously"].exists else { return }
         app.pageIndicators["page 1 of 2"].tap()
         app.buttons["Done"].tap()
+        sleep(Timeout.postFirstLaunch)
     }
     
     private func clearTabsAndData() {
@@ -115,13 +121,14 @@ class ContentBlockerTests: XCTestCase {
         }
     }
     
+    private func waitForPageLoad() {
+        SnapShotHelperExcerpt.waitForLoadingIndicators(timeout: Timeout.pageLoad)
+        sleep(Timeout.postPageLoad)
+    }
+    
     private func openContentBlocker() {
         let navBar = app.navigationBars["DuckDuckGo.MainView"]
         navBar.otherElements["siteRating"].tap()
-    }
-    
-    private func waitForPageTitle() {
-        sleep(2)
     }
 }
 

@@ -87,11 +87,11 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.buttons["Tabs"].tap()
+        app.toolbars.children(matching: .other).element.children(matching: .other).element.children(matching: .button).element(boundBy: 4).tap()
     }
-
+    
     private func addTab() {
-        app.toolbars.containing(.button, identifier:"Add").buttons["Add"].tap()
+        app.toolbars.buttons["Add"].tap()
     }
 
     private func newTab() {
@@ -116,11 +116,9 @@ class AppScreenshotsUITests: XCTestCase {
         app.sheets.buttons["Add to Bookmarks"].tap()
         app.alerts["Save Bookmark"].buttons["Save"].tap()
     }
-
+    
     private func clearTabsAndData() {
-        let app = XCUIApplication()
-        let toolbarsQuery = app.toolbars
-        toolbarsQuery.children(matching: .button).element(boundBy: 2).tap()
+        app.toolbars.buttons["Fire"].tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
     }
 

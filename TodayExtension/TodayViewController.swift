@@ -133,7 +133,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
         return clearAccessory
     }
     
-    func onClearTapped(sender: UIView) {
+    @objc func onClearTapped(sender: UIView) {
         let index = sender.tag
         if index < bookmarks.count {
             bookmarks.remove(at: sender.tag)

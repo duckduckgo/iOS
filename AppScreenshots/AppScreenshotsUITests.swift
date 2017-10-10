@@ -82,14 +82,8 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func tapSiteRating() {
-        let bar = app.navigationBars["DuckDuckGo.MainView"]
-        if bar.staticTexts["A"].exists {
-            bar.staticTexts["A"].tap()
-        } else if bar.staticTexts["B"].exists {
-            bar.staticTexts["B"].tap()
-        } else if bar.staticTexts["C"].exists {
-            bar.staticTexts["C"].tap()
-        }
+        let navBar = app.navigationBars["DuckDuckGo.MainView"]
+        navBar.otherElements["siteRating"].tap()
     }
 
     private func showTabs() {

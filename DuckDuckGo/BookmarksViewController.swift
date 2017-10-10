@@ -60,7 +60,7 @@ class BookmarksViewController: UIViewController {
         tableView.backgroundColor = UIColor.clear
     }
     
-    func onApplicationBecameActive(notification: NSNotification) {
+    @objc func onApplicationBecameActive(notification: NSNotification) {
         tableView.reloadData()
     }
     

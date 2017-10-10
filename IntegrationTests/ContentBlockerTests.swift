@@ -29,7 +29,7 @@ class ContentBlockerTests: XCTestCase {
     }
     
     struct PageElementIndex {
-        static let uniqueTrackerCount: UInt = 2
+        static let uniqueTrackerCount = 2
     }
     
     var app: XCUIApplication!

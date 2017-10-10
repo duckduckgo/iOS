@@ -125,7 +125,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
     }
     
-    func onRemoveTapped(sender: UIView) {
+    @objc func onRemoveTapped(sender: UIView) {
         let index = sender.tag
         onDeleted(tabAt: index)
     }

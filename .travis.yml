@@ -1,7 +1,4 @@
 language: objective-c
 osx_image: xcode9.0
-cache:
-  directories:
-  - Carthage
 script:
   - ./run_tests.sh

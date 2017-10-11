@@ -71,6 +71,7 @@
                         <barButtonItem image="Bookmarks" id="M7u-mw-fly">
                             <connections>
                                 <action selector="onBookmarksTapped" destination="C1X-Zd-UbA" id="Ivs-pb-GrG"/>
+                                <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" modalPresentationStyle="overCurrentContext" id="PFq-7F-8UP"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
@@ -93,6 +94,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="220" y="-6"/>
+        </scene>
+        <!--Bookmarks-->
+        <scene sceneID="538-OF-E2q">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Bookmarks" id="0sP-vt-2ZT" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="45" y="470"/>
         </scene>
     </scenes>
     <resources>

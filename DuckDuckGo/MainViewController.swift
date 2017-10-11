@@ -53,6 +53,14 @@ class MainViewController: UIViewController {
         fireButton = navigationController?.toolbar.addFireButton { self.onFirePressed() }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
+            controller.delegate = self
+        }
+
+    }
+
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
@@ -102,10 +110,6 @@ class MainViewController: UIViewController {
     
     @IBAction func onFirePressed() {
         launchFireMenu()
-    }
-    
-    @IBAction func onBookmarksTapped() {
-        launchBookmarks()
     }
     
     @IBAction func onTabsTapped() {
@@ -272,13 +276,7 @@ class MainViewController: UIViewController {
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
     }
-    
-    fileprivate func launchBookmarks() {
-        let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
-    }
-    
+
     fileprivate func launchSettings() {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
@@ -312,7 +310,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onBookmarksPressed() {
-        launchBookmarks()
+        performSegue(withIdentifier: "Bookmarks", sender: self)
     }
     
     func onDismissed() {

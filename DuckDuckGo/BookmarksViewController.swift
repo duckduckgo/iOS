@@ -21,43 +21,35 @@
 import UIKit
 import Core
 
-class BookmarksViewController: UIViewController {
+class BookmarksViewController: UITableViewController {
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     
     weak var delegate: BookmarksDelegate?
     
     fileprivate lazy var dataSource = BookmarksDataSource()
-    
-    static func loadFromStoryboard(delegate: BookmarksDelegate) -> BookmarksViewController {
-        let controller = UIStoryboard(name: "Bookmarks", bundle: nil).instantiateInitialViewController() as! BookmarksViewController
-        controller.delegate = delegate
-        return controller
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addAplicationActiveObserver()
         configureTableView()
         refreshEditButton()
     }
-    
-    deinit {
-        removeApplicationActiveObserver()
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            showEditBookmarkAlert(forIndex: indexPath.row)
+        } else {
+            selectBookmark(dataSource.bookmark(atIndex: indexPath.row))
+        }
     }
-    
+
     private func addAplicationActiveObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onApplicationBecameActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
     
-    private func removeApplicationActiveObserver() {
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-    }
-    
     private func configureTableView() {
         tableView.dataSource = dataSource
-        tableView.backgroundColor = UIColor.clear
     }
     
     @objc func onApplicationBecameActive(notification: NSNotification) {
@@ -130,14 +122,6 @@ class BookmarksViewController: UIViewController {
     private func dismiss() {
         dismiss(animated: true, completion: nil)
     }
+
 }
 
-extension BookmarksViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.isEditing {
-            showEditBookmarkAlert(forIndex: indexPath.row)
-        } else {
-            selectBookmark(dataSource.bookmark(atIndex: indexPath.row))
-        }
-    }
-}

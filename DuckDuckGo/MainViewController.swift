@@ -27,8 +27,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
-    @IBOutlet weak var fireButton: UIButton!
     @IBOutlet weak var tabsButton: UIButton!
+
+    weak var fireButton: UIView!
     weak var omniBar: OmniBar!
 
     fileprivate var homeController: HomeViewController?
@@ -48,8 +49,10 @@ class MainViewController: UIViewController {
         attachOmniBar()
         configureTabManager()
         loadInitialView()
+
+        fireButton = navigationController?.toolbar.addFireButton { self.onFirePressed() }
     }
-    
+
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)

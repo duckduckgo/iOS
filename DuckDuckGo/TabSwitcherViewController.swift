@@ -27,8 +27,8 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var fireButton: UIButton!
-    
+
+    weak var fireButton: UIView!
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     
@@ -44,6 +44,8 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
+
+        fireButton = toolbar.addFireButton { self.onFirePressed() }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,7 +78,7 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
     
-    @IBAction func onForgetAllPressed(_ sender: UIButton) {
+    func onFirePressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
             self?.forgetAll()

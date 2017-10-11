@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="YwJ-Cm-1hD" customClass="FireButton" customModule="DuckDuckGo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FireBackground" translatesAutoresizingMaskIntoConstraints="NO" id="0v3-0f-TuT">
+                    <rect key="frame" x="-8" y="-8" width="60" height="60"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K23-H6-0Rl">
+                    <rect key="frame" x="11" y="8" width="22" height="29"/>
+                    <state key="normal" image="Fire"/>
+                    <connections>
+                        <action selector="onClick" destination="YwJ-Cm-1hD" eventType="touchUpInside" id="bqd-FG-nwq"/>
+                    </connections>
+                </button>
+            </subviews>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="0v3-0f-TuT" firstAttribute="centerY" secondItem="YwJ-Cm-1hD" secondAttribute="centerY" id="1cw-rV-8Me"/>
+                <constraint firstItem="K23-H6-0Rl" firstAttribute="centerY" secondItem="2Ac-bm-6Wy" secondAttribute="centerY" id="AwO-gk-bUe"/>
+                <constraint firstItem="K23-H6-0Rl" firstAttribute="centerX" secondItem="2Ac-bm-6Wy" secondAttribute="centerX" id="C6K-Jn-Anq"/>
+                <constraint firstItem="0v3-0f-TuT" firstAttribute="centerX" secondItem="YwJ-Cm-1hD" secondAttribute="centerX" id="eY2-ys-XTd"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="2Ac-bm-6Wy"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Fire" width="22" height="29"/>
+        <image name="FireBackground" width="60" height="60"/>
+    </resources>
+</document>

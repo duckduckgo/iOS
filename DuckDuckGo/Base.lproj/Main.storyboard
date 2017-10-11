@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +21,6 @@
                 <navigationController navigationBarHidden="YES" toolbarHidden="NO" id="Xba-Bh-f6n" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -52,10 +52,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPw-xt-wy9">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Xuj-kZ-ete">
-                                        <rect key="frame" x="20" y="209" width="374" height="250"/>
+                                        <rect key="frame" x="20" y="199" width="374" height="250"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-7m-lZn">
                                                 <rect key="frame" x="86.666666666666686" y="0.0" width="201" height="160"/>
@@ -126,7 +126,7 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qk1-U5-j9v">
-                                        <rect key="frame" x="366" y="35" width="24" height="24"/>
+                                        <rect key="frame" x="366" y="15" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Ksg-mn-7x7"/>
                                             <constraint firstAttribute="width" constant="24" id="iOA-C8-1i8"/>
@@ -137,7 +137,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="cfZ-Bk-vM2">
-                                        <rect key="frame" x="113.33333333333334" y="646" width="188.66666666666666" height="60"/>
+                                        <rect key="frame" x="113.33333333333334" y="626" width="188.66666666666666" height="60"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Safari" translatesAutoresizingMaskIntoConstraints="NO" id="Rc8-BM-iey">
                                                 <rect key="frame" x="79.333333333333329" y="0.0" width="30" height="30"/>
@@ -224,7 +224,7 @@
                         <viewControllerLayoutGuide type="bottom" id="p3W-es-khp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
-                        <rect key="frame" x="0.0" y="64" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
@@ -253,21 +253,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
-                        <barButtonItem style="plain" id="Q2d-xq-trS">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" id="Vgi-dy-nQB">
-                                <rect key="frame" x="177" y="-8" width="60" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="bff-Gp-3Uk"/>
-                                    <constraint firstAttribute="width" constant="60" id="m2m-0K-uZC"/>
-                                </constraints>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" image="Fire" backgroundImage="FireBackground"/>
-                                <connections>
-                                    <action selector="onFirePressed" destination="C1X-Zd-UbA" eventType="touchUpInside" id="fAp-cl-axR"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="E1h-db-76k"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
                         <barButtonItem image="Bookmarks" id="M7u-mw-fly">
                             <connections>
@@ -287,7 +273,6 @@
                     <connections>
                         <outlet property="backButton" destination="Kc6-IR-lKx" id="eo5-dT-718"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
-                        <outlet property="fireButton" destination="Vgi-dy-nQB" id="7g5-6V-BN6"/>
                         <outlet property="forwardButton" destination="cUp-YP-aMf" id="7WB-lN-1AY"/>
                         <outlet property="tabsButton" destination="K7o-WL-SC5" id="6nF-LY-Gri"/>
                     </connections>
@@ -313,22 +298,22 @@
                         <viewControllerLayoutGuide type="bottom" id="ocz-cr-GSn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Yyc-sc-ZWN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbM-b9-fdC">
-                                <rect key="frame" x="0.0" y="-40" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="-20" width="414" height="40"/>
                                 <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="x5A-Pj-Tk6"/>
                                 </constraints>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9b1-jz-pNY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sel-Fj-CU4">
-                                <rect key="frame" x="69" y="101" width="237" height="16"/>
+                                <rect key="frame" x="73" y="121" width="268" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -376,8 +361,6 @@
         <image name="Bookmarks" width="22" height="22"/>
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
-        <image name="Fire" width="22" height="29"/>
-        <image name="FireBackground" width="60" height="60"/>
         <image name="LogoWithText" width="201" height="160"/>
         <image name="Safari" width="30" height="30"/>
         <image name="SearchLoupe" width="22" height="22"/>

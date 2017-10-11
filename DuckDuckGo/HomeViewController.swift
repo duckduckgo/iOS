@@ -39,7 +39,7 @@ class HomeViewController: UIViewController {
     private var active = false
     
     static func loadFromStoryboard(active: Bool) -> HomeViewController {
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        let controller = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         controller.active = active
         return controller
     }

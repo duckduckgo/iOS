@@ -30,6 +30,7 @@
 		8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0301F8E1EE300F04442 /* FireButton.xib */; };
 		8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A0321F8E1F2700F04442 /* FireButton.swift */; };
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
+		8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0371F8E54F100F04442 /* Tab.storyboard */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -341,6 +342,7 @@
 		8563A0301F8E1EE300F04442 /* FireButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FireButton.xib; sourceTree = "<group>"; };
 		8563A0321F8E1F2700F04442 /* FireButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButton.swift; sourceTree = "<group>"; };
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		8563A0371F8E54F100F04442 /* Tab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tab.storyboard; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -980,6 +982,7 @@
 			children = (
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
+				8563A0371F8E54F100F04442 /* Tab.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1768,6 +1771,7 @@
 				F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */,
 				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
 				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
+				8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */,
 				F1A169F31F3B2A8A00BE3E3B /* FlamesAnimation.xcassets in Resources */,
 				8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */,
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,

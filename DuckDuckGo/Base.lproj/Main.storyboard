@@ -6,14 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="proximanova-semibold.otf">
-            <string>ProximaNova-Semibold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="JCh-0r-CNM">
@@ -99,73 +93,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="220" y="-6"/>
-        </scene>
-        <!--Tab View Controller-->
-        <scene sceneID="PLi-M5-qzj">
-            <objects>
-                <viewController storyboardIdentifier="TabViewController" id="E9z-hU-o7g" customClass="TabViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="acf-1z-30M"/>
-                        <viewControllerLayoutGuide type="bottom" id="ocz-cr-GSn"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Yyc-sc-ZWN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RbM-b9-fdC">
-                                <rect key="frame" x="0.0" y="-20" width="414" height="40"/>
-                                <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="x5A-Pj-Tk6"/>
-                                </constraints>
-                            </view>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9b1-jz-pNY">
-                                <rect key="frame" x="0.0" y="20" width="414" height="2"/>
-                                <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sel-Fj-CU4">
-                                <rect key="frame" x="73" y="121" width="268" height="16"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="Sel-Fj-CU4" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leadingMargin" constant="53" id="4C0-Aa-FpL"/>
-                            <constraint firstItem="RbM-b9-fdC" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" constant="-40" id="4pS-g7-3M5"/>
-                            <constraint firstItem="9b1-jz-pNY" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leading" id="83m-pV-D21"/>
-                            <constraint firstItem="Sel-Fj-CU4" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" constant="101" id="D7X-kE-HGU"/>
-                            <constraint firstAttribute="trailing" secondItem="9b1-jz-pNY" secondAttribute="trailing" id="Gqq-an-IRo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Sel-Fj-CU4" secondAttribute="trailing" constant="53" id="NGI-rp-tYK"/>
-                            <constraint firstItem="9b1-jz-pNY" firstAttribute="top" secondItem="acf-1z-30M" secondAttribute="bottom" id="ZLt-SM-4aL"/>
-                            <constraint firstItem="RbM-b9-fdC" firstAttribute="leading" secondItem="Yyc-sc-ZWN" secondAttribute="leading" id="r23-gU-PnS"/>
-                            <constraint firstAttribute="trailing" secondItem="RbM-b9-fdC" secondAttribute="trailing" id="rnG-gB-xSN"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="o3F-pX-Jbo" appends="YES" id="GFB-Ha-jcY"/>
-                        </connections>
-                    </view>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <fixedSimulatedSizeMetrics key="simulatedDestinationMetrics">
-                        <size key="portraitSize" width="375" height="559"/>
-                        <size key="landscapeSize" width="559" height="375"/>
-                    </fixedSimulatedSizeMetrics>
-                    <connections>
-                        <outlet property="errorMessage" destination="Sel-Fj-CU4" id="2Hy-Vk-BuX"/>
-                        <outlet property="progressBar" destination="9b1-jz-pNY" id="erL-pu-2gE"/>
-                        <outlet property="showBarsTapGestureRecogniser" destination="o3F-pX-Jbo" id="yN5-q7-pMK"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vbR-Oc-W7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="o3F-pX-Jbo">
-                    <connections>
-                        <action selector="onBottomOfScreenTapped:" destination="E9z-hU-o7g" id="LVG-VW-kJE"/>
-                        <outlet property="delegate" destination="E9z-hU-o7g" id="dLE-1q-D7L"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1182" y="446"/>
         </scene>
     </scenes>
     <resources>

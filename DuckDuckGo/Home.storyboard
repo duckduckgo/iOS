@@ -113,7 +113,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="aty-ep-OLn">
-                                        <rect key="frame" x="92.5" y="550" width="191" height="63"/>
+                                        <rect key="frame" x="93" y="550" width="191" height="63"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Safari" translatesAutoresizingMaskIntoConstraints="NO" id="qBn-dZ-gMp">
                                                 <rect key="frame" x="80.5" y="0.0" width="30" height="30"/>

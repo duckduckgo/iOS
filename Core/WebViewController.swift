@@ -62,7 +62,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
 
-    func onApplicationWillResignActive() {
+    @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
 
@@ -90,7 +90,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.scrollView.addGestureRecognizer(handler)
     }
     
-    func onLongPress(sender: UILongPressGestureRecognizer) {
+    @objc func onLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         
         let x = Int(sender.location(in: webView).x)

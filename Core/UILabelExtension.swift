@@ -27,15 +27,15 @@ extension UILabel {
         attributedText = NSAttributedString(string: text ?? "", attributes: attributes)
     }
     
-    private func attributesForLineHeight(_ height: CGFloat) -> [String: Any] {
+    private func attributesForLineHeight(_ height: CGFloat) -> [NSAttributedStringKey: Any] {
         let paragaphStyle = NSMutableParagraphStyle()
         paragaphStyle.lineHeightMultiple = height
         paragaphStyle.alignment = textAlignment
         
         return [
-            NSFontAttributeName: font,
-            NSForegroundColorAttributeName: textColor,
-            NSParagraphStyleAttributeName: paragaphStyle
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.foregroundColor: textColor,
+            NSAttributedStringKey.paragraphStyle: paragaphStyle
         ]
     }
 }

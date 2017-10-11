@@ -22,8 +22,8 @@ import Foundation
 
 public class BookmarkUserDefaults: BookmarkStore {
 
-    private struct Constants {
-        static let groupName = "group.com.duckduckgo.bookmarks"
+    public struct Constants {
+        public static let groupName = "group.com.duckduckgo.bookmarks"
     }
     
     private struct Keys {

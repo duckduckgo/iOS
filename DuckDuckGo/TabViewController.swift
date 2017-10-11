@@ -61,7 +61,7 @@ class TabViewController: WebViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
 
-    func onContentBlockerConfigurationChanged() {
+    @objc func onContentBlockerConfigurationChanged() {
         reloadScripts()
         webView?.reload()
     }

@@ -36,12 +36,12 @@ extension UIFont {
     
     public static func lightAppFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: Name.ProximaNovaLight.rawValue, size: size) ??
-               UIFont.systemFont(ofSize: size, weight: UIFontWeightLight)
+               UIFont.systemFont(ofSize: size, weight: UIFont.Weight.light)
     }
 
     public static func semiBoldAppFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: Name.ProximaNovaSemibold.rawValue, size: size) ??
-               UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold)
+               UIFont.systemFont(ofSize: size, weight: UIFont.Weight.semibold)
     }
     
     public static func boldAppFont(ofSize size: CGFloat) -> UIFont {

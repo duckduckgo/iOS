@@ -129,7 +129,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Migration().start { occurred, storiesMigrated, bookmarksMigrated in
             Logger.log(items: "Migration completed", occurred, storiesMigrated, bookmarksMigrated)
             if occurred {
-                application.shortcutItems = []
+                DispatchQueue.main.async {
+                    application.shortcutItems = []
+                }
             }
         }
     }

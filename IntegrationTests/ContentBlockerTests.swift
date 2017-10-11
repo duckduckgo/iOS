@@ -29,7 +29,7 @@ class ContentBlockerTests: XCTestCase {
     }
     
     struct PageElementIndex {
-        static let uniqueTrackerCount: UInt = 2
+        static let uniqueTrackerCount = 2
     }
     
     struct Timeout {
@@ -84,11 +84,11 @@ class ContentBlockerTests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.buttons["Tabs"].tap()
+        app.toolbars.children(matching: .other).element.children(matching: .other).element.children(matching: .button).element(boundBy: 4).tap()
     }
     
     private func addTab() {
-        app.toolbars.containing(.button, identifier:"Add").buttons["Add"].tap()
+        app.toolbars.buttons["Add"].tap()
     }
     
     private func newTab() {
@@ -104,9 +104,7 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func clearTabsAndData() {
-        let app = XCUIApplication()
-        let toolbarsQuery = app.toolbars
-        toolbarsQuery.children(matching: .button).element(boundBy: 2).tap()
+        app.toolbars.buttons["Fire"].tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
     }
     

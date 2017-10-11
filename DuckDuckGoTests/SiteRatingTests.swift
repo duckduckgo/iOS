@@ -104,7 +104,8 @@ class SiteRatingTests: XCTestCase {
     }
     
     func testWhenUrlIsAChildOfAMajorNetworkThenMajorNetworkReturned() {
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: ["googlemail.com": "google.com"])!
+        let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!
         XCTAssertNotNil(testee.majorTrackingNetwork)
         XCTAssertEqual(testee.majorTrackingNetwork?.domain, "google.com")
         XCTAssertEqual(testee.majorTrackingNetwork?.perentageOfPages, 55)

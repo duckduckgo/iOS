@@ -74,9 +74,8 @@ class BlockerListRequest {
         }
 
     }
-
+    
 }
-
 
 protocol BlockerListETagStorage {
 

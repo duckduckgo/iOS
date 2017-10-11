@@ -22,10 +22,10 @@ import Foundation
 public class ContentBlockerStringCache {
 
     struct Constants {
-        static let groupName = "group.com.duckduckgo.contentblocker"
+        static let groupName = ContentBlockerStoreConstants.groupName
     }
 
-    public init() { }
+    public init() {}
 
     public func get(named name: String) -> String? {
         return try? String(contentsOf: persistenceLocation(for: name), encoding: .utf8)
@@ -44,5 +44,4 @@ public class ContentBlockerStringCache {
         try? FileManager.default.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
         return cacheDir.appendingPathComponent(name)
     }
-
 }

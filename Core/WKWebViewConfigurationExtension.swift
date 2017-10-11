@@ -44,22 +44,24 @@ extension WKWebViewConfiguration {
     
     public func loadScripts() {
         loadDocumentLevelScripts()
-        let contentBlocker = ContentBlockerConfigurationUserDefaults()
-        loadContentBlockerScripts(with: contentBlocker.domainWhitelist, and: contentBlocker.enabled)
-    }
-    
-    private func loadContentBlockerScripts(with whitelistedDomains: Set<String>, and blockingEnabled: Bool) {
-        loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelistedDomains.toJsonLookupString(), and: blockingEnabled)
-        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
-    }
-    
-    private func loadContentBlockerDependencyScripts() {
-        load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
+        
+        loadLegacyContentBlockerScripts()
     }
     
     private func loadDocumentLevelScripts() {
         load(scripts: [ .document, .favicon ])
+    }
+    
+    private func loadLegacyContentBlockerScripts() {
+        let configuration = ContentBlockerConfigurationUserDefaults()
+        let whitelist = configuration.domainWhitelist.toJsonLookupString()
+        loadLegacyContentBlockerDependencyScripts()
+        loadBlockerData(with: whitelist, and:  configuration.enabled)
+        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+    }
+    
+    private func loadLegacyContentBlockerDependencyScripts() {
+        load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {

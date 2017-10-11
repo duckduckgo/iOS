@@ -24,10 +24,10 @@ public class DisconnectMeStore {
     public static let shared = DisconnectMeStore()
 
     var hasData: Bool {
-        return !allTrackers.isEmpty
+        return !trackers.isEmpty
     }
 
-    public private(set) var allTrackers = [String: String]()
+    public private(set) var trackers = [String: Tracker]()
     public private(set) var bannedTrackersJson = "{}"
     public private(set) var allowedTrackersJson = "{}"
 
@@ -45,15 +45,19 @@ public class DisconnectMeStore {
 
     private func load(data: Data) throws {
         let parser = DisconnectMeTrackersParser()
-        allTrackers = try parser.convert(fromJsonData: data, categoryFilter: nil)
-        
-        bannedTrackersJson = (try? convertToInjectableJson(data, using: parser, filteringBy: DisconnectMeTrackersParser.bannedCategoryFilter)) ?? "{}"
-        allowedTrackersJson = (try? convertToInjectableJson(data, using: parser, filteringBy: DisconnectMeTrackersParser.allowedCategoryFilter)) ?? "{}"
+        trackers = try parser.convert(fromJsonData: data)
+        bannedTrackersJson = (try? convertToInjectableJson(trackers, filterBy: Tracker.Category.banned)) ?? "{}"
+        allowedTrackersJson = (try? convertToInjectableJson(trackers, filterBy: Tracker.Category.allowed)) ?? "{}"
     }
 
-    private func convertToInjectableJson(_ data: Data, using parser: DisconnectMeTrackersParser, filteringBy filter: [DisconnectMeTrackersParser.Category]) throws -> String {
-        let trackers = try parser.convert(fromJsonData: data, categoryFilter: filter)
-        let json = try JSONSerialization.data(withJSONObject: trackers, options: .prettyPrinted)
+    private func convertToInjectableJson(_ trackers: [String: Tracker], filterBy categoryFilter: [Tracker.Category]) throws -> String {
+        let filterdTrackers = trackers.filter { element -> Bool in
+            guard let category = element.value.category else { return false }
+            return categoryFilter.contains(category)
+        }
+        let simplifiedFilteredTrackers = filterdTrackers.mapValues( { $0.parentDomain } )
+        
+        let json = try JSONSerialization.data(withJSONObject: simplifiedFilteredTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {
             return jsonString
         }

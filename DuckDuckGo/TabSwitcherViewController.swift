@@ -34,17 +34,9 @@ class TabSwitcherViewController: UIViewController {
     
     fileprivate var hasSeenFooter = false
     
-    static func loadFromStoryboard(delegate: TabSwitcherDelegate, tabsModel: TabsModel) -> TabSwitcherViewController {
-        let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
-        controller.delegate = delegate
-        controller.tabsModel = tabsModel
-        return controller
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
-
         fireButton = toolbar.addFireButton { self.onFirePressed() }
     }
     

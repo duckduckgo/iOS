@@ -70,14 +70,13 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
                         <barButtonItem image="Bookmarks" id="M7u-mw-fly">
                             <connections>
-                                <action selector="onBookmarksTapped" destination="C1X-Zd-UbA" id="Ivs-pb-GrG"/>
                                 <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" modalPresentationStyle="overCurrentContext" id="PFq-7F-8UP"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
                         <barButtonItem image="Tabs" id="K7o-WL-SC5">
                             <connections>
-                                <action selector="onTabsTapped" destination="C1X-Zd-UbA" id="jOc-qa-j63"/>
+                                <segue destination="p9L-cF-4aL" kind="presentation" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -102,6 +101,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="45" y="470"/>
+        </scene>
+        <!--TabSwitcher-->
+        <scene sceneID="ylt-D6-E7x">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TabSwitcher" id="p9L-cF-4aL" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X9j-nR-zze" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="422" y="470"/>
         </scene>
     </scenes>
     <resources>

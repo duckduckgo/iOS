@@ -113,7 +113,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Bookmarks" id="tVt-jc-YaY">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="V4E-YN-xud">
+                        <barButtonItem key="leftBarButtonItem" id="V4E-YN-xud">
                             <connections>
                                 <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="gaA-92-zAb"/>
                             </connections>

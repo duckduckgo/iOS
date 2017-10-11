@@ -50,13 +50,22 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
 
-        fireButton = navigationController?.toolbar.addFireButton { self.onFirePressed() }
+        fireButton = navigationController?.toolbar.addFireButton { self.launchFireMenu() }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
+        if segue.destination.childViewControllers.count > 0,
+            let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
             controller.delegate = self
+            return
+        }
+
+        if let controller = segue.destination as? TabSwitcherViewController {
+            controller.transitioningDelegate = self
+            controller.delegate = self
+            controller.tabsModel = tabManager.model
+            return
         }
 
     }
@@ -106,14 +115,6 @@ class MainViewController: UIViewController {
     
     @IBAction func onForwardPressed() {
         currentTab?.goForward()
-    }
-    
-    @IBAction func onFirePressed() {
-        launchFireMenu()
-    }
-    
-    @IBAction func onTabsTapped() {
-        launchTabSwitcher()
     }
     
     public var siteRating: SiteRating? {
@@ -270,13 +271,6 @@ class MainViewController: UIViewController {
         currentTab?.launchContentBlockerPopover()
     }
     
-    fileprivate func launchTabSwitcher() {
-            let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
-        controller.transitioningDelegate = self
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
-    }
-
     fileprivate func launchSettings() {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext

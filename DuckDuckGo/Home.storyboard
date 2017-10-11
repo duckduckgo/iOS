@@ -113,7 +113,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="aty-ep-OLn">
-                                        <rect key="frame" x="93" y="550" width="191" height="63"/>
+                                        <rect key="frame" x="93" y="540" width="191" height="63"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Safari" translatesAutoresizingMaskIntoConstraints="NO" id="qBn-dZ-gMp">
                                                 <rect key="frame" x="80.5" y="0.0" width="30" height="30"/>
@@ -132,7 +132,6 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="pwM-bh-TMk" secondAttribute="trailing" constant="20" id="HIA-K1-pE2"/>
-                                    <constraint firstAttribute="bottom" secondItem="aty-ep-OLn" secondAttribute="bottom" constant="54" id="d7G-7s-Had"/>
                                     <constraint firstItem="pwM-bh-TMk" firstAttribute="leading" secondItem="eYX-Xc-kri" secondAttribute="leading" constant="20" id="e5Y-W7-YCP"/>
                                     <constraint firstItem="aty-ep-OLn" firstAttribute="centerX" secondItem="eYX-Xc-kri" secondAttribute="centerX" id="eyj-OW-Mel"/>
                                     <constraint firstItem="pwM-bh-TMk" firstAttribute="centerY" secondItem="eYX-Xc-kri" secondAttribute="centerY" constant="-34" id="jR5-0V-F2Q"/>
@@ -147,6 +146,7 @@
                             <constraint firstItem="eYX-Xc-kri" firstAttribute="height" secondItem="klK-ZJ-wmA" secondAttribute="height" id="ZiJ-EY-KxH"/>
                             <constraint firstItem="eYX-Xc-kri" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="bsB-cI-R2F"/>
                             <constraint firstItem="eYX-Xc-kri" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="lDz-Gu-MVs"/>
+                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="aty-ep-OLn" secondAttribute="bottom" constant="54" id="pBX-x6-Mea"/>
                             <constraint firstItem="eYX-Xc-kri" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="y9x-PP-Zad"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ijV-Vn-w9w"/>

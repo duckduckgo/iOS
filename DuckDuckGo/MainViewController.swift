@@ -90,7 +90,6 @@ class MainViewController: UIViewController {
         omniBar.omniDelegate = self
         omniBar.frame = navigationBar.bounds
         navigationBar.addSubview(omniBar)
-        navigationBar.addEqualSizeConstraints(subView: omniBar)
     }
     
     fileprivate func attachHomeScreen(active: Bool = true)  {

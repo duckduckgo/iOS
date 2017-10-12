@@ -115,7 +115,6 @@
                         <constraint firstItem="N6K-Lj-Fn6" firstAttribute="top" secondItem="5D5-iT-bUk" secondAttribute="top" id="HJ5-s0-Q5X"/>
                         <constraint firstItem="N6K-Lj-Fn6" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" constant="4" id="b5a-zA-VCZ"/>
                         <constraint firstAttribute="trailing" secondItem="N6K-Lj-Fn6" secondAttribute="trailing" constant="6" id="glC-XI-Ji8"/>
-                        <constraint firstAttribute="height" constant="40" id="z9P-Nx-A4a"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

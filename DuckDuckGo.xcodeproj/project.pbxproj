@@ -13,7 +13,10 @@
 		830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */; };
 		830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */; };
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
+		835750951F8E9B170059E07B /* beforeload-notification.js in Resources */ = {isa = PBXBuildFile; fileRef = 835750941F8E9B160059E07B /* beforeload-notification.js */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
+		839F047D1F8E8BD000892CD6 /* AppleContentBlockerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */; };
+		839F047F1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */; };
 		83C8A6671F8CD726007477F7 /* SnapShotHelperExcerpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
@@ -311,10 +314,13 @@
 		830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceParserTests.swift; sourceTree = "<group>"; };
 		8325A1201F68AFD900FF31B5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
+		835750941F8E9B160059E07B /* beforeload-notification.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "beforeload-notification.js"; sourceTree = "<group>"; };
 		836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
+		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParser.swift; sourceTree = "<group>"; };
+		839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParserTests.swift; sourceTree = "<group>"; };
 		83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapShotHelperExcerpt.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
 		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -624,6 +630,7 @@
 		830FA79C1F8E820B00FCE105 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
+				839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */,
 				F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */,
 			);
 			name = Parser;
@@ -645,6 +652,21 @@
 				85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */,
 			);
 			name = Store;
+			sourceTree = "<group>";
+		};
+		835750931F8E9A610059E07B /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				85047B891F69692C002A95D8 /* contentblocker.js */,
+				85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */,
+				85F1C3C11F7A4C1600161346 /* bloom-es2015.js */,
+				85047B811F6827AD002A95D8 /* blockerdata.js */,
+				85F1C3C31F7A4C7500161346 /* easylist-cached.js */,
+				85F1C3C41F7A4C7500161346 /* easylist-parsing.js */,
+				85047B871F6966ED002A95D8 /* disconnectme.js */,
+				85F1C3C51F7A4C7500161346 /* messaging.js */,
+			);
+			name = Legacy;
 			sourceTree = "<group>";
 		};
 		836B6B681F67F11E0061ECFB /* IntegrationTests */ = {
@@ -695,6 +717,7 @@
 			isa = PBXGroup;
 			children = (
 				F16394061ECE01E400DDD653 /* DisconnectMeTrackersParser.swift */,
+				839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */,
 			);
 			name = Parser;
 			sourceTree = "<group>";
@@ -1270,14 +1293,8 @@
 		F18608DE1E5E648100361C30 /* Javascript */ = {
 			isa = PBXGroup;
 			children = (
-				85F1C3C31F7A4C7500161346 /* easylist-cached.js */,
-				85F1C3C41F7A4C7500161346 /* easylist-parsing.js */,
-				85F1C3C51F7A4C7500161346 /* messaging.js */,
-				85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */,
-				85047B811F6827AD002A95D8 /* blockerdata.js */,
-				85F1C3C11F7A4C1600161346 /* bloom-es2015.js */,
-				85047B891F69692C002A95D8 /* contentblocker.js */,
-				85047B871F6966ED002A95D8 /* disconnectme.js */,
+				835750931F8E9A610059E07B /* Legacy */,
+				835750941F8E9B160059E07B /* beforeload-notification.js */,
 				F18608DF1E5E649400361C30 /* document.js */,
 				F10307671E7D67BA0059FEC7 /* favicon.js */,
 				85BA79941F71B37100F59015 /* tlds.js */,
@@ -1852,6 +1869,7 @@
 				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
+				835750951F8E9B170059E07B /* beforeload-notification.js in Resources */,
 				85F1C3C21F7A4C1600161346 /* bloom-es2015.js in Resources */,
 				85F1C3C61F7A4C7500161346 /* easylist-cached.js in Resources */,
 				85F1C3C81F7A4C7500161346 /* messaging.js in Resources */,
@@ -2037,6 +2055,7 @@
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
 				F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */,
 				F16393F51ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift in Sources */,
+				839F047F1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift in Sources */,
 				F1DA2F7D1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift in Sources */,
 				F14208C91F33457A0034198A /* MockContentBlockerConfigurationStore.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
@@ -2125,6 +2144,7 @@
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
 				F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */,
+				839F047D1F8E8BD000892CD6 /* AppleContentBlockerParser.swift in Sources */,
 				830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */,
 				85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,

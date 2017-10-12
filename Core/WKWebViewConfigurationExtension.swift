@@ -22,6 +22,10 @@ import WebKit
 
 extension WKWebViewConfiguration {
     
+    struct Constants {
+        static let listName = "customRules"
+    }
+    
     public static func persistent() -> WKWebViewConfiguration {
         return configuration(persistsData: true)
     }
@@ -45,18 +49,47 @@ extension WKWebViewConfiguration {
     public func loadScripts() {
         loadDocumentLevelScripts()
         
-        loadLegacyContentBlockerScripts()
+        if #available(iOS 11.0, *) {
+            loadSiteMonitoringScripts()
+        } else {
+            loadLegacySiteMonitoringScripts()
+        }
     }
     
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document, .favicon ])
+        load(scripts: [ .document, .favicon ] )
+    }
+   
+    @available(iOSApplicationExtension 11.0, *)
+    private func loadSiteMonitoringScripts() {
+        load(scripts: [ .beforeLoadNotification ] )
+        loadContentBlockerRules()
     }
     
-    private func loadLegacyContentBlockerScripts() {
+    @available(iOSApplicationExtension 11.0, *)
+    private func loadContentBlockerRules() {
+        let trackers = DisconnectMeStore.shared.trackers.flatMap( { $0.value })
+        let parser = AppleContentBlockerParser()
+        guard let ruleData = try? parser.toJsonData(trackers: trackers), let rulesString = String(bytes: ruleData, encoding: .utf8) else {
+            Logger.log(text: "Could not load content blocker rules")
+            return
+        }
+        
+        let store = WKContentRuleListStore.default()!
+        store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: rulesString) { list, error in
+            guard let list = list else {
+                Logger.log(text: "No rules loaded into WKContentRuleListStore")
+                return
+            }
+            self.userContentController.add(list)
+        }
+    }
+    
+    private func loadLegacySiteMonitoringScripts() {
         let configuration = ContentBlockerConfigurationUserDefaults()
         let whitelist = configuration.domainWhitelist.toJsonLookupString()
         loadLegacyContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelist, and:  configuration.enabled)
+        loadLegacyBlockerData(with: whitelist, and:  configuration.enabled)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
     
@@ -64,7 +97,7 @@ extension WKWebViewConfiguration {
         load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
     }
     
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+    private func loadLegacyBlockerData(with whitelist: String, and blockingEnabled: Bool) {
         let easylistStore = EasylistStore()
 
         let javascriptLoader = JavascriptLoader()

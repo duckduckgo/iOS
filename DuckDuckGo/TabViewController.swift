@@ -250,6 +250,7 @@ class TabViewController: WebViewController {
 }
 
 fileprivate struct MessageHandlerNames {
+    static let beforeLoad = "beforeLoadNotification"
     static let trackerDetected = "trackerDetectedMessage"
     static let cache = "cacheMessage"
 }
@@ -267,6 +268,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
             break
+        
+        case MessageHandlerNames.beforeLoad:
+            handleBeforeLoad(message: message)
 
         default:
             assertionFailure("Unhandled message: \(message.name)")
@@ -299,18 +303,27 @@ extension TabViewController: WKScriptMessageHandler {
         siteRating?.trackerDetected(Tracker(url: url, parentDomain: parent), blocked: blocked)
         onSiteRatingChanged()
     }
-
+    
+    private func handleBeforeLoad(message: WKScriptMessage) {
+        Logger.log(text: "\(MessageHandlerNames.beforeLoad)")
+        guard let urlString = message.body as? String else { return }
+        guard let url = URL(string: urlString) else { return }
+        Logger.log(text: "Before load \(url)")
+        //TODO: inform site monitor
+    }
 }
 
 extension TabViewController: WebEventsDelegate {
 
     func attached(webView: WKWebView) {
         webView.scrollView.delegate = self
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.beforeLoad)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
     }
     
     func detached(webView: WKWebView) {
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.beforeLoad)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
     }

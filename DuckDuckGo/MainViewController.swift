@@ -27,8 +27,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
-    @IBOutlet weak var fireButton: UIButton!
-    @IBOutlet weak var tabsButton: UIButton!
+
+    weak var fireButton: UIView!
     weak var omniBar: OmniBar!
 
     fileprivate var homeController: HomeViewController?
@@ -48,8 +48,27 @@ class MainViewController: UIViewController {
         attachOmniBar()
         configureTabManager()
         loadInitialView()
+
+        fireButton = navigationController?.toolbar.addFireButton { self.launchFireMenu() }
     }
-    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.destination.childViewControllers.count > 0,
+            let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
+            controller.delegate = self
+            return
+        }
+
+        if let controller = segue.destination as? TabSwitcherViewController {
+            controller.transitioningDelegate = self
+            controller.delegate = self
+            controller.tabsModel = tabManager.model
+            return
+        }
+
+    }
+
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
@@ -70,7 +89,6 @@ class MainViewController: UIViewController {
         omniBar.omniDelegate = self
         omniBar.frame = navigationBar.bounds
         navigationBar.addSubview(omniBar)
-        navigationBar.addEqualSizeConstraints(subView: omniBar)
     }
     
     fileprivate func attachHomeScreen(active: Bool = true)  {
@@ -95,18 +113,6 @@ class MainViewController: UIViewController {
     
     @IBAction func onForwardPressed() {
         currentTab?.goForward()
-    }
-    
-    @IBAction func onFirePressed() {
-        launchFireMenu()
-    }
-    
-    @IBAction func onBookmarksTapped() {
-        launchBookmarks()
-    }
-    
-    @IBAction func onTabsTapped() {
-        launchTabSwitcher()
     }
     
     public var siteRating: SiteRating? {
@@ -170,8 +176,7 @@ class MainViewController: UIViewController {
     private func addToView(controller: UIViewController) {
         addChildViewController(controller)
         containerView.addSubview(controller.view)
-        controller.view.frame = containerView.frame
-        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        controller.view.frame = containerView.bounds
         controller.didMove(toParentViewController: self)
     }
 
@@ -264,19 +269,6 @@ class MainViewController: UIViewController {
         currentTab?.launchContentBlockerPopover()
     }
     
-    fileprivate func launchTabSwitcher() {
-            let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
-        controller.transitioningDelegate = self
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
-    }
-    
-    fileprivate func launchBookmarks() {
-        let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
-    }
-    
     fileprivate func launchSettings() {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
@@ -310,7 +302,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onBookmarksPressed() {
-        launchBookmarks()
+        performSegue(withIdentifier: "Bookmarks", sender: self)
     }
     
     func onDismissed() {

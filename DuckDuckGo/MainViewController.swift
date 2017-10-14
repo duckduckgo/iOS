@@ -307,13 +307,25 @@ class MainViewController: UIViewController {
 extension MainViewController: BarHidingDelegate {
 
     func setBarsHidden(_ hidden: Bool) {
-        print("***", #function, hidden)
-        toolbar.isHidden = hidden
-        customNavigationBar.isHidden = hidden
+        barHider.hidden = hidden
+
+        let duration = 0.1
+
+        self.customNavigationBar.isHidden = false
+        self.toolbar.isHidden = false
+
+        UIView.animate(withDuration: duration, animations: {
+            self.customNavigationBar.transform.ty = hidden ? -self.customNavigationBar.bounds.size.height : 0
+            self.toolbar.transform.ty = hidden ? self.toolbar.bounds.size.height : 0
+        }) { (completed) in
+            self.customNavigationBar.isHidden = hidden
+            self.toolbar.isHidden = hidden
+        }
+
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
-        customNavigationBar.isHidden = hidden
+        self.customNavigationBar.isHidden = hidden
     }
 
     var isToolbarHidden: Bool {

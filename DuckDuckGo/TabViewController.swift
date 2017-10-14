@@ -72,10 +72,10 @@ class TabViewController: WebViewController {
     }
         
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
-        showBars()
+        showBars(animated: false)
     }
     
-    fileprivate func showBars() {
+    fileprivate func showBars(animated: Bool = true) {
         barHiding.setBarsHidden(false)
     }
 

@@ -42,26 +42,25 @@ class BarHider: NSObject, UIScrollViewDelegate {
         if let lastOffset = lastOffset {
 
             let ydiff = lastOffset.y - scrollView.contentOffset.y
-            // print("***", "ydiff", ydiff)
 
             if ydiff == 0 || (cumulative < 0 && ydiff > 0) || (cumulative > 0 && ydiff < 0) {
                 cumulative = 0
             }
 
             cumulative += ydiff
-            // print("***", "cumulative", cumulative)
 
             if abs(cumulative) > Constants.threshold {
-                let shouldHide = ydiff < 0
-                if shouldHide != hidden {
-                    delegate.setBarsHidden(shouldHide)
-                    hidden = shouldHide
-                }
+                updateBars(ydiff < 0)
             }
 
         }
 
         lastOffset = scrollView.contentOffset
+    }
+
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        print("***", #function)
+        updateBars(true)
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -71,7 +70,12 @@ class BarHider: NSObject, UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         dragging = false
         cumulative = 0
-        print("***", #function)
+    }
+
+    private func updateBars(_ shouldHide: Bool) {
+        guard shouldHide != hidden else { return }
+        delegate.setBarsHidden(shouldHide)
+        hidden = shouldHide
     }
 
 }

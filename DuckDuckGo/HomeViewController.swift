@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var useSafariContainer: UIView!
     
     weak var delegate: HomeControllerDelegate?
+    weak var barHiding: BarHidingDelegate!
     private var active = false
     
     static func loadFromStoryboard(active: Bool) -> HomeViewController {
@@ -55,8 +56,7 @@ class HomeViewController: UIViewController {
     }
     
     private func resetNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.hidesBarsOnSwipe = false
+        barHiding.setNavigationBarHidden(true)
     }
     
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {
@@ -73,7 +73,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterActiveMode() {
-        navigationController?.isNavigationBarHidden = false
+        barHiding.setNavigationBarHidden(false)
         passiveContent.isHidden = true
         delegate?.homeDidActivateOmniBar(home: self)
     }
@@ -83,7 +83,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterPassiveModeAnimated() {
-        navigationController?.isNavigationBarHidden = true
+        barHiding.setNavigationBarHidden(true)
         passiveContent.isHidden = false
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.resetSearchBar()
@@ -93,7 +93,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterPassiveMode() {
-        navigationController?.isNavigationBarHidden = true
+        barHiding.setNavigationBarHidden(true)
         adjustSafariButtonVisibility()
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
@@ -104,7 +104,7 @@ class HomeViewController: UIViewController {
     }
     
     private func moveSearchBarUp() {
-        guard let omniSearch = navigationController?.navigationBar.viewWithTag(OmniBar.Tag.searchContainer) else { return }
+        guard let omniSearch = barHiding.omniBar.viewWithTag(OmniBar.Tag.searchContainer) else { return }
         guard let frame = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
         
         let xScale = omniSearch.frame.size.width / searchBar.frame.size.width

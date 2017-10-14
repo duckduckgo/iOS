@@ -23,13 +23,15 @@ import WebKit
 import Core
 
 class MainViewController: UIViewController {
-    
+
+    @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var toolbar: UIToolbar!
 
     weak var fireButton: UIView!
-    weak var omniBar: OmniBar!
+    var omniBar: OmniBar!
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
@@ -42,14 +44,18 @@ class MainViewController: UIViewController {
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
-    
+
+    var barHider: BarHider!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        barHider = BarHider(delegate: self)
         attachOmniBar()
         configureTabManager()
         loadInitialView()
 
-        fireButton = navigationController?.toolbar.addFireButton { self.launchFireMenu() }
+        fireButton = toolbar.addFireButton { self.launchFireMenu() }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -84,16 +90,16 @@ class MainViewController: UIViewController {
     }
     
     private func attachOmniBar() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
-        omniBar.frame = navigationBar.bounds
-        navigationBar.addSubview(omniBar)
+        omniBar.frame = customNavigationBar.bounds
+        customNavigationBar.addSubview(omniBar)
     }
     
     fileprivate func attachHomeScreen(active: Bool = true)  {
         removeHomeScreen()
         let controller = HomeViewController.loadFromStoryboard(active: active)
+        controller.barHiding = self
         homeController = controller
         controller.delegate = self
         addToView(controller: controller)
@@ -157,6 +163,20 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         addToView(tab: tab)
     }
+
+    func findScrollView(_ view: UIView) -> UIScrollView? {
+        if let scrollView = view as? UIScrollView {
+            return scrollView
+        }
+
+        for view in view.subviews {
+            if let scrollView = findScrollView(view) {
+                return scrollView
+            }
+        }
+
+        return nil
+    }
     
     fileprivate func select(tabAt index: Int) {
         let tab = tabManager.select(tabAt: index)
@@ -168,9 +188,11 @@ class MainViewController: UIViewController {
         refreshControls()
     }
     
-    private func addToView(tab: UIViewController) {
+    private func addToView(tab: TabViewController) {
         removeHomeScreen()
+        tab.barHiding = self
         addToView(controller: tab)
+        findScrollView(tab.view)?.delegate = barHider
     }
 
     private func addToView(controller: UIViewController) {
@@ -280,6 +302,24 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
         tabManager.reduceMemory()
     }
+}
+
+extension MainViewController: BarHidingDelegate {
+
+    func setBarsHidden(_ hidden: Bool) {
+        print("***", #function, hidden)
+        toolbar.isHidden = hidden
+        customNavigationBar.isHidden = hidden
+    }
+
+    func setNavigationBarHidden(_ hidden: Bool) {
+        customNavigationBar.isHidden = hidden
+    }
+
+    var isToolbarHidden: Bool {
+        get { return toolbar.isHidden }
+    }
+
 }
 
 extension MainViewController: OmniBarDelegate {
@@ -421,3 +461,4 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         return DissolveAnimatedTransitioning()
     }
 }
+

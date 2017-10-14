@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Xba-Bh-f6n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,30 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="JCh-0r-CNM">
-            <objects>
-                <navigationController navigationBarHidden="YES" toolbarHidden="NO" id="Xba-Bh-f6n" sceneMemberID="viewController">
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="jmT-gh-cHl" customClass="OmniNavigationBar" customModule="DuckDuckGo" customModuleProvider="target">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="a8m-qV-BIW">
-                        <rect key="frame" x="0.0" y="692" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="C1X-Zd-UbA" kind="relationship" relationship="rootViewController" id="YPT-Z2-jAI"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uJ5-lh-reH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-714" y="-5"/>
-        </scene>
         <!--Main View Controller-->
         <scene sceneID="DKA-ax-iTU">
             <objects>
@@ -42,51 +18,75 @@
                         <viewControllerLayoutGuide type="bottom" id="p3W-es-khp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
+                                <rect key="frame" x="0.0" y="20" width="414" height="52"/>
+                                <color key="backgroundColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="XOq-1B-9oE"/>
+                                </constraints>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Krm-hA-s9u">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem enabled="NO" image="BrowsePrevious" id="Kc6-IR-lKx">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="onBackPressed" destination="C1X-Zd-UbA" id="W9t-r8-ei1"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Qhs-dl-WAQ"/>
+                                    <barButtonItem enabled="NO" image="BrowseNext" id="cUp-YP-aMf">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="onForwardPressed" destination="C1X-Zd-UbA" id="Vwk-rf-1TA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="E1h-db-76k"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
+                                    <barButtonItem image="Bookmarks" id="M7u-mw-fly" userLabel="Bookmarks Button">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" modalPresentationStyle="overCurrentContext" id="PFq-7F-8UP"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
+                                    <barButtonItem image="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <segue destination="p9L-cF-4aL" kind="presentation" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="nQT-PV-ULm" firstAttribute="top" secondItem="RU6-aL-RBH" secondAttribute="bottom" id="BrS-Dd-c0g"/>
+                            <constraint firstAttribute="bottom" secondItem="Krm-hA-s9u" secondAttribute="bottom" id="JjW-9I-YuT"/>
+                            <constraint firstItem="Krm-hA-s9u" firstAttribute="centerX" secondItem="nQT-PV-ULm" secondAttribute="centerX" id="RoI-M7-3aY"/>
+                            <constraint firstItem="nQT-PV-ULm" firstAttribute="centerX" secondItem="Vxt-xD-aBt" secondAttribute="centerX" id="mvu-GD-IuW"/>
+                            <constraint firstItem="nQT-PV-ULm" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="ukv-lF-Gp0"/>
+                            <constraint firstItem="Krm-hA-s9u" firstAttribute="width" secondItem="nQT-PV-ULm" secondAttribute="width" id="yiu-zG-E8h"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <toolbarItems>
-                        <barButtonItem enabled="NO" image="BrowsePrevious" id="Kc6-IR-lKx">
-                            <connections>
-                                <action selector="onBackPressed" destination="C1X-Zd-UbA" id="W9t-r8-ei1"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Qhs-dl-WAQ"/>
-                        <barButtonItem enabled="NO" image="BrowseNext" id="cUp-YP-aMf">
-                            <connections>
-                                <action selector="onForwardPressed" destination="C1X-Zd-UbA" id="Vwk-rf-1TA"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="E1h-db-76k"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
-                        <barButtonItem image="Bookmarks" id="M7u-mw-fly">
-                            <connections>
-                                <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" modalPresentationStyle="overCurrentContext" id="PFq-7F-8UP"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
-                        <barButtonItem image="Tabs" id="K7o-WL-SC5">
-                            <connections>
-                                <segue destination="p9L-cF-4aL" kind="presentation" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="4Us-57-SWd"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="backButton" destination="Kc6-IR-lKx" id="eo5-dT-718"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
+                        <outlet property="customNavigationBar" destination="nQT-PV-ULm" id="OGt-AV-tQb"/>
                         <outlet property="forwardButton" destination="cUp-YP-aMf" id="7WB-lN-1AY"/>
+                        <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>

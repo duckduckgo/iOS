@@ -29,6 +29,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var navBarTop: NSLayoutConstraint!
+    @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
 
     weak var fireButton: UIView!
     var omniBar: OmniBar!
@@ -45,12 +47,12 @@ class MainViewController: UIViewController {
         return tabManager.current
     }
 
-    var barHider: BarHider!
+    var chromeManager: BrowserChromeManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        barHider = BarHider(delegate: self)
+        chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
         configureTabManager()
         loadInitialView()
@@ -99,7 +101,7 @@ class MainViewController: UIViewController {
     fileprivate func attachHomeScreen(active: Bool = true)  {
         removeHomeScreen()
         let controller = HomeViewController.loadFromStoryboard(active: active)
-        controller.barHiding = self
+        controller.chromeDelegate = self
         homeController = controller
         controller.delegate = self
         addToView(controller: controller)
@@ -190,9 +192,9 @@ class MainViewController: UIViewController {
     
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
-        tab.barHiding = self
+        tab.chromeDelegate = self
         addToView(controller: tab)
-        findScrollView(tab.view)?.delegate = barHider
+        findScrollView(tab.view)?.delegate = chromeManager
     }
 
     private func addToView(controller: UIViewController) {
@@ -304,27 +306,33 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: BarHidingDelegate {
+extension MainViewController: BrowserChromeDelegate {
 
     func setBarsHidden(_ hidden: Bool) {
-        barHider.hidden = hidden
+        let duration = 0.3
 
-        let duration = 0.1
+        customNavigationBar.isHidden = false
+        toolbar.isHidden = false
 
-        self.customNavigationBar.isHidden = false
-        self.toolbar.isHidden = false
+        var bottomHeight = self.toolbar.frame.size.height
+        if #available(iOS 11.0, *) {
+            bottomHeight += view.safeAreaInsets.bottom
+        }
+
+        toolbarBottom.constant = hidden ? bottomHeight : 0
+        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
+        view.setNeedsUpdateConstraints()
 
         UIView.animate(withDuration: duration, animations: {
-            self.customNavigationBar.transform.ty = hidden ? -self.customNavigationBar.bounds.size.height : 0
-            self.toolbar.transform.ty = hidden ? self.toolbar.bounds.size.height : 0
+            self.view.layoutIfNeeded()
         }) { (completed) in
             self.customNavigationBar.isHidden = hidden
             self.toolbar.isHidden = hidden
         }
-
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
+        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
         self.customNavigationBar.isHidden = hidden
     }
 

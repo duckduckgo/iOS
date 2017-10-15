@@ -27,7 +27,7 @@ class TabViewController: WebViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
-    weak var barHiding: BarHidingDelegate!
+    weak var chromeDelegate: BrowserChromeDelegate!
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
@@ -68,7 +68,7 @@ class TabViewController: WebViewController {
     }
     
     private func resetNavigationBar() {
-        barHiding.setBarsHidden(false)
+        chromeDelegate.setBarsHidden(false)
     }
         
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
@@ -76,12 +76,12 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func showBars(animated: Bool = true) {
-        barHiding.setBarsHidden(false)
+        chromeDelegate.setBarsHidden(false)
     }
 
     func launchContentBlockerPopover() {
         guard let siteRating = siteRating else { return }
-        guard let button = barHiding.omniBar.viewWithTag(OmniBar.Tag.siteRating) else { return }
+        guard let button = chromeDelegate.omniBar.siteRatingView else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
@@ -114,7 +114,7 @@ class TabViewController: WebViewController {
     }
 
     func launchBrowsingMenu() {
-        guard let button = barHiding.omniBar.viewWithTag(OmniBar.Tag.menuButton) else { return }
+        guard let button = chromeDelegate.omniBar.menuButton else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())
@@ -203,7 +203,7 @@ class TabViewController: WebViewController {
     
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
-            guard let menu = self?.barHiding.omniBar.viewWithTag(OmniBar.Tag.menuButton) else { return }
+            guard let menu = self?.chromeDelegate.omniBar.menuButton else { return }
             self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: menu)
         }
     }
@@ -373,7 +373,7 @@ extension TabViewController {
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
         return gestureRecognizer == showBarsTapGestureRecogniser &&
-               barHiding.isToolbarHidden == true &&
+               chromeDelegate.isToolbarHidden == true &&
                isBottom(yPosition: y)
     }
     
@@ -391,7 +391,7 @@ extension TabViewController {
 
 extension TabViewController: UIScrollViewDelegate {
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if barHiding.isToolbarHidden == true {
+        if chromeDelegate.isToolbarHidden == true {
             showBars()
             return false
         }

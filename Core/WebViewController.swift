@@ -74,9 +74,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        webView.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(webView, at: 0)
-        view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
         
         if let url = url {

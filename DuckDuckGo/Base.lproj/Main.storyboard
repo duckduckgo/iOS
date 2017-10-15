@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,17 +14,12 @@
         <scene sceneID="DKA-ax-iTU">
             <objects>
                 <viewController id="C1X-Zd-UbA" customClass="MainViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RU6-aL-RBH"/>
-                        <viewControllerLayoutGuide type="bottom" id="p3W-es-khp"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
+                                <rect key="frame" x="0.0" y="72" width="414" height="620"/>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
                                 <rect key="frame" x="0.0" y="20" width="414" height="52"/>
@@ -68,15 +64,20 @@
                                 <color key="barTintColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="nQT-PV-ULm" firstAttribute="top" secondItem="RU6-aL-RBH" secondAttribute="bottom" id="BrS-Dd-c0g"/>
-                            <constraint firstAttribute="bottom" secondItem="Krm-hA-s9u" secondAttribute="bottom" id="JjW-9I-YuT"/>
+                            <constraint firstItem="Ylj-oJ-fqD" firstAttribute="top" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="8aN-zm-DQU"/>
+                            <constraint firstItem="nQT-PV-ULm" firstAttribute="top" secondItem="uBn-Md-Q2c" secondAttribute="top" id="BrS-Dd-c0g"/>
+                            <constraint firstItem="Krm-hA-s9u" firstAttribute="top" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" id="N6y-rD-Nne"/>
+                            <constraint firstItem="Ylj-oJ-fqD" firstAttribute="leading" secondItem="Vxt-xD-aBt" secondAttribute="leading" id="Piz-bL-YZd"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="centerX" secondItem="nQT-PV-ULm" secondAttribute="centerX" id="RoI-M7-3aY"/>
+                            <constraint firstItem="Krm-hA-s9u" firstAttribute="bottom" secondItem="uBn-Md-Q2c" secondAttribute="bottom" id="UsQ-i7-pjr"/>
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="centerX" secondItem="Vxt-xD-aBt" secondAttribute="centerX" id="mvu-GD-IuW"/>
+                            <constraint firstAttribute="trailing" secondItem="Ylj-oJ-fqD" secondAttribute="trailing" id="ssm-8i-6VT"/>
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="ukv-lF-Gp0"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="width" secondItem="nQT-PV-ULm" secondAttribute="width" id="yiu-zG-E8h"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="uBn-Md-Q2c"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
@@ -86,12 +87,14 @@
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
                         <outlet property="customNavigationBar" destination="nQT-PV-ULm" id="OGt-AV-tQb"/>
                         <outlet property="forwardButton" destination="cUp-YP-aMf" id="7WB-lN-1AY"/>
+                        <outlet property="navBarTop" destination="BrS-Dd-c0g" id="1ta-NK-q4L"/>
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
+                        <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="220" y="-6"/>
+            <point key="canvasLocation" x="218.84057971014494" y="-6.5217391304347831"/>
         </scene>
         <!--Bookmarks-->
         <scene sceneID="538-OF-E2q">

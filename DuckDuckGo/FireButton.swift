@@ -41,8 +41,15 @@ extension UIToolbar {
 
     func addFireButton(_ onClickHandler:@escaping FireButton.OnCilckHandler) -> FireButton {
         let view = FireButton.loadFromNib(onClickHandler)
-        view.center = CGPoint(x: bounds.midX, y: bounds.midY)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
+
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: view, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: view, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
+        ])
+
         return view
     }
 

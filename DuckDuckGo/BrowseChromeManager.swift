@@ -85,8 +85,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     private func updateBars(_ shouldHide: Bool) {
         guard shouldHide != hidden else { return }
-        delegate.setBarsHidden(shouldHide, animated: true)
         hidden = shouldHide
+        delegate.setBarsHidden(shouldHide, animated: true)
     }
 
 }

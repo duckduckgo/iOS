@@ -304,61 +304,38 @@ extension MainViewController: BrowserChromeDelegate {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
         print("***", #function, hidden, animated)
-        setNavigationBarHidden(hidden, animated: animated)
-        setToolbarHidden(hidden, animated: animated)
+
+        updateToolbarConstant(hidden)
+        updateNavBarConstant(hidden)
+
+        if animated {
+            customNavigationBar.isHidden = false
+            toolbar.isHidden = false
+
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: {
+                self.omniBar.alpha = hidden ? 0 : 1
+                self.toolbar.alpha = hidden ? 0 : 1
+
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+                self.customNavigationBar.isHidden = hidden
+                self.toolbar.isHidden = hidden
+            }
+
+        } else {
+            setNavigationBarHidden(hidden)
+
+            toolbar.isHidden = hidden
+            toolbar.alpha = hidden ? 0 : 1
+        }
+
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
         print("***", #function, hidden)
-        setNavigationBarHidden(hidden, animated: false)
-    }
-
-    private func setNavigationBarHidden(_ hidden: Bool, animated: Bool) {
-        print("***", #function, hidden, animated)
-
-        guard customNavigationBar.isHidden != hidden else { return }
-
-        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
-
-        if animated {
-            customNavigationBar.isHidden = false
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: {
-                self.omniBar.alpha = hidden ? 0 : 1
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-                self.customNavigationBar.isHidden = hidden
-            }
-        } else {
-            omniBar.alpha = hidden ? 0 : 1
-            customNavigationBar.isHidden = hidden
-        }
-
-    }
-
-    private func setToolbarHidden(_ hidden: Bool, animated: Bool) {
-        print("***", #function, hidden, animated)
-
-        guard toolbar.isHidden != hidden else { return }
-
-        var bottomHeight = self.toolbar.frame.size.height
-        if #available(iOS 11.0, *) {
-            bottomHeight += view.safeAreaInsets.bottom
-        }
-        toolbarBottom.constant = hidden ? bottomHeight : 0
-
-        if animated {
-            toolbar.isHidden = false
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: {
-                self.toolbar.alpha = hidden ? 0 : 1
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-                self.toolbar.isHidden = hidden
-            }
-        } else {
-            toolbar.alpha = hidden ? 0 : 1
-            toolbar.isHidden = hidden
-        }
-
+        updateNavBarConstant(hidden)
+        customNavigationBar.isHidden = hidden
+        omniBar.alpha = hidden ? 0 : 1
     }
 
     var isToolbarHidden: Bool {
@@ -367,6 +344,18 @@ extension MainViewController: BrowserChromeDelegate {
 
     var toolbarHeight: CGFloat {
         get { return toolbar.frame.size.height }
+    }
+
+    private func updateToolbarConstant(_ hidden: Bool) {
+        var bottomHeight = self.toolbar.frame.size.height
+        if #available(iOS 11.0, *) {
+            bottomHeight += view.safeAreaInsets.bottom
+        }
+        toolbarBottom.constant = hidden ? bottomHeight : 0
+    }
+
+    private func updateNavBarConstant(_ hidden: Bool) {
+        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
     }
 
 }

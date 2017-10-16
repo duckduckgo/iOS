@@ -72,7 +72,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
         print("***", #function)
-        updateBars(true)
+        updateBars(false)
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

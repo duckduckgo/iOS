@@ -349,11 +349,13 @@ extension MainViewController: BrowserChromeDelegate {
         if animated {
             toolbar.isHidden = false
             UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: {
+                self.toolbar.alpha = hidden ? 0 : 1
                 self.view.layoutIfNeeded()
             }) { (completed) in
                 self.toolbar.isHidden = hidden
             }
         } else {
+            toolbar.alpha = hidden ? 0 : 1
             toolbar.isHidden = hidden
         }
 

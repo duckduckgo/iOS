@@ -138,13 +138,17 @@ class TabManager {
     }
 
     private func cachedController(forTab tab: Tab) -> TabViewController? {
-        return tabControllerCache.filter( { $0.tabModel === tab } ).first
+        let controller = tabControllerCache.filter( { $0.tabModel === tab } ).first
+        tab.link = controller?.link
+        save()
+        return controller
     }
     
     func removeAll() {
         for controller in tabControllerCache {
             remove(tabController: controller)
         }
+        model.clearAll()
         save()
     }
     

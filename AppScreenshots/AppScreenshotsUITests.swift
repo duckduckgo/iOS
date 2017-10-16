@@ -53,6 +53,8 @@ class AppScreenshotsUITests: XCTestCase {
 
     func testTakeTabSwitcherSearchResultsAndAutoCompleteScreenshots() {
 
+        newTab()
+
         screenshotTabSwitcher()
 
         addTab()
@@ -68,7 +70,7 @@ class AppScreenshotsUITests: XCTestCase {
         newTab()
         enterSearch("https://nytimes.com/2017/08/24/books/review/10-new-books-we-recommend-this-week.html")
         sleep(5)
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         tapSiteRating()
         snapshot("Tracker Blocking")
     }
@@ -86,7 +88,7 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.children(matching: .button).element(boundBy: 3).tap()
+        app.toolbars.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .button).element(boundBy: 3).tap()
     }
     
     private func addTab() {
@@ -122,13 +124,12 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func screenshotTabSwitcher() {
-        app.staticTexts["Search or type URL"].tap()
         enterSearch("https://twitter.com/duckduckgo")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         waitForPageTitle()
         newTab()
         enterSearch("https://dribbble.com/duckduckgo")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         waitForPageTitle()
         showTabs()
         snapshot("Tab Switcher")
@@ -136,7 +137,7 @@ class AppScreenshotsUITests: XCTestCase {
 
     private func screenshotSearchResults() {
         enterSearch("https://duckduckgo.com?q=bars%20in%20portland&kl=us-en&k1=-1")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         waitForPageTitle()
         snapshot("Search Results")
     }
@@ -152,6 +153,11 @@ class AppScreenshotsUITests: XCTestCase {
 
     private func waitForToastToDisappear() {
         sleep(6)
+    }
+
+    private func waitForLoadingIndicatorToDisappear() {
+        // Snapshot.waitForLoadingIndicatorToDisappear()
+        sleep(5)
     }
 
 }

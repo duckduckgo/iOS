@@ -93,7 +93,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         
         let x = Int(sender.location(in: webView).x)
         let y = Int(sender.location(in: webView).y)
-        let offsetY = y - Int(touchesYOffset())
+        let offsetY = y
         
         webView.getUrlAtPoint(x: x, y: offsetY)  { [weak self] (url) in
             guard let webView = self?.webView, let url = url else { return }
@@ -245,11 +245,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webEventsDelegate?.detached(webView: webView)
     }
     
-    fileprivate func touchesYOffset() -> CGFloat {
-        guard navigationController != nil else { return 0 }
-        return decorHeight
-    }
-    
     private func showError(message: String) {
         webView.alpha = 0
         errorMessage.text = "\(UserText.webPageFailedLoad) \(message)"
@@ -276,9 +271,8 @@ extension WebViewController: UIGestureRecognizerDelegate {
             return false
         }
         
-        let yOffset = touchesYOffset()
         let x = Int(gestureRecognizer.location(in: webView).x)
-        let y = Int(gestureRecognizer.location(in: webView).y-yOffset)
+        let y = Int(gestureRecognizer.location(in: webView).y)
         let url = webView.getUrlAtPointSynchronously(x: x, y: y)
         return url != nil
     }

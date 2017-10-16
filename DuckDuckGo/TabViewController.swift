@@ -379,7 +379,7 @@ extension TabViewController {
     }
     
     private func isBottom(yPosition y: CGFloat) -> Bool {
-        return y > (view.frame.size.height - InterfaceMeasurement.defaultToolbarHeight)
+        return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
     }
     
     override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {

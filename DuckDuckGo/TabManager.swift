@@ -145,6 +145,9 @@ class TabManager {
         for controller in tabControllerCache {
             remove(tabController: controller)
         }
+
+        model.clearAll()
+
         save()
     }
     

@@ -363,6 +363,10 @@ extension MainViewController: BrowserChromeDelegate {
         get { return toolbar.isHidden }
     }
 
+    var toolbarHeight: CGFloat {
+        get { return toolbar.frame.size.height }
+    }
+
 }
 
 extension MainViewController: OmniBarDelegate {

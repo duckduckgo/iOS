@@ -25,6 +25,7 @@ protocol BrowserChromeDelegate: class {
     func setNavigationBarHidden(_ hidden: Bool)
     var isToolbarHidden: Bool { get }
     var omniBar: OmniBar! { get }
+    var toolbarHeight: CGFloat { get }
 
 }
 

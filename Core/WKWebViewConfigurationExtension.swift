@@ -68,7 +68,10 @@ extension WKWebViewConfiguration {
     
     @available(iOSApplicationExtension 11.0, *)
     private func loadContentBlockerRules() {
-        let trackers = DisconnectMeStore.shared.trackers.flatMap( { $0.value })
+
+        let all = DisconnectMeStore.shared.trackers
+        let trackers = Array(all.filter(byCategory: Tracker.Category.banned).values)
+
         let parser = AppleContentBlockerParser()
         guard let ruleData = try? parser.toJsonData(trackers: trackers), let rulesString = String(bytes: ruleData, encoding: .utf8) else {
             Logger.log(text: "Could not load content blocker rules")

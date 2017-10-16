@@ -15,8 +15,10 @@
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
 		835750951F8E9B170059E07B /* beforeload-notification.js in Resources */ = {isa = PBXBuildFile; fileRef = 835750941F8E9B160059E07B /* beforeload-notification.js */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
+		839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */; };
 		839F047D1F8E8BD000892CD6 /* AppleContentBlockerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */; };
 		839F047F1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */; };
+		83B66D701F94BC2F0065AC80 /* TrackerDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */; };
 		83C8A6671F8CD726007477F7 /* SnapShotHelperExcerpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
@@ -323,8 +325,10 @@
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
+		8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetectorTests.swift; sourceTree = "<group>"; };
 		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParser.swift; sourceTree = "<group>"; };
 		839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParserTests.swift; sourceTree = "<group>"; };
+		83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetector.swift; sourceTree = "<group>"; };
 		83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapShotHelperExcerpt.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
 		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -631,6 +635,7 @@
 				830FA79D1F8E82C500FCE105 /* Domain */,
 				830FA79E1F8E82DB00FCE105 /* Store */,
 				830FA79C1F8E820B00FCE105 /* Parser */,
+				8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -692,10 +697,11 @@
 		837774491F8E1ECE00E17A29 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
-				8377744D1F8E1FF700E17A29 /* Parser */,
 				8377744B1F8E1F8000E17A29 /* Domain */,
 				8377744C1F8E1F8D00E17A29 /* Store */,
+				8377744D1F8E1FF700E17A29 /* Parser */,
 				F17FB1701F349B7B005B1CB6 /* API */,
+				83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -2066,6 +2072,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */,
+				839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */,
 				8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */,
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
 				F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */,
@@ -2127,6 +2134,7 @@
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
 				F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */,
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
+				83B66D701F94BC2F0065AC80 /* TrackerDetector.swift in Sources */,
 				F1B29E1F1E9A5DA1007F5046 /* UILabelExtension.swift in Sources */,
 				857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */,
 				F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */,

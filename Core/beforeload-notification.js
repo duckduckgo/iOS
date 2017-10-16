@@ -21,8 +21,8 @@ var duckduckgoBeforeLoadNotification = function() {
 
     function install(document) {
         document.addEventListener("beforeload", function(event) {
-          var targetSrc = event["target"].src
-          sendBeforeLoadMessage(targetSrc)
+          var url = toFullURL(event.url)
+          sendBeforeLoadMessage(url)
         }, true);
     }
     
@@ -31,6 +31,14 @@ var duckduckgoBeforeLoadNotification = function() {
             webkit.messageHandlers.beforeLoadNotification.postMessage(url);
         } catch(error) {
             // webkit might not be defined
+        }
+    }
+    
+    function toFullURL(url) {
+        try {
+            return url.startsWith("//") ? document.location.protocol + url : url
+        } catch(error) {
+            return null
         }
     }
     

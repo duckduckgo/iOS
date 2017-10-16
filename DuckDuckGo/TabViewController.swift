@@ -23,7 +23,7 @@ import SafariServices
 import Core
 
 class TabViewController: WebViewController {
-        
+    
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
@@ -33,10 +33,12 @@ class TabViewController: WebViewController {
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
+    private(set) var trackerDetector: TrackerDetector?
     
-    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore, trackerDetector: TrackerDetector?) -> TabViewController {
         let controller = UIStoryboard(name: "Tab", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
+        controller.trackerDetector = trackerDetector
         controller.tabModel = model
         return controller
     }
@@ -46,7 +48,7 @@ class TabViewController: WebViewController {
         super.init(coder: aDecoder)
         webEventsDelegate = self
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
@@ -60,7 +62,7 @@ class TabViewController: WebViewController {
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
-
+    
     @objc func onContentBlockerConfigurationChanged() {
         reloadScripts()
         webView?.reload()
@@ -70,7 +72,7 @@ class TabViewController: WebViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.hidesBarsOnSwipe = true
     }
-        
+    
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
         showBars()
     }
@@ -79,7 +81,7 @@ class TabViewController: WebViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
     }
-
+    
     func launchContentBlockerPopover() {
         guard let siteRating = siteRating else { return }
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.siteRating) else { return }
@@ -113,7 +115,7 @@ class TabViewController: WebViewController {
         delegate?.tab(self, didChangeSiteRating: siteRating)
         contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
     }
-
+    
     func launchBrowsingMenu() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -242,7 +244,7 @@ class TabViewController: WebViewController {
         removeFromParentViewController()
         view.removeFromSuperview()
     }
-
+    
     func destroy() {
         dismiss()
         tearDown()
@@ -258,27 +260,27 @@ fileprivate struct MessageHandlerNames {
 extension TabViewController: WKScriptMessageHandler {
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
+        
         switch(message.name) {
-
+            
         case MessageHandlerNames.cache:
             handleCache(message: message)
             break
-
+            
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
             break
-        
+            
         case MessageHandlerNames.beforeLoad:
             handleBeforeLoad(message: message)
-
+            
         default:
             assertionFailure("Unhandled message: \(message.name)")
             break
         }
-
+        
     }
-
+    
     private func handleCache(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.cache)")
         guard let dict = message.body as? Dictionary<String, Any> else { return }
@@ -287,13 +289,13 @@ extension TabViewController: WKScriptMessageHandler {
         ContentBlockerStringCache().put(name: name, value: data)
         reloadScripts()
     }
-
+    
     struct TrackerDetectedKey {
         static let blocked = "blocked"
         static let parentDomain = "parentDomain"
         static let url = "url"
     }
-
+    
     private func handleTrackerDetected(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
         guard let dict = message.body as? Dictionary<String, Any> else { return }
@@ -308,13 +310,17 @@ extension TabViewController: WKScriptMessageHandler {
         Logger.log(text: "\(MessageHandlerNames.beforeLoad)")
         guard let urlString = message.body as? String else { return }
         guard let url = URL(string: urlString) else { return }
-        Logger.log(text: "Before load \(url)")
-        //TODO: inform site monitor
+        
+        let policy = trackerDetector?.policy(forUrl: url, document: self.url ?? url)
+        if let policy = policy, let tracker = policy.tracker {
+            siteRating?.trackerDetected(tracker, blocked: policy.block)
+            onSiteRatingChanged()
+        }
     }
 }
 
 extension TabViewController: WebEventsDelegate {
-
+    
     func attached(webView: WKWebView) {
         webView.scrollView.delegate = self
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.beforeLoad)
@@ -331,7 +337,7 @@ extension TabViewController: WebEventsDelegate {
     func webViewDidTerminate(webView: WKWebView) {
         delegate?.tabDidRequestMemoryReduction(tab: self)
     }
-
+    
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
@@ -387,8 +393,8 @@ extension TabViewController {
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
         return gestureRecognizer == showBarsTapGestureRecogniser &&
-               navigationController?.isToolbarHidden == true &&
-               isBottom(yPosition: y)
+            navigationController?.isToolbarHidden == true &&
+            isBottom(yPosition: y)
     }
     
     private func isBottom(yPosition y: CGFloat) -> Bool {

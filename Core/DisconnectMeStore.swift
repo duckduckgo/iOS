@@ -34,7 +34,7 @@ public class DisconnectMeStore {
     private init() {
         try? load(data: Data(contentsOf: persistenceLocation()))
     }
-    
+
     func persist(data: Data) throws  {
         try load(data: data)
 
@@ -46,18 +46,14 @@ public class DisconnectMeStore {
     private func load(data: Data) throws {
         let parser = DisconnectMeTrackersParser()
         trackers = try parser.convert(fromJsonData: data)
-        bannedTrackersJson = (try? convertToInjectableJson(trackers, filterBy: Tracker.Category.banned)) ?? "{}"
-        allowedTrackersJson = (try? convertToInjectableJson(trackers, filterBy: Tracker.Category.allowed)) ?? "{}"
+        bannedTrackersJson = try convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.banned))
+        allowedTrackersJson = try convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.allowed))
     }
 
-    private func convertToInjectableJson(_ trackers: [String: Tracker], filterBy categoryFilter: [Tracker.Category]) throws -> String {
-        let filterdTrackers = trackers.filter { element -> Bool in
-            guard let category = element.value.category else { return false }
-            return categoryFilter.contains(category)
-        }
-        let simplifiedFilteredTrackers = filterdTrackers.mapValues( { $0.parentDomain } )
+    private func convertToInjectableJson(_ trackers: [String: Tracker]) throws -> String {
         
-        let json = try JSONSerialization.data(withJSONObject: simplifiedFilteredTrackers, options: .prettyPrinted)
+        let simplifiedTrackers = trackers.mapValues( { $0.parentDomain } )
+        let json = try JSONSerialization.data(withJSONObject: simplifiedTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {
             return jsonString
         }

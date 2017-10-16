@@ -84,7 +84,7 @@ class ContentBlockerTests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.children(matching: .other).element.children(matching: .other).element.children(matching: .button).element(boundBy: 4).tap()
+        app.toolbars.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .button).element(boundBy: 3).tap()
     }
     
     private func addTab() {

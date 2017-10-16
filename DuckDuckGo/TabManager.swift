@@ -24,6 +24,7 @@ import WebKit
 class TabManager {
     
     private(set) var model: TabsModel
+    private(set) var trackerDetector: TrackerDetector?
     private var tabControllerCache = [TabViewController]()
     
     private weak var delegate: TabDelegate?
@@ -31,11 +32,18 @@ class TabManager {
     init(model: TabsModel, delegate: TabDelegate) {
         self.model = model
         self.delegate = delegate
+        self.trackerDetector = configureTrackerDetector()
         if let index = model.currentIndex {
             let tab = model.tabs[index]
             let controller = buildController(forTab: tab)
             tabControllerCache.append(controller)
         }
+    }
+    
+    private func configureTrackerDetector() -> TrackerDetector? {
+        guard #available(iOSApplicationExtension 11.0, *) else { return nil }
+        let trackers = Array(DisconnectMeStore.shared.trackers.values)
+        return TrackerDetector(disconnectTrackers: trackers)
     }
     
     private func buildController(forTab tab: Tab) -> TabViewController {
@@ -47,7 +55,7 @@ class TabManager {
     private func buildController(forTab tab: Tab, request: URLRequest?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
+        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker, trackerDetector: trackerDetector)
         controller.attachWebView(configuration: configuration)
         controller.delegate = delegate
         
@@ -136,7 +144,7 @@ class TabManager {
         }
         controller.destroy()
     }
-
+    
     private func cachedController(forTab tab: Tab) -> TabViewController? {
         return tabControllerCache.filter( { $0.tabModel === tab } ).first
     }
@@ -173,4 +181,3 @@ class TabManager {
         model.save()
     }
 }
-

@@ -67,3 +67,26 @@ public class Tracker: NSObject {
         return !MajorTrackerNetwork.all.filter( {$0.domain == parentDomain } ).isEmpty
     }
 }
+
+
+extension Dictionary where Key: ExpressibleByStringLiteral, Value: Tracker {
+    
+    func filter(byCategory categoryFilter: [Tracker.Category]) -> [Key: Value] {
+        let filterd = filter { element -> Bool in
+            guard let category = element.value.category else { return false }
+            return categoryFilter.contains(category)
+        }
+        return filterd
+    }
+}
+
+
+extension Array where Element: Tracker {
+    
+    func filter(byCategory categoryFilter: [Tracker.Category]) -> [Element] {
+        return filter() {
+            guard let category = $0.category else { return false }
+            return categoryFilter.contains(category)
+        }
+    }
+}

@@ -100,7 +100,7 @@ class HomeViewController: UIViewController {
     
     private func moveSearchBarUp() {
         guard let omniSearch = chromeDelegate?.omniBar.searchContainer else { return }
-        guard let frame = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
+        guard let convertedOrigin = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
         
         let xScale = omniSearch.frame.size.width / searchBar.frame.size.width
         let yScale = omniSearch.frame.size.height / searchBar.frame.size.height
@@ -108,7 +108,7 @@ class HomeViewController: UIViewController {
         let yIdentityScale = searchBar.frame.size.height / omniSearch.frame.size.height
         let searchBarToOmniTextRatio: CGFloat = 0.875
         let searchTextMarginChange: CGFloat = -12
-        passiveContent.transform.ty = statusBarSize - frame.y
+        passiveContent.transform.ty = -convertedOrigin.y
         searchBar.transform = CGAffineTransform(scaleX: xScale, y: yScale)
         searchBarContent.transform = CGAffineTransform(scaleX: xIdentityScale, y: yIdentityScale)
         searchText.transform = CGAffineTransform(scaleX: searchBarToOmniTextRatio, y: searchBarToOmniTextRatio)

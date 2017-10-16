@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
 
     weak var fireButton: UIView!
     var omniBar: OmniBar!
+    var chromeManager: BrowserChromeManager!
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
@@ -46,8 +47,6 @@ class MainViewController: UIViewController {
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
-
-    var chromeManager: BrowserChromeManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,20 +169,6 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
 
-    func findScrollView(_ view: UIView) -> UIScrollView? {
-        if let scrollView = view as? UIScrollView {
-            return scrollView
-        }
-
-        for view in view.subviews {
-            if let scrollView = findScrollView(view) {
-                return scrollView
-            }
-        }
-
-        return nil
-    }
-    
     fileprivate func select(tabAt index: Int) {
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
@@ -197,9 +182,9 @@ class MainViewController: UIViewController {
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
         currentTab?.chromeDelegate = nil
-        tab.chromeDelegate = self
         addToView(controller: tab)
-        findScrollView(tab.view)?.delegate = chromeManager
+        tab.webView.scrollView.delegate = chromeManager
+        tab.chromeDelegate = self
     }
 
     private func addToView(controller: UIViewController) {

@@ -309,23 +309,17 @@ extension MainViewController: BrowserChromeDelegate {
         updateNavBarConstant(hidden)
 
         if animated {
-            customNavigationBar.isHidden = false
-            toolbar.isHidden = false
 
-            UIView.animate(withDuration: ChromeAnimationConstants.duration, animations: {
+            self.view.layer.removeAllAnimations()
+            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
                 self.omniBar.alpha = hidden ? 0 : 1
                 self.toolbar.alpha = hidden ? 0 : 1
 
                 self.view.layoutIfNeeded()
-            }) { (completed) in
-                self.customNavigationBar.isHidden = hidden
-                self.toolbar.isHidden = hidden
             }
 
         } else {
             setNavigationBarHidden(hidden)
-
-            toolbar.isHidden = hidden
             toolbar.alpha = hidden ? 0 : 1
         }
 
@@ -334,12 +328,11 @@ extension MainViewController: BrowserChromeDelegate {
     func setNavigationBarHidden(_ hidden: Bool) {
         print("***", #function, hidden)
         updateNavBarConstant(hidden)
-        customNavigationBar.isHidden = hidden
         omniBar.alpha = hidden ? 0 : 1
     }
 
     var isToolbarHidden: Bool {
-        get { return toolbar.isHidden }
+        get { return toolbar.alpha < 1 }
     }
 
     var toolbarHeight: CGFloat {

@@ -21,10 +21,10 @@ import UIKit
 
 protocol BrowserChromeDelegate: class {
 
-    func setBarsHidden(_ hidden: Bool)
+    func setBarsHidden(_ hidden: Bool, animated: Bool)
     func setNavigationBarHidden(_ hidden: Bool)
-    var omniBar: OmniBar! { get }
     var isToolbarHidden: Bool { get }
+    var omniBar: OmniBar! { get }
 
 }
 
@@ -85,7 +85,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     private func updateBars(_ shouldHide: Bool) {
         guard shouldHide != hidden else { return }
-        delegate.setBarsHidden(shouldHide)
+        delegate.setBarsHidden(shouldHide, animated: true)
         hidden = shouldHide
     }
 

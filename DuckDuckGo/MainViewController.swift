@@ -100,11 +100,15 @@ class MainViewController: UIViewController {
     
     fileprivate func attachHomeScreen(active: Bool = true)  {
         removeHomeScreen()
+
         let controller = HomeViewController.loadFromStoryboard(active: active)
-        controller.chromeDelegate = self
         homeController = controller
+
+        controller.chromeDelegate = self
         controller.delegate = self
+
         addToView(controller: controller)
+
         tabManager.clearSelection()
         refreshControls()
     }
@@ -192,6 +196,7 @@ class MainViewController: UIViewController {
     
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
+        currentTab?.chromeDelegate = nil
         tab.chromeDelegate = self
         addToView(controller: tab)
         findScrollView(tab.view)?.delegate = chromeManager
@@ -216,9 +221,9 @@ class MainViewController: UIViewController {
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
-            completion()
             self.tabManager.removeAll()
             self.attachHomeScreen(active: false)
+            completion()
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
@@ -308,32 +313,50 @@ class MainViewController: UIViewController {
 
 extension MainViewController: BrowserChromeDelegate {
 
-    func setBarsHidden(_ hidden: Bool) {
-        let duration = 0.3
+    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+        print("***", #function, hidden, animated)
+        let duration = animated ? 0.3 : 0.0
+        setNavigationBarHidden(hidden, duration: duration)
+        setToolbarHidden(hidden, duration: duration)
+    }
+
+    func setNavigationBarHidden(_ hidden: Bool) {
+        print("***", #function, hidden)
+        setNavigationBarHidden(hidden, duration: 0.0)
+    }
+
+    private func setNavigationBarHidden(_ hidden: Bool, duration: TimeInterval) {
+        print("***", #function, hidden, duration)
+
+        guard customNavigationBar.isHidden != hidden else { return }
 
         customNavigationBar.isHidden = false
-        toolbar.isHidden = false
-
-        var bottomHeight = self.toolbar.frame.size.height
-        if #available(iOS 11.0, *) {
-            bottomHeight += view.safeAreaInsets.bottom
-        }
-
-        toolbarBottom.constant = hidden ? bottomHeight : 0
         navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
-        view.setNeedsUpdateConstraints()
-
         UIView.animate(withDuration: duration, animations: {
             self.view.layoutIfNeeded()
         }) { (completed) in
             self.customNavigationBar.isHidden = hidden
-            self.toolbar.isHidden = hidden
         }
+
     }
 
-    func setNavigationBarHidden(_ hidden: Bool) {
-        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
-        self.customNavigationBar.isHidden = hidden
+    private func setToolbarHidden(_ hidden: Bool, duration: TimeInterval) {
+        print("***", #function, hidden, duration)
+
+        guard toolbar.isHidden != hidden else { return }
+
+        self.toolbar.isHidden = false
+        var bottomHeight = self.toolbar.frame.size.height
+        if #available(iOS 11.0, *) {
+            bottomHeight += view.safeAreaInsets.bottom
+        }
+        toolbarBottom.constant = hidden ? bottomHeight : 0
+        UIView.animate(withDuration: duration, animations: {
+            self.view.layoutIfNeeded()
+        }) { (completed) in
+            self.toolbar.isHidden = hidden
+        }
+
     }
 
     var isToolbarHidden: Bool {
@@ -373,6 +396,7 @@ extension MainViewController: OmniBarDelegate {
 extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
+        homeController?.chromeDelegate = nil
         dismissOmniBar()
         loadQuery(suggestion)
     }

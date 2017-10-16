@@ -68,7 +68,7 @@ class TabViewController: WebViewController {
     }
     
     private func resetNavigationBar() {
-        chromeDelegate.setBarsHidden(false)
+        chromeDelegate.setBarsHidden(false, animated: false)
     }
         
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
@@ -76,7 +76,7 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func showBars(animated: Bool = true) {
-        chromeDelegate.setBarsHidden(false)
+        chromeDelegate.setBarsHidden(false, animated: animated)
     }
 
     func launchContentBlockerPopover() {
@@ -236,6 +236,7 @@ class TabViewController: WebViewController {
     }
     
     func dismiss() {
+        chromeDelegate = nil
         webView.scrollView.delegate = nil
         willMove(toParentViewController: nil)
         removeFromParentViewController()

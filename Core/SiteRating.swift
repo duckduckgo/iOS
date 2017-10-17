@@ -30,7 +30,7 @@ public class SiteRating {
     private var termsOfServiceStore = TermsOfServiceStore()
     private var disconnectMeTrackers: [String: Tracker]
     
-    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore.shared.trackers) {
+    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers) {
         guard let domain = url.host else {
             return nil
         }

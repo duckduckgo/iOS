@@ -24,7 +24,7 @@ import WebKit
 class TabManager {
     
     private(set) var model: TabsModel
-    private(set) var trackerDetector: TrackerDetector?
+    private var disconnectMeStore = DisconnectMeStore()
     private var tabControllerCache = [TabViewController]()
     
     private weak var delegate: TabDelegate?
@@ -32,7 +32,6 @@ class TabManager {
     init(model: TabsModel, delegate: TabDelegate) {
         self.model = model
         self.delegate = delegate
-        self.trackerDetector = configureTrackerDetector()
         if let index = model.currentIndex {
             let tab = model.tabs[index]
             let controller = buildController(forTab: tab)
@@ -40,9 +39,9 @@ class TabManager {
         }
     }
     
-    private func configureTrackerDetector() -> TrackerDetector? {
+    private var trackerDetector: TrackerDetector? {
         guard #available(iOSApplicationExtension 11.0, *) else { return nil }
-        let trackers = Array(DisconnectMeStore.shared.trackers.values)
+        let trackers = Array(disconnectMeStore.trackers.values)
         return TrackerDetector(disconnectTrackers: trackers)
     }
     
@@ -81,7 +80,6 @@ class TabManager {
             tabControllerCache.append(controller)
             return controller
         }
-        
     }
     
     var isEmpty: Bool {

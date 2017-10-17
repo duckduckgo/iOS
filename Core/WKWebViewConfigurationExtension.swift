@@ -68,18 +68,10 @@ extension WKWebViewConfiguration {
     
     @available(iOSApplicationExtension 11.0, *)
     private func loadContentBlockerRules() {
-
-        let all = DisconnectMeStore.shared.trackers
-        let trackers = Array(all.filter(byCategory: Tracker.Category.banned).values)
-
-        let parser = AppleContentBlockerParser()
-        guard let ruleData = try? parser.toJsonData(trackers: trackers), let rulesString = String(bytes: ruleData, encoding: .utf8) else {
-            Logger.log(text: "Could not load content blocker rules")
-            return
-        }
-        
-        let store = WKContentRuleListStore.default()!
-        store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: rulesString) { list, error in
+        let disconnectMeStore = DisconnectMeStore()
+        guard let rules = disconnectMeStore.appleRulesJson else { return }
+        let ruleStore = WKContentRuleListStore.default()!
+        ruleStore.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: rules) { list, error in
             guard let list = list else {
                 Logger.log(text: "No rules loaded into WKContentRuleListStore")
                 return
@@ -102,13 +94,13 @@ extension WKWebViewConfiguration {
     
     private func loadLegacyBlockerData(with whitelist: String, and blockingEnabled: Bool) {
         let easylistStore = EasylistStore()
-
+        let disconnectMeStore = DisconnectMeStore()
         let javascriptLoader = JavascriptLoader()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
-            "${disconnectmeBanned}": DisconnectMeStore.shared.bannedTrackersJson,
-            "${disconnectmeAllowed}": DisconnectMeStore.shared.allowedTrackersJson,
+            "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
+            "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
             "${whitelist}": whitelist ],
                               andController:userContentController,
                               forMainFrameOnly: false)

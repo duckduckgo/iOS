@@ -24,10 +24,11 @@ public typealias BlockerListsLoaderCompletion = (Bool) -> Void
 public class BlockerListsLoader {
 
     private var easylistStore = EasylistStore()
+    private var disconnectStore = DisconnectMeStore()
 
     public var hasData: Bool {
         get {
-            return DisconnectMeStore.shared.hasData && easylistStore.hasData
+            return disconnectStore.hasData && easylistStore.hasData
         }
     }
 
@@ -58,7 +59,7 @@ public class BlockerListsLoader {
         blockerListRequest.request(.disconnectMe) { (data) in
             if let data = data {
                 self.newDataItems += 1
-                try? DisconnectMeStore.shared.persist(data: data)
+                try? self.disconnectStore.persist(data: data)
             }
             semaphore.signal()
         }

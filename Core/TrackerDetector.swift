@@ -28,11 +28,7 @@ public class TrackerDetector {
         self.configuration = configuration
         self.disconnectTrackers = disconnectTrackers
     }
-    
-    public func enabled(forDomain domain: String) -> Bool {
-        return !configuration.whitelisted(domain: domain)
-    }
-    
+        
     public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
         
         if isFirstParty(url, of: documentUrl) {

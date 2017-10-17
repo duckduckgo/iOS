@@ -15,6 +15,7 @@
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
 		835750951F8E9B170059E07B /* beforeload-notification.js in Resources */ = {isa = PBXBuildFile; fileRef = 835750941F8E9B160059E07B /* beforeload-notification.js */; };
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
+		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
 		839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */; };
 		839F047D1F8E8BD000892CD6 /* AppleContentBlockerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */; };
@@ -322,6 +323,7 @@
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
 		835750941F8E9B160059E07B /* beforeload-notification.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "beforeload-notification.js"; sourceTree = "<group>"; };
 		8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
+		8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStoreTests.swift; sourceTree = "<group>"; };
 		836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -663,6 +665,7 @@
 				F16393F41ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift */,
 				85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */,
 				85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */,
+				8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -2106,6 +2109,7 @@
 				F1D477C91F2139410031ED49 /* OmniBarStateTests.swift in Sources */,
 				F16BB6601F56494C00B47A42 /* FeaturesViewControllerTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,
+				8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,

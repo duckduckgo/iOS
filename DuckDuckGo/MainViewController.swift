@@ -356,8 +356,8 @@ extension MainViewController: TabDelegate {
     func tabLoadingStateDidChange(tab: TabViewController) {
         if currentTab == tab {
             refreshControls()
-            tabManager.save()
         }
+        tabManager.save()
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

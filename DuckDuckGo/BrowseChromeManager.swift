@@ -71,7 +71,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
 
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        print("***", #function)
         updateBars(false)
     }
 

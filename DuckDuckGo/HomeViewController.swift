@@ -141,7 +141,6 @@ class HomeViewController: UIViewController {
     }
 
     func dismiss() {
-        print("*** HomeViewController", #function)
         delegate = nil
         chromeDelegate = nil
         removeFromParentViewController()

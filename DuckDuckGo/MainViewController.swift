@@ -303,7 +303,6 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
-        print("***", #function, hidden, animated)
 
         updateToolbarConstant(hidden)
         updateNavBarConstant(hidden)
@@ -326,7 +325,6 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
-        print("***", #function, hidden)
         updateNavBarConstant(hidden)
         omniBar.alpha = hidden ? 0 : 1
     }

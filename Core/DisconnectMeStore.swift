@@ -18,13 +18,13 @@
 //
 
 import Foundation
+import WebKit
 
 public class DisconnectMeStore {
     
     struct CacheKeys {
         static let disconnectJsonBanned = "disconnect-json-banned"
         static let disconnectJsonAllowed = "disconnect-json-allowed"
-        static let disconnectAppleRules = "disconnect-apple-rules"
     }
     
     private lazy var stringCache = ContentBlockerStringCache()
@@ -62,21 +62,15 @@ public class DisconnectMeStore {
             return cached
         }
         if let json = try? convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.banned)) {
-            stringCache.put(name: CacheKeys.disconnectJsonAllowed, value: json)
             return json
         }
         return "{}"
     }
     
     var appleRulesJson: String? {
-        if let cached = stringCache.get(named: CacheKeys.disconnectAppleRules) {
-            return cached
-        }
-        
         let parser = AppleContentBlockerParser()
         let bannedTrackers = Array(trackers.filter(byCategory: Tracker.Category.banned).values)
         if let ruleData = try? parser.toJsonData(trackers: bannedTrackers), let rulesString = String(bytes: ruleData, encoding: .utf8) {
-            stringCache.put(name: CacheKeys.disconnectAppleRules, value: rulesString)
             return rulesString
         }
         return nil
@@ -91,7 +85,7 @@ public class DisconnectMeStore {
     private func invalidateCahce() {
         stringCache.remove(named: CacheKeys.disconnectJsonAllowed)
         stringCache.remove(named: CacheKeys.disconnectJsonBanned)
-        stringCache.remove(named: CacheKeys.disconnectAppleRules)
+        WKWebViewConfiguration.removeDisconnectRulesFromCache()
     }
     
     private func parse(data: Data) throws -> [String: Tracker] {

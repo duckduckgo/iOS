@@ -66,12 +66,6 @@ class DisconnectMeStoreTests: XCTestCase {
         XCTAssertNil(cache.get(named: DisconnectMeStore.CacheKeys.disconnectJsonAllowed))
     }
     
-    func testWhenNewDisconnectDataIsPersistedAppleCacheIaInvalidated() {
-        cache.put(name: DisconnectMeStore.CacheKeys.disconnectAppleRules, value: "someText")
-        try! testee.persist(data: trackerData)
-        XCTAssertNil(cache.get(named: DisconnectMeStore.CacheKeys.disconnectAppleRules))
-    }
-    
     func testWhenBannedJsHasCacheValueThenCachedValueIsReturned() {
         let cacheValue = "{ someText }"
         cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonBanned, value: cacheValue)
@@ -82,12 +76,6 @@ class DisconnectMeStoreTests: XCTestCase {
         let cacheValue = "{ someText }"
         cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonAllowed, value: cacheValue)
         XCTAssertEqual(cacheValue, testee.allowedTrackersJson)
-    }
-    
-    func testWhenAppleRulesHaveCacheValueThenCachedValueIsReturned() {
-        let cacheValue = "{ someText }"
-        cache.put(name: DisconnectMeStore.CacheKeys.disconnectAppleRules, value: cacheValue)
-        XCTAssertEqual(cacheValue, testee.appleRulesJson)
     }
     
     func testWhenBannedJsDoesNotHaveACachedValueThenComputedValueIsReturned() {
@@ -104,12 +92,6 @@ class DisconnectMeStoreTests: XCTestCase {
         XCTAssertNotEqual(defaultJsValue, result)
     }
     
-    func testWhenAppleRulesDoNotHaveACachedValueThenComputedValueIsReturned() {
-        try! testee.persist(data: trackerData)
-        let result = testee.appleRulesJson
-        XCTAssertNotNil(result)
-    }
-    
     func testWhenBannedJsDoesNotHaveACachedValueAndThereIsNoDataForComputationThenDefaultValueIsReturned() {
         let result = testee.bannedTrackersJson
         XCTAssertEqual(defaultJsValue, result)
@@ -120,7 +102,13 @@ class DisconnectMeStoreTests: XCTestCase {
         XCTAssertEqual( defaultJsValue, result)
     }
     
-    func testWhenAppleRulesDoNotHaveACachedValueAndThereIsNoDataForComputationThenEmptyArrayIsReturned() {
+    func testWhenAppleRulesAreRequestedThenParsedDataIsReturned() {
+        try! testee.persist(data: trackerData)
+        let result = testee.appleRulesJson
+        XCTAssertNotNil(result)
+    }
+    
+    func testWhenAppleRulesAreRequestedAndThereIsNoDataThenAnEmptyArrayIsReturned() {
         let result = testee.appleRulesJson
         XCTAssertEqual("[]", result)
     }

@@ -70,10 +70,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         lastOffset = scrollView.contentOffset
     }
 
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        updateBars(false)
-    }
-
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         dragging = true
     }
@@ -81,6 +77,15 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         dragging = false
         cumulative = 0
+    }
+
+    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if hidden {
+            updateBars(false)
+            return false
+        }
+
+        return true
     }
 
     private func updateBars(_ shouldHide: Bool) {

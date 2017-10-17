@@ -56,6 +56,9 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
                                     <barButtonItem image="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs Button"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="p9L-cF-4aL" kind="presentation" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
                                         </connections>

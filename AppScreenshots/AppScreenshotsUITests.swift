@@ -156,7 +156,6 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func waitForLoadingIndicatorToDisappear() {
-        // Snapshot.waitForLoadingIndicatorToDisappear()
         sleep(5)
     }
 

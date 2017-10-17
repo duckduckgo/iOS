@@ -265,18 +265,16 @@ extension TabViewController: WKScriptMessageHandler {
             
         case MessageHandlerNames.cache:
             handleCache(message: message)
-            break
             
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
-            break
             
         case MessageHandlerNames.beforeLoad:
             handleBeforeLoad(message: message)
             
         default:
             assertionFailure("Unhandled message: \(message.name)")
-            break
+
         }
         
     }

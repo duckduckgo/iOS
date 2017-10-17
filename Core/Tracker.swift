@@ -72,11 +72,11 @@ public class Tracker: NSObject {
 extension Dictionary where Key: ExpressibleByStringLiteral, Value: Tracker {
     
     func filter(byCategory categoryFilter: [Tracker.Category]) -> [Key: Value] {
-        let filterd = filter { element -> Bool in
+        let filtered = filter { element -> Bool in
             guard let category = element.value.category else { return false }
             return categoryFilter.contains(category)
         }
-        return filterd
+        return filtered
     }
 }
 

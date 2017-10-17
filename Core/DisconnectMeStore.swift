@@ -79,10 +79,10 @@ public class DisconnectMeStore {
     func persist(data: Data) throws  {
         Logger.log(items: "DisconnectMeStore", persistenceLocation)
         try data.write(to: persistenceLocation, options: .atomic)
-        invalidateCahce()
+        invalidateCache()
     }
     
-    private func invalidateCahce() {
+    private func invalidateCache() {
         stringCache.remove(named: CacheKeys.disconnectJsonAllowed)
         stringCache.remove(named: CacheKeys.disconnectJsonBanned)
         WKWebViewConfiguration.removeDisconnectRulesFromCache()

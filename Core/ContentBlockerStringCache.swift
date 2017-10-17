@@ -21,10 +21,6 @@ import Foundation
 
 public class ContentBlockerStringCache {
 
-    struct Constants {
-        static let groupName = ContentBlockerStoreConstants.groupName
-    }
-
     public init() {}
 
     public func get(named name: String) -> String? {
@@ -40,7 +36,8 @@ public class ContentBlockerStringCache {
     }
 
     private func persistenceLocation(for name: String) -> URL {
-        let cacheDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!.appendingPathComponent("string-cache")
+        let groupName = ContentBlockerStoreConstants.groupName
+        let cacheDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
         try? FileManager.default.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
         return cacheDir.appendingPathComponent(name)
     }

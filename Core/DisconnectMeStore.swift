@@ -68,9 +68,9 @@ public class DisconnectMeStore {
     }
     
     var appleRulesJson: String? {
-        let parser = AppleContentBlockerParser()
+        let converter = AppleContentBlockerConverter()
         let bannedTrackers = Array(trackers.filter(byCategory: Tracker.Category.banned).values)
-        if let ruleData = try? parser.toJsonData(trackers: bannedTrackers), let rulesString = String(bytes: ruleData, encoding: .utf8) {
+        if let ruleData = try? converter.toJsonData(trackers: bannedTrackers), let rulesString = String(bytes: ruleData, encoding: .utf8) {
             return rulesString
         }
         return nil

@@ -18,8 +18,8 @@
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
 		839825311F9579EE00AB1338 /* TrackerDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */; };
-		839F047D1F8E8BD000892CD6 /* AppleContentBlockerParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */; };
-		839F047F1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */; };
+		839F047D1F8E8BD000892CD6 /* AppleContentBlockerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */; };
+		839F047F1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */; };
 		83B66D701F94BC2F0065AC80 /* TrackerDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */; };
 		83C8A6671F8CD726007477F7 /* SnapShotHelperExcerpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
@@ -329,8 +329,8 @@
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
 		8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetectorTests.swift; sourceTree = "<group>"; };
-		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParser.swift; sourceTree = "<group>"; };
-		839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerParserTests.swift; sourceTree = "<group>"; };
+		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverter.swift; sourceTree = "<group>"; };
+		839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverterTests.swift; sourceTree = "<group>"; };
 		83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetector.swift; sourceTree = "<group>"; };
 		83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapShotHelperExcerpt.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
@@ -636,19 +636,19 @@
 			children = (
 				830FA79D1F8E82C500FCE105 /* Domain */,
 				830FA79E1F8E82DB00FCE105 /* Store */,
-				830FA79C1F8E820B00FCE105 /* Parser */,
+				830FA79C1F8E820B00FCE105 /* Converters */,
 				8398252F1F95797300AB1338 /* TrackerDetectorTests.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
 		};
-		830FA79C1F8E820B00FCE105 /* Parser */ = {
+		830FA79C1F8E820B00FCE105 /* Converters */ = {
 			isa = PBXGroup;
 			children = (
-				839F047E1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift */,
+				839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */,
 				F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */,
 			);
-			name = Parser;
+			name = Converters;
 			sourceTree = "<group>";
 		};
 		830FA79D1F8E82C500FCE105 /* Domain */ = {
@@ -702,7 +702,7 @@
 			children = (
 				8377744B1F8E1F8000E17A29 /* Domain */,
 				8377744C1F8E1F8D00E17A29 /* Store */,
-				8377744D1F8E1FF700E17A29 /* Parser */,
+				8377744D1F8E1FF700E17A29 /* Converters */,
 				F17FB1701F349B7B005B1CB6 /* API */,
 				83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */,
 			);
@@ -730,13 +730,13 @@
 			name = Store;
 			sourceTree = "<group>";
 		};
-		8377744D1F8E1FF700E17A29 /* Parser */ = {
+		8377744D1F8E1FF700E17A29 /* Converters */ = {
 			isa = PBXGroup;
 			children = (
 				F16394061ECE01E400DDD653 /* DisconnectMeTrackersParser.swift */,
-				839F047C1F8E8BCF00892CD6 /* AppleContentBlockerParser.swift */,
+				839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */,
 			);
-			name = Parser;
+			name = Converters;
 			sourceTree = "<group>";
 		};
 		83DBCA791F7BBB5000DFD170 /* TopSitesReport */ = {
@@ -2089,7 +2089,7 @@
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
 				F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */,
 				F16393F51ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift in Sources */,
-				839F047F1F8E8BED00892CD6 /* AppleContentBlockerParserTests.swift in Sources */,
+				839F047F1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift in Sources */,
 				F1DA2F7D1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift in Sources */,
 				F14208C91F33457A0034198A /* MockContentBlockerConfigurationStore.swift in Sources */,
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
@@ -2180,7 +2180,7 @@
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
 				F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */,
-				839F047D1F8E8BD000892CD6 /* AppleContentBlockerParser.swift in Sources */,
+				839F047D1F8E8BD000892CD6 /* AppleContentBlockerConverter.swift in Sources */,
 				830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */,
 				85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,

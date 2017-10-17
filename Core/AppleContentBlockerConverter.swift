@@ -1,5 +1,5 @@
 //
-//  AppleContentBlockerParser.swift
+//  AppleContentBlockerConverter.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-public struct AppleContentBlockerParser {
+public struct AppleContentBlockerConverter {
     
     public init() {}
     
@@ -33,7 +33,7 @@ public struct AppleContentBlockerParser {
         return data
     }
     
-    public func toJsonArray(trackers: [Tracker]) -> [Any] {
+    private func toJsonArray(trackers: [Tracker]) -> [Any] {
         var array = [Any]()
         for tracker in trackers {
             let jsonTracker = toJsonObject(tracker: tracker)

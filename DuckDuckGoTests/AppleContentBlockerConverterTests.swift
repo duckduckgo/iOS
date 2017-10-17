@@ -1,5 +1,5 @@
 //
-//  AppleContentBlockerParserTests.swift
+//  AppleContentBlockerConverterTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,9 +21,9 @@
 import XCTest
 @testable import Core
 
-class AppleContentBlockerParserTests: XCTestCase {
+class AppleContentBlockerConverterTests: XCTestCase {
     
-    private var testee = AppleContentBlockerParser()
+    private var testee = AppleContentBlockerConverter()
 
     func testWhenNoTrackersThenParserCreatesEmptyArray() {
         let result = testee.toJsonArray(trackers: noTrackers())

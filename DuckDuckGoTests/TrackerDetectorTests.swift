@@ -29,18 +29,22 @@ class TrackersDetectorTests: XCTestCase {
     private var mockConifguartion: MockContentBlockerConfigurationStore!
     
     struct UrlString {
-        static let tracker = "http://www.atracker.com"
-        static let differentTracker = "http://www.anothertracker.com"
-        static let allowedTracker = "http://www.contenttracker.com"
-        static let standard =  "http://www.facebook.com/path"
+        static let tracker = "http://tracker.com"
+        static let trackerSubdomain = "http://subdomin.tracker.com"
+        static let differentTracker = "http://anothertracker.com"
+        static let allowedTracker = "http://contenttracker.com"
+        static let looksLikeATracker = "http://innocentnontracker.com"
+        static let standard = "http://standard.com"
         static let document =  "http://www.wordpress.com"
     }
     
     struct Url {
         static let tracker = URL(string: UrlString.tracker)!
+        static let trackerSubdomain = URL(string: UrlString.trackerSubdomain)!
         static let differentTracker = URL(string: UrlString.differentTracker)!
         static let allowedTracker = URL(string: UrlString.allowedTracker)!
         static let standard = URL(string: UrlString.standard)!
+        static let looksLikeATracker = URL(string: UrlString.looksLikeATracker)!
         static let document = URL(string: UrlString.document)!
     }
     
@@ -75,6 +79,12 @@ class TrackersDetectorTests: XCTestCase {
         XCTAssertFalse(policy.block)
     }
     
+    func testWhenNonTrackerUrlWithSimilarEndingThenNotBlocked() {
+        let policy = testee.policy(forUrl: Url.looksLikeATracker, document: Url.document)
+        XCTAssertNil(policy.tracker)
+        XCTAssertFalse(policy.block)
+    }
+    
     func testWhenBlockerDisabledThenTrackerNotBlocked() {
         mockConifguartion.enabled = false
         let policy = testee.policy(forUrl: Url.tracker, document: Url.document)
@@ -82,8 +92,20 @@ class TrackersDetectorTests: XCTestCase {
         XCTAssertFalse(policy.block)
     }
     
-    func testWhenFirstPartyUrlThenNotBlocked() {
+    func testWhenFirstPartyWithSameUrlThenNotBlocked() {
         let policy = testee.policy(forUrl: Url.tracker, document: Url.tracker)
+        XCTAssertNil(policy.tracker)
+        XCTAssertFalse(policy.block)
+    }
+    
+    func testWhenFirstPartySubdomainTrackerThenNotBlocked() {
+        let policy = testee.policy(forUrl: Url.trackerSubdomain, document: Url.tracker)
+        XCTAssertNil(policy.tracker)
+        XCTAssertFalse(policy.block)
+    }
+    
+    func testWhenFirstPartyParentDomainTrackerThenNotBlocked() {
+        let policy = testee.policy(forUrl: Url.tracker, document: Url.trackerSubdomain)
         XCTAssertNil(policy.tracker)
         XCTAssertFalse(policy.block)
     }

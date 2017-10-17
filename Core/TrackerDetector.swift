@@ -53,7 +53,8 @@ public class TrackerDetector {
         let banned = disconnectTrackers.filter(byCategory: Tracker.Category.banned)
 
         for tracker in banned {
-            if url.absoluteString.contains(tracker.url) {
+            guard let urlHost = url.host, let trackerUrl = URL(string: tracker.url), let trackerHost = trackerUrl.host else { return nil }
+            if isFirstParty(url, of: trackerUrl), urlHost.contains(trackerHost) {
                 return tracker
             }
         }
@@ -61,10 +62,7 @@ public class TrackerDetector {
     }
     
     private func isFirstParty(_ childUrl: URL, of parentUrl: URL) -> Bool {
-        guard let childHost = childUrl.host, let parentHost = parentUrl.host else {
-            return false
-        }
-        return childHost.contains(parentHost)
+        return childUrl.baseDomain == parentUrl.baseDomain
     }
 }
 

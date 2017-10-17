@@ -21,6 +21,8 @@
 		839F047D1F8E8BD000892CD6 /* AppleContentBlockerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */; };
 		839F047F1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */; };
 		83B66D701F94BC2F0065AC80 /* TrackerDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */; };
+		83B7F65C1F968F7E0027461D /* TLDURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B7F65B1F968F460027461D /* TLDURLExtension.swift */; };
+		83B7F65D1F968F800027461D /* effective_tld_names.dat in Resources */ = {isa = PBXBuildFile; fileRef = 83B7F65A1F968F460027461D /* effective_tld_names.dat */; };
 		83C8A6671F8CD726007477F7 /* SnapShotHelperExcerpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
@@ -332,6 +334,8 @@
 		839F047C1F8E8BCF00892CD6 /* AppleContentBlockerConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverter.swift; sourceTree = "<group>"; };
 		839F047E1F8E8BED00892CD6 /* AppleContentBlockerConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleContentBlockerConverterTests.swift; sourceTree = "<group>"; };
 		83B66D6F1F94BC2F0065AC80 /* TrackerDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDetector.swift; sourceTree = "<group>"; };
+		83B7F65A1F968F460027461D /* effective_tld_names.dat */ = {isa = PBXFileReference; lastKnownFileType = text; path = effective_tld_names.dat; sourceTree = "<group>"; };
+		83B7F65B1F968F460027461D /* TLDURLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLDURLExtension.swift; sourceTree = "<group>"; };
 		83C8A6661F8CD726007477F7 /* SnapShotHelperExcerpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapShotHelperExcerpt.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
 		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -739,6 +743,25 @@
 			name = Converters;
 			sourceTree = "<group>";
 		};
+		83B7F6571F968ECE0027461D /* Third-Party */ = {
+			isa = PBXGroup;
+			children = (
+				83B7F6591F968F460027461D /* Brave */,
+			);
+			name = "Third-Party";
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		83B7F6591F968F460027461D /* Brave */ = {
+			isa = PBXGroup;
+			children = (
+				83B7F65B1F968F460027461D /* TLDURLExtension.swift */,
+				83B7F65A1F968F460027461D /* effective_tld_names.dat */,
+			);
+			name = Brave;
+			path = "Third-Party/Brave";
+			sourceTree = SOURCE_ROOT;
+		};
 		83DBCA791F7BBB5000DFD170 /* TopSitesReport */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,6 +785,7 @@
 			children = (
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
+				83B7F6571F968ECE0027461D /* Third-Party */,
 				F1EEAC461EAFC708006128D9 /* Fonts */,
 				F1AA54621E48D90700223211 /* TodayExtension */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
@@ -1893,6 +1917,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85BA79951F71B37100F59015 /* tlds.js in Resources */,
+				83B7F65D1F968F800027461D /* effective_tld_names.dat in Resources */,
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,
@@ -2189,6 +2214,7 @@
 				F1134EA61F3E2AF400B73467 /* StatisticsStore.swift in Sources */,
 				F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */,
 				F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */,
+				83B7F65C1F968F7E0027461D /* TLDURLExtension.swift in Sources */,
 				F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,

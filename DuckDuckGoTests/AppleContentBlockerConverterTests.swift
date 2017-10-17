@@ -19,6 +19,7 @@
 
 
 import XCTest
+import SwiftyJSON
 @testable import Core
 
 class AppleContentBlockerConverterTests: XCTestCase {
@@ -26,15 +27,17 @@ class AppleContentBlockerConverterTests: XCTestCase {
     private var testee = AppleContentBlockerConverter()
 
     func testWhenNoTrackersThenParserCreatesEmptyArray() {
-        let result = testee.toJsonArray(trackers: noTrackers())
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result.count, 0)
+        let result = try! testee.toJsonData(trackers: noTrackers())
+        let json = try! JSON(data: result)
+        XCTAssertNotNil(json.array)
+        XCTAssertEqual(json.array!.count, 0)
     }
     
     func testWhenTrackersValidThenParserCreatesJsonArrayOfCorrectSize() {
-        let result = testee.toJsonArray(trackers: validTrackers())
-        XCTAssertNotNil(result)
-        XCTAssertEqual(result.count, 2)
+        let result = try! testee.toJsonData(trackers: validTrackers())
+        let json = try! JSON(data: result)
+        XCTAssertNotNil(json.array)
+        XCTAssertEqual(json.array!.count, 2)
     }
     
     func testWhenTrackersValidThenParserCreatesCorrectJsonData() {

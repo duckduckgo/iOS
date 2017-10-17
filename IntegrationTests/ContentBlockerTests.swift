@@ -84,7 +84,7 @@ class ContentBlockerTests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.children(matching: .other).element.children(matching: .other).element.children(matching: .button).element(boundBy: 4).tap()
+        app.toolbars.children(matching: .other).element.children(matching: .other).element.children(matching: .button).element(boundBy: 3).tap()
     }
     
     private func addTab() {
@@ -111,11 +111,11 @@ class ContentBlockerTests: XCTestCase {
     private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
         
-        let searchOrTypeUrlTextField = app.navigationBars["DuckDuckGo.MainView"].textFields["Search or type URL"]
+        let searchOrTypeUrlTextField = app.textFields["Search or type URL"]
         searchOrTypeUrlTextField.typeText(text)
         
         if submit {
-            app.typeText("\n")
+            searchOrTypeUrlTextField.typeText("\n")
         }
     }
     
@@ -125,8 +125,7 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func openContentBlocker() {
-        let navBar = app.navigationBars["DuckDuckGo.MainView"]
-        navBar.otherElements["siteRating"].tap()
+        app.otherElements["siteRating"].tap()
     }
 }
 

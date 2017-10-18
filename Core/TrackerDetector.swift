@@ -50,20 +50,31 @@ public class TrackerDetector {
     }
     
     private func tracker(forUrl url: URL) -> Tracker? {
-        let banned = disconnectTrackers.filter(byCategory: Tracker.Category.banned)
 
+        guard let urlHost = url.host else {
+            return nil
+        }
+
+        let banned = disconnectTrackers.filter(byCategory: Tracker.Category.banned)
         for tracker in banned {
-            guard let urlHost = url.host, let trackerUrl = URL(string: tracker.url), let trackerHost = trackerUrl.host else { return nil }
+            
+            guard let trackerUrl = URL(string: URL.appendScheme(path: tracker.url)),
+                  let trackerHost = trackerUrl.host else {
+                    continue
+            }
+
             if isFirstParty(url, of: trackerUrl), urlHost.contains(trackerHost) {
                 return tracker
             }
         }
+        
         return nil
     }
     
     private func isFirstParty(_ childUrl: URL, of parentUrl: URL) -> Bool {
         return childUrl.baseDomain == parentUrl.baseDomain
     }
+
 }
 
 

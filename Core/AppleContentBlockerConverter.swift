@@ -44,14 +44,13 @@ public struct AppleContentBlockerConverter {
     
     private func toJsonObject(tracker: Tracker) -> [String: Any] {
         
-        var trigger: [String: Any] = [
-            "url-filter": tracker.url,
+        // REGEX: \/\/([A-Za-z0-9\-]*.)HOST(\/.*)?
+        let urlFilter = "\\/\\/([A-Za-z0-9\\-]*.)\(tracker.url)(\\/.*)?"
+        
+        let trigger: [String: Any] = [
+            "url-filter": urlFilter,
             "load-type": [ "third-party" ]
         ]
-        
-        if let parentDomain = tracker.parentDomain {
-            trigger["unless-domain"] = [ "*\(parentDomain)" ]
-        }
         
         return [
             "action": [

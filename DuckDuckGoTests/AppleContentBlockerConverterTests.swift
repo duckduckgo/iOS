@@ -43,7 +43,7 @@ class AppleContentBlockerConverterTests: XCTestCase {
     func testWhenTrackersValidThenParserCreatesCorrectJsonData() {
         let result = try! testee.toJsonData(trackers: validTrackers())
         let resultString = String(data: result, encoding: .utf8)!
-        let expectedString = "[{\"action\":{\"type\":\"block\"},\"trigger\":{\"unless-domain\":[\"*facebook.com\"],\"load-type\":[\"third-party\"],\"url-filter\":\"facebook.gb\"}},{\"action\":{\"type\":\"block\"},\"trigger\":{\"unless-domain\":[\"*reddit.com\"],\"load-type\":[\"third-party\"],\"url-filter\":\"reddit.co.uk\"}}]"
+        let expectedString = "[{\"action\":{\"type\":\"block\"},\"trigger\":{\"load-type\":[\"third-party\"],\"url-filter\":\"\\\\\\/\\\\\\/([A-Za-z0-9\\\\-]*.)facebook.gb(\\\\\\/.*)?\"}},{\"action\":{\"type\":\"block\"},\"trigger\":{\"load-type\":[\"third-party\"],\"url-filter\":\"\\\\\\/\\\\\\/([A-Za-z0-9\\\\-]*.)reddit.co.uk(\\\\\\/.*)?\"}}]"
         XCTAssertEqual(resultString, expectedString)
     }
     

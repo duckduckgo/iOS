@@ -95,7 +95,7 @@ extension URL {
         guard isWebUrl(text: text) else {
             return nil
         }
-        let urlText = text.hasPrefix(URLProtocol.http.rawValue) ? text : appendScheme(path: text)
+        let urlText = appendScheme(path: text)
         return URL(string: urlText)
     }
     
@@ -112,9 +112,9 @@ extension URL {
     public static func decode(query: String) -> String? {
         return query.removingPercentEncoding
     }
-
-    private static func appendScheme(path: String) -> String {
-        return "\(URLProtocol.http.rawValue)://\(path)"
+    
+    public static func appendScheme(path: String) -> String {
+        return path.hasPrefix(URLProtocol.http.rawValue) ? path : "\(URLProtocol.http.rawValue)://\(path)"
     }
     
     private static func isValidHost(_ host: String) -> Bool {

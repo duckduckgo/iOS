@@ -39,6 +39,7 @@
 		8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A0321F8E1F2700F04442 /* FireButton.swift */; };
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
 		8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0371F8E54F100F04442 /* Tab.storyboard */; };
+		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -100,7 +101,6 @@
 		F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */; };
 		F11E23091ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */; };
 		F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669A71E412A12003D3222 /* MockBundle.swift */; };
-		F1204B7E1EE606F900969006 /* OmniNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */; };
 		F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */; };
 		F12A123D1F43644500277CCD /* ContentBlockerDisabledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */; };
 		F12A12411F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A12401F4449EE00277CCD /* ContentBlockerDisabledDelegate.swift */; };
@@ -358,6 +358,7 @@
 		8563A0321F8E1F2700F04442 /* FireButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButton.swift; sourceTree = "<group>"; };
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		8563A0371F8E54F100F04442 /* Tab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tab.storyboard; sourceTree = "<group>"; };
+		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -421,7 +422,6 @@
 		F11E22F51ED31CB600523BC9 /* JsonError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonError.swift; sourceTree = "<group>"; };
 		F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestError.swift; sourceTree = "<group>"; };
 		F11E23081ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackersParserTests.swift; sourceTree = "<group>"; };
-		F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniNavigationBar.swift; sourceTree = "<group>"; };
 		F12790E91EBBDE75001D3AEC /* InterfaceMeasurementTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceMeasurementTests.swift; sourceTree = "<group>"; };
 		F12790ED1EBBEDD8001D3AEC /* OnboaridingViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboaridingViewControllerTests.swift; sourceTree = "<group>"; };
 		F12A123C1F43644500277CCD /* ContentBlockerDisabledViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerDisabledViewController.swift; sourceTree = "<group>"; };
@@ -1471,7 +1471,6 @@
 				F1D477C51F2126CC0031ED49 /* OmniBarState.swift */,
 				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
 				F114C55C1E6717800018F95F /* OmniBar.xib */,
-				F1204B7D1EE606F900969006 /* OmniNavigationBar.swift */,
 				F114C55A1E66EB020018F95F /* NibLoading.swift */,
 			);
 			name = OmniBar;
@@ -1493,6 +1492,7 @@
 			children = (
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
+				8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -2065,6 +2065,7 @@
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
+				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
@@ -2089,7 +2090,6 @@
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
-				F1204B7E1EE606F900969006 /* OmniNavigationBar.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
 			);

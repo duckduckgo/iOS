@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var useSafariContainer: UIView!
     
     weak var delegate: HomeControllerDelegate?
+    weak var chromeDelegate: BrowserChromeDelegate?
     private var active = false
     
     static func loadFromStoryboard(active: Bool) -> HomeViewController {
@@ -46,17 +47,11 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        resetNavigationBar()
         if active {
             enterActiveMode()
         } else {
             enterPassiveMode()
         }
-    }
-    
-    private func resetNavigationBar() {
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.hidesBarsOnSwipe = false
     }
     
     @IBAction func onEnterActiveModeTapped(_ sender: Any) {
@@ -73,7 +68,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterActiveMode() {
-        navigationController?.isNavigationBarHidden = false
+        chromeDelegate?.setNavigationBarHidden(false)
         passiveContent.isHidden = true
         delegate?.homeDidActivateOmniBar(home: self)
     }
@@ -83,7 +78,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterPassiveModeAnimated() {
-        navigationController?.isNavigationBarHidden = true
+        chromeDelegate?.setNavigationBarHidden(true)
         passiveContent.isHidden = false
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.resetSearchBar()
@@ -93,7 +88,7 @@ class HomeViewController: UIViewController {
     }
     
     private func enterPassiveMode() {
-        navigationController?.isNavigationBarHidden = true
+        chromeDelegate?.setNavigationBarHidden(true)
         adjustSafariButtonVisibility()
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
@@ -104,8 +99,8 @@ class HomeViewController: UIViewController {
     }
     
     private func moveSearchBarUp() {
-        guard let omniSearch = navigationController?.navigationBar.viewWithTag(OmniBar.Tag.searchContainer) else { return }
-        guard let frame = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
+        guard let omniSearch = chromeDelegate?.omniBar.searchContainer else { return }
+        guard let convertedOrigin = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
         
         let xScale = omniSearch.frame.size.width / searchBar.frame.size.width
         let yScale = omniSearch.frame.size.height / searchBar.frame.size.height
@@ -113,7 +108,7 @@ class HomeViewController: UIViewController {
         let yIdentityScale = searchBar.frame.size.height / omniSearch.frame.size.height
         let searchBarToOmniTextRatio: CGFloat = 0.875
         let searchTextMarginChange: CGFloat = -12
-        passiveContent.transform.ty = statusBarSize - frame.y
+        passiveContent.transform.ty = -convertedOrigin.y
         searchBar.transform = CGAffineTransform(scaleX: xScale, y: yScale)
         searchBarContent.transform = CGAffineTransform(scaleX: xIdentityScale, y: yIdentityScale)
         searchText.transform = CGAffineTransform(scaleX: searchBarToOmniTextRatio, y: searchBarToOmniTextRatio)
@@ -146,6 +141,8 @@ class HomeViewController: UIViewController {
     }
 
     func dismiss() {
+        delegate = nil
+        chromeDelegate = nil
         removeFromParentViewController()
         view.removeFromSuperview()
     }

@@ -28,9 +28,9 @@ public class SiteRating {
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
     private var termsOfServiceStore = TermsOfServiceStore()
-    private var disconnectMeTrackers: [String: String]
+    private var disconnectMeTrackers: [String: Tracker]
     
-    public init?(url: URL, disconnectMeTrackers: [String: String] = DisconnectMeStore.shared.allTrackers) {
+    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers) {
         guard let domain = url.host else {
             return nil
         }
@@ -49,7 +49,7 @@ public class SiteRating {
             return network
         }
         
-        if let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value {
+        if let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.parentDomain {
             return MajorTrackerNetwork.network(forDomain: associatedDomain)
         }
             

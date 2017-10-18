@@ -30,21 +30,27 @@ class TrackerTests: XCTestCase {
         static let anotherParentDomain = "anotherdomain.com"
     }
     
-    func testThatEqualsIsTrueWhenUrlsAndDomainAreSame() {
-        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
-        let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
+    func testThatEqualsIsTrueWhenUrlsDomainAndCategoryAreSame() {
+        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain, category: .analytics)
+        let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain, category: .analytics)
         XCTAssertEqual(lhs, rhs)
     }
     
     func testThatEqualsFailsWhenUrlsDifferent() {
-        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
-        let rhs = Tracker(url: Constants.anotherUrl, parentDomain: Constants.aParentDomain)
+        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain, category: .analytics)
+        let rhs = Tracker(url: Constants.anotherUrl, parentDomain: Constants.aParentDomain, category: .analytics)
         XCTAssertNotEqual(lhs, rhs)
     }
     
     func testThatEqualsFailsWhenDomainsDifferent() {
-        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain)
-        let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.anotherParentDomain)
+        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain, category: .analytics)
+        let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.anotherParentDomain, category: .analytics)
+        XCTAssertNotEqual(lhs, rhs)
+    }
+    
+    func testThatEqualsFailsWhenCategoriesAreDifferent() {
+        let lhs = Tracker(url: Constants.aUrl, parentDomain: Constants.aParentDomain, category: .analytics)
+        let rhs = Tracker(url: Constants.aUrl, parentDomain: Constants.anotherParentDomain, category: .social)
         XCTAssertNotEqual(lhs, rhs)
     }
     

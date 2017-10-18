@@ -27,53 +27,42 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     private var testee = DisconnectMeTrackersParser()
     
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
-        XCTAssertThrowsError(try testee.convert(fromJsonData: data.empty(), categoryFilter: nil), "") { (error) in
+        XCTAssertThrowsError(try testee.convert(fromJsonData: data.empty()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
     
     func testWhenJsonInvalidThenInvalidJsonErrorThrown() {
-        XCTAssertThrowsError(try testee.convert(fromJsonData: data.invalid(), categoryFilter: nil), "") { (error) in
+        XCTAssertThrowsError(try testee.convert(fromJsonData: data.invalid()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
         let mismatchedJson = data.fromJsonFile("MockJson/disconnect_mismatched.json")
-        XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson, categoryFilter: nil), "") { (error) in
+        XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
         let validJson = data.fromJsonFile("MockJson/disconnect.json")
-        XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson, categoryFilter: nil))
+        XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson))
     }
     
-    func testWhenJsonValidAndCategoryUnfilteredThenResultContainsAllTrackers() {
+    func testWhenJsonValidThenResultContainsAllTrackers() {
         let validJson = data.fromJsonFile("MockJson/disconnect.json")
-        let result = try! testee.convert(fromJsonData: validJson, categoryFilter: nil)
+        let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.count, 9)
-        XCTAssertEqual(result["99anadurl.com"], "anadurl.com")
-        XCTAssertEqual(result["analyticsurl.com"], "analyticsurl.com")
-        XCTAssertEqual(result["99asocialurl.com"], "asocialurl.com")
-        XCTAssertEqual(result["acontenturl.com"], "acontenturl.com")
-        XCTAssertEqual(result["adisconnecturl.com"], "adisconnecturl.com")
-        XCTAssertEqual(result["anothersocialurl.com"], "anothersocialurl.com")
-        XCTAssertEqual(result["55anothersocialurl.com"], "anothersocialurl.com")
-        XCTAssertEqual(result["99anothersocialurl.com"], "anothersocialurl.com")
-        XCTAssertEqual(result["anunknowncategory.com"], "unknowncategoryurl.com")
+        XCTAssertEqual(result["99anadurl.com"]?.parentDomain, "anadurl.com")
+        XCTAssertEqual(result["analyticsurl.com"]?.parentDomain, "analyticsurl.com")
+        XCTAssertEqual(result["99asocialurl.com"]?.parentDomain, "asocialurl.com")
+        XCTAssertEqual(result["acontenturl.com"]?.parentDomain, "acontenturl.com")
+        XCTAssertEqual(result["adisconnecturl.com"]?.parentDomain, "adisconnecturl.com")
+        XCTAssertEqual(result["anothersocialurl.com"]?.parentDomain, "anothersocialurl.com")
+        XCTAssertEqual(result["55anothersocialurl.com"]?.parentDomain, "anothersocialurl.com")
+        XCTAssertEqual(result["99anothersocialurl.com"]?.parentDomain, "anothersocialurl.com")
+        XCTAssertEqual(result["anunknowncategory.com"]?.parentDomain, "unknowncategoryurl.com")
     }
-    
-    func testWhenJsonValidAndCategoryFilteredThenResultContainsOnlyFilteredTrackers() {
-        let validJson = data.fromJsonFile("MockJson/disconnect.json")
-        let result = try! testee.convert(fromJsonData: validJson, categoryFilter: [.analytics, .advertising, .social])
-        XCTAssertEqual(result.count, 6)
-        XCTAssertEqual(result["99anadurl.com"], "anadurl.com")
-        XCTAssertEqual(result["analyticsurl.com"], "analyticsurl.com")
-        XCTAssertEqual(result["99asocialurl.com"], "asocialurl.com")
-        XCTAssertEqual(result["anothersocialurl.com"], "anothersocialurl.com")
-        XCTAssertEqual(result["55anothersocialurl.com"], "anothersocialurl.com")
-        XCTAssertEqual(result["99anothersocialurl.com"], "anothersocialurl.com")
-    }
+
 }

@@ -63,7 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         displayAuthenticationWindow()
     }
 
-
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         handleShortCutItem(shortcutItem)
     }

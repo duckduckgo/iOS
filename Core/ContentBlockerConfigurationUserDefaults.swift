@@ -46,7 +46,6 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         }
         set(newValue) {
             userDefaults?.set(newValue, forKey: Keys.enabled)
-            SFContentBlockerManager.reloadContentBlocker()
             onStoreChanged()
         }
     }

@@ -21,22 +21,36 @@
 import Foundation
 
 public class Tracker: NSObject {
+
+    public enum Category: String {
+        case analytics = "Analytics"
+        case advertising = "Advertising"
+        case social = "Social"
+        case disconnect = "Disconnect"
+        case content = "Content"
+
+        static let banned: [Category] = [.analytics, .advertising, .social]
+        static let allowed: [Category] = [.disconnect, .content]
+        static let all: [Category] = banned + allowed
+    }
     
     public let url: String
     public let parentDomain: String?
+    public let category: Category?
 
-    public init(url: String, parentDomain: String?) {
+    public init(url: String, parentDomain: String?, category: Category? = nil) {
         self.url = url
         self.parentDomain = parentDomain
+        self.category = category
     }
 
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Tracker else { return false }
-        return url == other.url && parentDomain == other.parentDomain
+        return url == other.url && parentDomain == other.parentDomain && category == other.category
     }
     
     public override var hashValue: Int {
-        return url.hashValue ^ (parentDomain?.hashValue ?? 0)
+        return url.hashValue ^ (parentDomain?.hashValue ?? 0) ^ (category?.hashValue ?? 0)
     }
     
     public var isIpTracker: Bool {
@@ -51,5 +65,28 @@ public class Tracker: NSObject {
             return false
         }
         return !MajorTrackerNetwork.all.filter( {$0.domain == parentDomain } ).isEmpty
+    }
+}
+
+
+extension Dictionary where Key: ExpressibleByStringLiteral, Value: Tracker {
+    
+    func filter(byCategory categoryFilter: [Tracker.Category]) -> [Key: Value] {
+        let filtered = filter { element -> Bool in
+            guard let category = element.value.category else { return false }
+            return categoryFilter.contains(category)
+        }
+        return filtered
+    }
+}
+
+
+extension Array where Element: Tracker {
+    
+    func filter(byCategory categoryFilter: [Tracker.Category]) -> [Element] {
+        return filter() {
+            guard let category = $0.category else { return false }
+            return categoryFilter.contains(category)
+        }
     }
 }

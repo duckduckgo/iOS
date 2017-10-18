@@ -40,12 +40,13 @@ public class TrackerDetector {
             Logger.log(text: "TrackerDetector did NOT detect \(url.absoluteString) as tracker")
             return (nil, false)
         }
+
+        Logger.log(text: "TrackerDetector DID detect \(url.absoluteString) as tracker")
         
         if !configuration.enabled {
             return (tracker, false)
         }
         
-        Logger.log(text: "TrackerDetector DID detect \(url.absoluteString) as tracker")
         return (tracker, true)
     }
     

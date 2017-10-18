@@ -36,7 +36,8 @@ lane :screenshots do
 
   gym(
     scheme: "AppScreenshots",
-    export_method: "development"
+    export_method: "development",
+    export_options: { compileBitcode: false }
   )
 
    reset_simulators

@@ -19,8 +19,8 @@
                 <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FireBackground" translatesAutoresizingMaskIntoConstraints="NO" id="0v3-0f-TuT">
                     <rect key="frame" x="-8" y="-8" width="60" height="60"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K23-H6-0Rl">
-                    <rect key="frame" x="11" y="8" width="22" height="29"/>
+                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K23-H6-0Rl">
+                    <rect key="frame" x="0.0" y="0.5" width="44" height="44"/>
                     <state key="normal" image="Fire"/>
                     <connections>
                         <action selector="onClick" destination="YwJ-Cm-1hD" eventType="touchUpInside" id="bqd-FG-nwq"/>
@@ -30,8 +30,10 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="0v3-0f-TuT" firstAttribute="centerY" secondItem="YwJ-Cm-1hD" secondAttribute="centerY" id="1cw-rV-8Me"/>
-                <constraint firstItem="K23-H6-0Rl" firstAttribute="centerY" secondItem="2Ac-bm-6Wy" secondAttribute="centerY" id="AwO-gk-bUe"/>
-                <constraint firstItem="K23-H6-0Rl" firstAttribute="centerX" secondItem="2Ac-bm-6Wy" secondAttribute="centerX" id="C6K-Jn-Anq"/>
+                <constraint firstItem="K23-H6-0Rl" firstAttribute="centerY" secondItem="YwJ-Cm-1hD" secondAttribute="centerY" id="AwO-gk-bUe"/>
+                <constraint firstItem="K23-H6-0Rl" firstAttribute="centerX" secondItem="YwJ-Cm-1hD" secondAttribute="centerX" id="C6K-Jn-Anq"/>
+                <constraint firstItem="K23-H6-0Rl" firstAttribute="height" secondItem="YwJ-Cm-1hD" secondAttribute="height" id="EHc-kA-hcF"/>
+                <constraint firstItem="K23-H6-0Rl" firstAttribute="width" secondItem="YwJ-Cm-1hD" secondAttribute="width" id="Y87-05-Dl7"/>
                 <constraint firstItem="0v3-0f-TuT" firstAttribute="centerX" secondItem="YwJ-Cm-1hD" secondAttribute="centerX" id="eY2-ys-XTd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

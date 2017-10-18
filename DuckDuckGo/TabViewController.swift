@@ -27,6 +27,7 @@ class TabViewController: WebViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
+    weak var chromeDelegate: BrowserChromeDelegate!
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
@@ -67,22 +68,20 @@ class TabViewController: WebViewController {
     }
     
     private func resetNavigationBar() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.hidesBarsOnSwipe = true
+        chromeDelegate.setBarsHidden(false, animated: false)
     }
         
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
-        showBars()
+        showBars(animated: false)
     }
     
-    fileprivate func showBars() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
+    fileprivate func showBars(animated: Bool = true) {
+        chromeDelegate.setBarsHidden(false, animated: animated)
     }
 
     func launchContentBlockerPopover() {
         guard let siteRating = siteRating else { return }
-        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.siteRating) else { return }
+        guard let button = chromeDelegate.omniBar.siteRatingView else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
         controller.modalPresentationStyle = .popover
         controller.popoverPresentationController?.delegate = self
@@ -115,7 +114,7 @@ class TabViewController: WebViewController {
     }
 
     func launchBrowsingMenu() {
-        guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
+        guard let button = chromeDelegate.omniBar.menuButton else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())
@@ -204,7 +203,7 @@ class TabViewController: WebViewController {
     
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
-            guard let menu = self?.navigationController?.view.viewWithTag(OmniBar.Tag.menuButton) else { return }
+            guard let menu = self?.chromeDelegate.omniBar.menuButton else { return }
             self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: menu)
         }
     }
@@ -237,6 +236,7 @@ class TabViewController: WebViewController {
     }
     
     func dismiss() {
+        chromeDelegate = nil
         webView.scrollView.delegate = nil
         willMove(toParentViewController: nil)
         removeFromParentViewController()
@@ -374,12 +374,12 @@ extension TabViewController {
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
         return gestureRecognizer == showBarsTapGestureRecogniser &&
-               navigationController?.isToolbarHidden == true &&
+               chromeDelegate.isToolbarHidden == true &&
                isBottom(yPosition: y)
     }
     
     private func isBottom(yPosition y: CGFloat) -> Bool {
-        return y > (view.frame.size.height - InterfaceMeasurement.defaultToolbarHeight)
+        return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
     }
     
     override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -392,7 +392,7 @@ extension TabViewController {
 
 extension TabViewController: UIScrollViewDelegate {
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if navigationController?.isToolbarHidden == true {
+        if chromeDelegate.isToolbarHidden == true {
             showBars()
             return false
         }

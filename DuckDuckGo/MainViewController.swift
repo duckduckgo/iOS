@@ -23,13 +23,18 @@ import WebKit
 import Core
 
 class MainViewController: UIViewController {
-    
+
+    @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var navBarTop: NSLayoutConstraint!
+    @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
 
     weak var fireButton: UIView!
-    weak var omniBar: OmniBar!
+    var omniBar: OmniBar!
+    var chromeManager: BrowserChromeManager!
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
@@ -42,14 +47,16 @@ class MainViewController: UIViewController {
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
         configureTabManager()
         loadInitialView()
 
-        fireButton = navigationController?.toolbar.addFireButton { self.launchFireMenu() }
+        fireButton = toolbar.addFireButton { self.launchFireMenu() }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -84,19 +91,23 @@ class MainViewController: UIViewController {
     }
     
     private func attachOmniBar() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
-        omniBar.frame = navigationBar.bounds
-        navigationBar.addSubview(omniBar)
+        omniBar.frame = customNavigationBar.bounds
+        customNavigationBar.addSubview(omniBar)
     }
     
     fileprivate func attachHomeScreen(active: Bool = true)  {
         removeHomeScreen()
+
         let controller = HomeViewController.loadFromStoryboard(active: active)
         homeController = controller
+
+        controller.chromeDelegate = self
         controller.delegate = self
+
         addToView(controller: controller)
+
         tabManager.clearSelection()
         refreshControls()
     }
@@ -157,7 +168,7 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         addToView(tab: tab)
     }
-    
+
     fileprivate func select(tabAt index: Int) {
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
@@ -168,9 +179,12 @@ class MainViewController: UIViewController {
         refreshControls()
     }
     
-    private func addToView(tab: UIViewController) {
+    private func addToView(tab: TabViewController) {
         removeHomeScreen()
+        currentTab?.chromeDelegate = nil
         addToView(controller: tab)
+        tab.webView.scrollView.delegate = chromeManager
+        tab.chromeDelegate = self
     }
 
     private func addToView(controller: UIViewController) {
@@ -192,9 +206,9 @@ class MainViewController: UIViewController {
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
-            completion()
             self.tabManager.removeAll()
             self.attachHomeScreen(active: false)
+            completion()
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
@@ -282,6 +296,61 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController: BrowserChromeDelegate {
+
+    struct ChromeAnimationConstants {
+        static let duration = 0.3
+    }
+
+    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+
+        updateToolbarConstant(hidden)
+        updateNavBarConstant(hidden)
+
+        if animated {
+
+            self.view.layer.removeAllAnimations()
+            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+                self.omniBar.alpha = hidden ? 0 : 1
+                self.toolbar.alpha = hidden ? 0 : 1
+
+                self.view.layoutIfNeeded()
+            }
+
+        } else {
+            setNavigationBarHidden(hidden)
+            toolbar.alpha = hidden ? 0 : 1
+        }
+
+    }
+
+    func setNavigationBarHidden(_ hidden: Bool) {
+        updateNavBarConstant(hidden)
+        omniBar.alpha = hidden ? 0 : 1
+    }
+
+    var isToolbarHidden: Bool {
+        get { return toolbar.alpha < 1 }
+    }
+
+    var toolbarHeight: CGFloat {
+        get { return toolbar.frame.size.height }
+    }
+
+    private func updateToolbarConstant(_ hidden: Bool) {
+        var bottomHeight = self.toolbar.frame.size.height
+        if #available(iOS 11.0, *) {
+            bottomHeight += view.safeAreaInsets.bottom
+        }
+        toolbarBottom.constant = hidden ? bottomHeight : 0
+    }
+
+    private func updateNavBarConstant(_ hidden: Bool) {
+        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
+    }
+
+}
+
 extension MainViewController: OmniBarDelegate {
     
     func onOmniQueryUpdated(_ updatedQuery: String) {
@@ -313,6 +382,7 @@ extension MainViewController: OmniBarDelegate {
 extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
+        homeController?.chromeDelegate = nil
         dismissOmniBar()
         loadQuery(suggestion)
     }
@@ -421,3 +491,4 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         return DissolveAnimatedTransitioning()
     }
 }
+

@@ -29,10 +29,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypz-s2-KJB">
-                                <rect key="frame" x="0.0" y="-20" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="-60" width="375" height="80"/>
                                 <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="xhL-Yb-2Uf"/>
+                                    <constraint firstAttribute="height" constant="80" id="xhL-Yb-2Uf"/>
                                 </constraints>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cf7-Ja-fUU">
@@ -48,15 +48,15 @@
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="cf7-Ja-fUU" secondAttribute="trailing" id="2jX-5z-Ssu"/>
+                            <constraint firstItem="t0t-53-xVf" firstAttribute="trailing" secondItem="cf7-Ja-fUU" secondAttribute="trailing" id="2jX-5z-Ssu"/>
                             <constraint firstItem="6P7-7R-riV" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leadingMargin" constant="53" id="50N-DY-LRh"/>
                             <constraint firstItem="6P7-7R-riV" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="101" id="ImD-dD-psM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6P7-7R-riV" secondAttribute="trailing" constant="53" id="S9R-81-gn8"/>
-                            <constraint firstItem="cf7-Ja-fUU" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="Vfx-ef-Qp5"/>
-                            <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-40" id="Zyh-vQ-fMz"/>
+                            <constraint firstItem="cf7-Ja-fUU" firstAttribute="leading" secondItem="t0t-53-xVf" secondAttribute="leading" id="Vfx-ef-Qp5"/>
+                            <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-80" id="Zyh-vQ-fMz"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
-                            <constraint firstItem="cf7-Ja-fUU" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" id="uBM-zl-ldh"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
+                            <constraint firstItem="cf7-Ja-fUU" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="bottom" id="xwr-1D-cel"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="t0t-53-xVf"/>
                         <connections>

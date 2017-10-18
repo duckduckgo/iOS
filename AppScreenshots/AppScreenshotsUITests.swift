@@ -53,6 +53,8 @@ class AppScreenshotsUITests: XCTestCase {
 
     func testTakeTabSwitcherSearchResultsAndAutoCompleteScreenshots() {
 
+        newTab()
+
         screenshotTabSwitcher()
 
         addTab()
@@ -63,12 +65,12 @@ class AppScreenshotsUITests: XCTestCase {
 
         screenshotAutoComplete()
     }
-    
+
     func testScreenshotSiteRating() {
         newTab()
         enterSearch("https://nytimes.com/2017/08/24/books/review/10-new-books-we-recommend-this-week.html")
         sleep(5)
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         tapSiteRating()
         snapshot("Tracker Blocking")
     }
@@ -82,12 +84,11 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func tapSiteRating() {
-        let navBar = app.navigationBars["DuckDuckGo.MainView"]
-        navBar.otherElements["siteRating"].tap()
+        app.otherElements["siteRating"].tap()
     }
 
     private func showTabs() {
-        app.toolbars.children(matching: .other).element.children(matching: .other).element.children(matching: .button).element(boundBy: 4).tap()
+        app.toolbars.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .button).element(boundBy: 3).tap()
     }
     
     private func addTab() {
@@ -102,17 +103,17 @@ class AppScreenshotsUITests: XCTestCase {
     private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
 
-        let searchOrTypeUrlTextField = app.navigationBars["DuckDuckGo.MainView"].textFields["Search or type URL"]
+        let searchOrTypeUrlTextField = app.textFields["Search or type URL"]
         searchOrTypeUrlTextField.typeText(text)
 
         if submit {
-            app.typeText("\n")
+            searchOrTypeUrlTextField.typeText("\n")
         }
     }
 
     private func saveBookmark() {
         let app = XCUIApplication()
-        app.navigationBars["DuckDuckGo.MainView"].buttons["Menu"].tap()
+        app.buttons["Menu"].tap()
         app.sheets.buttons["Add to Bookmarks"].tap()
         app.alerts["Save Bookmark"].buttons["Save"].tap()
     }
@@ -123,13 +124,12 @@ class AppScreenshotsUITests: XCTestCase {
     }
 
     private func screenshotTabSwitcher() {
-        app.staticTexts["Search or type URL"].tap()
         enterSearch("https://twitter.com/duckduckgo")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         waitForPageTitle()
         newTab()
         enterSearch("https://dribbble.com/duckduckgo")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         waitForPageTitle()
         showTabs()
         snapshot("Tab Switcher")
@@ -137,7 +137,7 @@ class AppScreenshotsUITests: XCTestCase {
 
     private func screenshotSearchResults() {
         enterSearch("https://duckduckgo.com?q=bars%20in%20portland&kl=us-en&k1=-1")
-        Snapshot.waitForLoadingIndicatorToDisappear()
+        waitForLoadingIndicatorToDisappear()
         waitForPageTitle()
         snapshot("Search Results")
     }
@@ -153,6 +153,10 @@ class AppScreenshotsUITests: XCTestCase {
 
     private func waitForToastToDisappear() {
         sleep(6)
+    }
+
+    private func waitForLoadingIndicatorToDisappear() {
+        sleep(5)
     }
 
 }

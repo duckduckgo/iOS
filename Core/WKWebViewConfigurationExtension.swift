@@ -62,7 +62,7 @@ extension WKWebViewConfiguration {
    
     @available(iOSApplicationExtension 11.0, *)
     private func loadSiteMonitoringScripts() {
-        load(scripts: [ .beforeLoadNotification ] )
+        load(scripts: [ .beforeLoadNotification ], forMainFrameOnly: false)
         loadContentBlockerRules()
     }
     

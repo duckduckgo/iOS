@@ -123,8 +123,8 @@ class TabViewController: WebViewController {
         
         if let link = link {
 
-            if let host = link.url.host {
-                alert.addAction(whitelistAction(forHost: host))
+            if let domain = siteRating?.domain {
+                alert.addAction(whitelistAction(forDomain: domain))
             }
 
             alert.addAction(saveBookmarkAction(forLink: link))
@@ -136,15 +136,15 @@ class TabViewController: WebViewController {
         present(controller: alert, fromView: button)
     }
 
-    func whitelistAction(forHost host: String) -> UIAlertAction {
+    func whitelistAction(forDomain domain: String) -> UIAlertAction {
 
         let whitelistManager = WhitelistManager()
-        let whitelisted = whitelistManager.isWhitelisted(host: host)
+        let whitelisted = whitelistManager.isWhitelisted(domain: domain)
         let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
         let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
 
         return UIAlertAction(title: title, style: .default) { [weak self] (action) in
-            operation(host)
+            operation(domain)
             self?.reload()
         }
 

@@ -35,6 +35,7 @@
 		85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */; };
 		85047B881F6966ED002A95D8 /* disconnectme.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B871F6966ED002A95D8 /* disconnectme.js */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
+		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0301F8E1EE300F04442 /* FireButton.xib */; };
 		8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A0321F8E1F2700F04442 /* FireButton.swift */; };
@@ -355,6 +356,7 @@
 		85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListsLoader.swift; sourceTree = "<group>"; };
 		85047B871F6966ED002A95D8 /* disconnectme.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = disconnectme.js; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8563A0301F8E1EE300F04442 /* FireButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FireButton.xib; sourceTree = "<group>"; };
 		8563A0321F8E1F2700F04442 /* FireButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButton.swift; sourceTree = "<group>"; };
@@ -1454,6 +1456,7 @@
 				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
 				F1126DF61EA5C92E0016A6C7 /* FeedbackEmail.swift */,
+				8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2080,6 +2083,7 @@
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
 				F114C5611E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
+				8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */,

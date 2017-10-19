@@ -12,20 +12,37 @@ public class WhitelistManager {
 
     private let contentBlockerConfigurationStore: ContentBlockerConfigurationStore
 
+    public var count: Int {
+        get {
+            return contentBlockerConfigurationStore.domainWhitelist.count
+        }
+    }
+
+    private var domains: [String]?
+
     public init(contentBlockerConfigurationStore: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()) {
         self.contentBlockerConfigurationStore = contentBlockerConfigurationStore
     }
 
-    public func add(host: String) {
-        contentBlockerConfigurationStore.addToWhitelist(domain: host)
+    public func add(domain: String) {
+        contentBlockerConfigurationStore.addToWhitelist(domain: domain)
+        domains = nil
     }
 
-    public func remove(host: String) {
-        contentBlockerConfigurationStore.removeFromWhitelist(domain: host)
+    public func remove(domain: String) {
+        contentBlockerConfigurationStore.removeFromWhitelist(domain: domain)
+        domains = nil
     }
 
-    public func isWhitelisted(host: String) -> Bool {
-        return contentBlockerConfigurationStore.domainWhitelist.contains(host)
+    public func isWhitelisted(domain: String) -> Bool {
+        return contentBlockerConfigurationStore.domainWhitelist.contains(domain)
+    }
+
+    public func domain(at index: Int) -> String? {
+        if self.domains == nil {
+            self.domains = Array(contentBlockerConfigurationStore.domainWhitelist).sorted()
+        }
+        return self.domains?[index]
     }
 
 }

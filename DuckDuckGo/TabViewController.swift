@@ -122,6 +122,11 @@ class TabViewController: WebViewController {
         alert.addAction(newTabAction())
         
         if let link = link {
+
+            if let host = link.url.host {
+                alert.addAction(whitelistAction(forHost: host))
+            }
+
             alert.addAction(saveBookmarkAction(forLink: link))
             alert.addAction(shareAction(forLink: link))
         }
@@ -129,6 +134,20 @@ class TabViewController: WebViewController {
         alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
+    }
+
+    func whitelistAction(forHost host: String) -> UIAlertAction {
+
+        let whitelistManager = WhitelistManager()
+        let whitelisted = whitelistManager.isWhitelisted(host: host)
+        let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
+        let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
+
+        return UIAlertAction(title: title, style: .default) { [weak self] (action) in
+            operation(host)
+            self?.reload()
+        }
+
     }
     
     func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {

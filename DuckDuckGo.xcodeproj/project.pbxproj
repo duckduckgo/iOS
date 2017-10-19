@@ -35,6 +35,7 @@
 		85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */; };
 		85047B881F6966ED002A95D8 /* disconnectme.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B871F6966ED002A95D8 /* disconnectme.js */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
+		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0301F8E1EE300F04442 /* FireButton.xib */; };
 		8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A0321F8E1F2700F04442 /* FireButton.swift */; };
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
@@ -354,6 +355,7 @@
 		85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListsLoader.swift; sourceTree = "<group>"; };
 		85047B871F6966ED002A95D8 /* disconnectme.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = disconnectme.js; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8563A0301F8E1EE300F04442 /* FireButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FireButton.xib; sourceTree = "<group>"; };
 		8563A0321F8E1F2700F04442 /* FireButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButton.swift; sourceTree = "<group>"; };
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
@@ -827,6 +829,7 @@
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
 				F1E249411EF2075C008C947A /* SiteMonitoring */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
+				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
 				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
@@ -860,6 +863,21 @@
 				F1F533861F26ABAC00D80D4F /* Localizable.strings */,
 			);
 			name = UserInterfaceResources;
+			sourceTree = "<group>";
+		};
+		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = PrivacyProtection;
+			sourceTree = "<group>";
+		};
+		8533133E1F98EA2E00E061A5 /* PrivacyProtection */ = {
+			isa = PBXGroup;
+			children = (
+				8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */,
+			);
+			name = PrivacyProtection;
 			sourceTree = "<group>";
 		};
 		8563A02F1F8E1EB300F04442 /* FireButton */ = {
@@ -1128,19 +1146,20 @@
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				F143C3141E4A99BE00CFDE3A /* Domain */,
-				F11E23051ED33D8B00523BC9 /* API */,
-				F11E22E91ED31CA000523BC9 /* Parser */,
-				F143C3191E4A99DD00CFDE3A /* Utilities */,
-				F1134EA71F3E2B3500B73467 /* Statistics */,
-				F1CE42A21ECA08E60074A8DF /* SiteMonitoring */,
-				837774491F8E1ECE00E17A29 /* ContentBlocker */,
-				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
-				F143C32A1E4A9A2700CFDE3A /* UserInterface */,
-				F143C3311E4A9A6A00CFDE3A /* Web */,
-				F18608DE1E5E648100361C30 /* Javascript */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
+				F11E23051ED33D8B00523BC9 /* API */,
+				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
+				837774491F8E1ECE00E17A29 /* ContentBlocker */,
+				F143C3141E4A99BE00CFDE3A /* Domain */,
+				F18608DE1E5E648100361C30 /* Javascript */,
+				F11E22E91ED31CA000523BC9 /* Parser */,
+				8533133E1F98EA2E00E061A5 /* PrivacyProtection */,
+				F1CE42A21ECA08E60074A8DF /* SiteMonitoring */,
+				F1134EA71F3E2B3500B73467 /* Statistics */,
+				F143C32A1E4A9A2700CFDE3A /* UserInterface */,
+				F143C3191E4A99DD00CFDE3A /* Utilities */,
+				F143C3311E4A9A6A00CFDE3A /* Web */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2157,6 +2176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */,
 				F16393FF1ECCB9CC00DDD653 /* FileLoader.swift in Sources */,
 				F1134EAB1F3E2C6A00B73467 /* StatisticsUserDefaults.swift in Sources */,
 				F16956401ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift in Sources */,

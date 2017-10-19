@@ -43,7 +43,7 @@
 "action.title.share"= "Share...";
 "action.title.add.to.whitelist" = "Add to Whitelist";
 "action.title.remove.from.whitelist" = "Remove from Whitelist";
-"action.title.remove.bookmark" = "Remove Bookmarks";
+"action.title.remove.bookmark" = "Remove Bookmark";
 "action.title.save.bookmark" = "Add to Bookmarks";
 "action.title.settings" = "Settings...";
 "alert.title.save.bookmark" = "Save Bookmark";

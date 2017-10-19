@@ -69,5 +69,17 @@ class BookmarksManager {
     func clear() {
         dataStore.bookmarks = [Link]()
     }
-    
+
+    func indexOf(url: URL) -> Int? {
+        guard let bookmarks = dataStore.bookmarks else { return nil }
+        var index = 0
+        for link in bookmarks {
+            if link.url == url {
+                return index
+            }
+            index += 1
+        }
+        return nil
+    }
+
 }

@@ -17,12 +17,10 @@ public class WhitelistManager {
     }
 
     public func add(host: String) {
-        print("***", #function)
         contentBlockerConfigurationStore.addToWhitelist(domain: host)
     }
 
     public func remove(host: String) {
-        print("***", #function)
         contentBlockerConfigurationStore.removeFromWhitelist(domain: host)
     }
 

@@ -168,8 +168,16 @@ class TabViewController: WebViewController {
     }
     
     private func saveBookmarkAction(forLink link: Link) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] action in
-            self?.launchSaveBookmarkAlert(bookmark: link)
+
+        let bookmarksManager = BookmarksManager()
+        if let index = bookmarksManager.indexOf(url: link.url) {
+            return UIAlertAction(title: UserText.actionRemoveBookmark, style: .default) { action in
+                bookmarksManager.delete(itemAtIndex: index)
+            }
+        } else {
+            return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] action in
+                self?.launchSaveBookmarkAlert(bookmark: link)
+            }
         }
     }
     

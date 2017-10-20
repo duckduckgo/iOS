@@ -37,7 +37,7 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
-        fireButton = toolbar.addFireButton { self.onFirePressed() }
+        fireButton = toolbar.addFireButton { [weak self] in self?.onFirePressed() }
     }
     
     override func viewDidAppear(_ animated: Bool) {

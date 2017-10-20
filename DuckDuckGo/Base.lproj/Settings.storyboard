@@ -517,7 +517,11 @@ See our privacy policy online.</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Whitelist" id="OHV-qC-tL9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CxT-QK-iVn"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="CxT-QK-iVn">
+                            <connections>
+                                <action selector="onAddPressed" destination="UEu-y1-KbY" id="wOp-Gh-hyF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bjs-Ft-LTq" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -24,6 +24,8 @@ class WhitelistViewController: UITableViewController {
 
     let whitelistManager = WhitelistManager()
 
+    // MARK: UITableView data source
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -39,6 +41,51 @@ class WhitelistViewController: UITableViewController {
         let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as! WhitelistItemCell
         whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
         return whitelistItemCell
+    }
+
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return whitelistManager.count > 0
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+
+        if let domain = whitelistManager.domain(at: indexPath.row) {
+            whitelistManager.remove(domain: domain)
+            tableView.reloadData()
+        }
+    }
+
+    // MARK: actions
+
+    @IBAction func onAddPressed() {
+
+        let title = UserText.alertAddToWhitelist
+        let placeholder = UserText.alertAddToWhitelistPlaceholder
+        let add = UserText.actionAdd
+        let cancel = UserText.actionCancel
+
+        let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        addSiteBox.addTextField { (textField) in textField.placeholder = placeholder }
+        addSiteBox.addAction(UIAlertAction.init(title: add, style: .default, handler: { action in self.addSite(from: addSiteBox) }))
+        addSiteBox.addAction(UIAlertAction.init(title: cancel, style: .cancel, handler: nil))
+        present(addSiteBox, animated: true, completion: nil)
+
+    }
+
+    // MARK: private
+
+    private func addSite(from controller: UIAlertController) {
+        guard let field = controller.textFields?[0] else { return }
+        guard let domain = domain(from: field) else { return }
+        whitelistManager.add(domain: domain)
+        tableView.reloadData()
+    }
+
+    private func domain(from field: UITextField) -> String? {
+        guard let domain = field.text?.trimWhitespace() else { return nil }
+        guard (URL.isValidHostname(domain) || URL.isValidIpHost(domain)) else { return nil }
+        return domain
     }
 
 }

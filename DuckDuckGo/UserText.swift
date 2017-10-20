@@ -40,6 +40,7 @@ public struct UserText {
     
     public static let actionPasteAndGo = NSLocalizedString("action.title.pasteAndGo", comment: "Paste and Go action")
     public static let actionRefresh = NSLocalizedString("action.title.refresh", comment: "Refresh action")
+    public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
     public static let actionSave = NSLocalizedString("action.title.save", comment: "Save action")
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
@@ -57,7 +58,10 @@ public struct UserText {
     public static let actionSettings = NSLocalizedString("action.title.settings", comment: "Settings action")
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", comment: "Save Bookmark action")
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
-    
+
+    public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
+    public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
+
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
 
     public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")

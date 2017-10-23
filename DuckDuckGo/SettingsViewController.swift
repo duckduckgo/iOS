@@ -54,7 +54,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureMargins() {
-        guard #available(iOS 10, *) else { return }
+        guard #available(iOS 11, *) else { return }
         for margin in margins {
             margin.constant = 0
         }

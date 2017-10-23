@@ -25,6 +25,8 @@ import Device
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet var margins: [NSLayoutConstraint]!
+
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var contentBlockingToggle: UISwitch!
@@ -45,9 +47,17 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureMargins()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
+    }
+
+    private func configureMargins() {
+        guard #available(iOS 10, *) else { return }
+        for margin in margins {
+            margin.constant = 0
+        }
     }
     
     private func configureDisableAutocompleteToggle() {

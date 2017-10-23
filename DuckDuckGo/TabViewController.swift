@@ -122,6 +122,11 @@ class TabViewController: WebViewController {
         alert.addAction(newTabAction())
         
         if let link = link {
+
+            if let domain = siteRating?.domain {
+                alert.addAction(whitelistAction(forDomain: domain))
+            }
+
             alert.addAction(saveBookmarkAction(forLink: link))
             alert.addAction(shareAction(forLink: link))
         }
@@ -129,6 +134,20 @@ class TabViewController: WebViewController {
         alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
+    }
+
+    func whitelistAction(forDomain domain: String) -> UIAlertAction {
+
+        let whitelistManager = WhitelistManager()
+        let whitelisted = whitelistManager.isWhitelisted(domain: domain)
+        let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
+        let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
+
+        return UIAlertAction(title: title, style: .default) { [weak self] (action) in
+            operation(domain)
+            self?.reload()
+        }
+
     }
     
     func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
@@ -149,8 +168,16 @@ class TabViewController: WebViewController {
     }
     
     private func saveBookmarkAction(forLink link: Link) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] action in
-            self?.launchSaveBookmarkAlert(bookmark: link)
+
+        let bookmarksManager = BookmarksManager()
+        if let index = bookmarksManager.indexOf(url: link.url) {
+            return UIAlertAction(title: UserText.actionRemoveBookmark, style: .default) { action in
+                bookmarksManager.delete(itemAtIndex: index)
+            }
+        } else {
+            return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] action in
+                self?.launchSaveBookmarkAlert(bookmark: link)
+            }
         }
     }
     

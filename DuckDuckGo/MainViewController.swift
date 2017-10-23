@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
 
-        fireButton = toolbar.addFireButton { self.launchFireMenu() }
+        fireButton = toolbar.addFireButton { [weak self] in self?.launchFireMenu() }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

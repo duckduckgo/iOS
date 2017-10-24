@@ -48,12 +48,7 @@ extension WKWebViewConfiguration {
     
     public func loadScripts() {
         loadDocumentLevelScripts()
-        
-        if #available(iOS 11.0, *) {
-            loadSiteMonitoringScripts()
-        } else {
-            loadLegacySiteMonitoringScripts()
-        }
+        loadLegacySiteMonitoringScripts()
     }
     
     private func loadDocumentLevelScripts() {

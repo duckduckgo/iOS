@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -72,6 +72,7 @@
                         <outlet property="errorMessage" destination="6P7-7R-riV" id="xsf-dK-vm2"/>
                         <outlet property="progressBar" destination="cf7-Ja-fUU" id="3z8-Dr-WFy"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
+                        <segue destination="5Os-y0-IaV" kind="show" identifier="PrivacyProtection" id="nKl-8K-k03"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xy9-lL-XjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -83,6 +84,14 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1182" y="446"/>
+        </scene>
+        <!--PrivacyProtection-->
+        <scene sceneID="L6K-iW-ae0">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PrivacyProtection" id="5Os-y0-IaV" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UuK-nd-xhd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1922" y="188"/>
         </scene>
     </scenes>
 </document>

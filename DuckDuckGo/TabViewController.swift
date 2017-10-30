@@ -59,7 +59,7 @@ class TabViewController: WebViewController {
         super.viewDidAppear(animated)
         resetNavigationBar()
     }
-    
+
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
@@ -81,7 +81,7 @@ class TabViewController: WebViewController {
         chromeDelegate.setBarsHidden(false, animated: animated)
     }
     
-    func launchContentBlockerPopover() {
+    func launchContentBlockerPopoverOld() {
         guard let siteRating = siteRating else { return }
         guard let button = chromeDelegate.omniBar.siteRatingView else { return }
         let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
@@ -90,6 +90,10 @@ class TabViewController: WebViewController {
         controller.popoverPresentationController?.backgroundColor = UIColor.white
         present(controller: controller, fromView: button)
         contentBlockerPopover = controller
+    }
+
+    func launchContentBlockerPopover() {
+        performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
     
     fileprivate func resetSiteRating() {

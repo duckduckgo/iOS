@@ -10,26 +10,15 @@ import UIKit
 
 class PrivacyProtectionDashboardController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
-
-    static func loadFromStoryboard() -> PrivacyProtectionDashboardController {
-        let storyboard = UIStoryboard(name: "PrivacyProtection", bundle: nil)
-        return storyboard.instantiateInitialViewController() as! PrivacyProtectionDashboardController
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         transitioningDelegate = self
 
-        initTableView()
         initOmniBar()
-    }
-
-    private func initTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
     }
 
     private func initOmniBar() {
@@ -40,29 +29,6 @@ class PrivacyProtectionDashboardController: UIViewController {
 
 }
 
-extension PrivacyProtectionDashboardController: UITableViewDelegate {
-
-}
-
-extension PrivacyProtectionDashboardController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "PrivacyGrade")!
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 203
-    }
-
-}
 
 extension PrivacyProtectionDashboardController: UIViewControllerTransitioningDelegate {
 
@@ -76,6 +42,7 @@ class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAnimatedTr
 
     struct Constants {
         static let duration = 0.3
+        static let tyOffset = CGFloat(20.0)
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -89,9 +56,10 @@ class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAnimatedTr
         let toColor = toController.view.backgroundColor
         toController.view.backgroundColor = UIColor.clear
 
-        toController.tableView.transform.ty = -toController.tableView.frame.size.height
+        toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height - toController.omniBarContainer.frame.height - Constants.tyOffset
+
         UIView.animate(withDuration: Constants.duration, animations: {
-            toController.tableView.transform.ty = 0
+            toController.contentContainer.transform.ty = 0
         }, completion: { (value: Bool) in
             toController.view.backgroundColor = toColor
             transitionContext.completeTransition(true)

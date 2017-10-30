@@ -44,8 +44,8 @@ class SuggestionTableViewCell: UITableViewCell {
     private func styleText(query: String, text: String) {
 
         let attributes = [
-            NSFontAttributeName: UIFont.semiBoldAppFont(ofSize: 16),
-            NSForegroundColorAttributeName: UIColor.white
+            NSAttributedStringKey.font: UIFont.semiBoldAppFont(ofSize: 16),
+            NSAttributedStringKey.foregroundColor: UIColor.white
         ]
         
         let count = (query.length() < text.length()) ? query.length() : text.length()

@@ -24,12 +24,6 @@ import Core
 extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
-    
-    struct Tag {
-        static let searchContainer = 100
-        static let siteRating = 200
-        static let menuButton = 300
-    }
 
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var dismissButton: UIButton!
@@ -49,9 +43,6 @@ class OmniBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        searchContainer.tag = Tag.searchContainer
-        siteRatingView.tag = Tag.siteRating
-        menuButton.tag = Tag.menuButton
         configureTextField()
         configureEditingMenu()
         configureSiteRating()
@@ -59,7 +50,7 @@ class OmniBar: UIView {
     }
     
     private func configureTextField() {
-        textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo, attributes: [NSForegroundColorAttributeName: UIColor.coolGray])
+        textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo, attributes: [NSAttributedStringKey.foregroundColor: UIColor.coolGray])
         textField.delegate = self
     }
     
@@ -72,7 +63,7 @@ class OmniBar: UIView {
         siteRatingView.refresh()
     }
     
-    func pasteAndGo(sender: UIMenuItem) {
+    @objc func pasteAndGo(sender: UIMenuItem) {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()

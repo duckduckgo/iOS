@@ -23,13 +23,18 @@ import WebKit
 import Core
 
 class MainViewController: UIViewController {
-    
+
+    @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
-    @IBOutlet weak var fireButton: UIButton!
-    @IBOutlet weak var tabsButton: UIButton!
-    weak var omniBar: OmniBar!
+    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var navBarTop: NSLayoutConstraint!
+    @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
+
+    weak var fireButton: UIView!
+    var omniBar: OmniBar!
+    var chromeManager: BrowserChromeManager!
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
@@ -42,14 +47,35 @@ class MainViewController: UIViewController {
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
         configureTabManager()
         loadInitialView()
+
+        fireButton = toolbar.addFireButton { [weak self] in self?.launchFireMenu() }
     }
-    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.destination.childViewControllers.count > 0,
+            let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
+            controller.delegate = self
+            return
+        }
+
+        if let controller = segue.destination as? TabSwitcherViewController {
+            controller.transitioningDelegate = self
+            controller.delegate = self
+            controller.tabsModel = tabManager.model
+            return
+        }
+
+    }
+
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
@@ -65,20 +91,23 @@ class MainViewController: UIViewController {
     }
     
     private func attachOmniBar() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
-        omniBar.frame = navigationBar.bounds
-        navigationBar.addSubview(omniBar)
-        navigationBar.addEqualSizeConstraints(subView: omniBar)
+        omniBar.frame = customNavigationBar.bounds
+        customNavigationBar.addSubview(omniBar)
     }
     
     fileprivate func attachHomeScreen(active: Bool = true)  {
         removeHomeScreen()
+
         let controller = HomeViewController.loadFromStoryboard(active: active)
         homeController = controller
+
+        controller.chromeDelegate = self
         controller.delegate = self
+
         addToView(controller: controller)
+
         tabManager.clearSelection()
         refreshControls()
     }
@@ -95,18 +124,6 @@ class MainViewController: UIViewController {
     
     @IBAction func onForwardPressed() {
         currentTab?.goForward()
-    }
-    
-    @IBAction func onFirePressed() {
-        launchFireMenu()
-    }
-    
-    @IBAction func onBookmarksTapped() {
-        launchBookmarks()
-    }
-    
-    @IBAction func onTabsTapped() {
-        launchTabSwitcher()
     }
     
     public var siteRating: SiteRating? {
@@ -151,7 +168,7 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         addToView(tab: tab)
     }
-    
+
     fileprivate func select(tabAt index: Int) {
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
@@ -162,16 +179,18 @@ class MainViewController: UIViewController {
         refreshControls()
     }
     
-    private func addToView(tab: UIViewController) {
+    private func addToView(tab: TabViewController) {
         removeHomeScreen()
+        currentTab?.chromeDelegate = nil
         addToView(controller: tab)
+        tab.webView.scrollView.delegate = chromeManager
+        tab.chromeDelegate = self
     }
 
     private func addToView(controller: UIViewController) {
         addChildViewController(controller)
         containerView.addSubview(controller.view)
-        controller.view.frame = containerView.frame
-        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        controller.view.frame = containerView.bounds
         controller.didMove(toParentViewController: self)
     }
 
@@ -187,9 +206,9 @@ class MainViewController: UIViewController {
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
-            completion()
             self.tabManager.removeAll()
             self.attachHomeScreen(active: false)
+            completion()
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
@@ -264,19 +283,6 @@ class MainViewController: UIViewController {
         currentTab?.launchContentBlockerPopover()
     }
     
-    fileprivate func launchTabSwitcher() {
-            let controller = TabSwitcherViewController.loadFromStoryboard(delegate: self, tabsModel: tabManager.model)
-        controller.transitioningDelegate = self
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
-    }
-    
-    fileprivate func launchBookmarks() {
-        let controller = BookmarksViewController.loadFromStoryboard(delegate: self)
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
-    }
-    
     fileprivate func launchSettings() {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
@@ -288,6 +294,61 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
         tabManager.reduceMemory()
     }
+}
+
+extension MainViewController: BrowserChromeDelegate {
+
+    struct ChromeAnimationConstants {
+        static let duration = 0.3
+    }
+
+    func setBarsHidden(_ hidden: Bool, animated: Bool) {
+
+        updateToolbarConstant(hidden)
+        updateNavBarConstant(hidden)
+
+        if animated {
+
+            self.view.layer.removeAllAnimations()
+            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+                self.omniBar.alpha = hidden ? 0 : 1
+                self.toolbar.alpha = hidden ? 0 : 1
+
+                self.view.layoutIfNeeded()
+            }
+
+        } else {
+            setNavigationBarHidden(hidden)
+            toolbar.alpha = hidden ? 0 : 1
+        }
+
+    }
+
+    func setNavigationBarHidden(_ hidden: Bool) {
+        updateNavBarConstant(hidden)
+        omniBar.alpha = hidden ? 0 : 1
+    }
+
+    var isToolbarHidden: Bool {
+        get { return toolbar.alpha < 1 }
+    }
+
+    var toolbarHeight: CGFloat {
+        get { return toolbar.frame.size.height }
+    }
+
+    private func updateToolbarConstant(_ hidden: Bool) {
+        var bottomHeight = self.toolbar.frame.size.height
+        if #available(iOS 11.0, *) {
+            bottomHeight += view.safeAreaInsets.bottom
+        }
+        toolbarBottom.constant = hidden ? bottomHeight : 0
+    }
+
+    private func updateNavBarConstant(_ hidden: Bool) {
+        navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
+    }
+
 }
 
 extension MainViewController: OmniBarDelegate {
@@ -310,7 +371,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onBookmarksPressed() {
-        launchBookmarks()
+        performSegue(withIdentifier: "Bookmarks", sender: self)
     }
     
     func onDismissed() {
@@ -321,6 +382,7 @@ extension MainViewController: OmniBarDelegate {
 extension MainViewController: AutocompleteViewControllerDelegate {
     
     func autocomplete(selectedSuggestion suggestion: String) {
+        homeController?.chromeDelegate = nil
         dismissOmniBar()
         loadQuery(suggestion)
     }
@@ -364,8 +426,8 @@ extension MainViewController: TabDelegate {
     func tabLoadingStateDidChange(tab: TabViewController) {
         if currentTab == tab {
             refreshControls()
-            tabManager.save()
         }
+        tabManager.save()
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
@@ -429,3 +491,4 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         return DissolveAnimatedTransitioning()
     }
 }
+

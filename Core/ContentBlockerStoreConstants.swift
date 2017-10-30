@@ -20,8 +20,8 @@
 
 import Foundation
 
-struct ContentBlockerStoreConstants {
+public struct ContentBlockerStoreConstants {
 
-    static let groupName = "group.com.duckduckgo.contentblocker"
+    public static let groupName = "group.com.duckduckgo.contentblocker"
 
 }

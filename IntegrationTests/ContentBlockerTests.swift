@@ -29,11 +29,16 @@ class ContentBlockerTests: XCTestCase {
     }
     
     struct PageElementIndex {
-        static let uniqueTrackerCount: UInt = 2
+        static let uniqueTrackerCount = 2
+    }
+    
+    struct Timeout {
+        static let postFirstLaunch: UInt32 = 10
+        static let pageLoad = 20
+        static let postPageLoad: UInt32 = 1
     }
     
     var app: XCUIApplication!
-    
     
     override func setUp() {
         super.setUp()
@@ -66,7 +71,7 @@ class ContentBlockerTests: XCTestCase {
         
         enterSearch(url)
         
-        waitForPageTitle()
+        waitForPageLoad()
         
         openContentBlocker()
         
@@ -79,11 +84,11 @@ class ContentBlockerTests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.buttons["Tabs"].tap()
+        app.toolbars.buttons["Tabs Button"].tap()
     }
     
     private func addTab() {
-        app.toolbars.containing(.button, identifier:"Add").buttons["Add"].tap()
+        app.toolbars.buttons["Add"].tap()
     }
     
     private func newTab() {
@@ -92,36 +97,35 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        guard app.staticTexts["Search Anonymously"].exists else { return  }
+        guard app.staticTexts["Search Anonymously"].exists else { return }
         app.pageIndicators["page 1 of 2"].tap()
         app.buttons["Done"].tap()
+        sleep(Timeout.postFirstLaunch)
     }
     
     private func clearTabsAndData() {
-        let app = XCUIApplication()
-        let toolbarsQuery = app.toolbars
-        toolbarsQuery.children(matching: .button).element(boundBy: 2).tap()
+        app.toolbars.buttons["Fire"].tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
     }
     
     private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
         
-        let searchOrTypeUrlTextField = app.navigationBars["DuckDuckGo.MainView"].textFields["Search or type URL"]
+        let searchOrTypeUrlTextField = app.textFields["Search or type URL"]
         searchOrTypeUrlTextField.typeText(text)
         
         if submit {
-            app.typeText("\n")
+            searchOrTypeUrlTextField.typeText("\n")
         }
     }
     
-    private func openContentBlocker() {
-        let navBar = app.navigationBars["DuckDuckGo.MainView"]
-        navBar.otherElements["siteRating"].tap()
+    private func waitForPageLoad() {
+        SnapShotHelperExcerpt.waitForLoadingIndicators(timeout: Timeout.pageLoad)
+        sleep(Timeout.postPageLoad)
     }
     
-    private func waitForPageTitle() {
-        sleep(2)
+    private func openContentBlocker() {
+        app.otherElements["siteRating"].tap()
     }
 }
 

@@ -62,7 +62,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
 
-    func onApplicationWillResignActive() {
+    @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
 
@@ -74,9 +74,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        webView.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(webView, at: 0)
-        view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
         
         if let url = url {
@@ -90,12 +88,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.scrollView.addGestureRecognizer(handler)
     }
     
-    func onLongPress(sender: UILongPressGestureRecognizer) {
+    @objc func onLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         
         let x = Int(sender.location(in: webView).x)
         let y = Int(sender.location(in: webView).y)
-        let offsetY = y - Int(touchesYOffset())
+        let offsetY = y
         
         webView.getUrlAtPoint(x: x, y: offsetY)  { [weak self] (url) in
             guard let webView = self?.webView, let url = url else { return }
@@ -247,11 +245,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webEventsDelegate?.detached(webView: webView)
     }
     
-    fileprivate func touchesYOffset() -> CGFloat {
-        guard navigationController != nil else { return 0 }
-        return decorHeight
-    }
-    
     private func showError(message: String) {
         webView.alpha = 0
         errorMessage.text = "\(UserText.webPageFailedLoad) \(message)"
@@ -278,9 +271,8 @@ extension WebViewController: UIGestureRecognizerDelegate {
             return false
         }
         
-        let yOffset = touchesYOffset()
         let x = Int(gestureRecognizer.location(in: webView).x)
-        let y = Int(gestureRecognizer.location(in: webView).y-yOffset)
+        let y = Int(gestureRecognizer.location(in: webView).y)
         let url = webView.getUrlAtPointSynchronously(x: x, y: y)
         return url != nil
     }

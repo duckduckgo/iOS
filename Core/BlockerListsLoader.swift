@@ -19,17 +19,20 @@
 
 import Foundation
 
-public typealias BlockerListsLoaderCompletion = () -> Void
+public typealias BlockerListsLoaderCompletion = (Bool) -> Void
 
 public class BlockerListsLoader {
 
     private var easylistStore = EasylistStore()
+    private var disconnectStore = DisconnectMeStore()
 
     public var hasData: Bool {
         get {
-            return DisconnectMeStore.shared.hasData && easylistStore.hasData
+            return disconnectStore.hasData && easylistStore.hasData
         }
     }
+
+    private var newDataItems = 0
 
     public init() { }
 
@@ -43,8 +46,8 @@ public class BlockerListsLoader {
                 semaphore.wait()
             }
 
-            Logger.log(items: "BlockerListsLoader", "completed")
-            completion?()
+            Logger.log(items: "BlockerListsLoader", "completed", self.newDataItems)
+            completion?(self.newDataItems > 0)
         }
 
     }
@@ -55,13 +58,15 @@ public class BlockerListsLoader {
 
         blockerListRequest.request(.disconnectMe) { (data) in
             if let data = data {
-                try? DisconnectMeStore.shared.persist(data: data)
+                self.newDataItems += 1
+                try? self.disconnectStore.persist(data: data)
             }
             semaphore.signal()
         }
 
         blockerListRequest.request(.easylist) { (data) in
             if let data = data {
+                self.newDataItems += 1
                 self.easylistStore.persistEasylist(data: data)
             }
             semaphore.signal()
@@ -69,6 +74,7 @@ public class BlockerListsLoader {
 
         blockerListRequest.request(.easylistPrivacy) { (data) in
             if let data = data {
+                self.newDataItems += 1
                 self.easylistStore.persistEasylistPrivacy(data: data)
             }
             semaphore.signal()

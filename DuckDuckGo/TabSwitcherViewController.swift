@@ -27,23 +27,17 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var fireButton: UIButton!
-    
+
+    weak var fireButton: UIView!
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
     
     fileprivate var hasSeenFooter = false
     
-    static func loadFromStoryboard(delegate: TabSwitcherDelegate, tabsModel: TabsModel) -> TabSwitcherViewController {
-        let controller = UIStoryboard(name: "TabSwitcher", bundle: nil).instantiateInitialViewController() as! TabSwitcherViewController
-        controller.delegate = delegate
-        controller.tabsModel = tabsModel
-        return controller
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
+        fireButton = toolbar.addFireButton { [weak self] in self?.onFirePressed() }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,7 +70,7 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
     
-    @IBAction func onForgetAllPressed(_ sender: UIButton) {
+    func onFirePressed() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
             self?.forgetAll()
@@ -125,7 +119,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
     }
     
-    func onRemoveTapped(sender: UIView) {
+    @objc func onRemoveTapped(sender: UIView) {
         let index = sender.tag
         onDeleted(tabAt: index)
     }

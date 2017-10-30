@@ -1,18 +1,28 @@
 <html>
     <head>
         <title>Test: Resource Trackers</title>
+        
+        <!-- Trackers detection source: disconnect -->
         <link rel="stylesheet" type="text/css" media="all" href="https://criteo.com/abcd.css" />
         <script type="text/javascript" src="http://b.scorecardresearch.com/beacon.js"></script>
         <script type="text/javascript" src="http://web.adblade.com/js/ads/async/show.js"></script>
+        
+        <!-- Tracker detection source: easylist -->
+        <script type="text/javascript" src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+        
+        <!-- Tracker detection source: easyprivacy -->
+        <script type="text/javascript" src="//cdn.tagcommander.com/1705/tc_catalog.js"></script>
+        
     </head>
     
     <body>
         
-        <img src="https://www.my.yahoo.com/img.png" />
+        <!-- Tracker source: Disconnect list -->
+        <img src="https://www.adserver.yahoo.com/img.png" />
         
         <h1>Test: Resource Trackers</h1>
-        Unique trackers: <div>4</div>
-        Total trackers: <div>4</div>
+        Unique trackers: <div>6</div>
+        Total trackers: <div>6</div>
         
     </body>
 </html>

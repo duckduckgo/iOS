@@ -18,50 +18,93 @@
 //
 
 import Foundation
+import WebKit
 
-class DisconnectMeStore {
-
-    static let shared = DisconnectMeStore()
-
-    var hasData: Bool {
-        return !allTrackers.isEmpty
+public class DisconnectMeStore {
+    
+    struct CacheKeys {
+        static let disconnectJsonBanned = "disconnect-json-banned"
+        static let disconnectJsonAllowed = "disconnect-json-allowed"
     }
-
-    private(set) var allTrackers = [String: String]()
-    private(set) var bannedTrackersJson = "{}"
-    private(set) var allowedTrackersJson = "{}"
-
-    private init() {
-        try? load(data: Data(contentsOf: persistenceLocation()))
+    
+    private lazy var stringCache = ContentBlockerStringCache()
+    
+    public init() {
+        stringCache = ContentBlockerStringCache()
+    }
+    
+    var hasData: Bool {
+        get {
+            return (try? persistenceLocation.checkResourceIsReachable()) ?? false
+        }
+    }
+    
+    public var trackers: [String: Tracker] {
+       guard let data = try? Data(contentsOf: persistenceLocation), let trackers = try? parse(data: data) else {
+            return [String: Tracker]()
+        }
+        return trackers
+    }
+    
+    var bannedTrackersJson: String {
+        if let cached = stringCache.get(named: CacheKeys.disconnectJsonBanned) {
+            return cached
+        }
+        if let json = try? convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.banned)) {
+            stringCache.put(name: CacheKeys.disconnectJsonBanned, value: json)
+            return json
+        }
+        return "{}"
+    }
+    
+    var allowedTrackersJson: String {
+        if let cached = stringCache.get(named: CacheKeys.disconnectJsonAllowed) {
+            return cached
+        }
+        if let json = try? convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.banned)) {
+            return json
+        }
+        return "{}"
+    }
+    
+    var appleRulesJson: String? {
+        let converter = AppleContentBlockerConverter()
+        let bannedTrackers = Array(trackers.filter(byCategory: Tracker.Category.banned).values)
+        if let ruleData = try? converter.toJsonData(trackers: bannedTrackers), let rulesString = String(bytes: ruleData, encoding: .utf8) {
+            return rulesString
+        }
+        return nil
     }
     
     func persist(data: Data) throws  {
-        try load(data: data)
-
-        let location = persistenceLocation()
-        Logger.log(items: "DisconnectMeStore", location)
-        try data.write(to: persistenceLocation(), options: .atomic)
+        Logger.log(items: "DisconnectMeStore", persistenceLocation)
+        try data.write(to: persistenceLocation, options: .atomic)
+        invalidateCache()
     }
-
-    private func load(data: Data) throws {
+    
+    private func invalidateCache() {
+        stringCache.remove(named: CacheKeys.disconnectJsonAllowed)
+        stringCache.remove(named: CacheKeys.disconnectJsonBanned)
+        WKWebViewConfiguration.removeDisconnectRulesFromCache()
+    }
+    
+    private func parse(data: Data) throws -> [String: Tracker] {
         let parser = DisconnectMeTrackersParser()
-        allTrackers = try parser.convert(fromJsonData: data, categoryFilter: nil)
-        
-        bannedTrackersJson = (try? convertToInjectableJson(data, using: parser, filteringBy: DisconnectMeTrackersParser.bannedCategoryFilter)) ?? "{}"
-        allowedTrackersJson = (try? convertToInjectableJson(data, using: parser, filteringBy: DisconnectMeTrackersParser.allowedCategoryFilter)) ?? "{}"
+        return try parser.convert(fromJsonData: data)
     }
-
-    private func convertToInjectableJson(_ data: Data, using parser: DisconnectMeTrackersParser, filteringBy filter: [DisconnectMeTrackersParser.Category]) throws -> String {
-        let trackers = try parser.convert(fromJsonData: data, categoryFilter: filter)
-        let json = try JSONSerialization.data(withJSONObject: trackers, options: .prettyPrinted)
+    
+    private func convertToInjectableJson(_ trackers: [String: Tracker]) throws -> String {
+        let simplifiedTrackers = trackers.mapValues( { $0.parentDomain } )
+        let json = try JSONSerialization.data(withJSONObject: simplifiedTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {
             return jsonString
         }
         return ""
     }
-
-    private func persistenceLocation() -> URL {
+    
+    public var persistenceLocation: URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
         return path!.appendingPathComponent("disconnectme.json")
     }
 }
+

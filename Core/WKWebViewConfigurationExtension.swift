@@ -22,6 +22,10 @@ import WebKit
 
 extension WKWebViewConfiguration {
     
+    struct WebStoreCacheKeys {
+        static let disconnect = "disconnectList"
+    }
+
     public static func persistent() -> WKWebViewConfiguration {
         return configuration(persistsData: true)
     }
@@ -44,33 +48,74 @@ extension WKWebViewConfiguration {
     
     public func loadScripts() {
         loadDocumentLevelScripts()
-        let contentBlocker = ContentBlockerConfigurationUserDefaults()
-        loadContentBlockerScripts(with: contentBlocker.domainWhitelist, and: contentBlocker.enabled)
-    }
-    
-    private func loadContentBlockerScripts(with whitelistedDomains: Set<String>, and blockingEnabled: Bool) {
-        loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelistedDomains.toJsonLookupString(), and: blockingEnabled)
-        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
-    }
-    
-    private func loadContentBlockerDependencyScripts() {
-        load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
+        loadLegacySiteMonitoringScripts()
     }
     
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document, .favicon ])
+        load(scripts: [ .document, .favicon ] )
+    }
+   
+    @available(iOSApplicationExtension 11.0, *)
+    private func loadSiteMonitoringScripts() {
+        load(scripts: [ .beforeLoadNotification ], forMainFrameOnly: false)
+        loadContentBlockerRules()
     }
     
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+    @available(iOSApplicationExtension 11.0, *)
+    private func loadContentBlockerRules() {
+        let configuration = ContentBlockerConfigurationUserDefaults()
+        
+        if !configuration.enabled {
+            userContentController.removeAllContentRuleLists()
+            return
+        }
+        
+        let ruleStore = WKContentRuleListStore.default()!
+        ruleStore.lookUpContentRuleList(forIdentifier: WebStoreCacheKeys.disconnect) {  list, error in
+            
+            if let list = list {
+                self.userContentController.add(list)
+                return
+            }
+            
+            guard let rules = DisconnectMeStore().appleRulesJson else {
+                return
+            }
+            
+            ruleStore.compileContentRuleList(forIdentifier: WebStoreCacheKeys.disconnect, encodedContentRuleList: rules) { list, error in
+                guard let list = list else { return }
+                self.userContentController.add(list)
+            }
+        }
+    }
+    
+    public static func removeDisconnectRulesFromCache() {
+        if #available(iOS 11.0, *) {
+            WKContentRuleListStore.default().removeContentRuleList(forIdentifier: WebStoreCacheKeys.disconnect) { _ in }
+        }
+    }
+    
+    private func loadLegacySiteMonitoringScripts() {
+        let configuration = ContentBlockerConfigurationUserDefaults()
+        let whitelist = configuration.domainWhitelist.toJsonLookupString()
+        loadLegacyContentBlockerDependencyScripts()
+        loadLegacyBlockerData(with: whitelist, and:  configuration.enabled)
+        load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+    }
+    
+    private func loadLegacyContentBlockerDependencyScripts() {
+        load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
+    }
+    
+    private func loadLegacyBlockerData(with whitelist: String, and blockingEnabled: Bool) {
         let easylistStore = EasylistStore()
-
+        let disconnectMeStore = DisconnectMeStore()
         let javascriptLoader = JavascriptLoader()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
-            "${disconnectmeBanned}": DisconnectMeStore.shared.bannedTrackersJson,
-            "${disconnectmeAllowed}": DisconnectMeStore.shared.allowedTrackersJson,
+            "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
+            "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
             "${whitelist}": whitelist ],
                               andController:userContentController,
                               forMainFrameOnly: false)

@@ -39,12 +39,6 @@ class TabManager {
         }
     }
     
-    private var trackerDetector: TrackerDetector? {
-        guard #available(iOSApplicationExtension 11.0, *) else { return nil }
-        let trackers = Array(disconnectMeStore.trackers.values)
-        return TrackerDetector(disconnectTrackers: trackers)
-    }
-    
     private func buildController(forTab tab: Tab) -> TabViewController {
         let url = tab.link?.url
         let request = url == nil ? nil : URLRequest(url: url!)
@@ -54,7 +48,7 @@ class TabManager {
     private func buildController(forTab tab: Tab, request: URLRequest?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker, trackerDetector: trackerDetector)
+        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
         controller.attachWebView(configuration: configuration)
         controller.delegate = delegate
         
@@ -71,8 +65,6 @@ class TabManager {
         let tab = model.tabs[index]
         
         if let controller = cachedController(forTab: tab) {
-            tabControllerCache.remove(at: tabControllerCache.index(of: controller)!)
-            tabControllerCache.append(controller)
             return controller
         } else {
             Logger.log(text: "Tab not in cache, creating")
@@ -145,37 +137,26 @@ class TabManager {
     
     private func cachedController(forTab tab: Tab) -> TabViewController? {
         let controller = tabControllerCache.filter( { $0.tabModel === tab } ).first
-        tab.link = controller?.link
-        save()
+        if let link = controller?.link {
+            tab.link = link
+            save()
+        }
         return controller
     }
     
     func removeAll() {
         for controller in tabControllerCache {
-            remove(tabController: controller)
+            removeFromCache(controller)
         }
         model.clearAll()
         save()
     }
     
-    func reduceMemory() {
-        
-        if tabControllerCache.count < 3 {
-            return
-        }
-        
-        let itemsToClear = tabControllerCache.count / 2
-        var itemsCleared = 0
-        
-        for controller in tabControllerCache {
-            if itemsCleared == itemsToClear {
-                break
-            }
-            if controller === current {
-                continue
-            }
+    func invalidateCache(forController controller: TabViewController) {
+        if current === controller {
+            current?.reload()
+        } else {
             removeFromCache(controller)
-            itemsCleared += 1
         }
     }
     

@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import WebKit
 
 public class DisconnectMeStore {
     
@@ -67,15 +66,6 @@ public class DisconnectMeStore {
         return "{}"
     }
     
-    var appleRulesJson: String? {
-        let converter = AppleContentBlockerConverter()
-        let bannedTrackers = Array(trackers.filter(byCategory: Tracker.Category.banned).values)
-        if let ruleData = try? converter.toJsonData(trackers: bannedTrackers), let rulesString = String(bytes: ruleData, encoding: .utf8) {
-            return rulesString
-        }
-        return nil
-    }
-    
     func persist(data: Data) throws  {
         Logger.log(items: "DisconnectMeStore", persistenceLocation)
         try data.write(to: persistenceLocation, options: .atomic)
@@ -85,7 +75,6 @@ public class DisconnectMeStore {
     private func invalidateCache() {
         stringCache.remove(named: CacheKeys.disconnectJsonAllowed)
         stringCache.remove(named: CacheKeys.disconnectJsonBanned)
-        WKWebViewConfiguration.removeDisconnectRulesFromCache()
     }
     
     private func parse(data: Data) throws -> [String: Tracker] {

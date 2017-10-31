@@ -204,7 +204,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
 
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        webEventsDelegate?.webViewDidTerminate(webView: webView)
+        webEventsDelegate?.contentProcessDidTerminate(webView: webView)
     }
     
     private func shouldReissueSearch(for url: URL) -> Bool {

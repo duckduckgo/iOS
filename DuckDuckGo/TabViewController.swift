@@ -34,12 +34,10 @@ class TabViewController: WebViewController {
     private weak var contentBlockerPopover: ContentBlockerPopover?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
-    private(set) var trackerDetector: TrackerDetector?
-    
-    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore, trackerDetector: TrackerDetector?) -> TabViewController {
+
+    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Tab", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
-        controller.trackerDetector = trackerDetector
         controller.tabModel = model
         return controller
     }
@@ -292,7 +290,6 @@ class TabViewController: WebViewController {
 }
 
 fileprivate struct MessageHandlerNames {
-    static let beforeLoad = "beforeLoadNotification"
     static let trackerDetected = "trackerDetectedMessage"
     static let cache = "cacheMessage"
 }
@@ -308,10 +305,7 @@ extension TabViewController: WKScriptMessageHandler {
             
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
-            
-        case MessageHandlerNames.beforeLoad:
-            handleBeforeLoad(message: message)
-            
+
         default:
             assertionFailure("Unhandled message: \(message.name)")
 
@@ -343,37 +337,23 @@ extension TabViewController: WKScriptMessageHandler {
         siteRating?.trackerDetected(Tracker(url: url, parentDomain: parent), blocked: blocked)
         onSiteRatingChanged()
     }
-    
-    private func handleBeforeLoad(message: WKScriptMessage) {
-        Logger.log(text: "\(MessageHandlerNames.beforeLoad)")
-        guard let urlString = message.body as? String else { return }
-        guard let url = URL(string: urlString) else { return }
-        
-        let policy = trackerDetector?.policy(forUrl: url, document: self.url ?? url)
-        if let policy = policy, let tracker = policy.tracker {
-            siteRating?.trackerDetected(tracker, blocked: policy.block)
-            onSiteRatingChanged()
-        }
-    }
 }
 
 extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
         webView.scrollView.delegate = self
-        webView.configuration.userContentController.add(self, name: MessageHandlerNames.beforeLoad)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
     }
     
     func detached(webView: WKWebView) {
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.beforeLoad)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
     }
     
-    func webViewDidTerminate(webView: WKWebView) {
-        delegate?.tabDidRequestMemoryReduction(tab: self)
+    func contentProcessDidTerminate(webView: WKWebView) {
+        delegate?.tabContentProcessDidTerminate(tab: self)
     }
     
     func webpageDidStartLoading() {

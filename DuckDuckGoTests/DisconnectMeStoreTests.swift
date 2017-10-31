@@ -101,16 +101,5 @@ class DisconnectMeStoreTests: XCTestCase {
         let result = testee.allowedTrackersJson
         XCTAssertEqual( defaultJsValue, result)
     }
-    
-    func testWhenAppleRulesAreRequestedThenParsedDataIsReturned() {
-        try! testee.persist(data: trackerData)
-        let result = testee.appleRulesJson
-        XCTAssertNotNil(result)
-    }
-    
-    func testWhenAppleRulesAreRequestedAndThereIsNoDataThenAnEmptyArrayIsReturned() {
-        let result = testee.appleRulesJson
-        XCTAssertEqual("[]", result)
-    }
 }
 

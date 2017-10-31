@@ -359,8 +359,8 @@ extension TabViewController: WebEventsDelegate {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
     }
     
-    func webViewDidTerminate(webView: WKWebView) {
-        delegate?.tabDidRequestMemoryReduction(tab: self)
+    func contentProcessDidTerminate(webView: WKWebView) {
+        delegate?.tabContentProcessDidTerminate(tab: self)
     }
     
     func webpageDidStartLoading() {

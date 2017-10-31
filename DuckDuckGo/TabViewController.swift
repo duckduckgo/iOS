@@ -60,6 +60,15 @@ class TabViewController: WebViewController {
         resetNavigationBar()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let controller = segue.destination as? PrivacyProtectionDashboardController {
+            controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
+            controller.siteRating = siteRating
+        }
+
+    }
+
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }

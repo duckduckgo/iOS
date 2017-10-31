@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,10 +19,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Privacy Protection Dashboard Controller-->
+        <!--Dashboard-->
         <scene sceneID="xtT-jh-F57">
             <objects>
-                <viewController id="rnY-b4-XPk" customClass="PrivacyProtectionDashboardController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rnY-b4-XPk" userLabel="Dashboard" customClass="PrivacyProtectionDashboardController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ITH-Il-9PV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,11 +72,11 @@
             </objects>
             <point key="canvasLocation" x="775" y="409"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Overview-->
         <scene sceneID="Uch-vi-4H4">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController id="7Z1-eg-OWQ" customClass="PrivacyProtectionOverviewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="7Z1-eg-OWQ" userLabel="Overview" customClass="PrivacyProtectionOverviewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NNN-qG-D8F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -266,6 +267,28 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u1J-ua-Wxj" id="WB9-YV-0bF">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlL-wJ-Tks">
+                                                    <rect key="frame" x="16" y="12.5" width="343" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vx3-Uj-sNS">
+                                                            <rect key="frame" x="0.0" y="0.0" width="294" height="31"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f83-AN-wMW">
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31"/>
+                                                            <color key="onTintColor" red="0.086274509803921567" green="0.32941176470588235" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="dlL-wJ-Tks" secondAttribute="trailing" constant="8" id="FCQ-WN-COC"/>
+                                                <constraint firstItem="dlL-wJ-Tks" firstAttribute="leading" secondItem="WB9-YV-0bF" secondAttribute="leadingMargin" constant="8" id="Hyk-2k-0qs"/>
+                                                <constraint firstItem="dlL-wJ-Tks" firstAttribute="centerY" secondItem="WB9-YV-0bF" secondAttribute="centerY" id="I2n-Ue-SKQ"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.63137254901960782" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
@@ -287,6 +310,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="lwf-bc-TtK"/>
+                    <connections>
+                        <outletCollection property="margins" destination="FCQ-WN-COC" collectionClass="NSMutableArray" id="L70-Zg-EUr"/>
+                        <outletCollection property="margins" destination="Hyk-2k-0qs" collectionClass="NSMutableArray" id="ccE-zV-aut"/>
+                    </connections>
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="2652" y="408.84557721139436"/>

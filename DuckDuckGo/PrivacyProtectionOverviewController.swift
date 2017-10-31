@@ -10,8 +10,20 @@ import UIKit
 
 class PrivacyProtectionOverviewController: UITableViewController {
 
+    @IBOutlet var margins: [NSLayoutConstraint]!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        initMargins()
+    }
+
+    private func initMargins() {
+        if #available(iOS 10, *) {
+            for margin in margins {
+                margin.constant = 0
+            }
+        }
     }
 
 }

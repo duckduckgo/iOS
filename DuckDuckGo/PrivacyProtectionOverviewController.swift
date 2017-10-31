@@ -11,11 +11,13 @@ import UIKit
 class PrivacyProtectionOverviewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
+    @IBOutlet var requiresKernAdjustment: [UILabel]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initMargins()
+        adjustKerns()
     }
 
     private func initMargins() {
@@ -23,6 +25,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
             for margin in margins {
                 margin.constant = 0
             }
+        }
+    }
+
+    private func adjustKerns() {
+        for label in requiresKernAdjustment {
+            label.adjustKern(1.7)
         }
     }
 

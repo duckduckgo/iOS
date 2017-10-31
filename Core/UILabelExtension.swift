@@ -26,7 +26,12 @@ extension UILabel {
         let attributes = attributesForLineHeight(height)
         attributedText = NSAttributedString(string: text ?? "", attributes: attributes)
     }
-    
+
+    public func adjustKern(_ spacing: CGFloat) {
+        let attributes = attributesForKern(spacing)
+        attributedText = NSAttributedString(string: text ?? "", attributes: attributes)
+    }
+
     private func attributesForLineHeight(_ height: CGFloat) -> [NSAttributedStringKey: Any] {
         let paragaphStyle = NSMutableParagraphStyle()
         paragaphStyle.lineHeightMultiple = height
@@ -36,6 +41,14 @@ extension UILabel {
             NSAttributedStringKey.font: font,
             NSAttributedStringKey.foregroundColor: textColor,
             NSAttributedStringKey.paragraphStyle: paragaphStyle
+        ]
+    }
+
+    private func attributesForKern(_ spacing: CGFloat) -> [NSAttributedStringKey: Any] {
+        return [
+            NSAttributedStringKey.font: font,
+            NSAttributedStringKey.foregroundColor: textColor,
+            NSAttributedStringKey.kern: spacing
         ]
     }
 }

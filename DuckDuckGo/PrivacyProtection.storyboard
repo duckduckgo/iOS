@@ -75,7 +75,6 @@
         <!--Overview-->
         <scene sceneID="Uch-vi-4H4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="7Z1-eg-OWQ" userLabel="Overview" customClass="PrivacyProtectionOverviewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NNN-qG-D8F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
@@ -97,10 +96,6 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Extension OFF- Grade A" translatesAutoresizingMaskIntoConstraints="NO" id="j7r-Dh-Jwe">
                                                     <rect key="frame" x="102.5" y="20" width="170" height="113"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="170" id="DmJ-Rf-8Zh"/>
-                                                        <constraint firstAttribute="height" constant="113" id="IA9-Pn-Jur"/>
-                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaN-4M-Ok5">
                                                     <rect key="frame" x="20" y="141" width="335" height="20"/>
@@ -121,7 +116,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7S0-gR-tO5" userLabel="UPGRADE FROM TO">
-                                                    <rect key="frame" x="107.5" y="174" width="160" height="12"/>
+                                                    <rect key="frame" x="97.5" y="174" width="180" height="12"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UPGRADED FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nRd-xQ-Adm" userLabel="UPGRADED FROM">
                                                             <rect key="frame" x="0.0" y="0.0" width="102.5" height="12"/>
@@ -146,7 +141,7 @@
                                                         <constraint firstItem="OHa-Rw-ao0" firstAttribute="leading" secondItem="K2B-4E-fgJ" secondAttribute="trailing" constant="3" id="1Cr-XQ-dyc"/>
                                                         <constraint firstItem="OHa-Rw-ao0" firstAttribute="centerY" secondItem="K2B-4E-fgJ" secondAttribute="centerY" id="CZx-52-80C"/>
                                                         <constraint firstItem="rrS-VQ-J3G" firstAttribute="centerY" secondItem="K2B-4E-fgJ" secondAttribute="centerY" id="Dt5-7G-uxH"/>
-                                                        <constraint firstAttribute="width" constant="160" id="NUy-mk-ooE"/>
+                                                        <constraint firstAttribute="width" constant="180" id="NUy-mk-ooE"/>
                                                         <constraint firstItem="nRd-xQ-Adm" firstAttribute="leading" secondItem="7S0-gR-tO5" secondAttribute="leading" id="TpU-26-8mg"/>
                                                         <constraint firstItem="K2B-4E-fgJ" firstAttribute="leading" secondItem="rrS-VQ-J3G" secondAttribute="trailing" constant="3" id="c3p-Jf-4EK"/>
                                                         <constraint firstItem="K2B-4E-fgJ" firstAttribute="top" secondItem="nRd-xQ-Adm" secondAttribute="top" id="e4B-jI-GlI"/>
@@ -313,8 +308,13 @@
                     <connections>
                         <outletCollection property="margins" destination="FCQ-WN-COC" collectionClass="NSMutableArray" id="L70-Zg-EUr"/>
                         <outletCollection property="margins" destination="Hyk-2k-0qs" collectionClass="NSMutableArray" id="ccE-zV-aut"/>
+                        <outletCollection property="requiresKernAdjustment" destination="sRe-LT-6q8" collectionClass="NSMutableArray" id="HuB-gG-7jh"/>
+                        <outletCollection property="requiresKernAdjustment" destination="fA2-W3-OZ9" collectionClass="NSMutableArray" id="tK0-EO-qFP"/>
+                        <outletCollection property="requiresKernAdjustment" destination="nRd-xQ-Adm" collectionClass="NSMutableArray" id="frh-gy-fOf"/>
+                        <outletCollection property="requiresKernAdjustment" destination="K2B-4E-fgJ" collectionClass="NSMutableArray" id="prG-6D-hJ0"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2652" y="408.84557721139436"/>
         </scene>

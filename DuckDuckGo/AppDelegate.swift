@@ -153,17 +153,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private var rootViewController: UINavigationController? {
-        return window?.rootViewController as? UINavigationController
-    }
-    
     private var mainViewController: MainViewController? {
-        return rootViewController?.childViewControllers.first as? MainViewController
+        return window?.rootViewController as? MainViewController
     }
     
     private func clearNavigationStack() {
-        rootViewController?.topViewController?.dismiss(animated: false) {
-            self.rootViewController?.popToRootViewController(animated: false)
+        if let presented = mainViewController?.presentedViewController {
+            presented.dismiss(animated: false) { [weak self] in
+                self?.clearNavigationStack()
+            }
         }
     }
 }

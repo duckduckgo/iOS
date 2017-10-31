@@ -33,5 +33,5 @@ protocol TabDelegate: class {
 
     func tabDidRequestSettings(tab: TabViewController)
     
-    func tabDidRequestMemoryReduction(tab: TabViewController)
+    func tabContentProcessDidTerminate(tab: TabViewController)
 }

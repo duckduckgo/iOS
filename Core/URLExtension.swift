@@ -26,6 +26,10 @@ extension URL {
     enum URLProtocol: String {
         case http
         case https
+        
+        var scheme: String {
+            return "\(rawValue)://"
+        }
     }
     
     enum Host: String {
@@ -74,7 +78,7 @@ extension URL {
     }
 
     public func isHttps() -> Bool {
-        return absoluteString.hasPrefix(URLProtocol.https.rawValue)
+        return absoluteString.hasPrefix(URLProtocol.https.scheme)
     }
 
     // Encodes plus symbols in a string. iOS does not automatically encode plus symbols so it
@@ -114,7 +118,10 @@ extension URL {
     }
     
     public static func appendScheme(path: String) -> String {
-        return path.hasPrefix(URLProtocol.http.rawValue) ? path : "\(URLProtocol.http.rawValue)://\(path)"
+        if path.hasPrefix(URLProtocol.http.scheme) || path.hasPrefix(URLProtocol.https.scheme) {
+            return path
+        }
+        return "\(URLProtocol.http.scheme)\(path)"
     }
     
     private static func isValidHost(_ host: String) -> Bool {

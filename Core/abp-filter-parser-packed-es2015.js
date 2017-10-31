@@ -3813,10 +3813,10 @@ var ABPFilterParser =
 
     __webpack_require__(324);
 
-    if (global._babelPolyfill) {
-      throw new Error("only one instance of babel-polyfill is allowed");
-    }
-    global._babelPolyfill = true;
+   if (global._babelPolyfill) {
+       console.warn("An existing instance of babel-polyfill has been detected");
+       return;
+   }
 
     var DEFINE_PROPERTY = "defineProperty";
     function define(O, key, value) {

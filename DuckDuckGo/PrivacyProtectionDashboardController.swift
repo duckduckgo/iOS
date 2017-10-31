@@ -103,6 +103,7 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
         guard let toController = transitionContext.viewController(forKey: .to) else { return }
         guard let fromController = transitionContext.viewController(forKey: .from) as? PrivacyProtectionDashboardController else { return }
 
+        toController.view.frame = transitionContext.finalFrame(for: toController)
         containerView.insertSubview(toController.view, at: 0)
 
         UIView.animate(withDuration: AnimationConstants.duration, animations: {
@@ -125,6 +126,7 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
 
         guard let toController = transitionContext.viewController(forKey: .to) as? PrivacyProtectionDashboardController else { return }
 
+        toController.view.frame = transitionContext.finalFrame(for: toController)
         containerView.addSubview(toController.view)
 
         let toColor = toController.view.backgroundColor

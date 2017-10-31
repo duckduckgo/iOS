@@ -104,7 +104,12 @@ extension WKWebViewConfiguration {
     }
     
     private func loadLegacyContentBlockerDependencyScripts() {
-        load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
+
+        if #available(iOS 10, *) {
+            load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
+        } else {
+            load(scripts: [ .messaging, .apbfilterES2015, .tlds ], forMainFrameOnly: false)
+        }
     }
     
     private func loadLegacyBlockerData(with whitelist: String, and blockingEnabled: Bool) {
@@ -124,8 +129,12 @@ extension WKWebViewConfiguration {
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist), let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy) {
             
             Logger.log(text: "using cached easylist")
-            
-            javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
+
+            if #available(iOS 10, *) {
+                javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
+            } else {
+                javascriptLoader.load(.bloomES2015, withController: userContentController, forMainFrameOnly: false)
+            }
             
             javascriptLoader.load(script: .cachedEasylist, withReplacements: [
                 "${easylist_privacy_json}": cachedEasylistPrivacy,

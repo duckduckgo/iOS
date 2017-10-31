@@ -30,10 +30,12 @@ public class JavascriptLoader {
         case favicon
         case disconnectme
         case contentblocker
-        case apbfilter = "abp-filter-parser-packed-es2015"
+        case apbfilter = "abp-filter-parser-packed"
+        case apbfilterES2015 = "abp-filter-parser-packed-es2015"
         case tlds
         case messaging
-        case bloom = "bloom-es2015"
+        case bloom = "bloom-filter-packed"
+        case bloomES2015 = "bloom-filter-packed-es2015"
         case cachedEasylist = "easylist-cached"
         case easylistParsing = "easylist-parsing"
         case blockerData = "blockerdata"

@@ -39,12 +39,6 @@ class TabManager {
         }
     }
     
-    private var trackerDetector: TrackerDetector? {
-        guard #available(iOSApplicationExtension 11.0, *) else { return nil }
-        let trackers = Array(disconnectMeStore.trackers.values)
-        return TrackerDetector(disconnectTrackers: trackers)
-    }
-    
     private func buildController(forTab tab: Tab) -> TabViewController {
         let url = tab.link?.url
         let request = url == nil ? nil : URLRequest(url: url!)
@@ -54,7 +48,7 @@ class TabManager {
     private func buildController(forTab tab: Tab, request: URLRequest?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker, trackerDetector: trackerDetector)
+        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
         controller.attachWebView(configuration: configuration)
         controller.delegate = delegate
         

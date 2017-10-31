@@ -26,7 +26,6 @@ public class JavascriptLoader {
     
     public enum Script: String {
         case document
-        case beforeLoadNotification = "beforeload-notification"
         case favicon
         case disconnectme
         case contentblocker

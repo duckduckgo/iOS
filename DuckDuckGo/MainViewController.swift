@@ -288,12 +288,6 @@ class MainViewController: UIViewController {
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
     }
-    
-    override func didReceiveMemoryWarning() {
-        Logger.log(text: "Memory warning received, reducing memory")
-        super.didReceiveMemoryWarning()
-        tabManager.reduceMemory()
-    }
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -448,9 +442,8 @@ extension MainViewController: TabDelegate {
         launchSettings()
     }
     
-    func tabDidRequestMemoryReduction(tab: TabViewController) {
-        Logger.log(text: "Memory reduction requested, reducing memory")
-        tabManager.reduceMemory()
+    func tabContentProcessDidTerminate(tab: TabViewController) {
+        tabManager.invalidateCache(forController: tab)
     }
 }
 
@@ -491,4 +484,5 @@ extension MainViewController: UIViewControllerTransitioningDelegate {
         return DissolveAnimatedTransitioning()
     }
 }
+
 

@@ -14,7 +14,15 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet var requiresKernAdjustment: [UILabel]!
 
-    var popRecognizer: InteractivePopRecognizer!
+    @IBOutlet weak var privacyGrade: PrivacyGradeCell!
+    @IBOutlet weak var encryptionCell: UITableViewCell!
+    @IBOutlet weak var trackersCell: UITableViewCell!
+    @IBOutlet weak var majorTrackersCell: UITableViewCell!
+    @IBOutlet weak var privacyPracticesCell: UITableViewCell!
+    @IBOutlet weak var privacyProtectionSwitch: UISwitch!
+    @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardCell!
+
+    fileprivate var popRecognizer: InteractivePopRecognizer!
 
     lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     weak var siteRating: SiteRating!
@@ -23,8 +31,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         super.viewDidLoad()
 
         initPopRecognizer()
-        initGrade()
-        initProtectionStatus()
+        initPrivacyGrade()
         initEncryption()
         initTrackersBlocked()
         initMajorTrackersBlocked()
@@ -36,8 +43,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let infoDisplaying = segue.destination as? PrivacyProtectionInfoDisplaying {
-            infoDisplaying.prepare(for: siteRating)
+        if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
+            displayInfo.using(siteRating)
         }
 
     }
@@ -49,10 +56,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         controller.interactivePopGestureRecognizer?.delegate = popRecognizer
     }
 
-    private func initGrade() {
-    }
-
-    private func initProtectionStatus() {
+    private func initPrivacyGrade() {
     }
 
     private func initEncryption() {
@@ -68,6 +72,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func initLeaderBoard() {
+
+        leaderboard.didLoad()
 
     }
 
@@ -87,7 +93,50 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
 }
 
-class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
+class PrivacyGradeCell: UITableViewCell {
+
+    @IBOutlet weak var gradeImage: UIImageView!
+    @IBOutlet weak var siteTitleLabel: UILabel!
+    @IBOutlet weak var protectionPausedLabel: UILabel!
+    @IBOutlet weak var protectionDisabledLabel: UILabel!
+    @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
+
+}
+
+class ProtectionUpgradedView: UIView {
+
+    @IBOutlet weak var fromImage: UIImageView!
+    @IBOutlet weak var toImage: UIImageView!
+
+}
+
+class TrackerNetworkLeaderboardCell: UITableViewCell {
+
+    @IBOutlet weak var firstPill: TrackerNetworkPillView!
+    @IBOutlet weak var secondPill: TrackerNetworkPillView!
+    @IBOutlet weak var thirdPill: TrackerNetworkPillView!
+
+    func didLoad() {
+        firstPill.didLoad()
+        secondPill.didLoad()
+        thirdPill.didLoad()
+    }
+
+}
+
+class TrackerNetworkPillView: UIView {
+
+    @IBOutlet weak var networkImage: UIImageView!
+    @IBOutlet weak var percentageLabel: UILabel!
+
+    func didLoad() {
+        layer.cornerRadius = frame.size.height / 2
+        percentageLabel.adjustKern(1.2)
+    }
+
+}
+
+fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
 
     var navigationController: UINavigationController
 

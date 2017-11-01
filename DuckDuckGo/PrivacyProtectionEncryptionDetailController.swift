@@ -27,7 +27,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
 extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisplaying {
 
-    func prepare(for siteRating: SiteRating) {
+    func using(_ siteRating: SiteRating) {
         self.siteRating = siteRating
     }
 

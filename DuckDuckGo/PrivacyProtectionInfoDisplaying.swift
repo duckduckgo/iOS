@@ -10,6 +10,6 @@ import Core
 
 protocol PrivacyProtectionInfoDisplaying {
 
-    func prepare(for siteRating: SiteRating)
+    func using(_ siteRating: SiteRating)
 
 }

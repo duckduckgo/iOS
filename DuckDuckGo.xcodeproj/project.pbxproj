@@ -854,12 +854,12 @@
 		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
 			isa = PBXGroup;
 			children = (
-				85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */,
 				85436C3E1FA74BC300F4EEE1 /* PrivactProtection.xcassets */,
+				85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */,
 				8539D9F61FA756AD00BE8746 /* PrivacyProtectionDashboardController.swift */,
-				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
 				85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */,
 				85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */,
+				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
 			);
 			name = PrivacyProtection;
 			sourceTree = "<group>";

@@ -45,6 +45,14 @@ class PrivacyProtectionDashboardController: UIViewController {
         omniBar.omniDelegate = self
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let controller = segue.destination.childViewControllers[0] as? PrivacyProtectionOverviewController {
+            controller.siteRating = siteRating
+        }
+
+    }
+
 }
 
 extension PrivacyProtectionDashboardController: OmniBarDelegate {

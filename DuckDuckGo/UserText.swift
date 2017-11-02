@@ -66,7 +66,10 @@ public struct UserText {
 
     public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
     public static let unsecuredConnection = NSLocalizedString("monitoring.connection.unsecured", comment: "Unsecured conection")
-    
+
+    public static let privacyProtectionEncryptedConnection = NSLocalizedString("privacy.protection.encrypted.connection", comment: "Encrypted conection")
+    public static let privacyProtectionUnencryptedConnection = NSLocalizedString("privacy.protection.unencrypted.connection", comment: "Unencrypted conection")
+
     public static func forSiteGrade(_ grade: SiteGrade) -> String {
         let key = "monitoring.sitegrade.\(grade.rawValue)"
         return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")

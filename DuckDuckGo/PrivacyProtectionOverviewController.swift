@@ -15,10 +15,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet var requiresKernAdjustment: [UILabel]!
 
     @IBOutlet weak var privacyGrade: PrivacyGradeCell!
-    @IBOutlet weak var encryptionCell: UITableViewCell!
-    @IBOutlet weak var trackersCell: UITableViewCell!
-    @IBOutlet weak var majorTrackersCell: UITableViewCell!
-    @IBOutlet weak var privacyPracticesCell: UITableViewCell!
+    @IBOutlet weak var encryptionCell: SummaryCell!
+    @IBOutlet weak var trackersCell: SummaryCell!
+    @IBOutlet weak var majorTrackersCell: SummaryCell!
+    @IBOutlet weak var privacyPracticesCell: SummaryCell!
+    @IBOutlet weak var privacyProtectionCell: UITableViewCell!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardCell!
 
@@ -51,7 +52,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateEncryption()
         updateTrackersBlocked()
         updateMajorTrackersBlocked()
-        updatePrivacyPolicies()
+        updatePrivacyPractices()
+        updateProtectionToggle()
         updateLeaderBoard()
     }
 
@@ -60,18 +62,34 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
+        encryptionCell.summaryLabel.text = siteRating.https ?
+            UserText.privacyProtectionEncryptedConnection : UserText.privacyProtectionUnencryptedConnection
+        encryptionCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Connection") : #imageLiteral(resourceName: "PP Hero ON- Connection")
     }
 
     private func updateTrackersBlocked() {
+        trackersCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Networks Blocked") : #imageLiteral(resourceName: "PP Hero ON- Networks Blocked")
     }
 
     private func updateMajorTrackersBlocked() {
+        majorTrackersCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Major Networks") : #imageLiteral(resourceName: "PP Hero ON- Major Networks")
     }
 
-    private func updatePrivacyPolicies() {
+    private func updatePrivacyPractices() {
+        privacyPracticesCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Good Privacy") : #imageLiteral(resourceName: "PP Hero ON- Good Privacy")
     }
 
     private func updateLeaderBoard() {
+        leaderboard.isHidden = true
+    }
+
+    private func updateProtectionToggle() {
+        privacyProtectionSwitch.isOn = !blocking()
+        privacyProtectionCell.backgroundColor = blocking() ? UIColor.coolGray : UIColor.green
+    }
+
+    private func blocking() -> Bool {
+        return !contentBlocker.enabled || contentBlocker.domainWhitelist.contains(siteRating.domain)
     }
 
     // see https://stackoverflow.com/a/41248703
@@ -126,12 +144,19 @@ class PrivacyGradeCell: UITableViewCell {
 
         if !contentBlocking.enabled {
             protectionDisabledLabel.isHidden = false
-        } else if WhitelistManager().isWhitelisted(domain: siteRating.domain) {
+        } else if contentBlocking.domainWhitelist.contains(siteRating.domain) {
             protectionPausedLabel.isHidden = false
         } else {
             // TODO show upgrade
         }
     }
+
+}
+
+class SummaryCell: UITableViewCell {
+
+    @IBOutlet weak var summaryImage: UIImageView!
+    @IBOutlet weak var summaryLabel: UILabel!
 
 }
 

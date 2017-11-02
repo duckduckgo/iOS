@@ -187,93 +187,145 @@
                             </tableViewSection>
                             <tableViewSection id="ria-wo-DGJ">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="dmh-3K-qhE" imageView="MwM-5a-Be0" rowHeight="57" style="IBUITableViewCellStyleDefault" id="goO-wb-Nup">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="goO-wb-Nup" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="203" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="goO-wb-Nup" id="afc-cI-Pc9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dmh-3K-qhE">
-                                                    <rect key="frame" x="60" y="0.0" width="299" height="56.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Connection" translatesAutoresizingMaskIntoConstraints="NO" id="tQ2-6F-wmG">
+                                                    <rect key="frame" x="24" y="8.5" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="2sF-qt-Xmd"/>
+                                                        <constraint firstAttribute="height" constant="40" id="WY0-xl-JrU"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz1-Q4-Fxr">
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Connection" id="MwM-5a-Be0">
-                                                    <rect key="frame" x="16" y="18" width="29" height="19"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zz1-Q4-Fxr" firstAttribute="centerY" secondItem="afc-cI-Pc9" secondAttribute="centerY" id="154-Zq-WIQ"/>
+                                                <constraint firstItem="tQ2-6F-wmG" firstAttribute="leading" secondItem="afc-cI-Pc9" secondAttribute="leadingMargin" constant="8" id="Hf5-y4-Z8m"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zz1-Q4-Fxr" secondAttribute="trailing" constant="8" id="Jrf-Xl-88t"/>
+                                                <constraint firstItem="zz1-Q4-Fxr" firstAttribute="leading" secondItem="tQ2-6F-wmG" secondAttribute="trailing" constant="10" id="Roz-RO-xHc"/>
+                                                <constraint firstItem="tQ2-6F-wmG" firstAttribute="centerY" secondItem="afc-cI-Pc9" secondAttribute="centerY" id="amX-qt-xJv"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="summaryImage" destination="tQ2-6F-wmG" id="xms-GX-C2m"/>
+                                            <outlet property="summaryLabel" destination="zz1-Q4-Fxr" id="LYP-HO-tJJ"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="bld-eI-FUR" imageView="NKD-nb-bCc" rowHeight="57" style="IBUITableViewCellStyleDefault" id="ijR-Mj-joI">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="izo-7V-yei" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="260" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ijR-Mj-joI" id="igp-b6-w8y">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="izo-7V-yei" id="uvS-6F-pqD">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="8 Tracker Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bld-eI-FUR">
-                                                    <rect key="frame" x="57" y="0.0" width="302" height="56.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Networks Blocked" translatesAutoresizingMaskIntoConstraints="NO" id="ZoA-kS-Hsv">
+                                                    <rect key="frame" x="24" y="8.5" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="FtJ-RN-9NA"/>
+                                                        <constraint firstAttribute="height" constant="40" id="ekT-N9-Oae"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="8 Tracker Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZ4-PW-wOG">
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Networks Blocked" id="NKD-nb-bCc">
-                                                    <rect key="frame" x="16" y="19" width="26" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="GZ4-PW-wOG" firstAttribute="leading" secondItem="ZoA-kS-Hsv" secondAttribute="trailing" constant="10" id="7zz-eb-19f"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GZ4-PW-wOG" secondAttribute="trailing" constant="8" id="Cqa-9f-z0l"/>
+                                                <constraint firstItem="ZoA-kS-Hsv" firstAttribute="leading" secondItem="uvS-6F-pqD" secondAttribute="leadingMargin" constant="8" id="bzH-Rj-FGO"/>
+                                                <constraint firstItem="ZoA-kS-Hsv" firstAttribute="centerY" secondItem="uvS-6F-pqD" secondAttribute="centerY" id="imG-mC-UZC"/>
+                                                <constraint firstItem="GZ4-PW-wOG" firstAttribute="centerY" secondItem="uvS-6F-pqD" secondAttribute="centerY" id="qVC-KQ-gvn"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="summaryImage" destination="ZoA-kS-Hsv" id="Fx8-O6-TT5"/>
+                                            <outlet property="summaryLabel" destination="GZ4-PW-wOG" id="Uxc-rP-15h"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="COL-J3-uDv" imageView="jLt-cI-OxD" rowHeight="57" style="IBUITableViewCellStyleDefault" id="WLF-Df-YMP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="Wkd-gv-dQz" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="317" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WLF-Df-YMP" id="Rr4-8y-gbt">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wkd-gv-dQz" id="Nfx-4o-djA">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="3 Major Tracker Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="COL-J3-uDv">
-                                                    <rect key="frame" x="66" y="0.0" width="293" height="56.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Major Networks" translatesAutoresizingMaskIntoConstraints="NO" id="Adc-1u-8dC">
+                                                    <rect key="frame" x="24" y="8.5" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="qyd-BB-bjr"/>
+                                                        <constraint firstAttribute="width" constant="40" id="yPM-mR-fUT"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="3 Major Tracker Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRX-q4-dPP">
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Major Networks" id="jLt-cI-OxD">
-                                                    <rect key="frame" x="16" y="16" width="35" height="23"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pRX-q4-dPP" firstAttribute="leading" secondItem="Adc-1u-8dC" secondAttribute="trailing" constant="10" id="14v-WK-Afx"/>
+                                                <constraint firstItem="pRX-q4-dPP" firstAttribute="centerY" secondItem="Nfx-4o-djA" secondAttribute="centerY" id="1Se-6g-9kT"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="pRX-q4-dPP" secondAttribute="trailing" constant="8" id="5ux-FG-g0J"/>
+                                                <constraint firstItem="Adc-1u-8dC" firstAttribute="leading" secondItem="Nfx-4o-djA" secondAttribute="leadingMargin" constant="8" id="QM5-o3-zKe"/>
+                                                <constraint firstItem="Adc-1u-8dC" firstAttribute="centerY" secondItem="Nfx-4o-djA" secondAttribute="centerY" id="wZ5-Cm-0eP"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="summaryImage" destination="Adc-1u-8dC" id="BbF-vL-Cxf"/>
+                                            <outlet property="summaryLabel" destination="pRX-q4-dPP" id="i8i-VU-qhN"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="GNG-st-NMI" imageView="SE7-5d-83e" rowHeight="57" style="IBUITableViewCellStyleDefault" id="gmF-IT-T9T">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="7tG-Dt-rZf" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="374" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gmF-IT-T9T" id="02L-1H-Seo">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7tG-Dt-rZf" id="REe-ji-zYW">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Good Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GNG-st-NMI">
-                                                    <rect key="frame" x="66" y="0.0" width="293" height="56.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Good Privacy" translatesAutoresizingMaskIntoConstraints="NO" id="Uul-fb-r5K">
+                                                    <rect key="frame" x="24" y="8.5" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="7g5-nh-F4P"/>
+                                                        <constraint firstAttribute="width" constant="40" id="aGW-h4-hwg"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Good Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyz-09-obQ">
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Good Privacy" id="SE7-5d-83e">
-                                                    <rect key="frame" x="16" y="16" width="35" height="23"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="oyz-09-obQ" secondAttribute="trailing" constant="8" id="3Kx-n4-AUs"/>
+                                                <constraint firstItem="Uul-fb-r5K" firstAttribute="leading" secondItem="REe-ji-zYW" secondAttribute="leadingMargin" constant="8" id="NhZ-5w-YOh"/>
+                                                <constraint firstItem="Uul-fb-r5K" firstAttribute="centerY" secondItem="REe-ji-zYW" secondAttribute="centerY" id="YGl-ug-712"/>
+                                                <constraint firstItem="oyz-09-obQ" firstAttribute="leading" secondItem="Uul-fb-r5K" secondAttribute="trailing" constant="10" id="nXJ-1U-7iE"/>
+                                                <constraint firstItem="oyz-09-obQ" firstAttribute="centerY" secondItem="REe-ji-zYW" secondAttribute="centerY" id="quK-ls-uiU"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="summaryImage" destination="Uul-fb-r5K" id="1QN-7q-DqQ"/>
+                                            <outlet property="summaryLabel" destination="oyz-09-obQ" id="rTQ-QK-zJI"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -318,7 +370,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-nL-nri">
-                                                    <rect key="frame" x="83.5" y="22" width="209" height="14"/>
+                                                    <rect key="frame" x="84" y="22" width="209" height="14"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -442,20 +494,29 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="lwf-bc-TtK"/>
                     <connections>
-                        <outlet property="encryptionCell" destination="goO-wb-Nup" id="Hbl-cC-MB9"/>
+                        <outlet property="encryptionCell" destination="goO-wb-Nup" id="oyA-Bs-y4l"/>
                         <outlet property="leaderboard" destination="4g1-uR-ElB" id="Erg-RK-503"/>
-                        <outlet property="majorTrackersCell" destination="WLF-Df-YMP" id="nPw-7i-P2S"/>
+                        <outlet property="majorTrackersCell" destination="Wkd-gv-dQz" id="q51-cY-iaI"/>
                         <outlet property="privacyGrade" destination="s9p-bO-Vdf" id="pw7-q7-rRX"/>
-                        <outlet property="privacyPracticesCell" destination="gmF-IT-T9T" id="Jeb-yX-Bg9"/>
+                        <outlet property="privacyPracticesCell" destination="7tG-Dt-rZf" id="bRZ-1X-bt7"/>
+                        <outlet property="privacyProtectionCell" destination="u1J-ua-Wxj" id="j1i-2c-GKd"/>
                         <outlet property="privacyProtectionSwitch" destination="f83-AN-wMW" id="CIS-yZ-eMZ"/>
-                        <outlet property="trackersCell" destination="ijR-Mj-joI" id="g12-Vj-mPb"/>
-                        <outletCollection property="margins" destination="FCQ-WN-COC" collectionClass="NSMutableArray" id="L70-Zg-EUr"/>
-                        <outletCollection property="margins" destination="Hyk-2k-0qs" collectionClass="NSMutableArray" id="ccE-zV-aut"/>
+                        <outlet property="trackersCell" destination="izo-7V-yei" id="X6C-vM-6Xq"/>
                         <outletCollection property="requiresKernAdjustment" destination="sRe-LT-6q8" collectionClass="NSMutableArray" id="HuB-gG-7jh"/>
                         <outletCollection property="requiresKernAdjustment" destination="fA2-W3-OZ9" collectionClass="NSMutableArray" id="tK0-EO-qFP"/>
                         <outletCollection property="requiresKernAdjustment" destination="nRd-xQ-Adm" collectionClass="NSMutableArray" id="frh-gy-fOf"/>
                         <outletCollection property="requiresKernAdjustment" destination="K2B-4E-fgJ" collectionClass="NSMutableArray" id="prG-6D-hJ0"/>
                         <outletCollection property="requiresKernAdjustment" destination="hB8-nL-nri" collectionClass="NSMutableArray" id="Hfk-n6-XgT"/>
+                        <outletCollection property="margins" destination="FCQ-WN-COC" collectionClass="NSMutableArray" id="Qqg-6L-mBx"/>
+                        <outletCollection property="margins" destination="Hyk-2k-0qs" collectionClass="NSMutableArray" id="kib-kF-K8K"/>
+                        <outletCollection property="margins" destination="NhZ-5w-YOh" collectionClass="NSMutableArray" id="PUe-zm-Jb2"/>
+                        <outletCollection property="margins" destination="3Kx-n4-AUs" collectionClass="NSMutableArray" id="sU8-Lu-Y7U"/>
+                        <outletCollection property="margins" destination="QM5-o3-zKe" collectionClass="NSMutableArray" id="7Dj-Nf-xg9"/>
+                        <outletCollection property="margins" destination="5ux-FG-g0J" collectionClass="NSMutableArray" id="dLO-wp-r5f"/>
+                        <outletCollection property="margins" destination="bzH-Rj-FGO" collectionClass="NSMutableArray" id="ICM-Xz-Zcm"/>
+                        <outletCollection property="margins" destination="Cqa-9f-z0l" collectionClass="NSMutableArray" id="Hoy-ql-gcz"/>
+                        <outletCollection property="margins" destination="Hf5-y4-Z8m" collectionClass="NSMutableArray" id="3Dt-xn-CFA"/>
+                        <outletCollection property="margins" destination="Jrf-Xl-88t" collectionClass="NSMutableArray" id="zOz-hX-GWc"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -30,23 +30,48 @@ class PrivacyProtectionOverviewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        leaderboard.didLoad()
         initPopRecognizer()
-        initPrivacyGrade()
-        initEncryption()
-        initTrackersBlocked()
-        initMajorTrackersBlocked()
-        initPrivacyPolicies()
-        initLeaderBoard()
         adjustMargins()
         adjustKerns()
+
+        updateSiteRating(siteRating)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating)
         }
+    }
 
+    func updateSiteRating(_ siteRating: SiteRating) {
+        self.siteRating = siteRating
+
+        updatePrivacyGrade()
+        updateEncryption()
+        updateTrackersBlocked()
+        updateMajorTrackersBlocked()
+        updatePrivacyPolicies()
+        updateLeaderBoard()
+    }
+
+    private func updatePrivacyGrade() {
+        privacyGrade.update(with: siteRating, and: contentBlocker)
+    }
+
+    private func updateEncryption() {
+    }
+
+    private func updateTrackersBlocked() {
+    }
+
+    private func updateMajorTrackersBlocked() {
+    }
+
+    private func updatePrivacyPolicies() {
+    }
+
+    private func updateLeaderBoard() {
     }
 
     // see https://stackoverflow.com/a/41248703
@@ -54,27 +79,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
         guard let controller = navigationController else { return }
         popRecognizer = InteractivePopRecognizer(controller: controller)
         controller.interactivePopGestureRecognizer?.delegate = popRecognizer
-    }
-
-    private func initPrivacyGrade() {
-    }
-
-    private func initEncryption() {
-    }
-
-    private func initTrackersBlocked() {
-    }
-
-    private func initMajorTrackersBlocked() {
-    }
-
-    private func initPrivacyPolicies() {
-    }
-
-    private func initLeaderBoard() {
-
-        leaderboard.didLoad()
-
     }
 
     private func adjustMargins() {
@@ -95,11 +99,39 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
 class PrivacyGradeCell: UITableViewCell {
 
+    private static let grades = [
+        SiteGrade.a: #imageLiteral(resourceName: "PP Grade A"),
+        SiteGrade.b: #imageLiteral(resourceName: "PP Grade B"),
+        SiteGrade.c: #imageLiteral(resourceName: "PP Grade C"),
+        SiteGrade.d: #imageLiteral(resourceName: "PP Grade D"),
+    ]
+
     @IBOutlet weak var gradeImage: UIImageView!
     @IBOutlet weak var siteTitleLabel: UILabel!
     @IBOutlet weak var protectionPausedLabel: UILabel!
     @IBOutlet weak var protectionDisabledLabel: UILabel!
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
+
+    func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
+
+        if siteRating.finishedLoading {
+            gradeImage.image = PrivacyGradeCell.grades[siteRating.siteGrade]
+        }
+        
+        siteTitleLabel.text = siteRating.domain
+
+        protectionPausedLabel.isHidden = true
+        protectionDisabledLabel.isHidden = true
+        protectionUpgraded.isHidden = true
+
+        if !contentBlocking.enabled {
+            protectionDisabledLabel.isHidden = false
+        } else if WhitelistManager().isWhitelisted(domain: siteRating.domain) {
+            protectionPausedLabel.isHidden = false
+        } else {
+            // TODO show upgrade
+        }
+    }
 
 }
 

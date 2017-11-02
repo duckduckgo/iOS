@@ -32,6 +32,7 @@ class TabViewController: WebViewController {
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var contentBlockerPopover: ContentBlockerPopover?
+    private weak var privacyDashboard: PrivacyProtectionDashboardController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
 
@@ -61,6 +62,7 @@ class TabViewController: WebViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let controller = segue.destination as? PrivacyProtectionDashboardController {
+            privacyDashboard = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.siteRating = siteRating
         }
@@ -123,7 +125,8 @@ class TabViewController: WebViewController {
     
     fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
-        contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
+        // contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
+        privacyDashboard?.updateSiteRating(siteRating!)
     }
     
     func launchBrowsingMenu() {

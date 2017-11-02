@@ -25,6 +25,9 @@ class PrivacyProtectionDashboardController: UIViewController {
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
 
+    weak var embeddedController: UINavigationController!
+
+    weak var omniBar: OmniBar!
     weak var omniDelegate: OmniBarDelegate!
     weak var siteRating: SiteRating!
 
@@ -36,7 +39,7 @@ class PrivacyProtectionDashboardController: UIViewController {
     }
 
     private func initOmniBar() {
-        let omniBar = OmniBar.loadFromXib()
+        omniBar = OmniBar.loadFromXib()
         omniBar.frame = omniBarContainer.bounds
         omniBarContainer.addSubview(omniBar)
         omniBar.refreshText(forUrl: siteRating.url)
@@ -46,11 +49,23 @@ class PrivacyProtectionDashboardController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if let controller = segue.destination.childViewControllers[0] as? PrivacyProtectionOverviewController {
-            controller.siteRating = siteRating
+        if let controller = segue.destination as? UINavigationController {
+            embeddedController = controller
+            if let controller = embeddedController.viewControllers[0] as? PrivacyProtectionOverviewController {
+                controller.siteRating = siteRating
+            }
         }
+    }
 
+    func updateSiteRating(_ siteRating: SiteRating) {
+        self.siteRating = siteRating
+        omniBar.updateSiteRating(siteRating)
+
+        for controller in embeddedController.viewControllers {
+            if let controller = controller as? PrivacyProtectionOverviewController {
+                controller.updateSiteRating(siteRating)
+            }
+        }
     }
 
 }

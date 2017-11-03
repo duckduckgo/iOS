@@ -53,8 +53,8 @@ class TabViewController: WebViewController {
             return Link.mergeData(primary: nil, secondary: tabModel.link)
         }
         
-        let current = Link(title: name, url: url, favicon: favicon)
-        return Link.mergeData(primary: current, secondary: tabModel.link)
+        let activeLink = Link(title: name, url: url, favicon: favicon)
+        return Link.mergeData(primary: activeLink, secondary: tabModel.link)
     }
     
     override func viewDidLoad() {

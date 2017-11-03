@@ -85,14 +85,14 @@ class LinkTests: XCTestCase {
         XCTAssertEqual(result, primay)
     }
     
-    func testWhenMergingSAmeUrlAndBothHaveTitlesThenPrimaryTitleIsUsed() {
+    func testWhenMergingSameUrlAndBothHaveTitlesThenPrimaryTitleIsUsed() {
         let primay = Link(title: "primary", url: URL(string: "www.example.com")!, favicon: URL(string: "www.primaryfavicon.example.com")!)
         let secondary = Link(title: "secondary", url: URL(string: "www.example.com")!, favicon: URL(string: "www.secondaryfavicon.example.com")!)
         let result = Link.mergeData(primary: primay, secondary: secondary)
         XCTAssertEqual(result?.title, "primary");
     }
     
-    func testWhenMergingSAmeUrlAndOnlyPrimaryHasTitleThenPrimaryTitleIsUsed() {
+    func testWhenMergingSameUrlAndOnlyPrimaryHasTitleThenPrimaryTitleIsUsed() {
         let primay = Link(title: "primary", url: URL(string: "www.example.com")!, favicon: URL(string: "www.primaryfavicon.example.com")!)
         let secondary = Link(title: nil, url: URL(string: "www.example.com")!, favicon: URL(string: "www.secondaryfavicon.example.com")!)
         let result = Link.mergeData(primary: primay, secondary: secondary)
@@ -127,7 +127,7 @@ class LinkTests: XCTestCase {
         XCTAssertEqual(result?.favicon, URL(string: "www.secondaryfavicon.example.com")!);
     }
     
-    func testWhenMergingDifferentUrlsThenOnlySecondayDataIsIgnored() {
+    func testWhenMergingDifferentUrlsThenSecondayDataIsIgnored() {
         let primay = Link(title: nil, url: URL(string: "www.primary.example.com")!, favicon: nil)
         let secondary = Link(title: "secondary", url: URL(string: "www.seconday.example.com")!, favicon: URL(string: "www.secondaryfavicon.example.com")!)
         let result = Link.mergeData(primary: primay, secondary: secondary)

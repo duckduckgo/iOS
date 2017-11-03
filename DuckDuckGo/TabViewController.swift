@@ -367,7 +367,9 @@ extension TabViewController: WebEventsDelegate {
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
-        tabModel.link = selectBestLink(modelLink: tabModel.link, activeLink: link)
+        if let modelLink = tabModel.link {
+            tabModel.link = Link(title: modelLink.title, url: modelLink.url, favicon: favicon)
+        }
         delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -385,7 +387,7 @@ extension TabViewController: WebEventsDelegate {
         }
         
         guard let activeLink = activeLink else {
-            return nil
+            return modelLink
         }
         
         if activeLink.url == modelLink.url, (activeLink.title == nil || activeLink.title!.isEmpty) {

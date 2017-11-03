@@ -71,3 +71,7 @@
 "privacy.protection.trackers.found" = "%d Tracker Networks Found";
 "privacy.protection.major.trackers.blocked" = "%d Major Tracker Networks Blocked";
 "privacy.protection.major.trackers.found" = "%d Major Tracker Networks Found";
+"privacy.protection.tos.unknown" = "Unknown Privacy Practices";
+"privacy.protection.tos.good" = "Good Privacy Practices";
+"privacy.protection.tos.some" = "Some Privacy Practices";
+"privacy.protection.tos.poor" = "Poor Privacy Practices";

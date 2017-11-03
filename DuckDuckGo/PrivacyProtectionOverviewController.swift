@@ -52,6 +52,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
     func updateSiteRating(_ siteRating: SiteRating) {
         self.siteRating = siteRating
 
+        // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
+        guard isViewLoaded else { return }
+
         updatePrivacyGrade()
         updateEncryption()
         updateTrackersBlocked()
@@ -87,6 +90,22 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     private func updatePrivacyPractices() {
         privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Good Privacy") : #imageLiteral(resourceName: "PP Hero OFF- Good Privacy")
+        privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSUnknown
+
+        guard siteRating.termsOfService != nil else { return }
+
+        let score = siteRating.termsOfServiceScore
+
+        switch (score) {
+        case _ where(score < 0):
+            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSGood
+
+        case 0 ... 1:
+            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSSome
+
+        default:
+            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSPoor
+        }
     }
 
     private func updateLeaderBoard() {
@@ -94,7 +113,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = protecting()
+        privacyProtectionSwitch.isOn = contentBlocker.enabled
         privacyProtectionCell.backgroundColor = protecting() ? UIColor.ppGreen : UIColor.ppGray
     }
 

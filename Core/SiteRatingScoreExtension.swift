@@ -61,7 +61,7 @@ public extension SiteRating {
         return contrainsIpTracker ? 1 : 0
     }
     
-    private var termsOfServiceScore: Int {
+    public var termsOfServiceScore: Int {
         guard let termsOfService = termsOfService else {
             return 0
         }

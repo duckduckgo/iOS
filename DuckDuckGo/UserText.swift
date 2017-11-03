@@ -74,6 +74,11 @@ public struct UserText {
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
     public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
 
+    public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", comment: "Unknown Privacy Practices")
+    public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", comment: "Good Privacy Practices")
+    public static let privacyProtectionTOSSome = NSLocalizedString("privacy.protection.tos.some", comment: "Some Privacy Practices")
+    public static let privacyProtectionTOSPoor = NSLocalizedString("privacy.protection.tos.poor", comment: "Poor Privacy Practices")
+
     public static func forSiteGrade(_ grade: SiteGrade) -> String {
         let key = "monitoring.sitegrade.\(grade.rawValue)"
         return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")

@@ -69,6 +69,10 @@ public struct UserText {
 
     public static let privacyProtectionEncryptedConnection = NSLocalizedString("privacy.protection.encrypted.connection", comment: "Encrypted conection")
     public static let privacyProtectionUnencryptedConnection = NSLocalizedString("privacy.protection.unencrypted.connection", comment: "Unencrypted conection")
+    public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
+    public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
+    public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
+    public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
 
     public static func forSiteGrade(_ grade: SiteGrade) -> String {
         let key = "monitoring.sitegrade.\(grade.rawValue)"

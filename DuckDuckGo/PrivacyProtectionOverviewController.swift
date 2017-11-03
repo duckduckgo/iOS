@@ -45,6 +45,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
         }
     }
 
+    @IBAction func toggleProtection() {
+        contentBlocker.enabled = privacyProtectionSwitch.isOn
+    }
+
     func updateSiteRating(_ siteRating: SiteRating) {
         self.siteRating = siteRating
 
@@ -64,19 +68,25 @@ class PrivacyProtectionOverviewController: UITableViewController {
     private func updateEncryption() {
         encryptionCell.summaryLabel.text = siteRating.https ?
             UserText.privacyProtectionEncryptedConnection : UserText.privacyProtectionUnencryptedConnection
-        encryptionCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Connection") : #imageLiteral(resourceName: "PP Hero ON- Connection")
+        encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Connection") : #imageLiteral(resourceName: "PP Hero OFF- Connection")
     }
 
     private func updateTrackersBlocked() {
-        trackersCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Networks Blocked") : #imageLiteral(resourceName: "PP Hero ON- Networks Blocked")
+        trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Networks Blocked") : #imageLiteral(resourceName: "PP Hero OFF- Networks Blocked")
+        trackersCell.summaryLabel.text = protecting() ?
+            String(format: UserText.privacyProtectionTrackersBlocked, siteRating.uniqueTrackersBlocked) :
+            String(format: UserText.privacyProtectionTrackersFound, siteRating.uniqueTrackersDetected)
     }
 
     private func updateMajorTrackersBlocked() {
-        majorTrackersCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Major Networks") : #imageLiteral(resourceName: "PP Hero ON- Major Networks")
+        majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Major Networks") : #imageLiteral(resourceName: "PP Hero OFF- Major Networks")
+        majorTrackersCell.summaryLabel.text = protecting() ?
+            String(format: UserText.privacyProtectionMajorTrackersBlocked, siteRating.majorTrackersBlocked) :
+            String(format: UserText.privacyProtectionMajorTrackersFound, siteRating.majorTrackersDetected)
     }
 
     private func updatePrivacyPractices() {
-        privacyPracticesCell.summaryImage.image = blocking() ? #imageLiteral(resourceName: "PP Hero OFF- Good Privacy") : #imageLiteral(resourceName: "PP Hero ON- Good Privacy")
+        privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Good Privacy") : #imageLiteral(resourceName: "PP Hero OFF- Good Privacy")
     }
 
     private func updateLeaderBoard() {
@@ -84,12 +94,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = !blocking()
-        privacyProtectionCell.backgroundColor = blocking() ? UIColor.coolGray : UIColor.green
+        privacyProtectionSwitch.isOn = protecting()
+        privacyProtectionCell.backgroundColor = protecting() ? UIColor.ppGreen : UIColor.ppGray
     }
 
-    private func blocking() -> Bool {
-        return !contentBlocker.enabled || contentBlocker.domainWhitelist.contains(siteRating.domain)
+    private func protecting() -> Bool {
+        return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(siteRating.domain)
     }
 
     // see https://stackoverflow.com/a/41248703
@@ -130,7 +140,7 @@ class PrivacyGradeCell: UITableViewCell {
     @IBOutlet weak var protectionDisabledLabel: UILabel!
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
 
-    func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
+    func update(with siteRating: SiteRating, and contentprotecting: ContentBlockerConfigurationStore) {
 
         if siteRating.finishedLoading {
             gradeImage.image = PrivacyGradeCell.grades[siteRating.siteGrade]
@@ -142,9 +152,9 @@ class PrivacyGradeCell: UITableViewCell {
         protectionDisabledLabel.isHidden = true
         protectionUpgraded.isHidden = true
 
-        if !contentBlocking.enabled {
+        if !contentprotecting.enabled {
             protectionDisabledLabel.isHidden = false
-        } else if contentBlocking.domainWhitelist.contains(siteRating.domain) {
+        } else if contentprotecting.domainWhitelist.contains(siteRating.domain) {
             protectionPausedLabel.isHidden = false
         } else {
             // TODO show upgrade
@@ -212,4 +222,15 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
     }
 }
 
+fileprivate extension UIColor {
+
+    fileprivate static var ppGray: UIColor {
+        return UIColor(red: 149.0 / 255.0, green: 149.0 / 255.0, blue: 149.0 / 255.0, alpha: 1.0)
+    }
+
+    fileprivate static var ppGreen: UIColor {
+        return UIColor(red: 63.0 / 255.0, green: 161.0 / 255.0, blue: 64.0 / 255.0, alpha: 1.0)
+    }
+
+}
 

@@ -55,7 +55,15 @@ public class SiteRating {
             
         return nil
     }
-    
+
+    public var majorTrackersDetected: Int {
+        return majorTrackers(trackers: trackersDetected)
+    }
+
+    public var majorTrackersBlocked: Int {
+        return majorTrackers(trackers: trackersBlocked)
+    }
+
     public var containsMajorTracker: Bool {
         return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
     }
@@ -72,7 +80,7 @@ public class SiteRating {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         
-        if blocked{
+        if blocked {
             let blockCount = trackersBlocked[tracker] ?? 0  
             trackersBlocked[tracker] = blockCount + 1
         }
@@ -93,4 +101,9 @@ public class SiteRating {
     public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
+
+    private func majorTrackers(trackers: [Tracker: Int]) -> Int {
+        return Set(trackers.keys.filter({ $0.fromMajorNetwork }).flatMap({ $0.parentDomain })).count
+    }
+
 }

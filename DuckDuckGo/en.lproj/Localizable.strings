@@ -64,3 +64,10 @@
 "monitoring.sitegrade.b" = "B";
 "monitoring.sitegrade.c" = "C";
 "monitoring.sitegrade.d" = "D";
+
+"privacy.protection.encrypted.connection" = "Encrypted Connection";
+"privacy.protection.unencrypted.connection" = "Unencrypted Connection";
+"privacy.protection.trackers.blocked" = "%d Tracker Networks Blocked";
+"privacy.protection.trackers.found" = "%d Tracker Networks Found";
+"privacy.protection.major.trackers.blocked" = "%d Major Tracker Networks Blocked";
+"privacy.protection.major.trackers.found" = "%d Major Tracker Networks Found";

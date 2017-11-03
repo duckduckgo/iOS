@@ -59,4 +59,26 @@ public class Link: NSObject, NSCoding {
         guard let other = other as? Link else { return false }
         return title == other.title && url == other.url && favicon == other.favicon
     }
+    
+    /**
+     Where links share the same url, uses the seconday link to plug any missing data in the
+     primary link.
+     */
+    public static func mergeData(primary: Link?, secondary: Link?) -> Link? {
+        guard let primary = primary else {
+            return secondary
+        }
+        
+        guard let secondary = secondary else {
+            return primary
+        }
+        
+        if primary.url != secondary.url {
+            return primary
+        }
+    
+        let title = (primary.title == nil || primary.title!.isEmpty) ? secondary.title : primary.title
+        let favicon = primary.favicon ?? secondary.favicon
+        return Link(title: title, url: primary.url, favicon: favicon)
+    }
 }

@@ -48,6 +48,15 @@ class TabViewController: WebViewController {
         webEventsDelegate = self
     }
     
+    public var link: Link? {
+        guard let url = url else {
+            return Link.mergeData(primary: nil, secondary: tabModel.link)
+        }
+        
+        let current = Link(title: name, url: url, favicon: favicon)
+        return Link.mergeData(primary: current, secondary: tabModel.link)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
@@ -346,7 +355,7 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
-        tabModel.link = selectBestLink(modelLink: tabModel.link, activeLink: link)
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
@@ -355,7 +364,7 @@ extension TabViewController: WebEventsDelegate {
         Logger.log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
         siteRating?.finishedLoading = true
         updateSiteRating()
-        tabModel.link = selectBestLink(modelLink: tabModel.link, activeLink: link)
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
@@ -367,9 +376,7 @@ extension TabViewController: WebEventsDelegate {
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
-        if let modelLink = tabModel.link {
-            tabModel.link = Link(title: modelLink.title, url: modelLink.url, favicon: favicon)
-        }
+        tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -379,22 +386,6 @@ extension TabViewController: WebEventsDelegate {
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
-    }
-    
-    private func selectBestLink(modelLink: Link?, activeLink: Link?) -> Link? {
-        guard let modelLink = modelLink else {
-            return activeLink
-        }
-        
-        guard let activeLink = activeLink else {
-            return modelLink
-        }
-        
-        if activeLink.url == modelLink.url, (activeLink.title == nil || activeLink.title!.isEmpty) {
-            return modelLink
-        }
-        
-        return activeLink
     }
 }
 

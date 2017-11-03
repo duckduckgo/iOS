@@ -137,8 +137,7 @@ class TabManager {
     
     private func cachedController(forTab tab: Tab) -> TabViewController? {
         let controller = tabControllerCache.filter( { $0.tabModel === tab } ).first
-        if let link = controller?.link {
-            tab.link = link
+        if controller != nil {
             save()
         }
         return controller

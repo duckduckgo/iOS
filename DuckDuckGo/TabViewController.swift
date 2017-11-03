@@ -346,7 +346,7 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
-        tabModel.link = link
+        tabModel.link = selectBestLink(modelLink: tabModel.link, activeLink: link)
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
@@ -355,7 +355,7 @@ extension TabViewController: WebEventsDelegate {
         Logger.log(items: "webpageLoading finished:", Date().timeIntervalSince1970)
         siteRating?.finishedLoading = true
         updateSiteRating()
-        tabModel.link = link
+        tabModel.link = selectBestLink(modelLink: tabModel.link, activeLink: link)
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
@@ -367,7 +367,7 @@ extension TabViewController: WebEventsDelegate {
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
         let bookmarks = BookmarkUserDefaults()
         bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
-        tabModel.link = link
+        tabModel.link = selectBestLink(modelLink: tabModel.link, activeLink: link)
         delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -377,6 +377,22 @@ extension TabViewController: WebEventsDelegate {
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
+    }
+    
+    private func selectBestLink(modelLink: Link?, activeLink: Link?) -> Link? {
+        guard let modelLink = modelLink else {
+            return activeLink
+        }
+        
+        guard let activeLink = activeLink else {
+            return nil
+        }
+        
+        if activeLink.url == modelLink.url, (activeLink.title == nil || activeLink.title!.isEmpty) {
+            return modelLink
+        }
+        
+        return activeLink
     }
 }
 

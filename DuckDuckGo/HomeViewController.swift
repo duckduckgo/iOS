@@ -33,7 +33,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var searchBarContent: UIView!
     @IBOutlet weak var searchImage: UIImageView!
     @IBOutlet weak var searchText: UILabel!
-    @IBOutlet weak var useSafariContainer: UIView!
     
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -59,7 +58,6 @@ class HomeViewController: UIViewController {
     }
     
     private func enterActiveModeAnimated() {
-        hideSafariButton()
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.moveSearchBarUp()
         }, completion: { _ in
@@ -89,13 +87,11 @@ class HomeViewController: UIViewController {
     
     private func enterPassiveMode() {
         chromeDelegate?.setNavigationBarHidden(true)
-        adjustSafariButtonVisibility()
         passiveContent.isHidden = false
         delegate?.homeDidDeactivateOmniBar(home: self)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        adjustSafariButtonVisibility(forHeight: size.height)
     }
     
     private func moveSearchBarUp() {
@@ -122,14 +118,6 @@ class HomeViewController: UIViewController {
         searchBarContent.transform = CGAffineTransform.identity
         searchText.transform = CGAffineTransform.identity
         searchImage.alpha = 1
-    }
-    
-    private func adjustSafariButtonVisibility(forHeight height: CGFloat = UIScreen.main.bounds.size.height) {
-        useSafariContainer.isHidden = height < Constants.minHeightForSafariButton
-    }
-    
-    private func hideSafariButton() {
-        useSafariContainer.isHidden = true
     }
     
     func load(url: URL) {

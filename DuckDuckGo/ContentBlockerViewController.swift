@@ -66,10 +66,10 @@ class ContentBlockerViewController: UITableViewController {
     
     private func refreshHttps() {
         if siteRating.https {
-            httpsBackground.tintColor = UIColor.monitoringPositiveTint
+            // httpsBackground.tintColor = UIColor.monitoringPositiveTint
             httpsLabel.text = UserText.secureConnection
         } else {
-            httpsBackground.tintColor = UIColor.monitoringNeutralTint
+            // httpsBackground.tintColor = UIColor.monitoringNeutralTint
             httpsLabel.text = UserText.unsecuredConnection
         }
     }
@@ -82,13 +82,14 @@ class ContentBlockerViewController: UITableViewController {
     }
     
     private func blockCountCircleTint() -> UIColor {
-        if contentBlocker.whitelisted(domain: siteRating.domain) {
-            return UIColor.monitoringNegativeTint
-        }
-        if siteRating.uniqueTrackersBlocked > 0 {
-            return UIColor.monitoringNeutralTint
-        }
-        return UIColor.monitoringPositiveTint
+//        if contentBlocker.whitelisted(domain: siteRating.domain) {
+//            return UIColor.monitoringNegativeTint
+//        }
+//        if siteRating.uniqueTrackersBlocked > 0 {
+//            return UIColor.monitoringNeutralTint
+//        }
+//        return UIColor.monitoringPositiveTint
+        return UIColor.monitoringInactiveTint
     }
     
     @IBAction func onBlockThisDomainToggled(_ sender: UISwitch) {

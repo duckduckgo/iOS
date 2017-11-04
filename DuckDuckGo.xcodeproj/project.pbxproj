@@ -31,7 +31,7 @@
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionDashboardController.swift */; };
-		85436C3F1FA74BC300F4EEE1 /* PrivactProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivactProtection.xcassets */; };
+		85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */; };
 		855927B01FA89153003A3994 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 855927AF1FA89152003A3994 /* bloom-filter-packed.js */; };
 		855927B21FA8915F003A3994 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 855927B11FA8915F003A3994 /* abp-filter-parser-packed.js */; };
 		8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0301F8E1EE300F04442 /* FireButton.xib */; };
@@ -355,7 +355,7 @@
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionDashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionDashboardController.swift; sourceTree = "<group>"; };
-		85436C3E1FA74BC300F4EEE1 /* PrivactProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivactProtection.xcassets; sourceTree = "<group>"; };
+		85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivacyProtection.xcassets; sourceTree = "<group>"; };
 		855927AF1FA89152003A3994 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "bloom-filter-packed.js"; sourceTree = "<group>"; };
 		855927B11FA8915F003A3994 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "abp-filter-parser-packed.js"; sourceTree = "<group>"; };
 		8563A0301F8E1EE300F04442 /* FireButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FireButton.xib; sourceTree = "<group>"; };
@@ -854,7 +854,7 @@
 		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
 			isa = PBXGroup;
 			children = (
-				85436C3E1FA74BC300F4EEE1 /* PrivactProtection.xcassets */,
+				85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */,
 				85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */,
 				8539D9F61FA756AD00BE8746 /* PrivacyProtectionDashboardController.swift */,
 				85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */,
@@ -1903,7 +1903,7 @@
 				85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
-				85436C3F1FA74BC300F4EEE1 /* PrivactProtection.xcassets in Resources */,
+				85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,

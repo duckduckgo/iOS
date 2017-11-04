@@ -29,14 +29,14 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         static let trackerList = "com.duckduckgo.trackerList"
     }
     
-    private let suitName: String
+    private let suiteName: String
     
-    public init(suitName: String = ContentBlockerStoreConstants.groupName) {
-        self.suitName =  suitName
+    public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
+        self.suiteName =  suiteName
     }
     
     private var userDefaults: UserDefaults? {
-        return UserDefaults(suiteName: suitName)
+        return UserDefaults(suiteName: suiteName)
     }
     
     public var enabled: Bool {
@@ -77,6 +77,10 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         var whitelist = domainWhitelist
         whitelist.remove(domain)
         domainWhitelist = whitelist
+    }
+
+    public func protecting(domain: String) -> Bool {
+        return enabled && !whitelisted(domain: domain)
     }
     
     private func onStoreChanged() {

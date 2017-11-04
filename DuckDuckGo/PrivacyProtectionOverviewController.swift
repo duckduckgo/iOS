@@ -110,6 +110,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     private func updateLeaderBoard() {
         leaderboard.isHidden = true
+        // TODO update leaderboard later
     }
 
     private func updateProtectionToggle() {
@@ -118,7 +119,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func protecting() -> Bool {
-        return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(siteRating.domain)
+        return contentBlocker.protecting(domain: siteRating.domain)
     }
 
     // see https://stackoverflow.com/a/41248703
@@ -159,10 +160,11 @@ class PrivacyGradeCell: UITableViewCell {
     @IBOutlet weak var protectionDisabledLabel: UILabel!
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
 
-    func update(with siteRating: SiteRating, and contentprotecting: ContentBlockerConfigurationStore) {
+    func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
 
         if siteRating.finishedLoading {
-            gradeImage.image = PrivacyGradeCell.grades[siteRating.siteGrade]
+            let grade = siteRating.siteGrade(blockedOnly: contentBlocking.protecting(domain: siteRating.domain))
+            gradeImage.image = image(for: grade)
         }
         
         siteTitleLabel.text = siteRating.domain
@@ -171,13 +173,18 @@ class PrivacyGradeCell: UITableViewCell {
         protectionDisabledLabel.isHidden = true
         protectionUpgraded.isHidden = true
 
-        if !contentprotecting.enabled {
+        if !contentBlocking.enabled {
             protectionDisabledLabel.isHidden = false
-        } else if contentprotecting.domainWhitelist.contains(siteRating.domain) {
+        } else if contentBlocking.domainWhitelist.contains(siteRating.domain) {
             protectionPausedLabel.isHidden = false
         } else {
-            // TODO show upgrade
+            protectionUpgraded.isHidden = false
+            protectionUpgraded.update(with: siteRating)
         }
+    }
+
+    private func image(for grade: SiteGrade) -> UIImage? {
+        return PrivacyGradeCell.grades[grade]
     }
 
 }
@@ -191,8 +198,29 @@ class SummaryCell: UITableViewCell {
 
 class ProtectionUpgradedView: UIView {
 
+    static let grades = [
+        SiteGrade.a: #imageLiteral(resourceName: "PP inline-A"),
+        SiteGrade.b: #imageLiteral(resourceName: "PP inline-B"),
+        SiteGrade.c: #imageLiteral(resourceName: "PP inline-C"),
+        SiteGrade.d: #imageLiteral(resourceName: "PP inline-D")
+    ]
+
     @IBOutlet weak var fromImage: UIImageView!
     @IBOutlet weak var toImage: UIImageView!
+
+    func update(with siteRating: SiteRating) {
+        let fromGrade = siteRating.siteGrade(blockedOnly: false)
+        let toGrade = siteRating.siteGrade(blockedOnly: true)
+
+        isHidden = fromGrade == toGrade
+
+        fromImage.image = image(for: fromGrade)
+        toImage.image = image(for: toGrade)
+    }
+
+    private func image(for grade: SiteGrade) -> UIImage? {
+        return ProtectionUpgradedView.grades[grade]
+    }
 
 }
 

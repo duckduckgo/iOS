@@ -60,30 +60,19 @@ public class SiteRatingView: UIView {
     }
     
     public func refresh() {
-        
-        guard contentBlockerConfiguration.enabled, BlockerListsLoader().hasData else {
-            circleIndicator.tintColor = UIColor.monitoringNegativeTint
-            gradeLabel.text = "!"
-            return
-        }
-        
+        circleIndicator.tintColor = UIColor.monitoringInactiveTint
+
         guard let siteRating = siteRating, siteRating.finishedLoading else {
-            circleIndicator.tintColor = UIColor.monitoringInactiveTint
             gradeLabel.text = "-"
             return
         }
-        gradeLabel.text = UserText.forSiteGrade(siteRating.siteGrade)
-        circleIndicator.tintColor = colorForSiteRating(siteRating)
+
+        print("***", #function, "upgrade from ", siteRating.siteGrade(blockedOnly: false), "to", siteRating.siteGrade(blockedOnly: true))
+
+        gradeLabel.text = UserText.forSiteGrade(siteRating.siteGrade(blockedOnly: protecting()))
     }
-    
-    private func colorForSiteRating(_ siteRating: SiteRating) -> UIColor {
-        switch siteRating.siteGrade {
-        case .a:
-            return UIColor.monitoringPositiveTint
-        case .b, .c:
-            return UIColor.monitoringNeutralTint
-        case .d:
-            return UIColor.monitoringNegativeTint
-        }
+
+    private func protecting() -> Bool {
+        return contentBlockerConfiguration.protecting(domain: siteRating!.domain)
     }
 }

@@ -64,12 +64,14 @@ public class SiteRating {
         return majorTrackers(trackers: trackersBlocked)
     }
 
-    public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
+    public func containsMajorTracker(blockedOnly: Bool) -> Bool {
+        let trackers = blockedOnly ? trackersBlocked : trackersDetected
+        return trackers.contains(where: { $0.key.fromMajorNetwork } )
     }
 
-    public var contrainsIpTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.isIpTracker } )
+    public func contrainsIpTracker(blockedOnly: Bool) -> Bool {
+        let trackers = blockedOnly ? trackersBlocked : trackersDetected
+        return trackers.contains(where: { $0.key.isIpTracker } )
     }
     
     public var termsOfService: TermsOfService? {

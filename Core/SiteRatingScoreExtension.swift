@@ -22,7 +22,7 @@ import Foundation
 
 public extension SiteRating {
     
-    public func siteScore(blockedOnly: Bool) -> Int {
+    func siteScore(blockedOnly: Bool) -> Int {
         var score = 1
         score += httpsScore
         score += isMajorTrackerScore

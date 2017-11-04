@@ -48,98 +48,104 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     
     func testWhenHttpsThenScoreIsZero() {
         let testee = SiteRating(url: Url.https)!
-        XCTAssertEqual(0, testee.siteScore)
+        XCTAssertEqual(0, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenHttpThenScoreIsOne() {
         let testee = SiteRating(url: Url.http)!
-        XCTAssertEqual(1, testee.siteScore)
+        XCTAssertEqual(1, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenUrlHasTermsClassificationOfAThenScoreIsDecrementedToZero() {
         let testee = SiteRating(url: Url.duckduckgo)!
-        XCTAssertEqual(0, testee.siteScore)
+        XCTAssertEqual(0, testee.siteScore(blockedOnly: false))
     }
 
     func testWhenUrlHasTermsHasClassificationOfBThenScoreIsUnchangedAtOne() {
         let testee = SiteRating(url: Url.soundcloud)!
-        XCTAssertEqual(1, testee.siteScore)
+        XCTAssertEqual(1, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenUrlHasTermsClassificationOfDThenScoreIsIncrementedToTwo() {
         let testee = SiteRating(url: Url.delicious)!
-        XCTAssertEqual(2, testee.siteScore)
+        XCTAssertEqual(2, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenUrlHasNoTermsClassificationAndNegativeTermsScoreThenScoreIsDecrementedToZero() {
         let testee = SiteRating(url: Url.steampowered)!
-        XCTAssertEqual(0, testee.siteScore)
+        XCTAssertEqual(0, testee.siteScore(blockedOnly: false))
     }
 
     func testWhenUrlHasNoTermsClassificationAndZeroTermsScoreThenScoreIsUnchangedAtOne() {
         let testee = SiteRating(url: Url.wikipedia)!
-        XCTAssertEqual(1, testee.siteScore)
+        XCTAssertEqual(1, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenUrlHasNoTermsClassificationAndPositiveTermsScoreThenScoreIsIncremenetedToTwo() {
         let testee = SiteRating(url: Url.spotify)!
-        XCTAssertEqual(2, testee.siteScore)
+        XCTAssertEqual(2, testee.siteScore(blockedOnly: false))
     }
 
     func testWhenUrlIsInGoogleNetworkThenScoreIsSix() {
         let testee = SiteRating(url: Url.googleNetwork)!
-        XCTAssertEqual(7, testee.siteScore)
+        XCTAssertEqual(7, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenOneStandardTrackerThenScoreIsTwo() {
         let testee = SiteRating(url: Url.http)!
         addTrackers(siteRating: testee, qty: 1)
-        XCTAssertEqual(2, testee.siteScore)
+        XCTAssertEqual(2, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenOneIpTrackerThenScoreIsThree() {
         let testee = SiteRating(url: Url.http )!
         addTrackers(siteRating: testee, qty: 0, majorQty: 0, ipQty: 1)
-        XCTAssertEqual(3, testee.siteScore)
+        XCTAssertEqual(3, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenOneMajorTrackerThenScoreIsThree() {
         let testee = SiteRating(url: Url.http)!
         addTrackers(siteRating: testee, qty: 0, majorQty: 1)
-        XCTAssertEqual(3, testee.siteScore)
+        XCTAssertEqual(3, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenTenTrackersIncludingMajorThenScoreIsThree() {
         let testee = SiteRating(url: Url.http)!
         addTrackers(siteRating: testee, qty: 5, majorQty: 5)
-        XCTAssertEqual(3, testee.siteScore)
+        XCTAssertEqual(3, testee.siteScore(blockedOnly: false))
     }
 
     func testWhenElevenStandardTrackersThenScoreIsThree() {
         let testee = SiteRating(url: Url.http)!
         addTrackers(siteRating: testee, qty: 11)
-        XCTAssertEqual(3, testee.siteScore)
+        XCTAssertEqual(3, testee.siteScore(blockedOnly: false))
     }
 
     func testWhenElevenTrackersIncludingMajorThenScoreIsFour() {
         let testee = SiteRating(url: Url.http)!
         addTrackers(siteRating: testee, qty: 6, majorQty: 5)
-        XCTAssertEqual(4, testee.siteScore)
+        XCTAssertEqual(4, testee.siteScore(blockedOnly: false))
     }
     
     // Test all the adverse contions together
     func testWhenUrlIsHttpInGoogleNetworkWithElevenTrackersIncludingiPAndMajorNetworkThenScoreIsEleven() {
         let testee = SiteRating(url: Url.googleNetwork)!
         addTrackers(siteRating: testee, qty: 5, majorQty: 3, ipQty: 3)
-        XCTAssertEqual(11, testee.siteScore)
+        XCTAssertEqual(11, testee.siteScore(blockedOnly: false))
     }
     
     func testWhenNewRatingIsLowerThanCachedRatingThenCachedRatingIsUsed() {
         _ = SiteRatingCache.shared.add(url: Url.http, score: 100)
         let testee = SiteRating(url: Url.http)!
-        XCTAssertEqual(100, testee.siteScore)
+        XCTAssertEqual(100, testee.siteScore(blockedOnly: false))
     }
-    
+
+    func testWhenUsingBlockedOnlCacheIsNotUsed() {
+        _ = SiteRatingCache.shared.add(url: Url.http, score: 100)
+        let testee = SiteRating(url: Url.http)!
+        XCTAssertEqual(1, testee.siteScore(blockedOnly: true))
+    }
+
     func addTrackers(siteRating: SiteRating, qty: Int, majorQty: Int = 0, ipQty : Int = 0) {
         for _ in 0..<qty {
             siteRating.trackerDetected(MockTracker.standard, blocked: true)

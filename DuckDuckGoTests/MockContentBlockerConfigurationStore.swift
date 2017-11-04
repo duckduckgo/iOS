@@ -28,6 +28,7 @@ class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
         }
     }
 
+    var protecting = true
     var enabled = true
     
     // A very sophisticated stub, it supports a single whitelisted item ;-)
@@ -44,4 +45,9 @@ class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
     func removeFromWhitelist(domain: String) {
         lastWhiteListedItem = nil
     }
+
+    func protecting(domain: String) -> Bool {
+        return protecting
+    }
+
 }

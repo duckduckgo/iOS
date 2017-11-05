@@ -67,8 +67,6 @@ public class SiteRatingView: UIView {
             return
         }
 
-        print("***", #function, "upgrade from ", siteRating.siteGrade(blockedOnly: false), "to", siteRating.siteGrade(blockedOnly: true))
-
         gradeLabel.text = UserText.forSiteGrade(siteRating.siteGrade(blockedOnly: protecting()))
     }
 

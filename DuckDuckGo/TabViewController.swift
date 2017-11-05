@@ -31,7 +31,6 @@ class TabViewController: WebViewController {
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
-    private weak var contentBlockerPopover: ContentBlockerPopover?
     private weak var privacyDashboard: PrivacyProtectionDashboardController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
@@ -90,18 +89,7 @@ class TabViewController: WebViewController {
         chromeDelegate.setBarsHidden(false, animated: animated)
     }
     
-    func launchContentBlockerPopoverOld() {
-        guard let siteRating = siteRating else { return }
-        guard let button = chromeDelegate.omniBar.siteRatingView else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
-        controller.modalPresentationStyle = .popover
-        controller.popoverPresentationController?.delegate = self
-        controller.popoverPresentationController?.backgroundColor = UIColor.white
-        present(controller: controller, fromView: button)
-        contentBlockerPopover = controller
-    }
-
-    func launchContentBlockerPopover() {
+    func showPrivacyProtection() {
         performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
     

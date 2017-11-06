@@ -102,7 +102,7 @@ class LinkTests: XCTestCase {
         XCTAssertEqual(result.favicon, URL(string: "www.primaryfavicon.example.com")!);
     }
     
-    func testWhenMergingWithSameUrlSameUlrAndOnlySecondaryHasFaviconThenSecondaryFaviconIsUsed() {
+    func testWhenMergingWithSameUrlAndOnlySecondaryHasFaviconThenSecondaryFaviconIsUsed() {
         let primay = Link(title: "primary", url: URL(string: "www.example.com")!, favicon: nil)
         let secondary = Link(title: "secondary", url: URL(string: "www.example.com")!, favicon: URL(string: "www.secondaryfavicon.example.com")!)
         let result = primay.merge(with: secondary)

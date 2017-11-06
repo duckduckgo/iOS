@@ -304,12 +304,12 @@ extension MainViewController: BrowserChromeDelegate {
         if animated {
 
             self.view.layer.removeAllAnimations()
-            UIView.animate(withDuration: ChromeAnimationConstants.duration) {
+
+            UIView.animate(withDuration: ChromeAnimationConstants.duration, delay: 0.0, options: .allowUserInteraction, animations: {
                 self.omniBar.alpha = hidden ? 0 : 1
                 self.toolbar.alpha = hidden ? 0 : 1
-
                 self.view.layoutIfNeeded()
-            }
+            }, completion: nil)
 
         } else {
             setNavigationBarHidden(hidden)

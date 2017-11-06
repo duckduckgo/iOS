@@ -63,7 +63,7 @@ public class Link: NSObject, NSCoding {
     /**
      Provided links share the same url, uses other to plug any missing data.
      */
-    public func fillMissingData(with other: Link) -> Link {
+    public func merge(with other: Link) -> Link {
         
         if url != other.url {
             return self

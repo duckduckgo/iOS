@@ -58,7 +58,7 @@ class TabViewController: WebViewController {
             return activeLink
         }
 
-        return activeLink.fillMissingData(with: storedLink)
+        return activeLink.merge(with: storedLink)
     }
     
     override func viewDidLoad() {

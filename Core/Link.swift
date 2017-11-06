@@ -61,24 +61,16 @@ public class Link: NSObject, NSCoding {
     }
     
     /**
-     Where links share the same url, uses the seconday link to plug any missing data in the
-     primary link.
+     Provided links share the same url, uses other to plug any missing data.
      */
-    public static func mergeData(primary: Link?, secondary: Link?) -> Link? {
-        guard let primary = primary else {
-            return secondary
-        }
+    public func fillMissingData(with other: Link) -> Link {
         
-        guard let secondary = secondary else {
-            return primary
-        }
-        
-        if primary.url != secondary.url {
-            return primary
+        if url != other.url {
+            return self
         }
     
-        let title = (primary.title == nil || primary.title!.isEmpty) ? secondary.title : primary.title
-        let favicon = primary.favicon ?? secondary.favicon
-        return Link(title: title, url: primary.url, favicon: favicon)
+        let mergeTitle = (title == nil || title!.isEmpty) ? other.title : title
+        let mergeFavicon = favicon ?? other.favicon
+        return Link(title: mergeTitle, url: url, favicon: mergeFavicon)
     }
 }

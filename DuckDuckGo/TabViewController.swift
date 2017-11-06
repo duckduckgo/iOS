@@ -50,11 +50,15 @@ class TabViewController: WebViewController {
     
     public var link: Link? {
         guard let url = url else {
-            return Link.mergeData(primary: nil, secondary: tabModel.link)
+            return tabModel.link
         }
         
         let activeLink = Link(title: name, url: url, favicon: favicon)
-        return Link.mergeData(primary: activeLink, secondary: tabModel.link)
+        guard let storedLink = tabModel.link else {
+            return activeLink
+        }
+
+        return activeLink.fillMissingData(with: storedLink)
     }
     
     override func viewDidLoad() {

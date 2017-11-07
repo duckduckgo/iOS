@@ -31,7 +31,7 @@ class TabViewController: WebViewController {
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
-    private weak var contentBlockerPopover: ContentBlockerPopover?
+    private weak var privacyController: PrivacyProtectionController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
 
@@ -70,7 +70,17 @@ class TabViewController: WebViewController {
         super.viewDidAppear(animated)
         resetNavigationBar()
     }
-    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let controller = segue.destination as? PrivacyProtectionController {
+            privacyController = controller
+            controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
+            controller.siteRating = siteRating
+        }
+
+    }
+
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
@@ -92,15 +102,8 @@ class TabViewController: WebViewController {
         chromeDelegate.setBarsHidden(false, animated: animated)
     }
     
-    func launchContentBlockerPopover() {
-        guard let siteRating = siteRating else { return }
-        guard let button = chromeDelegate.omniBar.siteRatingView else { return }
-        let controller = ContentBlockerPopover.loadFromStoryboard(withDelegate: self, contentBlocker: contentBlocker, siteRating: siteRating)
-        controller.modalPresentationStyle = .popover
-        controller.popoverPresentationController?.delegate = self
-        controller.popoverPresentationController?.backgroundColor = UIColor.white
-        present(controller: controller, fromView: button)
-        contentBlockerPopover = controller
+    func showPrivacyProtection() {
+        performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
     
     fileprivate func resetSiteRating() {
@@ -123,7 +126,9 @@ class TabViewController: WebViewController {
     
     fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
-        contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
+        if let siteRating = siteRating {
+            privacyController?.updateSiteRating(siteRating)
+        }
     }
     
     func launchBrowsingMenu() {

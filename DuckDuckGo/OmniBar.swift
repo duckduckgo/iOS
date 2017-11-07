@@ -145,9 +145,7 @@ class OmniBar: UIView {
             return
         }
         resignFirstResponder()
-        if let omniDelegate = omniDelegate {
-            omniDelegate.onOmniQuerySubmitted(query)
-        }
+        omniDelegate?.onOmniQuerySubmitted(query)
     }
     
     @IBAction func onClearButtonPressed(_ sender: Any) {

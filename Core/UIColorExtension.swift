@@ -26,18 +26,6 @@ extension UIColor {
         return midGray
     }
 
-    public static var monitoringNeutralTint: UIColor {
-        return squash
-    }
-    
-    public static var monitoringNegativeTint: UIColor {
-        return dullRed
-    }
-    
-    public static var monitoringPositiveTint: UIColor {
-        return nastyGreen
-    }
-    
     public static var coolGray: UIColor {
         return UIColor(red: 149.0 / 255.0, green: 153.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0)
     }

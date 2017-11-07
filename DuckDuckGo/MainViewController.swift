@@ -279,10 +279,6 @@ class MainViewController: UIViewController {
         }
     }
 
-    fileprivate func launchContentBlockerPopover() {
-        currentTab?.launchContentBlockerPopover()
-    }
-    
     fileprivate func launchSettings() {
         let controller = SettingsViewController.loadFromStoryboard()
         controller.modalPresentationStyle = .overCurrentContext
@@ -357,7 +353,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onSiteRatingPressed() {
-        launchContentBlockerPopover()
+        currentTab?.showPrivacyProtection()
     }
     
     func onMenuPressed() {

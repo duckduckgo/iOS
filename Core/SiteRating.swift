@@ -55,13 +55,23 @@ public class SiteRating {
             
         return nil
     }
-    
-    public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.fromMajorNetwork } )
+
+    public var uniqueMajorTrackerNetworksDetected: Int {
+        return uniqueMajorTrackerNetworks(trackers: trackersDetected)
     }
 
-    public var contrainsIpTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.isIpTracker } )
+    public var uniqueMajorTrackerNetworksBlocked: Int {
+        return uniqueMajorTrackerNetworks(trackers: trackersBlocked)
+    }
+
+    public func containsMajorTracker(blockedOnly: Bool) -> Bool {
+        let trackers = blockedOnly ? trackersBlocked : trackersDetected
+        return trackers.contains(where: { $0.key.fromMajorNetwork } )
+    }
+
+    public func contrainsIpTracker(blockedOnly: Bool) -> Bool {
+        let trackers = blockedOnly ? trackersBlocked : trackersDetected
+        return trackers.contains(where: { $0.key.isIpTracker } )
     }
     
     public var termsOfService: TermsOfService? {
@@ -72,7 +82,7 @@ public class SiteRating {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         
-        if blocked{
+        if blocked {
             let blockCount = trackersBlocked[tracker] ?? 0  
             trackersBlocked[tracker] = blockCount + 1
         }
@@ -93,4 +103,9 @@ public class SiteRating {
     public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
+
+    private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {
+        return Set(trackers.keys.filter({ $0.fromMajorNetwork }).flatMap({ $0.parentDomain })).count
+    }
+
 }

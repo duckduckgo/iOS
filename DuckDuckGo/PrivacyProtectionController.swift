@@ -1,5 +1,5 @@
 //
-//  PrivacyProtectionDashboardController.swift
+//  PrivacyProtectionController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-class PrivacyProtectionDashboardController: UIViewController {
+class PrivacyProtectionController: UIViewController {
 
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
@@ -70,7 +70,7 @@ class PrivacyProtectionDashboardController: UIViewController {
 
 }
 
-extension PrivacyProtectionDashboardController: OmniBarDelegate {
+extension PrivacyProtectionController: OmniBarDelegate {
 
     func onOmniQueryUpdated(_ query: String) {
         // no-op
@@ -102,7 +102,7 @@ extension PrivacyProtectionDashboardController: OmniBarDelegate {
 
 }
 
-extension PrivacyProtectionDashboardController: UIViewControllerTransitioningDelegate {
+extension PrivacyProtectionController: UIViewControllerTransitioningDelegate {
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SlideInFromBelowOmniBarTransitioning()
@@ -124,7 +124,7 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         guard let toController = transitionContext.viewController(forKey: .to) else { return }
-        guard let fromController = transitionContext.viewController(forKey: .from) as? PrivacyProtectionDashboardController else { return }
+        guard let fromController = transitionContext.viewController(forKey: .from) as? PrivacyProtectionController else { return }
 
         toController.view.frame = transitionContext.finalFrame(for: toController)
         containerView.insertSubview(toController.view, at: 0)
@@ -147,7 +147,7 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
 
-        guard let toController = transitionContext.viewController(forKey: .to) as? PrivacyProtectionDashboardController else { return }
+        guard let toController = transitionContext.viewController(forKey: .to) as? PrivacyProtectionController else { return }
 
         toController.view.frame = transitionContext.finalFrame(for: toController)
         containerView.addSubview(toController.view)

@@ -31,7 +31,7 @@ class TabViewController: WebViewController {
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
-    private weak var privacyDashboard: PrivacyProtectionDashboardController?
+    private weak var privacyController: PrivacyProtectionController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
 
@@ -60,8 +60,8 @@ class TabViewController: WebViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let controller = segue.destination as? PrivacyProtectionDashboardController {
-            privacyDashboard = controller
+        if let controller = segue.destination as? PrivacyProtectionController {
+            privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.siteRating = siteRating
         }
@@ -112,9 +112,9 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func onSiteRatingChanged() {
+        delegate?.tab(self, didChangeSiteRating: siteRating)
         if let siteRating = siteRating {
-            delegate?.tab(self, didChangeSiteRating: siteRating)
-            privacyDashboard?.updateSiteRating(siteRating)
+            privacyController?.updateSiteRating(siteRating)
         }
     }
     

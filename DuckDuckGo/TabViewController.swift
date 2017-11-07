@@ -48,6 +48,19 @@ class TabViewController: WebViewController {
         webEventsDelegate = self
     }
     
+    public var link: Link? {
+        guard let url = url else {
+            return tabModel.link
+        }
+        
+        let activeLink = Link(title: name, url: url, favicon: favicon)
+        guard let storedLink = tabModel.link else {
+            return activeLink
+        }
+
+        return activeLink.merge(with: storedLink)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()

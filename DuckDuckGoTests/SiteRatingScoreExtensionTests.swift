@@ -127,7 +127,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(4, testee.siteScore(blockedOnly: false))
     }
     
-    // Test all the adverse contions together
+    // Test all the adverse conditions together
     func testWhenUrlIsHttpInGoogleNetworkWithElevenTrackersIncludingiPAndMajorNetworkThenScoreIsEleven() {
         let testee = SiteRating(url: Url.googleNetwork)!
         addTrackers(siteRating: testee, qty: 5, majorQty: 3, ipQty: 3)
@@ -140,7 +140,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(100, testee.siteScore(blockedOnly: false))
     }
 
-    func testWhenUsingBlockedOnlCacheIsNotUsed() {
+    func testWhenUsingBlockedOnlyCacheIsNotUsed() {
         _ = SiteRatingCache.shared.add(url: Url.http, score: 100)
         let testee = SiteRating(url: Url.http)!
         XCTAssertEqual(1, testee.siteScore(blockedOnly: true))

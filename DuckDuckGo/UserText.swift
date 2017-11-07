@@ -76,7 +76,7 @@ public struct UserText {
 
     public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", comment: "Unknown Privacy Practices")
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", comment: "Good Privacy Practices")
-    public static let privacyProtectionTOSSome = NSLocalizedString("privacy.protection.tos.some", comment: "Some Privacy Practices")
+    public static let privacyProtectionTOSMixed = NSLocalizedString("privacy.protection.tos.mixed", comment: "Mixed Privacy Practices")
     public static let privacyProtectionTOSPoor = NSLocalizedString("privacy.protection.tos.poor", comment: "Poor Privacy Practices")
 
     public static func forSiteGrade(_ grade: SiteGrade) -> String {

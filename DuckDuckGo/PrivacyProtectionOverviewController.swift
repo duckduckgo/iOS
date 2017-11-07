@@ -84,8 +84,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     private func updateMajorTrackersBlocked() {
         majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Major Networks") : #imageLiteral(resourceName: "PP Hero OFF- Major Networks")
         majorTrackersCell.summaryLabel.text = protecting() ?
-            String(format: UserText.privacyProtectionMajorTrackersBlocked, siteRating.majorTrackersBlocked) :
-            String(format: UserText.privacyProtectionMajorTrackersFound, siteRating.majorTrackersDetected)
+            String(format: UserText.privacyProtectionMajorTrackersBlocked, siteRating.uniqueMajorTrackersBlocked) :
+            String(format: UserText.privacyProtectionMajorTrackersFound, siteRating.uniqueMajorTrackersDetected)
     }
 
     private func updatePrivacyPractices() {
@@ -101,7 +101,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
             privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSGood
 
         case 0 ... 1:
-            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSSome
+            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSMixed
 
         default:
             privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSPoor

@@ -56,12 +56,12 @@ public class SiteRating {
         return nil
     }
 
-    public var majorTrackersDetected: Int {
-        return majorTrackers(trackers: trackersDetected)
+    public var uniqueMajorTrackersDetected: Int {
+        return uniqueMajorTrackers(trackers: trackersDetected)
     }
 
-    public var majorTrackersBlocked: Int {
-        return majorTrackers(trackers: trackersBlocked)
+    public var uniqueMajorTrackersBlocked: Int {
+        return uniqueMajorTrackers(trackers: trackersBlocked)
     }
 
     public func containsMajorTracker(blockedOnly: Bool) -> Bool {
@@ -104,7 +104,7 @@ public class SiteRating {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 
-    private func majorTrackers(trackers: [Tracker: Int]) -> Int {
+    private func uniqueMajorTrackers(trackers: [Tracker: Int]) -> Int {
         return Set(trackers.keys.filter({ $0.fromMajorNetwork }).flatMap({ $0.parentDomain })).count
     }
 

@@ -112,9 +112,10 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func onSiteRatingChanged() {
-        delegate?.tab(self, didChangeSiteRating: siteRating)
-        // contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
-        privacyDashboard?.updateSiteRating(siteRating!)
+        if let siteRating = siteRating {
+            delegate?.tab(self, didChangeSiteRating: siteRating)
+            privacyDashboard?.updateSiteRating(siteRating)
+        }
     }
     
     func launchBrowsingMenu() {

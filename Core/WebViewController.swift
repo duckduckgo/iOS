@@ -44,11 +44,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public var favicon: URL?
     
-    public var link: Link? {
-        guard let url = url else { return nil }
-        return Link(title: name, url: url, favicon: favicon)
-    }
-    
     public var canGoBack: Bool {
         return webView.canGoBack
     }

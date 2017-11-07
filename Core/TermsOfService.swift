@@ -23,15 +23,15 @@ import Foundation
 
 public struct TermsOfService {
 
-    let classification: Classification?
-    let score: Int
+    public let classification: Classification?
+    public let score: Int
     
     init(classification: Classification?, score: Int) {
         self.classification = classification
         self.score = score
     }
     
-    enum Classification: String {
+    public enum Classification: String {
         case a, b, c, d, e
     }
 }

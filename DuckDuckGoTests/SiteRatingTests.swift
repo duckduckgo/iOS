@@ -130,4 +130,19 @@ class SiteRatingTests: XCTestCase {
         let testee = SiteRating(url: Url.http)!
         XCTAssertNil(testee.majorTrackingNetwork)
     }
+
+    func testUniqueMajorTrackersDetected() {
+        let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!
+        testee.trackerDetected(tracker, blocked: false)
+        XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksDetected)
+        XCTAssertEqual(0, testee.uniqueMajorTrackerNetworksBlocked)
+    }
+
+    func testUniqueMajorTrackersBlocked() {
+        let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!
+        testee.trackerDetected(tracker, blocked: true)
+        XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksBlocked)
+    }
 }

@@ -59,4 +59,18 @@ public class Link: NSObject, NSCoding {
         guard let other = other as? Link else { return false }
         return title == other.title && url == other.url && favicon == other.favicon
     }
+    
+    /**
+     Provided links share the same url, uses other to plug any missing data.
+     */
+    public func merge(with other: Link) -> Link {
+        
+        if url != other.url {
+            return self
+        }
+    
+        let mergeTitle = (title == nil || title!.isEmpty) ? other.title : title
+        let mergeFavicon = favicon ?? other.favicon
+        return Link(title: mergeTitle, url: url, favicon: mergeFavicon)
+    }
 }

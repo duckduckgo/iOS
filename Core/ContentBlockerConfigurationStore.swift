@@ -35,4 +35,7 @@ public protocol ContentBlockerConfigurationStore {
     func addToWhitelist(domain: String)
     
     func removeFromWhitelist(domain: String)
+
+    func protecting(domain: String) -> Bool
+
 }

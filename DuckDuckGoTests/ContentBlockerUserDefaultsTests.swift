@@ -33,7 +33,7 @@ class ContentBlockerUserDefaultsTests: XCTestCase {
     
     override func setUp() {
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
-        testee = ContentBlockerConfigurationUserDefaults(suitName: Constants.userDefaultsSuit)
+        testee = ContentBlockerConfigurationUserDefaults(suiteName: Constants.userDefaultsSuit)
     }
     
     func testWhenInitialisedThenEnableIsTrue() {

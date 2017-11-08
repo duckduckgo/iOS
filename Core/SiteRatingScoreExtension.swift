@@ -47,22 +47,13 @@ public extension SiteRating {
             afterScore += 1
         }
 
+        beforeScore += ipTrackerScore
+
         return ( beforeScore, afterScore )
     }
 
     func siteScore(blockedOnly: Bool) -> Int {
-        var score = 1
-        score += httpsScore
-        score += isMajorTrackerScore
-        score += trackerCountScore(blockedOnly: blockedOnly)
-        score += containsMajorTrackerScore(blockedOnly: blockedOnly)
-        score += ipTrackerScore(blockedOnly: blockedOnly)
-        score += termsOfServiceScore
-
-        if blockedOnly {
-            return score
-        }
-
+        let score = 0
         let cache =  SiteRatingCache.shared
         if cache.add(url:url, score: score) {
             return score
@@ -73,7 +64,7 @@ public extension SiteRating {
     private var httpsScore: Int {
         return https ? -1 : 0
     }
-    
+
     private func trackerCountScore(blockedOnly: Bool) -> Int {
         let trackerCount = blockedOnly ? totalTrackersBlocked : totalTrackersDetected
         let baseScore = Double(trackerCount) / 10.0
@@ -94,8 +85,8 @@ public extension SiteRating {
         return network.score
     }
     
-    private func ipTrackerScore(blockedOnly: Bool) -> Int {
-        return contrainsIpTracker(blockedOnly: blockedOnly) ? 1 : 0
+    private var ipTrackerScore: Int {
+        return containsIpTracker ? 1 : 0
     }
     
     public var termsOfServiceScore: Int {
@@ -118,7 +109,7 @@ public extension SiteRating {
                 "isAMajorTrackingNetwork": isMajorTrackerScore,
                 "containsMajorTrackingNetwork": containsMajorTracker,
                 "totalBlocked": totalTrackersBlocked,
-                "hasObscureTracker": contrainsIpTracker,
+                "hasObscureTracker": containsIpTracker,
                 "tosdr": termsOfServiceScore
             ],
             "grade": siteGrade(blockedOnly: false).rawValue.uppercased()

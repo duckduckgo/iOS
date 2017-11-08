@@ -61,9 +61,8 @@ public class SiteRating {
         return trackers.contains(where: { majorTrackerNetworkStore.network(forDomain: $0.key.parentDomain ?? "" ) != nil } )
     }
 
-    public func contrainsIpTracker(blockedOnly: Bool) -> Bool {
-        let trackers = blockedOnly ? trackersBlocked : trackersDetected
-        return trackers.contains(where: { $0.key.isIpTracker } )
+    public var containsIpTracker: Bool {
+        return trackersDetected.contains(where: { $0.key.isIpTracker } )
     }
     
     public var termsOfService: TermsOfService? {

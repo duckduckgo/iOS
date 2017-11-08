@@ -44,7 +44,15 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         SiteRatingCache.shared.reset()
     }
 
-    func testWhenNoTrackersHTTPSAndClassATOSScoreThenLoadsInsecureResourceScoreIsOne() {
+    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
+        testee.trackerDetected(MockTracker.ipTracker, blocked: true)
+        let score = testee.siteScore()
+        XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(0, score?.after)
+    }
+
+    func testWhenNoTrackersHTTPSAndClassATOSThenLoadsInsecureResourceScoreIsOne() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
         testee.insecureContentDetected()
         let score = testee.siteScore()

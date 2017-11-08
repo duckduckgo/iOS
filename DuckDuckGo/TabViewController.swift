@@ -86,8 +86,11 @@ class TabViewController: WebViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        reloadScripts()
-        webView?.reload()
+        // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.reloadScripts()
+            self.webView?.reload()
+        }
     }
     
     private func resetNavigationBar() {

@@ -46,7 +46,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     @IBAction func toggleProtection() {
-        contentBlocker.enabled = privacyProtectionSwitch.isOn
+        let contentBlockingOn = privacyProtectionSwitch.isOn
+        self.contentBlocker.enabled = contentBlockingOn
+        updateSiteRating(siteRating)
     }
 
     func updateSiteRating(_ siteRating: SiteRating) {

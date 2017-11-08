@@ -31,6 +31,10 @@ public struct MajorTrackerNetwork {
     let domain: String
     let perentageOfPages: Int
 
+    var score: Int {
+        return Int(ceil(Double(perentageOfPages) / 10.0))
+    }
+
 }
 
 public class EmbeddedMajorTrackerNetworkStore: MajorTrackerNetworkStore {

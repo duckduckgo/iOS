@@ -96,26 +96,6 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
     
-    func testWhenUrlIsAMajorNetworkThenMajorNetworkReturned() {
-        let testee = SiteRating(url: Url.google, disconnectMeTrackers: [:])!
-        XCTAssertNotNil(testee.majorTrackingNetwork)
-        XCTAssertEqual(testee.majorTrackingNetwork?.domain, "google.com")
-        XCTAssertEqual(testee.majorTrackingNetwork?.perentageOfPages, 84)
-    }
-    
-    func testWhenUrlIsAChildOfAMajorNetworkThenMajorNetworkReturned() {
-        let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!
-        XCTAssertNotNil(testee.majorTrackingNetwork)
-        XCTAssertEqual(testee.majorTrackingNetwork?.domain, "google.com")
-        XCTAssertEqual(testee.majorTrackingNetwork?.perentageOfPages, 84)
-    }
-    
-    func testWhenUrlIsIsNotAssociatedWithAMajorNetworkThenNilReturned() {
-        let testee = SiteRating(url: Url.http, disconnectMeTrackers: [:])!
-        XCTAssertNil(testee.majorTrackingNetwork)
-    }
-    
     func testWhenUrlHasTosThenTosReturned() {
         let testee = SiteRating(url: Url.google)!
         XCTAssertNotNil(testee.termsOfService)
@@ -126,11 +106,6 @@ class SiteRatingTests: XCTestCase {
         XCTAssertNil(testee.termsOfService)
     }
     
-    func testWhenUrlIsNotAMajorNetworkThenMajorNetworkIsNil() {
-        let testee = SiteRating(url: Url.http)!
-        XCTAssertNil(testee.majorTrackingNetwork)
-    }
-
     func testUniqueMajorTrackersDetected() {
         let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
         let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!

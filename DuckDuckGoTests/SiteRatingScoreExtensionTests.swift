@@ -44,68 +44,77 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         SiteRatingCache.shared.reset()
     }
 
-    func testWhenSiteIsGoogleTrackerAndHTTPSAndClassATOSScoreIsTen() {
-        let networkStore = MockMajorTrackerNetworkStore().add(domain: Url.googleNetwork.host!, network: MajorTrackerNetwork(domain: "google.com", perentageOfPages: 84))
+    func testWhenSiteInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
+        let disconnectMeTrackers = [Url.https.host!: MockTracker.google]
+        let networkStore = MockMajorTrackerNetworkStore().add(network: MajorTrackerNetwork(domain: Url.googleNetwork.host!, perentageOfPages: 84))
+        let testee = SiteRating(url: Url.https, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)!
+        let score = testee.siteScore()
+        XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(0, score?.after)
+    }
+
+    func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassATOSScoreIsTen() {
+        let networkStore = MockMajorTrackerNetworkStore().add(network: MajorTrackerNetwork(domain: Url.googleNetwork.host!, perentageOfPages: 84))
         let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)!
         let score = testee.siteScore()
-        XCTAssertEqual(10, score?.after)
         XCTAssertEqual(10, score?.before)
+        XCTAssertEqual(10, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndPositiveTOSScoreIsTwo() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: nil, score: 10))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: 10))!
         let score = testee.siteScore()
-        XCTAssertEqual(2, score?.after)
         XCTAssertEqual(2, score?.before)
+        XCTAssertEqual(2, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndNegativeTOSScoreIsZero() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: nil, score: -10))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: -10))!
         let score = testee.siteScore()
-        XCTAssertEqual(0, score?.after)
         XCTAssertEqual(0, score?.before)
+        XCTAssertEqual(0, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassETOSScoreIsThree() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: .e, score: 0))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .e, score: 0))!
         let score = testee.siteScore()
-        XCTAssertEqual(3, score?.after)
         XCTAssertEqual(3, score?.before)
+        XCTAssertEqual(3, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassDTOSScoreIsTwo() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: .d, score: 0))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .d, score: 0))!
         let score = testee.siteScore()
-        XCTAssertEqual(2, score?.after)
         XCTAssertEqual(2, score?.before)
+        XCTAssertEqual(2, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassCTOSScoreIsOne() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: .c, score: 0))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .c, score: 0))!
         let score = testee.siteScore()
-        XCTAssertEqual(1, score?.after)
         XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(1, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassBTOSScoreIsOne() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: .b, score: 0))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .b, score: 0))!
         let score = testee.siteScore()
-        XCTAssertEqual(1, score?.after)
         XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(1, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassATOSScoreIsZero() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: 0))!
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
         let score = testee.siteScore()
-        XCTAssertEqual(0, score?.after)
         XCTAssertEqual(0, score?.before)
+        XCTAssertEqual(0, score?.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndNoTOSScoreIsOne() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())!
         let score = testee.siteScore()
-        XCTAssertEqual(1, score?.after)
         XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(1, score?.after)
     }
 
 }
@@ -129,8 +138,8 @@ fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
         return networks[domain]
     }
 
-    func add(domain: String, network: MajorTrackerNetwork) -> MajorTrackerNetworkStore {
-        networks[domain] = network
+    func add(network: MajorTrackerNetwork) -> MajorTrackerNetworkStore {
+        networks[network.domain] = network
         return self
     }
 

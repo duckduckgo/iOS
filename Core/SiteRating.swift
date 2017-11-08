@@ -29,8 +29,8 @@ public class SiteRating {
     private var trackersBlocked = [Tracker: Int]()
 
     private let termsOfServiceStore: TermsOfServiceStore
-    private let disconnectMeTrackers: [String: Tracker]
-    private let majorTrackerNetworkStore: MajorTrackerNetworkStore
+    let disconnectMeTrackers: [String: Tracker]
+    let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
     public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
         guard let domain = url.host else {
@@ -46,7 +46,8 @@ public class SiteRating {
     public var https: Bool {
         return url.isHttps()
     }
-    
+
+    /*
     var majorTrackingNetwork: MajorTrackerNetwork? {
        
         if let network = majorTrackerNetworkStore.network(forDomain: domain) {
@@ -59,7 +60,8 @@ public class SiteRating {
             
         return nil
     }
-
+    */
+    
     public var uniqueMajorTrackerNetworksDetected: Int {
         return uniqueMajorTrackerNetworks(trackers: trackersDetected)
     }

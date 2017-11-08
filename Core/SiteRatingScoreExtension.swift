@@ -39,7 +39,9 @@ public extension SiteRating {
             beforeScore += tos.derivedScore
             afterScore += tos.derivedScore
         }
-        
+
+        beforeScore += inMajorTrackerScore
+
         return ( beforeScore, afterScore )
     }
 
@@ -76,11 +78,15 @@ public extension SiteRating {
     private func containsMajorTrackerScore(blockedOnly: Bool) -> Int {
         return containsMajorTracker(blockedOnly: blockedOnly) ? 1 : 0
     }
-    
+
+    private var inMajorTrackerScore: Int {
+        guard let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.parentDomain else { return 0 }
+        return majorTrackerNetworkStore.network(forDomain: associatedDomain) == nil ? 0 : 1
+    }
+
     private var isMajorTrackerScore: Int {
-        guard let network = majorTrackingNetwork else { return 0 }
-        let baseScore = Double(network.perentageOfPages) / 10.0
-        return Int(ceil(baseScore))
+        guard let network = majorTrackerNetworkStore.network(forDomain: domain) else { return 0 }
+        return network.score
     }
     
     private func ipTrackerScore(blockedOnly: Bool) -> Int {

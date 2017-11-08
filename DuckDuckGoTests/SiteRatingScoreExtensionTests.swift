@@ -44,11 +44,11 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         SiteRatingCache.shared.reset()
     }
 
-    func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersRoundedUpAndAfterScoreIsZero() {
+    func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersDetectedRoundedUpAndAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
 
         for _ in 0 ..< 11 {
-            testee.trackerDetected(MockTracker.standard, blocked: true)
+            testee.trackerDetected(MockTracker.standard, blocked: false)
         }
 
         let score = testee.siteScore()
@@ -58,7 +58,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
     func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
-        testee.trackerDetected(MockTracker.standard, blocked: true)
+        testee.trackerDetected(MockTracker.standard, blocked: false)
         let score = testee.siteScore()
         XCTAssertEqual(1, score?.before)
         XCTAssertEqual(0, score?.after)

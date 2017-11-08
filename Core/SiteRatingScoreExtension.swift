@@ -49,32 +49,18 @@ public extension SiteRating {
 
         beforeScore += ipTrackerScore
 
-        beforeScore += Int(ceil(Double(totalTrackersBlocked) / 10))
+        beforeScore += Int(ceil(Double(totalTrackersDetected) / 10))
 
         return ( beforeScore, afterScore )
     }
 
-    func siteScore(blockedOnly: Bool) -> Int {
-        let score = 0
-        let cache =  SiteRatingCache.shared
-        if cache.add(url:url, score: score) {
-            return score
-        }
-        return cache.get(url: url)!
-    }
-    
-    private var httpsScore: Int {
-        return https ? -1 : 0
+    func siteGrade() -> ( before: SiteGrade, after: SiteGrade )? {
+        guard let score = siteScore() else { return nil }
+        return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
     }
 
-    private func trackerCountScore(blockedOnly: Bool) -> Int {
-        let trackerCount = blockedOnly ? totalTrackersBlocked : totalTrackersDetected
-        let baseScore = Double(trackerCount) / 10.0
-        return Int(ceil(baseScore))
-    }
-    
-    private func containsMajorTrackerScore(blockedOnly: Bool) -> Int {
-        return containsMajorTracker(blockedOnly: blockedOnly) ? 1 : 0
+    private var httpsScore: Int {
+        return https ? -1 : 0
     }
 
     private var inMajorTrackerScore: Int {
@@ -99,13 +85,10 @@ public extension SiteRating {
         return termsOfService.derivedScore
     }
     
-    public func siteGrade(blockedOnly: Bool) -> SiteGrade {
-        return SiteGrade.grade(fromScore: siteScore(blockedOnly: blockedOnly))
-    }
-    
-    public var scoreDict: [String : Any] {
+    public var scoreDict: [String : [String: Any]] {
+        let grade = siteGrade()
         return [
-            "score":  [
+            "score": [
                 "domain": domain,
                 "hasHttps": https,
                 "isAMajorTrackingNetwork": isMajorTrackerScore,
@@ -114,7 +97,10 @@ public extension SiteRating {
                 "hasObscureTracker": containsIpTracker,
                 "tosdr": termsOfServiceScore
             ],
-            "grade": siteGrade(blockedOnly: false).rawValue.uppercased()
+            "grade": [
+                "before": grade?.before ?? "",
+                "after": grade?.after ?? ""
+            ]
         ]
     }
     

@@ -74,6 +74,7 @@ class TabViewController: WebViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let controller = segue.destination as? PrivacyProtectionController {
+            controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.siteRating = siteRating
@@ -449,4 +450,12 @@ extension TabViewController: ContentBlockerSettingsChangeDelegate {
     func contentBlockerSettingsDidChange() {
         onContentBlockerConfigurationChanged()
     }
+}
+
+extension TabViewController: PrivacyProtectionDelegate {
+
+    func omniBarTextTapped() {
+        chromeDelegate.omniBar.becomeFirstResponder()
+    }
+
 }

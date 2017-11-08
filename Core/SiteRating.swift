@@ -27,16 +27,17 @@ public class SiteRating {
     public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
-    private var termsOfServiceStore = TermsOfServiceStore()
+    private var termsOfServiceStore: TermsOfServiceStore
     private var disconnectMeTrackers: [String: Tracker]
     
-    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers) {
+    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()) {
         guard let domain = url.host else {
             return nil
         }
         self.url = url
         self.domain = domain
         self.disconnectMeTrackers = disconnectMeTrackers
+        self.termsOfServiceStore = termsOfServiceStore
     }
     
     public var https: Bool {

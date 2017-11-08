@@ -19,20 +19,26 @@
 
 import Foundation
 
-class TermsOfServiceStore {
-    
+public protocol TermsOfServiceStore {
+
+    var terms: [String: TermsOfService] { get }
+
+}
+
+public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
+
     struct Constansts {
         static let fileName = "tosdr.json"
     }
-    
-    private(set) lazy var terms = TermsOfServiceStore.load()
-    
-    private static func load() -> [String: TermsOfService] {
+
+    public private(set) var terms: [String: TermsOfService]
+
+    public init() {
         let parser = TermsOfServiceListParser()
-        let bundle = Bundle(for: TermsOfServiceStore.self)
+        let bundle = Bundle(for: EmbeddedTermsOfServiceStore.self)
         let fileLoader = FileLoader()
         let data = try! fileLoader.load(fileName: Constansts.fileName, fromBundle: bundle)
-        let terms = try! parser.convert(fromJsonData: data)
-        return terms
+        terms = try! parser.convert(fromJsonData: data)
     }
+
 }

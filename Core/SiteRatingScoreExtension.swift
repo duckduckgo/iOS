@@ -21,7 +21,24 @@
 import Foundation
 
 public extension SiteRating {
-    
+
+    func siteScore() -> ( before: Int, after: Int )? {
+
+        // TODO "special page" returns nothing (hence optional tuple)
+
+        var beforeScore = 1
+        var afterScore = 1
+
+        // TODO major network tracking
+
+        if let tos = termsOfService {
+            beforeScore += tos.derivedScore
+            afterScore += tos.derivedScore
+        }
+
+        return ( beforeScore, afterScore )
+    }
+
     func siteScore(blockedOnly: Bool) -> Int {
         var score = 1
         score += httpsScore
@@ -71,21 +88,22 @@ public extension SiteRating {
             return 1
         }
         
-        guard let classification = termsOfService.classification else {
-            let score = termsOfService.score
-            if score == 0 {
-                return 0
-            }
-            return score > 0 ? 1 : -1
-        }
-        
-        switch classification {
-            case TermsOfService.Classification.a: return -1
-            case TermsOfService.Classification.b: return 0
-            case TermsOfService.Classification.c: return 0
-            case TermsOfService.Classification.d: return 1
-            case TermsOfService.Classification.e: return 2
-        }
+//        guard let classification = termsOfService.classification else {
+//            let score = termsOfService.score
+//            if score == 0 {
+//                return 0
+//            }
+//            return score > 0 ? 1 : -1
+//        }
+//
+//        switch classification {
+//            case TermsOfService.Classification.a: return -1
+//            case TermsOfService.Classification.b: return 0
+//            case TermsOfService.Classification.c: return 0
+//            case TermsOfService.Classification.d: return 1
+//            case TermsOfService.Classification.e: return 2
+//        }
+        return termsOfService.derivedScore
     }
     
     public func siteGrade(blockedOnly: Bool) -> SiteGrade {

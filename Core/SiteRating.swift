@@ -27,6 +27,7 @@ public class SiteRating {
     public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
+    private var insecureContentCount = 0
 
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: Tracker]
@@ -44,24 +45,9 @@ public class SiteRating {
     }
     
     public var https: Bool {
-        return url.isHttps()
+        return url.isHttps() && insecureContentCount == 0
     }
 
-    /*
-    var majorTrackingNetwork: MajorTrackerNetwork? {
-       
-        if let network = majorTrackerNetworkStore.network(forDomain: domain) {
-            return network
-        }
-        
-        if let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.parentDomain {
-            return majorTrackerNetworkStore.network(forDomain: associatedDomain)
-        }
-            
-        return nil
-    }
-    */
-    
     public var uniqueMajorTrackerNetworksDetected: Int {
         return uniqueMajorTrackerNetworks(trackers: trackersDetected)
     }
@@ -82,6 +68,10 @@ public class SiteRating {
     
     public var termsOfService: TermsOfService? {
         return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
+    }
+
+    public func insecureContentDetected() {
+        insecureContentCount += 1
     }
 
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {

@@ -42,6 +42,11 @@ public extension SiteRating {
 
         beforeScore += inMajorTrackerScore
 
+        if !https {
+            beforeScore += 1
+            afterScore += 1
+        }
+
         return ( beforeScore, afterScore )
     }
 

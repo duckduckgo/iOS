@@ -26,7 +26,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     struct Url {
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
-        static let googleNetwork = URL(string: "http://google.com")!
+        static let googleNetwork = URL(string: "https://google.com")!
         
         static let duckduckgo = URL(string: "http://duckduckgo.com")!
     }
@@ -42,6 +42,21 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
     override func setUp() {
         SiteRatingCache.shared.reset()
+    }
+
+    func testWhenNoTrackersHTTPSAndClassATOSScoreThenLoadsInsecureResourceScoreIsOne() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
+        testee.insecureContentDetected()
+        let score = testee.siteScore()
+        XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(1, score?.after)
+    }
+
+    func testWhenNoTrackersAndHTTPAndClassATOSScoreIsOne() {
+        let testee = SiteRating(url: Url.http, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
+        let score = testee.siteScore()
+        XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(1, score?.after)
     }
 
     func testWhenSiteInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {

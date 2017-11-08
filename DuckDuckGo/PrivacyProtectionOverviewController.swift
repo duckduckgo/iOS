@@ -162,11 +162,9 @@ class PrivacyGradeCell: UITableViewCell {
 
     func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
 
-        if siteRating.finishedLoading {
-            let grade = siteRating.siteGrade(blockedOnly: contentBlocking.protecting(domain: siteRating.domain))
-            gradeImage.image = image(for: grade)
-        }
-        
+        let grade = siteRating.siteGrade(blockedOnly: contentBlocking.protecting(domain: siteRating.domain))
+        gradeImage.image = image(for: grade)
+
         siteTitleLabel.text = siteRating.domain
 
         protectionPausedLabel.isHidden = true

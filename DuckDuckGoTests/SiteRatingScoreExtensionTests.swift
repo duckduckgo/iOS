@@ -44,11 +44,31 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         SiteRatingCache.shared.reset()
     }
 
-    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
+    func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersRoundedUpAndAfterScoreIsZero() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
+
+        for _ in 0 ..< 11 {
+            testee.trackerDetected(MockTracker.standard, blocked: true)
+        }
+
+        let score = testee.siteScore()
+        XCTAssertEqual(2, score?.before)
+        XCTAssertEqual(0, score?.after)
+    }
+
+    func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
+        testee.trackerDetected(MockTracker.standard, blocked: true)
+        let score = testee.siteScore()
+        XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(0, score?.after)
+    }
+
+    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
         testee.trackerDetected(MockTracker.ipTracker, blocked: true)
         let score = testee.siteScore()
-        XCTAssertEqual(1, score?.before)
+        XCTAssertEqual(2, score?.before)
         XCTAssertEqual(0, score?.after)
     }
 
@@ -91,6 +111,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(2, score?.after)
     }
 
+    // TODO check with extension team - the JS logic leaves after unchanged if the normalized score is negative
     func testWhenNoTrackersAndHTTPSAndNegativeTOSScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: -10))!
         let score = testee.siteScore()

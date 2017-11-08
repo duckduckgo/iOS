@@ -49,6 +49,8 @@ public extension SiteRating {
 
         beforeScore += ipTrackerScore
 
+        beforeScore += Int(ceil(Double(totalTrackersBlocked) / 10))
+
         return ( beforeScore, afterScore )
     }
 

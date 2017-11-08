@@ -68,7 +68,7 @@ public extension SiteRating {
     
     public var termsOfServiceScore: Int {
         guard let termsOfService = termsOfService else {
-            return 0
+            return 1
         }
         
         guard let classification = termsOfService.classification else {

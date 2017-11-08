@@ -51,6 +51,11 @@ public extension SiteRating {
 
         beforeScore += Int(ceil(Double(totalTrackersDetected) / 10))
 
+        let cache = SiteRatingCache.shared
+        if !cache.add(url: url, score: beforeScore) {
+            beforeScore = cache.get(url: url)!
+        }
+
         return ( beforeScore, afterScore )
     }
 

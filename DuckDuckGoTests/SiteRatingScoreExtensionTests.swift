@@ -44,6 +44,28 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         SiteRatingCache.shared.reset()
     }
 
+    func testWhenHighScoreCachedResultIsGradeD() {
+        _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())!
+        let before = testee.siteGrade()?.before
+        XCTAssertEqual(SiteGrade.d, before)
+    }
+
+    func testWhenWorseScoreIsCachedForBeforeScoreItIsUsed() {
+        _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
+
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())!
+        let score = testee.siteScore()
+        XCTAssertEqual(10, score?.before)
+        XCTAssertEqual(1, score?.after)
+    }
+
+    func testBeforeScoreIsCached() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .e, score: 0))!
+        XCTAssertNotNil(testee.siteScore())
+        XCTAssertEqual(3, SiteRatingCache.shared.get(url: Url.https))
+    }
+
     func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersDetectedRoundedUpAndAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
 

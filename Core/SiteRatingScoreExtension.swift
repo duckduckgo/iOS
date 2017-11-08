@@ -20,6 +20,9 @@
 
 import Foundation
 
+// Based on
+// https://github.com/duckduckgo/chrome-zeroclickinfo/blob/6f284bd95420e8fa5e145528ff9c3a9e9ff7bf7d/js/site.js#L88
+
 public extension SiteRating {
 
     func siteScore() -> ( before: Int, after: Int )? {
@@ -29,13 +32,14 @@ public extension SiteRating {
         var beforeScore = 1
         var afterScore = 1
 
-        // TODO major network tracking
+        beforeScore += isMajorTrackerScore
+        afterScore += isMajorTrackerScore
 
         if let tos = termsOfService {
             beforeScore += tos.derivedScore
             afterScore += tos.derivedScore
         }
-
+        
         return ( beforeScore, afterScore )
     }
 
@@ -88,21 +92,6 @@ public extension SiteRating {
             return 1
         }
         
-//        guard let classification = termsOfService.classification else {
-//            let score = termsOfService.score
-//            if score == 0 {
-//                return 0
-//            }
-//            return score > 0 ? 1 : -1
-//        }
-//
-//        switch classification {
-//            case TermsOfService.Classification.a: return -1
-//            case TermsOfService.Classification.b: return 0
-//            case TermsOfService.Classification.c: return 0
-//            case TermsOfService.Classification.d: return 1
-//            case TermsOfService.Classification.e: return 2
-//        }
         return termsOfService.derivedScore
     }
     

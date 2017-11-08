@@ -29,21 +29,41 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         static let googleNetwork = URL(string: "http://google.com")!
         
         static let duckduckgo = URL(string: "http://duckduckgo.com")!
-        static let soundcloud = URL(string: "http://soundcloud.com")!
-        static let delicious = URL(string: "http://delicious.com")!
-        static let steampowered = URL(string: "http://steampowered.com")!
-        static let wikipedia = URL(string: "http://wikipedia.org")!
-        static let spotify = URL(string: "http://spotify.com")!
     }
     
     struct MockTracker {
-        static let standard = Tracker(url: "example.com", parentDomain: "someSmallAdNetwork.com")
+        static let standard = Tracker(url: "trackerexample.com", parentDomain: "someSmallAdNetwork.com")
         static let ipTracker = Tracker(url: "http://192.168.5.10/abcd", parentDomain: "someSmallAdNetwork.com")
-        static let network = Tracker(url: "example.com", parentDomain: "facebook.com")
+        static let google = Tracker(url: "trackerexample.com", parentDomain: "google.com")
     }
-    
+
+    fileprivate let classATOS = MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: -100)
+    fileprivate let disconnectMeTrackers = ["googletracker.com": MockTracker.google]
+
     override func setUp() {
         SiteRatingCache.shared.reset()
+    }
+
+    func testWhenSiteIsGoogleTrackerAndHTTPSAndClassATOSScoreIsTen() {
+        let networkStore = MockMajorTrackerNetworkStore().add(domain: Url.googleNetwork.host!, network: MajorTrackerNetwork(domain: "google.com", perentageOfPages: 84))
+        let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)!
+        let score = testee.siteScore()
+        XCTAssertEqual(10, score?.after)
+        XCTAssertEqual(10, score?.before)
+    }
+
+    func testWhenNoTrackersAndHTTPSAndPositiveTOSScoreIsTwo() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: nil, score: 10))!
+        let score = testee.siteScore()
+        XCTAssertEqual(2, score?.after)
+        XCTAssertEqual(2, score?.before)
+    }
+
+    func testWhenNoTrackersAndHTTPSAndNegativeTOSScoreIsZero() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: "example.com", classification: nil, score: -10))!
+        let score = testee.siteScore()
+        XCTAssertEqual(0, score?.after)
+        XCTAssertEqual(0, score?.before)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassETOSScoreIsThree() {
@@ -88,17 +108,6 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(1, score?.before)
     }
 
-    private func addTrackers(siteRating: SiteRating, qty: Int, majorQty: Int = 0, ipQty : Int = 0) {
-        for _ in 0..<qty {
-            siteRating.trackerDetected(MockTracker.standard, blocked: true)
-        }
-        for _ in 0..<majorQty {
-            siteRating.trackerDetected(MockTracker.network, blocked: true)
-        }
-        for _ in 0..<ipQty {
-            siteRating.trackerDetected(MockTracker.ipTracker, blocked: true)
-        }
-    }
 }
 
 fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
@@ -107,6 +116,21 @@ fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
 
     func add(domain: String, classification: TermsOfService.Classification?, score: Int) -> MockTermsOfServiceStore {
         terms[domain] = TermsOfService(classification: classification, score: score)
+        return self
+    }
+
+}
+
+fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+
+    var networks = [String: MajorTrackerNetwork]()
+
+    func network(forDomain domain: String) -> MajorTrackerNetwork? {
+        return networks[domain]
+    }
+
+    func add(domain: String, network: MajorTrackerNetwork) -> MajorTrackerNetworkStore {
+        networks[domain] = network
         return self
     }
 

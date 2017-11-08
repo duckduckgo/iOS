@@ -66,18 +66,4 @@ class TrackerTests: XCTestCase {
         XCTAssertEqual(lhs.hashValue, rhs.hashValue)
     }
     
-    func testMajorNetworkTrueWhenTrackerFromMajorNetwork() {
-        let testee = Tracker(url: "example.com", parentDomain: "facebook.com")
-        XCTAssertTrue(testee.fromMajorNetwork)
-    }
-    
-    func testMajorNetworkFalseWhenTrackerNotFromMajorNetwork() {
-        let testee = Tracker(url: "example.com", parentDomain: "someSmallAdNetwork.com")
-        XCTAssertFalse(testee.fromMajorNetwork)
-    }
-    
-    func testMajorNetworkFalseWhenTrackerHasNoParentDomain() {
-        let testee = Tracker(url: "example.com", parentDomain: nil)
-        XCTAssertFalse(testee.fromMajorNetwork)
-    }
 }

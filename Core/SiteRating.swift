@@ -27,10 +27,12 @@ public class SiteRating {
     public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
-    private var termsOfServiceStore: TermsOfServiceStore
-    private var disconnectMeTrackers: [String: Tracker]
+
+    private let termsOfServiceStore: TermsOfServiceStore
+    private let disconnectMeTrackers: [String: Tracker]
+    private let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()) {
+    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
         guard let domain = url.host else {
             return nil
         }
@@ -38,6 +40,7 @@ public class SiteRating {
         self.domain = domain
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore
+        self.majorTrackerNetworkStore = majorTrackerNetworkStore
     }
     
     public var https: Bool {
@@ -46,12 +49,12 @@ public class SiteRating {
     
     var majorTrackingNetwork: MajorTrackerNetwork? {
        
-        if let network = MajorTrackerNetwork.network(forDomain: domain) {
+        if let network = majorTrackerNetworkStore.network(forDomain: domain) {
             return network
         }
         
         if let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.parentDomain {
-            return MajorTrackerNetwork.network(forDomain: associatedDomain)
+            return majorTrackerNetworkStore.network(forDomain: associatedDomain)
         }
             
         return nil
@@ -67,7 +70,7 @@ public class SiteRating {
 
     public func containsMajorTracker(blockedOnly: Bool) -> Bool {
         let trackers = blockedOnly ? trackersBlocked : trackersDetected
-        return trackers.contains(where: { $0.key.fromMajorNetwork } )
+        return trackers.contains(where: { majorTrackerNetworkStore.network(forDomain: $0.key.parentDomain ?? "" ) != nil } )
     }
 
     public func contrainsIpTracker(blockedOnly: Bool) -> Bool {
@@ -106,7 +109,7 @@ public class SiteRating {
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {
-        return Set(trackers.keys.filter({ $0.fromMajorNetwork }).flatMap({ $0.parentDomain })).count
+        return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forDomain: $0.parentDomain ?? "" ) != nil }).flatMap({ $0.parentDomain })).count
     }
 
 }

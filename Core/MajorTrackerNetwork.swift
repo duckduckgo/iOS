@@ -20,25 +20,38 @@
 
 import Foundation
 
-struct MajorTrackerNetwork {
-    
+public protocol MajorTrackerNetworkStore {
+
+    func network(forDomain domain: String) -> MajorTrackerNetwork?
+
+}
+
+public struct MajorTrackerNetwork {
+
     let domain: String
     let perentageOfPages: Int
-    
-    static let all = [
-        MajorTrackerNetwork(domain: "google.com",    perentageOfPages: 55),
-        MajorTrackerNetwork(domain: "amazon.com",    perentageOfPages: 23),
-        MajorTrackerNetwork(domain: "facebook.com",  perentageOfPages: 20),
-        MajorTrackerNetwork(domain: "comscore.com",  perentageOfPages: 19),
-        MajorTrackerNetwork(domain: "twitter.com",   perentageOfPages: 11),
-        MajorTrackerNetwork(domain: "criteo.com",    perentageOfPages: 9),
-        MajorTrackerNetwork(domain: "quantcast.com", perentageOfPages: 9),
-        MajorTrackerNetwork(domain: "adobe.com",     perentageOfPages: 8),
-        MajorTrackerNetwork(domain: "newrelic.com",  perentageOfPages: 7),
-        MajorTrackerNetwork(domain: "appnexus.com",  perentageOfPages: 7)
-    ]
-    
-    static func network(forDomain domain: String) -> MajorTrackerNetwork? {
-        return MajorTrackerNetwork.all.filter( { domain.hasSuffix($0.domain) } ).first
+
+}
+
+public class EmbeddedMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+
+    private let networks = [
+        MajorTrackerNetwork(domain: "google.com",     perentageOfPages: 84),
+        MajorTrackerNetwork(domain: "facebook.com",   perentageOfPages: 36),
+        MajorTrackerNetwork(domain: "twitter.com",    perentageOfPages: 16),
+        MajorTrackerNetwork(domain: "amazon.com",     perentageOfPages: 14),
+        MajorTrackerNetwork(domain: "appnexus.com",   perentageOfPages: 10),
+        MajorTrackerNetwork(domain: "oracle.com",     perentageOfPages: 10),
+        MajorTrackerNetwork(domain: "mediamath.com",  perentageOfPages: 9),
+        MajorTrackerNetwork(domain: "yahoo.com",      perentageOfPages: 9),
+        MajorTrackerNetwork(domain: "maxcdn.com",     perentageOfPages: 7),
+        MajorTrackerNetwork(domain: "automattic.com", perentageOfPages: 7),
+        ]
+
+    public init() { }
+
+    public func network(forDomain domain: String) -> MajorTrackerNetwork? {
+        return networks.filter( { domain.hasSuffix($0.domain) } ).first
     }
+
 }

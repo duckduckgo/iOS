@@ -62,12 +62,12 @@ public class SiteRatingView: UIView {
     public func refresh() {
         circleIndicator.tintColor = UIColor.monitoringInactiveTint
 
-        guard let siteRating = siteRating,
-            let grades = siteRating.siteGrade() else {
+        guard let siteRating = siteRating else {
             gradeLabel.text = "-"
             return
         }
-
+        
+        let grades = siteRating.siteGrade()
         gradeLabel.text = UserText.forSiteGrade(contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.after : grades.before)
     }
 

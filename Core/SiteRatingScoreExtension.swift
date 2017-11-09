@@ -21,13 +21,13 @@
 import Foundation
 
 // Based on
-// https://github.com/duckduckgo/chrome-zeroclickinfo/blob/6f284bd95420e8fa5e145528ff9c3a9e9ff7bf7d/js/site.js#L88
+// https://github.com/duckduckgo/chrome-zeroclickinfo/blob/ceb4fc6b2e36451207ef9c887b4e1e6ccff30352/js/site.js#L89
 
 public extension SiteRating {
 
-    func siteScore() -> ( before: Int, after: Int )? {
+    func siteScore() -> ( before: Int, after: Int ) {
 
-        // TODO "special page" returns nothing (hence optional tuple)
+        // No special pages
 
         var beforeScore = 1
         var afterScore = 1
@@ -59,8 +59,8 @@ public extension SiteRating {
         return ( beforeScore, afterScore )
     }
 
-    func siteGrade() -> ( before: SiteGrade, after: SiteGrade )? {
-        guard let score = siteScore() else { return nil }
+    func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
+        let score = siteScore()
         return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
     }
 
@@ -103,8 +103,8 @@ public extension SiteRating {
                 "tosdr": termsOfServiceScore
             ],
             "grade": [
-                "before": grade?.before ?? "",
-                "after": grade?.after ?? ""
+                "before": grade.before,
+                "after": grade.after
             ]
         ]
     }

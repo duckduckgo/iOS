@@ -172,13 +172,10 @@ class PrivacyGradeCell: UITableViewCell {
 
     func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
 
-        if let grades = siteRating.siteGrade() {
-            let protecting = contentBlocking.protecting(domain: siteRating.domain)
-            let grade =  protecting ? grades.after : grades.before
-            gradeImage.image = protecting ? PrivacyGradeCell.gradesOn[grade] : PrivacyGradeCell.gradesOff[grade]
-        } else {
-            gradeImage.image = #imageLiteral(resourceName: "PP Grade Null")
-        }
+        let grades = siteRating.siteGrade()
+        let protecting = contentBlocking.protecting(domain: siteRating.domain)
+        let grade =  protecting ? grades.after : grades.before
+        gradeImage.image = protecting ? PrivacyGradeCell.gradesOn[grade] : PrivacyGradeCell.gradesOff[grade]
 
         siteTitleLabel.text = siteRating.domain
 
@@ -218,7 +215,7 @@ class ProtectionUpgradedView: UIView {
     @IBOutlet weak var toImage: UIImageView!
 
     func update(with siteRating: SiteRating) {
-        guard let grades = siteRating.siteGrade() else { return }
+        let grades = siteRating.siteGrade()
 
         let fromGrade = grades.before
         let toGrade = grades.after

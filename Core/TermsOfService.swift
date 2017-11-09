@@ -23,12 +23,12 @@ import Foundation
 
 public struct TermsOfService {
 
-    private static let classificationScores = [
-        Classification.a: -1,
-        Classification.b: 0,
-        Classification.c: 0,
-        Classification.d: 1,
-        Classification.e: 2
+    private static let classificationScores: [Classification: Int] = [
+        .a: -1,
+        .b: 0,
+        .c: 0,
+        .d: 1,
+        .e: 2
     ]
 
     private let classification: Classification?

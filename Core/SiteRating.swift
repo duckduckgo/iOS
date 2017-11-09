@@ -23,11 +23,11 @@ import Foundation
 public class SiteRating {
     
     public var url: URL
+    public var hasOnlySecureContent: Bool
     public let domain: String
     public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
-    private var insecureContentCount = 0
 
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: Tracker]
@@ -42,10 +42,11 @@ public class SiteRating {
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore
         self.majorTrackerNetworkStore = majorTrackerNetworkStore
+        self.hasOnlySecureContent = url.isHttps()
     }
     
     public var https: Bool {
-        return url.isHttps() && insecureContentCount == 0
+        return url.isHttps()
     }
 
     public var uniqueMajorTrackerNetworksDetected: Int {
@@ -66,10 +67,6 @@ public class SiteRating {
     
     public var termsOfService: TermsOfService? {
         return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
-    }
-
-    public func insecureContentDetected() {
-        insecureContentCount += 1
     }
 
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {

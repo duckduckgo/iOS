@@ -400,6 +400,12 @@ extension TabViewController: WebEventsDelegate {
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
     }
+
+    func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool) {
+        siteRating?.hasOnlySecureContent = hasOnlySecureContent
+        updateSiteRating()
+    }
+
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

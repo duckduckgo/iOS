@@ -96,7 +96,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
     func testWhenNoTrackersHTTPSAndClassATOSThenLoadsInsecureResourceScoreIsOne() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))!
-        testee.insecureContentDetected()
+        testee.hasOnlySecureContent = false
         let score = testee.siteScore()
         XCTAssertEqual(1, score.before)
         XCTAssertEqual(1, score.after)

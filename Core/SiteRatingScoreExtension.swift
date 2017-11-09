@@ -42,7 +42,7 @@ public extension SiteRating {
 
         beforeScore += inMajorTrackerScore
 
-        if !https {
+        if !https || !hasOnlySecureContent {
             beforeScore += 1
             afterScore += 1
         }

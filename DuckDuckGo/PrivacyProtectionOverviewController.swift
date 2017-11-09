@@ -71,8 +71,15 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
-        encryptionCell.summaryLabel.text = siteRating.https ?
-            UserText.privacyProtectionEncryptedConnection : UserText.privacyProtectionUnencryptedConnection
+
+        if !siteRating.https {
+            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionBadConnection
+        } else if !siteRating.hasOnlySecureContent {
+            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionMixedConnection
+        } else {
+            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionGoodConnection
+        }
+
         encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
     }
 

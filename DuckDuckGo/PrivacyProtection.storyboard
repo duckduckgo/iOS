@@ -14,6 +14,9 @@
         <array key="proximanova-bold.otf">
             <string>ProximaNova-Bold</string>
         </array>
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -76,7 +79,7 @@
         <scene sceneID="Uch-vi-4H4">
             <objects>
                 <tableViewController id="7Z1-eg-OWQ" userLabel="Overview" customClass="PrivacyProtectionOverviewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NNN-qG-D8F">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NNN-qG-D8F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -87,7 +90,7 @@
                         <sections>
                             <tableViewSection id="LEu-tX-hOe">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="203" id="s9p-bO-Vdf" customClass="PrivacyGradeCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="203" id="s9p-bO-Vdf" customClass="PrivacyGradeCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s9p-bO-Vdf" id="ihq-Kt-ABs">
@@ -187,11 +190,11 @@
                             </tableViewSection>
                             <tableViewSection id="ria-wo-DGJ">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="goO-wb-Nup" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="57" id="goO-wb-Nup" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="203" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="goO-wb-Nup" id="afc-cI-Pc9">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Hero ON- Connection" translatesAutoresizingMaskIntoConstraints="NO" id="tQ2-6F-wmG">
@@ -202,7 +205,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz1-Q4-Fxr">
-                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
+                                                    <rect key="frame" x="74" y="18" width="251" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -220,9 +223,10 @@
                                         <connections>
                                             <outlet property="summaryImage" destination="tQ2-6F-wmG" id="xms-GX-C2m"/>
                                             <outlet property="summaryLabel" destination="zz1-Q4-Fxr" id="LYP-HO-tJJ"/>
+                                            <segue destination="FqV-mP-aQi" kind="show" id="2fL-q4-l6y"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="izo-7V-yei" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="57" id="izo-7V-yei" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="260" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="izo-7V-yei" id="uvS-6F-pqD">
@@ -257,7 +261,7 @@
                                             <outlet property="summaryLabel" destination="GZ4-PW-wOG" id="Uxc-rP-15h"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="Wkd-gv-dQz" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="57" id="Wkd-gv-dQz" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="317" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wkd-gv-dQz" id="Nfx-4o-djA">
@@ -292,7 +296,7 @@
                                             <outlet property="summaryLabel" destination="pRX-q4-dPP" id="i8i-VU-qhN"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="7tG-Dt-rZf" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="57" id="7tG-Dt-rZf" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="374" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7tG-Dt-rZf" id="REe-ji-zYW">
@@ -331,7 +335,7 @@
                             </tableViewSection>
                             <tableViewSection id="Plv-II-MPy">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="u1J-ua-Wxj">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="56" id="u1J-ua-Wxj">
                                         <rect key="frame" x="0.0" y="431" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u1J-ua-Wxj" id="WB9-YV-0bF">
@@ -365,7 +369,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.63137254901960782" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="108" id="4g1-uR-ElB" customClass="TrackerNetworkLeaderboardCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="108" id="4g1-uR-ElB" customClass="TrackerNetworkLeaderboardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="487" width="375" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4g1-uR-ElB" id="CWq-GZ-R3U">
@@ -524,7 +528,145 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2652" y="408.84557721139436"/>
+            <point key="canvasLocation" x="2042" y="409"/>
+        </scene>
+        <!--Privacy Protection Encryption Detail Controller-->
+        <scene sceneID="4T4-IH-Osg">
+            <objects>
+                <viewController id="FqV-mP-aQi" customClass="PrivacyProtectionEncryptionDetailController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ewv-Sc-Sqc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="deS-wD-kVs">
+                                <rect key="frame" x="0.0" y="10" width="375" height="595"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="XbD-tH-3K4" userLabel="Connection Status View">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
+                                            <rect key="frame" x="-0.5" y="155" width="375" height="75"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An encrypted connection prevents eavesdropping of any personal information you send to a website." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
+                                                    <rect key="frame" x="23.5" y="0.0" width="327" height="75"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35G-VL-OEY" userLabel="Custom Divider">
+                                                    <rect key="frame" x="20" y="73" width="335" height="2"/>
+                                                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="2" id="RJM-AD-S8t"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="35G-VL-OEY" secondAttribute="bottom" id="43N-U6-KDV"/>
+                                                <constraint firstItem="cfr-pR-GnE" firstAttribute="width" secondItem="Jd5-3d-xyR" secondAttribute="width" constant="-48" id="LBW-5V-TER"/>
+                                                <constraint firstItem="cfr-pR-GnE" firstAttribute="centerX" secondItem="Jd5-3d-xyR" secondAttribute="centerX" id="LYh-2X-sWB"/>
+                                                <constraint firstItem="35G-VL-OEY" firstAttribute="centerX" secondItem="Jd5-3d-xyR" secondAttribute="centerX" id="XgS-de-A1B"/>
+                                                <constraint firstAttribute="height" constant="75" id="ck0-1K-jCW"/>
+                                                <constraint firstItem="35G-VL-OEY" firstAttribute="width" secondItem="Jd5-3d-xyR" secondAttribute="width" constant="-40" id="m1Q-ga-S9X"/>
+                                                <constraint firstItem="cfr-pR-GnE" firstAttribute="height" secondItem="Jd5-3d-xyR" secondAttribute="height" id="mOn-kQ-FZe"/>
+                                                <constraint firstItem="cfr-pR-GnE" firstAttribute="centerY" secondItem="Jd5-3d-xyR" secondAttribute="centerY" id="xcO-w6-hTN"/>
+                                            </constraints>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Connection On" translatesAutoresizingMaskIntoConstraints="NO" id="8ma-gb-nuk">
+                                            <rect key="frame" x="166" y="20" width="43" height="65"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5w-e3-JfY">
+                                            <rect key="frame" x="20.5" y="90" width="335" height="23.5"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
+                                            <rect key="frame" x="20" y="119.5" width="335" height="14"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                            <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UNENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aT4-lx-qIx" userLabel="Unencrypted Label">
+                                            <rect key="frame" x="20" y="119.5" width="335" height="14"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="aT4-lx-qIx" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="GgS-OT-f2z"/>
+                                        <constraint firstItem="8ma-gb-nuk" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="HK4-7Q-nwp"/>
+                                        <constraint firstItem="Jd5-3d-xyR" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" id="M0S-1y-340"/>
+                                        <constraint firstItem="dZC-7f-pp3" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="Nee-oW-O9L"/>
+                                        <constraint firstItem="F5w-e3-JfY" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="V80-yt-FIk"/>
+                                        <constraint firstItem="dZC-7f-pp3" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="W3H-I0-PtX"/>
+                                        <constraint firstItem="F5w-e3-JfY" firstAttribute="top" secondItem="8ma-gb-nuk" secondAttribute="bottom" constant="5" id="b48-kj-EfE"/>
+                                        <constraint firstItem="dZC-7f-pp3" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="bVy-Jp-9AO"/>
+                                        <constraint firstItem="aT4-lx-qIx" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="i7m-bI-XOV"/>
+                                        <constraint firstItem="aT4-lx-qIx" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="lGf-ac-2Nb"/>
+                                        <constraint firstAttribute="bottom" secondItem="Jd5-3d-xyR" secondAttribute="bottom" id="n1T-QD-Z0A"/>
+                                        <constraint firstItem="Jd5-3d-xyR" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="oJI-Lo-2QW"/>
+                                        <constraint firstItem="F5w-e3-JfY" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="pP7-n3-4BJ"/>
+                                        <constraint firstItem="8ma-gb-nuk" firstAttribute="top" secondItem="XbD-tH-3K4" secondAttribute="top" constant="20" id="yIO-uQ-XtY"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="icx-w2-W4u" style="IBUITableViewCellStyleDefault" id="QuS-cY-xoL">
+                                        <rect key="frame" x="0.0" y="285.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QuS-cY-xoL" id="ha0-1b-qhG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="icx-w2-W4u">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-Ab-2VI">
+                                <rect key="frame" x="10" y="40" width="30" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="nQ1-SR-r2m"/>
+                                </constraints>
+                                <state key="normal" image="PP Arrow Back"/>
+                                <connections>
+                                    <action selector="onBack" destination="FqV-mP-aQi" eventType="touchUpInside" id="uxf-gg-UNo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="WMb-j1-aK5" firstAttribute="top" secondItem="KSV-Ab-2VI" secondAttribute="top" constant="-20" id="6lh-E6-SgV"/>
+                            <constraint firstItem="deS-wD-kVs" firstAttribute="width" secondItem="ewv-Sc-Sqc" secondAttribute="width" id="HEe-sX-hsI"/>
+                            <constraint firstItem="WMb-j1-aK5" firstAttribute="leading" secondItem="KSV-Ab-2VI" secondAttribute="leading" constant="-10" id="YMy-co-ZqT"/>
+                            <constraint firstItem="deS-wD-kVs" firstAttribute="centerY" secondItem="WMb-j1-aK5" secondAttribute="centerY" id="pR3-8K-aM2"/>
+                            <constraint firstItem="deS-wD-kVs" firstAttribute="centerX" secondItem="WMb-j1-aK5" secondAttribute="centerX" id="u5Z-nT-tT0"/>
+                            <constraint firstItem="deS-wD-kVs" firstAttribute="height" secondItem="ewv-Sc-Sqc" secondAttribute="height" id="uFh-Qb-xIM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WMb-j1-aK5"/>
+                    </view>
+                    <connections>
+                        <outlet property="domainLabel" destination="F5w-e3-JfY" id="Kex-XA-LPL"/>
+                        <outlet property="encryptedLabel" destination="dZC-7f-pp3" id="EUt-Lm-BrG"/>
+                        <outlet property="imageView" destination="8ma-gb-nuk" id="v59-7s-oPN"/>
+                        <outlet property="unencryptedLabel" destination="aT4-lx-qIx" id="YzO-Lq-mv7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhu-pq-Kqh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2040.8" y="1215.7421289355323"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bVE-dS-EIg">
@@ -539,12 +681,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bfQ-IQ-ptp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1698" y="409"/>
+            <point key="canvasLocation" x="1428" y="409"/>
         </scene>
     </scenes>
     <resources>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="PP Arrow Back" width="10" height="16"/>
         <image name="PP Grade Null" width="170" height="113"/>
+        <image name="PP Hero Connection On" width="43" height="65"/>
         <image name="PP Hero ON- Connection" width="29" height="19"/>
         <image name="PP Hero ON- Good Privacy" width="35" height="23"/>
         <image name="PP Hero ON- Major Networks" width="35" height="23"/>

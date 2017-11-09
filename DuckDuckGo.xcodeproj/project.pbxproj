@@ -70,6 +70,8 @@
 		85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */; };
 		85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */; };
 		85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */; };
+		85F1E9AC1FB49C0F00A75AC1 /* CertificateInfoExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AB1FB49C0F00A75AC1 /* CertificateInfoExtractor.swift */; };
+		85F1E9AE1FB49EA200A75AC1 /* ServerTrustCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */; };
 		85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */; };
 		85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
@@ -388,6 +390,8 @@
 		85F1C3C91F7A4E8000161346 /* ContentBlockerStringCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerStringCache.swift; sourceTree = "<group>"; };
 		85F1C3CB1F7A76B900161346 /* ContentBlockerStringCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerStringCache.swift; sourceTree = "<group>"; };
 		85F1C3D01F7BF30B00161346 /* EasylistStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasylistStoreTests.swift; sourceTree = "<group>"; };
+		85F1E9AB1FB49C0F00A75AC1 /* CertificateInfoExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateInfoExtractor.swift; sourceTree = "<group>"; };
+		85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTrustCache.swift; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListRequest.swift; sourceTree = "<group>"; };
 		85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "abp-filter-parser-packed-es2015.js"; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
@@ -842,6 +846,7 @@
 				85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */,
 				85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */,
 				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
+				85F1E9AB1FB49C0F00A75AC1 /* CertificateInfoExtractor.swift */,
 			);
 			name = PrivacyProtection;
 			sourceTree = "<group>";
@@ -850,6 +855,7 @@
 			isa = PBXGroup;
 			children = (
 				8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */,
+				85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */,
 			);
 			name = PrivacyProtection;
 			sourceTree = "<group>";
@@ -2037,6 +2043,7 @@
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				85ECA7F51F2A95860018EBEB /* PersistenceContainer.swift in Sources */,
+				85F1E9AC1FB49C0F00A75AC1 /* CertificateInfoExtractor.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
@@ -2167,6 +2174,7 @@
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,
 				F197EA3C1E6885F20029BDC1 /* TextFieldWithInsets.swift in Sources */,
+				85F1E9AE1FB49EA200A75AC1 /* ServerTrustCache.swift in Sources */,
 				857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */,
 				F14513571F46388F00710C46 /* SiteRating.swift in Sources */,
 				F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */,

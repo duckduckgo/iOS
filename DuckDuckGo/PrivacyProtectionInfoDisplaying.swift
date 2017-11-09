@@ -13,3 +13,4 @@ protocol PrivacyProtectionInfoDisplaying {
     func using(_ siteRating: SiteRating)
 
 }
+

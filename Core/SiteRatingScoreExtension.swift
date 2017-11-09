@@ -90,7 +90,7 @@ public extension SiteRating {
         return termsOfService.derivedScore
     }
     
-    public var scoreDict: [String : [String: Any]] {
+    public var scoreDict: [String : Any] {
         let grade = siteGrade()
         return [
             "score": [
@@ -103,8 +103,8 @@ public extension SiteRating {
                 "tosdr": termsOfServiceScore
             ],
             "grade": [
-                "before": grade.before,
-                "after": grade.after
+                "before": grade.before.rawValue.uppercased(),
+                "after": grade.after.rawValue.uppercased()
             ]
         ]
     }

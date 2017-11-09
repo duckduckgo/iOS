@@ -46,7 +46,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     @IBAction func toggleProtection() {
-        contentBlocker.enabled = privacyProtectionSwitch.isOn
+        let contentBlockingOn = privacyProtectionSwitch.isOn
+        self.contentBlocker.enabled = contentBlockingOn
+        updateSiteRating(siteRating)
     }
 
     func updateSiteRating(_ siteRating: SiteRating) {
@@ -69,27 +71,34 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
-        encryptionCell.summaryLabel.text = siteRating.https ?
-            UserText.privacyProtectionEncryptedConnection : UserText.privacyProtectionUnencryptedConnection
-        encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Connection") : #imageLiteral(resourceName: "PP Hero OFF- Connection")
+
+        if !siteRating.https {
+            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionBadConnection
+        } else if !siteRating.hasOnlySecureContent {
+            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionMixedConnection
+        } else {
+            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionGoodConnection
+        }
+
+        encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
     }
 
     private func updateTrackersBlocked() {
-        trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Networks Blocked") : #imageLiteral(resourceName: "PP Hero OFF- Networks Blocked")
+        trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Blocked On") : #imageLiteral(resourceName: "PP Icon Blocked Off")
         trackersCell.summaryLabel.text = protecting() ?
             String(format: UserText.privacyProtectionTrackersBlocked, siteRating.uniqueTrackersBlocked) :
             String(format: UserText.privacyProtectionTrackersFound, siteRating.uniqueTrackersDetected)
     }
 
     private func updateMajorTrackersBlocked() {
-        majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Major Networks") : #imageLiteral(resourceName: "PP Hero OFF- Major Networks")
+        majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
         majorTrackersCell.summaryLabel.text = protecting() ?
             String(format: UserText.privacyProtectionMajorTrackersBlocked, siteRating.uniqueMajorTrackerNetworksBlocked) :
             String(format: UserText.privacyProtectionMajorTrackersFound, siteRating.uniqueMajorTrackerNetworksDetected)
     }
 
     private func updatePrivacyPractices() {
-        privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Hero ON- Good Privacy") : #imageLiteral(resourceName: "PP Hero OFF- Good Privacy")
+        privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Bad Privacy On") : #imageLiteral(resourceName: "PP Icon Bad Privacy Off")
         privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSUnknown
 
         guard siteRating.termsOfService != nil else { return }
@@ -99,6 +108,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         switch (score) {
         case _ where(score < 0):
             privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSGood
+            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Good Privacy On") : #imageLiteral(resourceName: "PP Icon Good Privacy Off")
 
         case 0 ... 1:
             privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSMixed
@@ -147,12 +157,19 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
 class PrivacyGradeCell: UITableViewCell {
 
-    private static let grades = [
-        SiteGrade.a: #imageLiteral(resourceName: "PP Grade A"),
-        SiteGrade.b: #imageLiteral(resourceName: "PP Grade B"),
-        SiteGrade.c: #imageLiteral(resourceName: "PP Grade C"),
-        SiteGrade.d: #imageLiteral(resourceName: "PP Grade D"),
+    private static let gradesOn = [
+        SiteGrade.a: #imageLiteral(resourceName: "PP Grade A On"),
+        SiteGrade.b: #imageLiteral(resourceName: "PP Grade B On"),
+        SiteGrade.c: #imageLiteral(resourceName: "PP Grade C On"),
+        SiteGrade.d: #imageLiteral(resourceName: "PP Grade D On"),
     ]
+
+    private static let gradesOff = [
+        SiteGrade.a: #imageLiteral(resourceName: "PP Grade A Off"),
+        SiteGrade.b: #imageLiteral(resourceName: "PP Grade B Off"),
+        SiteGrade.c: #imageLiteral(resourceName: "PP Grade C Off"),
+        SiteGrade.d: #imageLiteral(resourceName: "PP Grade D Off"),
+        ]
 
     @IBOutlet weak var gradeImage: UIImageView!
     @IBOutlet weak var siteTitleLabel: UILabel!
@@ -162,11 +179,11 @@ class PrivacyGradeCell: UITableViewCell {
 
     func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
 
-        if siteRating.finishedLoading {
-            let grade = siteRating.siteGrade(blockedOnly: contentBlocking.protecting(domain: siteRating.domain))
-            gradeImage.image = image(for: grade)
-        }
-        
+        let grades = siteRating.siteGrade()
+        let protecting = contentBlocking.protecting(domain: siteRating.domain)
+        let grade =  protecting ? grades.after : grades.before
+        gradeImage.image = protecting ? PrivacyGradeCell.gradesOn[grade] : PrivacyGradeCell.gradesOff[grade]
+
         siteTitleLabel.text = siteRating.domain
 
         protectionPausedLabel.isHidden = true
@@ -183,10 +200,6 @@ class PrivacyGradeCell: UITableViewCell {
         }
     }
 
-    private func image(for grade: SiteGrade) -> UIImage? {
-        return PrivacyGradeCell.grades[grade]
-    }
-
 }
 
 class SummaryCell: UITableViewCell {
@@ -199,18 +212,20 @@ class SummaryCell: UITableViewCell {
 class ProtectionUpgradedView: UIView {
 
     static let grades = [
-        SiteGrade.a: #imageLiteral(resourceName: "PP inline-A"),
-        SiteGrade.b: #imageLiteral(resourceName: "PP inline-B"),
-        SiteGrade.c: #imageLiteral(resourceName: "PP inline-C"),
-        SiteGrade.d: #imageLiteral(resourceName: "PP inline-D")
+        SiteGrade.a: #imageLiteral(resourceName: "PP Inline A"),
+        SiteGrade.b: #imageLiteral(resourceName: "PP Inline B"),
+        SiteGrade.c: #imageLiteral(resourceName: "PP Inline C"),
+        SiteGrade.d: #imageLiteral(resourceName: "PP Inline D")
     ]
 
     @IBOutlet weak var fromImage: UIImageView!
     @IBOutlet weak var toImage: UIImageView!
 
     func update(with siteRating: SiteRating) {
-        let fromGrade = siteRating.siteGrade(blockedOnly: false)
-        let toGrade = siteRating.siteGrade(blockedOnly: true)
+        let grades = siteRating.siteGrade()
+
+        let fromGrade = grades.before
+        let toGrade = grades.after
 
         isHidden = fromGrade == toGrade
 

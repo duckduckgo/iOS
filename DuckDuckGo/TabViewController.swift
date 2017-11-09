@@ -74,6 +74,7 @@ class TabViewController: WebViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if let controller = segue.destination as? PrivacyProtectionController {
+            controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.siteRating = siteRating
@@ -86,8 +87,11 @@ class TabViewController: WebViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged() {
-        reloadScripts()
-        webView?.reload()
+        // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.reloadScripts()
+            self.webView?.reload()
+        }
     }
     
     private func resetNavigationBar() {
@@ -396,6 +400,12 @@ extension TabViewController: WebEventsDelegate {
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
     }
+
+    func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool) {
+        siteRating?.hasOnlySecureContent = hasOnlySecureContent
+        updateSiteRating()
+    }
+
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {
@@ -446,4 +456,12 @@ extension TabViewController: ContentBlockerSettingsChangeDelegate {
     func contentBlockerSettingsDidChange() {
         onContentBlockerConfigurationChanged()
     }
+}
+
+extension TabViewController: PrivacyProtectionDelegate {
+
+    func omniBarTextTapped() {
+        chromeDelegate.omniBar.becomeFirstResponder()
+    }
+
 }

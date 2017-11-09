@@ -20,10 +20,18 @@
 import UIKit
 import Core
 
+protocol PrivacyProtectionDelegate: class {
+
+    func omniBarTextTapped()
+
+}
+
 class PrivacyProtectionController: UIViewController {
 
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
+
+    weak var delegate: PrivacyProtectionDelegate?
 
     weak var embeddedController: UINavigationController!
 
@@ -46,6 +54,7 @@ class PrivacyProtectionController: UIViewController {
         omniBar.updateSiteRating(siteRating)
         omniBar.startBrowsing()
         omniBar.omniDelegate = self
+        omniBar.textField.addTarget(self, action: #selector(onTextFieldTapped), for: .touchDown)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -54,6 +63,12 @@ class PrivacyProtectionController: UIViewController {
             if let controller = embeddedController.viewControllers[0] as? PrivacyProtectionOverviewController {
                 controller.siteRating = siteRating
             }
+        }
+    }
+
+    @objc func onTextFieldTapped() {
+        dismiss(animated: true) {
+            self.delegate?.omniBarTextTapped()
         }
     }
 
@@ -115,7 +130,8 @@ extension PrivacyProtectionController: UIViewControllerTransitioningDelegate {
 }
 
 fileprivate struct AnimationConstants {
-    static let duration = 0.3
+    static let inDuration = 0.3
+    static let outDuration = 0.2
     static let tyOffset = CGFloat(20.0)
 }
 
@@ -129,7 +145,7 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
         toController.view.frame = transitionContext.finalFrame(for: toController)
         containerView.insertSubview(toController.view, at: 0)
 
-        UIView.animate(withDuration: AnimationConstants.duration, animations: {
+        UIView.animate(withDuration: AnimationConstants.outDuration, animations: {
             fromController.contentContainer.transform.ty = -fromController.contentContainer.frame.size.height - fromController.omniBarContainer.frame.height - AnimationConstants.tyOffset
         }, completion: { (value: Bool) in
             transitionContext.completeTransition(true)
@@ -137,7 +153,7 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return AnimationConstants.duration
+        return AnimationConstants.outDuration
     }
 
 }
@@ -157,7 +173,7 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
 
         toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height - toController.omniBarContainer.frame.height - AnimationConstants.tyOffset
 
-        UIView.animate(withDuration: AnimationConstants.duration, animations: {
+        UIView.animate(withDuration: AnimationConstants.inDuration, animations: {
             toController.contentContainer.transform.ty = 0
         }, completion: { (value: Bool) in
             toController.view.backgroundColor = toColor
@@ -166,7 +182,7 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return AnimationConstants.duration
+        return AnimationConstants.inDuration
     }
 
 }

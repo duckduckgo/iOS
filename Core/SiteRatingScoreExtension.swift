@@ -20,90 +20,92 @@
 
 import Foundation
 
+// Based on
+// https://github.com/duckduckgo/chrome-zeroclickinfo/blob/ceb4fc6b2e36451207ef9c887b4e1e6ccff30352/js/site.js#L89
+
 public extension SiteRating {
-    
-    func siteScore(blockedOnly: Bool) -> Int {
-        var score = 1
-        score += httpsScore
-        score += isMajorTrackerScore
-        score += trackerCountScore(blockedOnly: blockedOnly)
-        score += containsMajorTrackerScore(blockedOnly: blockedOnly)
-        score += ipTrackerScore(blockedOnly: blockedOnly)
-        score += termsOfServiceScore
 
-        if blockedOnly {
-            return score
+    func siteScore() -> ( before: Int, after: Int ) {
+
+        // No special pages
+
+        var beforeScore = 1
+        var afterScore = 1
+
+        beforeScore += isMajorTrackerScore
+        afterScore += isMajorTrackerScore
+
+        if let tos = termsOfService {
+            beforeScore += tos.derivedScore
+            afterScore += tos.derivedScore
         }
 
-        let cache =  SiteRatingCache.shared
-        if cache.add(url:url, score: score) {
-            return score
+        beforeScore += inMajorTrackerScore
+
+        if !https || !hasOnlySecureContent {
+            beforeScore += 1
+            afterScore += 1
         }
-        return cache.get(url: url)!
+
+        beforeScore += ipTrackerScore
+
+        beforeScore += Int(ceil(Double(totalTrackersDetected) / 10))
+
+        let cache = SiteRatingCache.shared
+        if !cache.add(url: url, score: beforeScore) {
+            beforeScore = cache.get(url: url)!
+        }
+
+        return ( beforeScore, afterScore )
     }
-    
+
+    func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
+        let score = siteScore()
+        return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
+    }
+
     private var httpsScore: Int {
         return https ? -1 : 0
     }
-    
-    private func trackerCountScore(blockedOnly: Bool) -> Int {
-        let trackerCount = blockedOnly ? totalTrackersBlocked : totalTrackersDetected
-        let baseScore = Double(trackerCount) / 10.0
-        return Int(ceil(baseScore))
+
+    private var inMajorTrackerScore: Int {
+        guard let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.parentDomain else { return 0 }
+        return majorTrackerNetworkStore.network(forDomain: associatedDomain) == nil ? 0 : 1
     }
-    
-    private func containsMajorTrackerScore(blockedOnly: Bool) -> Int {
-        return containsMajorTracker(blockedOnly: blockedOnly) ? 1 : 0
-    }
-    
+
     private var isMajorTrackerScore: Int {
-        guard let network = majorTrackingNetwork else { return 0 }
-        let baseScore = Double(network.perentageOfPages) / 10.0
-        return Int(ceil(baseScore))
+        guard let network = majorTrackerNetworkStore.network(forDomain: domain) else { return 0 }
+        return network.score
     }
     
-    private func ipTrackerScore(blockedOnly: Bool) -> Int {
-        return contrainsIpTracker(blockedOnly: blockedOnly) ? 1 : 0
+    private var ipTrackerScore: Int {
+        return containsIpTracker ? 1 : 0
     }
     
     public var termsOfServiceScore: Int {
         guard let termsOfService = termsOfService else {
-            return 0
+            return 1
         }
         
-        guard let classification = termsOfService.classification else {
-            let score = termsOfService.score
-            if score == 0 {
-                return 0
-            }
-            return score > 0 ? 1 : -1
-        }
-        
-        switch classification {
-            case TermsOfService.Classification.a: return -1
-            case TermsOfService.Classification.b: return 0
-            case TermsOfService.Classification.c: return 0
-            case TermsOfService.Classification.d: return 1
-            case TermsOfService.Classification.e: return 2
-        }
-    }
-    
-    public func siteGrade(blockedOnly: Bool) -> SiteGrade {
-        return SiteGrade.grade(fromScore: siteScore(blockedOnly: blockedOnly))
+        return termsOfService.derivedScore
     }
     
     public var scoreDict: [String : Any] {
+        let grade = siteGrade()
         return [
-            "score":  [
+            "score": [
                 "domain": domain,
                 "hasHttps": https,
                 "isAMajorTrackingNetwork": isMajorTrackerScore,
                 "containsMajorTrackingNetwork": containsMajorTracker,
                 "totalBlocked": totalTrackersBlocked,
-                "hasObscureTracker": contrainsIpTracker,
+                "hasObscureTracker": containsIpTracker,
                 "tosdr": termsOfServiceScore
             ],
-            "grade": siteGrade(blockedOnly: false).rawValue.uppercased()
+            "grade": [
+                "before": grade.before.rawValue.uppercased(),
+                "after": grade.after.rawValue.uppercased()
+            ]
         ]
     }
     

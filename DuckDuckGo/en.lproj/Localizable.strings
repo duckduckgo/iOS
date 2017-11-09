@@ -65,8 +65,9 @@
 "monitoring.sitegrade.c" = "C";
 "monitoring.sitegrade.d" = "D";
 
-"privacy.protection.encrypted.connection" = "Encrypted Connection";
-"privacy.protection.unencrypted.connection" = "Unencrypted Connection";
+"privacy.protection.encryption.good.connection" = "Encrypted Connection";
+"privacy.protection.encryption.bad.connection" = "Unencrypted Connection";
+"privacy.protection.encryption.mixed.connection" = "Mixed Encryption";
 "privacy.protection.trackers.blocked" = "%d Tracker Networks Blocked";
 "privacy.protection.trackers.found" = "%d Tracker Networks Found";
 "privacy.protection.major.trackers.blocked" = "%d Major Tracker Networks Blocked";

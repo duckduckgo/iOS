@@ -22,7 +22,10 @@ import WebKit
 
 open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
-    private static let estimatedProgressKeyPath = "estimatedProgress"
+    private struct webViewKeyPaths {
+        static let estimatedProgress = "estimatedProgress"
+        static let hasOnlySecureContent = "hasOnlySecureContent"
+    }
 
     public weak var webEventsDelegate: WebEventsDelegate?
     
@@ -67,6 +70,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.navigationDelegate = self
         webView.uiDelegate = self
         view.insertSubview(webView, at: 0)
@@ -107,8 +111,19 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == WebViewController.estimatedProgressKeyPath {
+
+        guard let keyPath = keyPath else { return }
+
+        switch(keyPath) {
+
+        case webViewKeyPaths.estimatedProgress:
             progressBar.progress = Float(webView.estimatedProgress)
+
+        case webViewKeyPaths.hasOnlySecureContent:
+            webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
+
+        default:
+            Logger.log(text: "Unhandled keyPath \(keyPath)")
         }
     }
     
@@ -236,6 +251,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func tearDown() {
         guard let webView = webView else { return }
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)
     }

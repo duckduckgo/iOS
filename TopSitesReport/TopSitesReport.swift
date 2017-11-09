@@ -86,10 +86,8 @@ class TopSitesReport: XCTestCase {
     
     func loadStoryboard() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-        mainController = navigationController.topViewController as! MainViewController
-        UIApplication.shared.keyWindow!.rootViewController = navigationController
-        XCTAssertNotNil(navigationController.view)
+        mainController = storyboard.instantiateInitialViewController() as! MainViewController
+        UIApplication.shared.keyWindow!.rootViewController = mainController
         XCTAssertNotNil(mainController.view)
     }
     

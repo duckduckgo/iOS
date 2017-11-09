@@ -67,8 +67,9 @@ public struct UserText {
     public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
     public static let unsecuredConnection = NSLocalizedString("monitoring.connection.unsecured", comment: "Unsecured conection")
 
-    public static let privacyProtectionEncryptedConnection = NSLocalizedString("privacy.protection.encrypted.connection", comment: "Encrypted conection")
-    public static let privacyProtectionUnencryptedConnection = NSLocalizedString("privacy.protection.unencrypted.connection", comment: "Unencrypted conection")
+    public static let privacyProtectionEncryptionGoodConnection = NSLocalizedString("privacy.protection.encryption.good.connection", comment: "Encrypted conection")
+    public static let privacyProtectionEncryptionBadConnection = NSLocalizedString("privacy.protection.encryption.bad.connection", comment: "Unencrypted conection")
+    public static let privacyProtectionEncryptionMixedConnection = NSLocalizedString("privacy.protection.encryption.mixed.connection", comment: "Mixed encryption conection")
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")

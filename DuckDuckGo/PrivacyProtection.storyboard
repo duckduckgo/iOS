@@ -378,7 +378,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-nL-nri">
-                                                    <rect key="frame" x="86" y="22" width="203.5" height="12"/>
+                                                    <rect key="frame" x="86.5" y="22" width="203.5" height="12"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -529,7 +529,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2042" y="409"/>
+            <point key="canvasLocation" x="2383" y="409"/>
         </scene>
         <!--Privacy Protection Encryption Detail Controller-->
         <scene sceneID="4T4-IH-Osg">
@@ -596,9 +596,16 @@
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIXED ENCRYPTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-Pa-Z9c" userLabel="Mixed Encryption Label">
+                                            <rect key="frame" x="20" y="116" width="335" height="12"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
+                                        <constraint firstItem="lcA-Pa-Z9c" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="CcK-1Y-Pwx"/>
                                         <constraint firstItem="aT4-lx-qIx" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="GgS-OT-f2z"/>
                                         <constraint firstItem="8ma-gb-nuk" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="HK4-7Q-nwp"/>
                                         <constraint firstItem="Jd5-3d-xyR" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" id="M0S-1y-340"/>
@@ -607,7 +614,9 @@
                                         <constraint firstItem="dZC-7f-pp3" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="W3H-I0-PtX"/>
                                         <constraint firstItem="F5w-e3-JfY" firstAttribute="top" secondItem="8ma-gb-nuk" secondAttribute="bottom" constant="5" id="b48-kj-EfE"/>
                                         <constraint firstItem="dZC-7f-pp3" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="bVy-Jp-9AO"/>
+                                        <constraint firstItem="lcA-Pa-Z9c" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="dAe-iu-DO1"/>
                                         <constraint firstItem="aT4-lx-qIx" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="i7m-bI-XOV"/>
+                                        <constraint firstItem="lcA-Pa-Z9c" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="jyW-oP-1Lx"/>
                                         <constraint firstItem="aT4-lx-qIx" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="lGf-ac-2Nb"/>
                                         <constraint firstAttribute="bottom" secondItem="Jd5-3d-xyR" secondAttribute="bottom" id="n1T-QD-Z0A"/>
                                         <constraint firstItem="Jd5-3d-xyR" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="oJI-Lo-2QW"/>
@@ -662,12 +671,13 @@
                         <outlet property="domainLabel" destination="F5w-e3-JfY" id="Kex-XA-LPL"/>
                         <outlet property="encryptedLabel" destination="dZC-7f-pp3" id="EUt-Lm-BrG"/>
                         <outlet property="imageView" destination="8ma-gb-nuk" id="v59-7s-oPN"/>
+                        <outlet property="mixedContentLabel" destination="lcA-Pa-Z9c" id="kaf-7b-Qeb"/>
                         <outlet property="unencryptedLabel" destination="aT4-lx-qIx" id="YzO-Lq-mv7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhu-pq-Kqh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2040.8" y="1215.7421289355323"/>
+            <point key="canvasLocation" x="2382" y="1133"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bVE-dS-EIg">
@@ -682,7 +692,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bfQ-IQ-ptp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1428" y="409"/>
+            <point key="canvasLocation" x="1566" y="409"/>
         </scene>
     </scenes>
     <resources>

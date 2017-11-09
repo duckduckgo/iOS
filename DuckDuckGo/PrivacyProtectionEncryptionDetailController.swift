@@ -15,6 +15,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
     @IBOutlet weak var unencryptedLabel: UILabel!
+    @IBOutlet weak var mixedContentLabel: UILabel!
 
     lazy var serverTrustCache = ServerTrustCache.shared
 
@@ -38,8 +39,17 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func updateHttpsStatus() {
         imageView.image = siteRating.https ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
-        encryptedLabel.isHidden = !siteRating.https
-        unencryptedLabel.isHidden = siteRating.https
+        encryptedLabel.isHidden = true
+        unencryptedLabel.isHidden = true
+        mixedContentLabel.isHidden = true
+
+        if !siteRating.https {
+            unencryptedLabel.isHidden = false
+        } else if !siteRating.hasOnlySecureContent {
+            mixedContentLabel.isHidden = false
+        } else {
+            encryptedLabel.isHidden = false
+        }
     }
 
     private func beginCertificateInfoExtraction() {

@@ -178,6 +178,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             return
         }
 
+        print("***", #function, url)
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
             decisionHandler(.cancel)
             return
@@ -275,9 +276,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
     public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.performDefaultHandling, nil)
-        guard let domain = url?.host else { return }
         guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
-        ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: domain)
+        ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
     }
 
 }

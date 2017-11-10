@@ -54,16 +54,27 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func beginCertificateInfoExtraction() {
         guard siteRating.https else { return }
-        guard let serverTrust = serverTrustCache.get(forDomain: siteRating.domain) else { return }
-        CertificateInfoExtractor().extract(serverTrust: serverTrust) { [weak self] certInfo in
+        guard let serverTrust = serverTrustCache.get(forDomain: siteRating.domain) else {
+            print("***", #function, "no serverTrust for", siteRating.domain)
+            return
+        }
+        DisplayableCertificateBuilder().build(usingTrust: serverTrust) { [weak self] displayable in
             DispatchQueue.main.async {
-                self?.updateCertificateInfo(certInfo)
+                self?.renderCertificates(displayable)
             }
         }
     }
 
-    private func updateCertificateInfo(_ certInfo: CertificateInfo) {
-        print("***", #function, certInfo)
+    private func renderCertificates(_ certs: [DisplayableCertificate]) {
+        print("***", #function, certs)
+
+        for cert in certs {
+            print("***", #function, "summary", cert.summary ?? "<no summary>")
+            print("***", #function, "common name", cert.commonName ?? "<no common name>")
+            print("***", #function, "emails", cert.emails ?? "<no emails>")
+            print("***", #function, "public key", cert.publicKey ?? "<no public key>")
+        }
+
     }
 
 }

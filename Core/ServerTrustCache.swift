@@ -19,6 +19,7 @@ public class ServerTrustCache {
     }
 
     public func put(serverTrust: SecTrust, forDomain domain: String) {
+        print("***", #function, "updating serverTrust for", domain)
         cache[domain] = serverTrust
     }
 

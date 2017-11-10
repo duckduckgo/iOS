@@ -127,9 +127,7 @@ class OmniBar: UIView {
             return
         }
 
-        let query = appUrls.searchQuery(fromUrl: url)
-
-        if query != nil {
+        if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
         } else {
             textField.text = url.absoluteString

@@ -122,7 +122,6 @@ class OmniBar: UIView {
             return
         }
 
-        
         guard let url = url else {
             textField.text = nil
             return

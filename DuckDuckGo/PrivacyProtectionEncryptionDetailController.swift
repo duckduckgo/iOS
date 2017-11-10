@@ -65,16 +65,14 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         }
     }
 
-    private func renderCertificates(_ certs: [DisplayableCertificate]) {
-        print("***", #function, certs)
+    private func renderCertificates(_ cert: DisplayableCertificate) {
+        print("***", #function, "Certificate: ", cert.commonName, "issuer:", cert.issuer?.commonName)
+        print("***", #function, "Public Key: ", cert.publicKey)
 
-        for cert in certs {
-            print("***", #function, "summary", cert.summary ?? "<no summary>")
-            print("***", #function, "common name", cert.commonName ?? "<no common name>")
-            print("***", #function, "emails", cert.emails ?? "<no emails>")
-            print("***", #function, "public key", cert.publicKey ?? "<no public key>")
+        if let issuer = cert.issuer {
+            renderCertificates(issuer)
         }
-
+        
     }
 
 }

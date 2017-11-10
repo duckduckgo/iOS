@@ -7,14 +7,12 @@
 //
 
 import Foundation
-import Core
-import Security
 
-typealias DisplayableCertificateBuilderCompletion = ([DisplayableCertificate]) -> Void
+typealias DisplayableCertificateBuilderCompletion = (DisplayableCertificate) -> Void
 
 protocol DisplayableCertificateBuilderDriver {
 
-    func build(usingTrust trust: SecTrust) -> [DisplayableCertificate]
+    func build(usingTrust trust: SecTrust) -> DisplayableCertificate
 
 }
 
@@ -34,7 +32,7 @@ class DisplayableCertificateBuilder {
 
 }
 
-struct DisplayableCertificate {
+class DisplayableCertificate {
 
     static let error = DisplayableCertificate()
 
@@ -43,13 +41,17 @@ struct DisplayableCertificate {
     var emails: [String]?
     var publicKey: DisplayableKey?
 
+    var issuer: DisplayableCertificate?
+
 }
 
 struct DisplayableKey {
 
     var keyId: Data?
-    var keyType = "RSA" // it's always RSA on iOS, see kSecAttrKeyType in SecItem.h
+
+    var bitSize: Int?
     var blockSize: Int?
+    var effectiveSize: Int?
 
     var canDecrypt: Bool?
     var canDerive: Bool?
@@ -59,43 +61,41 @@ struct DisplayableKey {
     var canVerify: Bool?
     var canWrap: Bool?
 
+    var isPermanent: Bool?
+    var type: String?
+
 }
 
 class NativeDisplayableCertificateBuilderDriver: DisplayableCertificateBuilderDriver {
 
-    func build(usingTrust trust: SecTrust) -> [DisplayableCertificate] {
-        var certs = [DisplayableCertificate]()
+    func build(usingTrust trust: SecTrust) -> DisplayableCertificate {
 
-        guard errSecSuccess == SecTrustSetNetworkFetchAllowed(trust, true) else {
-            Logger.log(text: "SecTrustSetNetworkFetchAllowed FAILED")
-            return certs
-        }
-
-        var steResult: SecTrustResultType = .unspecified
-        guard errSecSuccess == SecTrustEvaluate(trust, &steResult) else {
-            Logger.log(text: "SecTrustEvaluate FAILED")
-            return certs
-        }
-
-        Logger.log(text: "steResult = \(steResult.rawValue)")
+        var head: DisplayableCertificate!
+        var next: DisplayableCertificate!
 
         let certCount = SecTrustGetCertificateCount(trust)
         for certIndex in 0 ..< certCount {
-            guard let cert = SecTrustGetCertificateAtIndex(trust, certIndex) else {
-                certs.append(DisplayableCertificate.error)
-                continue
+            guard let certInChain = SecTrustGetCertificateAtIndex(trust, certIndex) else { return DisplayableCertificate.error }
+            let displayableCert: DisplayableCertificate = certInChain.toDisplayable()
+            if nil == head {
+                head = displayableCert
+            } else {
+                next.issuer = displayableCert
             }
-            certs.append(cert.displayable)
+            next = displayableCert
         }
-        return certs
+
+        return head
     }
 
 }
 
 fileprivate extension SecCertificate {
 
-    var displayable: DisplayableCertificate {
-        var displayable = DisplayableCertificate()
+    func toDisplayable() -> DisplayableCertificate {
+        print("***", #function, "SecCertificate", self)
+
+        let displayable = DisplayableCertificate()
 
         displayable.summary = extractSummary()
         if #available(iOS 10.3, *) {
@@ -103,20 +103,17 @@ fileprivate extension SecCertificate {
             displayable.emails = extractEmails()
         }
 
-        var secTrust: SecTrust?
-        guard errSecSuccess == SecTrustCreateWithCertificates(self, SecPolicyCreateBasicX509(), &secTrust),
-            let certTrust = secTrust else { return displayable }
-
-        guard errSecSuccess == SecTrustSetNetworkFetchAllowed(certTrust, true) else {
-            return displayable
-        }
-
-        var evaluationResultType: SecTrustResultType = .unspecified
-        guard errSecSuccess == SecTrustEvaluate(certTrust, &evaluationResultType) else { return displayable }
-
-        displayable.publicKey = SecTrustCopyPublicKey(certTrust)?.displayable
+        displayable.publicKey = extractKey()
 
         return displayable
+    }
+
+    private func extractKey() -> DisplayableKey? {
+        var secTrust: SecTrust?
+        guard errSecSuccess == SecTrustCreateWithCertificates(self, SecPolicyCreateBasicX509(), &secTrust),
+            let certTrust = secTrust else { return nil }
+
+        return SecTrustCopyPublicKey(certTrust)?.toDisplayable()
     }
 
     private func extractSummary() -> String {
@@ -143,16 +140,18 @@ fileprivate extension SecCertificate {
 
 fileprivate extension SecKey {
 
-    var displayable: DisplayableKey {
+    func toDisplayable() -> DisplayableKey {
+        print("***", #function, "SecKey", self)
+
         var key = DisplayableKey()
 
         key.blockSize = SecKeyGetBlockSize(self)
 
         if #available(iOS 10.0, *) {
-
             guard let attrs: NSDictionary = SecKeyCopyAttributes(self) else { return key }
 
-            key.keyId = attrs[kSecAttrApplicationLabel] as? Data
+            key.bitSize = attrs[kSecAttrKeySizeInBits] as? Int
+            key.effectiveSize = attrs[kSecAttrEffectiveKeySize] as? Int
             key.canDecrypt = attrs[kSecAttrCanDecrypt] as? Bool
             key.canDerive = attrs[kSecAttrCanDerive] as? Bool
             key.canEncrypt = attrs[kSecAttrCanEncrypt] as? Bool
@@ -160,11 +159,27 @@ fileprivate extension SecKey {
             key.canUnwrap = attrs[kSecAttrCanUnwrap] as? Bool
             key.canVerify = attrs[kSecAttrCanVerify] as? Bool
             key.canWrap = attrs[kSecAttrCanWrap] as? Bool
+            key.isPermanent = attrs[kSecAttrIsPermanent] as? Bool
+            key.keyId = attrs[kSecAttrApplicationLabel] as? Data
+
+            if let type = attrs[kSecAttrType] as? String {
+                 key.type = typeToString(type)
+            }
 
             print("***", #function, attrs)
         }
 
         return key
+    }
+
+    @available(iOS 10, *)
+    private func typeToString(_ type: String) -> String? {
+        switch(type as CFString) {
+        case kSecAttrKeyTypeRSA: return "RSA"
+        case kSecAttrKeyTypeEC: return "EC"
+        case kSecAttrKeyTypeECSECPrimeRandom: return "EC Prime Random"
+        default: return nil
+        }
     }
 
 }

@@ -121,13 +121,20 @@ class OmniBar: UIView {
         if textField.isEditing {
             return
         }
+
         
         guard let url = url else {
             textField.text = nil
             return
         }
-        
-        textField.text = url.absoluteString
+
+        let query = appUrls.searchQuery(fromUrl: url)
+
+        if query != nil {
+            textField.text = query
+        } else {
+            textField.text = url.absoluteString
+        }
     }
     
     

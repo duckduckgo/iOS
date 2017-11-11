@@ -178,7 +178,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             return
         }
 
-        print("***", #function, url)
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
             decisionHandler(.cancel)
             return

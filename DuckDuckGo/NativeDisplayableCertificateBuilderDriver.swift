@@ -1,70 +1,12 @@
 //
-//  CertificateInfoExtractor.swift
+//  NativeDisplayableCertificateBuilderDriver.swift
 //  DuckDuckGo
 //
-//  Created by Christopher Brind on 09/11/2017.
+//  Created by Christopher Brind on 11/11/2017.
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
 //
 
 import Foundation
-
-typealias DisplayableCertificateBuilderCompletion = (DisplayableCertificate) -> Void
-
-protocol DisplayableCertificateBuilderDriver {
-
-    func build(usingTrust trust: SecTrust) -> DisplayableCertificate
-
-}
-
-class DisplayableCertificateBuilder {
-
-    let driver: DisplayableCertificateBuilderDriver
-
-    init(withDriver driver: DisplayableCertificateBuilderDriver = NativeDisplayableCertificateBuilderDriver()) {
-        self.driver = driver
-    }
-
-    func build(usingTrust trust: SecTrust, completion: @escaping DisplayableCertificateBuilderCompletion) {
-        DispatchQueue.global(qos: .background).async {
-            completion(self.driver.build(usingTrust: trust))
-        }
-    }
-
-}
-
-class DisplayableCertificate {
-
-    static let error = DisplayableCertificate()
-
-    var summary: String?
-    var commonName: String?
-    var emails: [String]?
-    var publicKey: DisplayableKey?
-
-    var issuer: DisplayableCertificate?
-
-}
-
-struct DisplayableKey {
-
-    var keyId: Data?
-
-    var bitSize: Int?
-    var blockSize: Int?
-    var effectiveSize: Int?
-
-    var canDecrypt: Bool?
-    var canDerive: Bool?
-    var canEncrypt: Bool?
-    var canSign: Bool?
-    var canUnwrap: Bool?
-    var canVerify: Bool?
-    var canWrap: Bool?
-
-    var isPermanent: Bool?
-    var type: String?
-
-}
 
 class NativeDisplayableCertificateBuilderDriver: DisplayableCertificateBuilderDriver {
 
@@ -93,8 +35,6 @@ class NativeDisplayableCertificateBuilderDriver: DisplayableCertificateBuilderDr
 fileprivate extension SecCertificate {
 
     func toDisplayable() -> DisplayableCertificate {
-        print("***", #function, "SecCertificate", self)
-
         let displayable = DisplayableCertificate()
 
         displayable.summary = extractSummary()
@@ -141,13 +81,13 @@ fileprivate extension SecCertificate {
 fileprivate extension SecKey {
 
     func toDisplayable() -> DisplayableKey {
-        print("***", #function, "SecKey", self)
-
         var key = DisplayableKey()
 
         key.blockSize = SecKeyGetBlockSize(self)
 
         if #available(iOS 10.0, *) {
+            key.externalRepresentation = SecKeyCopyExternalRepresentation(self, nil) as Data?
+            
             guard let attrs: NSDictionary = SecKeyCopyAttributes(self) else { return key }
 
             key.bitSize = attrs[kSecAttrKeySizeInBits] as? Int
@@ -163,10 +103,8 @@ fileprivate extension SecKey {
             key.keyId = attrs[kSecAttrApplicationLabel] as? Data
 
             if let type = attrs[kSecAttrType] as? String {
-                 key.type = typeToString(type)
+                key.type = typeToString(type)
             }
-
-            print("***", #function, attrs)
         }
 
         return key
@@ -176,11 +114,10 @@ fileprivate extension SecKey {
     private func typeToString(_ type: String) -> String? {
         switch(type as CFString) {
         case kSecAttrKeyTypeRSA: return "RSA"
-        case kSecAttrKeyTypeEC: return "EC"
-        case kSecAttrKeyTypeECSECPrimeRandom: return "EC Prime Random"
+        case kSecAttrKeyTypeEC: return "Elliptic Curve"
+        case kSecAttrKeyTypeECSECPrimeRandom: return "Elliptic Curve (Prime Random)"
         default: return nil
         }
     }
 
 }
-

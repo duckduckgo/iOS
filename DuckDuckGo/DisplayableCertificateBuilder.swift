@@ -34,7 +34,9 @@ class DisplayableCertificateBuilder {
 
 class DisplayableCertificate {
 
-    static let error = DisplayableCertificate(summary: "Error extracting certificate")
+    static let error = DisplayableCertificate(error: true)
+
+    let isError: Bool
 
     var summary: String?
     var commonName: String?
@@ -43,10 +45,12 @@ class DisplayableCertificate {
 
     var issuer: DisplayableCertificate?
 
-    init() { }
+    private init(error: Bool) {
+        isError = error
+    }
 
-    init(summary: String) {
-        self.summary = summary
+    init() {
+        isError = false
     }
 
 }

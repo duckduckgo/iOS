@@ -12,6 +12,15 @@ import XCTest
 
 class PrivacyProtectionEncryptionDetailTests: XCTestCase {
 
+    func testErrorDisplayCertificateCreatesErrorMessage() {
+        let testee = DisplayableCertificate.error
+
+        XCTAssertEqual(1, testee.toSections().count)
+        XCTAssertEqual("Error extracting certificate", testee.toSections()[0].name)
+        XCTAssertEqual(0, testee.toSections()[0].rows.count)
+
+    }
+
     func testDisplayCertificateWithPublicKeyCreatesPublicKeySectionWithExternalRepresentation() {
         let testee = DisplayableCertificate()
         testee.publicKey = DisplayableKey()
@@ -155,10 +164,28 @@ class PrivacyProtectionEncryptionDetailTests: XCTestCase {
         testee.issuer = DisplayableCertificate()
         testee.issuer?.summary = "Summary Value"
 
-        XCTAssertEqual(2, testee.toSections().count)
         XCTAssertEqual("Issuer", testee.toSections()[1].name)
         XCTAssertEqual("Summary", testee.toSections()[1].rows[0].name)
         XCTAssertEqual("Summary Value", testee.toSections()[1].rows[0].value)
+    }
+
+    func testDisplayCertificateWithNoCommonNameIssuerCreatesUnknownIssuerRow() {
+        let testee = DisplayableCertificate()
+        testee.issuer = DisplayableCertificate()
+
+        XCTAssertEqual(2, testee.toSections().count)
+        XCTAssertEqual("Issuer", testee.toSections()[0].rows[2].name)
+        XCTAssertEqual("Unknown", testee.toSections()[0].rows[2].value)
+    }
+
+    func testDisplayCertificateWithIssuerCreatesIssuerRow() {
+        let testee = DisplayableCertificate()
+        testee.issuer = DisplayableCertificate()
+        testee.issuer?.commonName = "Common Name Value"
+
+        XCTAssertEqual(2, testee.toSections().count)
+        XCTAssertEqual("Issuer", testee.toSections()[0].rows[2].name)
+        XCTAssertEqual("Common Name Value", testee.toSections()[0].rows[2].value)
     }
 
     func testBasicDisplayCertificateCreatesSingleSubjectNameSection() {

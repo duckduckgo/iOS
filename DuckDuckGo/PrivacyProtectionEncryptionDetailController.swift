@@ -127,8 +127,13 @@ fileprivate extension Data {
 extension DisplayableCertificate {
 
     func toSections() -> [PrivacyProtectionEncryptionDetailController.Section] {
-
         var sections = [PrivacyProtectionEncryptionDetailController.Section]()
+
+        if isError {
+            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: "Error extracting certificate", rows: []))
+            return sections
+        }
+
         sections.append(PrivacyProtectionEncryptionDetailController.Section(name: "Subject Name", rows: buildIdentitySection()))
 
         if let publicKey = publicKey {

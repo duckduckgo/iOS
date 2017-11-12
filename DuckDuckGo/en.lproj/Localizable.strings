@@ -96,8 +96,8 @@
 "privacy.protection.encryption.usage.verify" = "Verify";
 "privacy.protection.encryption.usage" = "Usage";
 "privacy.protection.encryption.permanent" = "Permanent";
-"privacy.protection.encryption.id" = "ID";
-"privacy.protection.encryption.key" = "Key";
+"privacy.protection.encryption.id" = "Subject Key Identifier";
+"privacy.protection.encryption.key" = "Public Key";
 "privacy.protection.encryption.yes" = "Yes";
 "privacy.protection.encryption.no" = "No";
 "privacy.protection.encryption.unknown" = "Unknown";

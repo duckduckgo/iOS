@@ -1,5 +1,5 @@
 //
-//  PrivacyProtectionEncryptionDetailTests.swift
+//  DisplayableCertificateExtensionTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 
-class PrivacyProtectionEncryptionDetailTests: XCTestCase {
+class DisplayableCertificateExtensionTests: XCTestCase {
 
     func testErrorDisplayCertificateCreatesErrorMessage() {
         let testee = DisplayableCertificate.error
@@ -38,7 +38,7 @@ class PrivacyProtectionEncryptionDetailTests: XCTestCase {
         testee.publicKey?.externalRepresentation = "Fake ID".data(using: .utf8)
 
         XCTAssertEqual(2, testee.toSections()[1].rows.count)
-        XCTAssertEqual("Key", testee.toSections()[1].rows[1].name)
+        XCTAssertEqual("Public Key", testee.toSections()[1].rows[1].name)
         XCTAssertEqual("7 bytes : 46 61 6b 65 20 49 44", testee.toSections()[1].rows[1].value)
     }
 
@@ -48,7 +48,7 @@ class PrivacyProtectionEncryptionDetailTests: XCTestCase {
         testee.publicKey?.keyId = "Fake ID".data(using: .utf8)
 
         XCTAssertEqual(2, testee.toSections()[1].rows.count)
-        XCTAssertEqual("ID", testee.toSections()[1].rows[1].name)
+        XCTAssertEqual("Subject Key Identifier", testee.toSections()[1].rows[1].name)
         XCTAssertEqual("7 bytes : 46 61 6b 65 20 49 44", testee.toSections()[1].rows[1].value)
     }
 

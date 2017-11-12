@@ -73,7 +73,7 @@
 		85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AB1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift */; };
 		85F1E9AE1FB49EA200A75AC1 /* ServerTrustCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */; };
 		85F1E9B01FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AF1FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift */; };
-		85F1E9B31FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9B21FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift */; };
+		85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9B21FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift */; };
 		85F1E9B71FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */; };
 		85F1E9B91FB7CB7100A75AC1 /* testcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9B81FB7CB7100A75AC1 /* testcert.der */; };
 		85F1E9BB1FB7D06300A75AC1 /* ddgcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */; };
@@ -399,7 +399,7 @@
 		85F1E9AB1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableCertificateBuilder.swift; sourceTree = "<group>"; };
 		85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTrustCache.swift; sourceTree = "<group>"; };
 		85F1E9AF1FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeDisplayableCertificateBuilderDriver.swift; sourceTree = "<group>"; };
-		85F1E9B21FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionEncryptionDetailTests.swift; sourceTree = "<group>"; };
+		85F1E9B21FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableCertificateExtensionTests.swift; sourceTree = "<group>"; };
 		85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeDisplayableCertificateBuilderDriverTests.swift; sourceTree = "<group>"; };
 		85F1E9B81FB7CB7100A75AC1 /* testcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = testcert.der; sourceTree = "<group>"; };
 		85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgcert.der; sourceTree = "<group>"; };
@@ -925,7 +925,7 @@
 				85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */,
 				85F1E9B81FB7CB7100A75AC1 /* testcert.der */,
 				85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */,
-				85F1E9B21FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift */,
+				85F1E9B21FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift */,
 				85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */,
 			);
 			name = PrivacyProtection;
@@ -2142,7 +2142,7 @@
 				F1126DF91EA5CA6D0016A6C7 /* FeedbackEmailTests.swift in Sources */,
 				F1B88A111F3BA859000263D6 /* SiteRatingScoreExtensionTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
-				85F1E9B31FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift in Sources */,
+				85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,
 				F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */,
 				F14513591F4664E900710C46 /* SiteRatingTests.swift in Sources */,

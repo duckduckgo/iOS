@@ -47,6 +47,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initTableView() {
+        tableView.delegate = self
         tableView.dataSource = self
     }
 
@@ -92,6 +93,16 @@ extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisp
 
 }
 
+extension PrivacyProtectionEncryptionDetailController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableCell(withIdentifier: "Header") as! PrivacyProtectionEncryptionHeaderCell
+        header.update(section: sections[section].name)
+        return header
+    }
+
+}
+
 extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -107,9 +118,8 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
-        cell.textLabel?.text = sections[indexPath.section].rows[indexPath.row].name
-        cell.detailTextLabel?.text = sections[indexPath.section].rows[indexPath.row].value
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionEncryptionDetailCell
+        cell.update(name: sections[indexPath.section].rows[indexPath.row].name, value: sections[indexPath.section].rows[indexPath.row].value)
         return cell
     }
 
@@ -120,6 +130,28 @@ fileprivate extension Data {
     func hexString() -> String {
         let bytes =  map { String(format: "%02hhx", $0) }
         return "\(bytes.count) bytes : \(bytes.joined(separator: " "))"
+    }
+
+}
+
+class PrivacyProtectionEncryptionDetailCell: UITableViewCell {
+
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var valueLabel: UILabel!
+
+    func update(name: String, value: String) {
+        nameLabel.text = name
+        valueLabel.text = value
+    }
+
+}
+
+class PrivacyProtectionEncryptionHeaderCell: UITableViewCell {
+
+    @IBOutlet weak var sectionLabel: UILabel!
+
+    func update(section: String) {
+        sectionLabel.text = section
     }
 
 }

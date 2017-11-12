@@ -204,6 +204,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
+        ServerTrustCache.shared.clear()
         WebCacheManager.clear() {}
         FireAnimation.animate() {
             self.tabManager.removeAll()

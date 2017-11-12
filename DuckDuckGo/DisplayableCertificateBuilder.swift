@@ -34,7 +34,7 @@ class DisplayableCertificateBuilder {
 
 class DisplayableCertificate {
 
-    static let error = DisplayableCertificate()
+    static let error = DisplayableCertificate(summary: "Error extracting certificate")
 
     var summary: String?
     var commonName: String?
@@ -42,6 +42,12 @@ class DisplayableCertificate {
     var publicKey: DisplayableKey?
 
     var issuer: DisplayableCertificate?
+
+    init() { }
+
+    init(summary: String) {
+        self.summary = summary
+    }
 
 }
 

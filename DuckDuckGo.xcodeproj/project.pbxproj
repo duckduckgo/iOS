@@ -73,6 +73,11 @@
 		85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AB1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift */; };
 		85F1E9AE1FB49EA200A75AC1 /* ServerTrustCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */; };
 		85F1E9B01FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9AF1FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift */; };
+		85F1E9B31FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9B21FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift */; };
+		85F1E9B71FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */; };
+		85F1E9B91FB7CB7100A75AC1 /* testcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9B81FB7CB7100A75AC1 /* testcert.der */; };
+		85F1E9BB1FB7D06300A75AC1 /* ddgcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */; };
+		85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */; };
 		85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */; };
 		85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
@@ -394,6 +399,11 @@
 		85F1E9AB1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableCertificateBuilder.swift; sourceTree = "<group>"; };
 		85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTrustCache.swift; sourceTree = "<group>"; };
 		85F1E9AF1FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeDisplayableCertificateBuilderDriver.swift; sourceTree = "<group>"; };
+		85F1E9B21FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionEncryptionDetailTests.swift; sourceTree = "<group>"; };
+		85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeDisplayableCertificateBuilderDriverTests.swift; sourceTree = "<group>"; };
+		85F1E9B81FB7CB7100A75AC1 /* testcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = testcert.der; sourceTree = "<group>"; };
+		85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgcert.der; sourceTree = "<group>"; };
+		85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgissuercert.der; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListRequest.swift; sourceTree = "<group>"; };
 		85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "abp-filter-parser-packed-es2015.js"; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
@@ -909,6 +919,18 @@
 			name = Migration;
 			sourceTree = "<group>";
 		};
+		85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */ = {
+			isa = PBXGroup;
+			children = (
+				85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */,
+				85F1E9B81FB7CB7100A75AC1 /* testcert.der */,
+				85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */,
+				85F1E9B21FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift */,
+				85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */,
+			);
+			name = PrivacyProtection;
+			sourceTree = "<group>";
+		};
 		F11044FE1ECFD6AF00C5E3D3 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1057,6 +1079,7 @@
 				85ECA7EF1F2A82F10018EBEB /* Migration */,
 				F13B4BF71F18C9E800814661 /* Tabs */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
+				85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */,
 				F1126DFA1EA5CA730016A6C7 /* Settings */,
 				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
 				F194FAF91F14E605009B4DF8 /* UserInterface */,
@@ -1894,6 +1917,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */,
+				85F1E9BB1FB7D06300A75AC1 /* ddgcert.der in Resources */,
+				85F1E9B91FB7CB7100A75AC1 /* testcert.der in Resources */,
 				F17843E91F36226700390DCD /* MockJson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2116,6 +2142,7 @@
 				F1126DF91EA5CA6D0016A6C7 /* FeedbackEmailTests.swift in Sources */,
 				F1B88A111F3BA859000263D6 /* SiteRatingScoreExtensionTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
+				85F1E9B31FB7C59C00A75AC1 /* PrivacyProtectionEncryptionDetailTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,
 				F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */,
 				F14513591F4664E900710C46 /* SiteRatingTests.swift in Sources */,
@@ -2124,6 +2151,7 @@
 				85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* OmniBarStateTests.swift in Sources */,
 				F16BB6601F56494C00B47A42 /* FeaturesViewControllerTests.swift in Sources */,
+				85F1E9B71FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,
 				8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,

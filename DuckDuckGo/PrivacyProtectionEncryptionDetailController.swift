@@ -12,17 +12,13 @@ import Core
 class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     struct Section {
-
         var name: String
         var rows: [Row]
-
     }
 
     struct Row {
-
         var name: String
         var value: String
-
     }
 
     @IBOutlet weak var tableView: UITableView!

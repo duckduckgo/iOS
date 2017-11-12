@@ -173,22 +173,22 @@ extension DisplayableCertificate {
         var sections = [PrivacyProtectionEncryptionDetailController.Section]()
 
         if isError {
-            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: "Error extracting certificate", rows: []))
+            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: UserText.ppEncryptionCertError, rows: []))
             return sections
         }
 
-        sections.append(PrivacyProtectionEncryptionDetailController.Section(name: "Subject Name", rows: buildIdentitySection()))
+        sections.append(PrivacyProtectionEncryptionDetailController.Section(name: UserText.ppEncryptionSubjectName, rows: buildIdentitySection()))
 
         if let publicKey = publicKey {
-            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: "Public Key", rows: publicKey.toRows()))
+            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: UserText.ppEncryptionPublicKey, rows: publicKey.toRows()))
         }
 
         var issuer: DisplayableCertificate! = self.issuer
         while issuer != nil {
-            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: issuer.commonName ?? "Issuer", rows: issuer.buildIdentitySection()))
+            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: issuer.commonName ?? UserText.ppEncryptionIssuer, rows: issuer.buildIdentitySection()))
 
             if let issuerKey = issuer.publicKey {
-                sections.append(PrivacyProtectionEncryptionDetailController.Section(name: "Public Key", rows: issuerKey.toRows()))
+                sections.append(PrivacyProtectionEncryptionDetailController.Section(name: UserText.ppEncryptionPublicKey, rows: issuerKey.toRows()))
             }
 
             issuer = issuer.issuer
@@ -200,15 +200,15 @@ extension DisplayableCertificate {
     private func buildIdentitySection() -> [PrivacyProtectionEncryptionDetailController.Row] {
         var rows = [PrivacyProtectionEncryptionDetailController.Row]()
 
-        rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Summary", value: summary ?? "" ))
-        rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Common Name", value: commonName ?? "" ))
+        rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionSummary, value: summary ?? "" ))
+        rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionCommonName, value: commonName ?? "" ))
 
         for email in emails ?? [] {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Email", value: email))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionEmail, value: email))
         }
 
         if let issuer = issuer {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Issuer", value: issuer.commonName ?? "Unknown"))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionIssuer, value: issuer.commonName ?? UserText.ppEncryptionUnknown))
         }
 
         return rows
@@ -223,38 +223,39 @@ extension DisplayableKey {
     func toRows() -> [PrivacyProtectionEncryptionDetailController.Row] {
         var rows = [PrivacyProtectionEncryptionDetailController.Row]()
 
-        rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Algorithm", value: type ?? ""))
+        rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionAlgorithm, value: type ?? ""))
         if let bitSize = bitSize {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Key Size", value: "\(bitSize) bits"))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionKeySize, value: UserText.ppEncryptionBits.format(arguments: bitSize)))
         }
 
         if let effectiveSize = effectiveSize {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Effective Size", value: "\(effectiveSize) bits"))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionEffectiveSize, value: UserText.ppEncryptionBits.format(arguments: effectiveSize)))
         }
 
         let usage = [
-            canDecrypt ?? false ? "Decrypt" : "",
-            canDerive ?? false ? "Derive" : "",
-            canEncrypt ?? false ? "Encrypt" : "",
-            canSign ?? false ? "Sign" : "",
-            canUnwrap ?? false ? "Unwrap" : "",
-            canVerify ?? false ? "Verify" : "",
-            canWrap ?? false ? "Wrap" : "",
+            canDecrypt ?? false ? UserText.ppEncryptionUsageDecrypt : "",
+            canDerive ?? false ? UserText.ppEncryptionUsageDerive : "",
+            canEncrypt ?? false ? UserText.ppEncryptionUsageEncrypt : "",
+            canSign ?? false ? UserText.ppEncryptionUsageSign : "",
+            canUnwrap ?? false ? UserText.ppEncryptionUsageUnwrap : "",
+            canVerify ?? false ? UserText.ppEncryptionUsageVerify : "",
+            canWrap ?? false ? UserText.ppEncryptionUsageWrap : "",
             ].filter({ $0.count > 0 })
         if usage.count > 0 {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Usage", value: usage.joined(separator: ", ")))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionUsage, value: usage.joined(separator: ", ")))
         }
 
         if let permanent = isPermanent {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Permanent", value: permanent ? "Yes" : "No"))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionPermanent,
+                                                                        value: permanent ? UserText.ppEncryptionYes :  UserText.ppEncryptionNo))
         }
 
         if let keyId = keyId {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "ID", value: keyId.hexString()))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionId, value: keyId.hexString()))
         }
 
         if let externalRepresentation = externalRepresentation {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: "Key", value: externalRepresentation.hexString()))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionKey, value: externalRepresentation.hexString()))
         }
 
         return rows

@@ -4,7 +4,7 @@
 
   Copyright © 2017 DuckDuckGo. All rights reserved.
  
-  Licensed under the Apache License, Version 2.0 (the "License");
+  Licensed under the Apache License, Version 2.0 (the "License";;
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
  
@@ -76,3 +76,29 @@
 "privacy.protection.tos.good" = "Good Privacy Practices";
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";
 "privacy.protection.tos.poor" = "Poor Privacy Practices";
+
+"privacy.protection.encryption.cert.error" = "Error extracting certificate";
+"privacy.protection.encryption.subject.name" = "Subject Name";
+"privacy.protection.encryption.public.key" = "Public Key";
+"privacy.protection.encryption.issuer" = "Issuer";
+"privacy.protection.encryption.summary" = "Summary";
+"privacy.protection.encryption.common.name" = "Common Name";
+"privacy.protection.encryption.email" = "Email";
+"privacy.protection.encryption.algorithm" = "Algorithm";
+"privacy.protection.encryption.key.size" = "Key Size";
+"privacy.protection.encryption.effective.size" = "Effective Size";
+"privacy.protection.encryption.usage.decrypt" = "Decrypt";
+"privacy.protection.encryption.usage.encrypt" = "Encrypt";
+"privacy.protection.encryption.usage.derive" = "Derive";
+"privacy.protection.encryption.usage.wrap" = "Wrap";
+"privacy.protection.encryption.usage.unwrap" = "Unwrap";
+"privacy.protection.encryption.usage.sign" = "Sign";
+"privacy.protection.encryption.usage.verify" = "Verify";
+"privacy.protection.encryption.usage" = "Usage";
+"privacy.protection.encryption.permanent" = "Permanent";
+"privacy.protection.encryption.id" = "ID";
+"privacy.protection.encryption.key" = "Key";
+"privacy.protection.encryption.yes" = "Yes";
+"privacy.protection.encryption.no" = "No";
+"privacy.protection.encryption.unknown" = "Unknown";
+"privacy.protection.encryption.bits" = "%d bits";

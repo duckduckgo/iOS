@@ -273,6 +273,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.configuration.loadScripts()
     }
 
+    public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completionHandler(.performDefaultHandling, nil)
+        guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
+        ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
+    }
+
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

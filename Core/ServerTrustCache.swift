@@ -1,5 +1,5 @@
 //
-//  PrivacyProtectionInfoDisplaying.swift
+//  ServerTrustCache.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,11 +17,24 @@
 //  limitations under the License.
 //
 
-import Core
+import Foundation
 
-protocol PrivacyProtectionInfoDisplaying {
+public class ServerTrustCache {
 
-    func using(_ siteRating: SiteRating)
+    public static let shared = ServerTrustCache()
+
+    var cache = [String: SecTrust]()
+
+    public func get(forDomain domain: String) -> SecTrust? {
+        return cache[domain]
+    }
+
+    public func put(serverTrust: SecTrust, forDomain domain: String) {
+        cache[domain] = serverTrust
+    }
+
+    public func clear() {
+        cache.removeAll()
+    }
 
 }
-

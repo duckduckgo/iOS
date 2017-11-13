@@ -36,4 +36,9 @@ extension String {
         return matches.count == 1
     }
 
+    /// Useful if loaded from UserText, for example
+    public func format(arguments: CVarArg...) -> String {
+        return String(format: self, arguments: arguments)
+    }
+    
 }

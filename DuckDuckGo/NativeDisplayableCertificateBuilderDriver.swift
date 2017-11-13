@@ -27,6 +27,8 @@ class NativeDisplayableCertificateBuilderDriver: DisplayableCertificateBuilderDr
         var next: DisplayableCertificate!
 
         let certCount = SecTrustGetCertificateCount(trust)
+        guard certCount != 0 else { return DisplayableCertificate.error }
+
         for certIndex in 0 ..< certCount {
             guard let certInChain = SecTrustGetCertificateAtIndex(trust, certIndex) else { return DisplayableCertificate.error }
             let displayableCert: DisplayableCertificate = certInChain.toDisplayable()

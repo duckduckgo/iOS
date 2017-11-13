@@ -30,6 +30,7 @@
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
+		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
@@ -355,6 +356,7 @@
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
 		85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHeaderController.swift; sourceTree = "<group>"; };
+		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
@@ -862,10 +864,11 @@
 				85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */,
 				8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */,
 				85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */,
+				85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */,
+				85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */,
 				85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */,
 				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
 				85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */,
-				85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */,
 			);
 			name = PrivacyProtection;
 			sourceTree = "<group>";
@@ -1914,6 +1917,7 @@
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
 				85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
+				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 			);

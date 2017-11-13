@@ -75,13 +75,13 @@ struct DisplayableKey {
     var blockSize: Int?
     var effectiveSize: Int?
 
-    var canDecrypt: Bool?
-    var canDerive: Bool?
-    var canEncrypt: Bool?
-    var canSign: Bool?
-    var canUnwrap: Bool?
-    var canVerify: Bool?
-    var canWrap: Bool?
+    var canDecrypt: Bool = false
+    var canDerive: Bool = false
+    var canEncrypt: Bool = false
+    var canSign: Bool = false
+    var canUnwrap: Bool = false
+    var canVerify: Bool = false
+    var canWrap: Bool = false
 
     var isPermanent: Bool?
     var type: String?

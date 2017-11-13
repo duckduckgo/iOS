@@ -233,21 +233,21 @@ extension DisplayableKey {
         }
 
         let usage = [
-            canDecrypt ?? false ? UserText.ppEncryptionUsageDecrypt : "",
-            canDerive ?? false ? UserText.ppEncryptionUsageDerive : "",
-            canEncrypt ?? false ? UserText.ppEncryptionUsageEncrypt : "",
-            canSign ?? false ? UserText.ppEncryptionUsageSign : "",
-            canUnwrap ?? false ? UserText.ppEncryptionUsageUnwrap : "",
-            canVerify ?? false ? UserText.ppEncryptionUsageVerify : "",
-            canWrap ?? false ? UserText.ppEncryptionUsageWrap : "",
+            canDecrypt ? UserText.ppEncryptionUsageDecrypt : "",
+            canDerive ? UserText.ppEncryptionUsageDerive : "",
+            canEncrypt ? UserText.ppEncryptionUsageEncrypt : "",
+            canSign ? UserText.ppEncryptionUsageSign : "",
+            canUnwrap ? UserText.ppEncryptionUsageUnwrap : "",
+            canVerify ? UserText.ppEncryptionUsageVerify : "",
+            canWrap ? UserText.ppEncryptionUsageWrap : "",
             ].filter({ $0.count > 0 })
         if usage.count > 0 {
             rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionUsage, value: usage.joined(separator: ", ")))
         }
 
-        if let permanent = isPermanent {
+        if let isPermanent = isPermanent {
             rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionPermanent,
-                                                                        value: permanent ? UserText.ppEncryptionYes :  UserText.ppEncryptionNo))
+                                                                        value: isPermanent ? UserText.ppEncryptionYes :  UserText.ppEncryptionNo))
         }
 
         if let keyId = keyId {

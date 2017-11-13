@@ -103,14 +103,14 @@ fileprivate extension SecKey {
 
             key.bitSize = attrs[kSecAttrKeySizeInBits] as? Int
             key.effectiveSize = attrs[kSecAttrEffectiveKeySize] as? Int
-            key.canDecrypt = attrs[kSecAttrCanDecrypt] as? Bool
-            key.canDerive = attrs[kSecAttrCanDerive] as? Bool
-            key.canEncrypt = attrs[kSecAttrCanEncrypt] as? Bool
-            key.canSign = attrs[kSecAttrCanSign] as? Bool
-            key.canUnwrap = attrs[kSecAttrCanUnwrap] as? Bool
-            key.canVerify = attrs[kSecAttrCanVerify] as? Bool
-            key.canWrap = attrs[kSecAttrCanWrap] as? Bool
-            key.isPermanent = attrs[kSecAttrIsPermanent] as? Bool
+            key.canDecrypt = attrs[kSecAttrCanDecrypt] as? Bool ?? false
+            key.canDerive = attrs[kSecAttrCanDerive] as? Bool ?? false
+            key.canEncrypt = attrs[kSecAttrCanEncrypt] as? Bool ?? false
+            key.canSign = attrs[kSecAttrCanSign] as? Bool ?? false
+            key.canUnwrap = attrs[kSecAttrCanUnwrap] as? Bool ?? false
+            key.canVerify = attrs[kSecAttrCanVerify] as? Bool ?? false
+            key.canWrap = attrs[kSecAttrCanWrap] as? Bool ?? false
+            key.isPermanent = attrs[kSecAttrIsPermanent] as? Bool ?? false
             key.keyId = attrs[kSecAttrApplicationLabel] as? Data
 
             if let type = attrs[kSecAttrType] as? String {

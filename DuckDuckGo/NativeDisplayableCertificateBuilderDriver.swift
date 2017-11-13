@@ -23,16 +23,16 @@ class NativeDisplayableCertificateBuilderDriver: DisplayableCertificateBuilderDr
 
     func build(usingTrust trust: SecTrust) -> DisplayableCertificate {
 
-        var head: DisplayableCertificate!
-        var next: DisplayableCertificate!
-
         let certCount = SecTrustGetCertificateCount(trust)
         guard certCount != 0 else { return DisplayableCertificate.error }
 
+        var head: DisplayableCertificate!
+        var next: DisplayableCertificate!
+
         for certIndex in 0 ..< certCount {
             guard let certInChain = SecTrustGetCertificateAtIndex(trust, certIndex) else { return DisplayableCertificate.error }
-            let displayableCert: DisplayableCertificate = certInChain.toDisplayable()
-            if nil == head {
+            let displayableCert = certInChain.toDisplayable()
+            if head == nil {
                 head = displayableCert
             } else {
                 next.issuer = displayableCert

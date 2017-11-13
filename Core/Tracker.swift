@@ -60,12 +60,6 @@ public class Tracker: NSObject {
         return false
     }
     
-    var fromMajorNetwork: Bool {
-        guard let parentDomain = parentDomain else {
-            return false
-        }
-        return !MajorTrackerNetwork.all.filter( {$0.domain == parentDomain } ).isEmpty
-    }
 }
 
 

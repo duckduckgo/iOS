@@ -22,6 +22,10 @@ import XCTest
 
 class URLExtensionTests: XCTestCase {
 
+    func testWhenURLHasLongTLDItStillIsConsideredValid() {
+        XCTAssertTrue(URL.isWebUrl(text: "https://blah.accountants"))
+    }
+
     func testWhenUserIsPresentThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http://example.com@sample.com"))
     }

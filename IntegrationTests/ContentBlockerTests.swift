@@ -48,7 +48,7 @@ class ContentBlockerTests: XCTestCase {
         clearTabsAndData()
         continueAfterFailure = true
     }
-    
+
     func testThatNothingIsBlockedOnCleanPage() {
         checkContentBlocking(onTestPage: TrackerPageUrl.noTrackers)
     }
@@ -72,15 +72,14 @@ class ContentBlockerTests: XCTestCase {
         enterSearch(url)
         
         waitForPageLoad()
-        
+
+        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label + " Tracker Networks Blocked"
+
         openContentBlocker()
         
-        let popoverTrackerCount = app.tables.staticTexts["trackerCount"]
-        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount)
-        
-        XCTAssertTrue(popoverTrackerCount.exists)
-        XCTAssertTrue(webTrackerCount.exists)
-        XCTAssertEqual(popoverTrackerCount.label, webTrackerCount.label)
+        let popoverTrackerCount = app.tables.staticTexts["trackerCount"].label
+
+        XCTAssertEqual(popoverTrackerCount, webTrackerCount)
     }
 
     private func showTabs() {

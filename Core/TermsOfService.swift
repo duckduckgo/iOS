@@ -23,9 +23,24 @@ import Foundation
 
 public struct TermsOfService {
 
-    public let classification: Classification?
-    public let score: Int
-    
+    private static let classificationScores: [Classification: Int] = [
+        .a: -1,
+        .b: 0,
+        .c: 0,
+        .d: 1,
+        .e: 2
+    ]
+
+    private let classification: Classification?
+    private let score: Int
+
+    public var derivedScore: Int {
+        if let classification = classification {
+            return TermsOfService.classificationScores[classification]!
+        }
+        return score < 0 ? -1 : 1
+    }
+
     init(classification: Classification?, score: Int) {
         self.classification = classification
         self.score = score

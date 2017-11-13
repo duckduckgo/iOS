@@ -25,13 +25,11 @@ class TermsOfServiceTests: XCTestCase {
     
     func testWhenInitWithClassificationthenClassification() {
         let testee = TermsOfService(classification: .a, score: 10)
-        XCTAssertEqual(TermsOfService.Classification.a, testee.classification)
-        XCTAssertEqual(10, testee.score)
+        XCTAssertEqual(-1, testee.derivedScore)
     }
     
     func testWhenInitWithoutClassificationthenClassificationIsNil() {
         let testee = TermsOfService(classification: nil, score: 10)
-        XCTAssertNil(testee.classification)
-        XCTAssertEqual(10, testee.score)
+        XCTAssertEqual(1, testee.derivedScore)
     }
 }

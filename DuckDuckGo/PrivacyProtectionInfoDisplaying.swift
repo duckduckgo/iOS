@@ -21,7 +21,7 @@ import Core
 
 protocol PrivacyProtectionInfoDisplaying {
 
-    func using(_ siteRating: SiteRating)
+    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore)
 
 }
 

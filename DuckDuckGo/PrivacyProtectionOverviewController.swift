@@ -25,7 +25,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet var requiresKernAdjustment: [UILabel]!
 
-    @IBOutlet weak var privacyGrade: PrivacyGradeCell!
     @IBOutlet weak var encryptionCell: SummaryCell!
     @IBOutlet weak var trackersCell: SummaryCell!
     @IBOutlet weak var majorTrackersCell: SummaryCell!
@@ -38,6 +37,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     weak var siteRating: SiteRating!
+    private weak var header: PrivacyProtectionHeaderController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
-            displayInfo.using(siteRating)
+            displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
+        }
+
+        if let header = segue.destination as? PrivacyProtectionHeaderController {
+            self.header = header
         }
     }
 
@@ -68,17 +72,13 @@ class PrivacyProtectionOverviewController: UITableViewController {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
 
-        updatePrivacyGrade()
+        header.using(siteRating: siteRating, contentBlocker: contentBlocker)
         updateEncryption()
         updateTrackersBlocked()
         updateMajorTrackersBlocked()
         updatePrivacyPractices()
         updateProtectionToggle()
         updateLeaderBoard()
-    }
-
-    private func updatePrivacyGrade() {
-        privacyGrade.update(with: siteRating, and: contentBlocker)
     }
 
     private func updateEncryption() {
@@ -161,53 +161,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     private func adjustKerns() {
         for label in requiresKernAdjustment {
             label.adjustKern(1.7)
-        }
-    }
-
-}
-
-class PrivacyGradeCell: UITableViewCell {
-
-    private static let gradesOn = [
-        SiteGrade.a: #imageLiteral(resourceName: "PP Grade A On"),
-        SiteGrade.b: #imageLiteral(resourceName: "PP Grade B On"),
-        SiteGrade.c: #imageLiteral(resourceName: "PP Grade C On"),
-        SiteGrade.d: #imageLiteral(resourceName: "PP Grade D On"),
-    ]
-
-    private static let gradesOff = [
-        SiteGrade.a: #imageLiteral(resourceName: "PP Grade A Off"),
-        SiteGrade.b: #imageLiteral(resourceName: "PP Grade B Off"),
-        SiteGrade.c: #imageLiteral(resourceName: "PP Grade C Off"),
-        SiteGrade.d: #imageLiteral(resourceName: "PP Grade D Off"),
-        ]
-
-    @IBOutlet weak var gradeImage: UIImageView!
-    @IBOutlet weak var siteTitleLabel: UILabel!
-    @IBOutlet weak var protectionPausedLabel: UILabel!
-    @IBOutlet weak var protectionDisabledLabel: UILabel!
-    @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
-
-    func update(with siteRating: SiteRating, and contentBlocking: ContentBlockerConfigurationStore) {
-
-        let grades = siteRating.siteGrade()
-        let protecting = contentBlocking.protecting(domain: siteRating.domain)
-        let grade =  protecting ? grades.after : grades.before
-        gradeImage.image = protecting ? PrivacyGradeCell.gradesOn[grade] : PrivacyGradeCell.gradesOff[grade]
-
-        siteTitleLabel.text = siteRating.domain
-
-        protectionPausedLabel.isHidden = true
-        protectionDisabledLabel.isHidden = true
-        protectionUpgraded.isHidden = true
-
-        if !contentBlocking.enabled {
-            protectionDisabledLabel.isHidden = false
-        } else if contentBlocking.domainWhitelist.contains(siteRating.domain) {
-            protectionPausedLabel.isHidden = false
-        } else {
-            protectionUpgraded.isHidden = false
-            protectionUpgraded.update(with: siteRating)
         }
     }
 

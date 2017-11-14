@@ -82,51 +82,23 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
-
-        if !siteRating.https {
-            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionBadConnection
-        } else if !siteRating.hasOnlySecureContent {
-            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionMixedConnection
-        } else {
-            encryptionCell.summaryLabel.text = UserText.privacyProtectionEncryptionGoodConnection
-        }
-
+        encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
         encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
     }
 
     private func updateTrackersBlocked() {
         trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Blocked On") : #imageLiteral(resourceName: "PP Icon Blocked Off")
-        trackersCell.summaryLabel.text = protecting() ?
-            String(format: UserText.privacyProtectionTrackersBlocked, siteRating.uniqueTrackersBlocked) :
-            String(format: UserText.privacyProtectionTrackersFound, siteRating.uniqueTrackersDetected)
+        trackersCell.summaryLabel.text = siteRating.trackersText(contentBlocker: contentBlocker)
     }
 
     private func updateMajorTrackersBlocked() {
         majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
-        majorTrackersCell.summaryLabel.text = protecting() ?
-            String(format: UserText.privacyProtectionMajorTrackersBlocked, siteRating.uniqueMajorTrackerNetworksBlocked) :
-            String(format: UserText.privacyProtectionMajorTrackersFound, siteRating.uniqueMajorTrackerNetworksDetected)
+        majorTrackersCell.summaryLabel.text = siteRating.majorTrackersText(contentBlocker: contentBlocker)
     }
 
     private func updatePrivacyPractices() {
         privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Bad Privacy On") : #imageLiteral(resourceName: "PP Icon Bad Privacy Off")
-        privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSUnknown
-
-        guard siteRating.termsOfService != nil else { return }
-
-        let score = siteRating.termsOfServiceScore
-
-        switch (score) {
-        case _ where(score < 0):
-            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSGood
-            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Good Privacy On") : #imageLiteral(resourceName: "PP Icon Good Privacy Off")
-
-        case 0 ... 1:
-            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSMixed
-
-        default:
-            privacyPracticesCell.summaryLabel.text = UserText.privacyProtectionTOSPoor
-        }
+        privacyPracticesCell.summaryLabel.text = siteRating.privacyPracticesText()
     }
 
     private func updateLeaderBoard() {
@@ -175,30 +147,14 @@ class SummaryCell: UITableViewCell {
 
 class ProtectionUpgradedView: UIView {
 
-    static let grades = [
-        SiteGrade.a: #imageLiteral(resourceName: "PP Inline A"),
-        SiteGrade.b: #imageLiteral(resourceName: "PP Inline B"),
-        SiteGrade.c: #imageLiteral(resourceName: "PP Inline C"),
-        SiteGrade.d: #imageLiteral(resourceName: "PP Inline D")
-    ]
-
     @IBOutlet weak var fromImage: UIImageView!
     @IBOutlet weak var toImage: UIImageView!
 
     func update(with siteRating: SiteRating) {
-        let grades = siteRating.siteGrade()
-
-        let fromGrade = grades.before
-        let toGrade = grades.after
-
-        isHidden = fromGrade == toGrade
-
-        fromImage.image = image(for: fromGrade)
-        toImage.image = image(for: toGrade)
-    }
-
-    private func image(for grade: SiteGrade) -> UIImage? {
-        return ProtectionUpgradedView.grades[grade]
+        let siteGradeImages = siteRating.siteGradeImages()
+        isHidden = siteGradeImages.from == siteGradeImages.to
+        fromImage.image = siteGradeImages.from
+        toImage.image = siteGradeImages.to
     }
 
 }

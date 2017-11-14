@@ -140,7 +140,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz1-Q4-Fxr">
-                                                    <rect key="frame" x="74" y="19.5" width="257" height="16"/>
+                                                    <rect key="frame" x="74" y="18" width="257" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -181,7 +181,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="8 Tracker Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZ4-PW-wOG">
-                                                    <rect key="frame" x="74" y="19.5" width="277" height="16"/>
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="trackerCount"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -217,7 +217,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="3 Major Tracker Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pRX-q4-dPP">
-                                                    <rect key="frame" x="74" y="19.5" width="277" height="16"/>
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -252,7 +252,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Good Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyz-09-obQ">
-                                                    <rect key="frame" x="74" y="19.5" width="277" height="16"/>
+                                                    <rect key="frame" x="74" y="18" width="277" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -318,13 +318,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-nL-nri">
-                                                    <rect key="frame" x="86.5" y="22" width="203.5" height="12"/>
+                                                    <rect key="frame" x="84" y="22" width="209" height="14"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q6Y-bY-nYi" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="65" y="47" width="76" height="28"/>
+                                                    <rect key="frame" x="65" y="49" width="76" height="28"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ve5-dt-4kn">
                                                             <rect key="frame" x="27" y="5" width="1" height="18"/>
@@ -354,7 +354,7 @@
                                                     </connections>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vrM-lY-x6Q" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="149" y="47" width="76" height="28"/>
+                                                    <rect key="frame" x="149" y="49" width="76" height="28"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNG-nm-qKs">
                                                             <rect key="frame" x="27" y="5" width="1" height="18"/>
@@ -384,7 +384,7 @@
                                                     </connections>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xDK-db-xT9" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="233" y="47" width="76" height="28"/>
+                                                    <rect key="frame" x="233" y="49" width="76" height="28"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogU-m9-ezp">
                                                             <rect key="frame" x="27" y="5" width="1" height="18"/>
@@ -531,25 +531,25 @@
                                             <rect key="frame" x="166" y="20" width="43" height="65"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5w-e3-JfY">
-                                            <rect key="frame" x="20.5" y="90" width="335" height="20"/>
+                                            <rect key="frame" x="20.5" y="90" width="335" height="23.5"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
-                                            <rect key="frame" x="20" y="116" width="335" height="12"/>
+                                            <rect key="frame" x="20" y="119.5" width="335" height="14"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UNENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aT4-lx-qIx" userLabel="Unencrypted Label">
-                                            <rect key="frame" x="20" y="116" width="335" height="12"/>
+                                            <rect key="frame" x="20" y="119.5" width="335" height="14"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIXED ENCRYPTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-Pa-Z9c" userLabel="Mixed Encryption Label">
-                                            <rect key="frame" x="20" y="116" width="335" height="12"/>
+                                            <rect key="frame" x="20" y="119.5" width="335" height="14"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -587,7 +587,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mv2-oP-SQd">
-                                                    <rect key="frame" x="19" y="28.5" width="337" height="16"/>
+                                                    <rect key="frame" x="19" y="25.5" width="337" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -612,13 +612,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="6os-4h-chg">
-                                                    <rect key="frame" x="19" y="0.0" width="131" height="14"/>
+                                                    <rect key="frame" x="19" y="-1.5" width="131" height="17"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="199" translatesAutoresizingMaskIntoConstraints="NO" id="J3L-KE-1Vb">
-                                                    <rect key="frame" x="156" y="0.0" width="200" height="14"/>
+                                                    <rect key="frame" x="156" y="-1.5" width="200" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="xJ4-cQ-9CK"/>
                                                     </constraints>
@@ -731,7 +731,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Bfa-LO-5TA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Bfa-LO-5TA" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="225" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bfa-LO-5TA" id="hIo-y5-j4R">
@@ -739,7 +739,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf1-HZ-e7d">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="9.5" width="303" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -760,96 +760,112 @@
                                                 <constraint firstAttribute="trailing" secondItem="MVd-zg-FeX" secondAttribute="trailing" constant="20" id="pHt-ys-DGK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="iconImage" destination="MVd-zg-FeX" id="yUy-PN-hiQ"/>
+                                            <outlet property="messageLabel" destination="wf1-HZ-e7d" id="KeB-ne-M2g"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Ztb-VX-xiY">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="8qZ-Eh-VsF" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="263" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ztb-VX-xiY" id="X8H-N8-TcH">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8qZ-Eh-VsF" id="DO1-wT-u3l">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tracker Networks Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yu0-4b-otp">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge6-9h-2z5">
+                                                    <rect key="frame" x="20" y="9.5" width="303" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Result Fail" translatesAutoresizingMaskIntoConstraints="NO" id="aKF-1e-TVi">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Result Fail" translatesAutoresizingMaskIntoConstraints="NO" id="eyf-W7-aAW">
                                                     <rect key="frame" x="333" y="8" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="NF2-Qw-Ayn"/>
-                                                        <constraint firstAttribute="height" constant="22" id="Yfj-xH-zwb"/>
+                                                        <constraint firstAttribute="height" constant="22" id="bZN-ad-VmP"/>
+                                                        <constraint firstAttribute="width" constant="22" id="btE-Iv-8vf"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="aKF-1e-TVi" firstAttribute="leading" secondItem="yu0-4b-otp" secondAttribute="trailing" constant="10" id="5dY-8f-L8t"/>
-                                                <constraint firstItem="yu0-4b-otp" firstAttribute="leading" secondItem="X8H-N8-TcH" secondAttribute="leading" constant="20" id="BjO-BN-Wxz"/>
-                                                <constraint firstAttribute="trailing" secondItem="aKF-1e-TVi" secondAttribute="trailing" constant="20" id="Ixg-zK-lhZ"/>
-                                                <constraint firstItem="yu0-4b-otp" firstAttribute="centerY" secondItem="X8H-N8-TcH" secondAttribute="centerY" id="bYF-aU-riI"/>
-                                                <constraint firstItem="aKF-1e-TVi" firstAttribute="centerY" secondItem="X8H-N8-TcH" secondAttribute="centerY" id="pVH-N6-sv5"/>
+                                                <constraint firstAttribute="trailing" secondItem="eyf-W7-aAW" secondAttribute="trailing" constant="20" id="18k-Zh-T0G"/>
+                                                <constraint firstItem="Ge6-9h-2z5" firstAttribute="centerY" secondItem="DO1-wT-u3l" secondAttribute="centerY" id="O9t-c9-mop"/>
+                                                <constraint firstItem="eyf-W7-aAW" firstAttribute="centerY" secondItem="DO1-wT-u3l" secondAttribute="centerY" id="SUS-c7-H6v"/>
+                                                <constraint firstItem="Ge6-9h-2z5" firstAttribute="leading" secondItem="DO1-wT-u3l" secondAttribute="leading" constant="20" id="d4f-Lp-pPs"/>
+                                                <constraint firstItem="eyf-W7-aAW" firstAttribute="leading" secondItem="Ge6-9h-2z5" secondAttribute="trailing" constant="10" id="xbD-G9-rNC"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="iconImage" destination="eyf-W7-aAW" id="PUz-AV-DA6"/>
+                                            <outlet property="messageLabel" destination="Ge6-9h-2z5" id="cso-mm-E8b"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="rRH-r2-VXd">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="bLw-VQ-f8g" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="301" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rRH-r2-VXd" id="2q3-m1-nLM">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bLw-VQ-f8g" id="fwt-6q-cSP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major Networks Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HBG-hS-Oxd">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XzQ-fW-tzk">
+                                                    <rect key="frame" x="20" y="9.5" width="303" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Result Fail" translatesAutoresizingMaskIntoConstraints="NO" id="IRQ-e7-zvL">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Result Fail" translatesAutoresizingMaskIntoConstraints="NO" id="J4m-6Y-OeO">
                                                     <rect key="frame" x="333" y="8" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="FmH-5H-Ahw"/>
-                                                        <constraint firstAttribute="height" constant="22" id="LRf-3A-jE6"/>
+                                                        <constraint firstAttribute="width" constant="22" id="I7c-An-3Ew"/>
+                                                        <constraint firstAttribute="height" constant="22" id="bnd-MS-DT5"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="HBG-hS-Oxd" firstAttribute="leading" secondItem="2q3-m1-nLM" secondAttribute="leading" constant="20" id="Azr-Se-crk"/>
-                                                <constraint firstItem="HBG-hS-Oxd" firstAttribute="centerY" secondItem="2q3-m1-nLM" secondAttribute="centerY" id="ThR-Na-gFc"/>
-                                                <constraint firstItem="IRQ-e7-zvL" firstAttribute="leading" secondItem="HBG-hS-Oxd" secondAttribute="trailing" constant="10" id="gKs-dy-MZb"/>
-                                                <constraint firstItem="IRQ-e7-zvL" firstAttribute="centerY" secondItem="2q3-m1-nLM" secondAttribute="centerY" id="pPR-gz-kEO"/>
-                                                <constraint firstAttribute="trailing" secondItem="IRQ-e7-zvL" secondAttribute="trailing" constant="20" id="yHA-fD-OVe"/>
+                                                <constraint firstItem="XzQ-fW-tzk" firstAttribute="leading" secondItem="fwt-6q-cSP" secondAttribute="leading" constant="20" id="3fL-0F-INQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="J4m-6Y-OeO" secondAttribute="trailing" constant="20" id="5Y5-n3-3Nb"/>
+                                                <constraint firstItem="XzQ-fW-tzk" firstAttribute="centerY" secondItem="fwt-6q-cSP" secondAttribute="centerY" id="dVE-2t-z23"/>
+                                                <constraint firstItem="J4m-6Y-OeO" firstAttribute="centerY" secondItem="fwt-6q-cSP" secondAttribute="centerY" id="fbj-1f-bX3"/>
+                                                <constraint firstItem="J4m-6Y-OeO" firstAttribute="leading" secondItem="XzQ-fW-tzk" secondAttribute="trailing" constant="10" id="wWO-3i-2n2"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="iconImage" destination="J4m-6Y-OeO" id="yhP-CZ-yPX"/>
+                                            <outlet property="messageLabel" destination="XzQ-fW-tzk" id="Gvx-Bb-cTu"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="BbN-ZV-24g">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Djq-pK-0ll" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="339" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BbN-ZV-24g" id="gK4-7e-WCS">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Djq-pK-0ll" id="osH-0E-8uO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZi-05-KOy">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iF1-sO-WXk">
+                                                    <rect key="frame" x="20" y="9.5" width="303" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Result Fail" translatesAutoresizingMaskIntoConstraints="NO" id="9V7-Pr-4V6">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Result Fail" translatesAutoresizingMaskIntoConstraints="NO" id="WTC-5x-hhx">
                                                     <rect key="frame" x="333" y="8" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="V7E-b0-Egd"/>
-                                                        <constraint firstAttribute="height" constant="22" id="a5h-DN-lbI"/>
+                                                        <constraint firstAttribute="width" constant="22" id="2QU-RD-2cj"/>
+                                                        <constraint firstAttribute="height" constant="22" id="kh0-SZ-zxd"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="NZi-05-KOy" firstAttribute="leading" secondItem="gK4-7e-WCS" secondAttribute="leading" constant="20" id="Hvr-T2-yOx"/>
-                                                <constraint firstAttribute="trailing" secondItem="9V7-Pr-4V6" secondAttribute="trailing" constant="20" id="eXf-Nt-jAe"/>
-                                                <constraint firstItem="NZi-05-KOy" firstAttribute="centerY" secondItem="gK4-7e-WCS" secondAttribute="centerY" id="es0-J7-nke"/>
-                                                <constraint firstItem="9V7-Pr-4V6" firstAttribute="centerY" secondItem="gK4-7e-WCS" secondAttribute="centerY" id="utb-WU-Atu"/>
-                                                <constraint firstItem="9V7-Pr-4V6" firstAttribute="leading" secondItem="NZi-05-KOy" secondAttribute="trailing" constant="10" id="zjH-kS-vBG"/>
+                                                <constraint firstItem="WTC-5x-hhx" firstAttribute="centerY" secondItem="osH-0E-8uO" secondAttribute="centerY" id="A9w-B2-NvL"/>
+                                                <constraint firstItem="WTC-5x-hhx" firstAttribute="leading" secondItem="iF1-sO-WXk" secondAttribute="trailing" constant="10" id="HJp-ji-rfa"/>
+                                                <constraint firstAttribute="trailing" secondItem="WTC-5x-hhx" secondAttribute="trailing" constant="20" id="iaQ-Kd-Jtx"/>
+                                                <constraint firstItem="iF1-sO-WXk" firstAttribute="centerY" secondItem="osH-0E-8uO" secondAttribute="centerY" id="mAR-Tm-wbT"/>
+                                                <constraint firstItem="iF1-sO-WXk" firstAttribute="leading" secondItem="osH-0E-8uO" secondAttribute="leading" constant="20" id="wuI-e1-wNE"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="iconImage" destination="WTC-5x-hhx" id="LYi-cY-lGY"/>
+                                            <outlet property="messageLabel" destination="iF1-sO-WXk" id="jZ1-Od-Nu5"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="36" id="ll8-8B-YdJ" userLabel="Separator Table View Cell">
                                         <rect key="frame" x="0.0" y="377" width="375" height="36"/>
@@ -873,65 +889,73 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="cZ2-gD-tQv">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="THl-q3-0pd" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="413" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cZ2-gD-tQv" id="M3Z-DD-9ve">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="THl-q3-0pd" id="lbt-f1-TYY">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTq-9U-MiV">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xH-3L-wpf">
+                                                    <rect key="frame" x="20" y="9.5" width="303" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline C" translatesAutoresizingMaskIntoConstraints="NO" id="0Sh-s9-q1Y">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline C" translatesAutoresizingMaskIntoConstraints="NO" id="mhR-mO-h2h">
                                                     <rect key="frame" x="333" y="8" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="Jgy-9I-09q"/>
-                                                        <constraint firstAttribute="width" constant="22" id="oy6-Mu-Qy8"/>
+                                                        <constraint firstAttribute="width" constant="22" id="3vv-0J-gUf"/>
+                                                        <constraint firstAttribute="height" constant="22" id="MVV-zL-Mnh"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="0Sh-s9-q1Y" firstAttribute="leading" secondItem="NTq-9U-MiV" secondAttribute="trailing" constant="10" id="Pyg-oN-wVg"/>
-                                                <constraint firstItem="0Sh-s9-q1Y" firstAttribute="centerY" secondItem="M3Z-DD-9ve" secondAttribute="centerY" id="ZSP-dd-zcm"/>
-                                                <constraint firstItem="NTq-9U-MiV" firstAttribute="centerY" secondItem="M3Z-DD-9ve" secondAttribute="centerY" id="mFJ-aL-q9N"/>
-                                                <constraint firstAttribute="trailing" secondItem="0Sh-s9-q1Y" secondAttribute="trailing" constant="20" id="nrM-uK-qxU"/>
-                                                <constraint firstItem="NTq-9U-MiV" firstAttribute="leading" secondItem="M3Z-DD-9ve" secondAttribute="leading" constant="20" id="v5I-JX-5u8"/>
+                                                <constraint firstItem="7xH-3L-wpf" firstAttribute="leading" secondItem="lbt-f1-TYY" secondAttribute="leading" constant="20" id="IDY-aC-50V"/>
+                                                <constraint firstAttribute="trailing" secondItem="mhR-mO-h2h" secondAttribute="trailing" constant="20" id="bLl-QQ-QhN"/>
+                                                <constraint firstItem="7xH-3L-wpf" firstAttribute="centerY" secondItem="lbt-f1-TYY" secondAttribute="centerY" id="dDc-Yd-tLf"/>
+                                                <constraint firstItem="mhR-mO-h2h" firstAttribute="leading" secondItem="7xH-3L-wpf" secondAttribute="trailing" constant="10" id="uOB-c2-JEO"/>
+                                                <constraint firstItem="mhR-mO-h2h" firstAttribute="centerY" secondItem="lbt-f1-TYY" secondAttribute="centerY" id="wkf-Do-DUH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="iconImage" destination="mhR-mO-h2h" id="WrX-GY-Emz"/>
+                                            <outlet property="messageLabel" destination="7xH-3L-wpf" id="Et4-Ay-tSn"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="N4t-m9-ETm">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="8L0-Nl-oii" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="451" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N4t-m9-ETm" id="QPx-Jp-wPF">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8L0-Nl-oii" id="bvX-oz-Oip">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enhanced Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sBb-TT-Q3N">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enhanced Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dV-qp-Hz5">
+                                                    <rect key="frame" x="20" y="9.5" width="303" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="0.24705882352941178" green="0.63137254901960782" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.24705882352941178" green="0.63137254901960782" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline A" translatesAutoresizingMaskIntoConstraints="NO" id="dnQ-h2-Jgh">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline A" translatesAutoresizingMaskIntoConstraints="NO" id="fok-Cs-VUj">
                                                     <rect key="frame" x="333" y="8" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="0BD-DM-mc2"/>
-                                                        <constraint firstAttribute="width" constant="22" id="Y2l-38-X90"/>
+                                                        <constraint firstAttribute="width" constant="22" id="9fA-qr-5Ta"/>
+                                                        <constraint firstAttribute="height" constant="22" id="nJp-De-EkC"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="sBb-TT-Q3N" firstAttribute="centerY" secondItem="QPx-Jp-wPF" secondAttribute="centerY" id="1AT-t7-xJE"/>
-                                                <constraint firstItem="dnQ-h2-Jgh" firstAttribute="centerY" secondItem="QPx-Jp-wPF" secondAttribute="centerY" id="C4P-jD-gsc"/>
-                                                <constraint firstItem="dnQ-h2-Jgh" firstAttribute="leading" secondItem="sBb-TT-Q3N" secondAttribute="trailing" constant="10" id="MJI-q6-jtA"/>
-                                                <constraint firstItem="sBb-TT-Q3N" firstAttribute="leading" secondItem="QPx-Jp-wPF" secondAttribute="leading" constant="20" id="jUU-ew-iBC"/>
-                                                <constraint firstAttribute="trailing" secondItem="dnQ-h2-Jgh" secondAttribute="trailing" constant="20" id="w9y-t5-3zM"/>
+                                                <constraint firstAttribute="trailing" secondItem="fok-Cs-VUj" secondAttribute="trailing" constant="20" id="Rfn-bH-oJz"/>
+                                                <constraint firstItem="5dV-qp-Hz5" firstAttribute="centerY" secondItem="bvX-oz-Oip" secondAttribute="centerY" id="VE9-N3-Rdb"/>
+                                                <constraint firstItem="fok-Cs-VUj" firstAttribute="leading" secondItem="5dV-qp-Hz5" secondAttribute="trailing" constant="10" id="VGl-5C-hgy"/>
+                                                <constraint firstItem="5dV-qp-Hz5" firstAttribute="leading" secondItem="bvX-oz-Oip" secondAttribute="leading" constant="20" id="Xei-J8-J7M"/>
+                                                <constraint firstItem="fok-Cs-VUj" firstAttribute="centerY" secondItem="bvX-oz-Oip" secondAttribute="centerY" id="azF-h0-xua"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="iconImage" destination="fok-Cs-VUj" id="2pu-7c-Kvu"/>
+                                            <outlet property="messageLabel" destination="5dV-qp-Hz5" id="TKt-L6-wQN"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -941,6 +965,14 @@
                             <outlet property="delegate" destination="inG-Uk-VH6" id="os3-Ka-SV8"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="connectionCell" destination="Bfa-LO-5TA" id="oph-LH-7xv"/>
+                        <outlet property="enhancedGradeCell" destination="8L0-Nl-oii" id="GN3-LR-nQl"/>
+                        <outlet property="majorNetworksCell" destination="bLw-VQ-f8g" id="hLd-p7-KCA"/>
+                        <outlet property="networksCell" destination="8qZ-Eh-VsF" id="eLZ-iJ-obV"/>
+                        <outlet property="privacyGradeCell" destination="THl-q3-0pd" id="aXs-ho-6oc"/>
+                        <outlet property="privacyPracticesCell" destination="Djq-pK-0ll" id="Wtr-kX-v5D"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5bH-aD-fGV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

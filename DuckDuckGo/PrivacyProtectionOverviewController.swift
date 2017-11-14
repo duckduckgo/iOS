@@ -35,8 +35,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     fileprivate var popRecognizer: InteractivePopRecognizer!
 
-    lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
-    weak var siteRating: SiteRating!
+    private weak var siteRating: SiteRating!
+    private weak var contentBlocker: ContentBlockerConfigurationStore!
     private weak var header: PrivacyProtectionHeaderController!
 
     override func viewDidLoad() {
@@ -47,7 +47,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         adjustMargins()
         adjustKerns()
 
-        updateSiteRating(siteRating)
+        update()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,12 +63,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBAction func toggleProtection() {
         let contentBlockingOn = privacyProtectionSwitch.isOn
         self.contentBlocker.enabled = contentBlockingOn
-        updateSiteRating(siteRating)
+        update()
     }
 
-    func updateSiteRating(_ siteRating: SiteRating) {
-        self.siteRating = siteRating
-
+    private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
 
@@ -134,6 +132,17 @@ class PrivacyProtectionOverviewController: UITableViewController {
         for label in requiresKernAdjustment {
             label.adjustKern(1.7)
         }
+    }
+
+}
+
+
+extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
+
+    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
+        self.siteRating = siteRating
+        self.contentBlocker = contentBlocker
+        update()
     }
 
 }

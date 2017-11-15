@@ -83,7 +83,7 @@ public class DisconnectMeStore {
     }
     
     private func convertToInjectableJson(_ trackers: [String: Tracker]) throws -> String {
-        let simplifiedTrackers = trackers.mapValues( { $0.parentDomain } )
+        let simplifiedTrackers = trackers.mapValues( { $0.networkName } )
         let json = try JSONSerialization.data(withJSONObject: simplifiedTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {
             return jsonString

@@ -310,13 +310,16 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.24705882352941178" green="0.63137254901960782" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="108" id="4g1-uR-ElB" customClass="TrackerNetworkLeaderboardCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="108" id="4g1-uR-ElB" customClass="TrackerNetworkLeaderboardCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="487" width="375" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4g1-uR-ElB" id="CWq-GZ-R3U">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="107.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="Ctq-ZH-Qre">
+                                                    <rect key="frame" x="341" y="46" width="10" height="16"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-nL-nri">
                                                     <rect key="frame" x="84" y="22" width="209" height="14"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
@@ -415,9 +418,11 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Ctq-ZH-Qre" secondAttribute="trailing" constant="24" id="EFl-es-h7c"/>
                                                 <constraint firstItem="vrM-lY-x6Q" firstAttribute="leading" secondItem="Q6Y-bY-nYi" secondAttribute="trailing" constant="8" id="GpW-Nt-9JO"/>
                                                 <constraint firstItem="hB8-nL-nri" firstAttribute="top" secondItem="CWq-GZ-R3U" secondAttribute="top" constant="22" id="JVU-r0-ndW"/>
                                                 <constraint firstItem="hB8-nL-nri" firstAttribute="centerX" secondItem="CWq-GZ-R3U" secondAttribute="centerX" id="P7Z-KW-E3h"/>
+                                                <constraint firstItem="Ctq-ZH-Qre" firstAttribute="centerY" secondItem="CWq-GZ-R3U" secondAttribute="centerY" id="SdX-3c-FfF"/>
                                                 <constraint firstItem="vrM-lY-x6Q" firstAttribute="centerX" secondItem="CWq-GZ-R3U" secondAttribute="centerX" id="YnP-fT-jyj"/>
                                                 <constraint firstItem="vrM-lY-x6Q" firstAttribute="top" secondItem="hB8-nL-nri" secondAttribute="bottom" constant="13" id="bGn-kV-2qc"/>
                                                 <constraint firstItem="Q6Y-bY-nYi" firstAttribute="centerY" secondItem="vrM-lY-x6Q" secondAttribute="centerY" id="fzN-pN-Yjf"/>
@@ -430,6 +435,7 @@
                                             <outlet property="firstPill" destination="Q6Y-bY-nYi" id="k5T-qj-STA"/>
                                             <outlet property="secondPill" destination="vrM-lY-x6Q" id="4Ew-0y-Gl6"/>
                                             <outlet property="thirdPill" destination="xDK-db-xT9" id="KMt-xB-Xnx"/>
+                                            <segue destination="PP8-Mm-aEh" kind="show" id="vaj-gz-CLv"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -665,6 +671,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhu-pq-Kqh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2895" y="1478"/>
+        </scene>
+        <!--Privacy Protection Network Leaderboard Controller-->
+        <scene sceneID="fpQ-hl-aTU">
+            <objects>
+                <tableViewController id="PP8-Mm-aEh" customClass="PrivacyProtectionNetworkLeaderboardController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="T5n-2j-L8N">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="RfW-Jd-pdW">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RfW-Jd-pdW" id="GPi-nf-s8y">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="PP8-Mm-aEh" id="c3l-Oh-sT3"/>
+                            <outlet property="delegate" destination="PP8-Mm-aEh" id="JSY-oH-nb8"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kih-BY-Mzp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3790" y="1478"/>
         </scene>
         <!--PrivacyProtectionHeader-->
         <scene sceneID="R0m-fy-D7F">

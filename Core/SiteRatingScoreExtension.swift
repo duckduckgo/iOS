@@ -69,7 +69,7 @@ public extension SiteRating {
     }
 
     private var inMajorTrackerScore: Int {
-        guard let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.parentDomain else { return 0 }
+        guard let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.networkName else { return 0 }
         return majorTrackerNetworkStore.network(forDomain: associatedDomain) == nil ? 0 : 1
     }
 

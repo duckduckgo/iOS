@@ -32,9 +32,9 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     }
     
     struct MockTracker {
-        static let standard = Tracker(url: "trackerexample.com", parentDomain: "someSmallAdNetwork.com")
-        static let ipTracker = Tracker(url: "http://192.168.5.10/abcd", parentDomain: "someSmallAdNetwork.com")
-        static let google = Tracker(url: "trackerexample.com", parentDomain: "google.com")
+        static let standard = Tracker(url: "trackerexample.com", networkName: "someSmallAdNetwork.com")
+        static let ipTracker = Tracker(url: "http://192.168.5.10/abcd", networkName: "someSmallAdNetwork.com")
+        static let google = Tracker(url: "trackerexample.com", networkName: "google.com")
     }
 
     fileprivate let classATOS = MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: -100)

@@ -23,6 +23,8 @@ import Core
 
 class NetworkLeaderboard {
 
+    public static let shared = NetworkLeaderboard()
+
     struct entityNames {
 
         static let visitedSite = "PPVisitedSite"

@@ -35,8 +35,8 @@ class SiteRatingTests: XCTestCase {
     }
     
     struct TrackerMock {
-        static let tracker = Tracker(url: Url.tracker, parentDomain: Url.tracker)
-        static let differentTracker = Tracker(url: Url.differentTracker, parentDomain: Url.differentTracker)
+        static let tracker = Tracker(url: Url.tracker, networkName: Url.tracker)
+        static let differentTracker = Tracker(url: Url.differentTracker, networkName: Url.differentTracker)
     }
     
     func testWhenUrlContainHostThenInitSucceeds() {
@@ -107,7 +107,7 @@ class SiteRatingTests: XCTestCase {
     }
     
     func testUniqueMajorTrackersDetected() {
-        let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
+        let tracker = Tracker(url: "googlemail.com", networkName: "google.com")
         let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!
         testee.trackerDetected(tracker, blocked: false)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksDetected)
@@ -115,7 +115,7 @@ class SiteRatingTests: XCTestCase {
     }
 
     func testUniqueMajorTrackersBlocked() {
-        let tracker = Tracker(url: "googlemail.com", parentDomain: "google.com")
+        let tracker = Tracker(url: "googlemail.com", networkName: "google.com")
         let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])!
         testee.trackerDetected(tracker, blocked: true)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksBlocked)

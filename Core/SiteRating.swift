@@ -58,7 +58,7 @@ public class SiteRating {
     }
 
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { majorTrackerNetworkStore.network(forDomain: $0.key.parentDomain ?? "" ) != nil } )
+        return trackersDetected.contains(where: { majorTrackerNetworkStore.network(forDomain: $0.key.networkName ?? "" ) != nil } )
     }
 
     public var containsIpTracker: Bool {
@@ -96,7 +96,7 @@ public class SiteRating {
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {
-        return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forDomain: $0.parentDomain ?? "" ) != nil }).flatMap({ $0.parentDomain })).count
+        return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forDomain: $0.networkName ?? "" ) != nil }).flatMap({ $0.networkName })).count
     }
 
 }

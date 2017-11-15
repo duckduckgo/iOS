@@ -39,24 +39,17 @@ public struct DisconnectMeTrackersParser {
     
     private func parse(categoryName: String, fromJson jsonTrackers: JSON, into trackers: inout [String: Tracker]) throws {
         for jsonTracker in jsonTrackers.arrayValue {
-            guard let baseUrl = jsonTracker.first?.1.first?.0 else { throw JsonError.typeMismatch }
+            guard let networkName = jsonTracker.first?.0 else { throw JsonError.typeMismatch }
             guard let jsonTrackers = jsonTracker.first?.1.first?.1.arrayObject else { throw JsonError.typeMismatch }
     
             let category = Tracker.Category.all.filter( { $0.rawValue == categoryName }).first
-            let parentDomain = parseDomain(fromUrl: baseUrl)
-            
+
             for url in jsonTrackers {
                 guard let url = url as? String else { continue }
-                trackers[url] = Tracker(url: url, parentDomain: parentDomain, category: category)
+                trackers[url] = Tracker(url: url, networkName: networkName, category: category)
             }
         }
     }
-    
-    private func parseDomain(fromUrl url: String) -> String? {
-        guard let host = URL(string: url)?.host else {
-            return nil
-        }
-        return host.replacingOccurrences(of: "www.", with: "")
-    }
+
 }
 

@@ -100,7 +100,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateLeaderBoard() {
-        leaderboard.isHidden = true
+        // leaderboard.isHidden = true
         // TODO update leaderboard later
     }
 

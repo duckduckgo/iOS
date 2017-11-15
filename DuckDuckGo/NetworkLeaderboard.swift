@@ -23,6 +23,13 @@ import Core
 
 class NetworkLeaderboard {
 
+    struct entityNames {
+
+        static let visitedSite = "PPVisitedSite"
+        static let trackerNetwork = "PPTrackerNetwork"
+
+    }
+
     lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard")!
 
     func reset() {
@@ -54,7 +61,7 @@ class NetworkLeaderboard {
 
     func visited(domain: String) {
         guard nil == findSite(byDomain: domain) else { return }
-        let visitedSite = NSEntityDescription.insertNewObject(forEntityName: "PPVisitedSite", into: container.managedObjectContext) as! PPVisitedSite
+        let visitedSite = NSEntityDescription.insertNewObject(forEntityName: entityNames.visitedSite, into: container.managedObjectContext) as! PPVisitedSite
         visitedSite.domain = domain
         _ = container.save()
     }
@@ -74,7 +81,7 @@ class NetworkLeaderboard {
 
         var trackerNetwork = findNetwork(byName: network)
         if trackerNetwork == nil {
-            trackerNetwork = NSEntityDescription.insertNewObject(forEntityName: "PPTrackerNetwork", into: container.managedObjectContext) as? PPTrackerNetwork
+            trackerNetwork = NSEntityDescription.insertNewObject(forEntityName: entityNames.trackerNetwork, into: container.managedObjectContext) as? PPTrackerNetwork
             trackerNetwork?.name = network
             guard trackerNetwork != nil else { return }
         }

@@ -83,7 +83,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func beginCertificateInfoExtraction() {
         guard siteRating.https else { return }
-        guard let serverTrust = serverTrustCache.get(forDomain: siteRating.domain) else {
+        guard let serverTrust = serverTrustCache.get(forDomain: siteRating.url.host ?? "") else {
             return
         }
         DisplayableCertificateBuilder().build(usingTrust: serverTrust) { [weak self] displayable in

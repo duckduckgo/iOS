@@ -35,6 +35,7 @@
 		85200F9A1FBBC012001AF290 /* NetworkLeaderboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */; };
 		85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F9C1FBC5A1C001AF290 /* NetworkLeaderboard.swift */; };
 		85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */; };
+		85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
@@ -364,6 +365,7 @@
 		85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLeaderboardTests.swift; sourceTree = "<group>"; };
 		85200F9C1FBC5A1C001AF290 /* NetworkLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLeaderboard.swift; sourceTree = "<group>"; };
 		85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDGPersistenceContainer.swift; sourceTree = "<group>"; };
+		85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetworkLeaderboard.xcdatamodel; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
@@ -865,6 +867,7 @@
 			isa = PBXGroup;
 			children = (
 				85200F9C1FBC5A1C001AF290 /* NetworkLeaderboard.swift */,
+				85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */,
 			);
 			name = NetworkLeaderboard;
 			sourceTree = "<group>";
@@ -2156,6 +2159,7 @@
 				85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
+				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2857,6 +2861,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */,
+			);
+			currentVersion = 85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */;
+			path = NetworkLeaderboard.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		85CEC0731F2FD5CD0092C0C3 /* Stories.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

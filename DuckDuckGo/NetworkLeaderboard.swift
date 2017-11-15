@@ -23,63 +23,85 @@ import Core
 
 class NetworkLeaderboard {
 
-    lazy var coreData = DDGPersistenceContainer(name: "NetworkLeaderboard")
+    lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard")!
 
     func reset() {
-
+        deleteAll(entities: try? container.managedObjectContext.fetch(PPVisitedSite.fetchRequest()))
+        deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
+        _ = container.save()
     }
 
     func percentOfSitesWithNetwork(named: String? = nil) -> Int {
-        return 0
-    }
+        let allSitesRequest:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
+        guard let totalSites = try? container.managedObjectContext.count(for: allSitesRequest), totalSites > 0 else { return 0 }
 
-    func networksDetected() -> [String] {
-        return []
-    }
-
-    func visited(domain: String) {
-    }
-
-    func network(named network: String, detectedWhileVisitingDomain domain: String) {
-    }
-
-}
-
-class InMemoryNetworkLeaderboard {
-
-    var leaderboard = [String: Set<String>]()
-
-    func reset() {
-        leaderboard = [String: Set<String>]()
-    }
-
-    func percentOfSitesWithNetwork(named: String? = nil) -> Int {
-        guard leaderboard.count > 0 else { return 0 }
-        let sitesWithNetwork = leaderboard.filter( {  named == nil ? $0.value.count > 0 : $0.value.contains(named!) })
-        let percent = Float(sitesWithNetwork.count) / Float(leaderboard.count)
-        return Int(percent * 100)
-    }
-
-    func networksDetected() -> [String] {
-        return Array(leaderboard.reduce(Set<String>(), { (set, element) -> Set<String> in
-            return set.union(element.value)
-        }))
-    }
-
-    func visited(domain: String) {
-        guard leaderboard[domain] == nil else { return }
-        leaderboard[domain] = Set<String>()
-    }
-
-    func network(named network: String, detectedWhileVisitingDomain domain: String) {
-        var set: Set<String>!
-        if let detected = leaderboard[domain] {
-            set = detected
+        let byNetworkRequest:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
+        if let named = named {
+            byNetworkRequest.predicate = NSPredicate(format: "ANY networksDetected.name contains %@", named)
         } else {
-            set = Set<String>()
+            byNetworkRequest.predicate = NSPredicate(format: "networksDetected.@count > 0")
         }
-        set.insert(network)
-        leaderboard[domain] = set
+        guard let sitesWithNetworks = try? container.managedObjectContext.count(for: byNetworkRequest) else { return 0 }
+        
+        let rawPercent = Float(sitesWithNetworks) / Float(totalSites)
+        return Int(rawPercent * 100)
+    }
+
+    func networksDetected() -> [String] {
+        guard let results:[PPTrackerNetwork] = try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()) else { return [] }
+        return results.map( { $0.name ?? "" } )
+    }
+
+    func visited(domain: String) {
+        guard nil == findSite(byDomain: domain) else { return }
+        let visitedSite = NSEntityDescription.insertNewObject(forEntityName: "PPVisitedSite", into: container.managedObjectContext) as! PPVisitedSite
+        visitedSite.domain = domain
+        _ = container.save()
+    }
+
+    func network(named network: String, detectedWhileVisitingDomain domain: String) {
+        let byDomainAndNetworkRequest:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
+        byDomainAndNetworkRequest.predicate = NSPredicate(format: "domain LIKE %@ AND ANY networksDetected.name LIKE %@", domain, network)
+
+        guard let results = try? container.managedObjectContext.fetch(byDomainAndNetworkRequest), results.isEmpty else { return }
+
+        var visitedSite = findSite(byDomain: domain)
+        if visitedSite == nil {
+            visited(domain: domain)
+            guard let newSite = findSite(byDomain: domain) else { return }
+            visitedSite = newSite
+        }
+
+        var trackerNetwork = findNetwork(byName: network)
+        if trackerNetwork == nil {
+            trackerNetwork = NSEntityDescription.insertNewObject(forEntityName: "PPTrackerNetwork", into: container.managedObjectContext) as? PPTrackerNetwork
+            trackerNetwork?.name = network
+            guard trackerNetwork != nil else { return }
+        }
+        trackerNetwork?.addToDetectedOn(visitedSite!)
+        visitedSite?.addToNetworksDetected(trackerNetwork!)
+        _ = container.save()
+    }
+
+    private func findSite(byDomain domain: String) -> PPVisitedSite? {
+        let request:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
+        request.predicate = NSPredicate(format: "domain LIKE %@", domain)
+        guard let results = try? container.managedObjectContext.fetch(request) else { return nil }
+        return results.first
+    }
+
+    private func findNetwork(byName network: String) -> PPTrackerNetwork? {
+        let request:NSFetchRequest<PPTrackerNetwork> = PPTrackerNetwork.fetchRequest()
+        request.predicate = NSPredicate(format: "name LIKE %@", network)
+        guard let results = try? container.managedObjectContext.fetch(request) else { return nil }
+        return results.first
+    }
+
+    private func deleteAll(entities: [NSManagedObject]?) {
+        guard let entities = entities else { return }
+        for entity in entities {
+            container.managedObjectContext.delete(entity)
+        }
     }
 
 }

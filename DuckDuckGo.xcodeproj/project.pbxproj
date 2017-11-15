@@ -32,6 +32,7 @@
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
 		85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */; };
+		85200F9A1FBBC012001AF290 /* NetworkLeaderboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
@@ -359,6 +360,7 @@
 		85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHeaderController.swift; sourceTree = "<group>"; };
 		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
 		85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
+		85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLeaderboardTests.swift; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
@@ -939,6 +941,7 @@
 				85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */,
 				85F1E9B21FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift */,
 				85F1E9B61FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift */,
+				85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */,
 			);
 			name = PrivacyProtection;
 			sourceTree = "<group>";
@@ -2134,6 +2137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85200F9A1FBBC012001AF290 /* NetworkLeaderboardTests.swift in Sources */,
 				85F1C3CD1F7A76EF00161346 /* ContentBlockerStringCache.swift in Sources */,
 				8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */,
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,

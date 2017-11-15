@@ -25,13 +25,13 @@ import XCTest
 
 class MigrationTests: XCTestCase {
 
-    var container: PersistenceContainer!
+    var container: DDGPersistenceContainer!
     var userDefaults: UserDefaults!
     var bookmarksManager: BookmarksManager!
     var migration: Migration!
 
     override func setUp() {
-        container = PersistenceContainer(name: "test_stories")
+        container = DDGPersistenceContainer(name: "test_stories")
         userDefaults = UserDefaults(suiteName: "test")
         userDefaults.removeSuite(named: "test")
         userDefaults.removePersistentDomain(forName: "test")
@@ -44,7 +44,7 @@ class MigrationTests: XCTestCase {
     }
     
     override func tearDown() {
-        container.clear()
+        migration.clear()
         bookmarksManager.clear()
         clearOldBookmarks()
         userDefaults.removeSuite(named: "test")
@@ -75,7 +75,7 @@ class MigrationTests: XCTestCase {
                            [ "title": "example2.com", "url": "http://www.example2.com" ]], forKeyPath: Migration.Constants.oldBookmarksKey)
         userDefaults.synchronize()
 
-        let feed = initialise(feed: container.createFeed())
+        let feed = initialise(feed: migration.createFeed())
         let _ = createStory(in: feed)
         let _ = createStory(in: feed)
         XCTAssert(container.save())
@@ -147,12 +147,12 @@ class MigrationTests: XCTestCase {
     
     func testFavouriteStoriesDeletedAfterMigration() {
         testOnlyFavouriteStoryMigratedToBookmarks()
-        XCTAssertEqual(0, container.allStories().count)
+        XCTAssertEqual(0, migration.allStories().count)
     }
     
     func testSeveralFavouriteStoriesMigratedToBookmarks() {
         
-        let feed = initialise(feed: container.createFeed())
+        let feed = initialise(feed: migration.createFeed())
         createStory(in: feed).saved = NSNumber(booleanLiteral: false)
         createStory(in: feed).saved = NSNumber(booleanLiteral: true)
         createStory(in: feed).saved = NSNumber(booleanLiteral: false)
@@ -174,7 +174,7 @@ class MigrationTests: XCTestCase {
 
     func testOnlyFavouriteStoryMigratedToBookmarks() {
         
-        let feed = initialise(feed: container.createFeed())
+        let feed = initialise(feed: migration.createFeed())
         createStory(in: feed).saved = NSNumber(booleanLiteral: false)
         createStory(in: feed).saved = NSNumber(booleanLiteral: true)
         XCTAssert(container.save())
@@ -195,7 +195,7 @@ class MigrationTests: XCTestCase {
     
     func testSingleFavouriteStoriesMigratedToBookmarks() {
         
-        let feed = initialise(feed: container.createFeed())
+        let feed = initialise(feed: migration.createFeed())
         let story = retain(story: createStory(in: feed))
         XCTAssert(container.save())
         
@@ -240,7 +240,7 @@ class MigrationTests: XCTestCase {
     }
     
     private func createStory(in feed: DDGStoryFeed) -> DDGStory {
-        let story = container.createStory(in: feed)
+        let story = migration.createStory(in: feed)
         story.title = "A title"
         story.urlString = "http://example.com"
         story.saved = NSNumber(booleanLiteral: true)

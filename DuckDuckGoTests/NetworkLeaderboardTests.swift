@@ -137,41 +137,4 @@ class NetworkLeaderboardTests: XCTestCase {
 
 }
 
-class NetworkLeaderboard {
 
-    var leaderboard = [String: Set<String>]()
-
-    func reset() {
-        leaderboard = [String: Set<String>]()
-    }
-
-    func percentOfSitesWithNetwork(named: String? = nil) -> Int {
-        guard leaderboard.count > 0 else { return 0 }
-        let sitesWithNetwork = leaderboard.filter( {  named == nil ? $0.value.count > 0 : $0.value.contains(named!) })
-        let percent = Float(sitesWithNetwork.count) / Float(leaderboard.count)
-        return Int(percent * 100)
-    }
-
-    func networksDetected() -> [String] {
-        return Array(leaderboard.reduce(Set<String>(), { (set, element) -> Set<String> in
-            return set.union(element.value)
-        }))
-    }
-
-    func visited(domain: String) {
-        guard leaderboard[domain] == nil else { return }
-        leaderboard[domain] = Set<String>()
-    }
-
-    func network(named network: String, detectedWhileVisitingDomain domain: String) {
-        var set: Set<String>!
-        if let detected = leaderboard[domain] {
-            set = detected
-        } else {
-            set = Set<String>()
-        }
-        set.insert(network)
-        leaderboard[domain] = set
-    }
-
-}

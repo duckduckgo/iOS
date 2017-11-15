@@ -29,10 +29,10 @@ class Migration {
     }
 
     private let bookmarks: BookmarksManager
-    private var container: PersistenceContainer
-    private var userDefaults: UserDefaults
+    private let container: DDGPersistenceContainer
+    private let userDefaults: UserDefaults
     
-    init(container: PersistenceContainer = PersistenceContainer(name: "Stories")!,
+    init(container: DDGPersistenceContainer = DDGPersistenceContainer(name: "Stories")!,
          userDefaults: UserDefaults = UserDefaults.standard,
          bookmarks: BookmarksManager = BookmarksManager()) {
         self.container = container
@@ -79,10 +79,9 @@ class Migration {
     }
     
     private func migrateStories(into bookmarks: BookmarksManager) -> Int {
-        let savedStories = container.savedStories()
-        
+
         var storyCount = 0
-        for story in savedStories {
+        for story in savedStories() {
             
             guard let urlString = story.urlString else { continue }
             guard let url = URL(string: urlString) else { continue }
@@ -91,8 +90,51 @@ class Migration {
             storyCount += 1
         }
         
-        container.clear()
+        clear()
         return storyCount;
     }
-    
+
+    func createStory(in feed: DDGStoryFeed) -> DDGStory {
+        let story = NSEntityDescription.insertNewObject(forEntityName: "Story", into: container.managedObjectContext) as! DDGStory
+
+        story.feed = feed
+        feed.addToStories(story)
+
+        return story
+    }
+
+    func createFeed() -> DDGStoryFeed {
+        return NSEntityDescription.insertNewObject(forEntityName: "Feed", into: container.managedObjectContext) as! DDGStoryFeed
+    }
+
+    func savedStories() -> [DDGStory] {
+        do {
+            let request:NSFetchRequest<DDGStory> = DDGStory.fetchRequest()
+            request.predicate = NSPredicate(format: "saved > 0")
+
+            return try container.managedObjectContext.fetch(request)
+        } catch {
+            debugPrint("Failed to fetch stories", error.localizedDescription)
+        }
+        return []
+    }
+
+    func allStories() -> [DDGStory] {
+        do {
+            return try container.managedObjectContext.fetch(DDGStory.fetchRequest())
+        } catch {
+            debugPrint("Failed to fetch stories", error.localizedDescription)
+        }
+        return []
+    }
+
+    func clear() {
+
+        for story in allStories() {
+            container.managedObjectContext.delete(story)
+        }
+
+        _ = container.save()
+    }
+
 }

@@ -33,6 +33,8 @@
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
 		85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */; };
 		85200F9A1FBBC012001AF290 /* NetworkLeaderboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */; };
+		85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F9C1FBC5A1C001AF290 /* NetworkLeaderboard.swift */; };
+		85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
@@ -64,7 +66,6 @@
 		85CEC0771F2FD5CD0092C0C3 /* Stories.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85CEC0731F2FD5CD0092C0C3 /* Stories.xcdatamodeld */; };
 		85ECA7EE1F2A82C20018EBEB /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7ED1F2A82C20018EBEB /* Migration.swift */; };
 		85ECA7F11F2A83190018EBEB /* MigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7F01F2A83190018EBEB /* MigrationTests.swift */; };
-		85ECA7F51F2A95860018EBEB /* PersistenceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7F41F2A95860018EBEB /* PersistenceContainer.swift */; };
 		85ED11231F50B58C00A7FBCE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85ED11201F50B58C00A7FBCE /* Info.plist */; };
 		85ED11271F50B6FB00A7FBCE /* AppScreenshotsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */; };
 		85ED11281F50B6FB00A7FBCE /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */; };
@@ -361,6 +362,8 @@
 		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
 		85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
 		85200F981FBBBFD6001AF290 /* NetworkLeaderboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLeaderboardTests.swift; sourceTree = "<group>"; };
+		85200F9C1FBC5A1C001AF290 /* NetworkLeaderboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLeaderboard.swift; sourceTree = "<group>"; };
+		85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DDGPersistenceContainer.swift; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
@@ -395,7 +398,6 @@
 		85CEC0761F2FD5CD0092C0C3 /* Stories.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Stories.xcdatamodel; sourceTree = "<group>"; };
 		85ECA7ED1F2A82C20018EBEB /* Migration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Migration.swift; path = Migration/Migration.swift; sourceTree = "<group>"; };
 		85ECA7F01F2A83190018EBEB /* MigrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MigrationTests.swift; path = Migration/MigrationTests.swift; sourceTree = "<group>"; };
-		85ECA7F41F2A95860018EBEB /* PersistenceContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistenceContainer.swift; path = Migration/PersistenceContainer.swift; sourceTree = "<group>"; };
 		85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppScreenshotsUITests.swift; path = AppScreenshots/AppScreenshotsUITests.swift; sourceTree = SOURCE_ROOT; };
 		85ED11201F50B58C00A7FBCE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AppScreenshots/Info.plist; sourceTree = SOURCE_ROOT; };
 		85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = AppScreenshots/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
@@ -859,11 +861,26 @@
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
 		};
-		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
+		85200F9B1FBC59FF001AF290 /* NetworkLeaderboard */ = {
+			isa = PBXGroup;
+			children = (
+				85200F9C1FBC5A1C001AF290 /* NetworkLeaderboard.swift */,
+			);
+			name = NetworkLeaderboard;
+			sourceTree = "<group>";
+		};
+		85200F9E1FBC5A4E001AF290 /* CertificateBuilder */ = {
 			isa = PBXGroup;
 			children = (
 				85F1E9AB1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift */,
 				85F1E9AF1FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift */,
+			);
+			name = CertificateBuilder;
+			sourceTree = "<group>";
+		};
+		85200F9F1FBC5A67001AF290 /* UI */ = {
+			isa = PBXGroup;
+			children = (
 				85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */,
 				85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */,
 				8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */,
@@ -874,6 +891,16 @@
 				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
 				85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */,
 				85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
+			isa = PBXGroup;
+			children = (
+				85200F9F1FBC5A67001AF290 /* UI */,
+				85200F9E1FBC5A4E001AF290 /* CertificateBuilder */,
+				85200F9B1FBC59FF001AF290 /* NetworkLeaderboard */,
 			);
 			name = PrivacyProtection;
 			sourceTree = "<group>";
@@ -920,7 +947,6 @@
 			children = (
 				85CEC0731F2FD5CD0092C0C3 /* Stories.xcdatamodeld */,
 				85ECA7ED1F2A82C20018EBEB /* Migration.swift */,
-				85ECA7F41F2A95860018EBEB /* PersistenceContainer.swift */,
 			);
 			name = Migration;
 			sourceTree = "<group>";
@@ -1209,6 +1235,7 @@
 				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
 				F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */,
 				F1D477CA1F2149C40031ED49 /* Type.swift */,
+				85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2077,6 +2104,7 @@
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* FeaturesViewController.swift in Sources */,
 				F1134EC11F40DD9300B73467 /* AppVersionExtension.swift in Sources */,
+				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
@@ -2087,7 +2115,6 @@
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
-				85ECA7F51F2A95860018EBEB /* PersistenceContainer.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
@@ -2244,6 +2271,7 @@
 				857065681F6AADC40044DCB1 /* Tracker.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
+				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
 				F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */,
 				830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */,
 				85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */,

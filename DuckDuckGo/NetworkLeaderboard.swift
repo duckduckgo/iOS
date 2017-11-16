@@ -32,12 +32,30 @@ class NetworkLeaderboard {
 
     }
 
-    lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard")!
+    struct Constants {
+
+        static let startDateKey = "com.duckduckgo.network.leaderboard.start.date"
+
+    }
+
+    private lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard")!
+    private var userDefaults:UserDefaults!
+
+    var startDate: Date? {
+        let timeIntervalSince1970 = userDefaults.double(forKey: Constants.startDateKey)
+        guard timeIntervalSince1970 > 0.0 else { return nil }
+        return Date(timeIntervalSince1970: timeIntervalSince1970)
+    }
+
+    init(userDefaults: UserDefaults = UserDefaults()) {
+        self.userDefaults = userDefaults
+    }
 
     func reset() {
         deleteAll(entities: try? container.managedObjectContext.fetch(PPVisitedSite.fetchRequest()))
         deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
         _ = container.save()
+        userDefaults.removeObject(forKey: Constants.startDateKey)
     }
 
     func percentOfSitesWithNetwork(named: String? = nil) -> Int {
@@ -63,6 +81,11 @@ class NetworkLeaderboard {
 
     func visited(domain: String) {
         guard nil == findSite(byDomain: domain) else { return }
+
+        if nil == startDate {
+            setStartDate()
+        }
+
         let visitedSite = NSEntityDescription.insertNewObject(forEntityName: entityNames.visitedSite, into: container.managedObjectContext) as! PPVisitedSite
         visitedSite.domain = domain
         _ = container.save()
@@ -111,6 +134,10 @@ class NetworkLeaderboard {
         for entity in entities {
             container.managedObjectContext.delete(entity)
         }
+    }
+
+    private func setStartDate() {
+        userDefaults.set(Date().timeIntervalSince1970, forKey: Constants.startDateKey)
     }
 
 }

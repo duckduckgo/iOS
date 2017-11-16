@@ -18,6 +18,11 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
+    @IBOutlet weak var inlineResetContainer: UIView!
+    @IBOutlet weak var hoveringResetContainer: UIView!
+    @IBOutlet weak var hoveringView: UIView!
+    @IBOutlet weak var resetView: UIView!
+
     weak var contentBlocker: ContentBlockerConfigurationStore!
     weak var siteRating: SiteRating!
 
@@ -31,11 +36,35 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
 
         initTable()
         initHeroIcon()
-        initLeaderboard()
         initResetButton()
         initDomainLabel()
-        initMessageLabel()
         initDrama()
+        update()
+    }
+
+    func update() {
+        guard isViewLoaded else { return }
+
+        initLeaderboard()
+        initResetView()
+        initMessageLabel()
+        tableView.reloadData()
+    }
+
+    private func initResetView() {
+        resetView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        resetView.translatesAutoresizingMaskIntoConstraints = true
+
+        inlineResetContainer.isHidden = networksDetected.isEmpty
+        hoveringView.isHidden = networksDetected.isEmpty
+
+        if tableView.visibleCells.count >= networksDetected.count {
+            dismissHoveringView()
+        } else {
+            resetView.removeFromSuperview()
+            hoveringResetContainer.addSubview(resetView)
+        }
+
     }
 
     private func initHeroIcon() {
@@ -65,23 +94,27 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initMessageLabel() {
+        guard let date = leaderboard.startDate else {
+            messageLabel.isHidden = true
+            return
+        }
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
+        let dateText = dateFormatter.string(from: date)
 
-        let percent = "\(NetworkLeaderboard.shared.percentOfSitesWithNetwork())%"
-        let date = dateFormatter.string(from: Date())
-
-        let message = UserText.ppNetworkLeaderboard.format(arguments: percent, date)
+        let percent = "\(leaderboard.percentOfSitesWithNetwork())%"
+        let message = UserText.ppNetworkLeaderboard.format(arguments: percent, dateText)
 
         guard let percentRange = message.range(of: percent) else { return }
-        guard let dateRange = message.range(of: date) else { return }
+        guard let dateRange = message.range(of: dateText) else { return }
 
         let percentNSRange = NSRange(percentRange, in: message)
         let dateNSRange = NSRange(dateRange, in: message)
 
         let attributedString = NSMutableAttributedString(string: message)
-        attributedString.addAttribute(NSAttributedStringKey.kern, value: -0.18, range: percentNSRange)
-        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.ppRed, range: dateNSRange)
+        attributedString.addAttribute(NSAttributedStringKey.kern, value: -0.18, range: dateNSRange)
+        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.ppRed, range: percentNSRange)
 
         messageLabel.attributedText = attributedString
     }
@@ -94,15 +127,29 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         resetButton.layer.cornerRadius = 4
     }
 
+    private func dismissHoveringView() {
+        hoveringView.isHidden = true
+        resetView.removeFromSuperview()
+        inlineResetContainer.addSubview(self.resetView)
+    }
+
     @IBAction func onReset() {
+        onDismiss()
         leaderboard.reset()
-        initLeaderboard()
-        initMessageLabel()
-        tableView.reloadData()
+        update()
     }
 
     @IBAction func onBack() {
         navigationController?.popViewController(animated: true)
+    }
+
+    @IBAction func onDismiss() {
+        guard !hoveringView.isHidden else { return }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.hoveringView.alpha = 0
+        }, completion: { (completed) in
+            self.dismissHoveringView()
+        })
     }
 
 }
@@ -119,7 +166,7 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row + 1 >= networksDetected.count {
-            print("***", "lastRow detected!")
+            onDismiss()
         }
 
         let network = networksDetected[indexPath.row]
@@ -137,6 +184,7 @@ extension PrivacyProtectionNetworkLeaderboardController: PrivacyProtectionInfoDi
     func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
         self.contentBlocker = contentBlocker
+        update()
     }
 
 }

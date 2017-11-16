@@ -27,6 +27,25 @@ class NetworkLeaderboardTests: XCTestCase {
         NetworkLeaderboard().reset()
     }
 
+    func testWhenSubsequentSiteVisitedStartDateIsUnchanged() {
+        let leaderboard = NetworkLeaderboard()
+        leaderboard.visited(domain: "duckduckgo.com")
+        let startDate = leaderboard.startDate
+        leaderboard.visited(domain: "example.com")
+        XCTAssertEqual(startDate, leaderboard.startDate)
+    }
+
+    func testWhenFirstSiteVisitedStartDateIsSet() {
+        let leaderboard = NetworkLeaderboard()
+        leaderboard.visited(domain: "duckduckgo.com")
+        XCTAssertNotNil(leaderboard.startDate)
+    }
+
+    func testWhenNoSitesVisitedStartDateIsNil() {
+        let leaderboard = NetworkLeaderboard()
+        XCTAssertNil(leaderboard.startDate)
+    }
+
     func testWhenThreeSitesVisitedAndTwoNetworkDetectedOnOneSiteOneOnAnotherPercentForNamedNetworkIs33() {
         let leaderboard = NetworkLeaderboard()
         leaderboard.visited(domain: "nonetworksdetected.com")

@@ -1,0 +1,12 @@
+{
+	"categories": {
+		"Advertising": [{
+			"ItIsATracker": {
+				"dnt": "eff",
+				"https://itisatracker.com/": [
+					"itisatracker.com"
+				]
+			}
+		}]
+	}
+}

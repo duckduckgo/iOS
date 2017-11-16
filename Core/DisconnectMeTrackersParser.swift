@@ -41,8 +41,8 @@ public struct DisconnectMeTrackersParser {
         for jsonTracker in jsonTrackers.arrayValue {
             
             guard let networkName = jsonTracker.first?.0 else { throw JsonError.typeMismatch }
-            guard let jsonTrackers = jsonTracker.first?.1.first?.1.arrayObject else { throw JsonError.typeMismatch }
-    
+            guard let jsonTrackers = jsonTracker.first?.1.first(where: { $0.1.arrayObject != nil } )?.1.arrayObject else { throw JsonError.typeMismatch }
+
             let category = Tracker.Category.all.filter( { $0.rawValue == categoryName }).first
 
             guard let baseUrl = jsonTracker.first?.1.first?.0 else { throw JsonError.typeMismatch }

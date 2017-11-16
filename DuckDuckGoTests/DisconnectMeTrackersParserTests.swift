@@ -66,4 +66,9 @@ class DisconnectMeTrackersParserTests: XCTestCase {
         XCTAssertEqual(result["adisconnecturl.com"]?.networkName, "disconnect.com")
     }
 
+    func testWhenJsonValidButContainsDntEffElementInFirstPositionThenNoErrorThrown() {
+        let validJson = data.fromJsonFile("MockJson/disconnect_dnt.json")
+        XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson))
+    }
+
 }

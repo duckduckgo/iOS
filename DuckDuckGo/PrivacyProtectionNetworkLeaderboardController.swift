@@ -10,12 +10,15 @@ import Foundation
 import UIKit
 import Core
 
-class PrivacyProtectionNetworkLeaderboardController: UITableViewController {
+class PrivacyProtectionNetworkLeaderboardController: UIViewController {
 
+    @IBOutlet weak var heroIconImage: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
+    weak var contentBlocker: ContentBlockerConfigurationStore!
     weak var siteRating: SiteRating!
 
     let leaderboard = NetworkLeaderboard.shared
@@ -26,11 +29,21 @@ class PrivacyProtectionNetworkLeaderboardController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initTable()
+        initHeroIcon()
         initLeaderboard()
         initResetButton()
         initDomainLabel()
         initMessageLabel()
         initDrama()
+    }
+
+    private func initHeroIcon() {
+        heroIconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
+    }
+
+    private func initTable() {
+        tableView.dataSource = self
     }
 
     private func initLeaderboard() {
@@ -92,15 +105,23 @@ class PrivacyProtectionNetworkLeaderboardController: UITableViewController {
         navigationController?.popViewController(animated: true)
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+}
+
+extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return networksDetected.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row + 1 >= networksDetected.count {
+            print("***", "lastRow detected!")
+        }
+
         let network = networksDetected[indexPath.row]
         let percent = drama ? 0 : leaderboard.percentOfSitesWithNetwork(named: network)
 
@@ -115,6 +136,7 @@ extension PrivacyProtectionNetworkLeaderboardController: PrivacyProtectionInfoDi
 
     func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
+        self.contentBlocker = contentBlocker
     }
 
 }

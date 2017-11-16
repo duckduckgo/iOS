@@ -39,10 +39,13 @@ public class DisconnectMeStore {
     }
     
     public var trackers: [String: Tracker] {
-       guard let data = try? Data(contentsOf: persistenceLocation), let trackers = try? parse(data: data) else {
+        do {
+            let data = try Data(contentsOf: persistenceLocation)
+            return try parse(data: data)
+        } catch {
+            Logger.log(items: "error parsing json for disconnect", error)
             return [String: Tracker]()
         }
-        return trackers
     }
     
     var bannedTrackersJson: String {

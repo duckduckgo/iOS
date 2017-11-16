@@ -53,7 +53,7 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     func testWhenJsonValidThenResultContainsAllTrackers() {
         let validJson = data.fromJsonFile("MockJson/disconnect.json")
         let result = try! testee.convert(fromJsonData: validJson)
-        XCTAssertEqual(result.count, 9)
+        XCTAssertEqual(result.count, 12)
         XCTAssertEqual(result["99anadurl.com"]?.networkName, "anadurl.com")
         XCTAssertEqual(result["analyticsurl.com"]?.networkName, "analytics.com")
         XCTAssertEqual(result["99asocialurl.com"]?.networkName, "asocialurl.com")
@@ -63,6 +63,7 @@ class DisconnectMeTrackersParserTests: XCTestCase {
         XCTAssertEqual(result["55anothersocialurl.com"]?.networkName, "anothersocialurl.com")
         XCTAssertEqual(result["99anothersocialurl.com"]?.networkName, "anothersocialurl.com")
         XCTAssertEqual(result["anunknowncategory.com"]?.networkName, "unknowncategory.com")
+        XCTAssertEqual(result["adisconnecturl.com"]?.networkName, "disconnect.com")
     }
 
 }

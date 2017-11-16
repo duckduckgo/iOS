@@ -27,7 +27,7 @@ var duckduckgoContentBlocking = function() {
 		var blocked = block(event)
         duckduckgoMessaging.trackerDetected({
 	        url: event.url,
-	        parentDomain: parent,
+	        networkName: parent,
 	        blocked: blocked,
 	        method: detectionMethod
         })
@@ -178,7 +178,18 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (ABPFilterParser.matches(easylist, event.url, config)) {
-			handleDetection(event, null, name)
+			var url = toURL(event.url, topLevelUrl.protocol)
+			if (!url) {
+				return false
+			}
+
+			var parent = null
+			var result = DisconnectMe.parentTracker(url)
+			if (result != null) {
+				parent = result.parent
+			}
+
+			handleDetection(event, parent, name)
 			return true
 		}
 

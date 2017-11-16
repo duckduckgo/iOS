@@ -333,7 +333,7 @@ extension TabViewController: WKScriptMessageHandler {
     
     struct TrackerDetectedKey {
         static let blocked = "blocked"
-        static let parentDomain = "parentDomain"
+        static let networkName = "networkName"
         static let url = "url"
     }
     
@@ -342,7 +342,7 @@ extension TabViewController: WKScriptMessageHandler {
         guard let dict = message.body as? Dictionary<String, Any> else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let url = dict[TrackerDetectedKey.url] as? String else { return }
-        let parent = dict[TrackerDetectedKey.parentDomain] as? String
+        let parent = dict[TrackerDetectedKey.networkName] as? String
         let tracker = Tracker(url: url, networkName: parent)
         siteRating?.trackerDetected(tracker, blocked: blocked)
         onSiteRatingChanged()

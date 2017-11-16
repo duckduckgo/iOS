@@ -321,7 +321,7 @@
                                                     <rect key="frame" x="341" y="46" width="10" height="16"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hB8-nL-nri">
-                                                    <rect key="frame" x="84" y="22" width="209" height="14"/>
+                                                    <rect key="frame" x="83.5" y="22" width="209" height="14"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -676,18 +676,303 @@
         <scene sceneID="fpQ-hl-aTU">
             <objects>
                 <tableViewController id="PP8-Mm-aEh" customClass="PrivacyProtectionNetworkLeaderboardController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="T5n-2j-L8N">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="T5n-2j-L8N">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="UAf-eb-tA7">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Leaderboard On" translatesAutoresizingMaskIntoConstraints="NO" id="HGe-jW-qhx">
+                                    <rect key="frame" x="157.5" y="20" width="60" height="55"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPS-SD-65t">
+                                    <rect key="frame" x="40" y="80" width="295" height="23.5"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-u7-IeX" userLabel="Mixed Encryption Label">
+                                    <rect key="frame" x="20" y="109.5" width="335" height="14"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                    <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vQ-S5-Xxv">
+                                    <rect key="frame" x="0.0" y="155" width="375" height="75"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
+                                            <rect key="frame" x="19.5" y="19.5" width="335" height="37.5"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Trackers networks were found on ">
+                                                    <attributes>
+                                                        <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="91%">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.74117999999999995" green="0.0" blue="0.090200000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" of web sites you’ve visited since Jan 23, 2017.">
+                                                    <attributes>
+                                                        <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="3j6-i6-nia" firstAttribute="width" secondItem="2vQ-S5-Xxv" secondAttribute="width" constant="-40" id="GS4-Wu-Ilg"/>
+                                        <constraint firstItem="3j6-i6-nia" firstAttribute="centerX" secondItem="2vQ-S5-Xxv" secondAttribute="centerX" id="iBx-yg-FCx"/>
+                                        <constraint firstItem="3j6-i6-nia" firstAttribute="centerY" secondItem="2vQ-S5-Xxv" secondAttribute="centerY" id="ojj-sL-QKI"/>
+                                        <constraint firstAttribute="height" constant="75" id="xN7-nQ-eyz"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ict-Tf-vBn">
+                                    <rect key="frame" x="20" y="20" width="30" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="4lM-91-gHR"/>
+                                    </constraints>
+                                    <state key="normal" image="PP Arrow Back"/>
+                                    <connections>
+                                        <action selector="onBack" destination="PP8-Mm-aEh" eventType="touchUpInside" id="6UR-uk-ie1"/>
+                                        <action selector="onBack" destination="FqV-mP-aQi" eventType="touchUpInside" id="bFW-xS-nk8"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="Y3q-u7-IeX" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-40" id="4ky-h3-4Hu"/>
+                                <constraint firstItem="2vQ-S5-Xxv" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="CUn-bm-XRn"/>
+                                <constraint firstItem="IPS-SD-65t" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-80" id="GGd-LH-Oo9"/>
+                                <constraint firstItem="Y3q-u7-IeX" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="OZB-Xz-T7R"/>
+                                <constraint firstItem="HGe-jW-qhx" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="PcO-KV-Iw4"/>
+                                <constraint firstItem="2vQ-S5-Xxv" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="ST8-Fr-SiZ"/>
+                                <constraint firstItem="HGe-jW-qhx" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="bIe-DI-dgG"/>
+                                <constraint firstItem="IPS-SD-65t" firstAttribute="top" secondItem="HGe-jW-qhx" secondAttribute="bottom" constant="5" id="kRE-k1-1n2"/>
+                                <constraint firstAttribute="bottom" secondItem="2vQ-S5-Xxv" secondAttribute="bottom" id="nkd-F5-2YP"/>
+                                <constraint firstItem="Ict-Tf-vBn" firstAttribute="leading" secondItem="UAf-eb-tA7" secondAttribute="leading" constant="20" id="pDB-lj-mmP"/>
+                                <constraint firstItem="Y3q-u7-IeX" firstAttribute="top" secondItem="IPS-SD-65t" secondAttribute="bottom" constant="6" id="ptn-4m-rYU"/>
+                                <constraint firstItem="IPS-SD-65t" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="r7g-88-2oT"/>
+                                <constraint firstItem="Ict-Tf-vBn" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="wdt-rA-eO2"/>
+                            </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="43l-Zy-1B0">
+                            <rect key="frame" x="0.0" y="302" width="375" height="144"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJQ-al-hPw" userLabel="Custom Divider">
+                                    <rect key="frame" x="20" y="8" width="335" height="2"/>
+                                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="2" id="m2n-YA-bri"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="953-jn-tmN">
+                                    <rect key="frame" x="68" y="38" width="239" height="40"/>
+                                    <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="H5c-Kh-6Xs"/>
+                                        <constraint firstAttribute="width" constant="239" id="nCc-As-gML"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
+                                    <state key="normal" title="Reset Tracker Network Stats">
+                                        <color key="titleColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onReset" destination="PP8-Mm-aEh" eventType="touchUpInside" id="NnW-Go-ydO"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These stats are only stored on your device, and are not sent anywhere. Ever." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cs1-DU-13K">
+                                    <rect key="frame" x="19.5" y="93" width="335" height="33"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                    <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="Cs1-DU-13K" firstAttribute="top" secondItem="953-jn-tmN" secondAttribute="bottom" constant="15" id="3kt-8F-Ec6"/>
+                                <constraint firstItem="953-jn-tmN" firstAttribute="top" secondItem="dJQ-al-hPw" secondAttribute="bottom" constant="28" id="HdO-w5-1E5"/>
+                                <constraint firstItem="Cs1-DU-13K" firstAttribute="width" secondItem="43l-Zy-1B0" secondAttribute="width" constant="-40" id="JpH-46-6PJ"/>
+                                <constraint firstItem="dJQ-al-hPw" firstAttribute="top" secondItem="43l-Zy-1B0" secondAttribute="top" constant="8" id="YVB-Pu-a8j"/>
+                                <constraint firstItem="dJQ-al-hPw" firstAttribute="width" secondItem="43l-Zy-1B0" secondAttribute="width" constant="-40" id="qJ5-do-rvq"/>
+                                <constraint firstItem="953-jn-tmN" firstAttribute="centerX" secondItem="43l-Zy-1B0" secondAttribute="centerX" id="v6p-wJ-G1w"/>
+                                <constraint firstItem="Cs1-DU-13K" firstAttribute="centerX" secondItem="43l-Zy-1B0" secondAttribute="centerX" id="vCX-or-HYD"/>
+                                <constraint firstItem="dJQ-al-hPw" firstAttribute="centerX" secondItem="43l-Zy-1B0" secondAttribute="centerX" id="vQQ-YI-mqU"/>
+                            </constraints>
+                        </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="RfW-Jd-pdW">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="oXY-ER-plc" customClass="PrivacyProtectionNetworkLeaderboardCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="258" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RfW-Jd-pdW" id="GPi-nf-s8y">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oXY-ER-plc" id="whY-gS-Srx">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mP-U5-LBV">
+                                            <rect key="frame" x="16" y="14" width="84" height="16.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="84" id="fAv-vR-6yz"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-83-lMn">
+                                            <rect key="frame" x="324" y="14" width="35" height="16.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="35" id="Cds-GZ-p2n"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="14"/>
+                                            <color key="textColor" red="0.74117647058823533" green="0.0" blue="0.090196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Vc-hI-AG1">
+                                            <rect key="frame" x="117" y="20" width="180" height="2"/>
+                                            <color key="tintColor" red="0.74117647060000003" green="0.0" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                        </progressView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="7Vc-hI-AG1" firstAttribute="leading" secondItem="3mP-U5-LBV" secondAttribute="trailing" constant="17" id="4r8-6B-wAm"/>
+                                        <constraint firstItem="3mP-U5-LBV" firstAttribute="leading" secondItem="whY-gS-Srx" secondAttribute="leading" constant="16" id="7GA-wc-gMi"/>
+                                        <constraint firstItem="HnN-83-lMn" firstAttribute="centerY" secondItem="whY-gS-Srx" secondAttribute="centerY" id="AsL-Wh-CfG"/>
+                                        <constraint firstAttribute="trailing" secondItem="HnN-83-lMn" secondAttribute="trailing" constant="16" id="Da6-B9-NCr"/>
+                                        <constraint firstItem="3mP-U5-LBV" firstAttribute="centerY" secondItem="whY-gS-Srx" secondAttribute="centerY" id="QVp-Om-mfM"/>
+                                        <constraint firstItem="7Vc-hI-AG1" firstAttribute="centerY" secondItem="whY-gS-Srx" secondAttribute="centerY" id="Uvo-Fx-ssb"/>
+                                        <constraint firstItem="HnN-83-lMn" firstAttribute="leading" secondItem="7Vc-hI-AG1" secondAttribute="trailing" constant="27" id="b4g-kK-0yV"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="networkLabel" destination="3mP-U5-LBV" id="NCQ-d1-5ow"/>
+                                    <outlet property="percentLabel" destination="HnN-83-lMn" id="JxW-Sh-fri"/>
+                                    <outlet property="progress" destination="7Vc-hI-AG1" id="km5-Q5-pv1"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -695,10 +980,15 @@
                             <outlet property="delegate" destination="PP8-Mm-aEh" id="JSY-oH-nb8"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="domainLabel" destination="IPS-SD-65t" id="MhN-vn-ySm"/>
+                        <outlet property="messageLabel" destination="3j6-i6-nia" id="BM2-Ja-1hO"/>
+                        <outlet property="resetButton" destination="953-jn-tmN" id="Xvb-Ht-UMU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kih-BY-Mzp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3790" y="1478"/>
+            <point key="canvasLocation" x="3789.5999999999999" y="1477.5112443778112"/>
         </scene>
         <!--PrivacyProtectionHeader-->
         <scene sceneID="R0m-fy-D7F">
@@ -1033,6 +1323,7 @@
         <image name="PP Arrow Back" width="10" height="16"/>
         <image name="PP Arrow Forward" width="10" height="16"/>
         <image name="PP Hero Connection On" width="43" height="65"/>
+        <image name="PP Hero Leaderboard On" width="60" height="55"/>
         <image name="PP Icon Blocked Off" width="22" height="29"/>
         <image name="PP Icon Connection Off" width="19" height="28"/>
         <image name="PP Icon Good Privacy Off" width="23" height="30"/>

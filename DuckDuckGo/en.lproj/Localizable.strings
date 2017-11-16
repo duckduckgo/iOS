@@ -102,3 +102,5 @@
 "privacy.protection.encryption.no" = "No";
 "privacy.protection.encryption.unknown" = "Unknown";
 "privacy.protection.encryption.bits" = "%d bits";
+
+"privacy.protection.network.leaderboard" = "Trackers networks were found on %@ of web sites you’ve visited since %@.";

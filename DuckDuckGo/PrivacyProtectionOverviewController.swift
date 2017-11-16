@@ -212,16 +212,3 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
         return true
     }
 }
-
-fileprivate extension UIColor {
-
-    fileprivate static var ppGray: UIColor {
-        return UIColor(red: 149.0 / 255.0, green: 149.0 / 255.0, blue: 149.0 / 255.0, alpha: 1.0)
-    }
-
-    fileprivate static var ppGreen: UIColor {
-        return UIColor(red: 63.0 / 255.0, green: 161.0 / 255.0, blue: 64.0 / 255.0, alpha: 1.0)
-    }
-
-}
-

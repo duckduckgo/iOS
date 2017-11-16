@@ -34,7 +34,6 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initTable()
         initHeroIcon()
         initResetButton()
         initDomainLabel()
@@ -45,10 +44,11 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     func update() {
         guard isViewLoaded else { return }
 
+        initTable()
         initLeaderboard()
-        initResetView()
-        initMessageLabel()
         tableView.reloadData()
+        initMessageLabel()
+        initResetView()
     }
 
     private func initResetView() {
@@ -94,13 +94,9 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initMessageLabel() {
-        guard let date = leaderboard.startDate else {
-            messageLabel.isHidden = true
-            return
-        }
-
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
+        let date = leaderboard.startDate ?? Date()
         let dateText = dateFormatter.string(from: date)
 
         let percent = "\(leaderboard.percentOfSitesWithNetwork())%"

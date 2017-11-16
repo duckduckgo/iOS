@@ -86,12 +86,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     private func updateTrackersBlocked() {
         trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Blocked On") : #imageLiteral(resourceName: "PP Icon Blocked Off")
-        trackersCell.summaryLabel.text = siteRating.trackersText(contentBlocker: contentBlocker)
+        trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
     }
 
     private func updateMajorTrackersBlocked() {
         majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
-        majorTrackersCell.summaryLabel.text = siteRating.majorTrackersText(contentBlocker: contentBlocker)
+        majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
     }
 
     private func updatePrivacyPractices() {

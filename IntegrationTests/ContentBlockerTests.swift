@@ -65,7 +65,7 @@ class ContentBlockerTests: XCTestCase {
         checkContentBlocking(onTestPage: TrackerPageUrl.requests)
     }
     
-    func checkContentBlocking(onTestPage url: String) {
+    func checkContentBlocking(onTestPage url: String, file: StaticString = #file, line: UInt = #line) {
         
         newTab()
         
@@ -79,7 +79,7 @@ class ContentBlockerTests: XCTestCase {
         
         let popoverTrackerCount = app.tables.staticTexts["trackerCount"].label
 
-        XCTAssertEqual(popoverTrackerCount, webTrackerCount)
+        XCTAssertEqual(popoverTrackerCount, webTrackerCount, file: file, line: line)
     }
 
     private func showTabs() {

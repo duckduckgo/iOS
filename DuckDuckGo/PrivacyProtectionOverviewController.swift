@@ -222,24 +222,8 @@ class TrackerNetworkPillView: UIView {
         let percentText = "\(percent)%"
         let image = network.image
 
-        let animate = network.image != image || percentText != percentageLabel.text
-
         networkImage.image = image
         percentageLabel.text = percentText
-
-        if animate {
-
-            let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-            pulseAnimation.duration = 0.3
-            pulseAnimation.fromValue = 0
-            pulseAnimation.toValue = 1
-            pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-            pulseAnimation.autoreverses = true
-            self.percentageLabel.layer.add(pulseAnimation, forKey: "animateOpacity")
-            self.networkImage.layer.add(pulseAnimation, forKey: "animateOpacity")
-
-        }
-
     }
 
 }
@@ -262,3 +246,13 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
         return true
     }
 }
+
+fileprivate extension PPTrackerNetwork {
+
+    var image: UIImage {
+        let imageName = "PP Pill \(name!.lowercased())"
+        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
+    }
+
+}
+

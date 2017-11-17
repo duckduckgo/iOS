@@ -219,8 +219,27 @@ class TrackerNetworkPillView: UIView {
 
     func update(network: PPTrackerNetwork, sitesVisited: Int) {
         let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / sitesVisited
-        networkImage.image = network.image
-        percentageLabel.text = "\(percent)%"
+        let percentText = "\(percent)%"
+        let image = network.image
+
+        let animate = network.image != image || percentText != percentageLabel.text
+
+        networkImage.image = image
+        percentageLabel.text = percentText
+
+        if animate {
+
+            let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+            pulseAnimation.duration = 0.3
+            pulseAnimation.fromValue = 0
+            pulseAnimation.toValue = 1
+            pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            pulseAnimation.autoreverses = true
+            self.percentageLabel.layer.add(pulseAnimation, forKey: "animateOpacity")
+            self.networkImage.layer.add(pulseAnimation, forKey: "animateOpacity")
+
+        }
+
     }
 
 }

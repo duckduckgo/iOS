@@ -67,6 +67,6 @@ extension FeaturesViewController: OnboardingPageViewController {
     }
     
     var preferredBackgroundColor: UIColor {
-        return UIColor.lightOliveGreen
+        return UIColor.softBlue
     }
 }

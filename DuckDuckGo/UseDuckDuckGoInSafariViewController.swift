@@ -74,6 +74,6 @@ extension UseDuckDuckGoInSafariViewController: OnboardingPageViewController {
     }
     
     var preferredBackgroundColor: UIColor {
-        return UIColor.softBlue
+        return UIColor.lightOliveGreen
     }
 }

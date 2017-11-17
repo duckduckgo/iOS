@@ -13,7 +13,7 @@ extension PPTrackerNetwork {
 
     var image: UIImage {
         let imageName = "PP Pill \(name!.lowercased())"
-        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Inline D")
+        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
     }
 
 }

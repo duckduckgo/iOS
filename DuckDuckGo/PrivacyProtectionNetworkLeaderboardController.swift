@@ -27,8 +27,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     weak var siteRating: SiteRating!
 
     let leaderboard = NetworkLeaderboard.shared
-    var networksDetected = [String]()
-    var data = [String: Int]()
+    var networksDetected = [PPTrackerNetwork]()
+    var sitesVisited = 0
     var drama = true
 
     override func viewDidLoad() {
@@ -76,14 +76,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initLeaderboard() {
+        sitesVisited = leaderboard.sitesVisited()
         networksDetected = leaderboard.networksDetected()
-        for network in networksDetected {
-            data[network] = leaderboard.percentOfSitesWithNetwork(named: network)
-        }
-
-        networksDetected = networksDetected.sorted() { (left, right) -> Bool in
-            return data[left]! > data[right]!
-        }
     }
 
     private func initDrama() {
@@ -99,10 +93,12 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let date = leaderboard.startDate ?? Date()
         let dateText = dateFormatter.string(from: date)
 
-        let percent = "\(leaderboard.percentOfSitesWithNetwork())%"
-        let message = UserText.ppNetworkLeaderboard.format(arguments: percent, dateText)
+        let detectedOn = networksDetected.count == 0 ? 0 : Int(truncating: networksDetected[0].detectedOnCount ?? 0)
+        let percent = sitesVisited == 0 ? 0 : 100 * detectedOn / sitesVisited
+        let percentText = "\(percent)%"
+        let message = UserText.ppNetworkLeaderboard.format(arguments: percentText, dateText)
 
-        guard let percentRange = message.range(of: percent) else { return }
+        guard let percentRange = message.range(of: percentText) else { return }
         guard let dateRange = message.range(of: dateText) else { return }
 
         let percentNSRange = NSRange(percentRange, in: message)
@@ -166,10 +162,10 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
         }
 
         let network = networksDetected[indexPath.row]
-        let percent = drama ? 0 : leaderboard.percentOfSitesWithNetwork(named: network)
+        let percent = drama ? 0 : 100 * Int(truncating: network.detectedOnCount!) / sitesVisited
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionNetworkLeaderboardCell
-        cell.update(network: network, percent: percent)
+        cell.update(network: network.name!, percent: percent)
         return cell
     }
 

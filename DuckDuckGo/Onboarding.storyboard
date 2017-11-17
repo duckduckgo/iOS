@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -94,7 +95,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="426"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Igk-T8-aUE">
-                                        <rect key="frame" x="14" y="40" width="292" height="428"/>
+                                        <rect key="frame" x="14" y="40" width="292" height="441.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRealPrivacy" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-V5-dFX">
                                                 <rect key="frame" x="71" y="18" width="150" height="150"/>
@@ -120,7 +121,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfc-Ls-rdK">
-                                                <rect key="frame" x="24" y="240" width="244" height="32"/>
+                                                <rect key="frame" x="24" y="240" width="244" height="37.5"/>
                                                 <string key="text">Keep your search history private
 and minimize ad targeting.</string>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -131,7 +132,7 @@ and minimize ad targeting.</string>
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Block Trackers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="ant-km-gRI">
-                                                <rect key="frame" x="24" y="308" width="244" height="28"/>
+                                                <rect key="frame" x="24" y="313.5" width="244" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="tla-Kq-VFC"/>
                                                 </constraints>
@@ -143,7 +144,7 @@ and minimize ad targeting.</string>
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prevent advertisers and corporations from tracking you across the internet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQF-Hi-8du">
-                                                <rect key="frame" x="24" y="344" width="244" height="48"/>
+                                                <rect key="frame" x="24" y="349.5" width="244" height="56"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -237,7 +238,7 @@ and minimize ad targeting.</string>
                                 <rect key="frame" x="0.0" y="20" width="320" height="378"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ji-y4-722">
-                                        <rect key="frame" x="14" y="40" width="292" height="537"/>
+                                        <rect key="frame" x="14" y="40" width="292" height="548"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingNoTracking" translatesAutoresizingMaskIntoConstraints="NO" id="aKf-ss-fKw">
                                                 <rect key="frame" x="71" y="18" width="150" height="150"/>
@@ -263,7 +264,7 @@ and minimize ad targeting.</string>
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other search engines track your searches even when you’re in private browsing mode. We don’t track you — period." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-Kn-9Ho">
-                                                <rect key="frame" x="24" y="240" width="244" height="64"/>
+                                                <rect key="frame" x="24" y="240" width="244" height="75"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -272,7 +273,7 @@ and minimize ad targeting.</string>
                                                 </variation>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sgY-kD-zMD">
-                                                <rect key="frame" x="26" y="328" width="240" height="47"/>
+                                                <rect key="frame" x="26" y="339" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsSettings" translatesAutoresizingMaskIntoConstraints="NO" id="bGA-t9-pq9">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -282,7 +283,7 @@ and minimize ad targeting.</string>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Settings App" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVN-D0-jEi">
-                                                        <rect key="frame" x="59" y="15.5" width="181" height="16"/>
+                                                        <rect key="frame" x="59" y="14" width="181" height="19"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -297,7 +298,7 @@ and minimize ad targeting.</string>
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hiI-at-QuL">
-                                                <rect key="frame" x="26" y="391" width="240" height="47"/>
+                                                <rect key="frame" x="26" y="402" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsSafari" translatesAutoresizingMaskIntoConstraints="NO" id="0hg-Tu-0nt">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -321,7 +322,7 @@ and minimize ad targeting.</string>
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="EGv-r7-eiF">
-                                                <rect key="frame" x="26" y="454" width="240" height="47"/>
+                                                <rect key="frame" x="26" y="465" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionsTick" translatesAutoresizingMaskIntoConstraints="NO" id="MvK-Ki-UGn">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>

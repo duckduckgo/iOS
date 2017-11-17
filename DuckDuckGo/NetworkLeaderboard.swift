@@ -58,25 +58,16 @@ class NetworkLeaderboard {
         userDefaults.removeObject(forKey: Constants.startDateKey)
     }
 
-    func percentOfSitesWithNetwork(named: String? = nil) -> Int {
-        let allSitesRequest:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
-        guard let totalSites = try? container.managedObjectContext.count(for: allSitesRequest), totalSites > 0 else { return 0 }
-
-        let byNetworkRequest:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
-        if let named = named {
-            byNetworkRequest.predicate = NSPredicate(format: "ANY networksDetected.name contains %@", named)
-        } else {
-            byNetworkRequest.predicate = NSPredicate(format: "networksDetected.@count > 0")
-        }
-        guard let sitesWithNetworks = try? container.managedObjectContext.count(for: byNetworkRequest) else { return 0 }
-        
-        let rawPercent = Float(sitesWithNetworks) / Float(totalSites)
-        return Int(rawPercent * 100)
+    func sitesVisited() -> Int {
+        let request:NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
+        return (try? container.managedObjectContext.count(for: request)) ?? 0
     }
 
-    func networksDetected() -> [String] {
-        guard let results:[PPTrackerNetwork] = try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()) else { return [] }
-        return results.map( { $0.name ?? "" } )
+    func networksDetected() -> [PPTrackerNetwork] {
+        let request:NSFetchRequest<PPTrackerNetwork> = PPTrackerNetwork.fetchRequest()
+        request.sortDescriptors = [ NSSortDescriptor(key: "detectedOnCount", ascending: false) ]
+        guard let results = try? container.managedObjectContext.fetch(request) else { return [] }
+        return results
     }
 
     func visited(domain: String) {
@@ -104,13 +95,18 @@ class NetworkLeaderboard {
             visitedSite = newSite
         }
 
-        var trackerNetwork = findNetwork(byName: network)
+        var trackerNetwork:PPTrackerNetwork! = findNetwork(byName: network)
         if trackerNetwork == nil {
             trackerNetwork = NSEntityDescription.insertNewObject(forEntityName: entityNames.trackerNetwork, into: container.managedObjectContext) as? PPTrackerNetwork
-            trackerNetwork?.name = network
+            trackerNetwork.name = network
             guard trackerNetwork != nil else { return }
         }
-        trackerNetwork?.addToDetectedOn(visitedSite!)
+
+        if !trackerNetwork.detectedOn!.contains(visitedSite!) {
+            trackerNetwork.detectedOnCount = ((trackerNetwork.detectedOn?.count ?? 0) + 1) as NSNumber
+        }
+
+        trackerNetwork.addToDetectedOn(visitedSite!)
         visitedSite?.addToNetworksDetected(trackerNetwork!)
         _ = container.save()
     }

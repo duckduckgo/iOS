@@ -50,6 +50,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
         update()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        leaderboard.update()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
@@ -100,8 +104,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateLeaderBoard() {
-        // leaderboard.isHidden = true
-        // TODO update leaderboard later
+        leaderboard.update()
     }
 
     private func updateProtectionToggle() {
@@ -135,7 +138,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
 }
-
 
 extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
 
@@ -173,11 +175,34 @@ class TrackerNetworkLeaderboardCell: UITableViewCell {
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
     @IBOutlet weak var thirdPill: TrackerNetworkPillView!
+    @IBOutlet weak var message: UILabel!
+    @IBOutlet weak var forwardArrow: UIImageView!
+
+    var leaderboard = NetworkLeaderboard.shared
 
     func didLoad() {
         firstPill.didLoad()
         secondPill.didLoad()
         thirdPill.didLoad()
+    }
+
+    func update() {
+        let networksDetected = leaderboard.networksDetected()
+
+        firstPill.isHidden = networksDetected.count < 3
+        secondPill.isHidden = networksDetected.count < 3
+        thirdPill.isHidden = networksDetected.count < 3
+        forwardArrow.isHidden = networksDetected.count < 3
+        message.isHidden = networksDetected.count >= 3
+        selectionStyle = networksDetected.count < 3 ? .none : .default
+
+        if networksDetected.count >= 3 {
+            let sitesVisited = leaderboard.sitesVisited()
+            firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
+            secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
+            thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
+        }
+
     }
 
 }
@@ -190,6 +215,12 @@ class TrackerNetworkPillView: UIView {
     func didLoad() {
         layer.cornerRadius = frame.size.height / 2
         percentageLabel.adjustKern(1.2)
+    }
+
+    func update(network: PPTrackerNetwork, sitesVisited: Int) {
+        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / sitesVisited
+        networkImage.image = network.image
+        percentageLabel.text = "\(percent)%"
     }
 
 }

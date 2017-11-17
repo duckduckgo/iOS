@@ -46,7 +46,18 @@ class NetworkLeaderboardTests: XCTestCase {
         XCTAssertNil(leaderboard.startDate)
     }
 
-    func testWhenThreeSitesVisitedAndTwoNetworkDetectedOnOneSiteOneOnAnotherPercentForNamedNetworkIs33() {
+    func testWhenSitesVisitedTotalSitesVistedReturnsCorrectNumber() {
+        let leaderboard = NetworkLeaderboard()
+       leaderboard.visited(domain: "nonetworksdetected.com")
+        leaderboard.visited(domain: "ohno.com")
+        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "ohno.com")
+        leaderboard.visited(domain: "example.com")
+        leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "example.com")
+        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
+        XCTAssertEqual(3, leaderboard.sitesVisited())
+    }
+
+    func testWhenSitesVisitedNetworksDetectedReturnsThemInOrderOfCountDescending() {
         let leaderboard = NetworkLeaderboard()
         leaderboard.visited(domain: "nonetworksdetected.com")
         leaderboard.visited(domain: "ohno.com")
@@ -54,7 +65,14 @@ class NetworkLeaderboardTests: XCTestCase {
         leaderboard.visited(domain: "example.com")
         leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "example.com")
         leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(33, leaderboard.percentOfSitesWithNetwork(named: "tracker.com"))
+
+        let networks = leaderboard.networksDetected()
+        XCTAssertEqual("google.com", networks[0].name)
+        XCTAssertEqual(2, networks[0].detectedOnCount)
+
+        XCTAssertEqual("tracker.com", networks[1].name)
+        XCTAssertEqual(1, networks[1].detectedOnCount)
+
     }
 
     func testWhenThreeSitesVisitedAndTwoNetworkDetectedOnBothOfTwoSiteNetworksDetectedAreReturned() {
@@ -66,82 +84,14 @@ class NetworkLeaderboardTests: XCTestCase {
         leaderboard.visited(domain: "example.com")
         leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "example.com")
         leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(["google.com", "tracker.com"], leaderboard.networksDetected().sorted())
-    }
-
-    func testWhenThreeSitesVisitedAndTwoNetworkDetectedOnBothOfTwoSiteNetworkPercentIs66() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "nonetworksdetected.com")
-        leaderboard.visited(domain: "ohno.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "ohno.com")
-        leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "ohno.com")
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "example.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(66, leaderboard.percentOfSitesWithNetwork())
-    }
-
-    func testWhenThreeSitesVisitedAndTwoNetworkDetectedOnTwoSiteNetworkPercentIs66() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "ohno.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "ohno.com")
-        leaderboard.visited(domain: "nonetworksdetected.com")
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(66, leaderboard.percentOfSitesWithNetwork())
-    }
-
-    func testWhenThreeSitesVisitedAndTwoNetworkDetectedOnOneSiteNetworkPercentIs33() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "anothernonetworksdetected.com")
-        leaderboard.visited(domain: "nonetworksdetected.com")
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        leaderboard.network(named: "tracker.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(33, leaderboard.percentOfSitesWithNetwork())
-    }
-
-    func testWhenTwoSitesVisitedAndSingleNetworkDetectedOnOneSiteNetworkPercentIs50() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "nonetworksdetected.com")
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(50, leaderboard.percentOfSitesWithNetwork(named: "google.com"))
-    }
-
-    func testWhenTwoSitesVisitedAndSingleNetworkDetectedOnOneSitePercentIs50() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "nonetworksdetected.com")
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(50, leaderboard.percentOfSitesWithNetwork())
+        XCTAssertEqual(["google.com", "tracker.com"], leaderboard.networksDetected().map( { $0.name! }).sorted())
     }
 
     func testWhenSingleSiteVisitedAndSingleNetworkDetectedNetworkIsReturned() {
         let leaderboard = NetworkLeaderboard()
         leaderboard.visited(domain: "example.com")
         leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(["google.com"], leaderboard.networksDetected())
-    }
-
-    func testWhenSingleSiteVisitedAndSingleNetworkDetectedNetworkPercentIs100() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(100, leaderboard.percentOfSitesWithNetwork(named: "google.com"))
-    }
-
-    func testWhenSingleSiteVisitedAndSingleNetworkDetectedPercentIs100() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "example.com")
-        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
-        XCTAssertEqual(100, leaderboard.percentOfSitesWithNetwork())
-    }
-
-    func testWhenSiteVisitedButNoNetworksDetectedPercentIsZero() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.visited(domain: "example.com")
-        XCTAssertEqual(0, leaderboard.percentOfSitesWithNetwork())
+        XCTAssertEqual("google.com", leaderboard.networksDetected()[0].name)
     }
 
     func testWhenLeaderboardIsNewNoNetworksDetected() {
@@ -149,9 +99,9 @@ class NetworkLeaderboardTests: XCTestCase {
         XCTAssertEqual([], leaderboard.networksDetected())
     }
 
-    func testWhenLeaderboardIsNewPercentIsZero() {
+    func testWhenLeaderboardIsNewSitesVisitedIsZero() {
         let leaderboard = NetworkLeaderboard()
-        XCTAssertEqual(0, leaderboard.percentOfSitesWithNetwork())
+        XCTAssertEqual(0, leaderboard.sitesVisited())
     }
 
 }

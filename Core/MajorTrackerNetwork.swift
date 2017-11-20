@@ -22,13 +22,13 @@ import Foundation
 
 public protocol MajorTrackerNetworkStore {
 
-    func network(forDomain domain: String) -> MajorTrackerNetwork?
+    func network(forName name: String) -> MajorTrackerNetwork?
 
 }
 
 public struct MajorTrackerNetwork {
 
-    let domain: String
+    let name: String
     let perentageOfPages: Int
 
     var score: Int {
@@ -40,22 +40,23 @@ public struct MajorTrackerNetwork {
 public class EmbeddedMajorTrackerNetworkStore: MajorTrackerNetworkStore {
 
     private let networks = [
-        MajorTrackerNetwork(domain: "google.com",     perentageOfPages: 84),
-        MajorTrackerNetwork(domain: "facebook.com",   perentageOfPages: 36),
-        MajorTrackerNetwork(domain: "twitter.com",    perentageOfPages: 16),
-        MajorTrackerNetwork(domain: "amazon.com",     perentageOfPages: 14),
-        MajorTrackerNetwork(domain: "appnexus.com",   perentageOfPages: 10),
-        MajorTrackerNetwork(domain: "oracle.com",     perentageOfPages: 10),
-        MajorTrackerNetwork(domain: "mediamath.com",  perentageOfPages: 9),
-        MajorTrackerNetwork(domain: "yahoo.com",      perentageOfPages: 9),
-        MajorTrackerNetwork(domain: "maxcdn.com",     perentageOfPages: 7),
-        MajorTrackerNetwork(domain: "automattic.com", perentageOfPages: 7),
+        MajorTrackerNetwork(name: "google",     perentageOfPages: 84),
+        MajorTrackerNetwork(name: "facebook",   perentageOfPages: 36),
+        MajorTrackerNetwork(name: "twitter",    perentageOfPages: 16),
+        MajorTrackerNetwork(name: "amazon",     perentageOfPages: 14),
+        MajorTrackerNetwork(name: "appnexus",   perentageOfPages: 10),
+        MajorTrackerNetwork(name: "oracle",     perentageOfPages: 10),
+        MajorTrackerNetwork(name: "mediamath",  perentageOfPages: 9),
+        MajorTrackerNetwork(name: "yahoo",      perentageOfPages: 9),
+        MajorTrackerNetwork(name: "maxcdn",     perentageOfPages: 7),
+        MajorTrackerNetwork(name: "automattic", perentageOfPages: 7),
         ]
 
     public init() { }
 
-    public func network(forDomain domain: String) -> MajorTrackerNetwork? {
-        return networks.filter( { domain.hasSuffix($0.domain) } ).first
+    public func network(forName name: String) -> MajorTrackerNetwork? {
+        let lowercased = name.lowercased()
+        return networks.filter( { lowercased.hasSuffix($0.name) } ).first
     }
 
 }

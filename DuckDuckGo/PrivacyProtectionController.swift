@@ -39,6 +39,8 @@ class PrivacyProtectionController: UIViewController {
     weak var omniDelegate: OmniBarDelegate!
     weak var siteRating: SiteRating!
 
+    lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,9 +62,7 @@ class PrivacyProtectionController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? UINavigationController {
             embeddedController = controller
-            if let controller = embeddedController.viewControllers[0] as? PrivacyProtectionOverviewController {
-                controller.siteRating = siteRating
-            }
+            updateViewControllers()
         }
     }
 
@@ -75,10 +75,13 @@ class PrivacyProtectionController: UIViewController {
     func updateSiteRating(_ siteRating: SiteRating) {
         self.siteRating = siteRating
         omniBar.updateSiteRating(siteRating)
+        updateViewControllers()
+    }
 
+    func updateViewControllers() {
         for controller in embeddedController.viewControllers {
-            if let controller = controller as? PrivacyProtectionOverviewController {
-                controller.updateSiteRating(siteRating)
+            if let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying {
+                infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
             }
         }
     }

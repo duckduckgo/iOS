@@ -39,7 +39,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var unencryptedLabel: UILabel!
     @IBOutlet weak var mixedContentLabel: UILabel!
 
-    weak var siteRating: SiteRating!
+    private weak var siteRating: SiteRating!
 
     private let serverTrustCache = ServerTrustCache.shared
     private var sections = [Section]()
@@ -83,7 +83,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func beginCertificateInfoExtraction() {
         guard siteRating.https else { return }
-        guard let serverTrust = serverTrustCache.get(forDomain: siteRating.domain) else {
+        guard let serverTrust = serverTrustCache.get(forDomain: siteRating.url.host ?? "") else {
             return
         }
         DisplayableCertificateBuilder().build(usingTrust: serverTrust) { [weak self] displayable in
@@ -98,7 +98,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
 extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisplaying {
 
-    func using(_ siteRating: SiteRating) {
+    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
     }
 

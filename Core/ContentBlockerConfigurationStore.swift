@@ -24,7 +24,7 @@ public struct ContentBlockerConfigurationChangedNotification {
     public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
 }
 
-public protocol ContentBlockerConfigurationStore {
+public protocol ContentBlockerConfigurationStore: class {
     
     var domainWhitelist: Set<String> { get }
 

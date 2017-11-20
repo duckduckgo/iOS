@@ -39,10 +39,13 @@ public class DisconnectMeStore {
     }
     
     public var trackers: [String: Tracker] {
-       guard let data = try? Data(contentsOf: persistenceLocation), let trackers = try? parse(data: data) else {
+        do {
+            let data = try Data(contentsOf: persistenceLocation)
+            return try parse(data: data)
+        } catch {
+            Logger.log(items: "error parsing json for disconnect", error)
             return [String: Tracker]()
         }
-        return trackers
     }
     
     var bannedTrackersJson: String {
@@ -83,7 +86,7 @@ public class DisconnectMeStore {
     }
     
     private func convertToInjectableJson(_ trackers: [String: Tracker]) throws -> String {
-        let simplifiedTrackers = trackers.mapValues( { $0.parentDomain } )
+        let simplifiedTrackers = trackers.mapValues( { $0.networkName } )
         let json = try JSONSerialization.data(withJSONObject: simplifiedTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {
             return jsonString

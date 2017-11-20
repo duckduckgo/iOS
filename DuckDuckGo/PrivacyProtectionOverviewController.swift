@@ -51,6 +51,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        tableView.selectRow(at: nil, animated: false, scrollPosition: .none)
         leaderboard.update()
     }
 

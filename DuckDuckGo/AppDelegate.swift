@@ -139,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let main = mainViewController else { return }
         let onboardingController = OnboardingViewController.loadFromStoryboard()
         onboardingController.modalTransitionStyle = .flipHorizontal
-        main.present(onboardingController, animated: false, completion: nil)
+        main.present(onboardingController, animated: true, completion: nil)
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

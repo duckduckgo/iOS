@@ -190,14 +190,16 @@ class TrackerNetworkLeaderboardCell: UITableViewCell {
     func update() {
         let networksDetected = leaderboard.networksDetected()
 
-        firstPill.isHidden = networksDetected.count < 3
-        secondPill.isHidden = networksDetected.count < 3
-        thirdPill.isHidden = networksDetected.count < 3
-        forwardArrow.isHidden = networksDetected.count < 3
-        message.isHidden = networksDetected.count >= 3
-        selectionStyle = networksDetected.count < 3 ? .none : .default
+        let hasTop3 = networksDetected.count >= 3
 
-        if networksDetected.count >= 3 {
+        firstPill.isHidden = !hasTop3
+        secondPill.isHidden = !hasTop3
+        thirdPill.isHidden = !hasTop3
+        forwardArrow.isHidden = !hasTop3
+        message.isHidden = hasTop3
+        selectionStyle = !hasTop3 ? .none : .default
+
+        if hasTop3 {
             let sitesVisited = leaderboard.sitesVisited()
             firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
             secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)

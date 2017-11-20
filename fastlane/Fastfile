@@ -14,7 +14,7 @@ lane :release do
   #       app_identifier: "com.duckduckgo.mobile.ios",
   #       version: "7"
   #     ) + 1
-  buildNumber = 883
+  buildNumber = 884
 
   increment_build_number({
       build_number: buildNumber

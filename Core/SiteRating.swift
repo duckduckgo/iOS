@@ -35,7 +35,7 @@ public class SiteRating {
     let disconnectMeTrackers: [String: Tracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
+    public init(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
         self.url = url
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore

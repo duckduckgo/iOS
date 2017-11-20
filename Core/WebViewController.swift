@@ -30,6 +30,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var error: UIView!
     @IBOutlet weak var errorMessage: UILabel!
     
     open private(set) var webView: WKWebView!
@@ -258,15 +259,14 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     private func showError(message: String) {
-        webView.alpha = 0
-        errorMessage.text = "\(UserText.webPageFailedLoad) \(message)"
-        errorMessage.alpha = 1
-        errorMessage.adjustPlainTextLineHeight(1.5)
+        webView.isHidden = true
+        error.isHidden = false
+        errorMessage.text = message
     }
     
     private func hideErrorMessage() {
-        errorMessage.alpha = 0
-        webView.alpha = 1
+        error.isHidden = true
+        webView.isHidden = false
     }
 
     open func reloadScripts(with protectionId: String) {

@@ -35,22 +35,22 @@ public class Tracker: NSObject {
     }
     
     public let url: String
-    public let parentDomain: String?
+    public let networkName: String?
     public let category: Category?
 
-    public init(url: String, parentDomain: String?, category: Category? = nil) {
+    public init(url: String, networkName: String?, category: Category? = nil) {
         self.url = url
-        self.parentDomain = parentDomain
+        self.networkName = networkName
         self.category = category
     }
 
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Tracker else { return false }
-        return url == other.url && parentDomain == other.parentDomain && category == other.category
+        return url == other.url && networkName == other.networkName && category == other.category
     }
     
     public override var hashValue: Int {
-        return url.hashValue ^ (parentDomain?.hashValue ?? 0) ^ (category?.hashValue ?? 0)
+        return url.hashValue ^ (networkName?.hashValue ?? 0) ^ (category?.hashValue ?? 0)
     }
     
     public var isIpTracker: Bool {

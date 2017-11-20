@@ -50,6 +50,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
         update()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.selectRow(at: nil, animated: false, scrollPosition: .none)
+        leaderboard.update()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
@@ -86,12 +91,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     private func updateTrackersBlocked() {
         trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Blocked On") : #imageLiteral(resourceName: "PP Icon Blocked Off")
-        trackersCell.summaryLabel.text = siteRating.trackersText(contentBlocker: contentBlocker)
+        trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
     }
 
     private func updateMajorTrackersBlocked() {
         majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
-        majorTrackersCell.summaryLabel.text = siteRating.majorTrackersText(contentBlocker: contentBlocker)
+        majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
     }
 
     private func updatePrivacyPractices() {
@@ -100,8 +105,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateLeaderBoard() {
-        leaderboard.isHidden = true
-        // TODO update leaderboard later
+        leaderboard.update()
     }
 
     private func updateProtectionToggle() {
@@ -135,7 +139,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
 }
-
 
 extension PrivacyProtectionOverviewController: PrivacyProtectionInfoDisplaying {
 
@@ -173,11 +176,36 @@ class TrackerNetworkLeaderboardCell: UITableViewCell {
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
     @IBOutlet weak var thirdPill: TrackerNetworkPillView!
+    @IBOutlet weak var message: UILabel!
+    @IBOutlet weak var forwardArrow: UIImageView!
+
+    var leaderboard = NetworkLeaderboard.shared
 
     func didLoad() {
         firstPill.didLoad()
         secondPill.didLoad()
         thirdPill.didLoad()
+    }
+
+    func update() {
+        let networksDetected = leaderboard.networksDetected()
+
+        let hasTop3 = networksDetected.count >= 3
+
+        firstPill.isHidden = !hasTop3
+        secondPill.isHidden = !hasTop3
+        thirdPill.isHidden = !hasTop3
+        forwardArrow.isHidden = !hasTop3
+        message.isHidden = hasTop3
+        selectionStyle = !hasTop3 ? .none : .default
+
+        if hasTop3 {
+            let sitesVisited = leaderboard.sitesVisited()
+            firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
+            secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
+            thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
+        }
+
     }
 
 }
@@ -190,6 +218,15 @@ class TrackerNetworkPillView: UIView {
     func didLoad() {
         layer.cornerRadius = frame.size.height / 2
         percentageLabel.adjustKern(1.2)
+    }
+
+    func update(network: PPTrackerNetwork, sitesVisited: Int) {
+        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / sitesVisited
+        let percentText = "\(percent)%"
+        let image = network.image
+
+        networkImage.image = image
+        percentageLabel.text = percentText
     }
 
 }
@@ -213,14 +250,11 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
     }
 }
 
-fileprivate extension UIColor {
+fileprivate extension PPTrackerNetwork {
 
-    fileprivate static var ppGray: UIColor {
-        return UIColor(red: 149.0 / 255.0, green: 149.0 / 255.0, blue: 149.0 / 255.0, alpha: 1.0)
-    }
-
-    fileprivate static var ppGreen: UIColor {
-        return UIColor(red: 63.0 / 255.0, green: 161.0 / 255.0, blue: 64.0 / 255.0, alpha: 1.0)
+    var image: UIImage {
+        let imageName = "PP Pill \(name!.lowercased())"
+        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
     }
 
 }

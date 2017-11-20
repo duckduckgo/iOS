@@ -66,13 +66,13 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     }
 
     private func updateNetworksCell() {
-        let success = siteRating.trackersSuccess(contentBlocker: contentBlocker)
-        networksCell.update(message: siteRating.trackersText(contentBlocker: contentBlocker), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.networksSuccess(contentBlocker: contentBlocker)
+        networksCell.update(message: siteRating.networksText(contentBlocker: contentBlocker), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updateMajorNetworksCell() {
-        let success = siteRating.majorTrackersSuccess(contentBlocker: contentBlocker)
-        majorNetworksCell.update(message: siteRating.majorTrackersText(contentBlocker: contentBlocker), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.majorNetworksSuccess(contentBlocker: contentBlocker)
+        majorNetworksCell.update(message: siteRating.majorNetworksText(contentBlocker: contentBlocker), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updatePrivacyPractices() {

@@ -21,16 +21,22 @@ var DisconnectMe = function() {
 
 	// public
 	function parentTracker(url) {
-		var domain = duckduckgoTLDParser.extractDomain(url)
-		
-		var parentBlocked = duckduckgoBlockerData.disconnectmeBanned[domain]
-		if (parentBlocked) {
-			return { parent: parentBlocked, banned: true }
-		}
 
-		var parentAllowed = duckduckgoBlockerData.disconnectmeAllowed[domain]
-		if (parentAllowed) {
-			return { parent: parentAllowed, banned: false }
+		var splitHost = url.host.split(".")
+		while(splitHost.length >= 2) {		
+			var domain = splitHost.join(".")
+			
+			var parentBlocked = duckduckgoBlockerData.disconnectmeBanned[domain]
+			if (parentBlocked) {
+				return { parent: parentBlocked, banned: true }
+			}
+
+			var parentAllowed = duckduckgoBlockerData.disconnectmeAllowed[domain]
+			if (parentAllowed) {
+				return { parent: parentAllowed, banned: false }
+			}
+
+			splitHost.shift()
 		}
 
 		return null

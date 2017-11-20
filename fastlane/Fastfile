@@ -9,11 +9,15 @@ default_platform :ios
 
 lane :release do 
 
+  # buildNumber = latest_testflight_build_number(
+  #       username: 'office@duckduckgo.com',
+  #       app_identifier: "com.duckduckgo.mobile.ios",
+  #       version: "7"
+  #     ) + 1
+  buildNumber = 883
+
   increment_build_number({
-      build_number: latest_testflight_build_number(
-        username: 'office@duckduckgo.com',
-        app_identifier: "com.duckduckgo.mobile.ios"
-      ) + 1
+      build_number: buildNumber
     })
 
   gym(

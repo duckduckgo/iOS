@@ -86,22 +86,40 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     private func updateEncryption() {
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
-        encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        if siteRating.https && siteRating.hasOnlySecureContent {
+            encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        } else {
+            encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection Bad") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        }
     }
 
     private func updateTrackersBlocked() {
-        trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Blocked On") : #imageLiteral(resourceName: "PP Icon Blocked Off")
         trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
+
+        if (protecting() ? siteRating.uniqueTrackerNetworksBlocked : siteRating.uniqueMajorTrackerNetworksBlocked) == 0 {
+            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks On") : #imageLiteral(resourceName: "PP Icon Networks Off")
+        } else {
+            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks Bad") : #imageLiteral(resourceName: "PP Icon Networks Off")
+        }
     }
 
     private func updateMajorTrackersBlocked() {
-        majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
         majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
+        if siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) {
+            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+        } else {
+            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks Bad") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+        }
     }
 
     private func updatePrivacyPractices() {
-        privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Bad Privacy On") : #imageLiteral(resourceName: "PP Icon Bad Privacy Off")
         privacyPracticesCell.summaryLabel.text = siteRating.privacyPracticesText()
+
+        if siteRating.privacyPracticesSuccess() {
+            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Good On") : #imageLiteral(resourceName: "PP Icon Privacy Good Off")
+        } else {
+            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Bad On") : #imageLiteral(resourceName: "PP Icon Privacy Bad Off")
+        }
     }
 
     private func updateLeaderBoard() {

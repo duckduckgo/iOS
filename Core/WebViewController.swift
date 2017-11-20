@@ -49,11 +49,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public var favicon: URL?
     
     public var canGoBack: Bool {
-        return webView.canGoBack
+        return webView.canGoBack || (webView.url != nil && isError)
     }
     
     public var canGoForward: Bool {
         return webView.canGoForward
+    }
+
+    public var isError: Bool {
+        return !error.isHidden
     }
 
     open override func viewDidLoad() {
@@ -162,8 +166,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
-        webEventsDelegate?.webpageDidFailToLoad()
         showError(message: error.localizedDescription)
+        webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }
 
@@ -243,7 +247,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func goBack() {
-        webView.goBack()
+        if isError {
+            hideErrorMessage()
+            webEventsDelegate?.webpageDidFinishLoading()
+        } else {
+            webView.goBack()
+        }
     }
     
     public func goForward() {
@@ -262,6 +271,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.isHidden = true
         error.isHidden = false
         errorMessage.text = message
+
     }
     
     private func hideErrorMessage() {

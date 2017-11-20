@@ -121,7 +121,9 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func updateSiteRating() {
-        if let url = url {
+        if isError {
+            siteRating = nil
+        } else if let url = url {
             siteRating?.url = url
         } else {
             siteRating = nil
@@ -407,6 +409,10 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidFailToLoad() {
+        Logger.log(items: "webpageLoading failed:", Date().timeIntervalSince1970)
+        siteRating?.finishedLoading = true
+        updateSiteRating()
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     

@@ -80,9 +80,12 @@ class PrivacyProtectionController: UIViewController {
 
     func updateViewControllers() {
         for controller in embeddedController.viewControllers {
-            if let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying {
+            guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
+
+            if let siteRating = siteRating {
                 infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
             }
+            
         }
     }
 

@@ -249,6 +249,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func goBack() {
         if isError {
             hideErrorMessage()
+            webEventsDelegate?.webpageDidStartLoading()
             webEventsDelegate?.webpageDidFinishLoading()
         } else {
             webView.goBack()

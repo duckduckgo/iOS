@@ -107,6 +107,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
  
     public func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
+        webView.stopLoading()
         webView.load(urlRequest)
     }
     

@@ -26,6 +26,7 @@ var duckduckgoContentBlocking = function() {
 	function handleDetection(event, parent, detectionMethod) {
 		var blocked = block(event)
         duckduckgoMessaging.trackerDetected({
+        	pageUrl: location.href,
 	        url: event.url,
 	        networkName: parent,
 	        blocked: blocked,

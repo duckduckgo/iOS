@@ -378,8 +378,8 @@ extension TabViewController: WebEventsDelegate {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
-        if let siteRating = siteRating {
-            NetworkLeaderboard.shared.visited(domain: siteRating.domain)
+        if let domain = siteRating?.domain {
+            NetworkLeaderboard.shared.visited(domain: domain)
         }
     }
     

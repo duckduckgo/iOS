@@ -62,16 +62,17 @@ public class SiteRatingView: UIView {
     public func refresh() {
         circleIndicator.tintColor = UIColor.monitoringInactiveTint
 
-        guard let siteRating = siteRating else {
+        guard let siteRating = siteRating,
+            let domain = siteRating.domain else {
             gradeLabel.text = "-"
             return
         }
         
         let grades = siteRating.siteGrade()
-        gradeLabel.text = UserText.forSiteGrade(contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.after : grades.before)
+        gradeLabel.text = UserText.forSiteGrade(contentBlockerConfiguration.protecting(domain: domain) ? grades.after : grades.before)
     }
 
     private func protecting() -> Bool {
-        return contentBlockerConfiguration.protecting(domain: siteRating!.domain)
+        return contentBlockerConfiguration.protecting(domain: siteRating?.domain)
     }
 }

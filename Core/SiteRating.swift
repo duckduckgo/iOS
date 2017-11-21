@@ -24,8 +24,8 @@ public class SiteRating {
     
     public var url: URL
     public var hasOnlySecureContent: Bool
-    public var domain: String {
-        return url.host ?? ""
+    public var domain: String? {
+        return url.host
     }
     public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
@@ -72,6 +72,7 @@ public class SiteRating {
     }
     
     public var termsOfService: TermsOfService? {
+        let domain = self.domain ?? ""
         return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
     }
 

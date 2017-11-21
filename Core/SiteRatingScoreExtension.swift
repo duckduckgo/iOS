@@ -69,11 +69,13 @@ public extension SiteRating {
     }
 
     private var inMajorTrackerScore: Int {
+        guard let domain = domain else { return 0 }
         guard let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.networkName else { return 0 }
         return majorTrackerNetworkStore.network(forName: associatedDomain) == nil ? 0 : 1
     }
 
     private var isMajorTrackerScore: Int {
+        guard let domain = domain else { return 0 }
         guard let network = majorTrackerNetworkStore.network(forName: domain) else { return 0 }
         return network.score
     }
@@ -94,7 +96,7 @@ public extension SiteRating {
         let grade = siteGrade()
         return [
             "score": [
-                "domain": domain,
+                "domain": domain ?? "unknown",
                 "hasHttps": https,
                 "isAMajorTrackingNetwork": isMajorTrackerScore,
                 "containsMajorTrackingNetwork": containsMajorTracker,

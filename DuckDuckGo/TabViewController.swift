@@ -89,7 +89,8 @@ class TabViewController: WebViewController {
     @objc func onContentBlockerConfigurationChanged() {
         // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.reloadScripts()
+            guard let siteRating = self.siteRating else { return }
+            self.reloadScripts(with: siteRating.protectionId)
             self.webView?.reload()
         }
     }
@@ -109,7 +110,7 @@ class TabViewController: WebViewController {
     func showPrivacyProtection() {
         performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
-    
+
     fileprivate func resetSiteRating() {
         if let url = url {
             siteRating = SiteRating(url: url)
@@ -328,11 +329,13 @@ extension TabViewController: WKScriptMessageHandler {
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
-        reloadScripts()
+
+        guard let siteRating = siteRating else { return }
+        reloadScripts(with: siteRating.protectionId)
     }
     
     struct TrackerDetectedKey {
-        static let pageUrl = "pageUrl"
+        static let protectionId = "protectionId"
         static let blocked = "blocked"
         static let networkName = "networkName"
         static let url = "url"
@@ -343,10 +346,13 @@ extension TabViewController: WKScriptMessageHandler {
         guard let dict = message.body as? Dictionary<String, Any> else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let url = dict[TrackerDetectedKey.url] as? String else { return }
-        guard let pageUrl = dict[TrackerDetectedKey.pageUrl] as? String else { return }
+        guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
         let parent = dict[TrackerDetectedKey.networkName] as? String
 
-        guard pageUrl == self.url?.absoluteString else { return }
+        guard protectionId == siteRating?.protectionId else {
+            Logger.log(text: "id check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
+            return
+        }
 
         let tracker = Tracker(url: url, networkName: parent)
         siteRating?.trackerDetected(tracker, blocked: blocked)
@@ -379,6 +385,8 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
+        reloadScripts(with: siteRating!.protectionId)
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

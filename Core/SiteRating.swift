@@ -21,7 +21,7 @@
 import Foundation
 
 public class SiteRating {
-    
+    public let protectionId: String
     public var url: URL
     public var hasOnlySecureContent: Bool
     public var domain: String? {
@@ -36,6 +36,7 @@ public class SiteRating {
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
     public init(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
+        self.protectionId = UUID.init().uuidString
         self.url = url
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore

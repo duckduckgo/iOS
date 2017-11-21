@@ -177,7 +177,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Blocked Off" translatesAutoresizingMaskIntoConstraints="NO" id="ZoA-kS-Hsv">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Networks Off" translatesAutoresizingMaskIntoConstraints="NO" id="ZoA-kS-Hsv">
                                                     <rect key="frame" x="24" y="8.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="FtJ-RN-9NA"/>
@@ -213,7 +213,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Blocked Off" translatesAutoresizingMaskIntoConstraints="NO" id="Adc-1u-8dC">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Major Networks Off" translatesAutoresizingMaskIntoConstraints="NO" id="Adc-1u-8dC">
                                                     <rect key="frame" x="24" y="8.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="qyd-BB-bjr"/>
@@ -248,7 +248,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Good Privacy Off" translatesAutoresizingMaskIntoConstraints="NO" id="Uul-fb-r5K">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Privacy Bad Off" translatesAutoresizingMaskIntoConstraints="NO" id="Uul-fb-r5K">
                                                     <rect key="frame" x="24" y="8.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="7g5-nh-F4P"/>
@@ -1119,9 +1119,10 @@
         <image name="PP Dismiss" width="16" height="16"/>
         <image name="PP Hero Connection On" width="43" height="65"/>
         <image name="PP Hero Leaderboard On" width="60" height="55"/>
-        <image name="PP Icon Blocked Off" width="22" height="29"/>
         <image name="PP Icon Connection Off" width="19" height="28"/>
-        <image name="PP Icon Good Privacy Off" width="23" height="30"/>
+        <image name="PP Icon Major Networks Off" width="27" height="30"/>
+        <image name="PP Icon Networks Off" width="22" height="29"/>
+        <image name="PP Icon Privacy Bad Off" width="23" height="30"/>
         <image name="PP Icon Result Fail" width="22" height="22"/>
         <image name="PP Icon Result Success" width="22" height="22"/>
         <image name="PP Inline A" width="16" height="16"/>

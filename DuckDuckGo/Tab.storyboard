@@ -48,13 +48,13 @@
                                         <rect key="frame" x="142.5" y="134" width="90" height="90"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo can’t load this page." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
-                                        <rect key="frame" x="27" y="257" width="321" height="20"/>
+                                        <rect key="frame" x="27" y="257" width="321" height="23.5"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This URL doesn’t look valid or the page can’t be found. Please check the address and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
-                                        <rect key="frame" x="38" y="288" width="299" height="66"/>
+                                        <rect key="frame" x="38" y="291.5" width="299" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="X6F-zJ-Kge"/>
                                         </constraints>

@@ -23,36 +23,26 @@ import Core
 class PrivacyProtectionOverviewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
-    @IBOutlet var requiresKernAdjustment: [UILabel]!
 
     @IBOutlet weak var encryptionCell: SummaryCell!
     @IBOutlet weak var trackersCell: SummaryCell!
     @IBOutlet weak var majorTrackersCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
-    @IBOutlet weak var privacyProtectionCell: UITableViewCell!
-    @IBOutlet weak var privacyProtectionSwitch: UISwitch!
-    @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardCell!
 
     fileprivate var popRecognizer: InteractivePopRecognizer!
 
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!
     private weak var header: PrivacyProtectionHeaderController!
+    private weak var footer: PrivacyProtectionFooterController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        leaderboard.didLoad()
         initPopRecognizer()
         adjustMargins()
-        adjustKerns()
 
         update()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.selectRow(at: nil, animated: false, scrollPosition: .none)
-        leaderboard.update()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,12 +53,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
         if let header = segue.destination as? PrivacyProtectionHeaderController {
             self.header = header
         }
-    }
 
-    @IBAction func toggleProtection() {
-        let contentBlockingOn = privacyProtectionSwitch.isOn
-        self.contentBlocker.enabled = contentBlockingOn
-        update()
+        if let footer = segue.destination as? PrivacyProtectionFooterController {
+            self.footer = footer
+        }
     }
 
     private func update() {
@@ -76,12 +64,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
         guard isViewLoaded else { return }
 
         header.using(siteRating: siteRating, contentBlocker: contentBlocker)
+        footer.using(siteRating: siteRating, contentBlocker: contentBlocker)
         updateEncryption()
         updateTrackersBlocked()
         updateMajorTrackersBlocked()
         updatePrivacyPractices()
-        updateProtectionToggle()
-        updateLeaderBoard()
     }
 
     private func updateEncryption() {
@@ -122,15 +109,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
         }
     }
 
-    private func updateLeaderBoard() {
-        leaderboard.update()
-    }
-
-    private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = contentBlocker.enabled
-        privacyProtectionCell.backgroundColor = protecting() ? UIColor.ppGreen : UIColor.ppGray
-    }
-
     private func protecting() -> Bool {
         return contentBlocker.protecting(domain: siteRating.domain)
     }
@@ -147,12 +125,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
             for margin in margins {
                 margin.constant = 0
             }
-        }
-    }
-
-    private func adjustKerns() {
-        for label in requiresKernAdjustment {
-            label.adjustKern(1.7)
         }
     }
 
@@ -189,66 +161,6 @@ class ProtectionUpgradedView: UIView {
 
 }
 
-class TrackerNetworkLeaderboardCell: UITableViewCell {
-
-    @IBOutlet weak var firstPill: TrackerNetworkPillView!
-    @IBOutlet weak var secondPill: TrackerNetworkPillView!
-    @IBOutlet weak var thirdPill: TrackerNetworkPillView!
-    @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var forwardArrow: UIImageView!
-
-    var leaderboard = NetworkLeaderboard.shared
-
-    func didLoad() {
-        firstPill.didLoad()
-        secondPill.didLoad()
-        thirdPill.didLoad()
-    }
-
-    func update() {
-        let networksDetected = leaderboard.networksDetected()
-
-        let hasTop3 = networksDetected.count >= 3
-
-        firstPill.isHidden = !hasTop3
-        secondPill.isHidden = !hasTop3
-        thirdPill.isHidden = !hasTop3
-        forwardArrow.isHidden = !hasTop3
-        message.isHidden = hasTop3
-        selectionStyle = !hasTop3 ? .none : .default
-
-        if hasTop3 {
-            let sitesVisited = leaderboard.sitesVisited()
-            firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
-            secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
-            thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
-        }
-
-    }
-
-}
-
-class TrackerNetworkPillView: UIView {
-
-    @IBOutlet weak var networkImage: UIImageView!
-    @IBOutlet weak var percentageLabel: UILabel!
-
-    func didLoad() {
-        layer.cornerRadius = frame.size.height / 2
-        percentageLabel.adjustKern(1.2)
-    }
-
-    func update(network: PPTrackerNetwork, sitesVisited: Int) {
-        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / sitesVisited
-        let percentText = "\(percent)%"
-        let image = network.image
-
-        networkImage.image = image
-        percentageLabel.text = percentText
-    }
-
-}
-
 fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
 
     var navigationController: UINavigationController
@@ -268,12 +180,4 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
     }
 }
 
-fileprivate extension PPTrackerNetwork {
-
-    var image: UIImage {
-        let imageName = "PP Pill \(name!.lowercased())"
-        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
-    }
-
-}
 

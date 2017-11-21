@@ -349,8 +349,8 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onOmniQuerySubmitted(_ query: String) {
-        dismissOmniBar()
         loadQuery(query)
+        dismissAutcompleteSuggestions()
     }
     
     func onSiteRatingPressed() {

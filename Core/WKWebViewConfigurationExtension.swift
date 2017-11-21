@@ -38,27 +38,26 @@ extension WKWebViewConfiguration {
         if #available(iOSApplicationExtension 10.0, *) {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
-        configuration.loadScripts()
         return configuration
     }
     
-    public func loadScripts() {
+    public func loadScripts(with id: String) {
         loadDocumentLevelScripts()
-        loadSiteMonitoringScripts()
+        loadSiteMonitoringScripts(with: id)
     }
     
     private func loadDocumentLevelScripts() {
         load(scripts: [ .document, .favicon ] )
     }
     
-    private func loadSiteMonitoringScripts() {
+    private func loadSiteMonitoringScripts(with id: String) {
         let configuration = ContentBlockerConfigurationUserDefaults()
         let whitelist = configuration.domainWhitelist.toJsonLookupString()
         loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelist, and:  configuration.enabled)
+        loadBlockerData(with: whitelist, and:  configuration.enabled, with: id)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
     }
-    
+
     private func loadContentBlockerDependencyScripts() {
 
         if #available(iOS 10, *) {
@@ -68,12 +67,13 @@ extension WKWebViewConfiguration {
         }
     }
     
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {
         let easylistStore = EasylistStore()
         let disconnectMeStore = DisconnectMeStore()
         let javascriptLoader = JavascriptLoader()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
+            "${protectionId}": id,
             "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,

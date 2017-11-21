@@ -107,6 +107,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
  
     public func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
+        webView.stopLoading()
         webView.load(urlRequest)
     }
     
@@ -268,9 +269,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.alpha = 1
     }
 
-    open func reloadScripts() {
+    open func reloadScripts(with protectionId: String) {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts()
+        webView.configuration.loadScripts(with: protectionId)
     }
 
     public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

@@ -65,7 +65,7 @@ class PrivacyProtectionHeaderController: UIViewController {
 
         if !contentBlocker.enabled {
             protectionDisabledLabel.isHidden = false
-        } else if contentBlocker.domainWhitelist.contains(siteRating.domain) {
+        } else if contentBlocker.domainWhitelist.contains(siteRating.domain ?? "") {
             protectionPausedLabel.isHidden = false
         } else {
             protectionUpgraded.isHidden = false

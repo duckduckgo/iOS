@@ -24,7 +24,9 @@ public class SiteRating {
     
     public var url: URL
     public var hasOnlySecureContent: Bool
-    public let domain: String
+    public var domain: String? {
+        return url.host
+    }
     public var finishedLoading = false
     private var trackersDetected = [Tracker: Int]()
     private var trackersBlocked = [Tracker: Int]()
@@ -33,12 +35,8 @@ public class SiteRating {
     let disconnectMeTrackers: [String: Tracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
-        guard let domain = url.host else {
-            return nil
-        }
+    public init(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
         self.url = url
-        self.domain = domain
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore
         self.majorTrackerNetworkStore = majorTrackerNetworkStore
@@ -74,6 +72,7 @@ public class SiteRating {
     }
     
     public var termsOfService: TermsOfService? {
+        let domain = self.domain ?? ""
         return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
     }
 

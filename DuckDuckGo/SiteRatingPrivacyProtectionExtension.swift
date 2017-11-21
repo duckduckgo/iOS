@@ -91,6 +91,7 @@ extension SiteRating {
     }
 
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
+        guard let domain = domain else { return contentBlocker.enabled }
         return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(domain)
     }
 

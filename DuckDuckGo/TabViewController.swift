@@ -385,8 +385,9 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
-        reloadScripts(with: siteRating!.protectionId)
-
+        if let siteRating = siteRating {
+            reloadScripts(with: siteRating.protectionId)
+        }
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

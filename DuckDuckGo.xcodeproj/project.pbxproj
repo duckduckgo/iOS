@@ -909,9 +909,9 @@
 				85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */,
 				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
 				85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */,
+				8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */,
 				85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */,
 				85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */,
-				8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";

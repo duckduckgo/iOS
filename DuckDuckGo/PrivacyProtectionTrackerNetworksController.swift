@@ -24,6 +24,13 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         let name: String
         let rows: [Row]
 
+        func adding(_ row: Row) -> Section {
+            guard self.rows.filter( { $0.name == row.name } ).count == 0 else { return self }
+            var rows = self.rows
+            rows.append(row)
+            return Section(name: name, rows: rows.sorted(by: { $0.name < $1.name }))
+        }
+
     }
 
     struct Row {
@@ -46,7 +53,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     func update() {
         guard isViewLoaded else { return }
-        sections = siteRating.toSections()
+        sections = siteRating.toSections(siteRating: siteRating, contentBlocker: contentBlocker)
         updateDomain()
         updateMessage()
         updateIcon()
@@ -80,7 +87,10 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 extension PrivacyProtectionTrackerNetworksController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return tableView.dequeueReusableCell(withIdentifier: "Section")
+        print("***", #function, section)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Section") as! PrivacyProtectionTrackerNetworksSectionCell
+        cell.update(withSection: sections[section])
+        return cell
     }
 
 }
@@ -88,15 +98,22 @@ extension PrivacyProtectionTrackerNetworksController: UITableViewDelegate {
 extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sections.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return sections[section].rows.count
     }
 
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].name
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "Row")!
+        print("***", #function, indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Row") as! PrivacyProtectionTrackerNetworksRowCell
+        cell.update(withRow: sections[indexPath.section].rows[indexPath.row])
+        return cell
     }
 
 }
@@ -122,8 +139,57 @@ fileprivate extension Tracker {
 
 fileprivate extension SiteRating {
 
-    func toSections() -> [PrivacyProtectionTrackerNetworksController.Section] {
-        return []
+    func toSections(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) -> [PrivacyProtectionTrackerNetworksController.Section] {
+        return toSections(siteRating: siteRating, trackers: contentBlocker.enabled ? trackersBlocked : trackersDetected)
+    }
+
+    func toSections(siteRating: SiteRating, trackers: [Tracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
+        var sections = [String: PrivacyProtectionTrackerNetworksController.Section]()
+
+        for tracker in trackers.keys {
+            guard let networkName = tracker.networkName, networkName != "" else { continue }
+            guard let domain = tracker.domain else { continue }
+            let category = siteRating.category(forDomain: domain)
+
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: category ?? "")
+
+            if let section = sections[networkName] {
+                sections[networkName] = section.adding(row)
+            } else {
+                sections[networkName] = PrivacyProtectionTrackerNetworksController.Section(name: networkName, rows: [row])
+            }
+        }
+
+        return Array(sections.values).sorted(by: { $0.name < $1.name })
+    }
+
+}
+
+class PrivacyProtectionTrackerNetworksRowCell: UITableViewCell {
+
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var valueLabel: UILabel!
+
+    func update(withRow row: PrivacyProtectionTrackerNetworksController.Row) {
+        nameLabel.text = row.name
+        valueLabel.text = row.value
+    }
+
+}
+
+class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
+
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var iconImage: UIImageView!
+
+    func update(withSection section: PrivacyProtectionTrackerNetworksController.Section) {
+        nameLabel.text = section.name
+        iconImage.backgroundColor = UIColor.gray
+        if let image = UIImage(named: "PP Pill \(section.name.lowercased())") {
+            iconImage.image = image
+        } else {
+            iconImage.image = #imageLiteral(resourceName: "PP Pill Generic")
+        }
     }
 
 }

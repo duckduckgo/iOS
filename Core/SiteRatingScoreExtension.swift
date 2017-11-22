@@ -115,6 +115,10 @@ public extension SiteRating {
         let json = try! JSONSerialization.data(withJSONObject: scoreDict, options: .prettyPrinted)
         return String(data: json, encoding: .utf8)!
     }
+
+    public func category(forDomain domain: String) -> String? {
+        return disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.category?.rawValue
+    }
 }
 
 public class SiteRatingCache {

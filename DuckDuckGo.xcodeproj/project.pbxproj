@@ -51,6 +51,7 @@
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
 		8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */; };
 		8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */; };
+		8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -385,6 +386,7 @@
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
 		8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionFooterController.swift; sourceTree = "<group>"; };
 		8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionFooter.storyboard; sourceTree = "<group>"; };
+		8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionErrorController.swift; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -896,6 +898,7 @@
 				85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */,
 				8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */,
 				85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */,
+				8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */,
 				8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */,
 				8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */,
 				85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */,
@@ -2116,6 +2119,7 @@
 				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
 				F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */,
 				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
+				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* FeaturesViewController.swift in Sources */,

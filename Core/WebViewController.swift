@@ -53,11 +53,15 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public var canGoForward: Bool {
-        return webView.canGoForward
+        return webView.canGoForward && !isError
     }
 
     public var isError: Bool {
         return !error.isHidden
+    }
+
+    public var errorText: String? {
+        return errorMessage.text
     }
 
     open override func viewDidLoad() {

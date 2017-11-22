@@ -34,7 +34,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!
     private weak var header: PrivacyProtectionHeaderController!
-    private weak var footer: PrivacyProtectionFooterController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,10 +52,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
         if let header = segue.destination as? PrivacyProtectionHeaderController {
             self.header = header
         }
-
-        if let footer = segue.destination as? PrivacyProtectionFooterController {
-            self.footer = footer
-        }
     }
 
     private func update() {
@@ -64,7 +59,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
         guard isViewLoaded else { return }
 
         header.using(siteRating: siteRating, contentBlocker: contentBlocker)
-        footer.using(siteRating: siteRating, contentBlocker: contentBlocker)
         updateEncryption()
         updateTrackersBlocked()
         updateMajorTrackersBlocked()

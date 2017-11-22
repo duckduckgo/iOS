@@ -77,7 +77,9 @@ class TabViewController: WebViewController {
             controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
+            controller.omniBarText = chromeDelegate.omniBar.textField.text
             controller.siteRating = siteRating
+            controller.errorText = isError ? errorText : nil
         }
 
     }

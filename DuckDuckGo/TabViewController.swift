@@ -152,8 +152,10 @@ class TabViewController: WebViewController {
                 alert.addAction(whitelistAction(forDomain: domain))
             }
 
-            alert.addAction(saveBookmarkAction(forLink: link))
-            alert.addAction(shareAction(forLink: link))
+            if !isError {
+                alert.addAction(saveBookmarkAction(forLink: link))
+                alert.addAction(shareAction(forLink: link))
+            }
         }
         
         alert.addAction(settingsAction())
@@ -188,7 +190,14 @@ class TabViewController: WebViewController {
     
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] action in
-            self?.reload()
+            guard let sself = self else { return }
+            if sself.isError {
+                if let url = URL(string: sself.chromeDelegate.omniBar.textField.text ?? "") {
+                    sself.load(url: url)
+                }
+            } else {
+                sself.reload()
+            }
         }
     }
     

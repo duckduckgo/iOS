@@ -210,11 +210,10 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
 
     func update(withSection section: PrivacyProtectionTrackerNetworksController.Section) {
         nameLabel.text = section.name
-        iconImage.backgroundColor = UIColor.gray
-        if let image = UIImage(named: "PP Pill \(section.name.lowercased())") {
+        if let image = UIImage(named: "PP Network Icon \(section.name.lowercased())") {
             iconImage.image = image
         } else {
-            iconImage.image = #imageLiteral(resourceName: "PP Pill Generic")
+            iconImage.image = #imageLiteral(resourceName: "PP Network Icon unknown")
         }
     }
 

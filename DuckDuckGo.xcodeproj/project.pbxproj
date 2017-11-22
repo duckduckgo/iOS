@@ -52,6 +52,7 @@
 		8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */; };
 		8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */; };
 		8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */; };
+		8565A3431FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -387,6 +388,7 @@
 		8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionFooterController.swift; sourceTree = "<group>"; };
 		8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionFooter.storyboard; sourceTree = "<group>"; };
 		8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionErrorController.swift; sourceTree = "<group>"; };
+		8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksController.swift; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -909,6 +911,7 @@
 				85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */,
 				85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */,
 				85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */,
+				8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2157,6 +2160,7 @@
 				85F1E9B01FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift in Sources */,
 				85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
+				8565A3431FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,

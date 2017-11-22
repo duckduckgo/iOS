@@ -28,8 +28,8 @@ public class SiteRating {
         return url.host
     }
     public var finishedLoading = false
-    private var trackersDetected = [Tracker: Int]()
-    private var trackersBlocked = [Tracker: Int]()
+    public private (set) var trackersDetected = [Tracker: Int]()
+    public private (set) var trackersBlocked = [Tracker: Int]()
 
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: Tracker]

@@ -83,21 +83,13 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateMajorNetworksIcon() {
-        if siteRating.majorNetworksSuccess(contentBlocker: contentBlocker)  {
-            iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Off")
-        } else {
-            // TODO replace with bad icon
-            iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Off")
-        }
+        let resultImage = siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Bad")
+        iconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Major Off")
     }
 
     private func updateNetworksIcon() {
-        if siteRating.networksSuccess(contentBlocker: contentBlocker)  {
-            iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Networks On") : #imageLiteral(resourceName: "PP Hero Networks Off")
-        } else {
-            // TODO replace with bad icon
-            iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Networks On") : #imageLiteral(resourceName: "PP Hero Networks Off")
-        }
+        let resultImage = siteRating.networksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Networks On") : #imageLiteral(resourceName: "PP Hero Networks Bad")
+        iconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Networks Off")
     }
 
     private func initTableView() {

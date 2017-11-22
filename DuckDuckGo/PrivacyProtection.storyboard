@@ -192,9 +192,14 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="mNH-DH-vDm">
+                                                    <rect key="frame" x="341" y="20" width="10" height="16"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="mNH-DH-vDm" firstAttribute="centerY" secondItem="uvS-6F-pqD" secondAttribute="centerY" id="0Dl-h9-Jm1"/>
                                                 <constraint firstItem="GZ4-PW-wOG" firstAttribute="leading" secondItem="ZoA-kS-Hsv" secondAttribute="trailing" constant="10" id="7zz-eb-19f"/>
+                                                <constraint firstAttribute="trailing" secondItem="mNH-DH-vDm" secondAttribute="trailing" constant="24" id="AWE-bT-GSO"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="GZ4-PW-wOG" secondAttribute="trailing" constant="8" id="Cqa-9f-z0l"/>
                                                 <constraint firstItem="ZoA-kS-Hsv" firstAttribute="leading" secondItem="uvS-6F-pqD" secondAttribute="leadingMargin" constant="8" id="bzH-Rj-FGO"/>
                                                 <constraint firstItem="ZoA-kS-Hsv" firstAttribute="centerY" secondItem="uvS-6F-pqD" secondAttribute="centerY" id="imG-mC-UZC"/>
@@ -228,11 +233,16 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="gv1-Un-0MC">
+                                                    <rect key="frame" x="341" y="20" width="10" height="16"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="pRX-q4-dPP" firstAttribute="leading" secondItem="Adc-1u-8dC" secondAttribute="trailing" constant="10" id="14v-WK-Afx"/>
                                                 <constraint firstItem="pRX-q4-dPP" firstAttribute="centerY" secondItem="Nfx-4o-djA" secondAttribute="centerY" id="1Se-6g-9kT"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="pRX-q4-dPP" secondAttribute="trailing" constant="8" id="5ux-FG-g0J"/>
+                                                <constraint firstItem="gv1-Un-0MC" firstAttribute="centerY" secondItem="Nfx-4o-djA" secondAttribute="centerY" id="HHk-aN-0bM"/>
+                                                <constraint firstAttribute="trailing" secondItem="gv1-Un-0MC" secondAttribute="trailing" constant="24" id="LQ3-BO-WXB"/>
                                                 <constraint firstItem="Adc-1u-8dC" firstAttribute="leading" secondItem="Nfx-4o-djA" secondAttribute="leadingMargin" constant="8" id="QM5-o3-zKe"/>
                                                 <constraint firstItem="Adc-1u-8dC" firstAttribute="centerY" secondItem="Nfx-4o-djA" secondAttribute="centerY" id="wZ5-Cm-0eP"/>
                                             </constraints>
@@ -619,7 +629,7 @@
                                             <rect key="frame" x="0.0" y="155" width="375" height="75"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
-                                                    <rect key="frame" x="19.5" y="19.5" width="335" height="37.5"/>
+                                                    <rect key="frame" x="19.5" y="19" width="335" height="37.5"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Trackers networks were found on ">
                                                             <attributes>
@@ -718,7 +728,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mP-U5-LBV">
-                                                    <rect key="frame" x="16" y="9.5" width="84" height="16.5"/>
+                                                    <rect key="frame" x="16" y="9" width="84" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="84" id="fAv-vR-6yz"/>
                                                     </constraints>
@@ -727,7 +737,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-83-lMn">
-                                                    <rect key="frame" x="324" y="9.5" width="35" height="16.5"/>
+                                                    <rect key="frame" x="324" y="9" width="35" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="Cds-GZ-p2n"/>
                                                     </constraints>
@@ -985,7 +995,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-35-znM">
-                                                    <rect key="frame" x="20" y="2.5" width="335" height="16.5"/>
+                                                    <rect key="frame" x="20" y="3" width="335" height="16.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="www.tracker.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-Wf-SyO">
                                                             <rect key="frame" x="0.0" y="0.0" width="277.5" height="16.5"/>

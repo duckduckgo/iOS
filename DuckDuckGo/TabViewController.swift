@@ -426,7 +426,6 @@ extension TabViewController: WebEventsDelegate {
     }
 
     func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool) {
-        guard webView.url == siteRating?.url else { return }
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
     }

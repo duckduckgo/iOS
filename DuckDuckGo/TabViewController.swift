@@ -198,13 +198,13 @@ class TabViewController: WebViewController {
     
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] action in
-            guard let sself = self else { return }
-            if sself.isError {
-                if let url = URL(string: sself.chromeDelegate?.omniBar.textField.text ?? "") {
-                    sself.load(url: url)
+            guard let strongSelf = self else { return }
+            if strongSelf.isError {
+                if let url = URL(string: strongSelf.chromeDelegate?.omniBar.textField.text ?? "") {
+                    strongSelf.load(url: url)
                 }
             } else {
-                sself.reload()
+                strongSelf.reload()
             }
         }
     }

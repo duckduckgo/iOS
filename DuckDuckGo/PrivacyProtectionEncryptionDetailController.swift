@@ -68,7 +68,12 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        imageView.image = contentBlocker.protecting(domain: siteRating.domain) ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        if siteRating.encryptedConnectionSuccess() {
+            imageView.image = contentBlocker.protecting(domain: siteRating.domain) ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        } else {
+            // TODO green image will become a red image, waiting for assets
+            imageView.image = contentBlocker.protecting(domain: siteRating.domain) ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        }
 
         encryptedLabel.isHidden = true
         unencryptedLabel.isHidden = true

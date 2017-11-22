@@ -40,6 +40,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var mixedContentLabel: UILabel!
 
     private weak var siteRating: SiteRating!
+    private weak var contentBlocker: ContentBlockerConfigurationStore!
 
     private let serverTrustCache = ServerTrustCache.shared
     private var sections = [Section]()
@@ -67,7 +68,13 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        imageView.image = siteRating.https ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        if siteRating.encryptedConnectionSuccess() {
+            imageView.image = contentBlocker.protecting(domain: siteRating.domain) ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        } else {
+            // TODO green image will become a red image, waiting for assets
+            imageView.image = contentBlocker.protecting(domain: siteRating.domain) ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        }
+
         encryptedLabel.isHidden = true
         unencryptedLabel.isHidden = true
         mixedContentLabel.isHidden = true
@@ -99,6 +106,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisplaying {
 
     func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
+        self.contentBlocker = contentBlocker
         self.siteRating = siteRating
     }
 

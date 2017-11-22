@@ -26,10 +26,16 @@ import Core
 
 
 public class SiteRatingView: UIView {
-    
+
+    static let gradeImages: [SiteGrade: UIImage] = [
+        .a : #imageLiteral(resourceName: "PP Indicator Grade A"),
+        .b : #imageLiteral(resourceName: "PP Indicator Grade B"),
+        .c : #imageLiteral(resourceName: "PP Indicator Grade C"),
+        .d : #imageLiteral(resourceName: "PP Indicator Grade D")
+    ]
+
     @IBOutlet weak var circleIndicator: UIImageView!
-    @IBOutlet weak var gradeLabel: UILabel!
-    
+
     private var contentBlockerConfiguration = ContentBlockerConfigurationUserDefaults()
     private var siteRating: SiteRating?
 
@@ -60,16 +66,13 @@ public class SiteRatingView: UIView {
     }
     
     public func refresh() {
-        circleIndicator.tintColor = UIColor.monitoringInactiveTint
+        circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
 
-        guard let siteRating = siteRating,
-            let domain = siteRating.domain else {
-            gradeLabel.text = "-"
-            return
-        }
+        guard let siteRating = siteRating else { return }
         
         let grades = siteRating.siteGrade()
-        gradeLabel.text = UserText.forSiteGrade(contentBlockerConfiguration.protecting(domain: domain) ? grades.after : grades.before)
+        let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.after : grades.before
+        circleIndicator.image = SiteRatingView.gradeImages[grade]
     }
 
     private func protecting() -> Bool {

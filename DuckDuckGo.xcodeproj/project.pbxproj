@@ -49,6 +49,9 @@
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
 		8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0371F8E54F100F04442 /* Tab.storyboard */; };
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
+		8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */; };
+		8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */; };
+		8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -381,6 +384,9 @@
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		8563A0371F8E54F100F04442 /* Tab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tab.storyboard; sourceTree = "<group>"; };
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
+		8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionFooterController.swift; sourceTree = "<group>"; };
+		8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionFooter.storyboard; sourceTree = "<group>"; };
+		8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionErrorController.swift; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -892,6 +898,9 @@
 				85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */,
 				8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */,
 				85BD869C1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift */,
+				8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */,
+				8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */,
+				8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */,
 				85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */,
 				85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */,
 				85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */,
@@ -1946,6 +1955,7 @@
 				8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */,
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
 				F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */,
+				8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				85ED11231F50B58C00A7FBCE /* Info.plist in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
@@ -2109,6 +2119,7 @@
 				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
 				F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */,
 				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
+				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* FeaturesViewController.swift in Sources */,
@@ -2119,6 +2130,7 @@
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
+				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				85ECA7EE1F2A82C20018EBEB /* Migration.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,

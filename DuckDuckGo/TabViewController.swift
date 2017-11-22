@@ -27,7 +27,7 @@ class TabViewController: WebViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
-    weak var chromeDelegate: BrowserChromeDelegate!
+    weak var chromeDelegate: BrowserChromeDelegate?
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
@@ -49,6 +49,12 @@ class TabViewController: WebViewController {
     }
     
     public var link: Link? {
+        if isError {
+            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
+                return Link(title: errorText, url: url)
+            }
+        }
+
         guard let url = url else {
             return tabModel.link
         }
@@ -73,11 +79,15 @@ class TabViewController: WebViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+        guard let chromeDelegate = chromeDelegate else { return }
+
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
+            controller.omniBarText = chromeDelegate.omniBar.textField.text
             controller.siteRating = siteRating
+            controller.errorText = isError ? errorText : nil
         }
 
     }
@@ -96,7 +106,7 @@ class TabViewController: WebViewController {
     }
     
     private func resetNavigationBar() {
-        chromeDelegate.setBarsHidden(false, animated: false)
+        chromeDelegate?.setBarsHidden(false, animated: false)
     }
     
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
@@ -104,7 +114,7 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func showBars(animated: Bool = true) {
-        chromeDelegate.setBarsHidden(false, animated: animated)
+        chromeDelegate?.setBarsHidden(false, animated: animated)
     }
     
     func showPrivacyProtection() {
@@ -121,7 +131,9 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func updateSiteRating() {
-        if let url = url {
+        if isError {
+            siteRating = nil
+        } else if let url = url {
             siteRating?.url = url
         } else {
             siteRating = nil
@@ -137,7 +149,7 @@ class TabViewController: WebViewController {
     }
     
     func launchBrowsingMenu() {
-        guard let button = chromeDelegate.omniBar.menuButton else { return }
+        guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())
@@ -148,8 +160,10 @@ class TabViewController: WebViewController {
                 alert.addAction(whitelistAction(forDomain: domain))
             }
 
-            alert.addAction(saveBookmarkAction(forLink: link))
-            alert.addAction(shareAction(forLink: link))
+            if !isError {
+                alert.addAction(saveBookmarkAction(forLink: link))
+                alert.addAction(shareAction(forLink: link))
+            }
         }
         
         alert.addAction(settingsAction())
@@ -184,7 +198,14 @@ class TabViewController: WebViewController {
     
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] action in
-            self?.reload()
+            guard let strongSelf = self else { return }
+            if strongSelf.isError {
+                if let url = URL(string: strongSelf.chromeDelegate?.omniBar.textField.text ?? "") {
+                    strongSelf.load(url: url)
+                }
+            } else {
+                strongSelf.reload()
+            }
         }
     }
     
@@ -253,7 +274,7 @@ class TabViewController: WebViewController {
     
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
-            guard let menu = self?.chromeDelegate.omniBar.menuButton else { return }
+            guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
             self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: menu)
         }
     }
@@ -407,6 +428,10 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidFailToLoad() {
+        Logger.log(items: "webpageLoading failed:", Date().timeIntervalSince1970)
+        siteRating?.finishedLoading = true
+        updateSiteRating()
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
@@ -450,11 +475,12 @@ extension TabViewController {
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
         return gestureRecognizer == showBarsTapGestureRecogniser &&
-               chromeDelegate.isToolbarHidden == true &&
+               chromeDelegate?.isToolbarHidden == true &&
                isBottom(yPosition: y)
     }
     
     private func isBottom(yPosition y: CGFloat) -> Bool {
+        guard let chromeDelegate = chromeDelegate else { return false }
         return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
     }
     
@@ -468,7 +494,7 @@ extension TabViewController {
 
 extension TabViewController: UIScrollViewDelegate {
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if chromeDelegate.isToolbarHidden == true {
+        if chromeDelegate?.isToolbarHidden == true {
             showBars()
             return false
         }
@@ -485,7 +511,7 @@ extension TabViewController: ContentBlockerSettingsChangeDelegate {
 extension TabViewController: PrivacyProtectionDelegate {
 
     func omniBarTextTapped() {
-        chromeDelegate.omniBar.becomeFirstResponder()
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
 }

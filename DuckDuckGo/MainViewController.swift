@@ -225,7 +225,11 @@ class MainViewController: UIViewController {
             omniBar.stopBrowsing()
             return
         }
-        omniBar.refreshText(forUrl: tab.link?.url)
+
+        if !tab.isError {
+            omniBar.refreshText(forUrl: tab.link?.url)
+        }
+
         omniBar.updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
     }

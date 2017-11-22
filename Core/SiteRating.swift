@@ -103,6 +103,14 @@ public class SiteRating {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 
+    public var majorNetworkTrackersDetected: [Tracker: Int] {
+        return trackersDetected.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+    }
+
+    public var majorNetworkTrackersBlocked: [Tracker: Int] {
+        return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+    }
+
     private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {
         return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil }).flatMap({ $0.networkName })).count
     }

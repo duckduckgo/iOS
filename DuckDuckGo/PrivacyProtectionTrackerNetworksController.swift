@@ -19,6 +19,8 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!
 
+    var majorOnly = false
+
     struct Section {
 
         let name: String
@@ -53,7 +55,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     func update() {
         guard isViewLoaded else { return }
-        sections = siteRating.toSections(siteRating: siteRating, contentBlocker: contentBlocker)
+        sections = siteRating.toSections(withSiteRating: siteRating, andContentBlocker: contentBlocker, forMajorNetworksOnly: majorOnly)
         updateDomain()
         updateMessage()
         updateIcon()
@@ -65,11 +67,32 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateMessage() {
-        messageLabel.text = siteRating.networksText(contentBlocker: contentBlocker).uppercased()
+        messageLabel.text = majorOnly ?
+            siteRating.majorNetworksText(contentBlocker: contentBlocker).uppercased() :
+            siteRating.networksText(contentBlocker: contentBlocker).uppercased()
     }
 
     private func updateIcon() {
-        if siteRating.networksSuccess(contentBlocker: contentBlocker) {
+
+        if majorOnly {
+            updateMajorNetworksIcon()
+        } else {
+            updateNetworksIcon()
+        }
+
+    }
+
+    private func updateMajorNetworksIcon() {
+        if siteRating.majorNetworksSuccess(contentBlocker: contentBlocker)  {
+            iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Off")
+        } else {
+            // TODO replace with bad icon
+            iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Off")
+        }
+    }
+
+    private func updateNetworksIcon() {
+        if siteRating.networksSuccess(contentBlocker: contentBlocker)  {
             iconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Networks On") : #imageLiteral(resourceName: "PP Hero Networks Off")
         } else {
             // TODO replace with bad icon
@@ -87,7 +110,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 extension PrivacyProtectionTrackerNetworksController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        print("***", #function, section)
         let cell = tableView.dequeueReusableCell(withIdentifier: "Section") as! PrivacyProtectionTrackerNetworksSectionCell
         cell.update(withSection: sections[section])
         return cell
@@ -110,7 +132,6 @@ extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("***", #function, indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "Row") as! PrivacyProtectionTrackerNetworksRowCell
         cell.update(withRow: sections[indexPath.section].rows[indexPath.row])
         return cell
@@ -139,8 +160,13 @@ fileprivate extension Tracker {
 
 fileprivate extension SiteRating {
 
-    func toSections(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) -> [PrivacyProtectionTrackerNetworksController.Section] {
-        return toSections(siteRating: siteRating, trackers: contentBlocker.enabled ? trackersBlocked : trackersDetected)
+    func toSections(withSiteRating siteRating: SiteRating, andContentBlocker contentBlocker: ContentBlockerConfigurationStore, forMajorNetworksOnly majorOnly: Bool) -> [PrivacyProtectionTrackerNetworksController.Section] {
+
+        if majorOnly {
+            return toSections(siteRating: siteRating, trackers: contentBlocker.enabled ? majorNetworkTrackersBlocked : majorNetworkTrackersDetected)
+        } else {
+            return toSections(siteRating: siteRating, trackers: contentBlocker.enabled ? trackersBlocked : trackersDetected)
+        }
     }
 
     func toSections(siteRating: SiteRating, trackers: [Tracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {

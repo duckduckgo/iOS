@@ -79,7 +79,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initHeroIcon() {
-        heroIconImage.image = siteRating.protecting(contentBlocker) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
+        let resultImage = siteRating.networksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
+        heroIconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
     }
 
     private func initTable() {

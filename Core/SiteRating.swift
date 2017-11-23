@@ -28,8 +28,8 @@ public class SiteRating {
         return url.host
     }
     public var finishedLoading = false
-    private var trackersDetected = [Tracker: Int]()
-    private var trackersBlocked = [Tracker: Int]()
+    public private (set) var trackersDetected = [Tracker: Int]()
+    public private (set) var trackersBlocked = [Tracker: Int]()
 
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: Tracker]
@@ -101,6 +101,14 @@ public class SiteRating {
     
     public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
+    }
+
+    public var majorNetworkTrackersDetected: [Tracker: Int] {
+        return trackersDetected.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+    }
+
+    public var majorNetworkTrackersBlocked: [Tracker: Int] {
+        return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {

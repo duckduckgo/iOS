@@ -49,6 +49,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
         }
 
+        if let controller = segue.destination as? PrivacyProtectionTrackerNetworksController {
+            controller.majorOnly = segue.identifier == "Major"
+        }
+
         if let header = segue.destination as? PrivacyProtectionHeaderController {
             self.header = header
         }

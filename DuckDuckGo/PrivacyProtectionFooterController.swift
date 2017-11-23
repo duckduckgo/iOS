@@ -25,7 +25,7 @@ class PrivacyProtectionFooterController: UIViewController {
 
     @IBOutlet weak var privacyProtectionView: UIView!
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
-    @IBOutlet weak var leaderboard: TrackerNetworkLeaderboard!
+    @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
 
     var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
 
@@ -57,7 +57,7 @@ class PrivacyProtectionFooterController: UIViewController {
 
 }
 
-class TrackerNetworkLeaderboard: UIView {
+class TrackerNetworkLeaderboardView: UIView {
 
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
@@ -77,9 +77,7 @@ class TrackerNetworkLeaderboard: UIView {
     func update() {
         let networksDetected = leaderboard.networksDetected()
 
-        let shouldShow =
-            leaderboard.sitesVisited() > 10 &&
-            networksDetected.count >= 3
+        let shouldShow = leaderboard.shouldShow()
 
         firstPill.isHidden = !shouldShow
         secondPill.isHidden = !shouldShow
@@ -127,4 +125,3 @@ fileprivate extension PPTrackerNetwork {
     }
 
 }
-

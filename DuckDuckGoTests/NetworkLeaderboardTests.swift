@@ -27,6 +27,51 @@ class NetworkLeaderboardTests: XCTestCase {
         NetworkLeaderboard().reset()
     }
 
+    func testWhenEnoughSitesVisitedAndEnoughNetworksDetectedThenShouldShow() {
+        let leaderboard = NetworkLeaderboard()
+        for i in 0 ..< 11 {
+            let domain = "www.site\(i).com"
+            leaderboard.visited(domain: domain)
+        }
+
+        for i in 0 ..< 3 {
+            let domain = "www.site\(i).com"
+            leaderboard.network(named: "google\(i).com", detectedWhileVisitingDomain: domain)
+        }
+        XCTAssertEqual(11, leaderboard.sitesVisited())
+        XCTAssertEqual(3, leaderboard.networksDetected().count)
+        XCTAssertTrue(leaderboard.shouldShow())
+    }
+
+    func testWhenNotEnoughSitesVisitedButEnoughNetworksDetectedThenShouldNotShow() {
+        let leaderboard = NetworkLeaderboard()
+        for i in 0 ..< 3 {
+            let domain = "www.site\(i).com"
+            leaderboard.visited(domain: domain)
+            leaderboard.network(named: "google\(i).com", detectedWhileVisitingDomain: domain)
+        }
+
+        XCTAssertEqual(3, leaderboard.networksDetected().count)
+        XCTAssertFalse(leaderboard.shouldShow())
+    }
+
+    func testWhenEnoughSitesVisitedButNotEnoughNetworksDetectedThenShouldNotShow() {
+        let leaderboard = NetworkLeaderboard()
+        for i in 0 ..< 11 {
+            let domain = "www.site\(i).com"
+            leaderboard.visited(domain: domain)
+        }
+        XCTAssertEqual(11, leaderboard.sitesVisited())
+        XCTAssertFalse(leaderboard.shouldShow())
+    }
+
+    func testWhenNotEnoughSitesVisitedOrNetworksDetectedThenShouldNotShow() {
+
+        let leaderboard = NetworkLeaderboard()
+        XCTAssertFalse(leaderboard.shouldShow())
+
+    }
+
     func testWhenSubsequentSiteVisitedStartDateIsUnchanged() {
         let leaderboard = NetworkLeaderboard()
         leaderboard.visited(domain: "duckduckgo.com")

@@ -303,7 +303,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="uVQ-4K-5eS" userLabel="Leaderboard Tap Gesture">
                     <connections>
-                        <segue destination="3wX-Uf-JRU" kind="show" id="th7-lM-ier"/>
+                        <segue destination="3wX-Uf-JRU" kind="show" identifier="Leaderboard" id="th7-lM-ier"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -617,7 +617,7 @@
                                             <rect key="frame" x="0.0" y="155" width="375" height="75"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
-                                                    <rect key="frame" x="19.5" y="19.5" width="335" height="37.5"/>
+                                                    <rect key="frame" x="19.5" y="19" width="335" height="37.5"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Trackers networks were found on ">
                                                             <attributes>
@@ -716,7 +716,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mP-U5-LBV">
-                                                    <rect key="frame" x="16" y="9.5" width="84" height="16.5"/>
+                                                    <rect key="frame" x="16" y="9" width="84" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="84" id="fAv-vR-6yz"/>
                                                     </constraints>
@@ -725,7 +725,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-83-lMn">
-                                                    <rect key="frame" x="324" y="9.5" width="35" height="16.5"/>
+                                                    <rect key="frame" x="324" y="9" width="35" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="Cds-GZ-p2n"/>
                                                     </constraints>

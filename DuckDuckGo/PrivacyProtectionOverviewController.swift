@@ -54,6 +54,15 @@ class PrivacyProtectionOverviewController: UITableViewController {
         }
     }
 
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+
+        if identifier == "Leaderboard" && !NetworkLeaderboard.shared.shouldShow() {
+            return false
+        }
+
+        return true
+    }
+
     private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }

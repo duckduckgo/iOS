@@ -315,7 +315,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="uVQ-4K-5eS" userLabel="Leaderboard Tap Gesture">
                     <connections>
-                        <segue destination="3wX-Uf-JRU" kind="show" id="th7-lM-ier"/>
+                        <segue destination="3wX-Uf-JRU" kind="show" identifier="Leaderboard" id="th7-lM-ier"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

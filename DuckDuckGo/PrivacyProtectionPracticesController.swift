@@ -21,6 +21,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
 
     weak var siteRating: SiteRating!
     weak var contentBlocker: ContentBlockerConfigurationStore!
@@ -29,6 +30,7 @@ class PrivacyProtectionPracticesController: UIViewController {
 
     override func viewDidLoad() {
         initTable()
+        messageLabel.adjustPlainTextLineHeight(1.286)
         update()
     }
 

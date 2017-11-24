@@ -33,11 +33,12 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
     @IBOutlet weak var unencryptedLabel: UILabel!
     @IBOutlet weak var mixedContentLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
 
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!
@@ -50,6 +51,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         initTableView()
         initHttpsStatus()
         initDomain()
+        messageLabel.adjustPlainTextLineHeight(1.286)
         beginCertificateInfoExtraction()
 
     }
@@ -69,7 +71,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func initHttpsStatus() {
         let resultImage = siteRating.encryptedConnectionSuccess() ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Bad")
-        imageView.image = contentBlocker.protecting(domain: siteRating.domain) ? resultImage : #imageLiteral(resourceName: "PP Hero Connection Off")
+        iconImage.image = contentBlocker.protecting(domain: siteRating.domain) ? resultImage : #imageLiteral(resourceName: "PP Hero Connection Off")
 
         encryptedLabel.isHidden = true
         unencryptedLabel.isHidden = true

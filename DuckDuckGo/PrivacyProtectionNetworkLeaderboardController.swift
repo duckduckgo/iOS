@@ -119,8 +119,15 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let attributedString = NSMutableAttributedString(string: message)
         attributedString.addAttribute(NSAttributedStringKey.kern, value: -0.18, range: dateNSRange)
         attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.ppRed, range: percentNSRange)
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle(), range: .init(location: 0, length: message.count))
 
         messageLabel.attributedText = attributedString
+    }
+
+    private func paragraphStyle() -> NSParagraphStyle {
+        let paragaphStyle = NSMutableParagraphStyle()
+        paragaphStyle.lineHeightMultiple = 1.375
+        return paragaphStyle
     }
 
     private func initDomainLabel() {

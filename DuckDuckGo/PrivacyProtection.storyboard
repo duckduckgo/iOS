@@ -1167,9 +1167,6 @@
                                                 </fragment>
                                             </attributedString>
                                             <nil key="highlightedColor"/>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="uhM-pK-Y9R" appends="YES" id="29R-w7-ZKY"/>
-                                            </connections>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UST-Fh-8W6" userLabel="Fake Divider">
                                             <rect key="frame" x="20.5" y="0.0" width="335" height="1"/>
@@ -1188,6 +1185,9 @@
                                         <constraint firstItem="UST-Fh-8W6" firstAttribute="width" secondItem="dKK-U1-HtX" secondAttribute="width" constant="-40" id="pye-01-v6g"/>
                                         <constraint firstItem="UST-Fh-8W6" firstAttribute="centerX" secondItem="dKK-U1-HtX" secondAttribute="centerX" id="w7R-Dy-Kq9"/>
                                     </constraints>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="uhM-pK-Y9R" appends="YES" id="nIx-nB-a9v"/>
+                                    </connections>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="72t-tQ-5SV" imageView="WRK-Wt-JyD" style="IBUITableViewCellStyleDefault" id="LK0-gl-KUB" customClass="PrivacyProtectionPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">

@@ -31,8 +31,10 @@ public struct TermsOfService {
         .e: 2
     ]
 
-    private let classification: Classification?
-    private let score: Int
+    let classification: Classification?
+    let score: Int
+    let goodReasons: [String]
+    let badReasons: [String]
 
     public var derivedScore: Int {
         if let classification = classification {
@@ -41,11 +43,6 @@ public struct TermsOfService {
         return score < 0 ? -1 : 1
     }
 
-    init(classification: Classification?, score: Int) {
-        self.classification = classification
-        self.score = score
-    }
-    
     public enum Classification: String {
         case a, b, c, d, e
     }

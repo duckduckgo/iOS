@@ -24,12 +24,12 @@ import XCTest
 class TermsOfServiceTests: XCTestCase {
     
     func testWhenInitWithClassificationthenClassification() {
-        let testee = TermsOfService(classification: .a, score: 10)
+        let testee = TermsOfService(classification: .a, score: 10, goodReasons: [], badReasons: [])
         XCTAssertEqual(-1, testee.derivedScore)
     }
     
     func testWhenInitWithoutClassificationthenClassificationIsNil() {
-        let testee = TermsOfService(classification: nil, score: 10)
+        let testee = TermsOfService(classification: nil, score: 10, goodReasons: [], badReasons: [])
         XCTAssertEqual(1, testee.derivedScore)
     }
 }

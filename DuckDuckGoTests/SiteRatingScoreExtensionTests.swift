@@ -189,8 +189,8 @@ fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
 
     var terms = [String : TermsOfService]()
 
-    func add(domain: String, classification: TermsOfService.Classification?, score: Int) -> MockTermsOfServiceStore {
-        terms[domain] = TermsOfService(classification: classification, score: score)
+    func add(domain: String, classification: TermsOfService.Classification?, score: Int, goodReasons: [String] = [], badReasons: [String] = []) -> MockTermsOfServiceStore {
+        terms[domain] = TermsOfService(classification: classification, score: score, goodReasons: goodReasons, badReasons: badReasons)
         return self
     }
 

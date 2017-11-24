@@ -31,10 +31,10 @@ public struct TermsOfService {
         .e: 2
     ]
 
-    let classification: Classification?
-    let score: Int
-    let goodReasons: [String]
-    let badReasons: [String]
+    public let classification: Classification?
+    public let score: Int
+    public let goodReasons: [String]
+    public let badReasons: [String]
 
     public var derivedScore: Int {
         if let classification = classification {

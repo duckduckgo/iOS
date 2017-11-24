@@ -53,6 +53,7 @@
 		8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */; };
 		8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */; };
 		8565A3431FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */; };
+		8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */; };
 		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -389,6 +390,7 @@
 		8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionFooter.storyboard; sourceTree = "<group>"; };
 		8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionErrorController.swift; sourceTree = "<group>"; };
 		8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksController.swift; sourceTree = "<group>"; };
+		8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionPracticesController.swift; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -908,6 +910,7 @@
 				85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */,
 				85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */,
 				85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */,
+				8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */,
 				85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */,
 				8565A3421FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift */,
 				85200F961FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift */,
@@ -2182,6 +2185,7 @@
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
+				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,

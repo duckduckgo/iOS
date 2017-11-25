@@ -73,8 +73,14 @@ public class SiteRating {
     }
     
     public var termsOfService: TermsOfService? {
-        let domain = self.domain ?? ""
-        return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
+        guard let domain = self.domain else { return nil }
+        if let tos = termsOfServiceStore.terms.first( where: { domain.hasSuffix($0.0) } )?.value {
+            return tos
+        }
+
+        // if not TOS found for this site use the parent's (e.g. google.co.uk should use google.com)
+        let storeDomain = associatedDomain(for: domain) ?? domain
+        return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) } )?.value
     }
 
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
@@ -109,6 +115,11 @@ public class SiteRating {
 
     public var majorNetworkTrackersBlocked: [Tracker: Int] {
         return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+    }
+
+    public func associatedDomain(for domain: String) -> String? {
+        let tracker = disconnectMeTrackers.first( where: { domain.hasSuffix($0.value.url) })?.value
+        return tracker?.parentUrl?.host
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {

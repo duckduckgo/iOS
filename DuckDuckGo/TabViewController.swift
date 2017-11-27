@@ -273,7 +273,7 @@ class TabViewController: WebViewController {
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
-            self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: menu)
+            self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
         }
     }
     

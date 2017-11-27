@@ -47,7 +47,9 @@ public class TermsOfServiceListParser {
             classification = TermsOfService.Classification(rawValue: classificationString)
         }
         guard let score = json["score"].int else { throw JsonError.typeMismatch }
-        return TermsOfService(classification: classification, score: score)
+        let goodReasons = json["match"]["good"].arrayObject as? [String] ?? []
+        let badReasons = json["match"]["bad"].arrayObject as? [String] ?? []
+        return TermsOfService(classification: classification, score: score, goodReasons: goodReasons, badReasons: badReasons)
     }
 
 }

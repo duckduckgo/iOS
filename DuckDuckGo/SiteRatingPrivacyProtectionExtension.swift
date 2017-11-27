@@ -45,7 +45,7 @@ extension SiteRating {
         case _ where(score < 0):
             return UserText.privacyProtectionTOSGood
 
-        case 0 ... 1:
+        case 0:
             return UserText.privacyProtectionTOSMixed
 
         default:

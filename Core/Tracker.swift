@@ -36,11 +36,13 @@ public class Tracker: NSObject {
     
     public let url: String
     public let networkName: String?
+    public let parentUrl: URL?
     public let category: Category?
 
-    public init(url: String, networkName: String?, category: Category? = nil) {
+    public init(url: String, networkName: String?, parentUrl: URL? = nil, category: Category? = nil) {
         self.url = url
         self.networkName = networkName
+        self.parentUrl = parentUrl
         self.category = category
     }
 

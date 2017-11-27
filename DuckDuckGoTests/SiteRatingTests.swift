@@ -38,7 +38,19 @@ class SiteRatingTests: XCTestCase {
         static let tracker = Tracker(url: Url.tracker, networkName: Url.tracker)
         static let differentTracker = Tracker(url: Url.differentTracker, networkName: Url.differentTracker)
     }
-    
+
+    func testWhenAssociatedUrlHasTosThenTosReturned() {
+        let tracker = Tracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
+        XCTAssertNotNil(testee.termsOfService)
+    }
+
+    func testWhenAssociatedDomainExistsParentUrlDomainIsReturned() {
+        let tracker = Tracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
+        XCTAssertEqual("google.com", testee.associatedDomain(for: "googlemail.com"))
+    }
+
     func testWhenUrlContainHostThenInitSucceeds() {
         let testee = SiteRating(url: Url.withHost)
         XCTAssertNotNil(testee)
@@ -90,7 +102,7 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
         XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
-    
+
     func testWhenUrlHasTosThenTosReturned() {
         let testee = SiteRating(url: Url.google)
         XCTAssertNotNil(testee.termsOfService)

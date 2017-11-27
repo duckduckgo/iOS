@@ -24,6 +24,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
@@ -57,6 +58,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     override func viewDidLoad() {
         initTableView()
+        messageLabel.adjustPlainTextLineHeight(1.286)
         update()
     }
 
@@ -68,7 +70,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         guard isViewLoaded else { return }
         sections = siteRating.toSections(withSiteRating: siteRating, andContentBlocker: contentBlocker, forMajorNetworksOnly: majorOnly)
         updateDomain()
-        updateMessage()
+        updateSubtitle()
         updateIcon()
         tableView.reloadData()
     }
@@ -77,8 +79,8 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         domainLabel.text = siteRating.domain
     }
 
-    private func updateMessage() {
-        messageLabel.text = majorOnly ?
+    private func updateSubtitle() {
+        subtitleLabel.text = majorOnly ?
             siteRating.majorNetworksText(contentBlocker: contentBlocker).uppercased() :
             siteRating.networksText(contentBlocker: contentBlocker).uppercased()
     }

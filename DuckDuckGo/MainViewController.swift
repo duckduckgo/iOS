@@ -43,6 +43,7 @@ class MainViewController: UIViewController {
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     fileprivate var currentTab: TabViewController? {
         return tabManager.current
@@ -55,6 +56,7 @@ class MainViewController: UIViewController {
         attachOmniBar()
         configureTabManager()
         loadInitialView()
+        addLaunchTabNotificationObserver()
 
         fireButton = toolbar.addFireButton { [weak self] in self?.launchFireMenu() }
     }
@@ -79,6 +81,14 @@ class MainViewController: UIViewController {
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
+    }
+
+    private func addLaunchTabNotificationObserver() {
+        launchTabObserver = LaunchTabNotification.addObserver(handler: { urlString in
+            guard let url = URL(string: urlString) else { return }
+            
+            self.loadUrlInNewTab(url)
+        })
     }
     
     private func loadInitialView() {
@@ -289,6 +299,7 @@ class MainViewController: UIViewController {
         controller.modalPresentationStyle = .overCurrentContext
         present(controller, animated: true, completion: nil)
     }
+
 }
 
 extension MainViewController: BrowserChromeDelegate {

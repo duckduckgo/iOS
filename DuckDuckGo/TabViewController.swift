@@ -429,6 +429,9 @@ extension TabViewController: WebEventsDelegate {
     
     func webpageDidFailToLoad() {
         Logger.log(items: "webpageLoading failed:", Date().timeIntervalSince1970)
+        if isError {
+            showBars(animated: true)
+        }
         siteRating?.finishedLoading = true
         updateSiteRating()
         delegate?.tabLoadingStateDidChange(tab: self)

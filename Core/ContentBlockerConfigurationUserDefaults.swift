@@ -79,7 +79,8 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         domainWhitelist = whitelist
     }
 
-    public func protecting(domain: String) -> Bool {
+    public func protecting(domain: String?) -> Bool {
+        guard let domain = domain else { return enabled }
         return enabled && !whitelisted(domain: domain)
     }
     

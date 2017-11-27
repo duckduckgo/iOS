@@ -30,6 +30,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var error: UIView!
     @IBOutlet weak var errorMessage: UILabel!
     
     open private(set) var webView: WKWebView!
@@ -48,11 +49,19 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public var favicon: URL?
     
     public var canGoBack: Bool {
-        return webView.canGoBack
+        return webView.canGoBack || (webView.url != nil && isError)
     }
     
     public var canGoForward: Bool {
-        return webView.canGoForward
+        return webView.canGoForward && !isError
+    }
+
+    public var isError: Bool {
+        return !error.isHidden
+    }
+
+    public var errorText: String? {
+        return errorMessage.text
     }
 
     open override func viewDidLoad() {
@@ -107,6 +116,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
  
     public func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
+        webView.stopLoading()
         webView.load(urlRequest)
     }
     
@@ -160,8 +170,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
-        webEventsDelegate?.webpageDidFailToLoad()
         showError(message: error.localizedDescription)
+        webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }
 
@@ -241,7 +251,13 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func goBack() {
-        webView.goBack()
+        if isError {
+            hideErrorMessage()
+            webEventsDelegate?.webpageDidStartLoading()
+            webEventsDelegate?.webpageDidFinishLoading()
+        } else {
+            webView.goBack()
+        }
     }
     
     public func goForward() {
@@ -257,20 +273,20 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     private func showError(message: String) {
-        webView.alpha = 0
-        errorMessage.text = "\(UserText.webPageFailedLoad) \(message)"
-        errorMessage.alpha = 1
-        errorMessage.adjustPlainTextLineHeight(1.5)
+        webView.isHidden = true
+        error.isHidden = false
+        errorMessage.text = message
+
     }
     
     private func hideErrorMessage() {
-        errorMessage.alpha = 0
-        webView.alpha = 1
+        error.isHidden = true
+        webView.isHidden = false
     }
 
-    open func reloadScripts() {
+    open func reloadScripts(with protectionId: String) {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts()
+        webView.configuration.loadScripts(with: protectionId)
     }
 
     public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

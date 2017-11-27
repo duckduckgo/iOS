@@ -37,7 +37,9 @@ class PrivacyProtectionController: UIViewController {
 
     weak var omniBar: OmniBar!
     weak var omniDelegate: OmniBarDelegate!
-    weak var siteRating: SiteRating!
+    weak var siteRating: SiteRating?
+    var omniBarText: String?
+    var errorText: String?
 
     lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
 
@@ -46,13 +48,32 @@ class PrivacyProtectionController: UIViewController {
 
         transitioningDelegate = self
         initOmniBar()
+
+        if let errorText = errorText {
+            showError(withText: errorText)
+        } else {
+            showInitialScreen()
+        }
+
+    }
+
+    private func showError(withText errorText: String) {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
+        controller.errorText = errorText
+        embeddedController.pushViewController(controller, animated: true)
+    }
+
+    private func showInitialScreen() {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen") as? PrivacyProtectionOverviewController else { return }
+        embeddedController.pushViewController(controller, animated: true)
+        updateViewControllers()
     }
 
     private func initOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.frame = omniBarContainer.bounds
         omniBarContainer.addSubview(omniBar)
-        omniBar.refreshText(forUrl: siteRating.url)
+        omniBar.textField.text = omniBarText
         omniBar.updateSiteRating(siteRating)
         omniBar.startBrowsing()
         omniBar.omniDelegate = self
@@ -72,17 +93,18 @@ class PrivacyProtectionController: UIViewController {
         }
     }
 
-    func updateSiteRating(_ siteRating: SiteRating) {
+    func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
         omniBar.updateSiteRating(siteRating)
+        omniBar.refreshText(forUrl: siteRating?.url)
         updateViewControllers()
     }
 
     func updateViewControllers() {
+        guard let siteRating = siteRating else { return }
         for controller in embeddedController.viewControllers {
-            if let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying {
-                infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
-            }
+            guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
+            infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
         }
     }
 
@@ -144,6 +166,8 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
         let containerView = transitionContext.containerView
         guard let toController = transitionContext.viewController(forKey: .to) else { return }
         guard let fromController = transitionContext.viewController(forKey: .from) as? PrivacyProtectionController else { return }
+
+        fromController.view.backgroundColor = UIColor.clear
 
         toController.view.frame = transitionContext.finalFrame(for: toController)
         containerView.insertSubview(toController.view, at: 0)

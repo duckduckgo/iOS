@@ -27,7 +27,7 @@ class TabViewController: WebViewController {
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     
     weak var delegate: TabDelegate?
-    weak var chromeDelegate: BrowserChromeDelegate!
+    weak var chromeDelegate: BrowserChromeDelegate?
     
     private lazy var appUrls: AppUrls = AppUrls()
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
@@ -49,6 +49,12 @@ class TabViewController: WebViewController {
     }
     
     public var link: Link? {
+        if isError {
+            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
+                return Link(title: errorText, url: url)
+            }
+        }
+
         guard let url = url else {
             return tabModel.link
         }
@@ -73,11 +79,15 @@ class TabViewController: WebViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+        guard let chromeDelegate = chromeDelegate else { return }
+
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
+            controller.omniBarText = chromeDelegate.omniBar.textField.text
             controller.siteRating = siteRating
+            controller.errorText = isError ? errorText : nil
         }
 
     }
@@ -89,13 +99,14 @@ class TabViewController: WebViewController {
     @objc func onContentBlockerConfigurationChanged() {
         // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.reloadScripts()
+            guard let siteRating = self.siteRating else { return }
+            self.reloadScripts(with: siteRating.protectionId)
             self.webView?.reload()
         }
     }
     
     private func resetNavigationBar() {
-        chromeDelegate.setBarsHidden(false, animated: false)
+        chromeDelegate?.setBarsHidden(false, animated: false)
     }
     
     @IBAction func onBottomOfScreenTapped(_ sender: UITapGestureRecognizer) {
@@ -103,13 +114,13 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func showBars(animated: Bool = true) {
-        chromeDelegate.setBarsHidden(false, animated: animated)
+        chromeDelegate?.setBarsHidden(false, animated: animated)
     }
     
     func showPrivacyProtection() {
         performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
-    
+
     fileprivate func resetSiteRating() {
         if let url = url {
             siteRating = SiteRating(url: url)
@@ -120,7 +131,9 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func updateSiteRating() {
-        if let url = url {
+        if isError {
+            siteRating = nil
+        } else if let url = url {
             siteRating?.url = url
         } else {
             siteRating = nil
@@ -130,13 +143,11 @@ class TabViewController: WebViewController {
     
     fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
-        if let siteRating = siteRating {
-            privacyController?.updateSiteRating(siteRating)
-        }
+        privacyController?.updateSiteRating(siteRating)
     }
     
     func launchBrowsingMenu() {
-        guard let button = chromeDelegate.omniBar.menuButton else { return }
+        guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())
@@ -147,8 +158,10 @@ class TabViewController: WebViewController {
                 alert.addAction(whitelistAction(forDomain: domain))
             }
 
-            alert.addAction(saveBookmarkAction(forLink: link))
-            alert.addAction(shareAction(forLink: link))
+            if !isError {
+                alert.addAction(saveBookmarkAction(forLink: link))
+                alert.addAction(shareAction(forLink: link))
+            }
         }
         
         alert.addAction(settingsAction())
@@ -183,7 +196,14 @@ class TabViewController: WebViewController {
     
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] action in
-            self?.reload()
+            guard let strongSelf = self else { return }
+            if strongSelf.isError {
+                if let url = URL(string: strongSelf.chromeDelegate?.omniBar.textField.text ?? "") {
+                    strongSelf.load(url: url)
+                }
+            } else {
+                strongSelf.reload()
+            }
         }
     }
     
@@ -252,8 +272,8 @@ class TabViewController: WebViewController {
     
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
-            guard let menu = self?.chromeDelegate.omniBar.menuButton else { return }
-            self?.presentShareSheet(withItems: [ link.title ?? "", link.url, link ], fromView: menu)
+            guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
+            self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
         }
     }
     
@@ -328,10 +348,13 @@ extension TabViewController: WKScriptMessageHandler {
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
-        reloadScripts()
+
+        guard let siteRating = siteRating else { return }
+        reloadScripts(with: siteRating.protectionId)
     }
     
     struct TrackerDetectedKey {
+        static let protectionId = "protectionId"
         static let blocked = "blocked"
         static let networkName = "networkName"
         static let url = "url"
@@ -342,7 +365,14 @@ extension TabViewController: WKScriptMessageHandler {
         guard let dict = message.body as? Dictionary<String, Any> else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let url = dict[TrackerDetectedKey.url] as? String else { return }
+        guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
         let parent = dict[TrackerDetectedKey.networkName] as? String
+
+        guard protectionId == siteRating?.protectionId else {
+            Logger.log(text: "id check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
+            return
+        }
+
         let tracker = Tracker(url: url, networkName: parent)
         siteRating?.trackerDetected(tracker, blocked: blocked)
         onSiteRatingChanged()
@@ -374,12 +404,15 @@ extension TabViewController: WebEventsDelegate {
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         resetSiteRating()
+        if let siteRating = siteRating {
+            reloadScripts(with: siteRating.protectionId)
+        }
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
-        if let siteRating = siteRating {
-            NetworkLeaderboard.shared.visited(domain: siteRating.domain)
+        if let domain = siteRating?.domain {
+            NetworkLeaderboard.shared.visited(domain: domain)
         }
     }
     
@@ -393,6 +426,13 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidFailToLoad() {
+        Logger.log(items: "webpageLoading failed:", Date().timeIntervalSince1970)
+        if isError {
+            showBars(animated: true)
+        }
+        siteRating?.finishedLoading = true
+        updateSiteRating()
+        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
@@ -436,11 +476,12 @@ extension TabViewController {
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
         return gestureRecognizer == showBarsTapGestureRecogniser &&
-               chromeDelegate.isToolbarHidden == true &&
+               chromeDelegate?.isToolbarHidden == true &&
                isBottom(yPosition: y)
     }
     
     private func isBottom(yPosition y: CGFloat) -> Bool {
+        guard let chromeDelegate = chromeDelegate else { return false }
         return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
     }
     
@@ -454,7 +495,7 @@ extension TabViewController {
 
 extension TabViewController: UIScrollViewDelegate {
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if chromeDelegate.isToolbarHidden == true {
+        if chromeDelegate?.isToolbarHidden == true {
             showBars()
             return false
         }
@@ -471,7 +512,7 @@ extension TabViewController: ContentBlockerSettingsChangeDelegate {
 extension TabViewController: PrivacyProtectionDelegate {
 
     func omniBarTextTapped() {
-        chromeDelegate.omniBar.becomeFirstResponder()
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
 }

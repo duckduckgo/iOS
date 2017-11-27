@@ -46,7 +46,7 @@ class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
         lastWhiteListedItem = nil
     }
 
-    func protecting(domain: String) -> Bool {
+    func protecting(domain: String?) -> Bool {
         return protecting
     }
 

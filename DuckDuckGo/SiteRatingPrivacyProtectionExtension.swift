@@ -45,7 +45,7 @@ extension SiteRating {
         case _ where(score < 0):
             return UserText.privacyProtectionTOSGood
 
-        case 0 ... 1:
+        case 0:
             return UserText.privacyProtectionTOSMixed
 
         default:
@@ -91,6 +91,7 @@ extension SiteRating {
     }
 
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {
+        guard let domain = domain else { return contentBlocker.enabled }
         return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(domain)
     }
 

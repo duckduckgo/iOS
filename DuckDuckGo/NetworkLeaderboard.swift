@@ -70,6 +70,10 @@ class NetworkLeaderboard {
         return results
     }
 
+    func shouldShow() -> Bool {
+        return sitesVisited() > 10 && networksDetected().count >= 3
+    }
+
     func visited(domain: String) {
         guard nil == findSite(byDomain: domain) else { return }
 

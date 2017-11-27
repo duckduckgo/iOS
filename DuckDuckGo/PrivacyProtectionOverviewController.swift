@@ -23,15 +23,11 @@ import Core
 class PrivacyProtectionOverviewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
-    @IBOutlet var requiresKernAdjustment: [UILabel]!
 
     @IBOutlet weak var encryptionCell: SummaryCell!
     @IBOutlet weak var trackersCell: SummaryCell!
     @IBOutlet weak var majorTrackersCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
-    @IBOutlet weak var privacyProtectionCell: UITableViewCell!
-    @IBOutlet weak var privacyProtectionSwitch: UISwitch!
-    @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardCell!
 
     fileprivate var popRecognizer: InteractivePopRecognizer!
 
@@ -42,17 +38,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        leaderboard.didLoad()
         initPopRecognizer()
         adjustMargins()
-        adjustKerns()
 
         update()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.selectRow(at: nil, animated: false, scrollPosition: .none)
-        leaderboard.update()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -60,15 +49,22 @@ class PrivacyProtectionOverviewController: UITableViewController {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
         }
 
+        if let controller = segue.destination as? PrivacyProtectionTrackerNetworksController {
+            controller.majorOnly = segue.identifier == "Major"
+        }
+
         if let header = segue.destination as? PrivacyProtectionHeaderController {
             self.header = header
         }
     }
 
-    @IBAction func toggleProtection() {
-        let contentBlockingOn = privacyProtectionSwitch.isOn
-        self.contentBlocker.enabled = contentBlockingOn
-        update()
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+
+        if identifier == "Leaderboard" && !NetworkLeaderboard.shared.shouldShow() {
+            return false
+        }
+
+        return true
     }
 
     private func update() {
@@ -80,37 +76,44 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateTrackersBlocked()
         updateMajorTrackersBlocked()
         updatePrivacyPractices()
-        updateProtectionToggle()
-        updateLeaderBoard()
     }
 
     private func updateEncryption() {
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
-        encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        if siteRating.https && siteRating.hasOnlySecureContent {
+            encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        } else {
+            encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection Bad") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        }
     }
 
     private func updateTrackersBlocked() {
-        trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Blocked On") : #imageLiteral(resourceName: "PP Icon Blocked Off")
         trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
+
+        if (protecting() ? siteRating.uniqueTrackerNetworksBlocked : siteRating.uniqueMajorTrackerNetworksBlocked) == 0 {
+            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks On") : #imageLiteral(resourceName: "PP Icon Networks Off")
+        } else {
+            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks Bad") : #imageLiteral(resourceName: "PP Icon Networks Off")
+        }
     }
 
     private func updateMajorTrackersBlocked() {
-        majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
         majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
+        if siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) {
+            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+        } else {
+            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks Bad") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+        }
     }
 
     private func updatePrivacyPractices() {
-        privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Bad Privacy On") : #imageLiteral(resourceName: "PP Icon Bad Privacy Off")
         privacyPracticesCell.summaryLabel.text = siteRating.privacyPracticesText()
-    }
 
-    private func updateLeaderBoard() {
-        leaderboard.update()
-    }
-
-    private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = contentBlocker.enabled
-        privacyProtectionCell.backgroundColor = protecting() ? UIColor.ppGreen : UIColor.ppGray
+        if siteRating.privacyPracticesSuccess() {
+            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Good On") : #imageLiteral(resourceName: "PP Icon Privacy Good Off")
+        } else {
+            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Bad On") : #imageLiteral(resourceName: "PP Icon Privacy Bad Off")
+        }
     }
 
     private func protecting() -> Bool {
@@ -129,12 +132,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
             for margin in margins {
                 margin.constant = 0
             }
-        }
-    }
-
-    private func adjustKerns() {
-        for label in requiresKernAdjustment {
-            label.adjustKern(1.7)
         }
     }
 
@@ -171,66 +168,6 @@ class ProtectionUpgradedView: UIView {
 
 }
 
-class TrackerNetworkLeaderboardCell: UITableViewCell {
-
-    @IBOutlet weak var firstPill: TrackerNetworkPillView!
-    @IBOutlet weak var secondPill: TrackerNetworkPillView!
-    @IBOutlet weak var thirdPill: TrackerNetworkPillView!
-    @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var forwardArrow: UIImageView!
-
-    var leaderboard = NetworkLeaderboard.shared
-
-    func didLoad() {
-        firstPill.didLoad()
-        secondPill.didLoad()
-        thirdPill.didLoad()
-    }
-
-    func update() {
-        let networksDetected = leaderboard.networksDetected()
-
-        let hasTop3 = networksDetected.count >= 3
-
-        firstPill.isHidden = !hasTop3
-        secondPill.isHidden = !hasTop3
-        thirdPill.isHidden = !hasTop3
-        forwardArrow.isHidden = !hasTop3
-        message.isHidden = hasTop3
-        selectionStyle = !hasTop3 ? .none : .default
-
-        if hasTop3 {
-            let sitesVisited = leaderboard.sitesVisited()
-            firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
-            secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
-            thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
-        }
-
-    }
-
-}
-
-class TrackerNetworkPillView: UIView {
-
-    @IBOutlet weak var networkImage: UIImageView!
-    @IBOutlet weak var percentageLabel: UILabel!
-
-    func didLoad() {
-        layer.cornerRadius = frame.size.height / 2
-        percentageLabel.adjustKern(1.2)
-    }
-
-    func update(network: PPTrackerNetwork, sitesVisited: Int) {
-        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / sitesVisited
-        let percentText = "\(percent)%"
-        let image = network.image
-
-        networkImage.image = image
-        percentageLabel.text = percentText
-    }
-
-}
-
 fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
 
     var navigationController: UINavigationController
@@ -250,12 +187,4 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
     }
 }
 
-fileprivate extension PPTrackerNetwork {
-
-    var image: UIImage {
-        let imageName = "PP Pill \(name!.lowercased())"
-        return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")
-    }
-
-}
 

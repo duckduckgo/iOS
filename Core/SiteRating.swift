@@ -21,24 +21,23 @@
 import Foundation
 
 public class SiteRating {
-    
+    public let protectionId: String
     public var url: URL
     public var hasOnlySecureContent: Bool
-    public let domain: String
+    public var domain: String? {
+        return url.host
+    }
     public var finishedLoading = false
-    private var trackersDetected = [Tracker: Int]()
-    private var trackersBlocked = [Tracker: Int]()
+    public private (set) var trackersDetected = [Tracker: Int]()
+    public private (set) var trackersBlocked = [Tracker: Int]()
 
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: Tracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init?(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
-        guard let domain = url.host else {
-            return nil
-        }
+    public init(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
+        self.protectionId = UUID.init().uuidString
         self.url = url
-        self.domain = domain
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore
         self.majorTrackerNetworkStore = majorTrackerNetworkStore
@@ -74,7 +73,14 @@ public class SiteRating {
     }
     
     public var termsOfService: TermsOfService? {
-        return termsOfServiceStore.terms.filter( { domain.hasSuffix($0.0) } ).first?.value
+        guard let domain = self.domain else { return nil }
+        if let tos = termsOfServiceStore.terms.first( where: { domain.hasSuffix($0.0) } )?.value {
+            return tos
+        }
+
+        // if not TOS found for this site use the parent's (e.g. google.co.uk should use google.com)
+        let storeDomain = associatedDomain(for: domain) ?? domain
+        return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) } )?.value
     }
 
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
@@ -101,6 +107,19 @@ public class SiteRating {
     
     public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
+    }
+
+    public var majorNetworkTrackersDetected: [Tracker: Int] {
+        return trackersDetected.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+    }
+
+    public var majorNetworkTrackersBlocked: [Tracker: Int] {
+        return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+    }
+
+    public func associatedDomain(for domain: String) -> String? {
+        let tracker = disconnectMeTrackers.first( where: { domain.hasSuffix($0.value.url) })?.value
+        return tracker?.parentUrl?.host
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {

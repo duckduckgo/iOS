@@ -33,13 +33,15 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
     @IBOutlet weak var unencryptedLabel: UILabel!
     @IBOutlet weak var mixedContentLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
 
     private weak var siteRating: SiteRating!
+    private weak var contentBlocker: ContentBlockerConfigurationStore!
 
     private let serverTrustCache = ServerTrustCache.shared
     private var sections = [Section]()
@@ -49,6 +51,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         initTableView()
         initHttpsStatus()
         initDomain()
+        messageLabel.adjustPlainTextLineHeight(1.286)
         beginCertificateInfoExtraction()
 
     }
@@ -67,7 +70,9 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        imageView.image = siteRating.https ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Off")
+        let resultImage = siteRating.encryptedConnectionSuccess() ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Bad")
+        iconImage.image = contentBlocker.protecting(domain: siteRating.domain) ? resultImage : #imageLiteral(resourceName: "PP Hero Connection Off")
+
         encryptedLabel.isHidden = true
         unencryptedLabel.isHidden = true
         mixedContentLabel.isHidden = true
@@ -99,6 +104,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisplaying {
 
     func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
+        self.contentBlocker = contentBlocker
         self.siteRating = siteRating
     }
 

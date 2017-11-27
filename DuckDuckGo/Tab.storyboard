@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -39,22 +41,51 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
-                                <rect key="frame" x="69" y="121" width="237" height="16"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="0.65098039220000004" green="0.66666666669999997" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd4-Oi-JP2">
+                                <rect key="frame" x="0.0" y="20" width="375" height="400"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ErrorInfo" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-E3-s7Q">
+                                        <rect key="frame" x="142.5" y="134" width="90" height="90"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo can’t load this page." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
+                                        <rect key="frame" x="27" y="257" width="321" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This URL doesn’t look valid or the page can’t be found. Please check the address and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
+                                        <rect key="frame" x="38" y="291.5" width="299" height="66"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="66" id="X6F-zJ-Kge"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
+                                        <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="FYN-Aj-dTM"/>
+                                    <constraint firstItem="6P7-7R-riV" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-54" id="LuE-W6-z1U"/>
+                                    <constraint firstItem="TUO-E3-s7Q" firstAttribute="top" secondItem="Kd4-Oi-JP2" secondAttribute="top" constant="134" id="PFZ-er-jCK"/>
+                                    <constraint firstItem="6P7-7R-riV" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="Sjn-ZG-gAr"/>
+                                    <constraint firstItem="Cjw-mk-QL3" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="UQT-0H-F2p"/>
+                                    <constraint firstItem="Cjw-mk-QL3" firstAttribute="top" secondItem="6P7-7R-riV" secondAttribute="bottom" constant="11" id="Vc3-Ps-7wl"/>
+                                    <constraint firstItem="TUO-E3-s7Q" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="jYJ-tI-XcU"/>
+                                    <constraint firstItem="Cjw-mk-QL3" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-76" id="pOF-JR-JEz"/>
+                                    <constraint firstItem="6P7-7R-riV" firstAttribute="top" secondItem="TUO-E3-s7Q" secondAttribute="bottom" constant="33" id="wm5-Yr-sWj"/>
+                                </constraints>
+                            </view>
                         </subviews>
+                        <color key="backgroundColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="t0t-53-xVf" firstAttribute="trailing" secondItem="cf7-Ja-fUU" secondAttribute="trailing" id="2jX-5z-Ssu"/>
-                            <constraint firstItem="6P7-7R-riV" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leadingMargin" constant="53" id="50N-DY-LRh"/>
-                            <constraint firstItem="6P7-7R-riV" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="101" id="ImD-dD-psM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6P7-7R-riV" secondAttribute="trailing" constant="53" id="S9R-81-gn8"/>
+                            <constraint firstItem="Kd4-Oi-JP2" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="5OD-OG-z3h"/>
+                            <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerX" secondItem="t0t-53-xVf" secondAttribute="centerX" id="K0j-Jv-Jf9"/>
                             <constraint firstItem="cf7-Ja-fUU" firstAttribute="leading" secondItem="t0t-53-xVf" secondAttribute="leading" id="Vfx-ef-Qp5"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-80" id="Zyh-vQ-fMz"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
+                            <constraint firstItem="Kd4-Oi-JP2" firstAttribute="top" secondItem="t0t-53-xVf" secondAttribute="top" id="d1G-AJ-ASk"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
                             <constraint firstItem="cf7-Ja-fUU" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="bottom" id="xwr-1D-cel"/>
                         </constraints>
@@ -69,7 +100,8 @@
                         <size key="landscapeSize" width="559" height="375"/>
                     </fixedSimulatedSizeMetrics>
                     <connections>
-                        <outlet property="errorMessage" destination="6P7-7R-riV" id="xsf-dK-vm2"/>
+                        <outlet property="error" destination="Kd4-Oi-JP2" id="zBn-cG-pfQ"/>
+                        <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
                         <outlet property="progressBar" destination="cf7-Ja-fUU" id="3z8-Dr-WFy"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <segue destination="5Os-y0-IaV" kind="show" identifier="PrivacyProtection" id="nKl-8K-k03"/>
@@ -83,7 +115,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1182" y="446"/>
+            <point key="canvasLocation" x="1181.5999999999999" y="445.72713643178412"/>
         </scene>
         <!--PrivacyProtection-->
         <scene sceneID="L6K-iW-ae0">
@@ -94,4 +126,7 @@
             <point key="canvasLocation" x="1922" y="188"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ErrorInfo" width="90" height="90"/>
+    </resources>
 </document>

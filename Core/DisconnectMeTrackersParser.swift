@@ -52,7 +52,7 @@ public struct DisconnectMeTrackersParser {
 
             for url in jsonTrackers {
                 guard let url = url as? String else { continue }
-                trackers[url] = Tracker(url: url, networkName: networkName, category: category)
+                trackers[url] = Tracker(url: url, networkName: networkName, parentUrl: URL(string: baseUrl), category: category)
             }
         }
     }

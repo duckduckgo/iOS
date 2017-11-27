@@ -26,9 +26,11 @@ public enum SupportedExternalURLScheme: String {
     case mailto
     case maps
     case sms
+    case itunesapps = "itms-appss"
     
     public static func isSupported(url: URL) -> Bool {
         guard let scheme = url.scheme else { return false }
         return SupportedExternalURLScheme(rawValue: scheme) != nil
     }
+
 }

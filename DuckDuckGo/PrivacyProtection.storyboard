@@ -1244,6 +1244,7 @@
                         <outlet property="domainLabel" destination="0SO-8y-5QH" id="kup-a3-DH3"/>
                         <outlet property="iconImage" destination="9WR-Wf-9ad" id="nLQ-bJ-bkT"/>
                         <outlet property="messageLabel" destination="JrS-AS-COd" id="Qfr-uW-sls"/>
+                        <outlet property="subtitleLabel" destination="25V-p3-wsn" id="z4j-ja-X9u"/>
                         <outlet property="tableView" destination="4vm-2D-njE" id="LaJ-a1-fgE"/>
                     </connections>
                 </viewController>

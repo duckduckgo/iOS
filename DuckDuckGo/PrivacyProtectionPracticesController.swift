@@ -32,6 +32,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
     weak var siteRating: SiteRating!
@@ -56,9 +57,14 @@ class PrivacyProtectionPracticesController: UIViewController {
 
     func update() {
         guard isViewLoaded else { return }
+        updateSubtitleLabel()
         updateImageIcon()
         updateDomainLabel()
         updateReasons()
+    }
+
+    private func updateSubtitleLabel() {
+        subtitleLabel.text = siteRating.privacyPracticesText().uppercased()
     }
 
     private func updateImageIcon() {

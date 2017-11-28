@@ -26,6 +26,7 @@ public enum SupportedExternalURLScheme: String {
     case mailto
     case maps
     case sms
+    case itunes = "itmss"
     case itunesapps = "itms-appss"
     
     public static func isSupported(url: URL) -> Bool {

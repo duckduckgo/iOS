@@ -70,8 +70,13 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        let resultImage = siteRating.encryptedConnectionSuccess() ? #imageLiteral(resourceName: "PP Hero Connection On") : #imageLiteral(resourceName: "PP Hero Connection Bad")
-        iconImage.image = contentBlocker.protecting(domain: siteRating.domain) ? resultImage : #imageLiteral(resourceName: "PP Hero Connection Off")
+        if siteRating.hasOnlySecureContent {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
+        } else if siteRating.https {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Off")
+        } else {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
+        }
 
         encryptedLabel.isHidden = true
         unencryptedLabel.isHidden = true

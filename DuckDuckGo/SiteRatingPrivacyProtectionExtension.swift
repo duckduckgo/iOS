@@ -22,6 +22,23 @@ import Core
 
 extension SiteRating {
 
+    enum PrivacyPractices {
+
+        case unknown
+        case poor
+        case good
+        case mixed
+
+    }
+
+    static let practicesText: [PrivacyPractices: String] = [
+        .unknown: UserText.privacyProtectionTOSUnknown,
+        .good: UserText.privacyProtectionTOSGood,
+        .mixed: UserText.privacyProtectionTOSMixed,
+        .poor: UserText.privacyProtectionTOSPoor
+    ]
+
+
     func encryptedConnectionText() -> String {
         if !https {
             return UserText.privacyProtectionEncryptionBadConnection
@@ -36,26 +53,23 @@ extension SiteRating {
         return https && hasOnlySecureContent
     }
 
-    func privacyPracticesText() -> String {
-        guard termsOfService != nil else { return UserText.privacyProtectionTOSUnknown }
-
-        let score = termsOfServiceScore
-
-        switch (score) {
-        case _ where(score < 0):
-            return UserText.privacyProtectionTOSGood
-
-        case 0:
-            return UserText.privacyProtectionTOSMixed
-
-        default:
-            return UserText.privacyProtectionTOSPoor
-        }
+    func privacyPracticesText() -> String? {
+        return SiteRating.practicesText[privacyPractices()]
     }
 
-    func privacyPracticesSuccess() -> Bool {
-        guard termsOfService != nil else { return false}
-        return termsOfServiceScore < 0
+    func privacyPractices() -> PrivacyPractices {
+        guard termsOfService != nil else { return .unknown }
+        let score = termsOfServiceScore
+        switch (score) {
+        case _ where(score < 0):
+            return .good
+
+        case 0:
+            return .mixed
+
+        default:
+            return .poor
+        }
     }
 
     func majorNetworksText(contentBlocker: ContentBlockerConfigurationStore) -> String {

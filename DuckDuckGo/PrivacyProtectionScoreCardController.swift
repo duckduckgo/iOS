@@ -76,8 +76,8 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     }
 
     private func updatePrivacyPractices() {
-        let success = siteRating.privacyPracticesSuccess()
-        privacyPracticesCell.update(message: siteRating.privacyPracticesText(), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.privacyPractices() == .good
+        privacyPracticesCell.update(message: siteRating.privacyPracticesText() ?? "", image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updatePrivacyGradeCells() {

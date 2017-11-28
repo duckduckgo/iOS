@@ -23,12 +23,14 @@ import Foundation
 public protocol MajorTrackerNetworkStore {
 
     func network(forName name: String) -> MajorTrackerNetwork?
+    func network(forDomain domain: String) -> MajorTrackerNetwork?
 
 }
 
 public struct MajorTrackerNetwork {
 
     let name: String
+    let domain: String
     let perentageOfPages: Int
 
     var score: Int {
@@ -37,26 +39,43 @@ public struct MajorTrackerNetwork {
 
 }
 
-public class EmbeddedMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+public class InMemoryMajorNetworkStore: MajorTrackerNetworkStore {
 
-    private let networks = [
-        MajorTrackerNetwork(name: "google",     perentageOfPages: 84),
-        MajorTrackerNetwork(name: "facebook",   perentageOfPages: 36),
-        MajorTrackerNetwork(name: "twitter",    perentageOfPages: 16),
-        MajorTrackerNetwork(name: "amazon",     perentageOfPages: 14),
-        MajorTrackerNetwork(name: "appnexus",   perentageOfPages: 10),
-        MajorTrackerNetwork(name: "oracle",     perentageOfPages: 10),
-        MajorTrackerNetwork(name: "mediamath",  perentageOfPages: 9),
-        MajorTrackerNetwork(name: "yahoo",      perentageOfPages: 9),
-        MajorTrackerNetwork(name: "maxcdn",     perentageOfPages: 7),
-        MajorTrackerNetwork(name: "automattic", perentageOfPages: 7),
-        ]
+    let networks: [MajorTrackerNetwork]
 
-    public init() { }
+    init(networks: [MajorTrackerNetwork]) {
+        self.networks = networks
+    }
+
+    public func network(forDomain domain: String) -> MajorTrackerNetwork? {
+        let lowercased = domain.lowercased()
+        return networks.first(where: { lowercased.hasSuffix($0.domain) })
+    }
 
     public func network(forName name: String) -> MajorTrackerNetwork? {
         let lowercased = name.lowercased()
-        return networks.filter( { lowercased.hasSuffix($0.name) } ).first
+        return networks.first(where: { lowercased == $0.name.lowercased() })
+    }
+
+}
+
+public class EmbeddedMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
+
+    private static let networks = [
+        MajorTrackerNetwork(name: "google",     domain: "google.com",       perentageOfPages: 84),
+        MajorTrackerNetwork(name: "facebook",   domain: "facebook.com",     perentageOfPages: 36),
+        MajorTrackerNetwork(name: "twitter",    domain: "twitter.com",      perentageOfPages: 16),
+        MajorTrackerNetwork(name: "amazon.com", domain: "amazon.com",       perentageOfPages: 14),
+        MajorTrackerNetwork(name: "appnexus",   domain: "appnexus.com",     perentageOfPages: 10),
+        MajorTrackerNetwork(name: "oracle",     domain: "oracle.com",       perentageOfPages: 10),
+        MajorTrackerNetwork(name: "mediamath",  domain: "mediamath.com",    perentageOfPages: 9),
+        MajorTrackerNetwork(name: "yahoo!",     domain: "yahoo.com",        perentageOfPages: 9),
+        MajorTrackerNetwork(name: "maxcdn",     domain: "maxcdn.com",       perentageOfPages: 7),
+        MajorTrackerNetwork(name: "automattic", domain: "automattic.com",   perentageOfPages: 7),
+        ]
+
+    public init() {
+        super.init(networks: EmbeddedMajorTrackerNetworkStore.networks)
     }
 
 }

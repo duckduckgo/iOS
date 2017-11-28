@@ -158,7 +158,9 @@ fileprivate extension Tracker {
 
     var domain: String? {
         let urlString = url.starts(with: "//") ? "http:\(url)" : url
-        return URL(string: urlString)?.host
+        let domainUrl = URL(string: urlString.trimWhitespace())
+        let host = domainUrl?.host
+        return host
     }
 
 }

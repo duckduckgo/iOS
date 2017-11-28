@@ -50,6 +50,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         initDomainLabel()
         initDrama()
         update()
+
     }
 
     func update() {

@@ -58,7 +58,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     override func viewDidLoad() {
         initTableView()
-        messageLabel.adjustPlainTextLineHeight(1.286)
+        initMessage()
         update()
     }
 
@@ -73,6 +73,13 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         updateSubtitle()
         updateIcon()
         tableView.reloadData()
+    }
+
+    private func initMessage() {
+        messageLabel.adjustPlainTextLineHeight(1.286)
+        if majorOnly {
+            messageLabel.text = UserText.ppTrackerNetworksMajorMessage
+        }
     }
 
     private func updateDomain() {

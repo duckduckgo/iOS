@@ -20,17 +20,23 @@
 
 import Foundation
 
-public enum SupportedExternalURLScheme: String {
-    
-    case tel
-    case mailto
-    case maps
-    case sms
-    case itunesapps = "itms-appss"
-    
+public struct SupportedExternalURLScheme {
+
+    static let schemes = [
+        "tel",
+        "mailto",
+        "maps",
+        "sms",
+        "itms",
+        "itmss",
+        "itms-apps",
+        "itms-appss",
+        "itunes",
+    ]
+
     public static func isSupported(url: URL) -> Bool {
         guard let scheme = url.scheme else { return false }
-        return SupportedExternalURLScheme(rawValue: scheme) != nil
+        return schemes.contains(scheme)
     }
 
 }

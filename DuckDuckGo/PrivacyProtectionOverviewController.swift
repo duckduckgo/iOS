@@ -73,8 +73,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         header.using(siteRating: siteRating, contentBlocker: contentBlocker)
         updateEncryption()
-        updateTrackersBlocked()
-        updateMajorTrackersBlocked()
+        updateTrackers()
+        updateMajorTrackers()
         updatePrivacyPractices()
     }
 
@@ -89,22 +89,23 @@ class PrivacyProtectionOverviewController: UITableViewController {
         }
     }
 
-    private func updateTrackersBlocked() {
+    private func updateTrackers() {
         trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
 
-        if (protecting() ? siteRating.uniqueTrackerNetworksBlocked : siteRating.uniqueMajorTrackerNetworksBlocked) == 0 {
-            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks On") : #imageLiteral(resourceName: "PP Icon Networks Off")
+        if protecting() || siteRating.uniqueTrackersDetected == 0 {
+            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Networks On")
         } else {
-            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks Bad") : #imageLiteral(resourceName: "PP Icon Networks Off")
+            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Networks Bad")
         }
+
     }
 
-    private func updateMajorTrackersBlocked() {
+    private func updateMajorTrackers() {
         majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
-        if siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) {
-            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+        if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
+            majorTrackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
         } else {
-            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks Bad") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+            majorTrackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")
         }
     }
 

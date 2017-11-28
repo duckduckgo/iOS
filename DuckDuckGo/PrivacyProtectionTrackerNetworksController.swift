@@ -95,19 +95,29 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     }
 
-    private func updateMajorNetworksIcon() {
-        let resultImage = siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Bad")
-        iconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Major Off")
+    private func updateNetworksIcon() {
+        if protecting() || siteRating.uniqueTrackersDetected == 0 {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Networks On")
+        } else {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Networks Bad")
+        }
     }
 
-    private func updateNetworksIcon() {
-        let resultImage = siteRating.networksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Networks On") : #imageLiteral(resourceName: "PP Hero Networks Bad")
-        iconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Networks Off")
+    private func updateMajorNetworksIcon() {
+        if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
+        } else {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")
+        }
     }
 
     private func initTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+    }
+
+    private func protecting() -> Bool {
+        return siteRating.protecting(contentBlocker)
     }
 
 }

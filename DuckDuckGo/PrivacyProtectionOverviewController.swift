@@ -22,6 +22,13 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
 
+    let privacyPracticesImages: [SiteRating.PrivacyPractices: UIImage] = [
+        .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
+        .poor: #imageLiteral(resourceName: "PP Icon Privacy Bad On"),
+        .mixed: #imageLiteral(resourceName: "PP Icon Privacy Good Off"),
+        .good: #imageLiteral(resourceName: "PP Icon Privacy Good On")
+    ]
+
     @IBOutlet var margins: [NSLayoutConstraint]!
 
     @IBOutlet weak var encryptionCell: SummaryCell!
@@ -111,12 +118,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     private func updatePrivacyPractices() {
         privacyPracticesCell.summaryLabel.text = siteRating.privacyPracticesText()
-
-        if siteRating.privacyPracticesSuccess() {
-            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Good On") : #imageLiteral(resourceName: "PP Icon Privacy Good Off")
-        } else {
-            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Bad On") : #imageLiteral(resourceName: "PP Icon Privacy Bad Off")
-        }
+        privacyPracticesCell.summaryImage.image = privacyPracticesImages[siteRating.privacyPractices()]
     }
 
     private func protecting() -> Bool {

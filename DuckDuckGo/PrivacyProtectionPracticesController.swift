@@ -22,6 +22,13 @@ import Core
 
 class PrivacyProtectionPracticesController: UIViewController {
 
+    let privacyPracticesImages: [SiteRating.PrivacyPractices: UIImage] = [
+        .unknown: #imageLiteral(resourceName: "PP Hero Privacy Bad Off"),
+        .poor: #imageLiteral(resourceName: "PP Hero Privacy Bad On"),
+        .mixed: #imageLiteral(resourceName: "PP Hero Privacy Good Off"),
+        .good: #imageLiteral(resourceName: "PP Hero Privacy Good On"),
+    ]
+
     struct Row {
 
         let text: String
@@ -64,13 +71,11 @@ class PrivacyProtectionPracticesController: UIViewController {
     }
 
     private func updateSubtitleLabel() {
-        subtitleLabel.text = siteRating.privacyPracticesText().uppercased()
+        subtitleLabel.text = siteRating.privacyPracticesText()?.uppercased()
     }
 
     private func updateImageIcon() {
-        let resultOn = siteRating.privacyPracticesSuccess() ? #imageLiteral(resourceName: "PP Hero Privacy Good On") : #imageLiteral(resourceName: "PP Hero Privacy Bad On")
-        let resultOff = siteRating.privacyPracticesSuccess() ? #imageLiteral(resourceName: "PP Hero Privacy Good Off") : #imageLiteral(resourceName: "PP Hero Privacy Bad Off")
-        iconImage.image = contentBlocker.enabled ? resultOn : resultOff
+        iconImage.image = privacyPracticesImages[siteRating.privacyPractices()]
     }
 
     private func updateDomainLabel() {
@@ -99,18 +104,13 @@ extension PrivacyProtectionPracticesController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(rows.count, 1)
+        return rows.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        if 0 == rows.count {
-            return tableView.dequeueReusableCell(withIdentifier: "None")!
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionPracticesCell
-            cell.update(row: rows[indexPath.row])
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionPracticesCell
+        cell.update(row: rows[indexPath.row])
+        return cell
     }
 
 }

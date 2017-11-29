@@ -106,6 +106,8 @@ public struct UserText {
     public static let ppEncryptionUnknown = NSLocalizedString("privacy.protection.encryption.unknown", comment:  "Unknown")
     public static let ppEncryptionBits = NSLocalizedString("privacy.protection.encryption.bits", comment:  "%d bits")
 
+    public static let ppTrackerNetworksMajorMessage = NSLocalizedString("privacy.protection.tracker.networks.major.message", comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
+
     public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment:  "Trackers networks were found on %@ of web sites you’ve visited since %@.")
 
     public static func forSiteGrade(_ grade: SiteGrade) -> String {

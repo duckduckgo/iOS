@@ -636,7 +636,7 @@
                                             <rect key="frame" x="0.0" y="155" width="375" height="75"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
-                                                    <rect key="frame" x="19.5" y="22" width="335" height="32"/>
+                                                    <rect key="frame" x="19.5" y="21.5" width="335" height="32"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Trackers networks were found on ">
                                                             <attributes>
@@ -735,7 +735,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mP-U5-LBV">
-                                                    <rect key="frame" x="16" y="10.5" width="84" height="14"/>
+                                                    <rect key="frame" x="16" y="10" width="84" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="84" id="fAv-vR-6yz"/>
                                                     </constraints>
@@ -744,7 +744,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-83-lMn">
-                                                    <rect key="frame" x="324" y="10.5" width="35" height="14"/>
+                                                    <rect key="frame" x="324" y="10" width="35" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="Cds-GZ-p2n"/>
                                                     </constraints>
@@ -1002,7 +1002,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-35-znM">
-                                                    <rect key="frame" x="20" y="3.5" width="335" height="14"/>
+                                                    <rect key="frame" x="20" y="4" width="335" height="14"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="www.tracker.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-Wf-SyO">
                                                             <rect key="frame" x="0.0" y="0.0" width="278.5" height="14"/>
@@ -1087,8 +1087,8 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-BI-Cm8">
                                             <rect key="frame" x="0.0" y="155" width="375" height="75"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poor privacy practices do not adequately protect the personal information you share with a website." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
-                                                    <rect key="frame" x="25.5" y="23.5" width="323" height="28"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy practices indicate how much the personal information that you share with a website is protected." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
+                                                    <rect key="frame" x="25.5" y="16.5" width="323" height="42"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1171,9 +1171,9 @@
                                 <rect key="frame" x="0.0" y="597" width="375" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLZ-Bg-d8p">
-                                        <rect key="frame" x="26" y="28.5" width="323" height="14"/>
+                                        <rect key="frame" x="26" y="28" width="323" height="14"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="Privacy Practices results from ">
+                                            <fragment content="Using privacy practices info from ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="14" name="ProximaNova-Regular"/>

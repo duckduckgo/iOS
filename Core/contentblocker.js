@@ -23,7 +23,7 @@ var duckduckgoContentBlocking = function() {
 	var topLevelUrl = null
 
 	// private
-	function handleDetection(event, parent, detectionMethod) {
+	function handleDetection(event, detectionMethod) {
 		var blocked = block(event)
         duckduckgoMessaging.trackerDetected({
         	protectionId: duckduckgoBlockerData.protectionId,
@@ -61,7 +61,7 @@ var duckduckgoContentBlocking = function() {
 
 		var result = DisconnectMe.parentTracker(url)
 		if (result && result.banned) {
-			handleDetection(event, result.parent, "disconnectme")
+			handleDetection(event, "disconnectme")
 			return true
 		}		
 
@@ -178,7 +178,7 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (ABPFilterParser.matches(easylist, event.url, config)) {
-			handleDetection(event, "Found by Easylist", name)
+			handleDetection(event, name)
 			return true
 		}
 

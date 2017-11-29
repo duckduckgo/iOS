@@ -56,7 +56,7 @@
 		8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
-		857065681F6AADC40044DCB1 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* Tracker.swift */; };
+		857065681F6AADC40044DCB1 /* DisconnectMeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* DisconnectMeTracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
 		857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065751F6ADCF70044DCB1 /* EasylistStore.swift */; };
@@ -397,7 +397,7 @@
 		8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionPracticesController.swift; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
-		857065671F6AADC40044DCB1 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
+		857065671F6AADC40044DCB1 /* DisconnectMeTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeTracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* TrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		857065751F6ADCF70044DCB1 /* EasylistStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasylistStore.swift; sourceTree = "<group>"; };
@@ -757,7 +757,7 @@
 		8377744B1F8E1F8000E17A29 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				857065671F6AADC40044DCB1 /* Tracker.swift */,
+				857065671F6AADC40044DCB1 /* DisconnectMeTracker.swift */,
 				85C271D01FCF33C8007216B4 /* DetectedTracker.swift */,
 			);
 			name = Domain;
@@ -2316,7 +2316,7 @@
 				F1B88A0C1F3B6C0E000263D6 /* MajorTrackerNetwork.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				F1D934031E610DCE00A6F0D6 /* Point.swift in Sources */,
-				857065681F6AADC40044DCB1 /* Tracker.swift in Sources */,
+				857065681F6AADC40044DCB1 /* DisconnectMeTracker.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				F16956421ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,

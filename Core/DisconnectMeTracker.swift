@@ -1,5 +1,5 @@
 //
-//  Tracker.swift
+//  DisconnectMeTracker.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.

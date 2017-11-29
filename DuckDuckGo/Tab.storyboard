@@ -42,29 +42,26 @@
                                 <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd4-Oi-JP2">
-                                <rect key="frame" x="0.0" y="20" width="375" height="400"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ErrorInfo" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-E3-s7Q">
                                         <rect key="frame" x="142.5" y="134" width="90" height="90"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo can’t load this page." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
-                                        <rect key="frame" x="27" y="257" width="321" height="23.5"/>
+                                        <rect key="frame" x="27" y="257" width="321" height="20"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This URL doesn’t look valid or the page can’t be found. Please check the address and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
-                                        <rect key="frame" x="38" y="291.5" width="299" height="66"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="66" id="X6F-zJ-Kge"/>
-                                        </constraints>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
+                                        <rect key="frame" x="38" y="288" width="299" height="224"/>
+                                        <mutableString key="text">The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk.  The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk. The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk. The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk.</mutableString>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                         <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="FYN-Aj-dTM"/>
                                     <constraint firstItem="6P7-7R-riV" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-54" id="LuE-W6-z1U"/>
                                     <constraint firstItem="TUO-E3-s7Q" firstAttribute="top" secondItem="Kd4-Oi-JP2" secondAttribute="top" constant="134" id="PFZ-er-jCK"/>
                                     <constraint firstItem="6P7-7R-riV" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="Sjn-ZG-gAr"/>
@@ -86,6 +83,7 @@
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-80" id="Zyh-vQ-fMz"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="top" secondItem="t0t-53-xVf" secondAttribute="top" id="d1G-AJ-ASk"/>
+                            <constraint firstItem="Kd4-Oi-JP2" firstAttribute="height" secondItem="Sgm-Wo-lho" secondAttribute="height" id="i7n-ek-99Q"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
                             <constraint firstItem="cf7-Ja-fUU" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="bottom" id="xwr-1D-cel"/>
                         </constraints>

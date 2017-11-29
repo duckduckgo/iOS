@@ -68,7 +68,7 @@ class TrackerNetworkLeaderboardView: UIView {
     var leaderboard = NetworkLeaderboard.shared
 
     func didLoad() {
-        message.adjustKern(1.7)
+        message.adjustPlainTextLineHeight(1.286)
         firstPill.didLoad()
         secondPill.didLoad()
         thirdPill.didLoad()

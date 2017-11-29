@@ -171,17 +171,6 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 }
 
-//fileprivate extension Tracker {
-//
-//    var domain: String? {
-//        let urlString = url.starts(with: "//") ? "http:\(url)" : url
-//        let domainUrl = URL(string: urlString.trimWhitespace())
-//        let host = domainUrl?.host
-//        return host
-//    }
-//
-//}
-
 fileprivate extension SiteRating {
 
     func toSections(withSiteRating siteRating: SiteRating, andContentBlocker contentBlocker: ContentBlockerConfigurationStore, forMajorNetworksOnly majorOnly: Bool) -> [PrivacyProtectionTrackerNetworksController.Section] {

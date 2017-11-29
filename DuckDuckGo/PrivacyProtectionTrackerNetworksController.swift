@@ -76,10 +76,10 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func initMessage() {
-        messageLabel.adjustPlainTextLineHeight(1.286)
         if majorOnly {
             messageLabel.text = UserText.ppTrackerNetworksMajorMessage
         }
+        messageLabel.adjustPlainTextLineHeight(1.286)
     }
 
     private func updateDomain() {

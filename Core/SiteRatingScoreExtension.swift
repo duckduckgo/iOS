@@ -117,9 +117,11 @@ public extension SiteRating {
         return String(data: json, encoding: .utf8)!
     }
 
-    public func category(forDomain domain: String) -> String? {
-        return disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.category?.rawValue
+    public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
+        let tracker = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) } )?.value
+        return ( tracker?.networkName, tracker?.category?.rawValue )
     }
+
 }
 
 public class SiteRatingCache {

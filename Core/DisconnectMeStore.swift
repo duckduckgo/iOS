@@ -38,13 +38,13 @@ public class DisconnectMeStore {
         }
     }
     
-    public var trackers: [String: Tracker] {
+    public var trackers: [String: DisconnectMeTracker] {
         do {
             let data = try Data(contentsOf: persistenceLocation)
             return try parse(data: data)
         } catch {
             Logger.log(items: "error parsing json for disconnect", error)
-            return [String: Tracker]()
+            return [String: DisconnectMeTracker]()
         }
     }
     
@@ -52,7 +52,7 @@ public class DisconnectMeStore {
         if let cached = stringCache.get(named: CacheKeys.disconnectJsonBanned) {
             return cached
         }
-        if let json = try? convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.banned)) {
+        if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.banned)) {
             stringCache.put(name: CacheKeys.disconnectJsonBanned, value: json)
             return json
         }
@@ -63,7 +63,7 @@ public class DisconnectMeStore {
         if let cached = stringCache.get(named: CacheKeys.disconnectJsonAllowed) {
             return cached
         }
-        if let json = try? convertToInjectableJson(trackers.filter(byCategory: Tracker.Category.banned)) {
+        if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.banned)) {
             return json
         }
         return "{}"
@@ -80,12 +80,12 @@ public class DisconnectMeStore {
         stringCache.remove(named: CacheKeys.disconnectJsonBanned)
     }
     
-    private func parse(data: Data) throws -> [String: Tracker] {
+    private func parse(data: Data) throws -> [String: DisconnectMeTracker] {
         let parser = DisconnectMeTrackersParser()
         return try parser.convert(fromJsonData: data)
     }
     
-    private func convertToInjectableJson(_ trackers: [String: Tracker]) throws -> String {
+    private func convertToInjectableJson(_ trackers: [String: DisconnectMeTracker]) throws -> String {
         let simplifiedTrackers = trackers.mapValues( { $0.networkName } )
         let json = try JSONSerialization.data(withJSONObject: simplifiedTrackers, options: .prettyPrinted)
         if let jsonString = String(data: json, encoding: .utf8) {

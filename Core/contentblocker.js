@@ -28,7 +28,6 @@ var duckduckgoContentBlocking = function() {
         duckduckgoMessaging.trackerDetected({
         	protectionId: duckduckgoBlockerData.protectionId,
 	        url: event.url,
-	        networkName: parent,
 	        blocked: blocked,
 	        method: detectionMethod
         })

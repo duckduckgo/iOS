@@ -30,40 +30,32 @@ class TrackerTests: XCTestCase {
         static let anotherParentDomain = "anotherdomain.com"
     }
     
-    func testThatEqualsIsTrueWhenUrlsDomainAndCategoryAreSame() {
-        let lhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: .analytics)
-        let rhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: .analytics)
-        XCTAssertEqual(lhs, rhs)
-    }
-    
-    func testThatEqualsFailsWhenUrlsDifferent() {
-        let lhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: .analytics)
-        let rhs = Tracker(url: Constants.anotherUrl, networkName: Constants.aParentDomain, category: .analytics)
-        XCTAssertNotEqual(lhs, rhs)
-    }
-    
-    func testThatEqualsFailsWhenDomainsDifferent() {
-        let lhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: .analytics)
-        let rhs = Tracker(url: Constants.aUrl, networkName: Constants.anotherParentDomain, category: .analytics)
-        XCTAssertNotEqual(lhs, rhs)
-    }
-    
-    func testThatEqualsFailsWhenCategoriesAreDifferent() {
-        let lhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: .analytics)
-        let rhs = Tracker(url: Constants.aUrl, networkName: Constants.anotherParentDomain, category: .social)
-        XCTAssertNotEqual(lhs, rhs)
-    }
-    
-    func testThatEqualsFailsWhenTypesAreDifferent() {
-        let tracker = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain)
-        XCTAssertFalse(tracker.isEqual(NSObject()))
-    }
-
-    func testHashIsSameWhenItemsAreEqual() {
-        let lhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain)
-        let rhs = Tracker(url: Constants.aUrl, networkName: Constants.aParentDomain)
+    func testThatHashMatchesAndEqualsIsTrueWhenAllPropertiesAreSame() {
+        let lhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: "Category", blocked: true)
+        let rhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: "Category", blocked: true)
         XCTAssertEqual(lhs, rhs)
         XCTAssertEqual(lhs.hashValue, rhs.hashValue)
     }
     
+    func testThatHashDoesntMatchAndEqualsFailsWhenUrlsDifferent() {
+        let lhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category:"Category", blocked: true)
+        let rhs = DetectedTracker(url: Constants.anotherUrl, networkName: Constants.aParentDomain, category: "Category", blocked: true)
+        XCTAssertNotEqual(lhs, rhs)
+        XCTAssertNotEqual(lhs.hashValue, rhs.hashValue)
+    }
+    
+    func testThatHashDoesntMatchEqualsFailsWhenNetworkNamesAreDifferent() {
+        let lhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: "Category", blocked: true)
+        let rhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.anotherParentDomain, category: "Category", blocked: true)
+        XCTAssertNotEqual(lhs, rhs)
+        XCTAssertNotEqual(lhs.hashValue, rhs.hashValue)
+    }
+    
+    func testThatHashDoesntMatchEqualsFailsWhenCategoriesAreDifferent() {
+        let lhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.aParentDomain, category: "Category 1", blocked: true)
+        let rhs = DetectedTracker(url: Constants.aUrl, networkName: Constants.anotherParentDomain, category: "Category 2", blocked: true)
+        XCTAssertNotEqual(lhs, rhs)
+        XCTAssertNotEqual(lhs.hashValue, rhs.hashValue)
+    }
+
 }

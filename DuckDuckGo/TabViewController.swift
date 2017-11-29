@@ -366,20 +366,20 @@ extension TabViewController: WKScriptMessageHandler {
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let url = dict[TrackerDetectedKey.url] as? String else { return }
         guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
-        let parent = dict[TrackerDetectedKey.networkName] as? String
+        let networkName = dict[TrackerDetectedKey.networkName] as? String
 
         guard protectionId == siteRating?.protectionId else {
             Logger.log(text: "id check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
             return
         }
 
-        let tracker = Tracker(url: url, networkName: parent)
+        let tracker = Tracker(url: url, networkName: networkName)
         siteRating?.trackerDetected(tracker, blocked: blocked)
         onSiteRatingChanged()
 
-        if let parent = parent,
+        if let networkName = networkName,
             let domain = siteRating?.domain {
-            NetworkLeaderboard.shared.network(named: parent, detectedWhileVisitingDomain: domain)
+            NetworkLeaderboard.shared.network(named: networkName, detectedWhileVisitingDomain: domain)
         }
     }
 }

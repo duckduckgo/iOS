@@ -84,12 +84,14 @@ public class SiteRating {
     }
 
     public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
-        let detectedCount = trackersDetected[tracker] ?? 0
-        trackersDetected[tracker] = detectedCount + 1
+        let fixedTracker = tracker.fixingNetworkName(with: disconnectMeTrackers)
+
+        let detectedCount = trackersDetected[fixedTracker] ?? 0
+        trackersDetected[fixedTracker] = detectedCount + 1
         
         if blocked {
-            let blockCount = trackersBlocked[tracker] ?? 0  
-            trackersBlocked[tracker] = blockCount + 1
+            let blockCount = trackersBlocked[fixedTracker] ?? 0
+            trackersBlocked[fixedTracker] = blockCount + 1
         }
     }
     
@@ -128,6 +130,31 @@ public class SiteRating {
 
     private func uniqueTrackerNetworks(trackers: [Tracker: Int]) -> Int {
         return Set(trackers.keys.filter({ $0.networkName != nil }).flatMap({ $0.networkName })).count
+    }
+
+}
+
+fileprivate extension Tracker {
+
+    func fixingNetworkName(with disconnectMeTrackers: [String: Tracker]) -> Tracker {
+        guard networkName == nil else { return self }
+
+        var domain:String?
+        if let parentUrl = parentUrl {
+            domain = parentUrl.host
+        } else if let url = URL(string: url) {
+            domain = url.host
+        }
+
+        if let domain = domain {
+            let associatedTracker = disconnectMeTrackers.first(where: { domain.hasSuffix($0.value.url ) } )?.value
+            let associatedNetworkName = associatedTracker?.networkName
+            let associatedCategory = associatedTracker?.category
+            print("***", url, associatedNetworkName, associatedCategory)
+            return Tracker(url: url, networkName: associatedNetworkName ?? domain, parentUrl: parentUrl, category: associatedCategory ?? category)
+        }
+
+        return self
     }
 
 }

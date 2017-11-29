@@ -179,18 +179,7 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (ABPFilterParser.matches(easylist, event.url, config)) {
-			var url = toURL(event.url, topLevelUrl.protocol)
-			if (!url) {
-				return false
-			}
-
-			var parent = null
-			var result = DisconnectMe.parentTracker(url)
-			if (result != null) {
-				parent = result.parent
-			}
-
-			handleDetection(event, parent, name)
+			handleDetection(event, "Found by Easylist", name)
 			return true
 		}
 

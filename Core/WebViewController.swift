@@ -37,6 +37,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
     private var shouldReloadOnError = false
     private lazy var appUrls: AppUrls = AppUrls()
+    private lazy var httpsUpgrade = HTTPSUpgrade()
 
     public var name: String? {
         return webView.title    
@@ -205,6 +206,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
+            decisionHandler(.cancel)
+            return
+        }
+
+        if let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+            load(url: upgradeUrl)
             decisionHandler(.cancel)
             return
         }

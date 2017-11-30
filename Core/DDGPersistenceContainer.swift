@@ -28,7 +28,10 @@ public class DDGPersistenceContainer {
     public let managedObjectContext: NSManagedObjectContext
 
     public init?(name: String) {
-        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: nil) else { return nil }
+        let mainBundle = Bundle.main
+        let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
+
+        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { return nil }
         self.managedObjectModel = managedObjectModel
 
         guard let persistenceStoreCoordinator = DDGPersistenceContainer.createPersistenceStoreCoordinator(name: name, model: managedObjectModel) else { return nil }

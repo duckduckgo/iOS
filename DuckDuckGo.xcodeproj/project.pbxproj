@@ -65,6 +65,7 @@
 		859151EB1F543F5600F5FB53 /* SimulatorStatusMagiciOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
+		85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85B718F31FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
 		85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */; };
 		85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58591F3506AE00C6E8CA /* AppSettings.swift */; };
@@ -77,8 +78,8 @@
 		85C271DB1FD0366F007216B4 /* HTTPSUpgradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271DA1FD0366F007216B4 /* HTTPSUpgradeTests.swift */; };
 		85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271DC1FD04459007216B4 /* HTTPSUpgrade.swift */; };
 		85C271DF1FD044D7007216B4 /* HTTPSUpgradePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271DE1FD044D7007216B4 /* HTTPSUpgradePersistence.swift */; };
-		85C271E21FD048EE007216B4 /* HTTPSUpgrade.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E01FD048EE007216B4 /* HTTPSUpgrade.xcdatamodeld */; };
 		85C271E41FD04ACD007216B4 /* HTTPSUpgradeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E31FD04ACD007216B4 /* HTTPSUpgradeStoreTests.swift */; };
+		85C271E61FD065D8007216B4 /* CoreDataHTTPSUpgradePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E51FD065D8007216B4 /* CoreDataHTTPSUpgradePersistenceTests.swift */; };
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85CEC0771F2FD5CD0092C0C3 /* Stories.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85CEC0731F2FD5CD0092C0C3 /* Stories.xcdatamodeld */; };
 		85ECA7EE1F2A82C20018EBEB /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ECA7ED1F2A82C20018EBEB /* Migration.swift */; };
@@ -412,6 +413,7 @@
 		859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagiciOS.framework; path = Carthage/Build/iOS/SimulatorStatusMagiciOS.framework; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
+		85B718F41FD071E50031A14F /* HTTPSUpgrade.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HTTPSUpgrade.xcdatamodel; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaultsTests.swift; sourceTree = "<group>"; };
 		85BA58591F3506AE00C6E8CA /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -424,8 +426,8 @@
 		85C271DA1FD0366F007216B4 /* HTTPSUpgradeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeTests.swift; sourceTree = "<group>"; };
 		85C271DC1FD04459007216B4 /* HTTPSUpgrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgrade.swift; sourceTree = "<group>"; };
 		85C271DE1FD044D7007216B4 /* HTTPSUpgradePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradePersistence.swift; sourceTree = "<group>"; };
-		85C271E11FD048EE007216B4 /* HTTPSUpgrade.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HTTPSUpgrade.xcdatamodel; sourceTree = "<group>"; };
 		85C271E31FD04ACD007216B4 /* HTTPSUpgradeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeStoreTests.swift; sourceTree = "<group>"; };
+		85C271E51FD065D8007216B4 /* CoreDataHTTPSUpgradePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHTTPSUpgradePersistenceTests.swift; sourceTree = "<group>"; };
 		85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionOverviewController.swift; sourceTree = "<group>"; };
 		85CEC0741F2FD5CD0092C0C3 /* Stories v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Stories v2.xcdatamodel"; sourceTree = "<group>"; };
 		85CEC0751F2FD5CD0092C0C3 /* Stories v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Stories v3.xcdatamodel"; sourceTree = "<group>"; };
@@ -990,7 +992,7 @@
 				85C271DC1FD04459007216B4 /* HTTPSUpgrade.swift */,
 				85C271DE1FD044D7007216B4 /* HTTPSUpgradePersistence.swift */,
 				85C271D71FD0311A007216B4 /* HTTPSUpgradeStore.swift */,
-				85C271E01FD048EE007216B4 /* HTTPSUpgrade.xcdatamodeld */,
+				85B718F31FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld */,
 			);
 			name = HTTPSUpgrade;
 			sourceTree = "<group>";
@@ -1000,6 +1002,7 @@
 			children = (
 				85C271DA1FD0366F007216B4 /* HTTPSUpgradeTests.swift */,
 				85C271E31FD04ACD007216B4 /* HTTPSUpgradeStoreTests.swift */,
+				85C271E51FD065D8007216B4 /* CoreDataHTTPSUpgradePersistenceTests.swift */,
 			);
 			name = HTTPSUpgrade;
 			sourceTree = "<group>";
@@ -2251,6 +2254,7 @@
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				F165B8FD1EBBF055004496FC /* OnboaridingViewControllerTests.swift in Sources */,
+				85C271E61FD065D8007216B4 /* CoreDataHTTPSUpgradePersistenceTests.swift in Sources */,
 				833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */,
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
@@ -2329,7 +2333,7 @@
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradePersistence.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
-				85C271E21FD048EE007216B4 /* HTTPSUpgrade.xcdatamodeld in Sources */,
+				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,
 				F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
@@ -2951,12 +2955,12 @@
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
-		85C271E01FD048EE007216B4 /* HTTPSUpgrade.xcdatamodeld */ = {
+		85B718F31FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				85C271E11FD048EE007216B4 /* HTTPSUpgrade.xcdatamodel */,
+				85B718F41FD071E50031A14F /* HTTPSUpgrade.xcdatamodel */,
 			);
-			currentVersion = 85C271E11FD048EE007216B4 /* HTTPSUpgrade.xcdatamodel */;
+			currentVersion = 85B718F41FD071E50031A14F /* HTTPSUpgrade.xcdatamodel */;
 			path = HTTPSUpgrade.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

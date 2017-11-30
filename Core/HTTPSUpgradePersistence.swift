@@ -41,31 +41,55 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
         for simpleDomain in domains {
             let entityName = String(describing: HTTPSUpgradeSimpleDomain.self)
-            let content = container.managedObjectContext
-            let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: content) as! HTTPSUpgradeSimpleDomain
+            let context = container.managedObjectContext
+            let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! HTTPSUpgradeSimpleDomain
             storedDomain.domain = simpleDomain
         }
 
         for wildcardDomain in wildcardDomains {
             let domain = String(wildcardDomain.suffix(from: String.Index.init(encodedOffset: 1)))
             let entityName = String(describing: HTTPSUpgradeWildcardDomain.self)
-            let content = container.managedObjectContext
-            let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: content) as! HTTPSUpgradeWildcardDomain
+            let context = container.managedObjectContext
+            let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! HTTPSUpgradeWildcardDomain
             storedDomain.domain = domain
         }
 
         _ = container.save()
     }
 
-    public func hasDomain(_ domain: String) -> Bool {
-        return false
+    public func hasWildcardDomain(_ domain: String) -> Bool {
+        let domains = buildDomainList(domain)
+        let request:NSFetchRequest<HTTPSUpgradeWildcardDomain> = HTTPSUpgradeWildcardDomain.fetchRequest()
+        request.predicate = NSPredicate(format: "domain in %@", domains)
+        guard let count = try? container.managedObjectContext.count(for: request) else { return false }
+        return count > 0
     }
 
-    private func loadAll(domains: [String], createEntity: (String) -> NSManagedObject) {
-        for domain in domains {
-            let object = createEntity(domain)
-            container.managedObjectContext.insert(object)
+    public func hasSimpleDomain(_ domain: String) -> Bool {
+        let request:NSFetchRequest<HTTPSUpgradeSimpleDomain> = HTTPSUpgradeSimpleDomain.fetchRequest()
+        request.predicate = NSPredicate(format: "domain like %@", domain)
+        guard let count = try? container.managedObjectContext.count(for: request) else { return false }
+        return count > 0
+    }
+
+    public func hasDomain(_ domain: String) -> Bool {
+        return hasSimpleDomain(domain) || hasWildcardDomain(domain)
+    }
+
+    func reset() {
+        deleteAll()
+    }
+
+    private func buildDomainList(_ domain: String) -> [String] {
+        var domains = [String]()
+        for part in domain.components(separatedBy: ".").reversed() {
+            if domains.isEmpty {
+                domains.append(".\(part)")
+            } else {
+                domains.append(".\(part)\(domains.last!)")
+            }
         }
+        return domains
     }
 
     private func deleteAll() {

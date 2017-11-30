@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B48" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="HTTPSUpgradeSimpleDomain" representedClassName="HTTPSUpgradeSimpleDomain" syncable="YES" codeGenerationType="class">
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="HTTPSUpgradeWildcardDomain" representedClassName="HTTPSUpgradeWildcardDomain" syncable="YES" codeGenerationType="class">
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="HTTPSUpgradeSimpleDomain" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="HTTPSUpgradeWildcardDomain" positionX="-54" positionY="-9" width="128" height="60"/>
+    </elements>
+</model>

@@ -26,6 +26,7 @@ class BlockerListRequest {
         case disconnectMe = "disconnectme"
         case easylist = "easylist"
         case easylistPrivacy = "easyprivacy"
+        case httpsUpgrade = "https"
 
     }
 
@@ -71,6 +72,7 @@ class BlockerListRequest {
             case .disconnectMe: return appUrls.disconnectMeBlockList
             case .easylist: return appUrls.easylistBlockList
             case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
+            case .httpsUpgrade: return appUrls.httpsUpgradeList
         }
 
     }

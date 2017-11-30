@@ -56,6 +56,13 @@ public class DDGPersistenceContainer {
         return persistenceStoreCoordinator
     }
 
+    public func deleteAll(entities: [NSManagedObject]?) {
+        guard let entities = entities else { return }
+        for entity in entities {
+            managedObjectContext.delete(entity)
+        }
+    }
+
     public func save() -> Bool {
 
         do {

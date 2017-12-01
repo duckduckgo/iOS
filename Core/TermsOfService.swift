@@ -40,7 +40,11 @@ public struct TermsOfService {
         if let classification = classification {
             return TermsOfService.classificationScores[classification]!
         }
-        return score < 0 ? -1 : 1
+
+        // extensions JS uses Math.sign(score)
+        if score < 0 { return -1 }
+        if score > 0 { return 1 }
+        return 0
     }
 
     public enum Classification: String {

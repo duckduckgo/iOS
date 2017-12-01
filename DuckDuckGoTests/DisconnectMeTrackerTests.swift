@@ -45,6 +45,13 @@ class DisconnectMeTrackerTests: XCTestCase {
         XCTAssertTrue(filtered.contains(where: { $0.value.category == .advertising }))
     }
 
+    func testWhenTrackersWithSameUrlAndNetworkAndCategoryThenEqualAndHashSame() {
+        let lhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork, category: .social)
+        let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork, category: .social)
+        XCTAssertEqual(lhs, rhs)
+        XCTAssertEqual(lhs.hashValue, rhs.hashValue)
+    }
+
     func testWhenTrackersWithSameUrlAndNetworkAndDifferentCategoryThenNotEqualAndHashNotSame() {
         let lhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork, category: .analytics)
         let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork)

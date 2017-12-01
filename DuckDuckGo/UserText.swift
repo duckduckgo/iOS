@@ -110,7 +110,7 @@ public struct UserText {
 
     public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment:  "Trackers networks were found on %@ of web sites you’ve visited since %@.")
 
-    public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Tracker network unknown")
+    public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
 
     public static func forSiteGrade(_ grade: SiteGrade) -> String {
         let key = "monitoring.sitegrade.\(grade.rawValue)"

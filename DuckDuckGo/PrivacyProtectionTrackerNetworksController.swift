@@ -187,7 +187,7 @@ fileprivate extension SiteRating {
 
         for tracker in trackers.keys {
             guard let domain = tracker.domain else { continue }
-            let networkName = tracker.networkName ?? UserText.ppTrackerNetworkUnknown
+            let networkName = tracker.networkNameForDisplay
             let networkNameAndCategory = siteRating.networkNameAndCategory(forDomain: domain)
 
             let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: networkNameAndCategory.category ?? "")
@@ -199,7 +199,7 @@ fileprivate extension SiteRating {
             }
         }
 
-        return Array(sections.values).sorted(by: { $0.name != UserText.ppTrackerNetworkUnknown || $0.name.lowercased() < $1.name.lowercased() })
+        return Array(sections.values).sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
     }
 
 }
@@ -227,6 +227,18 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
             iconImage.image = image
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Network Icon unknown")
+        }
+    }
+
+}
+
+fileprivate extension DetectedTracker {
+
+    var networkNameForDisplay: String {
+        get {
+            guard !isIpTracker else { return UserText.ppTrackerNetworkUnknown }
+            guard let networkName = networkName else { return domain! }
+            return networkName
         }
     }
 

@@ -23,12 +23,17 @@ import XCTest
 
 class TermsOfServiceTests: XCTestCase {
 
-    func testWhenNoClassAndScoreIsPositiveScoreDerivedScoreIsPlusOne() {
+    func testWhenNoClassAndScoreIsZeroDerivedScoreIsZero() {
+        let testee = TermsOfService(classification: nil, score: 0, goodReasons: [], badReasons: [])
+        XCTAssertEqual(0, testee.derivedScore)
+    }
+
+    func testWhenNoClassAndScoreIsPositiveDerivedScoreIsPlusOne() {
         let testee = TermsOfService(classification: nil, score: 1, goodReasons: [], badReasons: [])
         XCTAssertEqual(1, testee.derivedScore)
     }
 
-    func testWhenNoClassAndScoreIsNegativeScoreDerivedScoreIsMinusOne() {
+    func testWhenNoClassAndScoreIsNegativeDerivedScoreIsMinusOne() {
         let testee = TermsOfService(classification: nil, score: -1, goodReasons: [], badReasons: [])
         XCTAssertEqual(-1, testee.derivedScore)
     }

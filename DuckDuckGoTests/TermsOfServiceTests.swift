@@ -22,10 +22,37 @@ import XCTest
 @testable import Core
 
 class TermsOfServiceTests: XCTestCase {
-    
-    func testWhenInitWithClassificationthenClassification() {
-        let testee = TermsOfService(classification: .a, score: 10, goodReasons: [], badReasons: [])
+
+    func testWhenNoClassAndScoreIsZeroDerivedScoreIsZero() {
+        let testee = TermsOfService(classification: nil, score: 0, goodReasons: [], badReasons: [])
+        XCTAssertEqual(0, testee.derivedScore)
+    }
+
+    func testWhenNoClassAndScoreIsPositiveDerivedScoreIsPlusOne() {
+        let testee = TermsOfService(classification: nil, score: 1, goodReasons: [], badReasons: [])
+        XCTAssertEqual(1, testee.derivedScore)
+    }
+
+    func testWhenNoClassAndScoreIsNegativeDerivedScoreIsMinusOne() {
+        let testee = TermsOfService(classification: nil, score: -1, goodReasons: [], badReasons: [])
         XCTAssertEqual(-1, testee.derivedScore)
+    }
+
+    func testWhenInitWithClassificationAppropriateScoreReturned() {
+
+        let classificationScores: [TermsOfService.Classification: Int] = [
+            .a : -1,
+            .b : 0,
+            .c : 0,
+            .d : 1,
+            .e : 2
+        ]
+
+        for params in classificationScores {
+            let testee = TermsOfService(classification: params.key, score: 10, goodReasons: [], badReasons: [])
+            XCTAssertEqual(params.value, testee.derivedScore)
+        }
+
     }
     
     func testWhenInitWithoutClassificationthenClassificationIsNil() {

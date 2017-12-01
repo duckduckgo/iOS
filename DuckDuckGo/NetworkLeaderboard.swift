@@ -52,8 +52,8 @@ class NetworkLeaderboard {
     }
 
     func reset() {
-        deleteAll(entities: try? container.managedObjectContext.fetch(PPVisitedSite.fetchRequest()))
-        deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
+        container.deleteAll(entities: try? container.managedObjectContext.fetch(PPVisitedSite.fetchRequest()))
+        container.deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
         _ = container.save()
         userDefaults.removeObject(forKey: Constants.startDateKey)
     }
@@ -127,13 +127,6 @@ class NetworkLeaderboard {
         request.predicate = NSPredicate(format: "name LIKE %@", network)
         guard let results = try? container.managedObjectContext.fetch(request) else { return nil }
         return results.first
-    }
-
-    private func deleteAll(entities: [NSManagedObject]?) {
-        guard let entities = entities else { return }
-        for entity in entities {
-            container.managedObjectContext.delete(entity)
-        }
     }
 
     private func setStartDate() {

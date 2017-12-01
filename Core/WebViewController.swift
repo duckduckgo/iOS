@@ -211,6 +211,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
 
         if let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+            Logger.log(text: "upgrading \(url) to \(upgradeUrl)")
             load(url: upgradeUrl)
             decisionHandler(.cancel)
             return

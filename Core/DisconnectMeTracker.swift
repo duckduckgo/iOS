@@ -1,5 +1,5 @@
 //
-//  Tracker.swift
+//  DisconnectMeTracker.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 
 import Foundation
 
-public class Tracker: NSObject {
+public class DisconnectMeTracker: NSObject {
 
     public enum Category: String {
         case analytics = "Analytics"
@@ -47,42 +47,23 @@ public class Tracker: NSObject {
     }
 
     public override func isEqual(_ other: Any?) -> Bool {
-        guard let other = other as? Tracker else { return false }
+        guard let other = other as? DisconnectMeTracker else { return false }
         return url == other.url && networkName == other.networkName && category == other.category
     }
     
     public override var hashValue: Int {
-        return url.hashValue ^ (networkName?.hashValue ?? 0) ^ (category?.hashValue ?? 0)
-    }
-    
-    public var isIpTracker: Bool {
-        if let host = URL(string: url)?.host {
-            return URL.isValidIpHost(host)
-        }
-        return false
+        return "\(url) \(String(describing: networkName)) \(String(describing: category))".hashValue
     }
     
 }
 
-
-extension Dictionary where Key: ExpressibleByStringLiteral, Value: Tracker {
+extension Dictionary where Key: ExpressibleByStringLiteral, Value: DisconnectMeTracker {
     
-    func filter(byCategory categoryFilter: [Tracker.Category]) -> [Key: Value] {
+    func filter(byCategory categoryFilter: [DisconnectMeTracker.Category]) -> [Key: Value] {
         let filtered = filter { element -> Bool in
             guard let category = element.value.category else { return false }
             return categoryFilter.contains(category)
         }
         return filtered
-    }
-}
-
-
-extension Array where Element: Tracker {
-    
-    func filter(byCategory categoryFilter: [Tracker.Category]) -> [Element] {
-        return filter() {
-            guard let category = $0.category else { return false }
-            return categoryFilter.contains(category)
-        }
     }
 }

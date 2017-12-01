@@ -22,6 +22,13 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
 
+    let privacyPracticesImages: [SiteRating.PrivacyPractices: UIImage] = [
+        .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
+        .poor: #imageLiteral(resourceName: "PP Icon Privacy Bad On"),
+        .mixed: #imageLiteral(resourceName: "PP Icon Privacy Good Off"),
+        .good: #imageLiteral(resourceName: "PP Icon Privacy Good On")
+    ]
+
     @IBOutlet var margins: [NSLayoutConstraint]!
 
     @IBOutlet weak var encryptionCell: SummaryCell!
@@ -73,47 +80,45 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         header.using(siteRating: siteRating, contentBlocker: contentBlocker)
         updateEncryption()
-        updateTrackersBlocked()
-        updateMajorTrackersBlocked()
+        updateTrackers()
+        updateMajorTrackers()
         updatePrivacyPractices()
     }
 
     private func updateEncryption() {
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
-        if siteRating.https && siteRating.hasOnlySecureContent {
-            encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection On") : #imageLiteral(resourceName: "PP Icon Connection Off")
+        if siteRating.hasOnlySecureContent {
+            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
+        } else if siteRating.https {
+            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
         } else {
-            encryptionCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Connection Bad") : #imageLiteral(resourceName: "PP Icon Connection Off")
+            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
         }
     }
 
-    private func updateTrackersBlocked() {
+    private func updateTrackers() {
         trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
 
-        if (protecting() ? siteRating.uniqueTrackerNetworksBlocked : siteRating.uniqueMajorTrackerNetworksBlocked) == 0 {
-            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks On") : #imageLiteral(resourceName: "PP Icon Networks Off")
+        if protecting() || siteRating.uniqueTrackersDetected == 0 {
+            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Networks On")
         } else {
-            trackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Networks Bad") : #imageLiteral(resourceName: "PP Icon Networks Off")
+            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Networks Bad")
         }
+
     }
 
-    private func updateMajorTrackersBlocked() {
+    private func updateMajorTrackers() {
         majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
-        if siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) {
-            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks On") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+        if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
+            majorTrackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
         } else {
-            majorTrackersCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Major Networks Bad") : #imageLiteral(resourceName: "PP Icon Major Networks Off")
+            majorTrackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")
         }
     }
 
     private func updatePrivacyPractices() {
         privacyPracticesCell.summaryLabel.text = siteRating.privacyPracticesText()
-
-        if siteRating.privacyPracticesSuccess() {
-            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Good On") : #imageLiteral(resourceName: "PP Icon Privacy Good Off")
-        } else {
-            privacyPracticesCell.summaryImage.image = protecting() ? #imageLiteral(resourceName: "PP Icon Privacy Bad On") : #imageLiteral(resourceName: "PP Icon Privacy Bad Off")
-        }
+        privacyPracticesCell.summaryImage.image = privacyPracticesImages[siteRating.privacyPractices()]
     }
 
     private func protecting() -> Bool {

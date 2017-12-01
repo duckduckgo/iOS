@@ -1,0 +1,11 @@
+{ "simpleUpgrade" :
+{ "top500":
+[
+    "*.bbc.co.uk",
+    "www.example.com",
+    "*.example.com",
+    "apple.com",
+    "developer.apple.com"
+]
+}
+}

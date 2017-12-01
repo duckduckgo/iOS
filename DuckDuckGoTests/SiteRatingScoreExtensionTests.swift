@@ -31,14 +31,24 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         static let duckduckgo = URL(string: "http://duckduckgo.com")!
     }
     
-    struct MockTracker {
-        static let standard = Tracker(url: "trackerexample.com", networkName: "someSmallAdNetwork.com")
-        static let ipTracker = Tracker(url: "http://192.168.5.10/abcd", networkName: "someSmallAdNetwork.com")
-        static let google = Tracker(url: "trackerexample.com", networkName: "google.com")
+    struct MockTrackerBuilder {
+
+        static func standard(category: String = "", blocked: Bool) -> DetectedTracker {
+            return DetectedTracker(url: "trackerexample.com", networkName: "someSmallAdNetwork.com", category: category, blocked: blocked)
+        }
+
+        static func ipTracker(category: String = "", blocked: Bool) -> DetectedTracker {
+            return DetectedTracker(url: "http://192.168.5.10/abcd", networkName: "someSmallAdNetwork.com", category: category, blocked: blocked)
+        }
+
+        static func google(category: String = "", blocked: Bool) -> DetectedTracker {
+            return DetectedTracker(url: "trackerexample.com", networkName: "Google", category: category, blocked: blocked)
+        }
+
     }
 
     fileprivate let classATOS = MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: -100)
-    fileprivate let disconnectMeTrackers = ["googletracker.com": MockTracker.google]
+    fileprivate let disconnectMeTrackers = ["googletracker.com": DisconnectMeTracker(url: Url.googleNetwork.absoluteString, networkName: "Google")]
 
     override func setUp() {
         SiteRatingCache.shared.reset()
@@ -70,7 +80,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
 
         for _ in 0 ..< 11 {
-            testee.trackerDetected(MockTracker.standard, blocked: false)
+            testee.trackerDetected(MockTrackerBuilder.standard(blocked: false))
         }
 
         let score = testee.siteScore()
@@ -80,7 +90,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
     func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
-        testee.trackerDetected(MockTracker.standard, blocked: false)
+        testee.trackerDetected(MockTrackerBuilder.standard(blocked: false))
         let score = testee.siteScore()
         XCTAssertEqual(1, score.before)
         XCTAssertEqual(0, score.after)
@@ -88,7 +98,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
     func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
-        testee.trackerDetected(MockTracker.ipTracker, blocked: true)
+        testee.trackerDetected(MockTrackerBuilder.ipTracker(blocked: true))
         let score = testee.siteScore()
         XCTAssertEqual(2, score.before)
         XCTAssertEqual(0, score.after)
@@ -110,8 +120,8 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     }
 
     func testWhenSiteInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
-        let disconnectMeTrackers = [Url.https.host!: MockTracker.google]
-        let networkStore = MockMajorTrackerNetworkStore().add(network: MajorTrackerNetwork(name: Url.googleNetwork.host!, perentageOfPages: 84))
+        let disconnectMeTrackers = [Url.https.host!: DisconnectMeTracker(url: Url.googleNetwork.absoluteString, networkName: "Google")]
+        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
         let testee = SiteRating(url: Url.https, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
         let score = testee.siteScore()
         XCTAssertEqual(1, score.before)
@@ -119,7 +129,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     }
 
     func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassATOSScoreIsTen() {
-        let networkStore = MockMajorTrackerNetworkStore().add(network: MajorTrackerNetwork(name: Url.googleNetwork.host!, perentageOfPages: 84))
+        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
         let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
         let score = testee.siteScore()
         XCTAssertEqual(10, score.before)
@@ -196,17 +206,16 @@ fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
 
 }
 
-fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+fileprivate class MockMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
 
-    var networks = [String: MajorTrackerNetwork]()
-
-    func network(forName name: String) -> MajorTrackerNetwork? {
-        return networks[name]
+    override init(networks: [MajorTrackerNetwork] = []) {
+        super.init(networks: networks)
     }
 
-    func add(network: MajorTrackerNetwork) -> MajorTrackerNetworkStore {
-        networks[network.name] = network
-        return self
+    func adding(network: MajorTrackerNetwork) -> MajorTrackerNetworkStore {
+        var networks = self.networks
+        networks.append(network)
+        return MockMajorTrackerNetworkStore(networks: networks)
     }
 
 }

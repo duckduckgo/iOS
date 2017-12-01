@@ -70,14 +70,15 @@ public extension SiteRating {
 
     private var inMajorTrackerScore: Int {
         guard let domain = domain else { return 0 }
-        guard let associatedDomain = disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.networkName else { return 0 }
-        return majorTrackerNetworkStore.network(forName: associatedDomain) == nil ? 0 : 1
+        guard let networkName = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) })?.value.networkName else { return 0 }
+        return majorTrackerNetworkStore.network(forName: networkName) == nil ? 0 : 1
     }
 
     private var isMajorTrackerScore: Int {
         guard let domain = domain else { return 0 }
-        guard let network = majorTrackerNetworkStore.network(forName: domain) else { return 0 }
-        return network.score
+        if let network = majorTrackerNetworkStore.network(forName: domain) { return network.score }
+        if let network = majorTrackerNetworkStore.network(forDomain: domain) { return network.score }
+        return 0
     }
     
     private var ipTrackerScore: Int {
@@ -116,9 +117,11 @@ public extension SiteRating {
         return String(data: json, encoding: .utf8)!
     }
 
-    public func category(forDomain domain: String) -> String? {
-        return disconnectMeTrackers.filter( { domain.hasSuffix($0.key) } ).first?.value.category?.rawValue
+    public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
+        let tracker = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) } )?.value
+        return ( tracker?.networkName, tracker?.category?.rawValue )
     }
+
 }
 
 public class SiteRatingCache {

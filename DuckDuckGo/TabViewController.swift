@@ -362,24 +362,34 @@ extension TabViewController: WKScriptMessageHandler {
     
     private func handleTrackerDetected(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
+
+        guard let siteRating = siteRating else { return }
         guard let dict = message.body as? Dictionary<String, Any> else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
-        guard let url = dict[TrackerDetectedKey.url] as? String else { return }
+        guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
         guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
-        let parent = dict[TrackerDetectedKey.networkName] as? String
 
-        guard protectionId == siteRating?.protectionId else {
+        guard protectionId == siteRating.protectionId else {
             Logger.log(text: "id check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
             return
         }
 
-        let tracker = Tracker(url: url, networkName: parent)
-        siteRating?.trackerDetected(tracker, blocked: blocked)
+        let url = URL(string: urlString)
+        var networkName: String?
+        var category: String?
+        if let domain = url?.host {
+            let networkNameAndCategory = siteRating.networkNameAndCategory(forDomain: domain)
+            networkName = networkNameAndCategory.networkName
+            category = networkNameAndCategory.category
+        }
+
+        let tracker = DetectedTracker(url: urlString, networkName: networkName, category: category, blocked: blocked)
+        siteRating.trackerDetected(tracker)
         onSiteRatingChanged()
 
-        if let parent = parent,
-            let domain = siteRating?.domain {
-            NetworkLeaderboard.shared.network(named: parent, detectedWhileVisitingDomain: domain)
+        if let networkName = networkName,
+            let browsingDomain = siteRating.domain {
+            NetworkLeaderboard.shared.network(named: networkName, detectedWhileVisitingDomain: browsingDomain)
         }
     }
 }

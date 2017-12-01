@@ -25,6 +25,7 @@ public class BlockerListsLoader {
 
     private var easylistStore = EasylistStore()
     private var disconnectStore = DisconnectMeStore()
+    private var httpsUpgradeStore = HTTPSUpgradeStore()
 
     public var hasData: Bool {
         get {
@@ -80,7 +81,15 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
-        return 3
+        blockerListRequest.request(.httpsUpgrade) { (data) in
+            if let data = data {
+                self.newDataItems += 1
+                self.httpsUpgradeStore.persist(data: data)
+            }
+            semaphore.signal()
+        }
+
+        return 4
     }
 
 }

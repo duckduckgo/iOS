@@ -35,18 +35,19 @@ class SiteRatingTests: XCTestCase {
     }
     
     struct TrackerMock {
-        static let tracker = Tracker(url: Url.tracker, networkName: Url.tracker)
-        static let differentTracker = Tracker(url: Url.differentTracker, networkName: Url.differentTracker)
+        static let blockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: true)
+        static let unblockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: false)
+        static let differentTracker = DetectedTracker(url: Url.differentTracker, networkName: Url.differentTracker, category: "tracker", blocked: true)
     }
 
     func testWhenAssociatedUrlHasTosThenTosReturned() {
-        let tracker = Tracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
+        let tracker = DisconnectMeTracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
         let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
         XCTAssertNotNil(testee.termsOfService)
     }
 
     func testWhenAssociatedDomainExistsParentUrlDomainIsReturned() {
-        let tracker = Tracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
+        let tracker = DisconnectMeTracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
         let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
         XCTAssertEqual("google.com", testee.associatedDomain(for: "googlemail.com"))
     }
@@ -76,8 +77,8 @@ class SiteRatingTests: XCTestCase {
     
     func testWhenUniqueTrackersAreBlockedThenAllDetectionAndBlockCountsIncremenet() {
         let testee = SiteRating(url: Url.https)
-        testee.trackerDetected(TrackerMock.tracker, blocked: true)
-        testee.trackerDetected(TrackerMock.differentTracker, blocked: true)
+        testee.trackerDetected(TrackerMock.blockedTracker)
+        testee.trackerDetected(TrackerMock.differentTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 2)
         XCTAssertEqual(testee.uniqueTrackersDetected, 2)
         XCTAssertEqual(testee.totalTrackersBlocked, 2)
@@ -86,8 +87,8 @@ class SiteRatingTests: XCTestCase {
     
     func testWhenRepeatTrackersAreBlockedThenUniqueCountsOnlyIncrementOnce() {
         let testee = SiteRating(url: Url.https)
-        testee.trackerDetected(TrackerMock.tracker, blocked: true)
-        testee.trackerDetected(TrackerMock.tracker, blocked: true)
+        testee.trackerDetected(TrackerMock.blockedTracker)
+        testee.trackerDetected(TrackerMock.blockedTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 2)
         XCTAssertEqual(testee.uniqueTrackersDetected, 1)
         XCTAssertEqual(testee.totalTrackersBlocked, 2)
@@ -96,7 +97,7 @@ class SiteRatingTests: XCTestCase {
     
     func testWhenNotBlockerThenDetectedCountsIncrementButBlockCountsDoNot() {
         let testee = SiteRating(url: Url.https)
-        testee.trackerDetected(TrackerMock.tracker, blocked: false)
+        testee.trackerDetected(TrackerMock.unblockedTracker)
         XCTAssertEqual(testee.totalTrackersDetected, 1)
         XCTAssertEqual(testee.uniqueTrackersDetected, 1)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
@@ -114,17 +115,17 @@ class SiteRatingTests: XCTestCase {
     }
     
     func testUniqueMajorTrackersDetected() {
-        let tracker = Tracker(url: "googlemail.com", networkName: "Google")
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
-        testee.trackerDetected(tracker, blocked: false)
+        let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: false)
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: DisconnectMeTracker(url: "", networkName: "")])
+        testee.trackerDetected(tracker)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksDetected)
         XCTAssertEqual(0, testee.uniqueMajorTrackerNetworksBlocked)
     }
 
     func testUniqueMajorTrackersBlocked() {
-        let tracker = Tracker(url: "googlemail.com", networkName: "Google")
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
-        testee.trackerDetected(tracker, blocked: true)
+        let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: true)
+        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: DisconnectMeTracker(url: "", networkName: "")])
+        testee.trackerDetected(tracker)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksBlocked)
     }
 }

@@ -58,7 +58,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     override func viewDidLoad() {
         initTableView()
-        messageLabel.adjustPlainTextLineHeight(1.286)
+        initMessage()
         update()
     }
 
@@ -73,6 +73,13 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         updateSubtitle()
         updateIcon()
         tableView.reloadData()
+    }
+
+    private func initMessage() {
+        if majorOnly {
+            messageLabel.text = UserText.ppTrackerNetworksMajorMessage
+        }
+        messageLabel.adjustPlainTextLineHeight(1.286)
     }
 
     private func updateDomain() {
@@ -95,19 +102,29 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     }
 
-    private func updateMajorNetworksIcon() {
-        let resultImage = siteRating.majorNetworksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Major On") : #imageLiteral(resourceName: "PP Hero Major Bad")
-        iconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Major Off")
+    private func updateNetworksIcon() {
+        if protecting() || siteRating.uniqueTrackersDetected == 0 {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Networks On")
+        } else {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Networks Bad")
+        }
     }
 
-    private func updateNetworksIcon() {
-        let resultImage = siteRating.networksSuccess(contentBlocker: contentBlocker) ? #imageLiteral(resourceName: "PP Hero Networks On") : #imageLiteral(resourceName: "PP Hero Networks Bad")
-        iconImage.image = siteRating.protecting(contentBlocker) ? resultImage : #imageLiteral(resourceName: "PP Hero Networks Off")
+    private func updateMajorNetworksIcon() {
+        if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
+        } else {
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")
+        }
     }
 
     private func initTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+    }
+
+    private func protecting() -> Bool {
+        return siteRating.protecting(contentBlocker)
     }
 
 }
@@ -154,15 +171,6 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 }
 
-fileprivate extension Tracker {
-
-    var domain: String? {
-        let urlString = url.starts(with: "//") ? "http:\(url)" : url
-        return URL(string: urlString)?.host
-    }
-
-}
-
 fileprivate extension SiteRating {
 
     func toSections(withSiteRating siteRating: SiteRating, andContentBlocker contentBlocker: ContentBlockerConfigurationStore, forMajorNetworksOnly majorOnly: Bool) -> [PrivacyProtectionTrackerNetworksController.Section] {
@@ -174,15 +182,15 @@ fileprivate extension SiteRating {
         }
     }
 
-    func toSections(siteRating: SiteRating, trackers: [Tracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
+    func toSections(siteRating: SiteRating, trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
         var sections = [String: PrivacyProtectionTrackerNetworksController.Section]()
 
         for tracker in trackers.keys {
-            guard let networkName = tracker.networkName, networkName != "" else { continue }
             guard let domain = tracker.domain else { continue }
-            let category = siteRating.category(forDomain: domain)
+            let networkName = tracker.networkNameForDisplay
+            let networkNameAndCategory = siteRating.networkNameAndCategory(forDomain: domain)
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: category ?? "")
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: networkNameAndCategory.category ?? "")
 
             if let section = sections[networkName] {
                 sections[networkName] = section.adding(row)
@@ -191,7 +199,7 @@ fileprivate extension SiteRating {
             }
         }
 
-        return Array(sections.values).sorted(by: { $0.name < $1.name })
+        return Array(sections.values).sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
     }
 
 }
@@ -219,6 +227,18 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
             iconImage.image = image
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Network Icon unknown")
+        }
+    }
+
+}
+
+fileprivate extension DetectedTracker {
+
+    var networkNameForDisplay: String {
+        get {
+            guard !isIpTracker else { return UserText.ppTrackerNetworkUnknown }
+            guard let networkName = networkName else { return domain! }
+            return networkName
         }
     }
 

@@ -39,7 +39,7 @@ public struct DetectedTracker {
 
     public var isIpTracker: Bool {
         get {
-            return (domain ?? "").components(separatedBy: ".").filter( { Int($0) != nil } ).count == 4
+            return URL.isValidIpHost(domain ?? "")
         }
     }
 

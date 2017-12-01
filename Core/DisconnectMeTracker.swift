@@ -52,18 +52,10 @@ public class DisconnectMeTracker: NSObject {
     }
     
     public override var hashValue: Int {
-        return url.hashValue ^ (networkName?.hashValue ?? 0) ^ (category?.hashValue ?? 0)
-    }
-    
-    public var isIpTracker: Bool {
-        if let host = URL(string: url)?.host {
-            return URL.isValidIpHost(host)
-        }
-        return false
+        return "\(url) \(String(describing: networkName)) \(String(describing: category))".hashValue
     }
     
 }
-
 
 extension Dictionary where Key: ExpressibleByStringLiteral, Value: DisconnectMeTracker {
     
@@ -73,16 +65,5 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: DisconnectMeT
             return categoryFilter.contains(category)
         }
         return filtered
-    }
-}
-
-
-extension Array where Element: DisconnectMeTracker {
-    
-    func filter(byCategory categoryFilter: [DisconnectMeTracker.Category]) -> [Element] {
-        return filter() {
-            guard let category = $0.category else { return false }
-            return categoryFilter.contains(category)
-        }
     }
 }

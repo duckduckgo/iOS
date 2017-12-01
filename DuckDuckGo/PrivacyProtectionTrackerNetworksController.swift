@@ -171,17 +171,6 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 }
 
-fileprivate extension Tracker {
-
-    var domain: String? {
-        let urlString = url.starts(with: "//") ? "http:\(url)" : url
-        let domainUrl = URL(string: urlString.trimWhitespace())
-        let host = domainUrl?.host
-        return host
-    }
-
-}
-
 fileprivate extension SiteRating {
 
     func toSections(withSiteRating siteRating: SiteRating, andContentBlocker contentBlocker: ContentBlockerConfigurationStore, forMajorNetworksOnly majorOnly: Bool) -> [PrivacyProtectionTrackerNetworksController.Section] {
@@ -193,15 +182,15 @@ fileprivate extension SiteRating {
         }
     }
 
-    func toSections(siteRating: SiteRating, trackers: [Tracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
+    func toSections(siteRating: SiteRating, trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
         var sections = [String: PrivacyProtectionTrackerNetworksController.Section]()
 
         for tracker in trackers.keys {
-            guard let networkName = tracker.networkName, networkName != "" else { continue }
             guard let domain = tracker.domain else { continue }
-            let category = siteRating.category(forDomain: domain)
+            let networkName = tracker.networkNameForDisplay
+            let networkNameAndCategory = siteRating.networkNameAndCategory(forDomain: domain)
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: category ?? "")
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: networkNameAndCategory.category ?? "")
 
             if let section = sections[networkName] {
                 sections[networkName] = section.adding(row)
@@ -210,7 +199,7 @@ fileprivate extension SiteRating {
             }
         }
 
-        return Array(sections.values).sorted(by: { $0.name < $1.name })
+        return Array(sections.values).sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
     }
 
 }
@@ -238,6 +227,18 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
             iconImage.image = image
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Network Icon unknown")
+        }
+    }
+
+}
+
+fileprivate extension DetectedTracker {
+
+    var networkNameForDisplay: String {
+        get {
+            guard !isIpTracker else { return UserText.ppTrackerNetworkUnknown }
+            guard let networkName = networkName else { return domain! }
+            return networkName
         }
     }
 

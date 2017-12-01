@@ -24,35 +24,35 @@ import SwiftyJSON
 
 public struct DisconnectMeTrackersParser {
     
-    func convert(fromJsonData data: Data) throws -> [String: Tracker] {
+    func convert(fromJsonData data: Data) throws -> [String: DisconnectMeTracker] {
         guard let json = try? JSON(data: data) else {
             throw JsonError.invalidJson
         }
         
         let jsonCategories = json["categories"]
-        var trackers = [String: Tracker]()
+        var trackers = [String: DisconnectMeTracker]()
         for (categoryName, jsonTrackers) in jsonCategories {
             try parse(categoryName: categoryName, fromJson: jsonTrackers, into: &trackers)
         }
         return trackers
     }
     
-    private func parse(categoryName: String, fromJson jsonTrackers: JSON, into trackers: inout [String: Tracker]) throws {
+    private func parse(categoryName: String, fromJson jsonTrackers: JSON, into trackers: inout [String: DisconnectMeTracker]) throws {
         for jsonTracker in jsonTrackers.arrayValue {
             
             guard let networkName = jsonTracker.first?.0 else { throw JsonError.typeMismatch }
             guard let jsonTrackers = jsonTracker.first?.1.first(where: { $0.1.arrayObject != nil } )?.1.arrayObject else { throw JsonError.typeMismatch }
 
-            let category = Tracker.Category.all.filter( { $0.rawValue == categoryName }).first
+            let category = DisconnectMeTracker.Category.all.filter( { $0.rawValue == categoryName }).first
 
             guard let baseUrl = jsonTracker.first?.1.first?.0 else { throw JsonError.typeMismatch }
             guard let parentDomain = parseDomain(fromUrl: baseUrl) else { throw JsonError.typeMismatch }
 
-            trackers[parentDomain] = Tracker(url: parentDomain, networkName: networkName, category: category)
+            trackers[parentDomain] = DisconnectMeTracker(url: parentDomain, networkName: networkName, category: category)
 
             for url in jsonTrackers {
                 guard let url = url as? String else { continue }
-                trackers[url] = Tracker(url: url, networkName: networkName, parentUrl: URL(string: baseUrl), category: category)
+                trackers[url] = DisconnectMeTracker(url: url, networkName: networkName, parentUrl: URL(string: baseUrl), category: category)
             }
         }
     }

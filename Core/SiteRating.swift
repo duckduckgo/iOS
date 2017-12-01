@@ -28,14 +28,14 @@ public class SiteRating {
         return url.host
     }
     public var finishedLoading = false
-    public private (set) var trackersDetected = [Tracker: Int]()
-    public private (set) var trackersBlocked = [Tracker: Int]()
+    public private (set) var trackersDetected = [DetectedTracker: Int]()
+    public private (set) var trackersBlocked = [DetectedTracker: Int]()
 
     private let termsOfServiceStore: TermsOfServiceStore
-    let disconnectMeTrackers: [String: Tracker]
+    let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init(url: URL, disconnectMeTrackers: [String: Tracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
+    public init(url: URL, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
         self.protectionId = UUID.init().uuidString
         self.url = url
         self.disconnectMeTrackers = disconnectMeTrackers
@@ -65,7 +65,7 @@ public class SiteRating {
     }
 
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil } )
+        return majorNetworkTrackersDetected.count > 0
     }
 
     public var containsIpTracker: Bool {
@@ -83,12 +83,12 @@ public class SiteRating {
         return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) } )?.value
     }
 
-    public func trackerDetected(_ tracker: Tracker, blocked: Bool) {
+    public func trackerDetected(_ tracker: DetectedTracker) {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
         
-        if blocked {
-            let blockCount = trackersBlocked[tracker] ?? 0  
+        if tracker.blocked {
+            let blockCount = trackersBlocked[tracker] ?? 0
             trackersBlocked[tracker] = blockCount + 1
         }
     }
@@ -109,11 +109,11 @@ public class SiteRating {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }
 
-    public var majorNetworkTrackersDetected: [Tracker: Int] {
+    public var majorNetworkTrackersDetected: [DetectedTracker: Int] {
         return trackersDetected.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
     }
 
-    public var majorNetworkTrackersBlocked: [Tracker: Int] {
+    public var majorNetworkTrackersBlocked: [DetectedTracker: Int] {
         return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
     }
 
@@ -122,12 +122,12 @@ public class SiteRating {
         return tracker?.parentUrl?.host
     }
 
-    private func uniqueMajorTrackerNetworks(trackers: [Tracker: Int]) -> Int {
+    private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil }).flatMap({ $0.networkName })).count
     }
 
-    private func uniqueTrackerNetworks(trackers: [Tracker: Int]) -> Int {
-        return Set(trackers.keys.filter({ $0.networkName != nil }).flatMap({ $0.networkName })).count
+    private func uniqueTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
+        return Set(trackers.keys.flatMap({ $0.networkName ?? $0.domain })).count
     }
 
 }

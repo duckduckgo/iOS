@@ -53,7 +53,24 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     override func setUp() {
         SiteRatingCache.shared.reset()
     }
-
+    
+    func testWhenNetworkExistsForMajorDomainNotInDisconnectItIsReturned() {
+        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString, networkName: "TrickyAds", category: .social ) ]
+        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Major", domain: "major.com", perentageOfPages: 5))
+        let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "major.com")
+        XCTAssertEqual("Major", nameAndCategory.networkName)
+        XCTAssertNil(nameAndCategory.category)
+    }
+    
+    func testWhenNetworkNameAndCategoryExistsForDomainTheyAreReturned() {
+        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString, networkName: "TrickyAds", category: .social ) ]
+        let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "sometracker.com")
+        XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
+        XCTAssertEqual("Social", nameAndCategory.category)
+    }
+    
     func testWhenHighScoreCachedResultIsGradeD() {
         _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())

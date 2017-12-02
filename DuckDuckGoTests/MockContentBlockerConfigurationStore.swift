@@ -17,33 +17,24 @@
 //  limitations under the License.
 //
 
-
 @testable import Core
 
 class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
 
-    var domainWhitelist: Set<String> {
-        get {
-            return Set<String>()
-        }
-    }
-
+    var domainWhitelist = Set<String>()
     var protecting = true
     var enabled = true
     
-    // A very sophisticated stub, it supports a single whitelisted item ;-)
-    private var lastWhiteListedItem: String?
-    
     func whitelisted(domain: String) -> Bool {
-        return domain == lastWhiteListedItem
+        return domainWhitelist.contains(domain)
     }
     
     func addToWhitelist(domain: String) {
-        lastWhiteListedItem = domain
+        domainWhitelist.insert(domain)
     }
     
     func removeFromWhitelist(domain: String) {
-        lastWhiteListedItem = nil
+        domainWhitelist.remove(domain)
     }
 
     func protecting(domain: String?) -> Bool {

@@ -19,6 +19,7 @@
 
 import Foundation
 
+// Populated with relevant info at the point of detection.  If networkName or category are nil, they are genuinely not known.
 public struct DetectedTracker {
 
     public let url: String

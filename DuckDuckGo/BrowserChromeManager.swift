@@ -39,44 +39,27 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     let delegate: BrowserChromeDelegate
 
-    var dragging = false
     var hidden = false
-    var lastOffset: CGPoint?
-    var cumulative: CGFloat = 0
+    var lastYOffset: CGFloat = 0
 
     init(delegate: BrowserChromeDelegate) {
         self.delegate = delegate
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard dragging else { return }
 
-        if let lastOffset = lastOffset {
+        let yDiff = scrollView.contentOffset.y - lastYOffset
+        print("*** yDiff", yDiff)
 
-            let ydiff = lastOffset.y - scrollView.contentOffset.y
-
-            if ydiff == 0 || (cumulative < 0 && ydiff > 0) || (cumulative > 0 && ydiff < 0) {
-                cumulative = 0
-            }
-
-            cumulative += ydiff
-
-            if abs(cumulative) > Constants.threshold {
-                updateBars(ydiff < 0)
-            }
-
+        if abs(yDiff) > Constants.threshold {
+            updateBars(yDiff > 0)
         }
 
-        lastOffset = scrollView.contentOffset
     }
 
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        dragging = true
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        dragging = false
-        cumulative = 0
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        lastYOffset = scrollView.contentOffset.y
+        print("***", #function, lastYOffset)
     }
 
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
@@ -88,7 +71,14 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         return true
     }
 
+    func reset() {
+        print("***", #function)
+        lastYOffset = 0
+        hidden = false
+    }
+
     private func updateBars(_ shouldHide: Bool) {
+        print("***", #function, shouldHide, hidden)
         guard shouldHide != hidden else { return }
         hidden = shouldHide
         delegate.setBarsHidden(shouldHide, animated: true)

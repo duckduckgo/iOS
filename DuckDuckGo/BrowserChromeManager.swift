@@ -39,9 +39,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     let delegate: BrowserChromeDelegate
 
-    var dragging = false
     var hidden = false
-    var lastOffset: CGPoint?
+    var lastYOffset: CGFloat = 0
     var cumulative: CGFloat = 0
 
     init(delegate: BrowserChromeDelegate) {
@@ -49,36 +48,18 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard dragging else { return }
-
-        if let lastOffset = lastOffset {
-
-            let ydiff = lastOffset.y - scrollView.contentOffset.y
-
-            if ydiff == 0 || (cumulative < 0 && ydiff > 0) || (cumulative > 0 && ydiff < 0) {
-                cumulative = 0
-            }
-
-            cumulative += ydiff
-
-            if abs(cumulative) > Constants.threshold {
-                updateBars(ydiff < 0)
-            }
-
+        let y = scrollView.contentOffset.y
+        let diff = y - lastYOffset
+        cumulative += diff
+        
+        if abs(cumulative) > Constants.threshold {
+            updateBars(cumulative > 0)
+            cumulative = 0
         }
-
-        lastOffset = scrollView.contentOffset
+        
+        lastYOffset = y
     }
-
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        dragging = true
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        dragging = false
-        cumulative = 0
-    }
-
+    
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         if hidden {
             updateBars(false)
@@ -86,6 +67,11 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         }
 
         return true
+    }
+
+    func reset() {
+        lastYOffset = 0
+        hidden = false
     }
 
     private func updateBars(_ shouldHide: Bool) {

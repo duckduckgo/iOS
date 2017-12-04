@@ -68,7 +68,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     func update() {
         guard isViewLoaded else { return }
-        sections = siteRating.toSections(withSiteRating: siteRating, andContentBlocker: contentBlocker, forMajorNetworksOnly: majorOnly)
+        sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: contentBlocker, majorNetworksOnly: majorOnly).build()
         updateDomain()
         updateSubtitle()
         updateIcon()
@@ -171,26 +171,31 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 }
 
-fileprivate extension SiteRating {
+struct SiteRatingTrackerNetworkSectionBuilder {
+    
+    let siteRating: SiteRating
+    let contentBlocker: ContentBlockerConfigurationStore
+    let majorNetworksOnly: Bool
+    
+    func build() -> [PrivacyProtectionTrackerNetworksController.Section] {
 
-    func toSections(withSiteRating siteRating: SiteRating, andContentBlocker contentBlocker: ContentBlockerConfigurationStore, forMajorNetworksOnly majorOnly: Bool) -> [PrivacyProtectionTrackerNetworksController.Section] {
-
-        if majorOnly {
-            return toSections(siteRating: siteRating, trackers: contentBlocker.enabled ? majorNetworkTrackersBlocked : majorNetworkTrackersDetected)
+        let protecting = siteRating.protecting(contentBlocker)
+        
+        if majorNetworksOnly {
+            return toSections(trackers: protecting ? siteRating.majorNetworkTrackersBlocked : siteRating.majorNetworkTrackersDetected)
         } else {
-            return toSections(siteRating: siteRating, trackers: contentBlocker.enabled ? trackersBlocked : trackersDetected)
+            return toSections(trackers: protecting ? siteRating.trackersBlocked : siteRating.trackersDetected)
         }
     }
 
-    func toSections(siteRating: SiteRating, trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
+    private func toSections(trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
         var sections = [String: PrivacyProtectionTrackerNetworksController.Section]()
 
         for tracker in trackers.keys {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
-            let networkNameAndCategory = siteRating.networkNameAndCategory(forDomain: domain)
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: networkNameAndCategory.category ?? "")
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: tracker.category ?? "")
 
             if let section = sections[networkName] {
                 sections[networkName] = section.adding(row)

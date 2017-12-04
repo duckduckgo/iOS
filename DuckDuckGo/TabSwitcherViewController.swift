@@ -90,7 +90,7 @@ class TabSwitcherViewController: UIViewController {
     
     func onDeleted(tabAt index: Int) {
         delegate.tabSwitcher(self, didRemoveTabAt: index)
-        collectionView.reloadData()
+        collectionView.deleteItems(at: [ IndexPath(row: index, section: 0) ])
         refreshTitle()
     }
     
@@ -121,7 +121,12 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
     
     @objc func onRemoveTapped(sender: UIView) {
         let index = sender.tag
-        onDeleted(tabAt: index)
+        UIView.animate(withDuration: 0.3, animations: {
+            guard let superview = sender.superview else { return }
+            superview.transform.tx = -superview.frame.width * 1.5
+        }, completion: { completed in
+            self.onDeleted(tabAt: index)
+        })
     }
 }
 

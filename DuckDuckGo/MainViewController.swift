@@ -309,7 +309,8 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
-
+        chromeManager.hidden = hidden
+        
         updateToolbarConstant(hidden)
         updateNavBarConstant(hidden)
 

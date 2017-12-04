@@ -34,4 +34,7 @@ protocol TabDelegate: class {
     func tabDidRequestSettings(tab: TabViewController)
     
     func tabContentProcessDidTerminate(tab: TabViewController)
+    
+    func showBars()
+    
 }

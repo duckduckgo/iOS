@@ -413,6 +413,7 @@ extension TabViewController: WebEventsDelegate {
     
     func webpageDidStartLoading() {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
+        delegate?.showBars()
         resetSiteRating()
         if let siteRating = siteRating {
             reloadScripts(with: siteRating.protectionId)

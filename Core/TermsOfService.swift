@@ -23,24 +23,75 @@ import Foundation
 
 public struct TermsOfService {
 
-    private static let classificationScores: [Classification: Int] = [
-        .a: -1,
-        .b: 0,
-        .c: 0,
-        .d: 1,
-        .e: 2
-    ]
+    struct Lookups {
+
+        static let classificationAsPractices: [Classification: PrivacyPractices] = [
+            .a: .good,
+            .b: .mixed,
+            .c: .poor,
+            .d: .poor,
+            .e: .poor,
+            ]
+
+        static let classificationScores: [Classification: Int] = [
+            .a: -1,
+            .b: 0,
+            .c: 0,
+            .d: 1,
+            .e: 2,
+            ]
+
+        static let derivedScoreAsPractices: [Int: PrivacyPractices] = [
+            -1: .good,
+            0: .mixed,
+            1: .poor,
+            ]
+
+    }
 
     public let classification: Classification?
     public let score: Int
     public let goodReasons: [String]
     public let badReasons: [String]
 
+    public var hasReasons: Bool {
+        return !goodReasons.isEmpty || !badReasons.isEmpty
+    }
+
+    public var hasUnknownPractices: Bool {
+        get {
+            return !hasReasons
+        }
+    }
+
     public var derivedScore: Int {
         if let classification = classification {
-            return TermsOfService.classificationScores[classification]!
+            return Lookups.classificationScores[classification]!
         }
 
+        return normalizeScore()
+    }
+
+    public func privacyPractices() -> PrivacyPractices {
+        guard !hasUnknownPractices else { return .unknown }
+
+        var practices: PrivacyPractices?
+        if let classification = classification {
+            practices = Lookups.classificationAsPractices[classification]
+        } else {
+            practices = Lookups.derivedScoreAsPractices[normalizeScore()]!
+        }
+
+        guard let derivedPractices = practices else { return .unknown }
+
+        if !badReasons.isEmpty {
+            return derivedPractices.downgrade()
+        }
+
+        return derivedPractices
+    }
+
+    private func normalizeScore() -> Int {
         // extensions JS uses Math.sign(score)
         if score < 0 { return -1 }
         if score > 0 { return 1 }
@@ -50,4 +101,19 @@ public struct TermsOfService {
     public enum Classification: String {
         case a, b, c, d, e
     }
+
+    public enum PrivacyPractices {
+
+        case poor, mixed, good, unknown
+
+        func downgrade() -> PrivacyPractices {
+            switch self {
+            case .good: return .mixed
+            case .mixed: return .poor
+            default: return .poor
+            }
+        }
+
+    }
+
 }

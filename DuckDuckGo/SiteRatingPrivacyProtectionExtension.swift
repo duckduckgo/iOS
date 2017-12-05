@@ -62,7 +62,7 @@ extension SiteRating {
         let score = termsOfServiceScore
         switch (score) {
         case _ where(score < 0):
-            return .good
+            return termsOfService.badReasons.isEmpty ? .good : .mixed
 
         case 0:
             return termsOfService.badReasons.isEmpty && termsOfService.goodReasons.isEmpty ? .unknown : .mixed

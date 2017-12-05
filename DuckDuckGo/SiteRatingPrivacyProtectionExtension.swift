@@ -58,14 +58,14 @@ extension SiteRating {
     }
 
     func privacyPractices() -> PrivacyPractices {
-        guard termsOfService != nil else { return .unknown }
+        guard let termsOfService = termsOfService else { return .unknown }
         let score = termsOfServiceScore
         switch (score) {
         case _ where(score < 0):
             return .good
 
         case 0:
-            return .unknown
+            return termsOfService.badReasons.isEmpty && termsOfService.goodReasons.isEmpty ? .unknown : .mixed
 
         default:
             return .poor

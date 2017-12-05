@@ -210,7 +210,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             return
         }
 
-        if let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+        if let targetMainFrame = navigationAction.targetFrame?.isMainFrame,
+            targetMainFrame == true,
+            let upgradeUrl = httpsUpgrade.upgrade(url: url) {
             Logger.log(text: "upgrading \(url) to \(upgradeUrl)")
             load(url: upgradeUrl)
             decisionHandler(.cancel)

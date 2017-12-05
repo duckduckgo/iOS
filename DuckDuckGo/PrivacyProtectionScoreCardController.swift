@@ -28,6 +28,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var privacyPracticesCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var privacyGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var enhancedGradeCell: PrivacyProtectionScoreCardCell!
+    @IBOutlet weak var isMajorNetworkCell: PrivacyProtectionScoreCardCell!
 
     weak var siteRating: SiteRating!
     weak var contentBlocker: ContentBlockerConfigurationStore!
@@ -56,8 +57,14 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         updateConnectionCell()
         updateNetworksCell()
         updateMajorNetworksCell()
+        updateIsMajorNetworkCell()
         updatePrivacyPractices()
         updatePrivacyGradeCells()
+    }
+
+    private func updateIsMajorNetworkCell() {
+        let success = !siteRating.isMajorTrackerNetwork
+        isMajorNetworkCell.update(message: siteRating.isMajorNetworkText(), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updateConnectionCell() {

@@ -65,7 +65,7 @@ extension SiteRating {
             return .good
 
         case 0:
-            return .mixed
+            return .unknown
 
         default:
             return .poor

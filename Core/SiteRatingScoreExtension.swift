@@ -80,6 +80,12 @@ public extension SiteRating {
         if let network = majorTrackerNetworkStore.network(forDomain: domain) { return network.score }
         return 0
     }
+
+    var isMajorTrackerNetwork: Bool {
+        get {
+            return isMajorTrackerScore > 0
+        }
+    }
     
     private var ipTrackerScore: Int {
         return containsIpTracker ? 1 : 0

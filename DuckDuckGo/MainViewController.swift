@@ -457,6 +457,11 @@ extension MainViewController: TabDelegate {
     func tabContentProcessDidTerminate(tab: TabViewController) {
         tabManager.invalidateCache(forController: tab)
     }
+    
+    func showBars() {
+        chromeManager.reset()
+    }
+    
 }
 
 extension MainViewController: TabSwitcherDelegate {

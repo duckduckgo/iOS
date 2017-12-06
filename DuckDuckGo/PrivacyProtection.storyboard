@@ -1082,7 +1082,7 @@ at you across the internet.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4vm-2D-njE">
-                                <rect key="frame" x="0.0" y="10" width="375" height="587"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="577"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="uDA-bS-Uwl" userLabel="Header">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
@@ -1257,7 +1257,7 @@ with a website is protected.</string>
                             <constraint firstItem="RU8-yV-5bJ" firstAttribute="bottom" secondItem="dKK-U1-HtX" secondAttribute="bottom" id="BGJ-OE-PxR"/>
                             <constraint firstItem="4vm-2D-njE" firstAttribute="width" secondItem="CmA-8L-BSR" secondAttribute="width" id="StK-Ee-BC0"/>
                             <constraint firstItem="dKK-U1-HtX" firstAttribute="top" secondItem="4vm-2D-njE" secondAttribute="bottom" id="UyZ-KZ-4ek"/>
-                            <constraint firstItem="RU8-yV-5bJ" firstAttribute="top" secondItem="4vm-2D-njE" secondAttribute="top" constant="10" id="ZZL-cN-KTy"/>
+                            <constraint firstItem="RU8-yV-5bJ" firstAttribute="top" secondItem="4vm-2D-njE" secondAttribute="top" id="ZZL-cN-KTy"/>
                             <constraint firstItem="4vm-2D-njE" firstAttribute="centerX" secondItem="RU8-yV-5bJ" secondAttribute="centerX" id="p9c-8e-Dbz"/>
                             <constraint firstItem="dKK-U1-HtX" firstAttribute="width" secondItem="RU8-yV-5bJ" secondAttribute="width" id="upJ-bd-9HU"/>
                         </constraints>

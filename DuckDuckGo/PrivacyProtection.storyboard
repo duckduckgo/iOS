@@ -429,11 +429,8 @@
                                                 <constraint firstAttribute="width" constant="30" id="nQ1-SR-r2m"/>
                                             </constraints>
                                             <state key="normal" image="PP Arrow Back"/>
-                                            <connections>
-                                                <action selector="onBack" destination="FqV-mP-aQi" eventType="touchUpInside" id="uxf-gg-UNo"/>
-                                            </connections>
                                         </button>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
+                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
                                             <rect key="frame" x="0.0" y="155" width="375" height="75"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
@@ -498,8 +495,15 @@ of any personal information you send to a website.</string>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-Zr-WkQ" userLabel="Tap View">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="155"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="T2j-bE-D9r" appends="YES" id="fil-e9-tQ3"/>
+                                            </connections>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstItem="lcA-Pa-Z9c" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="CcK-1Y-Pwx"/>
                                         <constraint firstItem="aT4-lx-qIx" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="GgS-OT-f2z"/>
@@ -507,11 +511,14 @@ of any personal information you send to a website.</string>
                                         <constraint firstItem="KSV-Ab-2VI" firstAttribute="leading" secondItem="XbD-tH-3K4" secondAttribute="leading" constant="20" id="JOQ-hV-GKp"/>
                                         <constraint firstItem="Jd5-3d-xyR" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" id="M0S-1y-340"/>
                                         <constraint firstItem="dZC-7f-pp3" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="Nee-oW-O9L"/>
+                                        <constraint firstItem="FSs-Zr-WkQ" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="PEP-Qc-PLB"/>
                                         <constraint firstItem="F5w-e3-JfY" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="V80-yt-FIk"/>
                                         <constraint firstItem="dZC-7f-pp3" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="W3H-I0-PtX"/>
+                                        <constraint firstItem="FSs-Zr-WkQ" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" id="a0x-Kp-1fq"/>
                                         <constraint firstItem="F5w-e3-JfY" firstAttribute="top" secondItem="8ma-gb-nuk" secondAttribute="bottom" constant="5" id="b48-kj-EfE"/>
                                         <constraint firstItem="dZC-7f-pp3" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="bVy-Jp-9AO"/>
                                         <constraint firstItem="lcA-Pa-Z9c" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="dAe-iu-DO1"/>
+                                        <constraint firstItem="FSs-Zr-WkQ" firstAttribute="top" secondItem="XbD-tH-3K4" secondAttribute="top" id="hEp-Ka-gWh"/>
                                         <constraint firstItem="aT4-lx-qIx" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="i7m-bI-XOV"/>
                                         <constraint firstItem="lcA-Pa-Z9c" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="jyW-oP-1Lx"/>
                                         <constraint firstItem="aT4-lx-qIx" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="lGf-ac-2Nb"/>
@@ -520,6 +527,7 @@ of any personal information you send to a website.</string>
                                         <constraint firstItem="F5w-e3-JfY" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="pP7-n3-4BJ"/>
                                         <constraint firstItem="KSV-Ab-2VI" firstAttribute="top" secondItem="XbD-tH-3K4" secondAttribute="top" constant="20" id="w4s-4C-MWO"/>
                                         <constraint firstItem="8ma-gb-nuk" firstAttribute="top" secondItem="XbD-tH-3K4" secondAttribute="top" constant="20" id="yIO-uQ-XtY"/>
+                                        <constraint firstItem="Jd5-3d-xyR" firstAttribute="top" secondItem="FSs-Zr-WkQ" secondAttribute="bottom" id="zqT-fq-uvl"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -608,8 +616,13 @@ of any personal information you send to a website.</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhu-pq-Kqh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="T2j-bE-D9r">
+                    <connections>
+                        <action selector="onBack" destination="FqV-mP-aQi" id="n2O-td-gGm"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1566" y="1487"/>
+            <point key="canvasLocation" x="1565.5999999999999" y="1485.6071964017992"/>
         </scene>
         <!--Privacy Protection Network Leaderboard Controller-->
         <scene sceneID="t8U-i2-XtK">
@@ -684,26 +697,33 @@ of any personal information you send to a website.</string>
                                                 <constraint firstAttribute="width" constant="30" id="4lM-91-gHR"/>
                                             </constraints>
                                             <state key="normal" image="PP Arrow Back"/>
-                                            <connections>
-                                                <action selector="onBack" destination="3wX-Uf-JRU" eventType="touchUpInside" id="5FV-yn-JvO"/>
-                                                <action selector="onBack" destination="FqV-mP-aQi" eventType="touchUpInside" id="bFW-xS-nk8"/>
-                                            </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ye-uJ-wqw" userLabel="Tap View">
+                                            <rect key="frame" x="-0.5" y="0.0" width="375" height="155"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="yGA-Zj-3Em" appends="YES" id="dwZ-ps-h6R"/>
+                                            </connections>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-40" id="4ky-h3-4Hu"/>
+                                        <constraint firstItem="4ye-uJ-wqw" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="BVe-K7-7L5"/>
                                         <constraint firstItem="2vQ-S5-Xxv" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="CUn-bm-XRn"/>
                                         <constraint firstItem="IPS-SD-65t" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-80" id="GGd-LH-Oo9"/>
+                                        <constraint firstItem="4ye-uJ-wqw" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="HsO-hc-aBG"/>
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="OZB-Xz-T7R"/>
                                         <constraint firstItem="HGe-jW-qhx" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="PcO-KV-Iw4"/>
                                         <constraint firstItem="2vQ-S5-Xxv" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="ST8-Fr-SiZ"/>
                                         <constraint firstItem="HGe-jW-qhx" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="bIe-DI-dgG"/>
+                                        <constraint firstItem="2vQ-S5-Xxv" firstAttribute="top" secondItem="4ye-uJ-wqw" secondAttribute="bottom" id="gEe-2D-nwE"/>
                                         <constraint firstItem="IPS-SD-65t" firstAttribute="top" secondItem="HGe-jW-qhx" secondAttribute="bottom" constant="11" id="kRE-k1-1n2"/>
                                         <constraint firstAttribute="bottom" secondItem="2vQ-S5-Xxv" secondAttribute="bottom" id="nkd-F5-2YP"/>
                                         <constraint firstItem="Ict-Tf-vBn" firstAttribute="leading" secondItem="UAf-eb-tA7" secondAttribute="leading" constant="20" id="pDB-lj-mmP"/>
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="top" secondItem="IPS-SD-65t" secondAttribute="bottom" constant="6" id="ptn-4m-rYU"/>
                                         <constraint firstItem="IPS-SD-65t" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="r7g-88-2oT"/>
+                                        <constraint firstItem="4ye-uJ-wqw" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" id="wZV-UM-8oh"/>
                                         <constraint firstItem="Ict-Tf-vBn" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="wdt-rA-eO2"/>
                                     </constraints>
                                 </view>
@@ -876,8 +896,13 @@ of any personal information you send to a website.</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kms-Dd-Tj3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="yGA-Zj-3Em">
+                    <connections>
+                        <action selector="onBack" destination="3wX-Uf-JRU" id="ZA7-cV-yLi"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2382" y="1487"/>
+            <point key="canvasLocation" x="2381.5999999999999" y="1486.5067466266867"/>
         </scene>
         <!--Privacy Protection Tracker Networks Controller-->
         <scene sceneID="Pom-58-Ytp">
@@ -955,10 +980,15 @@ at you across the internet.</string>
                                             <state key="normal" image="PP Arrow Back"/>
                                             <connections>
                                                 <action selector="onBack" destination="3wX-Uf-JRU" eventType="touchUpInside" id="1PI-1o-E71"/>
-                                                <action selector="onBack" destination="FqV-mP-aQi" eventType="touchUpInside" id="hxx-Au-5F3"/>
-                                                <action selector="onBack" destination="7u1-pv-hRO" eventType="touchUpInside" id="wPg-BB-eLY"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIf-0g-TkK" userLabel="Tap View">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="155"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="XGe-f4-wQn" appends="YES" id="R6n-gL-zQ3"/>
+                                            </connections>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -969,8 +999,12 @@ at you across the internet.</string>
                                         <constraint firstAttribute="bottom" secondItem="qwM-eP-cbc" secondAttribute="bottom" id="Eza-VH-rUN"/>
                                         <constraint firstItem="q0F-D6-aaO" firstAttribute="top" secondItem="e4V-2n-13h" secondAttribute="top" constant="20" id="K41-kh-Ndk"/>
                                         <constraint firstItem="OHN-Tz-cdk" firstAttribute="width" secondItem="e4V-2n-13h" secondAttribute="width" constant="-40" id="KF8-qF-XxI"/>
+                                        <constraint firstItem="gIf-0g-TkK" firstAttribute="width" secondItem="e4V-2n-13h" secondAttribute="width" id="OS7-OX-YTd"/>
+                                        <constraint firstItem="qwM-eP-cbc" firstAttribute="top" secondItem="gIf-0g-TkK" secondAttribute="bottom" id="U4f-VY-8g0"/>
+                                        <constraint firstItem="gIf-0g-TkK" firstAttribute="centerX" secondItem="e4V-2n-13h" secondAttribute="centerX" id="VkO-tj-huV"/>
                                         <constraint firstItem="7nh-8f-M2e" firstAttribute="centerX" secondItem="e4V-2n-13h" secondAttribute="centerX" id="Vv5-X4-t21"/>
                                         <constraint firstItem="OHN-Tz-cdk" firstAttribute="top" secondItem="7nh-8f-M2e" secondAttribute="bottom" constant="6" id="W9o-Ve-Itt"/>
+                                        <constraint firstItem="gIf-0g-TkK" firstAttribute="top" secondItem="e4V-2n-13h" secondAttribute="top" id="XEB-qY-e7b"/>
                                         <constraint firstItem="m0O-GE-gIK" firstAttribute="top" secondItem="e4V-2n-13h" secondAttribute="top" constant="20" id="Yh7-Fe-Q0o"/>
                                         <constraint firstItem="qwM-eP-cbc" firstAttribute="centerX" secondItem="e4V-2n-13h" secondAttribute="centerX" id="n0q-kH-bXC"/>
                                         <constraint firstItem="7nh-8f-M2e" firstAttribute="width" secondItem="e4V-2n-13h" secondAttribute="width" constant="-80" id="oeF-YS-oLL"/>
@@ -1070,6 +1104,11 @@ at you across the internet.</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZU6-CC-CYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="XGe-f4-wQn">
+                    <connections>
+                        <action selector="onBack" destination="7u1-pv-hRO" id="MsC-Iw-3Uu"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3246" y="1487"/>
         </scene>
@@ -1149,17 +1188,23 @@ with a website is protected.</string>
                                             <state key="normal" image="PP Arrow Back"/>
                                             <connections>
                                                 <action selector="onBack" destination="3wX-Uf-JRU" eventType="touchUpInside" id="FoO-Kq-0Mq"/>
-                                                <action selector="onBack" destination="FqV-mP-aQi" eventType="touchUpInside" id="eMM-fv-nxm"/>
-                                                <action selector="onBack" destination="7u1-pv-hRO" eventType="touchUpInside" id="sah-cD-mwE"/>
-                                                <action selector="onBack" destination="ASo-lP-j3Z" eventType="touchUpInside" id="vV9-EG-EOZ"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OWk-Mj-6oF" userLabel="Tap View">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="155"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="h6V-Ex-12u" appends="YES" id="Qmf-4M-xHs"/>
+                                            </connections>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="V7a-BI-Cm8" firstAttribute="centerX" secondItem="uDA-bS-Uwl" secondAttribute="centerX" id="49P-JU-hBg"/>
                                         <constraint firstItem="zqk-Al-R2h" firstAttribute="top" secondItem="uDA-bS-Uwl" secondAttribute="top" constant="20" id="4ug-rj-px1"/>
+                                        <constraint firstItem="OWk-Mj-6oF" firstAttribute="top" secondItem="uDA-bS-Uwl" secondAttribute="top" id="56o-Y9-9Qt"/>
                                         <constraint firstItem="V7a-BI-Cm8" firstAttribute="width" secondItem="uDA-bS-Uwl" secondAttribute="width" id="FVn-ko-BN1"/>
+                                        <constraint firstItem="OWk-Mj-6oF" firstAttribute="width" secondItem="uDA-bS-Uwl" secondAttribute="width" id="MoF-yc-g1E"/>
                                         <constraint firstItem="9WR-Wf-9ad" firstAttribute="centerX" secondItem="uDA-bS-Uwl" secondAttribute="centerX" id="P71-u4-APU"/>
                                         <constraint firstItem="0SO-8y-5QH" firstAttribute="width" secondItem="uDA-bS-Uwl" secondAttribute="width" constant="-80" id="Pop-nX-ce6"/>
                                         <constraint firstItem="zqk-Al-R2h" firstAttribute="leading" secondItem="uDA-bS-Uwl" secondAttribute="leading" constant="20" id="QlP-2F-uvq"/>
@@ -1168,8 +1213,10 @@ with a website is protected.</string>
                                         <constraint firstItem="0SO-8y-5QH" firstAttribute="centerX" secondItem="uDA-bS-Uwl" secondAttribute="centerX" id="e6Z-ir-qt9"/>
                                         <constraint firstItem="9WR-Wf-9ad" firstAttribute="top" secondItem="uDA-bS-Uwl" secondAttribute="top" constant="20" id="jtU-t0-Vn5"/>
                                         <constraint firstItem="25V-p3-wsn" firstAttribute="width" secondItem="uDA-bS-Uwl" secondAttribute="width" constant="-40" id="kDd-Ax-a6D"/>
+                                        <constraint firstItem="OWk-Mj-6oF" firstAttribute="centerX" secondItem="uDA-bS-Uwl" secondAttribute="centerX" id="lq2-Z0-evF"/>
                                         <constraint firstItem="0SO-8y-5QH" firstAttribute="top" secondItem="9WR-Wf-9ad" secondAttribute="bottom" constant="5" id="me2-g5-K0s"/>
                                         <constraint firstAttribute="bottom" secondItem="V7a-BI-Cm8" secondAttribute="bottom" id="psV-bE-aFA"/>
+                                        <constraint firstItem="V7a-BI-Cm8" firstAttribute="top" secondItem="OWk-Mj-6oF" secondAttribute="bottom" id="tCw-DF-2fc"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -1272,13 +1319,18 @@ with a website is protected.</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qln-su-Tzz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="uhM-pK-Y9R">
+                <tapGestureRecognizer id="uhM-pK-Y9R" userLabel="Link Tap">
                     <connections>
                         <action selector="onTapTOSDRLink" destination="ASo-lP-j3Z" id="yF3-UN-MAz"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="h6V-Ex-12u" userLabel="Back Tap">
+                    <connections>
+                        <action selector="onBack" destination="ASo-lP-j3Z" id="jAj-eW-fni"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4257" y="1487"/>
+            <point key="canvasLocation" x="4256.8000000000002" y="1486.5067466266867"/>
         </scene>
         <!--PrivacyProtectionHeader-->
         <scene sceneID="R0m-fy-D7F">
@@ -1316,15 +1368,12 @@ with a website is protected.</string>
                                                         <segue destination="8eA-o1-lUc" kind="embed" id="lZI-wu-ujD"/>
                                                     </connections>
                                                 </containerView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0FD-as-X0W">
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0FD-as-X0W">
                                                     <rect key="frame" x="20" y="90.5" width="30" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="RTA-ie-E98"/>
                                                     </constraints>
                                                     <state key="normal" image="PP Arrow Back"/>
-                                                    <connections>
-                                                        <action selector="onBack" destination="inG-Uk-VH6" eventType="touchUpInside" id="zjx-N1-L8A"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -1336,6 +1385,10 @@ with a website is protected.</string>
                                                 <constraint firstItem="0FD-as-X0W" firstAttribute="leading" secondItem="ERP-CT-0SL" secondAttribute="leading" constant="20" id="xgC-D9-ZKT"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="ons-8k-ZtF" appends="YES" id="aB3-Nb-RvD"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="22" id="e0b-NU-2I0">
                                         <rect key="frame" x="0.0" y="203" width="375" height="22"/>
@@ -1624,6 +1677,11 @@ with a website is protected.</string>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5bH-aD-fGV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ons-8k-ZtF">
+                    <connections>
+                        <action selector="onBack" destination="inG-Uk-VH6" id="6W7-Sw-AZa"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="774" y="1487"/>
         </scene>

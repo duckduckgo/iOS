@@ -76,6 +76,8 @@
 "privacy.protection.tos.good" = "Good Privacy Practices";
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";
 "privacy.protection.tos.poor" = "Poor Privacy Practices";
+"privacy.protection.is.major.network" = "Site is Major Tracker Network";
+"privacy.protection.is.not.major.network" = "Site is not Major Tracker Network";
 
 "privacy.protection.encryption.cert.error" = "Error extracting certificate";
 "privacy.protection.encryption.subject.name" = "Subject Name";
@@ -103,7 +105,7 @@
 "privacy.protection.encryption.unknown" = "Unknown";
 "privacy.protection.encryption.bits" = "%d bits";
 
-"privacy.protection.tracker.networks.major.message" = "Major tracker networks are more harmful because they can track and target you across more of the internet.";
+"privacy.protection.tracker.networks.major.message" = "Major tracker networks are more\nharmful because they can track and target\nyou across more of the internet.";
 
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";

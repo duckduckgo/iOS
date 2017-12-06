@@ -38,6 +38,11 @@ extension SiteRating {
         .poor: UserText.privacyProtectionTOSPoor
     ]
 
+    func isMajorNetworkText() -> String {
+        return isMajorTrackerNetwork ?
+            UserText.privacyProtectionIsMajorTrackerNetwork :
+            UserText.privacyProtectionIsNotMajorTrackerNetwork
+    }
 
     func encryptedConnectionText() -> String {
         if !https {
@@ -58,14 +63,14 @@ extension SiteRating {
     }
 
     func privacyPractices() -> PrivacyPractices {
-        guard termsOfService != nil else { return .unknown }
+        guard let termsOfService = termsOfService else { return .unknown }
         let score = termsOfServiceScore
         switch (score) {
         case _ where(score < 0):
-            return .good
+            return termsOfService.badReasons.isEmpty ? .good : .mixed
 
         case 0:
-            return .mixed
+            return termsOfService.badReasons.isEmpty && termsOfService.goodReasons.isEmpty ? .unknown : .mixed
 
         default:
             return .poor

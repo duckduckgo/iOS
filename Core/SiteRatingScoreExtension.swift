@@ -80,6 +80,12 @@ public extension SiteRating {
         if let network = majorTrackerNetworkStore.network(forDomain: domain) { return network.score }
         return 0
     }
+
+    var isMajorTrackerNetwork: Bool {
+        get {
+            return isMajorTrackerScore > 0
+        }
+    }
     
     private var ipTrackerScore: Int {
         return containsIpTracker ? 1 : 0
@@ -87,7 +93,7 @@ public extension SiteRating {
     
     public var termsOfServiceScore: Int {
         guard let termsOfService = termsOfService else {
-            return 1
+            return 0
         }
         
         return termsOfService.derivedScore
@@ -118,8 +124,15 @@ public extension SiteRating {
     }
 
     public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
-        let tracker = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) } )?.value
-        return ( tracker?.networkName, tracker?.category?.rawValue )
+        if let tracker = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) } )?.value {
+            return ( tracker.networkName, tracker.category?.rawValue )
+        }
+        
+        if let majorNetwork = majorTrackerNetworkStore.network(forDomain: domain) {
+            return ( majorNetwork.name, nil )
+        }
+        
+        return ( nil, nil )
     }
 
 }

@@ -210,7 +210,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
             return
         }
 
-        if let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+        if navigationAction.isTargettingMainFrame(),
+            let upgradeUrl = httpsUpgrade.upgrade(url: url) {
             Logger.log(text: "upgrading \(url) to \(upgradeUrl)")
             load(url: upgradeUrl)
             decisionHandler(.cancel)
@@ -234,7 +235,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         webEventsDelegate?.contentProcessDidTerminate(webView: webView)
     }
-    
+
     private func shouldReissueSearch(for url: URL) -> Bool {
         return appUrls.isDuckDuckGoSearch(url: url) && !appUrls.hasCorrectMobileStatsParams(url: url)
     }
@@ -324,3 +325,11 @@ extension WebViewController: UIGestureRecognizerDelegate {
 }
 
 fileprivate class WebLongPressGestureRecognizer: UILongPressGestureRecognizer {}
+
+fileprivate extension WKNavigationAction {
+
+    func isTargettingMainFrame() -> Bool {
+        return targetFrame?.isMainFrame ?? false
+    }
+
+}

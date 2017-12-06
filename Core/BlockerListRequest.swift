@@ -26,6 +26,7 @@ class BlockerListRequest {
         case disconnectMe = "disconnectme"
         case easylist = "easylist"
         case easylistPrivacy = "easyprivacy"
+        case trackersWhitelist
         case httpsUpgrade = "https"
 
     }
@@ -73,6 +74,7 @@ class BlockerListRequest {
             case .easylist: return appUrls.easylistBlockList
             case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
             case .httpsUpgrade: return appUrls.httpsUpgradeList
+            case .trackersWhitelist: return appUrls.trackersWhitelist
         }
 
     }
@@ -102,3 +104,5 @@ class UserDefaultsETagStorage: BlockerListETagStorage {
     }
     
 }
+
+

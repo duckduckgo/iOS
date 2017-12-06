@@ -76,6 +76,8 @@
 "privacy.protection.tos.good" = "Good Privacy Practices";
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";
 "privacy.protection.tos.poor" = "Poor Privacy Practices";
+"privacy.protection.is.major.network" = "Site is Major Tracker Network";
+"privacy.protection.is.not.major.network" = "Site is not Major Tracker Network";
 
 "privacy.protection.encryption.cert.error" = "Error extracting certificate";
 "privacy.protection.encryption.subject.name" = "Subject Name";

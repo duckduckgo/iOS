@@ -259,7 +259,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.reload()
     }
     
-    public func goBack() {
+    open func goBack() {
         if isError {
             hideErrorMessage()
             webEventsDelegate?.webpageDidStartLoading()

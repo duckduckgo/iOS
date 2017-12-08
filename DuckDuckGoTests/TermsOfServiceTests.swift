@@ -23,6 +23,16 @@ import XCTest
 
 class TermsOfServiceTests: XCTestCase {
 
+    func testWhenInitWithNoClassTerribleScoreAndGoodAndBadReasonsThenPracticesAreMixed() {
+        let testee = TermsOfService(classification: nil, score: 100, goodReasons: [ "goodReason" ], badReasons: [ "badReason" ])
+        XCTAssertEqual(testee.privacyPractices(), .mixed)
+    }
+
+    func testWhenInitWithNoClassExcellentScoreAndGoodAndBadReasonsThenPracticesAreMixed() {
+        let testee = TermsOfService(classification: nil, score: -100, goodReasons: [ "goodReason" ], badReasons: [ "badReason" ])
+        XCTAssertEqual(testee.privacyPractices(), .mixed)
+    }
+
     func testWhenInitWithAClassificationButNoTermsPracticesAreUnknown() {
         let testee = TermsOfService(classification: .a, score: 10, goodReasons: [], badReasons: [])
         XCTAssertEqual(testee.privacyPractices(), .unknown)

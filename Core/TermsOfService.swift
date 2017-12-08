@@ -78,6 +78,8 @@ public struct TermsOfService {
         var practices: PrivacyPractices?
         if let classification = classification {
             practices = Lookups.classificationAsPractices[classification]
+        } else if !goodReasons.isEmpty && !badReasons.isEmpty {
+            return .mixed
         } else {
             practices = Lookups.derivedScoreAsPractices[normalizeScore()]!
         }

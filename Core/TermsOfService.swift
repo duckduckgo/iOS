@@ -84,13 +84,11 @@ public struct TermsOfService {
             practices = Lookups.derivedScoreAsPractices[normalizeScore()]!
         }
 
-        guard let derivedPractices = practices else { return .unknown }
-
-        if !badReasons.isEmpty {
-            return derivedPractices.downgrade()
+        if let practices = practices {
+            return practices
         }
-
-        return derivedPractices
+        
+        return .unknown
     }
 
     private func normalizeScore() -> Int {

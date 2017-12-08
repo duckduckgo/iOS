@@ -59,8 +59,8 @@ class TermsOfServiceTests: XCTestCase {
 
     func testWhenInitWithClassificationAndBadReasonsAppropriatePrivacyPracticsReturned() {
         let classificationScores: [TermsOfService.Classification: TermsOfService.PrivacyPractices] = [
-            .a : .mixed,
-            .b : .poor,
+            .a : .good,
+            .b : .mixed,
             .c : .poor,
             .d : .poor,
             .e : .poor,

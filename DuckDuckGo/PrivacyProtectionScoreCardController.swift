@@ -51,6 +51,11 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         navigationController?.popViewController(animated: true)
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        return cell.isHidden ? 0 : super.tableView(tableView, heightForRowAt:indexPath)
+    }
+
     private func update() {
         guard isViewLoaded else { return }
 
@@ -60,11 +65,11 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         updateIsMajorNetworkCell()
         updatePrivacyPractices()
         updatePrivacyGradeCells()
+        tableView.reloadData()
     }
 
     private func updateIsMajorNetworkCell() {
-        let success = !siteRating.isMajorTrackerNetwork
-        isMajorNetworkCell.update(message: siteRating.isMajorNetworkText(), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        isMajorNetworkCell.isHidden = !siteRating.isMajorTrackerNetwork
     }
 
     private func updateConnectionCell() {

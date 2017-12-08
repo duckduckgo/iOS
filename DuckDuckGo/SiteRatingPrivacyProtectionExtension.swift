@@ -38,12 +38,6 @@ extension SiteRating {
         .poor: UserText.privacyProtectionTOSPoor
     ]
 
-    func isMajorNetworkText() -> String {
-        return isMajorTrackerNetwork ?
-            UserText.privacyProtectionIsMajorTrackerNetwork :
-            UserText.privacyProtectionIsNotMajorTrackerNetwork
-    }
-
     func encryptedConnectionText() -> String {
         if !https {
             return UserText.privacyProtectionEncryptionBadConnection

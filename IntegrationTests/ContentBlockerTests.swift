@@ -73,7 +73,7 @@ class ContentBlockerTests: XCTestCase {
         
         waitForPageLoad()
 
-        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label + " Tracker Networks Found"
+        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label + " Tracker Networks Blocked"
 
         openContentBlocker()
         

@@ -34,8 +34,7 @@ class ContentBlockerTests: XCTestCase {
     
     struct Timeout {
         static let postFirstLaunch: UInt32 = 10
-        static let pageLoad = 20
-        static let postPageLoad: UInt32 = 1
+        static let pageLoad: UInt32 = 5
     }
     
     var app: XCUIApplication!
@@ -119,8 +118,7 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func waitForPageLoad() {
-        SnapShotHelperExcerpt.waitForLoadingIndicators(timeout: Timeout.pageLoad)
-        sleep(Timeout.postPageLoad)
+        sleep(Timeout.pageLoad)
     }
     
     private func openContentBlocker() {

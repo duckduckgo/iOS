@@ -81,6 +81,14 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
+        blockerListRequest.request(.trackersWhitelist) { (data) in
+            if let data = data {
+                self.newDataItems += 1
+                self.easylistStore.persistEasylistWhitelist(data: data)
+            }
+            semaphore.signal()
+        }
+
         blockerListRequest.request(.httpsUpgrade) { (data) in
             if let data = data {
                 self.newDataItems += 1
@@ -89,7 +97,7 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
-        return 4
+        return 5
     }
 
 }

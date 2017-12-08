@@ -24,6 +24,7 @@ class EasylistStore {
 
         static let easylist = "easylist"
         static let easylistPrivacy = "easylist-privacy"
+        static let easylistWhitelist = "easylist-whitelist"
 
     }
 
@@ -31,6 +32,7 @@ class EasylistStore {
 
         case easylist
         case easylistPrivacy
+        case easylistWhitelist
 
     }
 
@@ -52,6 +54,12 @@ class EasylistStore {
         }
     }
 
+    var easylistWhitelist: String? {
+        get {
+            return load(.easylistWhitelist)
+        }
+    }
+
     func load(_ type: Easylist) -> String? {
         guard let data = try? Data(contentsOf: persistenceLocation(type: type)) else {
             return nil
@@ -65,6 +73,10 @@ class EasylistStore {
 
     func persistEasylistPrivacy(data: Data) {
         persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy)
+    }
+
+    func persistEasylistWhitelist(data: Data) {
+        persistAndPrepareForInjection(data: data, as: .easylistWhitelist, withCacheName: CacheNames.easylistWhitelist)
     }
 
     private func exists(type: Easylist) -> Bool {

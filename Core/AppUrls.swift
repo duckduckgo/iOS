@@ -35,6 +35,7 @@ public struct AppUrls {
         static let easylistBlockList = "\(home)/contentblocking.js?l=easylist"
         static let easylistPrivacyBlockList = "\(home)/contentblocking.js?l=easyprivacy"
         static let httpsUpgradeList = "\(home)/contentblocking.js?l=https"
+        static let trackersWhitelist = "\(home)/contentblocking/trackers-whitelist.txt"
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"
     }
@@ -86,6 +87,10 @@ public struct AppUrls {
 
     public var httpsUpgradeList: URL {
         return URL(string: Url.httpsUpgradeList)!
+    }
+
+    public var trackersWhitelist: URL {
+        return URL(string: Url.trackersWhitelist)!
     }
 
     public var atb: URL {

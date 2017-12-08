@@ -25,6 +25,9 @@ try {
     ABPFilterParser.parse(`${easylist_general}`, duckduckgoBlockerData.easylist)
     duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist))
 
+    ABPFilterParser.parse(`${easylist_whitelist}`, duckduckgoBlockerData.easylistWhitelist)
+    duckduckgoMessaging.cache("easylist-whitelist", JSON.stringify(duckduckgoBlockerData.easylistWhitelist))
+
 } catch (error) {
     // no-op
 }

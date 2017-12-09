@@ -24,7 +24,9 @@ import Core
 struct TutorialSettings {
     
     private struct Keys {
-        static let hasSeenOnboarding = "com.duckduckgo.tutorials.hasSeenOnboarding"
+        // Set the build number of the last build that didn't force them to appear to force them to appear.
+        static let lastBuildWithoutForcePop = 1
+        static let hasSeenOnboarding = "com.duckduckgo.tutorials.hasSeenOnboarding.\(lastBuildWithoutForcePop)"
     }
     
     private func userDefaults() -> UserDefaults {

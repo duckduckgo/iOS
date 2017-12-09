@@ -40,6 +40,5 @@ extension OnboardingPageViewController where Self: UIViewController {
     
     func resetImage() {
         onboardingImage.transform = CGAffineTransform.identity
-        print("***", #function, onboardingImage.frame, onboardingImage.transform)
     }
 }

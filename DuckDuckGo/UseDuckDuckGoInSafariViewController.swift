@@ -38,10 +38,6 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
         return storyboard.instantiateViewController(withIdentifier: "UseDuckDuckGoInSafari") as! UseDuckDuckGoInSafariViewController
     }
     
-    var onboaringImage: UIImageView {
-        return image
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
@@ -49,16 +45,6 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
 
     private func configureViews() {
         descriptionText.adjustPlainTextLineHeight(Constants.lineHeight)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        adjustTopMarginOnSmallScreens()
-    }
-    
-    private func adjustTopMarginOnSmallScreens() {
-        if interfaceMeasurement.isSmallScreenDevice {
-            topMarginConstraint.constant = 0
-        }
     }
 
     @IBAction func onDonePressed(_ sender: UIButton) {

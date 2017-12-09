@@ -27,6 +27,7 @@
 		85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */; };
 		85047B881F6966ED002A95D8 /* disconnectme.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B871F6966ED002A95D8 /* disconnectme.js */; };
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
+		850819D61FDB68F9006561FD /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819D51FDB68F9006561FD /* Onboarding.xcassets */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
@@ -234,7 +235,7 @@
 		F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */; };
 		F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */; };
 		F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE54571E69DE1000FCF649 /* TutorialSettings.swift */; };
-		F1BE545E1E69FB9900FCF649 /* FeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE545D1E69FB9900FCF649 /* FeaturesViewController.swift */; };
+		F1BE545E1E69FB9900FCF649 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE545D1E69FB9900FCF649 /* TutorialPageViewController.swift */; };
 		F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4A70D1E57725800A6CA1B /* OmniBar.swift */; };
 		F1C4EA751F54F7D200E5AC02 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C4EA741F54F7D200E5AC02 /* OnboardingPageViewController.swift */; };
 		F1C81A741F33873800241DE6 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1C81A731F33873800241DE6 /* Alamofire.framework */; };
@@ -376,6 +377,7 @@
 		85047B851F6887D2002A95D8 /* BlockerListsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListsLoader.swift; sourceTree = "<group>"; };
 		85047B871F6966ED002A95D8 /* disconnectme.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = disconnectme.js; sourceTree = "<group>"; };
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		850819D51FDB68F9006561FD /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
 		85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHeaderController.swift; sourceTree = "<group>"; };
 		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
@@ -593,7 +595,7 @@
 		F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataSource.swift; sourceTree = "<group>"; };
 		F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		F1BE54571E69DE1000FCF649 /* TutorialSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSettings.swift; sourceTree = "<group>"; };
-		F1BE545D1E69FB9900FCF649 /* FeaturesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturesViewController.swift; sourceTree = "<group>"; };
+		F1BE545D1E69FB9900FCF649 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		F1C4A70D1E57725800A6CA1B /* OmniBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBar.swift; sourceTree = "<group>"; };
 		F1C4EA741F54F7D200E5AC02 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		F1C81A731F33873800241DE6 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
@@ -1600,8 +1602,9 @@
 				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
 				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
 				F1C4EA741F54F7D200E5AC02 /* OnboardingPageViewController.swift */,
-				F1BE545D1E69FB9900FCF649 /* FeaturesViewController.swift */,
+				F1BE545D1E69FB9900FCF649 /* TutorialPageViewController.swift */,
 				F114C5601E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift */,
+				850819D51FDB68F9006561FD /* Onboarding.xcassets */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -2013,6 +2016,7 @@
 				8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */,
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
 				F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */,
+				850819D61FDB68F9006561FD /* Onboarding.xcassets in Resources */,
 				8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				85ED11231F50B58C00A7FBCE /* Info.plist in Resources */,
@@ -2179,7 +2183,7 @@
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
-				F1BE545E1E69FB9900FCF649 /* FeaturesViewController.swift in Sources */,
+				F1BE545E1E69FB9900FCF649 /* TutorialPageViewController.swift in Sources */,
 				F1134EC11F40DD9300B73467 /* AppVersionExtension.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,

@@ -116,11 +116,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func startOnboardingFlowIfNotSeenBefore() {
         
-        var settings = TutorialSettings()
-        if !settings.hasSeenOnboarding {
+//        var settings = TutorialSettings()
+//        if !settings.hasSeenOnboarding {
             startOnboardingFlow()
-            settings.hasSeenOnboarding = true
-        }
+//            settings.hasSeenOnboarding = true
+//        }
     }
     
     private func startMigration(application: UIApplication) {
@@ -137,9 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func startOnboardingFlow() {
         guard let main = mainViewController else { return }
-        let onboardingController = OnboardingViewController.loadFromStoryboard()
-        onboardingController.modalTransitionStyle = .flipHorizontal
-        main.present(onboardingController, animated: false, completion: nil)
+        main.performSegue(withIdentifier: "Onboarding", sender: self)
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

@@ -1,5 +1,5 @@
 //
-//  FeaturesViewController.swift
+//  TutorialPageViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@
 import UIKit
 import Core
 
-class FeaturesViewController: UIViewController {
+class TutorialPageViewController: UIViewController {
     
     struct Constants {
         static let lineHeight: CGFloat = 1.375
@@ -29,44 +29,45 @@ class FeaturesViewController: UIViewController {
     
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var image: UIImageView!
+
+    @IBOutlet var requiresLineHeightAdjustment: [UILabel]!
+
     @IBOutlet weak var searchDescription: UILabel!
     @IBOutlet weak var blockingDescription: UILabel!
     
     private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
-    
-    static func loadFromStoryboard() -> FeaturesViewController {
+
+    private var _preferredBackgroundColor: UIColor!
+
+    static func loadFromStoryboard(name: String) -> TutorialPageViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "Features") as! FeaturesViewController
+        return storyboard.instantiateViewController(withIdentifier: name) as! TutorialPageViewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        _preferredBackgroundColor = view.backgroundColor
         configureViews()
     }
-    
+
     private func configureViews() {
-        searchDescription.adjustPlainTextLineHeight(Constants.lineHeight)
-        blockingDescription.adjustPlainTextLineHeight(Constants.lineHeight)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        adjustTopMarginOnSmallScreens()
-    }
-    
-    private func adjustTopMarginOnSmallScreens() {
-        if interfaceMeasurement.isSmallScreenDevice {
-            topMarginConstraint.constant = 0
+        for label in requiresLineHeightAdjustment {
+            label.adjustPlainTextLineHeight(Constants.lineHeight)
         }
     }
+
 }
 
-extension FeaturesViewController: OnboardingPageViewController {
+extension TutorialPageViewController: OnboardingPageViewController {
 
     var onboardingImage: UIImageView {
         return image
     }
     
     var preferredBackgroundColor: UIColor {
-        return UIColor.lightOliveGreen
+        get {
+            return _preferredBackgroundColor
+        }
     }
+
 }

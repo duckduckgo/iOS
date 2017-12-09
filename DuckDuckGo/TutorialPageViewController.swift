@@ -27,15 +27,8 @@ class TutorialPageViewController: UIViewController {
         static let lineHeight: CGFloat = 1.375
     }
     
-    @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var image: UIImageView!
-
     @IBOutlet var requiresLineHeightAdjustment: [UILabel]!
-
-    @IBOutlet weak var searchDescription: UILabel!
-    @IBOutlet weak var blockingDescription: UILabel!
-    
-    private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
 
     private var _preferredBackgroundColor: UIColor!
 
@@ -50,7 +43,14 @@ class TutorialPageViewController: UIViewController {
         configureViews()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        print("***", #function)
+        // TODO set scroll position back to the top
+        // TODO if scroll view is bigger than visible, animate slowly to bottom
+    }
+
     private func configureViews() {
+        guard requiresLineHeightAdjustment != nil else { return }
         for label in requiresLineHeightAdjustment {
             label.adjustPlainTextLineHeight(Constants.lineHeight)
         }

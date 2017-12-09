@@ -23,12 +23,13 @@ import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
-    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
     
     private weak var pageController: UIPageViewController!
     private var transitioningToPage: OnboardingPageViewController?
     fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
+
+    var currentPageIndex = 0
 
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
@@ -37,13 +38,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePageControl()
         configureScrollView()
-    }
-    
-    private func configurePageControl() {
-        pageControl.numberOfPages = dataSource.count
-        pageControl.currentPage = 0
     }
     
     private func configureScrollView() {
@@ -55,6 +50,12 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         if let controller = segue.destination as? UIPageViewController {
             prepare(forPageControllerSegue: controller)
         }
+    }
+
+    @IBAction func onTapContinue() {
+
+        // TODO onTapContinue
+
     }
     
     private func prepare(forPageControllerSegue controller: UIPageViewController) {
@@ -78,13 +79,13 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         } else {
             guard let current = transitioningToPage as? UIViewController else { return }
             guard let index = dataSource.index(of: current) else { return }
+            currentPageIndex = index
             configureDisplay(forPage: index)
         }
         transitioningToPage = nil
     }
     
     private func configureDisplay(forPage index: Int) {
-        pageControl.currentPage = index
         currentPage.resetImage()
         view.backgroundColor = currentPage.preferredBackgroundColor
     }
@@ -127,9 +128,9 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
 
     fileprivate var currentController: UIViewController {
-        return dataSource.controller(forIndex: pageControl.currentPage)
+        return dataSource.controller(forIndex: currentPageIndex)
     }
-    
+
     fileprivate var currentPage: OnboardingPageViewController {
         return currentController as! OnboardingPageViewController
     }

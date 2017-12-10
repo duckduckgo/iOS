@@ -27,7 +27,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     @IBOutlet weak var button: UIButton!
 
     private weak var pageController: UIPageViewController!
-    private var transitioningToPage: OnboardingPageViewController?
+    private var transitioningToPage: OnboardingTutorialPageViewController?
     fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
 
     private var currentPageIndex = 0
@@ -65,10 +65,9 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         } else {
             let currentColor = currentPage.preferredBackgroundColor
             goToPage(index: page)
-            if let controller = dataSource.controller(forIndex: page) as? OnboardingPageViewController {
-                let nextColor = controller.preferredBackgroundColor
-                animateBackgroundColor(from: currentColor, to: nextColor)
-            }
+            guard let controller = dataSource.controller(forIndex: page) as? OnboardingTutorialPageViewController else { return }
+            let nextColor = controller.preferredBackgroundColor
+            animateBackgroundColor(from: currentColor, to: nextColor)
         }
     }
 
@@ -93,7 +92,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        guard let next = pendingViewControllers.first as? OnboardingPageViewController else { return }
+        guard let next = pendingViewControllers.first as? OnboardingTutorialPageViewController else { return }
         transitioningToPage = next
     }
     
@@ -104,7 +103,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
             guard let index = dataSource.index(of: previous) else { return }
             configureDisplay(forPage: index)
         } else {
-            guard let current = transitioningToPage as? UIViewController else { return }
+            guard let current = transitioningToPage else { return }
             guard let index = dataSource.index(of: current) else { return }
             configureDisplay(forPage: index)
         }
@@ -155,8 +154,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         return dataSource.controller(forIndex: currentPageIndex)
     }
 
-    fileprivate var currentPage: OnboardingPageViewController {
-        return currentController as! OnboardingPageViewController
+    fileprivate var currentPage: OnboardingTutorialPageViewController {
+        return currentController as! OnboardingTutorialPageViewController
     }
 }
 

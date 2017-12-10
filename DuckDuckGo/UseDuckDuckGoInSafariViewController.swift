@@ -33,11 +33,6 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
     
     private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
     
-    static func loadFromStoryboard() -> UseDuckDuckGoInSafariViewController {
-        let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "UseDuckDuckGoInSafari") as! UseDuckDuckGoInSafariViewController
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
@@ -50,16 +45,14 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
     @IBAction func onDonePressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
-}
 
-extension UseDuckDuckGoInSafariViewController: OnboardingPageViewController {
-    
     var onboardingImage: UIImageView {
         return image
     }
-    
+
     var preferredBackgroundColor: UIColor {
         return UIColor.softBlue
     }
+
 }
+

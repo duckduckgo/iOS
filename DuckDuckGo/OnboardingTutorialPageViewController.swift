@@ -1,5 +1,5 @@
 //
-//  TutorialPageViewController.swift
+//  OnboardingTutorialPageViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@
 import UIKit
 import Core
 
-class TutorialPageViewController: UIViewController {
+class OnboardingTutorialPageViewController: UIViewController {
     
     struct Constants {
         static let lineHeight: CGFloat = 1.375
@@ -32,9 +32,9 @@ class TutorialPageViewController: UIViewController {
 
     private var _preferredBackgroundColor: UIColor!
 
-    static func loadFromStoryboard(name: String) -> TutorialPageViewController {
+    static func loadFromStoryboard(name: String) -> OnboardingTutorialPageViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: name) as! TutorialPageViewController
+        return storyboard.instantiateViewController(withIdentifier: name) as! OnboardingTutorialPageViewController
     }
     
     override func viewDidLoad() {
@@ -50,18 +50,22 @@ class TutorialPageViewController: UIViewController {
         }
     }
 
-}
-
-extension TutorialPageViewController: OnboardingPageViewController {
-
     var onboardingImage: UIImageView {
         return image
     }
-    
+
     var preferredBackgroundColor: UIColor {
         get {
             return _preferredBackgroundColor
         }
+    }
+
+    func scaleImage(_ scale: CGFloat) {
+        onboardingImage.transform = CGAffineTransform(scaleX: scale, y: scale)
+    }
+
+    func resetImage() {
+        onboardingImage.transform = CGAffineTransform.identity
     }
 
 }

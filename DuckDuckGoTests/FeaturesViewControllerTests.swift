@@ -25,12 +25,12 @@ import XCTest
 
 class TutorialPageViewControllerTests: XCTestCase {
     func testLoadPage2() {
-        let testee = TutorialPageViewController.loadFromStoryboard(name: "Page2")
+        let testee = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page2")
         XCTAssertNotNil(testee)
     }
 
     func testLoadPage1() {
-        let testee = TutorialPageViewController.loadFromStoryboard(name: "Page1")
+        let testee = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page1")
         XCTAssertNotNil(testee)
     }
 }

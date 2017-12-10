@@ -25,12 +25,12 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     @IBOutlet weak var swipeGestureRecogniser: UISwipeGestureRecognizer!
     @IBOutlet weak var button: UIButton!
-    
+
     private weak var pageController: UIPageViewController!
     private var transitioningToPage: OnboardingPageViewController?
     fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
 
-    var currentPageIndex = 0
+    private var currentPageIndex = 0
 
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
@@ -59,15 +59,30 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
 
     @IBAction func onTapContinue() {
-
-        
-
+        let page = currentPageIndex + 1
+        if page >= dataSource.count {
+            finishOnboardingFlow()
+        } else {
+            let currentColor = currentPage.preferredBackgroundColor
+            goToPage(index: page)
+            if let controller = dataSource.controller(forIndex: page) as? OnboardingPageViewController {
+                let nextColor = controller.preferredBackgroundColor
+                animateBackgroundColor(from: currentColor, to: nextColor)
+            }
+        }
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
             return UIDevice.isPhone ? .portrait : .all
         }
+    }
+
+    private func animateBackgroundColor(from: UIColor, to: UIColor) {
+        view.backgroundColor = from
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.backgroundColor = to
+        })
     }
 
     private func prepare(forPageControllerSegue controller: UIPageViewController) {
@@ -91,13 +106,13 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         } else {
             guard let current = transitioningToPage as? UIViewController else { return }
             guard let index = dataSource.index(of: current) else { return }
-            currentPageIndex = index
             configureDisplay(forPage: index)
         }
         transitioningToPage = nil
     }
     
     private func configureDisplay(forPage index: Int) {
+        currentPageIndex = index
         currentPage.resetImage()
         view.backgroundColor = currentPage.preferredBackgroundColor
     }
@@ -114,11 +129,12 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func shrinkImages(withRatio ratio: CGFloat) {
+        guard let transitioningToPage = transitioningToPage else { return }
         let currentImageScale = 1 - (0.3 * (1 - ratio))
         currentPage.scaleImage(currentImageScale)
 
         let nextImageScale = 1 - (0.3 * ratio)
-        transitioningToPage?.scaleImage(nextImageScale)
+        transitioningToPage.scaleImage(nextImageScale)
     }
     
     private func goToPage(index: Int) {

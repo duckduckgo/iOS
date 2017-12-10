@@ -23,10 +23,14 @@ import XCTest
 @testable import Core
 
 
-class FeaturesViewControllerTests: XCTestCase {
+class TutorialPageViewControllerTests: XCTestCase {
+    func testLoadPage2() {
+        let testee = TutorialPageViewController.loadFromStoryboard(name: "Page2")
+        XCTAssertNotNil(testee)
+    }
 
-    func testLoadFromStoryboardIsNonNull() {
-        let testee = FeaturesViewController.loadFromStoryboard()
+    func testLoadPage1() {
+        let testee = TutorialPageViewController.loadFromStoryboard(name: "Page1")
         XCTAssertNotNil(testee)
     }
 }

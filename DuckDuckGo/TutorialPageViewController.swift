@@ -43,12 +43,6 @@ class TutorialPageViewController: UIViewController {
         configureViews()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        print("***", #function)
-        // TODO set scroll position back to the top
-        // TODO if scroll view is bigger than visible, animate slowly to bottom
-    }
-
     private func configureViews() {
         guard requiresLineHeightAdjustment != nil else { return }
         for label in requiresLineHeightAdjustment {

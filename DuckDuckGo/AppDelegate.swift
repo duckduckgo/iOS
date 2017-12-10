@@ -115,12 +115,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func startOnboardingFlowIfNotSeenBefore() {
-        
-//        var settings = TutorialSettings()
-//        if !settings.hasSeenOnboarding {
+        var settings = TutorialSettings()
+        if !settings.hasSeenOnboarding {
             startOnboardingFlow()
-//            settings.hasSeenOnboarding = true
-//        }
+            settings.hasSeenOnboarding = true
+        }
     }
     
     private func startMigration(application: UIApplication) {

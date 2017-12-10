@@ -29,8 +29,8 @@
 		85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B891F69692C002A95D8 /* contentblocker.js */; };
 		850819D61FDB68F9006561FD /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819D51FDB68F9006561FD /* Onboarding.xcassets */; };
 		850819D81FDDBCDC006561FD /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850819D71FDDBCDC006561FD /* UIDeviceExtension.swift */; };
-		850819DB1FDDE176006561FD /* Tutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850819DA1FDDE176006561FD /* Tutorials.storyboard */; };
-		850819DD1FDDE1A8006561FD /* TutorialAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819DC1FDDE1A8006561FD /* TutorialAssets.xcassets */; };
+		850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */; };
+		850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
@@ -380,8 +380,8 @@
 		85047B891F69692C002A95D8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
 		850819D51FDB68F9006561FD /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		850819D71FDDBCDC006561FD /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
-		850819DA1FDDE176006561FD /* Tutorials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tutorials.storyboard; sourceTree = "<group>"; };
-		850819DC1FDDE1A8006561FD /* TutorialAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TutorialAssets.xcassets; sourceTree = "<group>"; };
+		850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsTutorials.storyboard; sourceTree = "<group>"; };
+		850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SettingsTutorialAssets.xcassets; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
 		85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHeaderController.swift; sourceTree = "<group>"; };
 		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
@@ -906,14 +906,14 @@
 			name = UserInterfaceResources;
 			sourceTree = "<group>";
 		};
-		850819D91FDDE127006561FD /* SettingsAbout */ = {
+		850819D91FDDE127006561FD /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				850819DC1FDDE1A8006561FD /* TutorialAssets.xcassets */,
-				850819DA1FDDE176006561FD /* Tutorials.storyboard */,
+				850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */,
+				850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */,
 				F114C5601E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift */,
 			);
-			name = SettingsAbout;
+			name = Settings;
 			sourceTree = "<group>";
 		};
 		85200F9B1FBC59FF001AF290 /* NetworkLeaderboard */ = {
@@ -1147,7 +1147,7 @@
 			isa = PBXGroup;
 			children = (
 				F1BE54481E69DD5F00FCF649 /* Onboarding */,
-				850819D91FDDE127006561FD /* SettingsAbout */,
+				850819D91FDDE127006561FD /* Settings */,
 				F186421A1E94A3F900B2A911 /* Support */,
 			);
 			name = Tutorials;
@@ -2038,14 +2038,14 @@
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */,
-				850819DD1FDDE1A8006561FD /* TutorialAssets.xcassets in Resources */,
+				850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
 				85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
-				850819DB1FDDE176006561FD /* Tutorials.storyboard in Resources */,
+				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

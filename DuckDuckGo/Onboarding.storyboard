@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -23,19 +23,19 @@
                         <viewControllerLayoutGuide type="bottom" id="48G-w4-Xuh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bOv-vd-VY9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-a2-Ooa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Wam-Zg-GbZ" kind="embed" id="HHT-Fz-Hk7"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3WB-mW-Eaq">
-                                <rect key="frame" x="62.5" y="597" width="250" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.24753852739726026" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="82" y="666" width="250" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.24753852740000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lWW-aX-coc"/>
                                     <constraint firstAttribute="width" constant="250" id="xge-k3-6Tu"/>
@@ -64,6 +64,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="button" destination="3WB-mW-Eaq" id="dA8-rr-xZp"/>
                         <outlet property="swipeGestureRecogniser" destination="Jc4-v5-FSQ" id="WiE-sT-3LY"/>
                     </connections>
                 </viewController>
@@ -94,71 +95,47 @@
                         <viewControllerLayoutGuide type="bottom" id="KeP-xV-Aki"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TPY-2e-0Je">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="DVe-wq-M62">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="577"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bpo-Uw-g1W" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="550"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="privacy-onboarding-1" translatesAutoresizingMaskIntoConstraints="NO" id="9Lp-Lu-ykc">
-                                                <rect key="frame" x="63" y="30" width="250" height="300"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="300" id="gs3-yl-h1z"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="YQq-S4-9Iq" userLabel="Title">
-                                                <rect key="frame" x="0.0" y="350" width="375" height="22"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
-                                                </variation>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Privacy Grade to reveal who we caught trying to track you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-fL-h3C" userLabel="Text">
-                                                <rect key="frame" x="24" y="394" width="327" height="32"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                                </variation>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="centerX" secondItem="Bpo-Uw-g1W" secondAttribute="centerX" id="1ir-yq-2pU"/>
-                                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="top" secondItem="Bpo-Uw-g1W" secondAttribute="top" constant="30" id="JYU-wV-GaQ"/>
-                                            <constraint firstItem="jdg-fL-h3C" firstAttribute="width" secondItem="Bpo-Uw-g1W" secondAttribute="width" constant="-48" id="MRr-QU-q1G"/>
-                                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="width" secondItem="Bpo-Uw-g1W" secondAttribute="width" id="QDF-F2-KN1"/>
-                                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="top" secondItem="9Lp-Lu-ykc" secondAttribute="bottom" constant="20" id="Re6-n3-CvN"/>
-                                            <constraint firstAttribute="height" constant="550" id="m7w-v9-2Ro"/>
-                                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="centerX" secondItem="Bpo-Uw-g1W" secondAttribute="centerX" id="thp-Pd-Vph"/>
-                                            <constraint firstItem="jdg-fL-h3C" firstAttribute="centerX" secondItem="Bpo-Uw-g1W" secondAttribute="centerX" id="uY9-4O-0kf"/>
-                                            <constraint firstItem="jdg-fL-h3C" firstAttribute="top" secondItem="YQq-S4-9Iq" secondAttribute="bottom" constant="22" id="v2A-pa-aEj"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="privacy-onboarding-1" translatesAutoresizingMaskIntoConstraints="NO" id="9Lp-Lu-ykc">
+                                <rect key="frame" x="82" y="40" width="250" height="398"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Bpo-Uw-g1W" secondAttribute="trailing" id="BR6-Fb-rOF"/>
-                                    <constraint firstAttribute="bottom" secondItem="Bpo-Uw-g1W" secondAttribute="bottom" id="ckB-k0-AcT"/>
-                                    <constraint firstItem="Bpo-Uw-g1W" firstAttribute="leading" secondItem="DVe-wq-M62" secondAttribute="leading" id="rrf-cB-z8k"/>
-                                    <constraint firstItem="Bpo-Uw-g1W" firstAttribute="top" secondItem="DVe-wq-M62" secondAttribute="top" id="x8r-tq-t6F"/>
+                                    <constraint firstAttribute="height" priority="250" constant="398" id="7kM-Hx-7pc"/>
                                 </constraints>
-                            </scrollView>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="YQq-S4-9Iq" userLabel="Title">
+                                <rect key="frame" x="0.0" y="458" width="414" height="22"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Fire Button to erase your tabs and browsing history. Your data is toast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-fL-h3C" userLabel="Text">
+                                <rect key="frame" x="24" y="500" width="366" height="32"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.3921568627" green="0.68235294120000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Bpo-Uw-g1W" firstAttribute="width" secondItem="TPY-2e-0Je" secondAttribute="width" id="0ad-Zt-POF"/>
-                            <constraint firstItem="DVe-wq-M62" firstAttribute="top" secondItem="TPY-2e-0Je" secondAttribute="top" id="43s-by-0YC"/>
-                            <constraint firstItem="KeP-xV-Aki" firstAttribute="top" secondItem="DVe-wq-M62" secondAttribute="bottom" constant="90" id="7fS-Sy-8J7"/>
-                            <constraint firstAttribute="trailing" secondItem="DVe-wq-M62" secondAttribute="trailing" id="Tqj-cf-pTz"/>
-                            <constraint firstItem="DVe-wq-M62" firstAttribute="leading" secondItem="TPY-2e-0Je" secondAttribute="leading" id="qPD-4Z-Ckl"/>
+                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="top" secondItem="jIu-4u-iue" secondAttribute="bottom" constant="20" id="54X-JL-4eh"/>
+                            <constraint firstItem="jdg-fL-h3C" firstAttribute="width" secondItem="TPY-2e-0Je" secondAttribute="width" constant="-48" id="SLO-nG-Zz8"/>
+                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="Sbg-0t-NHh"/>
+                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="q1T-7v-kLP"/>
+                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="top" secondItem="9Lp-Lu-ykc" secondAttribute="bottom" constant="20" id="qay-jT-6Gn"/>
+                            <constraint firstItem="KeP-xV-Aki" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jdg-fL-h3C" secondAttribute="bottom" constant="90" id="rzm-rJ-tfL"/>
+                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="width" secondItem="TPY-2e-0Je" secondAttribute="width" id="t19-Za-8Ra"/>
+                            <constraint firstItem="jdg-fL-h3C" firstAttribute="top" secondItem="YQq-S4-9Iq" secondAttribute="bottom" constant="20" id="tR2-gv-WDi"/>
+                            <constraint firstItem="jdg-fL-h3C" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="zZ2-G9-ucE"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
                     <connections>
                         <outlet property="image" destination="9Lp-Lu-ykc" id="bFz-rA-Nvr"/>
                         <outletCollection property="requiresLineHeightAdjustment" destination="jdg-fL-h3C" collectionClass="NSMutableArray" id="QOn-tS-WSe"/>
@@ -166,7 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yi6-K0-pdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-658.39999999999998" y="-654.42278860569718"/>
+            <point key="canvasLocation" x="-659.4202898550725" y="-654.61956521739137"/>
         </scene>
         <!--Use Duck Duck Go In Safari View Controller-->
         <scene sceneID="HbI-ac-Saj">
@@ -177,17 +154,17 @@
                         <viewControllerLayoutGuide type="bottom" id="Qow-8K-itx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FLr-N5-dON">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzD-uQ-cZD">
-                                <rect key="frame" x="0.0" y="20" width="375" height="565"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="634"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ji-y4-722">
-                                        <rect key="frame" x="14" y="40" width="347" height="521"/>
+                                        <rect key="frame" x="14" y="40" width="386" height="521"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:aKf-ss-fKw:image" translatesAutoresizingMaskIntoConstraints="NO" id="aKf-ss-fKw">
-                                                <rect key="frame" x="98.5" y="18" width="150" height="150"/>
+                                                <rect key="frame" x="118" y="18" width="150" height="150"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="2Xy-uT-65v">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="210"/>
@@ -198,7 +175,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="O2J-Ql-dcB">
-                                                <rect key="frame" x="24" y="204" width="299" height="28"/>
+                                                <rect key="frame" x="24" y="204" width="338" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="ShB-Oe-fmG"/>
                                                 </constraints>
@@ -210,7 +187,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other search engines track your searches even when you’re in private browsing mode. We don’t track you — period." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-Kn-9Ho">
-                                                <rect key="frame" x="24" y="240" width="299" height="48"/>
+                                                <rect key="frame" x="24" y="240" width="338" height="48"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -219,7 +196,7 @@
                                                 </variation>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="sgY-kD-zMD">
-                                                <rect key="frame" x="53.5" y="312" width="240" height="47"/>
+                                                <rect key="frame" x="73" y="312" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:bGA-t9-pq9:image" translatesAutoresizingMaskIntoConstraints="NO" id="bGA-t9-pq9">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -229,7 +206,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Settings App" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVN-D0-jEi">
-                                                        <rect key="frame" x="59" y="15.5" width="181" height="16"/>
+                                                        <rect key="frame" x="59" y="15.666666666666686" width="181" height="16"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -244,7 +221,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hiI-at-QuL">
-                                                <rect key="frame" x="53.5" y="375" width="240" height="47"/>
+                                                <rect key="frame" x="73" y="375" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:0hg-Tu-0nt:image" translatesAutoresizingMaskIntoConstraints="NO" id="0hg-Tu-0nt">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -268,7 +245,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="EGv-r7-eiF">
-                                                <rect key="frame" x="53.5" y="438" width="240" height="47"/>
+                                                <rect key="frame" x="73" y="438" width="240" height="47"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:MvK-Ki-UGn:image" translatesAutoresizingMaskIntoConstraints="NO" id="MvK-Ki-UGn">
                                                         <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
@@ -339,7 +316,7 @@
                                 </variation>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngj-u5-HYd">
-                                <rect key="frame" x="14" y="587" width="347" height="40"/>
+                                <rect key="frame" x="14" y="656" width="386" height="40"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="480" id="DO6-TE-3wS"/>
@@ -385,87 +362,63 @@
             <point key="canvasLocation" x="994" y="-654"/>
         </scene>
         <!--Tutorial Page View Controller-->
-        <scene sceneID="LOh-b4-GZ2">
+        <scene sceneID="yFe-Fn-5vf">
             <objects>
-                <viewController storyboardIdentifier="Page2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uhu-uZ-kWr" customClass="TutorialPageViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Page2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y5C-Pb-uJa" customClass="TutorialPageViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MoI-ko-br3"/>
-                        <viewControllerLayoutGuide type="bottom" id="21P-qP-GhY"/>
+                        <viewControllerLayoutGuide type="top" id="bRK-IO-JRw"/>
+                        <viewControllerLayoutGuide type="bottom" id="y7b-Zg-ZVY"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ct4-Ig-rMh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <view key="view" contentMode="scaleToFill" id="bln-lE-dbY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="k0I-0x-LhA">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="577"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ina-ar-g98" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="550"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="privacy-onboarding-2" translatesAutoresizingMaskIntoConstraints="NO" id="otF-kM-maB">
-                                                <rect key="frame" x="63" y="30" width="250" height="300"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="300" id="JiC-B0-YFI"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="jXH-qe-qSi" userLabel="Title">
-                                                <rect key="frame" x="0.0" y="350" width="375" height="22"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
-                                                </variation>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Privacy Grade to reveal who we caught trying to track you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNE-dU-r5z" userLabel="Text">
-                                                <rect key="frame" x="24" y="394" width="327" height="32"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                                </variation>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="rNE-dU-r5z" firstAttribute="top" secondItem="jXH-qe-qSi" secondAttribute="bottom" constant="22" id="1Td-0L-iwE"/>
-                                            <constraint firstItem="otF-kM-maB" firstAttribute="centerX" secondItem="ina-ar-g98" secondAttribute="centerX" id="2rp-rK-Qkn"/>
-                                            <constraint firstItem="rNE-dU-r5z" firstAttribute="width" secondItem="ina-ar-g98" secondAttribute="width" constant="-48" id="646-DQ-VOA"/>
-                                            <constraint firstItem="jXH-qe-qSi" firstAttribute="top" secondItem="otF-kM-maB" secondAttribute="bottom" constant="20" id="83O-em-q6F"/>
-                                            <constraint firstItem="jXH-qe-qSi" firstAttribute="width" secondItem="ina-ar-g98" secondAttribute="width" id="B57-5N-Mcm"/>
-                                            <constraint firstItem="otF-kM-maB" firstAttribute="top" secondItem="ina-ar-g98" secondAttribute="top" constant="30" id="OXq-CZ-Xup"/>
-                                            <constraint firstAttribute="height" constant="550" id="T9Q-e7-clW"/>
-                                            <constraint firstItem="jXH-qe-qSi" firstAttribute="centerX" secondItem="ina-ar-g98" secondAttribute="centerX" id="YJV-Bv-Jeb"/>
-                                            <constraint firstItem="rNE-dU-r5z" firstAttribute="centerX" secondItem="ina-ar-g98" secondAttribute="centerX" id="cGv-45-A6x"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="privacy-onboarding-2" translatesAutoresizingMaskIntoConstraints="NO" id="bgK-zO-76i">
+                                <rect key="frame" x="82" y="40" width="250" height="398"/>
                                 <constraints>
-                                    <constraint firstItem="ina-ar-g98" firstAttribute="top" secondItem="k0I-0x-LhA" secondAttribute="top" id="6ME-xl-4S0"/>
-                                    <constraint firstAttribute="bottom" secondItem="ina-ar-g98" secondAttribute="bottom" id="H7p-AQ-ADY"/>
-                                    <constraint firstItem="ina-ar-g98" firstAttribute="leading" secondItem="k0I-0x-LhA" secondAttribute="leading" id="dlK-Xn-dPJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="ina-ar-g98" secondAttribute="trailing" id="rWB-bQ-fPO"/>
+                                    <constraint firstAttribute="height" priority="250" constant="398" id="m2s-6p-MMR"/>
                                 </constraints>
-                            </scrollView>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="eVS-Fb-3NW" userLabel="Title">
+                                <rect key="frame" x="0.0" y="458" width="414" height="22"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Privacy Grade to reveal who we caught trying to track you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qay-ez-RGb" userLabel="Text">
+                                <rect key="frame" x="24" y="500" width="366" height="32"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="21P-qP-GhY" firstAttribute="top" secondItem="k0I-0x-LhA" secondAttribute="bottom" constant="90" id="0JD-06-Zie"/>
-                            <constraint firstAttribute="trailing" secondItem="k0I-0x-LhA" secondAttribute="trailing" id="8fP-BP-U0B"/>
-                            <constraint firstItem="k0I-0x-LhA" firstAttribute="top" secondItem="Ct4-Ig-rMh" secondAttribute="top" id="Phy-sW-YIE"/>
-                            <constraint firstItem="k0I-0x-LhA" firstAttribute="leading" secondItem="Ct4-Ig-rMh" secondAttribute="leading" id="gpQ-G0-am0"/>
-                            <constraint firstItem="ina-ar-g98" firstAttribute="width" secondItem="Ct4-Ig-rMh" secondAttribute="width" id="xwi-1y-Fsb"/>
+                            <constraint firstItem="bgK-zO-76i" firstAttribute="top" secondItem="bRK-IO-JRw" secondAttribute="bottom" constant="20" id="8aG-WF-KP6"/>
+                            <constraint firstItem="Qay-ez-RGb" firstAttribute="top" secondItem="eVS-Fb-3NW" secondAttribute="bottom" constant="20" id="HTs-rh-fSN"/>
+                            <constraint firstItem="y7b-Zg-ZVY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Qay-ez-RGb" secondAttribute="bottom" constant="90" id="HYM-TJ-1lh"/>
+                            <constraint firstItem="Qay-ez-RGb" firstAttribute="width" secondItem="bln-lE-dbY" secondAttribute="width" constant="-48" id="NAP-Tq-m2s"/>
+                            <constraint firstItem="eVS-Fb-3NW" firstAttribute="top" secondItem="bgK-zO-76i" secondAttribute="bottom" constant="20" id="NxE-rh-gte"/>
+                            <constraint firstItem="eVS-Fb-3NW" firstAttribute="width" secondItem="bln-lE-dbY" secondAttribute="width" id="gvH-hS-qTH"/>
+                            <constraint firstItem="bgK-zO-76i" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="mZ7-zW-xmi"/>
+                            <constraint firstItem="eVS-Fb-3NW" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="oml-Xc-YOn"/>
+                            <constraint firstItem="Qay-ez-RGb" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="uMs-lb-PRj"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
                     <connections>
-                        <outlet property="image" destination="otF-kM-maB" id="N8C-PA-qfp"/>
-                        <outletCollection property="requiresLineHeightAdjustment" destination="rNE-dU-r5z" collectionClass="NSMutableArray" id="PhI-Yj-Qlp"/>
+                        <outlet property="image" destination="bgK-zO-76i" id="vaL-Di-svN"/>
+                        <outletCollection property="requiresLineHeightAdjustment" destination="Qay-ez-RGb" collectionClass="NSMutableArray" id="KnG-k8-Sc5"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hD3-h0-gRj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hGH-n5-f82" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="134" y="-654"/>
+            <point key="canvasLocation" x="62" y="-655"/>
         </scene>
     </scenes>
     <resources>

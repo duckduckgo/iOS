@@ -23,7 +23,8 @@ import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
-    @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
+    @IBOutlet weak var swipeGestureRecogniser: UISwipeGestureRecognizer!
+    @IBOutlet weak var button: UIButton!
     
     private weak var pageController: UIPageViewController!
     private var transitioningToPage: OnboardingPageViewController?
@@ -39,8 +40,13 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureScrollView()
+        configureButton()
     }
-    
+
+    private func configureButton() {
+        button.layer.cornerRadius = 5
+    }
+
     private func configureScrollView() {
         let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
         scrollView?.delegate = self
@@ -54,10 +60,16 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
 
     @IBAction func onTapContinue() {
 
-        // TODO onTapContinue
+        
 
     }
-    
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return UIDevice.isPhone ? .portrait : .all
+        }
+    }
+
     private func prepare(forPageControllerSegue controller: UIPageViewController) {
         pageController = controller
         controller.dataSource = dataSource
@@ -113,10 +125,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         let controllers = [dataSource.controller(forIndex: index)]
         pageController.setViewControllers(controllers, direction: .forward, animated: true, completion: nil)
         configureDisplay(forPage: index)
-    }
-    
-    @IBAction func onPageSelected(_ sender: UIPageControl) {
-        goToPage(index: sender.currentPage)
     }
     
     @IBAction func onLastPageSwiped(_ sender: Any) {

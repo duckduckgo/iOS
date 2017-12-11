@@ -106,14 +106,6 @@ public struct TermsOfService {
 
         case poor, mixed, good, unknown
 
-        func downgrade() -> PrivacyPractices {
-            switch self {
-            case .good: return .mixed
-            case .mixed: return .poor
-            default: return .poor
-            }
-        }
-
     }
 
 }

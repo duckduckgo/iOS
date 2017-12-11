@@ -305,13 +305,13 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw7-2D-U9S">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="560"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="660"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="87.5" y="32" width="201" height="160"/>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We don't track you" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
                                                 <rect key="frame" x="47.5" y="224" width="280" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="8Ro-lJ-9ja">
@@ -326,15 +326,17 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="47.5" y="276" width="280" height="112"/>
+                                                <rect key="frame" x="47.5" y="276" width="280" height="224"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
                                                     </constraint>
                                                 </constraints>
-                                                <string key="text">What you search for is your own business and we’d like to keep it that way. That’s why we don’t collect any personal information and therefore, have none to share.
+                                                <string key="text">At DuckDuckGo, we’re setting the new standard of trust online.
 
-See our privacy policy online.</string>
+DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
+
+After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -343,14 +345,14 @@ See our privacy policy online.</string>
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="47.5" y="396" width="280" height="28"/>
+                                                <rect key="frame" x="47.5" y="508" width="280" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
                                                     </constraint>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                <state key="normal" title="https://duckduckgo.com/privacy">
+                                                <state key="normal" title="More at duckduckgo.com/about">
                                                     <color key="titleColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <variation key="heightClass=regular-widthClass=regular">
@@ -369,7 +371,7 @@ See our privacy policy online.</string>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="BtH-UX-7up"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="TuI-fs-lpV"/>
                                             <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="WiW-aH-os0"/>
-                                            <constraint firstAttribute="height" constant="560" id="aBC-xi-cEy"/>
+                                            <constraint firstAttribute="height" constant="660" id="aBC-xi-cEy"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="eaN-Or-GFY"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="g71-aw-kOx"/>
                                         </constraints>

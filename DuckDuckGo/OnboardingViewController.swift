@@ -64,10 +64,14 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
             finishOnboardingFlow()
         } else {
             let currentColor = currentPage.preferredBackgroundColor
+
             goToPage(index: page)
+
             guard let controller = dataSource.controller(forIndex: page) as? OnboardingTutorialPageViewController else { return }
-            let nextColor = controller.preferredBackgroundColor
-            animateBackgroundColor(from: currentColor, to: nextColor)
+            guard let nextColor = controller.preferredBackgroundColor else { return }
+            if let currentColor = currentColor {
+                animateBackgroundColor(from: currentColor, to: nextColor)
+            }
         }
     }
 
@@ -117,7 +121,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     private func transitionBackgroundColor(withRatio ratio: CGFloat) {
         guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
-        let currentColor = currentPage.preferredBackgroundColor
+        guard let currentColor = currentPage.preferredBackgroundColor else { return }
         view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
     }
     

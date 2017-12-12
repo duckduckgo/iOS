@@ -30,7 +30,7 @@ class OnboardingTutorialPageViewController: UIViewController {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet var requiresLineHeightAdjustment: [UILabel]!
 
-    private var _preferredBackgroundColor: UIColor!
+    private(set) var preferredBackgroundColor: UIColor?
 
     static func loadFromStoryboard(name: String) -> OnboardingTutorialPageViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
@@ -39,7 +39,7 @@ class OnboardingTutorialPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _preferredBackgroundColor = view.backgroundColor
+        preferredBackgroundColor = view.backgroundColor
         configureViews()
     }
 
@@ -52,12 +52,6 @@ class OnboardingTutorialPageViewController: UIViewController {
 
     var onboardingImage: UIImageView {
         return image
-    }
-
-    var preferredBackgroundColor: UIColor {
-        get {
-            return _preferredBackgroundColor
-        }
     }
 
     func scaleImage(_ scale: CGFloat) {

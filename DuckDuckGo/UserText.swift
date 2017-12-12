@@ -70,10 +70,18 @@ public struct UserText {
     public static let privacyProtectionEncryptionGoodConnection = NSLocalizedString("privacy.protection.encryption.good.connection", comment: "Encrypted conection")
     public static let privacyProtectionEncryptionBadConnection = NSLocalizedString("privacy.protection.encryption.bad.connection", comment: "Unencrypted conection")
     public static let privacyProtectionEncryptionMixedConnection = NSLocalizedString("privacy.protection.encryption.mixed.connection", comment: "Mixed encryption conection")
+
+    // Plurals
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
     public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
+
+    // Singular
+    public static let privacyProtectionTrackerBlocked = NSLocalizedString("privacy.protection.tracker.blocked", comment: "Tracker blocked")
+    public static let privacyProtectionTrackerFound = NSLocalizedString("privacy.protection.tracker.found", comment: "Tracker found")
+    public static let privacyProtectionMajorTrackerBlocked = NSLocalizedString("privacy.protection.major.tracker.blocked", comment: "Major tracker blocked")
+    public static let privacyProtectionMajorTrackerFound = NSLocalizedString("privacy.protection.major.tracker.found", comment: "Major tracker found")
 
     public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", comment: "Unknown Privacy Practices")
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", comment: "Good Privacy Practices")

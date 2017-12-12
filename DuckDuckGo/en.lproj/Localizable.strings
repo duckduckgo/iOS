@@ -68,10 +68,19 @@
 "privacy.protection.encryption.good.connection" = "Encrypted Connection";
 "privacy.protection.encryption.bad.connection" = "Unencrypted Connection";
 "privacy.protection.encryption.mixed.connection" = "Mixed Encryption";
+
+// Plurals
 "privacy.protection.trackers.blocked" = "%d Tracker Networks Blocked";
 "privacy.protection.trackers.found" = "%d Tracker Networks Found";
 "privacy.protection.major.trackers.blocked" = "%d Major Tracker Networks Blocked";
 "privacy.protection.major.trackers.found" = "%d Major Tracker Networks Found";
+
+// Singular
+"privacy.protection.tracker.blocked" = "1 Tracker Network Blocked";
+"privacy.protection.tracker.found" = "1 Tracker Network Found";
+"privacy.protection.major.tracker.blocked" = "1 Major Tracker Network Blocked";
+"privacy.protection.major.tracker.found" = "1 Major Tracker Network Found";
+
 "privacy.protection.tos.unknown" = "Unknown Privacy Practices";
 "privacy.protection.tos.good" = "Good Privacy Practices";
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";

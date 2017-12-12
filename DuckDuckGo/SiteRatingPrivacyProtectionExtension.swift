@@ -61,7 +61,7 @@ extension SiteRating {
     }
 
     func majorNetworksBlockedText() -> String {
-        if 1 == uniqueMajorTrackerNetworksBlocked {
+        if uniqueMajorTrackerNetworksBlocked == 1 {
             return UserText.privacyProtectionMajorTrackerBlocked
         } else {
             return String(format: UserText.privacyProtectionMajorTrackersBlocked, uniqueMajorTrackerNetworksBlocked)
@@ -69,7 +69,7 @@ extension SiteRating {
     }
 
     func majorNetworksDetectedText() -> String {
-        if 1 == uniqueMajorTrackerNetworksDetected {
+        if uniqueMajorTrackerNetworksDetected == 1 {
             return UserText.privacyProtectionMajorTrackerFound
         } else {
             return String(format: UserText.privacyProtectionMajorTrackersFound, uniqueMajorTrackerNetworksDetected)
@@ -85,7 +85,7 @@ extension SiteRating {
     }
 
     func networksBlockedText() -> String {
-        if 1 == uniqueTrackerNetworksBlocked {
+        if uniqueTrackerNetworksBlocked == 1 {
             return  UserText.privacyProtectionTrackerBlocked
         } else {
             return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackerNetworksBlocked)
@@ -93,7 +93,7 @@ extension SiteRating {
     }
 
     func networksDetectedText() -> String {
-        if 1 == uniqueTrackerNetworksDetected {
+        if uniqueTrackerNetworksDetected == 1 {
             return UserText.privacyProtectionTrackerFound
         } else {
             return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackerNetworksDetected)

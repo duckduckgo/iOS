@@ -24,6 +24,11 @@ var duckduckgoContentBlocking = function() {
 
 	// private
 	function handleDetection(event, detectionMethod) {
+		if (isAssociatedFirstPartyDomain(event)) {
+			// Completely ignore
+			return
+		}
+
 		var blocked = didBlock(event)
         duckduckgoMessaging.trackerDetected({
         	protectionId: duckduckgoBlockerData.protectionId,
@@ -91,10 +96,6 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (currentDomainIsWhitelisted()) {
-			return false
-		}
-
-		if (isAssociatedFirstPartyDomain(event)) {
 			return false
 		}
 

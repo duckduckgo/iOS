@@ -32,18 +32,44 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
     }
 
-    func testMultipleNetworkBlockedReturnsPluralText() {
+    func testMultipleMajorNetworksBlockedReturnsPluralText() {
+        let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+        rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major1", category: nil, blocked: true))
+        rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "major2", category: nil, blocked: true))
+        XCTAssertEqual(rating.majorNetworksBlockedText(), String(format: DuckDuckGo.UserText.privacyProtectionMajorTrackersBlocked, 2))
+    }
+
+    func testMultipleMajorNetworksDetectedReturnsPluralText() {
+        let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+        rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major1", category: nil, blocked: false))
+        rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "major2", category: nil, blocked: false))
+        XCTAssertEqual(rating.majorNetworksDetectedText(), String(format: DuckDuckGo.UserText.privacyProtectionMajorTrackersFound, 2))
+    }
+
+    func testMultipleNetworksBlockedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "minor1", category: nil, blocked: true))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "minor2", category: nil, blocked: true))
         XCTAssertEqual(rating.networksBlockedText(), String(format: DuckDuckGo.UserText.privacyProtectionTrackersBlocked, 2))
     }
 
-    func testMultipleNetworkDetectedReturnsPluralText() {
+    func testMultipleNetworksDetectedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "minor1", category: nil, blocked: false))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "minor2", category: nil, blocked: false))
         XCTAssertEqual(rating.networksDetectedText(), String(format: DuckDuckGo.UserText.privacyProtectionTrackersFound, 2))
+    }
+
+    func testSingleMajorNetworkBlockedReturnsSinglularText() {
+        let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+        rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major", category: nil, blocked: true))
+        XCTAssertEqual(rating.majorNetworksBlockedText(), DuckDuckGo.UserText.privacyProtectionMajorTrackerBlocked)
+    }
+
+    func testSingleMajorNetworkDetectedReturnsSinglularText() {
+        let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+        rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major", category: nil, blocked: false))
+        XCTAssertEqual(rating.majorNetworksDetectedText(), DuckDuckGo.UserText.privacyProtectionMajorTrackerFound)
     }
 
     func testSingleNetworkBlockedReturnsSinglularText() {
@@ -59,3 +85,20 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
     }
 
 }
+
+fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+    func network(forName name: String) -> MajorTrackerNetwork? {
+        return MajorTrackerNetwork(name: name, domain: name, perentageOfPages: 50)
+    }
+
+    func network(forDomain domain: String) -> MajorTrackerNetwork? {
+        return nil
+    }
+}
+
+fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
+
+    var terms = [String : TermsOfService]()
+
+}
+

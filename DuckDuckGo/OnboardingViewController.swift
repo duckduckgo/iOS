@@ -71,12 +71,6 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         }
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        get {
-            return UIDevice.isPhone ? .portrait : .all
-        }
-    }
-
     private func animateBackgroundColor(from: UIColor, to: UIColor) {
         view.backgroundColor = from
         UIView.animate(withDuration: 0.5, animations: {
@@ -147,7 +141,10 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func finishOnboardingFlow() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            var settings = TutorialSettings()
+            settings.hasSeenOnboarding = true
+        }
     }
 
     fileprivate var currentController: UIViewController {

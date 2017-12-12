@@ -61,19 +61,11 @@ extension SiteRating {
     }
 
     func majorNetworksBlockedText() -> String {
-        if uniqueMajorTrackerNetworksBlocked == 1 {
-            return UserText.privacyProtectionMajorTrackerBlocked
-        } else {
-            return String(format: UserText.privacyProtectionMajorTrackersBlocked, uniqueMajorTrackerNetworksBlocked)
-        }
+        return String(format: UserText.privacyProtectionMajorTrackersBlocked, uniqueMajorTrackerNetworksBlocked)
     }
 
     func majorNetworksDetectedText() -> String {
-        if uniqueMajorTrackerNetworksDetected == 1 {
-            return UserText.privacyProtectionMajorTrackerFound
-        } else {
-            return String(format: UserText.privacyProtectionMajorTrackersFound, uniqueMajorTrackerNetworksDetected)
-        }
+        return String(format: UserText.privacyProtectionMajorTrackersFound, uniqueMajorTrackerNetworksDetected)
     }
 
     func networksText(contentBlocker: ContentBlockerConfigurationStore) -> String {
@@ -85,19 +77,11 @@ extension SiteRating {
     }
 
     func networksBlockedText() -> String {
-        if uniqueTrackerNetworksBlocked == 1 {
-            return  UserText.privacyProtectionTrackerBlocked
-        } else {
-            return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackerNetworksBlocked)
-        }
+        return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackerNetworksBlocked)
     }
 
     func networksDetectedText() -> String {
-        if uniqueTrackerNetworksDetected == 1 {
-            return UserText.privacyProtectionTrackerFound
-        } else {
-            return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackerNetworksDetected)
-        }
+        return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackerNetworksDetected)
     }
 
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {

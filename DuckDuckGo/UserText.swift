@@ -71,7 +71,6 @@ public struct UserText {
     public static let privacyProtectionEncryptionBadConnection = NSLocalizedString("privacy.protection.encryption.bad.connection", comment: "Unencrypted conection")
     public static let privacyProtectionEncryptionMixedConnection = NSLocalizedString("privacy.protection.encryption.mixed.connection", comment: "Mixed encryption conection")
 
-    // Plurals
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")

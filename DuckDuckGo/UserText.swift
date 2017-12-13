@@ -70,12 +70,11 @@ public struct UserText {
     public static let privacyProtectionEncryptionGoodConnection = NSLocalizedString("privacy.protection.encryption.good.connection", comment: "Encrypted conection")
     public static let privacyProtectionEncryptionBadConnection = NSLocalizedString("privacy.protection.encryption.bad.connection", comment: "Unencrypted conection")
     public static let privacyProtectionEncryptionMixedConnection = NSLocalizedString("privacy.protection.encryption.mixed.connection", comment: "Mixed encryption conection")
+
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
     public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
-    public static let privacyProtectionIsMajorTrackerNetwork = NSLocalizedString("privacy.protection.is.major.network", comment: "Is major network")
-    public static let privacyProtectionIsNotMajorTrackerNetwork = NSLocalizedString("privacy.protection.is.not.major.network", comment: "Is not major network")
 
     public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", comment: "Unknown Privacy Practices")
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", comment: "Good Privacy Practices")

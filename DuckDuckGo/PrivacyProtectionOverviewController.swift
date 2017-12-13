@@ -22,7 +22,7 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
 
-    let privacyPracticesImages: [SiteRating.PrivacyPractices: UIImage] = [
+    let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Icon Privacy Bad On"),
         .mixed: #imageLiteral(resourceName: "PP Icon Privacy Good Off"),

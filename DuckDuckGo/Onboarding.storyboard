@@ -159,60 +159,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage2" translatesAutoresizingMaskIntoConstraints="NO" id="bgK-zO-76i">
-                                <rect key="frame" x="387" y="245" width="250" height="398"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-MF-RL0">
+                                <rect key="frame" x="0.0" y="283" width="1024" height="800"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="Wsv-ap-wrF" userLabel="Title">
+                                        <rect key="frame" x="0.0" y="448" width="1024" height="27"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Fire Button to erase  your tabs and browsing history.   Your data is toast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEP-wM-MN0" userLabel="Text">
+                                        <rect key="frame" x="370.5" y="505" width="284" height="80"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                        </variation>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Yy-O0U">
+                                        <rect key="frame" x="387.5" y="20" width="250" height="398"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="250" constant="398" id="YHg-VE-O9H"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="250" constant="398" id="m2s-6p-MMR"/>
+                                    <constraint firstItem="Wsv-ap-wrF" firstAttribute="centerX" secondItem="rx3-MF-RL0" secondAttribute="centerX" id="2vx-Cs-Mj5"/>
+                                    <constraint firstItem="YEP-wM-MN0" firstAttribute="top" secondItem="Wsv-ap-wrF" secondAttribute="bottom" constant="20" id="J3Q-EG-3EI">
+                                        <variation key="widthClass=regular" constant="30"/>
+                                    </constraint>
+                                    <constraint firstItem="yHh-Yy-O0U" firstAttribute="centerX" secondItem="rx3-MF-RL0" secondAttribute="centerX" id="Og4-LW-eDw"/>
+                                    <constraint firstItem="YEP-wM-MN0" firstAttribute="centerX" secondItem="rx3-MF-RL0" secondAttribute="centerX" id="aeH-A3-kG4"/>
+                                    <constraint firstItem="Wsv-ap-wrF" firstAttribute="top" secondItem="yHh-Yy-O0U" secondAttribute="bottom" constant="20" id="dCR-ta-NgY">
+                                        <variation key="widthClass=regular" constant="30"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YEP-wM-MN0" secondAttribute="bottom" constant="90" id="drc-gy-Sg1"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wsv-ap-wrF" secondAttribute="trailing" id="f0t-LB-BJu"/>
+                                    <constraint firstItem="yHh-Yy-O0U" firstAttribute="top" secondItem="rx3-MF-RL0" secondAttribute="top" constant="20" id="oE0-c6-UTa"/>
+                                    <constraint firstItem="Wsv-ap-wrF" firstAttribute="leading" secondItem="rx3-MF-RL0" secondAttribute="leading" id="qBV-aj-40p"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="800" id="x6l-dV-YEb"/>
                                 </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="eVS-Fb-3NW" userLabel="Title">
-                                <rect key="frame" x="0.0" y="663" width="1024" height="27"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qay-ez-RGb" userLabel="Text">
-                                <rect key="frame" x="24" y="710" width="976" height="40"/>
-                                <string key="text">Tap the Privacy Grade to reveal
-who we caught trying to track you.</string>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                </variation>
-                            </label>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="bgK-zO-76i" firstAttribute="top" secondItem="bRK-IO-JRw" secondAttribute="bottom" constant="20" id="8aG-WF-KP6">
-                                <variation key="heightClass=regular-widthClass=regular" constant="225"/>
-                            </constraint>
-                            <constraint firstItem="Qay-ez-RGb" firstAttribute="top" secondItem="eVS-Fb-3NW" secondAttribute="bottom" constant="20" id="HTs-rh-fSN"/>
-                            <constraint firstItem="y7b-Zg-ZVY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Qay-ez-RGb" secondAttribute="bottom" constant="90" id="HYM-TJ-1lh"/>
-                            <constraint firstItem="Qay-ez-RGb" firstAttribute="width" secondItem="bln-lE-dbY" secondAttribute="width" constant="-48" id="NAP-Tq-m2s"/>
-                            <constraint firstItem="eVS-Fb-3NW" firstAttribute="top" secondItem="bgK-zO-76i" secondAttribute="bottom" constant="20" id="NxE-rh-gte"/>
-                            <constraint firstItem="eVS-Fb-3NW" firstAttribute="width" secondItem="bln-lE-dbY" secondAttribute="width" id="gvH-hS-qTH"/>
-                            <constraint firstItem="bgK-zO-76i" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="mZ7-zW-xmi"/>
-                            <constraint firstItem="eVS-Fb-3NW" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="oml-Xc-YOn"/>
-                            <constraint firstItem="Qay-ez-RGb" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="uMs-lb-PRj"/>
+                            <constraint firstAttribute="trailing" secondItem="rx3-MF-RL0" secondAttribute="trailing" id="AEC-r9-N2x"/>
+                            <constraint firstItem="rx3-MF-RL0" firstAttribute="centerY" secondItem="bln-lE-dbY" secondAttribute="centerY" id="JOM-k7-ogo"/>
+                            <constraint firstItem="rx3-MF-RL0" firstAttribute="leading" secondItem="bln-lE-dbY" secondAttribute="leading" id="LIe-JT-tvg"/>
+                            <constraint firstItem="rx3-MF-RL0" firstAttribute="centerX" secondItem="bln-lE-dbY" secondAttribute="centerX" id="ksH-rh-2eR"/>
+                            <constraint firstItem="y7b-Zg-ZVY" firstAttribute="top" secondItem="rx3-MF-RL0" secondAttribute="bottom" priority="900" id="l0P-YD-xus"/>
+                            <constraint firstItem="rx3-MF-RL0" firstAttribute="top" secondItem="bRK-IO-JRw" secondAttribute="bottom" priority="900" id="v1d-qJ-tbL"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="image" destination="bgK-zO-76i" id="vaL-Di-svN"/>
-                        <outletCollection property="requiresLineHeightAdjustment" destination="Qay-ez-RGb" collectionClass="NSMutableArray" id="KnG-k8-Sc5"/>
+                        <outlet property="image" destination="yHh-Yy-O0U" id="bll-Ib-Pvo"/>
+                        <outletCollection property="requiresLineHeightAdjustment" destination="YEP-wM-MN0" collectionClass="NSMutableArray" id="4Ft-G7-Ud1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGH-n5-f82" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="62" y="-655"/>
+            <point key="canvasLocation" x="61.875" y="-655.9859154929577"/>
         </scene>
     </scenes>
     <resources>
         <image name="OnboardingPage1" width="250" height="398"/>
-        <image name="OnboardingPage2" width="250" height="398"/>
     </resources>
 </document>

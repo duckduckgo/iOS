@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
-    <device id="retina5_5" orientation="portrait">
+    <device id="ipad12_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -23,18 +23,18 @@
                         <viewControllerLayoutGuide type="bottom" id="48G-w4-Xuh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bOv-vd-VY9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-a2-Ooa">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Wam-Zg-GbZ" kind="embed" id="HHT-Fz-Hk7"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3WB-mW-Eaq">
-                                <rect key="frame" x="82" y="666" width="250" height="50"/>
+                                <rect key="frame" x="387" y="1296" width="250" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.24753852740000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lWW-aX-coc"/>
@@ -95,17 +95,17 @@
                         <viewControllerLayoutGuide type="bottom" id="KeP-xV-Aki"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TPY-2e-0Je">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="9Lp-Lu-ykc">
-                                <rect key="frame" x="82" y="40" width="250" height="398"/>
+                                <rect key="frame" x="387" y="245" width="250" height="398"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="398" id="7kM-Hx-7pc"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="YQq-S4-9Iq" userLabel="Title">
-                                <rect key="frame" x="0.0" y="458" width="414" height="22"/>
+                                <rect key="frame" x="0.0" y="663" width="1024" height="27"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -114,7 +114,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Fire Button to erase  your tabs and browsing history.   Your data is toast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-fL-h3C" userLabel="Text">
-                                <rect key="frame" x="24" y="500" width="366" height="64"/>
+                                <rect key="frame" x="24" y="710" width="976" height="80"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -125,7 +125,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.3921568627" green="0.68235294120000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="top" secondItem="jIu-4u-iue" secondAttribute="bottom" constant="20" id="54X-JL-4eh"/>
+                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="top" secondItem="jIu-4u-iue" secondAttribute="bottom" constant="20" id="54X-JL-4eh">
+                                <variation key="heightClass=regular-widthClass=regular" constant="225"/>
+                            </constraint>
                             <constraint firstItem="jdg-fL-h3C" firstAttribute="width" secondItem="TPY-2e-0Je" secondAttribute="width" constant="-48" id="SLO-nG-Zz8"/>
                             <constraint firstItem="YQq-S4-9Iq" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="Sbg-0t-NHh"/>
                             <constraint firstItem="9Lp-Lu-ykc" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="q1T-7v-kLP"/>
@@ -154,17 +156,17 @@
                         <viewControllerLayoutGuide type="bottom" id="y7b-Zg-ZVY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bln-lE-dbY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage2" translatesAutoresizingMaskIntoConstraints="NO" id="bgK-zO-76i">
-                                <rect key="frame" x="82" y="40" width="250" height="398"/>
+                                <rect key="frame" x="387" y="245" width="250" height="398"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="398" id="m2s-6p-MMR"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="eVS-Fb-3NW" userLabel="Title">
-                                <rect key="frame" x="0.0" y="458" width="414" height="22"/>
+                                <rect key="frame" x="0.0" y="663" width="1024" height="27"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -173,7 +175,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qay-ez-RGb" userLabel="Text">
-                                <rect key="frame" x="24" y="500" width="366" height="32"/>
+                                <rect key="frame" x="24" y="710" width="976" height="40"/>
                                 <string key="text">Tap the Privacy Grade to reveal
 who we caught trying to track you.</string>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
@@ -186,7 +188,9 @@ who we caught trying to track you.</string>
                         </subviews>
                         <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="bgK-zO-76i" firstAttribute="top" secondItem="bRK-IO-JRw" secondAttribute="bottom" constant="20" id="8aG-WF-KP6"/>
+                            <constraint firstItem="bgK-zO-76i" firstAttribute="top" secondItem="bRK-IO-JRw" secondAttribute="bottom" constant="20" id="8aG-WF-KP6">
+                                <variation key="heightClass=regular-widthClass=regular" constant="225"/>
+                            </constraint>
                             <constraint firstItem="Qay-ez-RGb" firstAttribute="top" secondItem="eVS-Fb-3NW" secondAttribute="bottom" constant="20" id="HTs-rh-fSN"/>
                             <constraint firstItem="y7b-Zg-ZVY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Qay-ez-RGb" secondAttribute="bottom" constant="90" id="HYM-TJ-1lh"/>
                             <constraint firstItem="Qay-ez-RGb" firstAttribute="width" secondItem="bln-lE-dbY" secondAttribute="width" constant="-48" id="NAP-Tq-m2s"/>

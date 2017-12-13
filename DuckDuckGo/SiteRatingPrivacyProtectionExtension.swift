@@ -22,27 +22,12 @@ import Core
 
 extension SiteRating {
 
-    enum PrivacyPractices {
-
-        case unknown
-        case poor
-        case good
-        case mixed
-
-    }
-
-    static let practicesText: [PrivacyPractices: String] = [
+    static let practicesText: [TermsOfService.PrivacyPractices: String] = [
         .unknown: UserText.privacyProtectionTOSUnknown,
         .good: UserText.privacyProtectionTOSGood,
         .mixed: UserText.privacyProtectionTOSMixed,
         .poor: UserText.privacyProtectionTOSPoor
     ]
-
-    func isMajorNetworkText() -> String {
-        return isMajorTrackerNetwork ?
-            UserText.privacyProtectionIsMajorTrackerNetwork :
-            UserText.privacyProtectionIsNotMajorTrackerNetwork
-    }
 
     func encryptedConnectionText() -> String {
         if !https {
@@ -62,19 +47,9 @@ extension SiteRating {
         return SiteRating.practicesText[privacyPractices()]
     }
 
-    func privacyPractices() -> PrivacyPractices {
+    func privacyPractices() -> TermsOfService.PrivacyPractices {
         guard let termsOfService = termsOfService else { return .unknown }
-        let score = termsOfServiceScore
-        switch (score) {
-        case _ where(score < 0):
-            return termsOfService.badReasons.isEmpty ? .good : .mixed
-
-        case 0:
-            return termsOfService.badReasons.isEmpty && termsOfService.goodReasons.isEmpty ? .unknown : .mixed
-
-        default:
-            return .poor
-        }
+        return termsOfService.privacyPractices()
     }
 
     func majorNetworksText(contentBlocker: ContentBlockerConfigurationStore) -> String {

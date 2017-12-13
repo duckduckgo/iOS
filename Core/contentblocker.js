@@ -24,7 +24,12 @@ var duckduckgoContentBlocking = function() {
 
 	// private
 	function handleDetection(event, detectionMethod) {
-		var blocked = block(event)
+		if (isAssociatedFirstPartyDomain(event)) {
+			// Completely ignore
+			return
+		}
+
+		var blocked = didBlock(event)
         duckduckgoMessaging.trackerDetected({
         	protectionId: duckduckgoBlockerData.protectionId,
 	        url: event.url,
@@ -73,17 +78,24 @@ var duckduckgoContentBlocking = function() {
 		return duckduckgoBlockerData.whitelist[topLevelUrl.host]
 	}
 
+	function trackerWhitelisted(event) {
+		var config = {
+			domain: document.location.hostname,
+			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
+		}
+
+		var match = ABPFilterParser.matches(duckduckgoBlockerData.easylistWhitelist, event.url, config)
+		console.log("Checking easylist whitelist: ", match, event.url)
+		return match
+	}
+
 	// private
-	function block(event) {
+	function didBlock(event) {
 		if (!duckduckgoBlockerData.blockingEnabled) {
 			return false
 		}
 
 		if (currentDomainIsWhitelisted()) {
-			return false
-		}
-
-		if (isAssociatedFirstPartyDomain(event)) {
 			return false
 		}
 
@@ -210,6 +222,10 @@ var duckduckgoContentBlocking = function() {
 		parentEntityUrl = getParentEntityUrl()
 
 		document.addEventListener("beforeload", function(event) {
+			if (trackerWhitelisted(event)) {
+				return false
+			}
+
 			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
 	}

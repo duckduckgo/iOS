@@ -92,6 +92,11 @@ class TabViewController: WebViewController {
 
     }
 
+    override func goBack() {
+        resetSiteRating()
+        super.goBack()
+    }
+
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }

@@ -23,12 +23,14 @@ import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
-    @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet var swipeGestureRecogniser: UISwipeGestureRecognizer!
-    
+    @IBOutlet weak var swipeGestureRecogniser: UISwipeGestureRecognizer!
+    @IBOutlet weak var button: UIButton!
+
     private weak var pageController: UIPageViewController!
-    private var transitioningToPage: OnboardingPageViewController?
+    private var transitioningToPage: OnboardingTutorialPageViewController?
     fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
+
+    private var currentPageIndex = 0
 
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
@@ -37,15 +39,14 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePageControl()
         configureScrollView()
+        configureButton()
     }
-    
-    private func configurePageControl() {
-        pageControl.numberOfPages = dataSource.count
-        pageControl.currentPage = 0
+
+    private func configureButton() {
+        button.layer.cornerRadius = 5
     }
-    
+
     private func configureScrollView() {
         let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
         scrollView?.delegate = self
@@ -56,7 +57,31 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
             prepare(forPageControllerSegue: controller)
         }
     }
-    
+
+    @IBAction func onTapContinue() {
+        let page = currentPageIndex + 1
+        if page >= dataSource.count {
+            finishOnboardingFlow()
+        } else {
+            let currentColor = currentPage.preferredBackgroundColor
+
+            goToPage(index: page)
+
+            guard let controller = dataSource.controller(forIndex: page) as? OnboardingTutorialPageViewController else { return }
+            guard let nextColor = controller.preferredBackgroundColor else { return }
+            if let currentColor = currentColor {
+                animateBackgroundColor(from: currentColor, to: nextColor)
+            }
+        }
+    }
+
+    private func animateBackgroundColor(from: UIColor, to: UIColor) {
+        view.backgroundColor = from
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.backgroundColor = to
+        })
+    }
+
     private func prepare(forPageControllerSegue controller: UIPageViewController) {
         pageController = controller
         controller.dataSource = dataSource
@@ -65,7 +90,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        guard let next = pendingViewControllers.first as? OnboardingPageViewController else { return }
+        guard let next = pendingViewControllers.first as? OnboardingTutorialPageViewController else { return }
         transitioningToPage = next
     }
     
@@ -76,7 +101,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
             guard let index = dataSource.index(of: previous) else { return }
             configureDisplay(forPage: index)
         } else {
-            guard let current = transitioningToPage as? UIViewController else { return }
+            guard let current = transitioningToPage else { return }
             guard let index = dataSource.index(of: current) else { return }
             configureDisplay(forPage: index)
         }
@@ -84,7 +109,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func configureDisplay(forPage index: Int) {
-        pageControl.currentPage = index
+        currentPageIndex = index
         currentPage.resetImage()
         view.backgroundColor = currentPage.preferredBackgroundColor
     }
@@ -96,16 +121,17 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     
     private func transitionBackgroundColor(withRatio ratio: CGFloat) {
         guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
-        let currentColor = currentPage.preferredBackgroundColor
+        guard let currentColor = currentPage.preferredBackgroundColor else { return }
         view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
     }
     
     private func shrinkImages(withRatio ratio: CGFloat) {
+        guard let transitioningToPage = transitioningToPage else { return }
         let currentImageScale = 1 - (0.3 * (1 - ratio))
         currentPage.scaleImage(currentImageScale)
 
         let nextImageScale = 1 - (0.3 * ratio)
-        transitioningToPage?.scaleImage(nextImageScale)
+        transitioningToPage.scaleImage(nextImageScale)
     }
     
     private func goToPage(index: Int) {
@@ -114,24 +140,23 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         configureDisplay(forPage: index)
     }
     
-    @IBAction func onPageSelected(_ sender: UIPageControl) {
-        goToPage(index: sender.currentPage)
-    }
-    
     @IBAction func onLastPageSwiped(_ sender: Any) {
         finishOnboardingFlow()
     }
     
     private func finishOnboardingFlow() {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            var settings = TutorialSettings()
+            settings.hasSeenOnboarding = true
+        }
     }
 
     fileprivate var currentController: UIViewController {
-        return dataSource.controller(forIndex: pageControl.currentPage)
+        return dataSource.controller(forIndex: currentPageIndex)
     }
-    
-    fileprivate var currentPage: OnboardingPageViewController {
-        return currentController as! OnboardingPageViewController
+
+    fileprivate var currentPage: OnboardingTutorialPageViewController {
+        return currentController as! OnboardingTutorialPageViewController
     }
 }
 

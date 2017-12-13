@@ -82,7 +82,9 @@ extension WKWebViewConfiguration {
                               forMainFrameOnly: false)
         
         let cache = ContentBlockerStringCache()
-        if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist), let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy) {
+        if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
+            let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
+            let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
             
             Logger.log(text: "using cached easylist")
 
@@ -94,18 +96,21 @@ extension WKWebViewConfiguration {
             
             javascriptLoader.load(script: .cachedEasylist, withReplacements: [
                 "${easylist_privacy_json}": cachedEasylistPrivacy,
-                "${easylist_general_json}": cachedEasylist ],
+                "${easylist_general_json}": cachedEasylist,
+                "${easylist_whitelist_json}": cachedEasylistWhitelist ],
                                   andController: userContentController,
                                   forMainFrameOnly: false)
             
         } else if let easylist = easylistStore.easylist,
-            let easylistPrivacy = easylistStore.easylistPrivacy {
+            let easylistPrivacy = easylistStore.easylistPrivacy,
+            let easylistWhitelist = easylistStore.easylistWhitelist {
             
             Logger.log(text: "parsing easylist")
 
             javascriptLoader.load(script: .easylistParsing, withReplacements: [
                 "${easylist_privacy}": easylistPrivacy,
-                "${easylist_general}": easylist ],
+                "${easylist_general}": easylist,
+                "${easylist_whitelist}": easylistWhitelist ],
                                   andController: userContentController,
                                   forMainFrameOnly: false)
             

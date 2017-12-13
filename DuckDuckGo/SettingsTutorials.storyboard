@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Use Duck Duck Go In Safari View Controller-->
+        <scene sceneID="2gE-he-Mob">
+            <objects>
+                <viewController storyboardIdentifier="UseDuckDuckGoInSafari" useStoryboardIdentifierAsRestorationIdentifier="YES" id="c0g-rm-Tff" customClass="UseDuckDuckGoInSafariViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oFj-5Z-Hhf"/>
+                        <viewControllerLayoutGuide type="bottom" id="2v2-OL-9VG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nf9-sb-cmz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1o-fs-eH5">
+                                <rect key="frame" x="0.0" y="20" width="375" height="565"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shK-dM-ttG">
+                                        <rect key="frame" x="14" y="40" width="347" height="521"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialNoTracking" translatesAutoresizingMaskIntoConstraints="NO" id="iQy-5N-xOl">
+                                                <rect key="frame" x="98.5" y="18" width="150" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="150" id="Dz2-tD-qsQ">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="210"/>
+                                                    </constraint>
+                                                    <constraint firstAttribute="width" constant="150" id="EVa-F5-mnL">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="210"/>
+                                                    </constraint>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="vYL-qe-BWA">
+                                                <rect key="frame" x="24" y="204" width="299" height="28"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="28" id="Haf-ZS-jhS"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other search engines track your searches even when you’re in private browsing mode. We don’t track you — period." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95k-Yc-H4P">
+                                                <rect key="frame" x="24" y="240" width="299" height="48"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                </variation>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="RLt-Cw-wMf">
+                                                <rect key="frame" x="53.5" y="312" width="240" height="47"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialSettings" translatesAutoresizingMaskIntoConstraints="NO" id="Kp7-AX-oRe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="47" id="4de-Z9-fca"/>
+                                                            <constraint firstAttribute="width" constant="47" id="dbV-7p-0Cs"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Settings App" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rlc-DV-dis">
+                                                        <rect key="frame" x="59" y="15.5" width="181" height="16"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                        </variation>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="Kp7-AX-oRe" firstAttribute="top" secondItem="RLt-Cw-wMf" secondAttribute="top" id="L39-dW-xIq"/>
+                                                    <constraint firstAttribute="width" constant="240" id="eFd-7Y-5NG"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="qe2-pp-wM2">
+                                                <rect key="frame" x="53.5" y="375" width="240" height="47"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialSafari" translatesAutoresizingMaskIntoConstraints="NO" id="QPY-bW-uXg">
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="47" id="X0z-gT-S9i"/>
+                                                            <constraint firstAttribute="width" constant="47" id="gJV-7l-KDB"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Navigate to 'Safari', then 'Search Engine'" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXd-EC-jGB">
+                                                        <rect key="frame" x="59" y="0.0" width="181" height="47"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                        </variation>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="bNn-iE-xiF"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Hy3-8Y-I2c">
+                                                <rect key="frame" x="53.5" y="438" width="240" height="47"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UseInSafariTutorialTick" translatesAutoresizingMaskIntoConstraints="NO" id="Ogh-Nl-YFq">
+                                                        <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="47" id="6VX-a3-a4I"/>
+                                                            <constraint firstAttribute="width" constant="47" id="9VT-xE-axg"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select DuckDuckGo" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0I-HV-NwH">
+                                                        <rect key="frame" x="59" y="0.0" width="181" height="47"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                        </variation>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="cFl-fq-gHu"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="vYL-qe-BWA" firstAttribute="leading" secondItem="shK-dM-ttG" secondAttribute="leading" constant="24" id="CTK-MU-mBN"/>
+                                            <constraint firstItem="vYL-qe-BWA" firstAttribute="top" secondItem="iQy-5N-xOl" secondAttribute="bottom" constant="36" id="MbI-8V-MAV"/>
+                                            <constraint firstAttribute="trailing" secondItem="95k-Yc-H4P" secondAttribute="trailing" constant="24" id="Mkr-hW-XjX"/>
+                                            <constraint firstItem="RLt-Cw-wMf" firstAttribute="centerX" secondItem="shK-dM-ttG" secondAttribute="centerX" id="NcX-ER-g5E"/>
+                                            <constraint firstAttribute="trailing" secondItem="vYL-qe-BWA" secondAttribute="trailing" constant="24" id="OUv-9t-aUo"/>
+                                            <constraint firstItem="Hy3-8Y-I2c" firstAttribute="top" secondItem="qe2-pp-wM2" secondAttribute="bottom" constant="16" id="PAk-Ga-HG8"/>
+                                            <constraint firstItem="iQy-5N-xOl" firstAttribute="top" secondItem="shK-dM-ttG" secondAttribute="top" constant="18" id="VqM-xA-a4r"/>
+                                            <constraint firstItem="95k-Yc-H4P" firstAttribute="leading" secondItem="shK-dM-ttG" secondAttribute="leading" constant="24" id="d8g-pd-fXv"/>
+                                            <constraint firstItem="qe2-pp-wM2" firstAttribute="top" secondItem="RLt-Cw-wMf" secondAttribute="bottom" constant="16" id="e0s-DI-F3E"/>
+                                            <constraint firstItem="95k-Yc-H4P" firstAttribute="top" secondItem="vYL-qe-BWA" secondAttribute="bottom" constant="8" id="flU-5d-Svx"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="480" id="iL8-S9-d4B"/>
+                                            <constraint firstItem="RLt-Cw-wMf" firstAttribute="top" secondItem="95k-Yc-H4P" secondAttribute="bottom" constant="24" id="j8X-n8-rqz"/>
+                                            <constraint firstItem="iQy-5N-xOl" firstAttribute="centerX" secondItem="shK-dM-ttG" secondAttribute="centerX" id="lGA-h3-M6I"/>
+                                            <constraint firstItem="Hy3-8Y-I2c" firstAttribute="centerX" secondItem="shK-dM-ttG" secondAttribute="centerX" id="oJk-rp-fmU"/>
+                                            <constraint firstItem="qe2-pp-wM2" firstAttribute="centerX" secondItem="shK-dM-ttG" secondAttribute="centerX" id="pi7-CP-JkP"/>
+                                            <constraint firstAttribute="bottom" secondItem="Hy3-8Y-I2c" secondAttribute="bottom" constant="36" id="sgB-gd-5PO"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="shK-dM-ttG" firstAttribute="centerY" secondItem="Y1o-fs-eH5" secondAttribute="centerY" id="68v-x6-3nF"/>
+                                    <constraint firstItem="shK-dM-ttG" firstAttribute="centerX" secondItem="Y1o-fs-eH5" secondAttribute="centerX" id="G5c-KV-sER"/>
+                                    <constraint firstAttribute="trailing" secondItem="shK-dM-ttG" secondAttribute="trailing" id="N5A-MT-u3b"/>
+                                    <constraint firstItem="shK-dM-ttG" firstAttribute="top" secondItem="Y1o-fs-eH5" secondAttribute="top" constant="40" id="hp9-nn-hlE">
+                                        <variation key="heightClass=compact" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" secondItem="shK-dM-ttG" secondAttribute="bottom" id="kJ5-ld-MZB"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="68v-x6-3nF"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="68v-x6-3nF"/>
+                                        <exclude reference="hp9-nn-hlE"/>
+                                    </mask>
+                                </variation>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9pP-jL-m5D">
+                                <rect key="frame" x="14" y="587" width="347" height="40"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="480" id="Ri3-aA-uJ1"/>
+                                    <constraint firstAttribute="height" constant="40" id="uco-us-kNu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onDonePressed:" destination="c0g-rm-Tff" eventType="touchUpInside" id="n3u-UK-XvK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.3921568627" green="0.68235294120000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9pP-jL-m5D" firstAttribute="top" secondItem="Y1o-fs-eH5" secondAttribute="bottom" constant="2" id="5Kd-x1-rxj"/>
+                            <constraint firstItem="shK-dM-ttG" firstAttribute="leading" secondItem="Nf9-sb-cmz" secondAttribute="leading" priority="900" constant="14" id="FAX-tx-Jui"/>
+                            <constraint firstItem="9pP-jL-m5D" firstAttribute="centerX" secondItem="Nf9-sb-cmz" secondAttribute="centerX" id="Jar-YV-vsf"/>
+                            <constraint firstItem="9pP-jL-m5D" firstAttribute="leading" secondItem="Nf9-sb-cmz" secondAttribute="leading" priority="800" constant="14" id="Ket-e8-cpa"/>
+                            <constraint firstAttribute="trailing" secondItem="shK-dM-ttG" secondAttribute="trailing" priority="900" constant="14" id="RhF-8b-vYa"/>
+                            <constraint firstAttribute="trailing" secondItem="Y1o-fs-eH5" secondAttribute="trailing" id="cdS-xv-8Nm"/>
+                            <constraint firstAttribute="trailing" secondItem="9pP-jL-m5D" secondAttribute="trailing" priority="800" constant="14" id="dec-DU-LKE"/>
+                            <constraint firstItem="Y1o-fs-eH5" firstAttribute="top" secondItem="oFj-5Z-Hhf" secondAttribute="bottom" id="plB-6d-1rg"/>
+                            <constraint firstItem="Y1o-fs-eH5" firstAttribute="leading" secondItem="Nf9-sb-cmz" secondAttribute="leading" id="xbi-QC-UAe"/>
+                            <constraint firstItem="2v2-OL-9VG" firstAttribute="top" secondItem="9pP-jL-m5D" secondAttribute="bottom" constant="40" id="xzw-az-hWx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qhF-u0-1yh"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
+                    <connections>
+                        <outlet property="descriptionText" destination="95k-Yc-H4P" id="tyf-kr-1QG"/>
+                        <outlet property="image" destination="iQy-5N-xOl" id="kb6-85-FJX"/>
+                        <outlet property="topMarginConstraint" destination="hp9-nn-hlE" id="sds-Od-qD5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c9l-Jf-gl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-170" y="-735"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="UseInSafariTutorialNoTracking" width="200" height="200"/>
+        <image name="UseInSafariTutorialSafari" width="47" height="47"/>
+        <image name="UseInSafariTutorialSettings" width="47" height="47"/>
+        <image name="UseInSafariTutorialTick" width="50" height="48"/>
+    </resources>
+</document>

@@ -25,6 +25,7 @@ var duckduckgoBlockerData = {
     disconnectmeAllowed: ${disconnectmeAllowed},
     whitelist: ${whitelist},
     easylist: {},
-    easylistPrivacy: {}
+    easylistPrivacy: {},
+    easylistWhitelist: {}
 
 }

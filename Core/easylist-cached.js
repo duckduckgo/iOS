@@ -19,6 +19,7 @@
 
 duckduckgoBlockerData.easylist = ${easylist_general_json}
 duckduckgoBlockerData.easylistPrivacy = ${easylist_privacy_json}
+duckduckgoBlockerData.easylistWhitelist = ${easylist_whitelist_json}
 
 function duckduckgoEasylistRepair(parserData) {
 	parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
@@ -27,3 +28,4 @@ function duckduckgoEasylistRepair(parserData) {
 
 duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)
 duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)
+duckduckgoEasylistRepair(duckduckgoBlockerData.easylistWhitelist)

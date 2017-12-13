@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
-    <device id="ipad12_9" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -23,18 +23,18 @@
                         <viewControllerLayoutGuide type="bottom" id="48G-w4-Xuh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bOv-vd-VY9">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-a2-Ooa">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="Wam-Zg-GbZ" kind="embed" id="HHT-Fz-Hk7"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3WB-mW-Eaq">
-                                <rect key="frame" x="387" y="1296" width="250" height="50"/>
+                                <rect key="frame" x="259" y="954" width="250" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.24753852740000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lWW-aX-coc"/>
@@ -87,67 +87,6 @@
             <point key="canvasLocation" x="-657" y="-1446"/>
         </scene>
         <!--Onboarding Tutorial Page View Controller-->
-        <scene sceneID="7tn-qm-MpF">
-            <objects>
-                <viewController storyboardIdentifier="Page1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="64K-kw-HvE" customClass="OnboardingTutorialPageViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jIu-4u-iue"/>
-                        <viewControllerLayoutGuide type="bottom" id="KeP-xV-Aki"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TPY-2e-0Je">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="9Lp-Lu-ykc">
-                                <rect key="frame" x="387" y="245" width="250" height="398"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="250" constant="398" id="7kM-Hx-7pc"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="YQq-S4-9Iq" userLabel="Title">
-                                <rect key="frame" x="0.0" y="663" width="1024" height="27"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Fire Button to erase  your tabs and browsing history.   Your data is toast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdg-fL-h3C" userLabel="Text">
-                                <rect key="frame" x="24" y="710" width="976" height="80"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                </variation>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.3921568627" green="0.68235294120000001" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="top" secondItem="jIu-4u-iue" secondAttribute="bottom" constant="20" id="54X-JL-4eh">
-                                <variation key="heightClass=regular-widthClass=regular" constant="225"/>
-                            </constraint>
-                            <constraint firstItem="jdg-fL-h3C" firstAttribute="width" secondItem="TPY-2e-0Je" secondAttribute="width" constant="-48" id="SLO-nG-Zz8"/>
-                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="Sbg-0t-NHh"/>
-                            <constraint firstItem="9Lp-Lu-ykc" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="q1T-7v-kLP"/>
-                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="top" secondItem="9Lp-Lu-ykc" secondAttribute="bottom" constant="20" id="qay-jT-6Gn"/>
-                            <constraint firstItem="KeP-xV-Aki" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jdg-fL-h3C" secondAttribute="bottom" constant="90" id="rzm-rJ-tfL"/>
-                            <constraint firstItem="YQq-S4-9Iq" firstAttribute="width" secondItem="TPY-2e-0Je" secondAttribute="width" id="t19-Za-8Ra"/>
-                            <constraint firstItem="jdg-fL-h3C" firstAttribute="top" secondItem="YQq-S4-9Iq" secondAttribute="bottom" constant="20" id="tR2-gv-WDi"/>
-                            <constraint firstItem="jdg-fL-h3C" firstAttribute="centerX" secondItem="TPY-2e-0Je" secondAttribute="centerX" id="zZ2-G9-ucE"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="image" destination="9Lp-Lu-ykc" id="bFz-rA-Nvr"/>
-                        <outletCollection property="requiresLineHeightAdjustment" destination="jdg-fL-h3C" collectionClass="NSMutableArray" id="QOn-tS-WSe"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yi6-K0-pdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-659.4202898550725" y="-654.61956521739137"/>
-        </scene>
-        <!--Onboarding Tutorial Page View Controller-->
         <scene sceneID="yFe-Fn-5vf">
             <objects>
                 <viewController storyboardIdentifier="Page2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y5C-Pb-uJa" customClass="OnboardingTutorialPageViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -156,14 +95,14 @@
                         <viewControllerLayoutGuide type="bottom" id="y7b-Zg-ZVY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bln-lE-dbY">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-MF-RL0">
-                                <rect key="frame" x="0.0" y="283" width="1024" height="800"/>
+                                <rect key="frame" x="0.0" y="152" width="768" height="720"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="Wsv-ap-wrF" userLabel="Title">
-                                        <rect key="frame" x="0.0" y="448" width="1024" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="Wsv-ap-wrF" userLabel="Title">
+                                        <rect key="frame" x="0.0" y="448" width="768" height="27"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -171,8 +110,11 @@
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Fire Button to erase  your tabs and browsing history.   Your data is toast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEP-wM-MN0" userLabel="Text">
-                                        <rect key="frame" x="370.5" y="505" width="284" height="80"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEP-wM-MN0" userLabel="Text">
+                                        <rect key="frame" x="272.5" y="505" width="224" height="60"/>
+                                        <string key="text">Tap the Privacy Grade
+to reveal who we caught 
+trying to track you.</string>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -180,8 +122,8 @@
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                         </variation>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Yy-O0U">
-                                        <rect key="frame" x="387" y="20" width="250" height="398"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage2" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Yy-O0U">
+                                        <rect key="frame" x="259.5" y="20" width="250" height="398"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="398" id="YHg-VE-O9H"/>
                                         </constraints>
@@ -203,7 +145,7 @@
                                     <constraint firstItem="yHh-Yy-O0U" firstAttribute="top" secondItem="rx3-MF-RL0" secondAttribute="top" constant="20" id="oE0-c6-UTa"/>
                                     <constraint firstItem="Wsv-ap-wrF" firstAttribute="leading" secondItem="rx3-MF-RL0" secondAttribute="leading" id="qBV-aj-40p"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="600" id="x6l-dV-YEb">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="800"/>
+                                        <variation key="heightClass=regular-widthClass=regular" constant="720"/>
                                     </constraint>
                                 </constraints>
                             </view>
@@ -225,10 +167,91 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGH-n5-f82" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="61.875" y="-655.9859154929577"/>
+            <point key="canvasLocation" x="-464" y="-704"/>
+        </scene>
+        <!--Onboarding Tutorial Page View Controller-->
+        <scene sceneID="s2a-ix-GGI">
+            <objects>
+                <viewController storyboardIdentifier="Page1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xT0-tZ-Rr2" customClass="OnboardingTutorialPageViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GA8-tp-5uq"/>
+                        <viewControllerLayoutGuide type="bottom" id="JuU-nW-FBz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JSg-Dt-Ef7">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wV-pf-QCI">
+                                <rect key="frame" x="0.0" y="152" width="768" height="720"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="6Un-DZ-5LV" userLabel="Title">
+                                        <rect key="frame" x="0.0" y="448" width="768" height="27"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the Fire Button to erase  your tabs and browsing history.   Your data is toast!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi8-od-YMh" userLabel="Text">
+                                        <rect key="frame" x="242.5" y="505" width="284" height="80"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                        </variation>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="Rv4-zj-1nx">
+                                        <rect key="frame" x="259.5" y="20" width="250" height="398"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="250" constant="398" id="bRG-tT-wCa"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="fi8-od-YMh" firstAttribute="centerX" secondItem="4wV-pf-QCI" secondAttribute="centerX" id="0aZ-x0-LkY"/>
+                                    <constraint firstItem="6Un-DZ-5LV" firstAttribute="centerX" secondItem="4wV-pf-QCI" secondAttribute="centerX" id="2EU-du-6Ac"/>
+                                    <constraint firstItem="Rv4-zj-1nx" firstAttribute="centerX" secondItem="4wV-pf-QCI" secondAttribute="centerX" id="Hf2-bY-qAw"/>
+                                    <constraint firstItem="fi8-od-YMh" firstAttribute="top" secondItem="6Un-DZ-5LV" secondAttribute="bottom" constant="20" id="MmB-WF-1Nm">
+                                        <variation key="widthClass=regular" constant="30"/>
+                                    </constraint>
+                                    <constraint firstItem="Rv4-zj-1nx" firstAttribute="top" secondItem="4wV-pf-QCI" secondAttribute="top" constant="20" id="SK5-ra-HIA"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Un-DZ-5LV" secondAttribute="trailing" id="byd-jO-rNN"/>
+                                    <constraint firstItem="6Un-DZ-5LV" firstAttribute="leading" secondItem="4wV-pf-QCI" secondAttribute="leading" id="c3i-zv-8iB"/>
+                                    <constraint firstItem="6Un-DZ-5LV" firstAttribute="top" secondItem="Rv4-zj-1nx" secondAttribute="bottom" constant="20" id="fWv-W6-Cha">
+                                        <variation key="widthClass=regular" constant="30"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="600" id="hxz-uH-c2R">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="720"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fi8-od-YMh" secondAttribute="bottom" constant="90" id="oY5-yO-tEw"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="4wV-pf-QCI" firstAttribute="top" secondItem="GA8-tp-5uq" secondAttribute="bottom" priority="900" id="GGk-wI-HLm"/>
+                            <constraint firstItem="4wV-pf-QCI" firstAttribute="centerX" secondItem="JSg-Dt-Ef7" secondAttribute="centerX" id="Itp-pA-gM0"/>
+                            <constraint firstItem="4wV-pf-QCI" firstAttribute="leading" secondItem="JSg-Dt-Ef7" secondAttribute="leading" id="PDh-kC-5jD"/>
+                            <constraint firstItem="JuU-nW-FBz" firstAttribute="top" secondItem="4wV-pf-QCI" secondAttribute="bottom" priority="900" id="o9j-zr-Pi5"/>
+                            <constraint firstItem="4wV-pf-QCI" firstAttribute="centerY" secondItem="JSg-Dt-Ef7" secondAttribute="centerY" id="peu-A9-3sH"/>
+                            <constraint firstAttribute="trailing" secondItem="4wV-pf-QCI" secondAttribute="trailing" id="pwP-P8-hxq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="image" destination="Rv4-zj-1nx" id="7Rd-w1-PEZ"/>
+                        <outletCollection property="requiresLineHeightAdjustment" destination="fi8-od-YMh" collectionClass="NSMutableArray" id="BwG-6M-3ev"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bM5-R5-RE9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1175" y="-704"/>
         </scene>
     </scenes>
     <resources>
         <image name="OnboardingPage1" width="250" height="398"/>
+        <image name="OnboardingPage2" width="250" height="398"/>
     </resources>
 </document>

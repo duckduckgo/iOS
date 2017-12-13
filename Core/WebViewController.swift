@@ -25,6 +25,7 @@ open class WebViewController: UIViewController {
     private struct webViewKeyPaths {
         static let estimatedProgress = "estimatedProgress"
         static let hasOnlySecureContent = "hasOnlySecureContent"
+        static let url = "URL"
     }
 
     public weak var webEventsDelegate: WebEventsDelegate?
@@ -80,8 +81,11 @@ open class WebViewController: UIViewController {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
+
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
@@ -134,6 +138,9 @@ open class WebViewController: UIViewController {
         case webViewKeyPaths.hasOnlySecureContent:
             webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
 
+        case webViewKeyPaths.url:
+            webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
+            
         default:
             Logger.log(text: "Unhandled keyPath \(keyPath)")
         }
@@ -145,7 +152,6 @@ open class WebViewController: UIViewController {
             webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
         }
     }
-
 
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }

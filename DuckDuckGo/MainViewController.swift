@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     fileprivate var currentTab: TabViewController? {
-        return tabManager.current
+        return tabManager?.current
     }
 
     override func viewDidLoad() {
@@ -433,7 +433,7 @@ extension MainViewController: TabDelegate {
         if currentTab == tab {
             refreshControls()
         }
-        tabManager.save()
+        tabManager?.save()
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

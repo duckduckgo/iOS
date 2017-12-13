@@ -181,7 +181,7 @@
                                         </variation>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Yy-O0U">
-                                        <rect key="frame" x="387.5" y="20" width="250" height="398"/>
+                                        <rect key="frame" x="387" y="20" width="250" height="398"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="398" id="YHg-VE-O9H"/>
                                         </constraints>
@@ -202,7 +202,9 @@
                                     <constraint firstAttribute="trailing" secondItem="Wsv-ap-wrF" secondAttribute="trailing" id="f0t-LB-BJu"/>
                                     <constraint firstItem="yHh-Yy-O0U" firstAttribute="top" secondItem="rx3-MF-RL0" secondAttribute="top" constant="20" id="oE0-c6-UTa"/>
                                     <constraint firstItem="Wsv-ap-wrF" firstAttribute="leading" secondItem="rx3-MF-RL0" secondAttribute="leading" id="qBV-aj-40p"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="800" id="x6l-dV-YEb"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="600" id="x6l-dV-YEb">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="800"/>
+                                    </constraint>
                                 </constraints>
                             </view>
                         </subviews>

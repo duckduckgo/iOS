@@ -68,10 +68,7 @@
 "privacy.protection.encryption.good.connection" = "Encrypted Connection";
 "privacy.protection.encryption.bad.connection" = "Unencrypted Connection";
 "privacy.protection.encryption.mixed.connection" = "Mixed Encryption";
-"privacy.protection.trackers.blocked" = "%d Tracker Networks Blocked";
-"privacy.protection.trackers.found" = "%d Tracker Networks Found";
-"privacy.protection.major.trackers.blocked" = "%d Major Tracker Networks Blocked";
-"privacy.protection.major.trackers.found" = "%d Major Tracker Networks Found";
+
 "privacy.protection.tos.unknown" = "Unknown Privacy Practices";
 "privacy.protection.tos.good" = "Good Privacy Practices";
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";

@@ -23,14 +23,14 @@ import UIKit
 class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
     
     private let pages: [UIViewController]
-    
+
     var count: Int {
         return pages.count
     }
     
     override init() {
-        let first = FeaturesViewController.loadFromStoryboard()
-        let second = UseDuckDuckGoInSafariViewController.loadFromStoryboard()
+        let first = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page1")
+        let second = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page2")
         first.view.backgroundColor = UIColor.clear
         second.view.backgroundColor = UIColor.clear
         self.pages = [first, second]

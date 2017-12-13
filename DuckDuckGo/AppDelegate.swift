@@ -115,11 +115,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func startOnboardingFlowIfNotSeenBefore() {
-        
-        var settings = TutorialSettings()
+        let settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
             startOnboardingFlow()
-            settings.hasSeenOnboarding = true
         }
     }
     
@@ -137,9 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func startOnboardingFlow() {
         guard let main = mainViewController else { return }
-        let onboardingController = OnboardingViewController.loadFromStoryboard()
-        onboardingController.modalTransitionStyle = .flipHorizontal
-        main.present(onboardingController, animated: false, completion: nil)
+        main.performSegue(withIdentifier: "Onboarding", sender: self)
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

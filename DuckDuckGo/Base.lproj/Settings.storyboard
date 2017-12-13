@@ -285,10 +285,10 @@
         <!--UseDuckDuckGoInSafari-->
         <scene sceneID="8YY-rV-1E3">
             <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" referencedIdentifier="UseDuckDuckGoInSafari" id="VNm-a5-bBg" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="SettingsTutorials" referencedIdentifier="UseDuckDuckGoInSafari" id="VNm-a5-bBg" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mkU-kG-PHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1931" y="524"/>
+            <point key="canvasLocation" x="1892" y="529"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="Z9e-Sp-3fR">

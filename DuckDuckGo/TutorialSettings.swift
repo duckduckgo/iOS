@@ -22,20 +22,36 @@ import Foundation
 import Core
 
 struct TutorialSettings {
-    
+
+    private struct Constants {
+        // Set the build number of the last build that didn't force them to appear to force them to appear.
+        static let onboardingVersion = 1
+    }
+
     private struct Keys {
+        static let lastVersionSeen = "com.duckduckgo.tutorials.lastVersionSeen"
         static let hasSeenOnboarding = "com.duckduckgo.tutorials.hasSeenOnboarding"
     }
     
     private func userDefaults() -> UserDefaults {
         return UserDefaults.standard
     }
+
+    public var lastVersionSeen: Int {
+        get {
+            return userDefaults().integer(forKey: Keys.lastVersionSeen)
+        }
+    }
     
     public var hasSeenOnboarding: Bool {
         get {
+            if Constants.onboardingVersion > lastVersionSeen {
+                return false
+            }
             return userDefaults().bool(forKey: Keys.hasSeenOnboarding, defaultValue: false)
         }
         set(newValue) {
+            userDefaults().set(Constants.onboardingVersion, forKey: Keys.lastVersionSeen)
             userDefaults().set(newValue, forKey: Keys.hasSeenOnboarding)
         }
     }

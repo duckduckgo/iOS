@@ -23,11 +23,33 @@ import UIKit
 class PrivacyProtectionErrorController: UIViewController {
 
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var activity: UIActivityIndicatorView!
 
     var errorText: String?
 
+    private var tryAgain: (() -> Void)?
+
     override func viewDidLoad() {
+        button.layer.cornerRadius = 5
         errorLabel.text = errorText
+        configureTryAgain()
+    }
+
+    private func configureTryAgain() {
+        button?.isHidden = tryAgain == nil
+        activity?.isHidden = true
+    }
+
+    func onTryAgain(_ tryAgain: @escaping () -> Void) {
+        self.tryAgain = tryAgain
+        configureTryAgain()
+    }
+
+    @IBAction func onTapTryAgain() {
+        activity.isHidden = false
+        button.isHidden = true
+        tryAgain?()
     }
 
 }

@@ -24,6 +24,8 @@ protocol PrivacyProtectionDelegate: class {
 
     func omniBarTextTapped()
 
+    func reload()
+
 }
 
 class PrivacyProtectionController: UIViewController {
@@ -49,7 +51,9 @@ class PrivacyProtectionController: UIViewController {
         transitioningDelegate = self
         initOmniBar()
 
-        if let errorText = errorText {
+        if !BlockerListsLoader().hasData {
+            showBlockerListError()
+        } else if let errorText = errorText {
             showError(withText: errorText)
         } else {
             showInitialScreen()
@@ -61,6 +65,33 @@ class PrivacyProtectionController: UIViewController {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
         controller.errorText = errorText
         embeddedController.pushViewController(controller, animated: true)
+    }
+
+    private func showBlockerListError() {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
+        controller.errorText = "This can be caused by a loss of internet connection when loading the content blocking rules."
+        embeddedController.pushViewController(controller, animated: true)
+        showLoadBlockerListTryAgain(controller)
+    }
+
+    private func showLoadBlockerListTryAgain(_ controller: PrivacyProtectionErrorController) {
+        controller.onTryAgain {
+            let blockerListLoader = BlockerListsLoader()
+            blockerListLoader.start { newData in
+                self.handleLoadBlockerListResult(controller, blockerListLoader.hasData)
+            }
+        }
+    }
+
+    private func handleLoadBlockerListResult(_ controller: PrivacyProtectionErrorController, _ newData: Bool) {
+        DispatchQueue.main.async {
+            if !newData {
+                self.showLoadBlockerListTryAgain(controller)
+            } else {
+                self.dismiss(animated: true)
+                self.delegate?.reload()
+            }
+        }
     }
 
     private func showInitialScreen() {

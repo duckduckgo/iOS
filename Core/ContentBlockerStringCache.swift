@@ -21,7 +21,36 @@ import Foundation
 
 public class ContentBlockerStringCache {
 
-    public init() {}
+    struct Constants {
+        // bump the cache version if you know the cache should be invalidated on the next release
+        static let cacheVersion = 1
+        static let cacheVersionKey = "cacheVersionKey"
+    }
+
+    private var cacheDir: URL {
+        get {
+            let groupName = ContentBlockerStoreConstants.groupName
+            return fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
+        }
+    }
+
+    private var fileManager: FileManager {
+        get {
+            return FileManager.default
+        }
+    }
+
+    public init(userDefaults: UserDefaults = UserDefaults.standard) {
+        let lastSeenVersion = userDefaults.integer(forKey: Constants.cacheVersionKey)
+        if lastSeenVersion < Constants.cacheVersion {
+            clearCache()
+            userDefaults.set(Constants.cacheVersion, forKey: Constants.cacheVersionKey)
+        }
+    }
+
+    private func clearCache() {
+        try? fileManager.removeItem(atPath: cacheDir.path)
+    }
 
     public func get(named name: String) -> String? {
         return try? String(contentsOf: persistenceLocation(for: name), encoding: .utf8)
@@ -32,13 +61,12 @@ public class ContentBlockerStringCache {
     }
 
     public func remove(named name: String) {
-        try? FileManager.default.removeItem(at: persistenceLocation(for: name))
+        try? fileManager.removeItem(at: persistenceLocation(for: name))
     }
 
     private func persistenceLocation(for name: String) -> URL {
-        let groupName = ContentBlockerStoreConstants.groupName
-        let cacheDir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
-        try? FileManager.default.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
+        try? fileManager.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
         return cacheDir.appendingPathComponent(name)
     }
+
 }

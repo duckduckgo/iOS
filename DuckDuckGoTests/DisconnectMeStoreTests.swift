@@ -43,7 +43,19 @@ class DisconnectMeStoreTests: XCTestCase {
         try! testee.persist(data: "".data(using: .utf8)!)
         try? FileManager.default.removeItem(at: testee.persistenceLocation)
     }
-    
+
+    func testWhenItemsAreInAllowedListTheyAppearInAllowedJson() {
+        try! testee.persist(data: trackerData)
+        XCTAssertFalse(testee.allowedTrackersJson.contains("99anothersocialurl.com"))
+        XCTAssertTrue(testee.allowedTrackersJson.contains("acontenturl.com"))
+    }
+
+    func testWhenItemsAreInBannedListTheyAppearInBannedJson() {
+        try! testee.persist(data: trackerData)
+        XCTAssertTrue(testee.bannedTrackersJson.contains("99anothersocialurl.com"))
+        XCTAssertFalse(testee.bannedTrackersJson.contains("acontenturl.com"))
+    }
+
     func testWhenTrackersNotPersistedThenHasDataIsFalse() {
         clearAll()
         XCTAssertFalse(testee.hasData)

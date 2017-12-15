@@ -63,7 +63,7 @@ public class DisconnectMeStore {
         if let cached = stringCache.get(named: CacheKeys.disconnectJsonAllowed) {
             return cached
         }
-        if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.banned)) {
+        if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.allowed)) {
             return json
         }
         return "{}"

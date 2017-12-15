@@ -77,8 +77,8 @@ class PrivacyProtectionController: UIViewController {
     private func showLoadBlockerListTryAgain(_ controller: PrivacyProtectionErrorController) {
         controller.onTryAgain {
             let blockerListLoader = BlockerListsLoader()
-            blockerListLoader.start { newData in
-                self.handleLoadBlockerListResult(controller, blockerListLoader.hasData)
+            blockerListLoader.start { [weak self] newData in
+                self?.handleLoadBlockerListResult(controller, blockerListLoader.hasData)
             }
         }
     }

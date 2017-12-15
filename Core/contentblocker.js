@@ -85,7 +85,6 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		var match = ABPFilterParser.matches(duckduckgoBlockerData.easylistWhitelist, event.url, config)
-		console.log("Checking easylist whitelist: ", match, event.url)
 		return match
 	}
 

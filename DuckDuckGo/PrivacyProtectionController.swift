@@ -69,7 +69,7 @@ class PrivacyProtectionController: UIViewController {
 
     private func showBlockerListError() {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
-        controller.errorText = "This can be caused by a loss of internet connection when loading the content blocking rules."
+        controller.errorText = UserText.privacyProtectionReloadBlockerLists
         embeddedController.pushViewController(controller, animated: true)
         showLoadBlockerListTryAgain(controller)
     }

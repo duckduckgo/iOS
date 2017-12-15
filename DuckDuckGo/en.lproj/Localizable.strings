@@ -74,6 +74,8 @@
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";
 "privacy.protection.tos.poor" = "Poor Privacy Practices";
 
+"privacy.protection.reload.blocker.lists" = "This can be caused by a loss of internet connection when loading the content blocking rules.";
+
 "privacy.protection.encryption.cert.error" = "Error extracting certificate";
 "privacy.protection.encryption.subject.name" = "Subject Name";
 "privacy.protection.encryption.public.key" = "Public Key";

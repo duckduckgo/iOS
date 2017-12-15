@@ -70,28 +70,8 @@ class PrivacyProtectionController: UIViewController {
     private func showBlockerListError() {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "Error") as? PrivacyProtectionErrorController else { return }
         controller.errorText = UserText.privacyProtectionReloadBlockerLists
+        controller.delegate = self
         embeddedController.pushViewController(controller, animated: true)
-        showLoadBlockerListTryAgain(controller)
-    }
-
-    private func showLoadBlockerListTryAgain(_ controller: PrivacyProtectionErrorController) {
-        controller.onTryAgain {
-            let blockerListLoader = BlockerListsLoader()
-            blockerListLoader.start { [weak self] newData in
-                self?.handleLoadBlockerListResult(controller, blockerListLoader.hasData)
-            }
-        }
-    }
-
-    private func handleLoadBlockerListResult(_ controller: PrivacyProtectionErrorController, _ newData: Bool) {
-        DispatchQueue.main.async {
-            if !newData {
-                self.showLoadBlockerListTryAgain(controller)
-            } else {
-                self.dismiss(animated: true)
-                self.delegate?.reload()
-            }
-        }
     }
 
     private func showInitialScreen() {
@@ -136,6 +116,32 @@ class PrivacyProtectionController: UIViewController {
         for controller in embeddedController.viewControllers {
             guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
             infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
+        }
+    }
+
+}
+
+// Only use case just now is blocker lists not having downloaded
+extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
+
+    func canTryAgain(controller: PrivacyProtectionErrorController) -> Bool {
+        return true
+    }
+
+    func tryAgain(controller: PrivacyProtectionErrorController) {
+        BlockerListsLoader().start { [weak self] newData in
+            self?.handleBlockerListsLoaderResult(controller, newData)
+        }
+    }
+
+    private func handleBlockerListsLoaderResult(_ controller: PrivacyProtectionErrorController, _ newData: Bool) {
+        DispatchQueue.main.async {
+            if newData {
+                controller.dismiss(animated: true)
+                self.delegate?.reload()
+            } else {
+                controller.resetTryAgain()
+            }
         }
     }
 

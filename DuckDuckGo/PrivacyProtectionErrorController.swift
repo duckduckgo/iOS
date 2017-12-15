@@ -20,6 +20,14 @@
 import Foundation
 import UIKit
 
+protocol PrivacyProtectionErrorDelegate: class {
+
+    func canTryAgain(controller: PrivacyProtectionErrorController) -> Bool
+
+    func tryAgain(controller: PrivacyProtectionErrorController)
+
+}
+
 class PrivacyProtectionErrorController: UIViewController {
 
     @IBOutlet weak var errorLabel: UILabel!
@@ -28,28 +36,23 @@ class PrivacyProtectionErrorController: UIViewController {
 
     var errorText: String?
 
-    private var tryAgain: (() -> Void)?
+    weak var delegate: PrivacyProtectionErrorDelegate?
 
     override func viewDidLoad() {
         button.layer.cornerRadius = 5
         errorLabel.text = errorText
-        configureTryAgain()
+        resetTryAgain()
     }
 
-    private func configureTryAgain() {
-        button?.isHidden = tryAgain == nil
+    func resetTryAgain() {
+        button?.isHidden = !(delegate?.canTryAgain(controller: self) ?? false)
         activity?.isHidden = true
-    }
-
-    func onTryAgain(_ tryAgain: @escaping () -> Void) {
-        self.tryAgain = tryAgain
-        configureTryAgain()
     }
 
     @IBAction func onTapTryAgain() {
         activity.isHidden = false
         button.isHidden = true
-        tryAgain?()
+        delegate?.tryAgain(controller: self)
     }
 
 }

@@ -353,44 +353,68 @@
                                 </connections>
                             </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Grade Null" translatesAutoresizingMaskIntoConstraints="NO" id="Eym-g2-2W7">
-                                <rect key="frame" x="119" y="82" width="137" height="111"/>
+                                <rect key="frame" x="119" y="80" width="137" height="111"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uh-oh, that didn’t work." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwJ-gu-wkh">
-                                <rect key="frame" x="20" y="205.5" width="335" height="20"/>
+                                <rect key="frame" x="20" y="203.5" width="335" height="20"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check your internet connection and try again." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5L-XE-U9e">
-                                <rect key="frame" x="38" y="236.5" width="299" height="32"/>
+                                <rect key="frame" x="38" y="234.5" width="299" height="32"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.55294117647058827" green="0.55294117647058827" blue="0.55294117647058827" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PN6-XD-NaV">
+                                <rect key="frame" x="27" y="436" width="322" height="46"/>
+                                <color key="backgroundColor" red="0.37254901959999998" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="OTf-p5-pnz"/>
+                                </constraints>
+                                <state key="normal" title="Try Again">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onTapTryAgain" destination="X3g-za-d5S" eventType="touchUpInside" id="fwj-nb-6kK"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="n2A-BJ-cmy">
+                                <rect key="frame" x="178" y="449" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Eym-g2-2W7" firstAttribute="top" secondItem="OCb-9B-JB1" secondAttribute="top" constant="62" id="1KR-A6-oT4"/>
+                            <constraint firstItem="Eym-g2-2W7" firstAttribute="top" secondItem="OCb-9B-JB1" secondAttribute="top" priority="250" constant="60" id="1KR-A6-oT4"/>
+                            <constraint firstItem="PN6-XD-NaV" firstAttribute="centerX" secondItem="OCb-9B-JB1" secondAttribute="centerX" id="AO9-Jo-wbZ"/>
                             <constraint firstItem="wwJ-gu-wkh" firstAttribute="centerX" secondItem="OCb-9B-JB1" secondAttribute="centerX" id="Bk6-U0-Svl"/>
                             <constraint firstItem="wwJ-gu-wkh" firstAttribute="width" secondItem="hph-V2-QWe" secondAttribute="width" constant="-40" id="Gre-MQ-5rB"/>
                             <constraint firstItem="Eym-g2-2W7" firstAttribute="centerX" secondItem="OCb-9B-JB1" secondAttribute="centerX" id="JCE-Dk-6Ph"/>
                             <constraint firstItem="2tj-Oo-RA1" firstAttribute="width" secondItem="hph-V2-QWe" secondAttribute="width" id="M1j-sU-ac4"/>
                             <constraint firstItem="wwJ-gu-wkh" firstAttribute="top" secondItem="Eym-g2-2W7" secondAttribute="bottom" constant="12.699999999999999" id="NWQ-ry-GzZ"/>
+                            <constraint firstItem="n2A-BJ-cmy" firstAttribute="centerX" secondItem="OCb-9B-JB1" secondAttribute="centerX" id="OpK-oL-8B3"/>
                             <constraint firstItem="d5L-XE-U9e" firstAttribute="width" secondItem="hph-V2-QWe" secondAttribute="width" constant="-76" id="Wgs-Zo-LaY"/>
                             <constraint firstItem="d5L-XE-U9e" firstAttribute="centerX" secondItem="OCb-9B-JB1" secondAttribute="centerX" id="Yly-Ys-GVM"/>
+                            <constraint firstItem="2tj-Oo-RA1" firstAttribute="top" secondItem="PN6-XD-NaV" secondAttribute="bottom" constant="21" id="eIs-yc-XcU"/>
+                            <constraint firstItem="PN6-XD-NaV" firstAttribute="width" secondItem="hph-V2-QWe" secondAttribute="width" constant="-53" id="fzy-Yw-SoA"/>
                             <constraint firstItem="OCb-9B-JB1" firstAttribute="bottom" secondItem="2tj-Oo-RA1" secondAttribute="bottom" id="hpH-xp-DNQ"/>
+                            <constraint firstItem="PN6-XD-NaV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="d5L-XE-U9e" secondAttribute="bottom" constant="20" id="jOV-Ba-0UK"/>
                             <constraint firstItem="d5L-XE-U9e" firstAttribute="top" secondItem="wwJ-gu-wkh" secondAttribute="bottom" constant="11" id="mdl-JZ-hwq"/>
                             <constraint firstItem="2tj-Oo-RA1" firstAttribute="centerX" secondItem="OCb-9B-JB1" secondAttribute="centerX" id="scc-f5-hHb"/>
+                            <constraint firstItem="2tj-Oo-RA1" firstAttribute="top" secondItem="n2A-BJ-cmy" secondAttribute="bottom" constant="34" id="xly-LV-FBu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OCb-9B-JB1"/>
                     </view>
                     <connections>
+                        <outlet property="activity" destination="n2A-BJ-cmy" id="pYQ-Hp-amT"/>
+                        <outlet property="button" destination="PN6-XD-NaV" id="f3A-en-WRn"/>
                         <outlet property="errorLabel" destination="d5L-XE-U9e" id="JHu-NF-C63"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4V6-xu-lqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2399" y="-365"/>
+            <point key="canvasLocation" x="2397.5999999999999" y="-365.66716641679164"/>
         </scene>
         <!--PrivacyProtectionFooter-->
         <scene sceneID="hHO-R7-6mI">

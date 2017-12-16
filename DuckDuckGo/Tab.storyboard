@@ -102,7 +102,10 @@
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
                         <outlet property="progressBar" destination="cf7-Ja-fUU" id="3z8-Dr-WFy"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
-                        <segue destination="5Os-y0-IaV" kind="show" identifier="PrivacyProtection" id="nKl-8K-k03"/>
+                        <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
+                        <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtection" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xy9-lL-XjG" userLabel="First Responder" sceneMemberID="firstResponder"/>

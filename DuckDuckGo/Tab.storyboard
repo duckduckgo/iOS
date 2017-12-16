@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,9 +53,8 @@
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
-                                        <rect key="frame" x="38" y="288" width="299" height="224"/>
-                                        <mutableString key="text">The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk.  The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk. The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk. The certificate for this server is invalid.  You might be connecting to a server that is pretending to be "m.allmenus.com" which could put your confidential information at risk.</mutableString>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An unknown error has occured." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
+                                        <rect key="frame" x="38" y="288" width="299" height="16"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                         <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -102,7 +101,6 @@
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
                         <outlet property="progressBar" destination="cf7-Ja-fUU" id="3z8-Dr-WFy"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
-                        <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
                         <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtection" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>

@@ -20,7 +20,7 @@
 import UIKit
 import WebKit
 
-open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
+open class WebViewController: UIViewController {
 
     private struct webViewKeyPaths {
         static let estimatedProgress = "estimatedProgress"
@@ -32,7 +32,8 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var error: UIView!
     @IBOutlet weak var errorMessage: UILabel!
-    
+    @IBOutlet weak var webViewContainer: UIView!
+
     open private(set) var webView: WKWebView!
 
     private var shouldReloadOnError = false
@@ -83,7 +84,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        view.insertSubview(webView, at: 0)
+        webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
         
         if let url = url {
@@ -145,95 +146,11 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
     }
 
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        shouldReloadOnError = false
-        favicon = nil
-        hideErrorMessage()
-        showProgressIndicator()
-        webEventsDelegate?.webpageDidStartLoading()
-    }
-
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        hideProgressIndicator()
-        webView.getFavicon(completion: { [weak self] (favicon) in
-            if let favicon = favicon {
-                self?.onFaviconLoaded(favicon)
-            }
-        })
-        webEventsDelegate?.webpageDidFinishLoading()
-    }
-    
-    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        hideProgressIndicator()
-        webEventsDelegate?.webpageDidFailToLoad()
-        checkForReloadOnError()
-    }
-    
-    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        hideProgressIndicator()
-        showError(message: error.localizedDescription)
-        webEventsDelegate?.webpageDidFailToLoad()
-        checkForReloadOnError()
-    }
 
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
         reload()
-    }
-
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-
-        guard let url = navigationAction.request.url else {
-            decisionHandler(.allow)
-            return
-        }
-
-        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
-            decisionHandler(.cancel)
-            return
-        }
-
-        guard let delegate = webEventsDelegate,
-            let documentUrl = navigationAction.request.mainDocumentURL else {
-                decisionHandler(.allow)
-                return
-        }
-        
-        if appUrls.isDuckDuckGoSearch(url: url) {
-            StatisticsLoader.shared.refreshRetentionAtb()
-        }
-
-        if shouldReissueSearch(for: url) {
-            reissueSearchWithStatsParams(for: url)
-            decisionHandler(.cancel)
-            return
-        }
-
-        if navigationAction.isTargettingMainFrame(),
-            let upgradeUrl = httpsUpgrade.upgrade(url: url) {
-            Logger.log(text: "upgrading \(url) to \(upgradeUrl)")
-            load(url: upgradeUrl)
-            decisionHandler(.cancel)
-            return
-        }
-
-        if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
-            decisionHandler(.allow)
-            return
-        }
-
-        decisionHandler(.cancel)
-
-    }
-    
-    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        webView.load(navigationAction.request)
-        return nil
-    }
-
-    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        webEventsDelegate?.contentProcessDidTerminate(webView: webView)
     }
 
     private func shouldReissueSearch(for url: URL) -> Bool {
@@ -298,11 +215,106 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.configuration.loadScripts(with: protectionId)
     }
 
+}
+
+extension WebViewController: WKUIDelegate {
+
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        webView.load(navigationAction.request)
+        return nil
+    }
+
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        webEventsDelegate?.contentProcessDidTerminate(webView: webView)
+    }
+
+}
+
+extension WebViewController: WKNavigationDelegate {
+
     public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         completionHandler(.performDefaultHandling, nil)
         guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
         ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
     }
+
+
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        shouldReloadOnError = false
+        favicon = nil
+        hideErrorMessage()
+        showProgressIndicator()
+        webEventsDelegate?.webpageDidStartLoading()
+    }
+
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        hideProgressIndicator()
+        webView.getFavicon(completion: { [weak self] (favicon) in
+            if let favicon = favicon {
+                self?.onFaviconLoaded(favicon)
+            }
+        })
+        webEventsDelegate?.webpageDidFinishLoading()
+    }
+
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+        webEventsDelegate?.webpageDidFailToLoad()
+        checkForReloadOnError()
+    }
+
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
+        showError(message: error.localizedDescription)
+        webEventsDelegate?.webpageDidFailToLoad()
+        checkForReloadOnError()
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+
+        guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
+            decisionHandler(.cancel)
+            return
+        }
+
+        guard let delegate = webEventsDelegate,
+            let documentUrl = navigationAction.request.mainDocumentURL else {
+                decisionHandler(.allow)
+                return
+        }
+
+        if appUrls.isDuckDuckGoSearch(url: url) {
+            StatisticsLoader.shared.refreshRetentionAtb()
+        }
+
+        if shouldReissueSearch(for: url) {
+            reissueSearchWithStatsParams(for: url)
+            decisionHandler(.cancel)
+            return
+        }
+
+        if navigationAction.isTargettingMainFrame(),
+            let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+            Logger.log(text: "upgrading \(url) to \(upgradeUrl)")
+            load(url: upgradeUrl)
+            decisionHandler(.cancel)
+            return
+        }
+
+        if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
+            decisionHandler(.allow)
+            return
+        }
+
+        decisionHandler(.cancel)
+
+    }
+
 
 }
 

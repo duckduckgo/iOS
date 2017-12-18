@@ -70,7 +70,7 @@ public class EmbeddedMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
         MajorTrackerNetwork(name: "oracle",     domain: "oracle.com",       perentageOfPages: 10),
         MajorTrackerNetwork(name: "mediamath",  domain: "mediamath.com",    perentageOfPages: 9),
         MajorTrackerNetwork(name: "yahoo!",     domain: "yahoo.com",        perentageOfPages: 9),
-        MajorTrackerNetwork(name: "maxcdn",     domain: "maxcdn.com",       perentageOfPages: 7),
+        MajorTrackerNetwork(name: "stackpath",  domain: "stackpath.com",    perentageOfPages: 7),
         MajorTrackerNetwork(name: "automattic", domain: "automattic.com",   perentageOfPages: 7),
         ]
 

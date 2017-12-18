@@ -1,0 +1,3 @@
+[submodule "submodules/ios-js-support"]
+	path = submodules/ios-js-support
+	url = git@github.com:duckduckgo/ios-js-support.git

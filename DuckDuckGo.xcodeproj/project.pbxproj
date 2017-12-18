@@ -46,8 +46,6 @@
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
 		85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */; };
-		855927B01FA89153003A3994 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 855927AF1FA89152003A3994 /* bloom-filter-packed.js */; };
-		855927B21FA8915F003A3994 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 855927B11FA8915F003A3994 /* abp-filter-parser-packed.js */; };
 		8563A0311F8E1EE300F04442 /* FireButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0301F8E1EE300F04442 /* FireButton.xib */; };
 		8563A0331F8E1F2700F04442 /* FireButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A0321F8E1F2700F04442 /* FireButton.swift */; };
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
@@ -70,6 +68,10 @@
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
+		85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */; };
+		85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */; };
+		85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */; };
+		85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547091FE852CE0008E1E5 /* bloom-filter-packed-es2015.js */; };
 		85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85B718F31FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
 		85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */; };
@@ -93,7 +95,6 @@
 		85ED11231F50B58C00A7FBCE /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85ED11201F50B58C00A7FBCE /* Info.plist */; };
 		85ED11271F50B6FB00A7FBCE /* AppScreenshotsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */; };
 		85ED11281F50B6FB00A7FBCE /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */; };
-		85F1C3C21F7A4C1600161346 /* bloom-filter-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C11F7A4C1600161346 /* bloom-filter-packed-es2015.js */; };
 		85F1C3C61F7A4C7500161346 /* easylist-cached.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C31F7A4C7500161346 /* easylist-cached.js */; };
 		85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C41F7A4C7500161346 /* easylist-parsing.js */; };
 		85F1C3C81F7A4C7500161346 /* messaging.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C51F7A4C7500161346 /* messaging.js */; };
@@ -110,7 +111,6 @@
 		85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */; };
 		85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */; };
 		85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */; };
-		85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
 		F10307681E7D67BA0059FEC7 /* favicon.js in Resources */ = {isa = PBXBuildFile; fileRef = F10307671E7D67BA0059FEC7 /* favicon.js */; };
@@ -398,8 +398,6 @@
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
 		85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivacyProtection.xcassets; sourceTree = "<group>"; };
-		855927AF1FA89152003A3994 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "bloom-filter-packed.js"; sourceTree = "<group>"; };
-		855927B11FA8915F003A3994 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "abp-filter-parser-packed.js"; sourceTree = "<group>"; };
 		8563A0301F8E1EE300F04442 /* FireButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FireButton.xib; sourceTree = "<group>"; };
 		8563A0321F8E1F2700F04442 /* FireButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButton.swift; sourceTree = "<group>"; };
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
@@ -423,6 +421,10 @@
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
+		85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed.js"; path = "submodules/ios-js-support/src/bloom-filter-packed.js"; sourceTree = SOURCE_ROOT; };
+		85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
+		85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed-es2015.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed-es2015.js"; sourceTree = SOURCE_ROOT; };
+		85B547091FE852CE0008E1E5 /* bloom-filter-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed-es2015.js"; path = "submodules/ios-js-support/src/bloom-filter-packed-es2015.js"; sourceTree = SOURCE_ROOT; };
 		85B718F41FD071E50031A14F /* HTTPSUpgrade.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HTTPSUpgrade.xcdatamodel; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
 		85BA58561F34F61C00C6E8CA /* AppUserDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaultsTests.swift; sourceTree = "<group>"; };
@@ -448,7 +450,6 @@
 		85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppScreenshotsUITests.swift; path = AppScreenshots/AppScreenshotsUITests.swift; sourceTree = SOURCE_ROOT; };
 		85ED11201F50B58C00A7FBCE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AppScreenshots/Info.plist; sourceTree = SOURCE_ROOT; };
 		85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = AppScreenshots/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
-		85F1C3C11F7A4C1600161346 /* bloom-filter-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "bloom-filter-packed-es2015.js"; sourceTree = "<group>"; };
 		85F1C3C31F7A4C7500161346 /* easylist-cached.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "easylist-cached.js"; sourceTree = "<group>"; };
 		85F1C3C41F7A4C7500161346 /* easylist-parsing.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "easylist-parsing.js"; sourceTree = "<group>"; };
 		85F1C3C51F7A4C7500161346 /* messaging.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = messaging.js; sourceTree = "<group>"; };
@@ -465,7 +466,6 @@
 		85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgissuercert.der; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListRequest.swift; sourceTree = "<group>"; };
 		85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackerTests.swift; sourceTree = "<group>"; };
-		85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "abp-filter-parser-packed-es2015.js"; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		F10307671E7D67BA0059FEC7 /* favicon.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = favicon.js; sourceTree = "<group>"; };
@@ -740,11 +740,8 @@
 		835750931F8E9A610059E07B /* contentblocking */ = {
 			isa = PBXGroup;
 			children = (
-				85FC52631F6BD86700933A70 /* abp-filter-parser-packed-es2015.js */,
-				855927B11FA8915F003A3994 /* abp-filter-parser-packed.js */,
+				8595BF491FE847EB00F692EC /* ios-js-support */,
 				85047B811F6827AD002A95D8 /* blockerdata.js */,
-				85F1C3C11F7A4C1600161346 /* bloom-filter-packed-es2015.js */,
-				855927AF1FA89152003A3994 /* bloom-filter-packed.js */,
 				85047B891F69692C002A95D8 /* contentblocker.js */,
 				85047B871F6966ED002A95D8 /* disconnectme.js */,
 				85F1C3C31F7A4C7500161346 /* easylist-cached.js */,
@@ -997,6 +994,17 @@
 				85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */,
 			);
 			path = AppScreenshots;
+			sourceTree = "<group>";
+		};
+		8595BF491FE847EB00F692EC /* ios-js-support */ = {
+			isa = PBXGroup;
+			children = (
+				85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */,
+				85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */,
+				85B547091FE852CE0008E1E5 /* bloom-filter-packed-es2015.js */,
+				85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */,
+			);
+			name = "ios-js-support";
 			sourceTree = "<group>";
 		};
 		859872221F5743AF00041CB8 /* FireAnimation */ = {
@@ -2078,16 +2086,16 @@
 			files = (
 				85BA79951F71B37100F59015 /* tlds.js in Resources */,
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
+				85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
+				85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */,
+				85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */,
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,
-				85FC52641F6BD86700933A70 /* abp-filter-parser-packed-es2015.js in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
-				855927B01FA89153003A3994 /* bloom-filter-packed.js in Resources */,
+				85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */,
 				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
-				855927B21FA8915F003A3994 /* abp-filter-parser-packed.js in Resources */,
-				85F1C3C21F7A4C1600161346 /* bloom-filter-packed-es2015.js in Resources */,
 				85F1C3C61F7A4C7500161346 /* easylist-cached.js in Resources */,
 				85F1C3C81F7A4C7500161346 /* messaging.js in Resources */,
 			);

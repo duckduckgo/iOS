@@ -84,7 +84,6 @@ open class WebViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        // view.insertSubview(webView, at: 0)
         webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
         

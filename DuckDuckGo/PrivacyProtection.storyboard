@@ -1265,6 +1265,44 @@ with a website is protected.</string>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPractices" rowHeight="300" id="dTH-6q-tGo" customClass="PrivacyProtectionNoPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="302" width="375" height="300"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dTH-6q-tGo" id="9KP-Lk-xIX">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Unknown" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-y5-PuH">
+                                                    <rect key="frame" x="161" y="35" width="53" height="53"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Privacy Practices Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0S-dU-EUe">
+                                                    <rect key="frame" x="23" y="108" width="328" height="18"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The privacy practices of this website have not been reviewed." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATi-1t-ByQ">
+                                                    <rect key="frame" x="23" y="131" width="328" height="28"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="k0S-dU-EUe" firstAttribute="centerX" secondItem="9KP-Lk-xIX" secondAttribute="centerX" id="3Bs-Pl-PoI"/>
+                                                <constraint firstItem="Hdk-y5-PuH" firstAttribute="centerX" secondItem="9KP-Lk-xIX" secondAttribute="centerX" id="I3O-VY-vGO"/>
+                                                <constraint firstItem="k0S-dU-EUe" firstAttribute="top" secondItem="Hdk-y5-PuH" secondAttribute="bottom" constant="20" id="Jlb-EP-WTT"/>
+                                                <constraint firstItem="k0S-dU-EUe" firstAttribute="width" secondItem="9KP-Lk-xIX" secondAttribute="width" constant="-47" id="d9B-lO-wuc"/>
+                                                <constraint firstItem="ATi-1t-ByQ" firstAttribute="centerX" secondItem="9KP-Lk-xIX" secondAttribute="centerX" id="eAV-I8-up4"/>
+                                                <constraint firstItem="ATi-1t-ByQ" firstAttribute="top" secondItem="k0S-dU-EUe" secondAttribute="bottom" constant="5" id="lKf-YT-cFn"/>
+                                                <constraint firstItem="Hdk-y5-PuH" firstAttribute="top" secondItem="9KP-Lk-xIX" secondAttribute="top" constant="35" id="rgf-Rc-wfp"/>
+                                                <constraint firstItem="ATi-1t-ByQ" firstAttribute="width" secondItem="9KP-Lk-xIX" secondAttribute="width" constant="-47" id="zPL-PK-elz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="message" destination="ATi-1t-ByQ" id="WFS-jf-63e"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKK-U1-HtX">
@@ -1354,7 +1392,7 @@ with a website is protected.</string>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4256.8000000000002" y="1486.5067466266867"/>
+            <point key="canvasLocation" x="4229.6000000000004" y="1485.6071964017992"/>
         </scene>
         <!--PrivacyProtectionHeader-->
         <scene sceneID="R0m-fy-D7F">
@@ -1740,6 +1778,7 @@ with a website is protected.</string>
         <image name="PP Icon Result Success" width="22" height="22"/>
         <image name="PP Inline A" width="16" height="16"/>
         <image name="PP Inline C" width="16" height="16"/>
+        <image name="PP Unknown" width="53" height="53"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="iUG-hs-pjP"/>

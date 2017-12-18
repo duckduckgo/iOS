@@ -104,10 +104,16 @@ extension PrivacyProtectionPracticesController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rows.count
+        return max(1, rows.count)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard rows.count > 0 else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoPractices") as! PrivacyProtectionNoPracticesCell
+            cell.update()
+            return cell
+        }
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionPracticesCell
         cell.update(row: rows[indexPath.row])
         return cell
@@ -119,7 +125,7 @@ extension PrivacyProtectionPracticesController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if rows.count == 0 {
-            return 144
+            return 250
         }
 
         return UITableViewAutomaticDimension
@@ -143,6 +149,16 @@ class PrivacyProtectionPracticesCell: UITableViewCell {
         imageView?.image = row.good ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail")
         textLabel?.text = row.text
         textLabel?.adjustPlainTextLineHeight(21 / 16)
+    }
+
+}
+
+class PrivacyProtectionNoPracticesCell: UITableViewCell {
+
+    @IBOutlet weak var message: UILabel!
+
+    func update() {
+        message.adjustPlainTextLineHeight(1.28)
     }
 
 }

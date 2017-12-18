@@ -67,6 +67,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iL3-Ku-sPE"/>
                     </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="667"/>
                     <connections>
                         <outlet property="contentContainer" destination="HZv-0z-1Nb" id="CUZ-DE-TYa"/>
                         <outlet property="headerConstraint" destination="KgA-Er-xvv" id="0xI-Ul-MIx"/>

@@ -88,7 +88,7 @@ class TabViewController: WebViewController {
                 controller.popoverPresentationController?.sourceView = siteRatingView
                 controller.popoverPresentationController?.sourceRect = CGRect(
                     x: siteRatingView.frame.width / 2,
-                    y: siteRatingView.frame.width,
+                    y: siteRatingView.frame.height,
                     width: 1, height: 1)
             }
             

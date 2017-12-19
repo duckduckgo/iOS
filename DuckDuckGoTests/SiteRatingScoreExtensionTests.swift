@@ -136,13 +136,14 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(1, score.after)
     }
 
-    func testWhenSiteInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
+    func testWhenTrackerDetectedInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsOne() {
         let disconnectMeTrackers = [Url.https.host!: DisconnectMeTracker(url: Url.googleNetwork.absoluteString, networkName: "Google")]
         let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
-        let testee = SiteRating(url: Url.https, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
+        let testee = SiteRating(url: URL(string: "https://another.com")!, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
+        testee.trackerDetected(DetectedTracker(url: "https://tracky.com/tracker.js", networkName: nil, category: nil, blocked: false))
         let score = testee.siteScore()
-        XCTAssertEqual(1, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(2, score.before)
+        XCTAssertEqual(1, score.after)
     }
 
     func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassATOSScoreIsTen() {

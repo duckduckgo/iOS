@@ -32,6 +32,7 @@ class PrivacyProtectionController: UIViewController {
 
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
+    @IBOutlet weak var headerConstraint: NSLayoutConstraint!
 
     weak var delegate: PrivacyProtectionDelegate?
 
@@ -49,6 +50,8 @@ class PrivacyProtectionController: UIViewController {
         super.viewDidLoad()
 
         transitioningDelegate = self
+        popoverPresentationController?.backgroundColor = view.backgroundColor
+
         initOmniBar()
 
         if !BlockerListsLoader().hasData {
@@ -222,6 +225,15 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
 
 }
 
+extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate {
+
+    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
+        view.bringSubview(toFront: contentContainer)
+        headerConstraint.constant = -omniBarContainer.frame.size.height
+    }
+
+}
+
 fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -250,3 +262,4 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
     }
 
 }
+

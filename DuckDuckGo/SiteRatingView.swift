@@ -68,6 +68,7 @@ public class SiteRatingView: UIView {
     public func refresh() {
         circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
 
+        guard BlockerListsLoader().hasData else { return }
         guard let siteRating = siteRating else { return }
         
         let grades = siteRating.siteGrade()

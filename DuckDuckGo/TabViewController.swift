@@ -82,6 +82,16 @@ class TabViewController: WebViewController {
         guard let chromeDelegate = chromeDelegate else { return }
 
         if let controller = segue.destination as? PrivacyProtectionController {
+            controller.popoverPresentationController?.delegate = controller
+
+            if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
+                controller.popoverPresentationController?.sourceView = siteRatingView
+                controller.popoverPresentationController?.sourceRect = CGRect(
+                    x: siteRatingView.frame.width / 2,
+                    y: siteRatingView.frame.height,
+                    width: 1, height: 1)
+            }
+            
             controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate

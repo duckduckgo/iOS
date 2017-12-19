@@ -40,7 +40,7 @@ public extension SiteRating {
             afterScore += tos.derivedScore
         }
 
-        beforeScore += inMajorTrackerScore
+        beforeScore += hasTrackerInMajorNetworkScore
 
         if !https || !hasOnlySecureContent {
             beforeScore += 1
@@ -68,10 +68,8 @@ public extension SiteRating {
         return https ? -1 : 0
     }
 
-    private var inMajorTrackerScore: Int {
-        guard let domain = domain else { return 0 }
-        guard let networkName = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) })?.value.networkName else { return 0 }
-        return majorTrackerNetworkStore.network(forName: networkName) == nil ? 0 : 1
+    private var hasTrackerInMajorNetworkScore: Int {
+        return trackersDetected.keys.first(where: { $0.inMajorNetwork(disconnectMeTrackers, majorTrackerNetworkStore) }) != nil ? 1 : 0
     }
 
     private var isMajorTrackerScore: Int {
@@ -82,9 +80,7 @@ public extension SiteRating {
     }
 
     var isMajorTrackerNetwork: Bool {
-        get {
-            return isMajorTrackerScore > 0
-        }
+        return isMajorTrackerScore > 0
     }
     
     private var ipTrackerScore: Int {
@@ -178,3 +174,15 @@ public class SiteRatingCache {
         return "\(scheme)_\(domain)"
     }
 }
+
+fileprivate extension DetectedTracker {
+
+    func inMajorNetwork(_ disconnectMeTrackers: [String: DisconnectMeTracker], _ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Bool {
+        guard let domain = domain else { return false }
+        guard let networkName = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) })?.value.networkName else { return false }
+        return majorTrackerNetworkStore.network(forName: networkName) != nil
+    }
+
+}
+
+

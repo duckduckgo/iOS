@@ -49,7 +49,7 @@ public class InMemoryMajorNetworkStore: MajorTrackerNetworkStore {
 
     public func network(forDomain domain: String) -> MajorTrackerNetwork? {
         let lowercased = domain.lowercased()
-        return networks.first(where: { lowercased.hasSuffix($0.domain) })
+        return networks.first(where: { lowercased == $0.domain || lowercased.hasSuffix(".\($0.domain)") })
     }
 
     public func network(forName name: String) -> MajorTrackerNetwork? {

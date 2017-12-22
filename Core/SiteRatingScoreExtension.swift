@@ -120,7 +120,7 @@ public extension SiteRating {
     }
 
     public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
-        if let tracker = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) } )?.value {
+        if let tracker = disconnectMeTrackers.first(where: { domain == $0.key || domain.hasSuffix(".\($0.key)") } )?.value {
             return ( tracker.networkName, tracker.category?.rawValue )
         }
         

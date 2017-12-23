@@ -41,21 +41,18 @@ class TabManager {
     
     private func buildController(forTab tab: Tab) -> TabViewController {
         let url = tab.link?.url
-        let request = url == nil ? nil : URLRequest(url: url!)
-        return buildController(forTab: tab, request: request)
+        return buildController(forTab: tab, url: url)
     }
     
-    private func buildController(forTab tab: Tab, request: URLRequest?) -> TabViewController {
+    private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
         controller.attachWebView(configuration: configuration)
         controller.delegate = delegate
-        
-        if let request = request {
-            controller.load(urlRequest: request)
+        if let url = url {
+            controller.load(url: url)
         }
-        
         return controller
     }
     
@@ -97,16 +94,10 @@ class TabManager {
     }
     
     func add(url: URL?) -> TabViewController {
-        let request = url == nil ? nil : URLRequest(url: url!)
-        return add(request: request)
-    }
-    
-    func add(request: URLRequest?) -> TabViewController {
         current?.dismiss()
-        let url = request?.url
         let link = url == nil ? nil : Link(title: nil, url: url!)
         let tab = Tab(link: link)
-        let controller = buildController(forTab: tab, request: request)
+        let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
         model.add(tab: tab)
         save()

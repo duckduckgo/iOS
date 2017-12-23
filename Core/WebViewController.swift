@@ -37,7 +37,9 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
 
+    private var navigation: WKNavigation?
     private var shouldReloadOnError = false
+    
     private lazy var appUrls: AppUrls = AppUrls()
     private lazy var httpsUpgrade = HTTPSUpgrade()
 
@@ -52,11 +54,14 @@ open class WebViewController: UIViewController {
     public var favicon: URL?
     
     public var canGoBack: Bool {
-        return webView.canGoBack || (webView.url != nil && isError)
+        let webViewCanGoBack = webView.canGoBack
+        let navigatedToError = webView.url != nil && isError
+        return webViewCanGoBack || navigatedToError
     }
     
     public var canGoForward: Bool {
-        return webView.canGoForward && !isError
+        let webViewCanGoForward = webView.canGoForward
+        return webViewCanGoForward && !isError
     }
 
     public var isError: Bool {
@@ -139,11 +144,18 @@ open class WebViewController: UIViewController {
             webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
 
         case webViewKeyPaths.url:
-            webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
+            urlDidChange()
             
         default:
             Logger.log(text: "Unhandled keyPath \(keyPath)")
         }
+    }
+    
+    private func urlDidChange() {
+        guard navigation == nil else { return }
+        webEventsDelegate?.webpageDidStartLoading()
+        webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
+        webEventsDelegate?.webpageDidFinishLoading()
     }
     
     private func onFaviconLoaded(_ favicon: URL) {
@@ -246,6 +258,7 @@ extension WebViewController: WKNavigationDelegate {
 
 
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        self.navigation = navigation
         shouldReloadOnError = false
         favicon = nil
         hideErrorMessage()
@@ -254,6 +267,7 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.navigation = nil
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
             if let favicon = favicon {
@@ -264,12 +278,14 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        self.navigation = nil
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }
 
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        self.navigation = nil
         hideProgressIndicator()
         showError(message: error.localizedDescription)
         webEventsDelegate?.webpageDidFailToLoad()

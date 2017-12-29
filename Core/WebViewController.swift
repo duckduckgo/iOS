@@ -152,10 +152,7 @@ open class WebViewController: UIViewController {
     }
     
     private func urlDidChange() {
-        guard navigation == nil else { return }
-        webEventsDelegate?.webpageDidStartLoading()
         webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
-        webEventsDelegate?.webpageDidFinishLoading()
     }
     
     private func onFaviconLoaded(_ favicon: URL) {

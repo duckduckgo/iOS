@@ -37,7 +37,6 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
 
-    private var navigation: WKNavigation?
     private var shouldReloadOnError = false
     
     private lazy var appUrls: AppUrls = AppUrls()
@@ -255,7 +254,6 @@ extension WebViewController: WKNavigationDelegate {
 
 
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        self.navigation = navigation
         shouldReloadOnError = false
         favicon = nil
         hideErrorMessage()
@@ -264,7 +262,6 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        self.navigation = nil
         hideProgressIndicator()
         webView.getFavicon(completion: { [weak self] (favicon) in
             if let favicon = favicon {
@@ -275,14 +272,12 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        self.navigation = nil
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }
 
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        self.navigation = nil
         hideProgressIndicator()
         showError(message: error.localizedDescription)
         webEventsDelegate?.webpageDidFailToLoad()

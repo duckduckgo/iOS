@@ -26,6 +26,10 @@ open class WebViewController: UIViewController {
         static let estimatedProgress = "estimatedProgress"
         static let hasOnlySecureContent = "hasOnlySecureContent"
     }
+    
+    private struct webViewErrorCodes {
+        static let frameLoadInterrupted = 102
+    }
 
     var failingUrls = Set<String>()
     
@@ -272,9 +276,11 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let nserror = error as NSError
         lastError = error
-        if let url = loadedURL, let domain = url.host, nserror.code == 102 {
+        let error = error as NSError
+        if let url = loadedURL,
+            let domain = url.host,
+            error.code == webViewErrorCodes.frameLoadInterrupted {
             failingUrls.insert(domain)
         }
         showErrorLater()

@@ -26,7 +26,13 @@ open class WebViewController: UIViewController {
         static let estimatedProgress = "estimatedProgress"
         static let hasOnlySecureContent = "hasOnlySecureContent"
     }
+    
+    private struct webViewErrorCodes {
+        static let frameLoadInterrupted = 102
+    }
 
+    var failingUrls = Set<String>()
+    
     public weak var webEventsDelegate: WebEventsDelegate?
     
     @IBOutlet weak var progressBar: UIProgressView!
@@ -36,12 +42,15 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
 
+    private var lastError: Error?
+    private var loadedURL: URL?
     private var shouldReloadOnError = false
+    
     private lazy var appUrls: AppUrls = AppUrls()
     private lazy var httpsUpgrade = HTTPSUpgrade()
 
     public var name: String? {
-        return webView.title    
+        return webView.title
     }
     
     public var url: URL? {
@@ -113,10 +122,12 @@ open class WebViewController: UIViewController {
     }
     
     public func load(url: URL) {
+        loadedURL = url
+        lastError = nil
         load(urlRequest: URLRequest(url: url))
     }
  
-    public func load(urlRequest: URLRequest) {
+    private func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
         webView.stopLoading()
         webView.load(urlRequest)
@@ -240,6 +251,7 @@ extension WebViewController: WKNavigationDelegate {
 
 
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        lastError = nil
         shouldReloadOnError = false
         favicon = nil
         hideErrorMessage()
@@ -262,14 +274,18 @@ extension WebViewController: WKNavigationDelegate {
         webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }
-
+    
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        hideProgressIndicator()
-        showError(message: error.localizedDescription)
-        webEventsDelegate?.webpageDidFailToLoad()
-        checkForReloadOnError()
+        lastError = error
+        let error = error as NSError
+        if let url = loadedURL,
+            let domain = url.host,
+            error.code == webViewErrorCodes.frameLoadInterrupted {
+            failingUrls.insert(domain)
+        }
+        showErrorLater()
     }
-
+    
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
         guard let url = navigationAction.request.url else {
@@ -298,9 +314,9 @@ extension WebViewController: WKNavigationDelegate {
             return
         }
 
-        if navigationAction.isTargettingMainFrame(),
+        if !failingUrls.contains(url.host ?? ""),
+            navigationAction.isTargettingMainFrame(),
             let upgradeUrl = httpsUpgrade.upgrade(url: url) {
-            Logger.log(text: "upgrading \(url) to \(upgradeUrl)")
             load(url: upgradeUrl)
             decisionHandler(.cancel)
             return
@@ -315,6 +331,19 @@ extension WebViewController: WKNavigationDelegate {
 
     }
 
+    private func showErrorLater() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.showErrorNow()
+        }
+    }
+    
+    private func showErrorNow() {
+        guard let error = lastError else { return }
+        hideProgressIndicator()
+        showError(message: error.localizedDescription)
+        webEventsDelegate?.webpageDidFailToLoad()
+        checkForReloadOnError()
+    }
 
 }
 

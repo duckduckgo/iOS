@@ -25,6 +25,7 @@ open class WebViewController: UIViewController {
     private struct webViewKeyPaths {
         static let estimatedProgress = "estimatedProgress"
         static let hasOnlySecureContent = "hasOnlySecureContent"
+        static let url = "URL"
     }
     
     private struct webViewErrorCodes {
@@ -60,11 +61,14 @@ open class WebViewController: UIViewController {
     public var favicon: URL?
     
     public var canGoBack: Bool {
-        return webView.canGoBack || (webView.url != nil && isError)
+        let webViewCanGoBack = webView.canGoBack
+        let navigatedToError = webView.url != nil && isError
+        return webViewCanGoBack || navigatedToError
     }
     
     public var canGoForward: Bool {
-        return webView.canGoForward && !isError
+        let webViewCanGoForward = webView.canGoForward
+        return webViewCanGoForward && !isError
     }
 
     public var isError: Bool {
@@ -89,8 +93,11 @@ open class WebViewController: UIViewController {
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
+
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
@@ -145,9 +152,16 @@ open class WebViewController: UIViewController {
         case webViewKeyPaths.hasOnlySecureContent:
             webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
 
+        case webViewKeyPaths.url:
+            urlDidChange()
+            
         default:
             Logger.log(text: "Unhandled keyPath \(keyPath)")
         }
+    }
+    
+    private func urlDidChange() {
+        webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
     }
     
     private func onFaviconLoaded(_ favicon: URL) {
@@ -156,7 +170,6 @@ open class WebViewController: UIViewController {
             webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
         }
     }
-
 
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }

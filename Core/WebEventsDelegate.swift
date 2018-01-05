@@ -33,6 +33,8 @@ public protocol WebEventsDelegate: class {
 
     func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool)
 
+    func webView(_ webView: WKWebView, didChangeUrl url: URL?)
+
     func webpageDidStartLoading()
     
     func webpageDidFinishLoading()

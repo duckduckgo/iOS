@@ -50,7 +50,7 @@
                                         <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpB-oW-OBQ" userLabel="Enhancement Message Container" customClass="ProtectionUpgradedView" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpB-oW-OBQ" customClass="ProtectionUpgradedView" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="97.5" y="172" width="180" height="12"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENHANCED FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBS-tt-KGX">

@@ -62,7 +62,15 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual("Major", nameAndCategory.networkName)
         XCTAssertNil(nameAndCategory.category)
     }
-    
+
+    func testWhenNetworkNameAndCategoryExistsForUppercasedDomainTheyAreReturned() {
+        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString, networkName: "TrickyAds", category: .social ) ]
+        let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "SOMETRACKER.com")
+        XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
+        XCTAssertEqual("Social", nameAndCategory.category)
+    }
+
     func testWhenNetworkNameAndCategoryExistsForDomainTheyAreReturned() {
         let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString, networkName: "TrickyAds", category: .social ) ]
         let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS)

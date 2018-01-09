@@ -46,7 +46,7 @@ class MainViewController: UIViewController {
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     fileprivate var currentTab: TabViewController? {
-        return tabManager.current
+        return tabManager?.current
     }
 
     override func viewDidLoad() {
@@ -146,15 +146,11 @@ class MainViewController: UIViewController {
     }
     
     func loadUrlInNewTab(_ url: URL) {
-        loadRequestInNewTab(URLRequest(url: url))
-    }
-    
-    func loadRequestInNewTab(_ request: URLRequest) {
         loadViewIfNeeded()
-        addTab(forUrlRequest: request)
+        addTab(url: url)
         refreshOmniBar()
     }
-
+    
     func launchNewSearch() {
         loadViewIfNeeded()
         attachHomeScreen()
@@ -173,8 +169,8 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func addTab(forUrlRequest urlRequest: URLRequest) {
-        let tab = tabManager.add(request: urlRequest)
+    private func addTab(url: URL?) {
+        let tab = tabManager.add(url: url)
         omniBar.resignFirstResponder()
         addToView(tab: tab)
     }
@@ -433,7 +429,7 @@ extension MainViewController: TabDelegate {
         if currentTab == tab {
             refreshControls()
         }
-        tabManager.save()
+        tabManager?.save()
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {

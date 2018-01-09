@@ -447,8 +447,10 @@ extension TabViewController: WebEventsDelegate {
         siteRating?.finishedLoading = true
         updateSiteRating()
         tabModel.link = link
-        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.delegate?.tabLoadingStateDidChange(tab: self!)
+        }
     }
     
     func webpageDidFailToLoad() {
@@ -458,8 +460,10 @@ extension TabViewController: WebEventsDelegate {
         }
         siteRating?.finishedLoading = true
         updateSiteRating()
-        delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.delegate?.tabLoadingStateDidChange(tab: self!)
+        }
     }
     
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
@@ -480,6 +484,12 @@ extension TabViewController: WebEventsDelegate {
     func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool) {
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
+    }
+
+    func webView(_ webView: WKWebView, didChangeUrl url: URL?) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.delegate?.tabLoadingStateDidChange(tab: self!)
+        }
     }
 
 }

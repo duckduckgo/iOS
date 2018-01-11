@@ -29,7 +29,7 @@ public class HTTPSUpgradeStore {
 
     func persist(data: Data) {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-	    guard let upgradeRules = jsonObject as?	[String] else {	return }
+	guard let upgradeRules = jsonObject as?	[String] else {	return }
         let domains = upgradeRules.filter( { !$0.starts(with: "*.") } )
         let wildcardDomains = upgradeRules.filter( { $0.starts(with: "*." ) } )
         persistence.persist(domains: domains, wildcardDomains: wildcardDomains)

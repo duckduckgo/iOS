@@ -43,7 +43,7 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
             let entityName = String(describing: HTTPSUpgradeSimpleDomain.self)
             let context = container.managedObjectContext
             let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! HTTPSUpgradeSimpleDomain
-            storedDomain.domain = simpleDomain
+            storedDomain.domain = simpleDomain.lowercased()
         }
 
         for wildcardDomain in wildcardDomains {
@@ -51,14 +51,14 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
             let entityName = String(describing: HTTPSUpgradeWildcardDomain.self)
             let context = container.managedObjectContext
             let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! HTTPSUpgradeWildcardDomain
-            storedDomain.domain = domain
+            storedDomain.domain = domain.lowercased()
         }
 
         _ = container.save()
     }
 
     public func hasWildcardDomain(_ domain: String) -> Bool {
-        let domains = buildDomainList(domain)
+        let domains = buildDomainList(domain.lowercased())
         let request:NSFetchRequest<HTTPSUpgradeWildcardDomain> = HTTPSUpgradeWildcardDomain.fetchRequest()
         request.predicate = NSPredicate(format: "domain in %@", domains)
         guard let count = try? container.managedObjectContext.count(for: request) else { return false }
@@ -67,7 +67,7 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
     public func hasSimpleDomain(_ domain: String) -> Bool {
         let request:NSFetchRequest<HTTPSUpgradeSimpleDomain> = HTTPSUpgradeSimpleDomain.fetchRequest()
-        request.predicate = NSPredicate(format: "domain like %@", domain)
+        request.predicate = NSPredicate(format: "domain = %@", domain.lowercased())
         guard let count = try? container.managedObjectContext.count(for: request) else { return false }
         return count > 0
     }

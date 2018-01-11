@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17B1003" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="HTTPSUpgradeSimpleDomain" representedClassName=".HTTPSUpgradeSimpleDomain" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="HTTPSUpgradeSimpleDomain" representedClassName=".HTTPSUpgradeSimpleDomain" versionHashModifier="added domain index" syncable="YES" codeGenerationType="class">
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="domainIndex">
+            <fetchIndexElement property="domain" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
-    <entity name="HTTPSUpgradeWildcardDomain" representedClassName="HTTPSUpgradeWildcardDomain" syncable="YES" codeGenerationType="class">
+    <entity name="HTTPSUpgradeWildcardDomain" representedClassName="HTTPSUpgradeWildcardDomain" versionHashModifier="added domain index" syncable="YES" codeGenerationType="class">
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="domainIndex">
+            <fetchIndexElement property="domain" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
         <element name="HTTPSUpgradeSimpleDomain" positionX="-63" positionY="-18" width="128" height="60"/>

@@ -218,6 +218,7 @@ open class WebViewController: UIViewController {
         guard let webView = webView else { return }
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)
     }

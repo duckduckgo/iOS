@@ -34,7 +34,7 @@ public struct AppUrls {
         static let disconnectMeBlockList = "\(home)/contentblocking.js?l=disconnect"
         static let easylistBlockList = "\(home)/contentblocking.js?l=easylist"
         static let easylistPrivacyBlockList = "\(home)/contentblocking.js?l=easyprivacy"
-        static let httpsUpgradeList = "\(home)/contentblocking.js?l=https"
+        static let httpsUpgradeList = "\(home)/contentblocking.js?l=https2"
         static let trackersWhitelist = "\(home)/contentblocking/trackers-whitelist.txt"
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"

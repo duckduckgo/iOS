@@ -210,7 +210,7 @@ open class WebViewController: UIViewController {
         }
     }
     
-    public func goForward() {
+    open func goForward() {
         webView.goForward()
     }
     

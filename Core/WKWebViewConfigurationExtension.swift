@@ -50,12 +50,22 @@ extension WKWebViewConfiguration {
         load(scripts: [ .document, .favicon ] )
     }
     
+    // TODO pass if whitelisted to this func
     private func loadSiteMonitoringScripts(with id: String) {
         let configuration = ContentBlockerConfigurationUserDefaults()
         let whitelist = configuration.domainWhitelist.toJsonLookupString()
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelist, and:  configuration.enabled, with: id)
+        loadSurrogate()
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+    }
+    
+    private func loadSurrogate() {
+        let surrogateStore = SurrogateStore()
+        guard let js = surrogateStore.js else { return }
+        let javascriptLoader = JavascriptLoader()
+        javascriptLoader.load(js: js, into: userContentController, forMainFrameOnly: false)
+        javascriptLoader.load(.surrogate, into: userContentController, forMainFrameOnly: false, injectionTime: .atDocumentEnd)
     }
 
     private func loadContentBlockerDependencyScripts() {
@@ -78,7 +88,7 @@ extension WKWebViewConfiguration {
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
             "${whitelist}": whitelist ],
-                              andController:userContentController,
+                              into:userContentController,
                               forMainFrameOnly: false)
         
         let cache = ContentBlockerStringCache()
@@ -89,16 +99,16 @@ extension WKWebViewConfiguration {
             Logger.log(text: "using cached easylist")
 
             if #available(iOS 10, *) {
-                javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
+                javascriptLoader.load(.bloom, into: userContentController, forMainFrameOnly: false)
             } else {
-                javascriptLoader.load(.bloomES2015, withController: userContentController, forMainFrameOnly: false)
+                javascriptLoader.load(.bloomES2015, into: userContentController, forMainFrameOnly: false)
             }
             
             javascriptLoader.load(script: .cachedEasylist, withReplacements: [
                 "${easylist_privacy_json}": cachedEasylistPrivacy,
                 "${easylist_general_json}": cachedEasylist,
                 "${easylist_whitelist_json}": cachedEasylistWhitelist ],
-                                  andController: userContentController,
+                                  into: userContentController,
                                   forMainFrameOnly: false)
             
         } else if let easylist = easylistStore.easylist,
@@ -111,7 +121,7 @@ extension WKWebViewConfiguration {
                 "${easylist_privacy}": easylistPrivacy,
                 "${easylist_general}": easylist,
                 "${easylist_whitelist}": easylistWhitelist ],
-                                  andController: userContentController,
+                                  into: userContentController,
                                   forMainFrameOnly: false)
             
         }
@@ -121,7 +131,7 @@ extension WKWebViewConfiguration {
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {
-            javascriptLoader.load(script, withController: userContentController, forMainFrameOnly: forMainFrameOnly)
+            javascriptLoader.load(script, into: userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
 }

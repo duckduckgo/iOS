@@ -26,6 +26,7 @@ public class BlockerListsLoader {
     private var easylistStore = EasylistStore()
     private var disconnectStore = DisconnectMeStore()
     private var httpsUpgradeStore = HTTPSUpgradeStore()
+    private var surrogateStore = SurrogateStore()
 
     public var hasData: Bool {
         get {
@@ -97,7 +98,15 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
-        return 5
+        blockerListRequest.request(.surrogates) { (data) in
+            if let data = data {
+                self.newDataItems += 1
+                self.surrogateStore.persist(data: data)
+            }
+            semaphore.signal()
+        }
+
+        return blockerListRequest.requestCount
     }
 
 }

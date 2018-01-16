@@ -71,7 +71,7 @@ class NetworkLeaderboard {
     }
 
     func shouldShow() -> Bool {
-        return sitesVisited() > 10 && networksDetected().count >= 3
+        return sitesVisited() > 30 && networksDetected().count >= 3
     }
 
     func visited(domain: String) {

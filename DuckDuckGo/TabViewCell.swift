@@ -42,7 +42,7 @@ class TabViewCell: UICollectionViewCell {
     
     func update(withTab tab: Tab) {
         self.tab = tab
-        self.isHidden = false
+        isHidden = false
         title.text = tab.link?.title ?? ""
         link.text = tab.link?.url.absoluteString ?? ""
         configureFavicon(tab.link?.favicon)

@@ -83,20 +83,26 @@ class TabSwitcherViewController: UIViewController {
         self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
     
-    func onSelected(tabAt index: Int) {
-        delegate.tabSwitcher(self, didSelectTabAt: index)
-        dismiss()
-    }
-    
-    func onDeleted(tabAt index: Int) {
-        delegate.tabSwitcher(self, didRemoveTabAt: index)
-        collectionView.deleteItems(at: [ IndexPath(row: index, section: 0) ])
-        refreshTitle()
-    }
-    
     fileprivate func dismiss() {
         dismiss(animated: true, completion: nil)
     }
+}
+
+extension TabSwitcherViewController: TabViewCellDelegate {
+    
+    func deleteTab(tab: Tab) {
+        let index = tabsModel.indexOf(tab: tab)
+        
+        delegate.tabSwitcher(self, didRemoveTab: tab)
+        refreshTitle()
+        
+        if let index = index {
+            collectionView.deleteItems(at: [ IndexPath(row: index, section: 0) ])
+        } else {
+            collectionView.reloadData()
+        }
+    }
+    
 }
 
 extension TabSwitcherViewController: UICollectionViewDataSource {
@@ -109,8 +115,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         let tab = tabsModel.get(tabAt: indexPath.row)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as! TabViewCell
         cell.update(withTab: tab)
-        cell.removeButton.tag = indexPath.row
-        cell.removeButton.addTarget(self, action: #selector(onRemoveTapped(sender:)), for: .touchUpInside)
+        cell.delegate = self
         return cell
     }
     
@@ -119,21 +124,15 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! TabsFooter
     }
     
-    @objc func onRemoveTapped(sender: UIView) {
-        let index = sender.tag
-        UIView.animate(withDuration: 0.3, animations: {
-            guard let superview = sender.superview else { return }
-            superview.transform.tx = -superview.frame.width * 1.5
-        }, completion: { completed in
-            self.onDeleted(tabAt: index)
-        })
-    }
 }
 
 extension TabSwitcherViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        onSelected(tabAt: indexPath.row)
+        let cell = collectionView.cellForItem(at: indexPath) as! TabViewCell
+        guard let tab = cell.tab else { return }
+        delegate.tabSwitcher(self, didSelectTab: tab)
+        dismiss()
     }
 }
 

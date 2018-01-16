@@ -465,12 +465,14 @@ extension MainViewController: TabSwitcherDelegate {
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         attachHomeScreen()
     }
-    
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTabAt index: Int) {
+
+    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
+        guard let index = tabManager.model.indexOf(tab: tab) else { return }
         select(tabAt: index)
     }
     
-    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTabAt index: Int) {
+    func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
+        guard let index = tabManager.model.indexOf(tab: tab) else { return }
         remove(tabAt: index)
     }
     

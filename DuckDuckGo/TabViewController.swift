@@ -125,6 +125,14 @@ class TabViewController: WebViewController {
         }
     }
     
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        guard let url = webView.url else { return }
+        
+        siteRating = SiteRating(url: url)
+        reloadScripts(with: siteRating!.protectionId)
+        updateSiteRating()
+    }
+    
     private func resetNavigationBar() {
         chromeDelegate?.setBarsHidden(false, animated: false)
     }

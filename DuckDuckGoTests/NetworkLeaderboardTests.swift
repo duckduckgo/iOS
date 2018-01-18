@@ -29,7 +29,7 @@ class NetworkLeaderboardTests: XCTestCase {
 
     func testWhenEnoughSitesVisitedAndEnoughNetworksDetectedThenShouldShow() {
         let leaderboard = NetworkLeaderboard()
-        for i in 0 ..< 11 {
+        for i in 0 ... 30 {
             let domain = "www.site\(i).com"
             leaderboard.visited(domain: domain)
         }
@@ -38,7 +38,7 @@ class NetworkLeaderboardTests: XCTestCase {
             let domain = "www.site\(i).com"
             leaderboard.network(named: "google\(i).com", detectedWhileVisitingDomain: domain)
         }
-        XCTAssertEqual(11, leaderboard.sitesVisited())
+        XCTAssertEqual(31, leaderboard.sitesVisited())
         XCTAssertEqual(3, leaderboard.networksDetected().count)
         XCTAssertTrue(leaderboard.shouldShow())
     }

@@ -103,8 +103,13 @@ class TabViewController: WebViewController {
     }
 
     override func goBack() {
-        resetSiteRating()
+        siteRating = nil
         super.goBack()
+    }
+    
+    override func goForward() {
+        siteRating = nil
+        super.goForward()
     }
 
     private func addContentBlockerConfigurationObserver() {
@@ -118,6 +123,14 @@ class TabViewController: WebViewController {
             self.reloadScripts(with: siteRating.protectionId)
             self.webView?.reload()
         }
+    }
+    
+    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        guard let url = webView.url else { return }
+        
+        siteRating = SiteRating(url: url)
+        reloadScripts(with: siteRating!.protectionId)
+        updateSiteRating()
     }
     
     private func resetNavigationBar() {
@@ -147,10 +160,6 @@ class TabViewController: WebViewController {
     
     fileprivate func updateSiteRating() {
         if isError {
-            siteRating = nil
-        } else if let url = url {
-            siteRating?.url = url
-        } else {
             siteRating = nil
         }
         onSiteRatingChanged()
@@ -482,6 +491,7 @@ extension TabViewController: WebEventsDelegate {
     }
 
     func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool) {
+        guard webView.url?.host == siteRating?.url.host else { return }        
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
     }

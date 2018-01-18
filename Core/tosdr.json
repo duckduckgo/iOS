@@ -131,7 +131,7 @@
                     ],
             "good": []
         },
-        "class": "E"
+        "class": false
     },
     "tumblr.com": {
         "score": 0,
@@ -180,12 +180,42 @@
         },
         "class": false
     },
+    "store.steampowered.com": {
+        "score": -65,
+        "all": {
+            "bad": [
+                    "they can delete your account without prior notice and without a reason",
+                    "class action waiver",
+                    "personal data is given to third parties",
+                    "defend, indemnify, hold harmless; survives termination"
+                    ],
+            "good": [
+                     "pseudonyms allowed",
+                     "you can leave at any time",
+                     "personal data is not sold",
+                     "you can request access and deletion of personal data",
+                     "user is notified a month or more in advance"
+                     ]
+        },
+        "match": {
+            "bad": [
+                    "personal data is given to third parties"
+                    ],
+            "good": [
+                     "personal data is not sold",
+                     "you can request access and deletion of personal data"
+                     ]
+        },
+        "class": false
+    },
     "spotify.com": {
         "score": 10,
         "all": {
             "bad": [
                     "no promise to inform/notify",
                     "they can delete your account without prior notice and without a reason",
+                    "Spotify may transfer and process your data to somewhere outside of your country-bad-50",
+                    "You grant perpetual license to anything you publish-bad-80",
                     "no quality guarantee",
                     "no quality guarantee",
                     "third parties may be involved in operating the service",
@@ -557,7 +587,6 @@
         "all": {
             "bad": [
                     "tracks you on other websites",
-                    "the (mobile) app of this service requires very broad permissions at install-time",
                     "your data is used for many purposes",
                     "very broad",
                     "pseudonym not allowed (not because of user-to-user trust)",
@@ -602,6 +631,86 @@
         "class": false
     },
     "duckduckgo.com": {
+        "score": -100,
+        "all": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "match": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "class": "A"
+    },
+    "donttrack.us": {
+        "score": -100,
+        "all": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "match": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "class": "A"
+    },
+    "spreadprivacy.com": {
+        "score": -100,
+        "all": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "match": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "class": "A"
+    },
+    "duckduckhack.com": {
+        "score": -100,
+        "all": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "match": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "class": "A"
+    },
+    "privatebrowsingmyths.com": {
+        "score": -100,
+        "all": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "match": {
+            "bad": [],
+            "good": [
+                     "no tracking"
+                     ]
+        },
+        "class": "A"
+    },
+    "duck.co": {
         "score": -100,
         "all": {
             "bad": [],

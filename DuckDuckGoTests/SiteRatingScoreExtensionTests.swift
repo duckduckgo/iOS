@@ -173,12 +173,21 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(2, score.after)
     }
 
-    // TODO check with extension team - the JS logic leaves after unchanged if the normalized score is negative
-    func testWhenNoTrackersAndHTTPSAndNegativeTOSScoreIsZero() {
+    func testWhenTOSIsNegativeThenScoreGreaterThanOneIsDecremented() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: -10))
+        for _ in 1...10 {
+            testee.trackerDetected(DetectedTracker(url: "https://tracky.com/tracker.js", networkName: nil, category: nil, blocked: false))
+        }
+        let score = testee.siteScore()
+        XCTAssertEqual(1, score.before)
+        XCTAssertEqual(1, score.after)
+    }
+    
+    func testWhenTOSIsNegativeThenScoreOfOneIsUnchanged() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: -10))
         let score = testee.siteScore()
-        XCTAssertEqual(0, score.before)
-        XCTAssertEqual(0, score.after)
+        XCTAssertEqual(1, score.before)
+        XCTAssertEqual(1, score.after)
     }
 
     func testWhenNoTrackersAndHTTPSAndClassETOSScoreIsThree() {

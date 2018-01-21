@@ -50,6 +50,14 @@ public extension SiteRating {
         beforeScore += ipTrackerScore
 
         beforeScore += Int(floor(Double(totalTrackersDetected) / 10))
+        
+        if afterScore == 0 && termsOfService?.classification != .a {
+            afterScore = 1
+        }
+        
+        if beforeScore == 0 && termsOfService?.classification != .a {
+            beforeScore = 1
+        }
 
         let cache = SiteRatingCache.shared
         if !cache.add(url: url, score: beforeScore) {

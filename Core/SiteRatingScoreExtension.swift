@@ -49,7 +49,7 @@ public extension SiteRating {
 
         beforeScore += ipTrackerScore
 
-        beforeScore += Int(ceil(Double(totalTrackersDetected) / 10))
+        beforeScore += Int(floor(Double(totalTrackersDetected) / 10))
 
         let cache = SiteRatingCache.shared
         if !cache.add(url: url, score: beforeScore) {

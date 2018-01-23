@@ -58,6 +58,9 @@
 		8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */; };
 		8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */; };
 		8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */; };
+		856B0DB42016A91900B7BED3 /* PasswordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0DB32016A91900B7BED3 /* PasswordsViewController.swift */; };
+		856B0DB62016ADBB00B7BED3 /* TabViewControllerPasswordExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856B0DB52016ADBB00B7BED3 /* TabViewControllerPasswordExtension.swift */; };
+		856B0DB82016B1D700B7BED3 /* password-injection.js in Resources */ = {isa = PBXBuildFile; fileRef = 856B0DB72016B1D700B7BED3 /* password-injection.js */; };
 		857065681F6AADC40044DCB1 /* DisconnectMeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065671F6AADC40044DCB1 /* DisconnectMeTracker.swift */; };
 		8570656E1F6AAE270044DCB1 /* DetectedTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */; };
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
@@ -410,6 +413,9 @@
 		8565A3461FC87EC800239327 /* PrivacyProtectionPracticesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionPracticesController.swift; sourceTree = "<group>"; };
 		8565A34A1FC8D96B00239327 /* LaunchTabNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotification.swift; sourceTree = "<group>"; };
 		8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTabNotificationTests.swift; sourceTree = "<group>"; };
+		856B0DB32016A91900B7BED3 /* PasswordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordsViewController.swift; sourceTree = "<group>"; };
+		856B0DB52016ADBB00B7BED3 /* TabViewControllerPasswordExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerPasswordExtension.swift; sourceTree = "<group>"; };
+		856B0DB72016B1D700B7BED3 /* password-injection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "password-injection.js"; sourceTree = "<group>"; };
 		857065671F6AADC40044DCB1 /* DisconnectMeTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisconnectMeTracker.swift; sourceTree = "<group>"; };
 		8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedTrackerTests.swift; sourceTree = "<group>"; };
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -1275,6 +1281,8 @@
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 				8563A0371F8E54F100F04442 /* Tab.storyboard */,
+				856B0DB32016A91900B7BED3 /* PasswordsViewController.swift */,
+				856B0DB52016ADBB00B7BED3 /* TabViewControllerPasswordExtension.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1518,6 +1526,7 @@
 				F18608DF1E5E649400361C30 /* document.js */,
 				F10307671E7D67BA0059FEC7 /* favicon.js */,
 				85BA79941F71B37100F59015 /* tlds.js */,
+				856B0DB72016B1D700B7BED3 /* password-injection.js */,
 			);
 			name = Javascript;
 			sourceTree = "<group>";
@@ -2093,6 +2102,7 @@
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */,
+				856B0DB82016B1D700B7BED3 /* password-injection.js in Resources */,
 				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
@@ -2192,6 +2202,7 @@
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
+				856B0DB62016ADBB00B7BED3 /* TabViewControllerPasswordExtension.swift in Sources */,
 				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
 				85CEC0771F2FD5CD0092C0C3 /* Stories.xcdatamodeld in Sources */,
@@ -2205,6 +2216,7 @@
 				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
 				F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */,
 				F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */,
+				856B0DB42016A91900B7BED3 /* PasswordsViewController.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,

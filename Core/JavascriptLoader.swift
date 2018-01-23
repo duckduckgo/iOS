@@ -38,6 +38,7 @@ public class JavascriptLoader {
         case cachedEasylist = "easylist-cached"
         case easylistParsing = "easylist-parsing"
         case blockerData = "blockerdata"
+        case passwordInjection = "password-injection"
     }
 
     class func path(for jsFile: String) -> String {

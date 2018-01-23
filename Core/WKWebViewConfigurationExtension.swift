@@ -47,7 +47,7 @@ extension WKWebViewConfiguration {
     }
     
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document, .favicon ] )
+        load(scripts: [ .document, .favicon, .passwordInjection ] )
     }
     
     private func loadSiteMonitoringScripts(with id: String) {

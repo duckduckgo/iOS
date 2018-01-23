@@ -35,6 +35,8 @@ class TabViewController: WebViewController {
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
 
+    var hasPasswordInjectionScript = false
+    
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Tab", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
         controller.contentBlocker = contentBlocker
@@ -78,30 +80,39 @@ class TabViewController: WebViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        guard let chromeDelegate = chromeDelegate else { return }
-
         if let controller = segue.destination as? PrivacyProtectionController {
-            controller.popoverPresentationController?.delegate = controller
-
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
-                controller.popoverPresentationController?.sourceView = siteRatingView
-                controller.popoverPresentationController?.sourceRect = CGRect(
-                    x: siteRatingView.frame.width / 2,
-                    y: siteRatingView.frame.height,
-                    width: 1, height: 1)
-            }
-            
-            controller.delegate = self
-            privacyController = controller
-            controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
-            controller.omniBarText = chromeDelegate.omniBar.textField.text
-            controller.siteRating = siteRating
-            controller.errorText = isError ? errorText : nil
+            preparePrivacyProtectionController(controller)
+        } else if let controller = segue.destination as? PasswordsViewController {
+            preparePasswordsController(controller)
         }
-
+    }
+    
+    private func preparePasswordsController(_ controller: PasswordsViewController) {
+        controller.delegate = self
+        controller.domainName = siteRating?.domain
     }
 
+    private func preparePrivacyProtectionController(_ controller: PrivacyProtectionController) {
+        guard let chromeDelegate = chromeDelegate else { return }
+        
+        controller.popoverPresentationController?.delegate = controller
+        
+        if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
+            controller.popoverPresentationController?.sourceView = siteRatingView
+            controller.popoverPresentationController?.sourceRect = CGRect(
+                x: siteRatingView.frame.width / 2,
+                y: siteRatingView.frame.height,
+                width: 1, height: 1)
+        }
+        
+        controller.delegate = self
+        privacyController = controller
+        controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
+        controller.omniBarText = chromeDelegate.omniBar.textField.text
+        controller.siteRating = siteRating
+        controller.errorText = isError ? errorText : nil
+    }
+    
     override func goBack() {
         siteRating = nil
         super.goBack()
@@ -179,6 +190,7 @@ class TabViewController: WebViewController {
         if let link = link {
 
             if let domain = siteRating?.domain {
+                alert.addAction(passwordsAction())
                 alert.addAction(whitelistAction(forDomain: domain))
             }
 
@@ -193,6 +205,12 @@ class TabViewController: WebViewController {
         present(controller: alert, fromView: button)
     }
 
+    func passwordsAction() -> UIAlertAction {
+        return UIAlertAction(title: "Passwords...", style: .default) { [weak self] (action) in
+            self?.launchPasswords()
+        }
+    }
+    
     func whitelistAction(forDomain domain: String) -> UIAlertAction {
 
         let whitelistManager = WhitelistManager()
@@ -216,6 +234,10 @@ class TabViewController: WebViewController {
         alert.addAction(shareAction(forUrl: url, atPoint: point))
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: webView, atPoint: point)
+    }
+    
+    private func launchPasswords() {
+        performSegue(withIdentifier: "Passwords", sender: self)
     }
     
     private func refreshAction() -> UIAlertAction {

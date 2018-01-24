@@ -68,7 +68,6 @@ extension WKWebViewConfiguration {
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {
-        let easylistStore = EasylistStore()
         let disconnectMeStore = DisconnectMeStore()
         let javascriptLoader = JavascriptLoader()
         
@@ -81,13 +80,18 @@ extension WKWebViewConfiguration {
                               andController:userContentController,
                               forMainFrameOnly: false)
         
+//        loadEasylist(javascriptLoader)
+    }
+    
+    private func loadEasylist(_ javascriptLoader: JavascriptLoader) {
+        let easylistStore = EasylistStore()
         let cache = ContentBlockerStringCache()
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
             let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
             
             Logger.log(text: "using cached easylist")
-
+            
             if #available(iOS 10, *) {
                 javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
             } else {
@@ -106,7 +110,7 @@ extension WKWebViewConfiguration {
             let easylistWhitelist = easylistStore.easylistWhitelist {
             
             Logger.log(text: "parsing easylist")
-
+            
             javascriptLoader.load(script: .easylistParsing, withReplacements: [
                 "${easylist_privacy}": easylistPrivacy,
                 "${easylist_general}": easylist,
@@ -115,7 +119,6 @@ extension WKWebViewConfiguration {
                                   forMainFrameOnly: false)
             
         }
-        
     }
     
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {

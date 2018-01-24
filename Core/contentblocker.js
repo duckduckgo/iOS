@@ -225,7 +225,8 @@ var duckduckgoContentBlocking = function() {
 				return false
 			}
 
-			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
+			disconnectMeMatch(event) 
+			// || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
 	}
 

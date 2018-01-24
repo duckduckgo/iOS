@@ -20,7 +20,7 @@
 
 import Foundation
 
-public struct Atb {
+public struct Atb: Decodable {
     
     public static let variant = "mi"
 

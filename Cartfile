@@ -4,7 +4,7 @@ github "subsymbolic/SwiftyJSON" "4a62eb3a37e1e694a7f83d50093e803f966055ba"
 
 github "subsymbolic/Kingfisher" ~> 3.10.3
 
-github "subsymbolic/Device.swift" ~> 0.5.0
+github "duckduckgo/Device.swift" ~> 1.1 
 
 github "subsymbolic/Toast-Swift" ~> 2.0.0
 

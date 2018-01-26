@@ -17,15 +17,27 @@
 //  limitations under the License.
 //
 
-duckduckgoBlockerData.easylist = ${easylist_general_json}
-duckduckgoBlockerData.easylistPrivacy = ${easylist_privacy_json}
-duckduckgoBlockerData.easylistWhitelist = ${easylist_whitelist_json}
+(function() {
 
-function duckduckgoEasylistRepair(parserData) {
-	parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
-	parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionFilter)
-}
+    duckduckgoBlockerData.easylist = ${easylist_general_json}
+    duckduckgoBlockerData.easylistPrivacy = ${easylist_privacy_json}
+    duckduckgoBlockerData.easylistWhitelist = ${easylist_whitelist_json}
 
-duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)
-duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)
-duckduckgoEasylistRepair(duckduckgoBlockerData.easylistWhitelist)
+    function duckduckgoEasylistRepair(parserData) {
+        parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
+        parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionFilter)
+    }
+
+    if (Object.keys(duckduckgoBlockerData.easylist).length > 0) {
+        duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)
+    }
+
+    if (Object.keys(duckduckgoBlockerData.easylistPrivacy).length > 0) {
+        duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)
+    }
+
+    if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length > 0) {
+        duckduckgoEasylistRepair(duckduckgoBlockerData.easylistWhitelist)
+    }
+
+})()

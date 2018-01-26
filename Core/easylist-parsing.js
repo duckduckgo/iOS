@@ -17,17 +17,32 @@
 //  limitations under the License.
 //
 
-try {
+(function (){
 
-    ABPFilterParser.parse(`${easylist_privacy}`, duckduckgoBlockerData.easylistPrivacy)
-    duckduckgoMessaging.cache("easylist-privacy", JSON.stringify(duckduckgoBlockerData.easylistPrivacy))
+    try {
 
-    ABPFilterParser.parse(`${easylist_general}`, duckduckgoBlockerData.easylist)
-    duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist))
+        var easylistPrivacy = `${easylist_privacy}`
+        var easylistGeneral = `${easylist_general}`
+        var easylistWhitelist = `${easylist_whitelist}`
+        
+        if (easylistPrivacy != "") {
+            ABPFilterParser.parse(easylistPrivacy, duckduckgoBlockerData.easylistPrivacy)
+        }
+        duckduckgoMessaging.cache("easylist-privacy", JSON.stringify(duckduckgoBlockerData.easylistPrivacy))
 
-    ABPFilterParser.parse(`${easylist_whitelist}`, duckduckgoBlockerData.easylistWhitelist)
-    duckduckgoMessaging.cache("easylist-whitelist", JSON.stringify(duckduckgoBlockerData.easylistWhitelist))
+        if (easylistGeneral != "") {
+            ABPFilterParser.parse(easylistGeneral, duckduckgoBlockerData.easylist)
+        }
+        duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist))
+        
+        if (easylistWhitelist != "") {
+            ABPFilterParser.parse(easylistWhitelist, duckduckgoBlockerData.easylistWhitelist)
+        }
+        duckduckgoMessaging.cache("easylist-whitelist", JSON.stringify(duckduckgoBlockerData.easylistWhitelist))
 
-} catch (error) {
-    // no-op
-}
+    } catch (error) {
+        // no-op
+    }
+
+})()
+

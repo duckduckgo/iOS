@@ -1,5 +1,5 @@
+github "duckduckgo/Device.swift" "1.1"
 github "subsymbolic/Alamofire" "4.5.0"
-github "subsymbolic/Device.swift" "0.5"
 github "subsymbolic/Kingfisher" "3.10.3"
 github "subsymbolic/OHHTTPStubs" "6.0.0"
 github "subsymbolic/SimulatorStatusMagic" "tags/1.9.5"

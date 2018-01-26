@@ -79,6 +79,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	function trackerWhitelisted(event) {
+        if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length == 0) { return }
+        
 		var config = {
 			domain: document.location.hostname,
 			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
@@ -183,6 +185,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	function checkEasylist(event, easylist, name) {
+		if (Object.keys(easylist).length == 0) { return }
+
 		var config = {
 			domain: document.location.hostname,
 			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
@@ -221,9 +225,9 @@ var duckduckgoContentBlocking = function() {
 		parentEntityUrl = getParentEntityUrl()
 
 		document.addEventListener("beforeload", function(event) {
-			if (trackerWhitelisted(event)) {
-				return false
-			}
+            if (trackerWhitelisted(event)) {
+                return false
+            }
 
 			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)

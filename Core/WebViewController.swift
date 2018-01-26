@@ -235,9 +235,9 @@ open class WebViewController: UIViewController {
         webView.isHidden = false
     }
 
-    open func reloadScripts(with protectionId: String) {
+    open func reloadScripts(with protectionId: String, restrictedDevice: Bool) {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(with: protectionId)
+        webView.configuration.loadScripts(with: protectionId, restrictedDevice: restrictedDevice)
     }
 
 }

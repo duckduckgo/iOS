@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        print("***", UIDevice.current.deviceType.displayName)
+        
         appIsLaunching = true
         return true
     }

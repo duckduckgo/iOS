@@ -26,6 +26,14 @@ function duckduckgoEasylistRepair(parserData) {
 	parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionFilter)
 }
 
-duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)
-duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)
-duckduckgoEasylistRepair(duckduckgoBlockerData.easylistWhitelist)
+if (Object.keys(duckduckgoBlockerData.easylist).length > 0) {
+	duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)	
+}
+
+if (Object.keys(duckduckgoBlockerData.easylistPrivacy).length > 0) {
+	duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)
+}
+
+if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length > 0) {
+	duckduckgoEasylistRepair(duckduckgoBlockerData.easylistWhitelist)
+}

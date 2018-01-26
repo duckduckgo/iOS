@@ -19,13 +19,23 @@
 
 try {
 
-    ABPFilterParser.parse(`${easylist_privacy}`, duckduckgoBlockerData.easylistPrivacy)
+    var easylistPrivacy = `${easylist_privacy}`
+    var easylistGeneral = `${easylist_general}`
+    var easylistWhitelist = `${easylist_whitelist}`
+    
+    if (easylistPrivacy != "") {
+	    ABPFilterParser.parse(easylistPrivacy, duckduckgoBlockerData.easylistPrivacy)
+	}
     duckduckgoMessaging.cache("easylist-privacy", JSON.stringify(duckduckgoBlockerData.easylistPrivacy))
 
-    ABPFilterParser.parse(`${easylist_general}`, duckduckgoBlockerData.easylist)
+	if (easylistGeneral != "") {
+	    ABPFilterParser.parse(easylistGeneral, duckduckgoBlockerData.easylist)
+	}
     duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist))
-
-    ABPFilterParser.parse(`${easylist_whitelist}`, duckduckgoBlockerData.easylistWhitelist)
+	
+	if (easylistWhitelist != "") {
+	    ABPFilterParser.parse(easylistWhitelist, duckduckgoBlockerData.easylistWhitelist)
+	}
     duckduckgoMessaging.cache("easylist-whitelist", JSON.stringify(duckduckgoBlockerData.easylistWhitelist))
 
 } catch (error) {

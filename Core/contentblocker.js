@@ -79,6 +79,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	function trackerWhitelisted(event) {
+        if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length == 0) { return }
+        
 		var config = {
 			domain: document.location.hostname,
 			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap

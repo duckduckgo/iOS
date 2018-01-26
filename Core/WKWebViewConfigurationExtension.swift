@@ -48,6 +48,8 @@ extension WKWebViewConfiguration {
 
 fileprivate class Loader {
     
+    let javascriptLoader = JavascriptLoader()
+    
     let id: String
     let userContentController: WKUserContentController
     let restrictedDevice: Bool
@@ -86,7 +88,6 @@ fileprivate class Loader {
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {
         let disconnectMeStore = DisconnectMeStore()
-        let javascriptLoader = JavascriptLoader()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${protectionId}": id,
@@ -97,11 +98,11 @@ fileprivate class Loader {
                               andController:userContentController,
                               forMainFrameOnly: false)
         
-        loadEasylist(javascriptLoader)
+        loadEasylist()
     
     }
     
-    fileprivate func injectCompiledEasylist(_ javascriptLoader: JavascriptLoader, _ cachedEasylistPrivacy: String, _ cachedEasylist: String, _ cachedEasylistWhitelist: String) {
+    fileprivate func injectCompiledEasylist(_ cachedEasylistPrivacy: String, _ cachedEasylist: String, _ cachedEasylistWhitelist: String) {
         Logger.log(text: "using cached easylist")
         
         if #available(iOS 10, *) {
@@ -118,7 +119,7 @@ fileprivate class Loader {
                               forMainFrameOnly: false)
     }
     
-    fileprivate func injectRawEasylist(_ javascriptLoader: JavascriptLoader, _ easylistPrivacy: String, _ easylist: String, _ easylistWhitelist: String) {
+    fileprivate func injectRawEasylist(_ easylistPrivacy: String, _ easylist: String, _ easylistWhitelist: String) {
         Logger.log(text: "parsing easylist")
         
         javascriptLoader.load(script: .easylistParsing, withReplacements: [
@@ -130,7 +131,7 @@ fileprivate class Loader {
         
     }
     
-    private func loadEasylist(_ javascriptLoader: JavascriptLoader) {
+    private func loadEasylist() {
         let easylistStore = EasylistStore()
         let cache = ContentBlockerStringCache()
         
@@ -138,19 +139,18 @@ fileprivate class Loader {
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
             let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
             
-            injectCompiledEasylist(javascriptLoader, cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
+            injectCompiledEasylist(cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
             
         } else if let easylist = easylistStore.easylist,
             let easylistPrivacy = easylistStore.easylistPrivacy,
             let easylistWhitelist = easylistStore.easylistWhitelist {
             
-            injectRawEasylist(javascriptLoader, easylistPrivacy, easylist, easylistWhitelist)
+            injectRawEasylist(easylistPrivacy, easylist, easylistWhitelist)
             
         }
     }
     
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
-        let javascriptLoader = JavascriptLoader()
         for script in scripts {
             javascriptLoader.load(script, withController: userContentController, forMainFrameOnly: forMainFrameOnly)
         }

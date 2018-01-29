@@ -102,6 +102,7 @@ var duckduckgoContentBlocking = function() {
 
 		event.preventDefault()
 		event.stopPropagation()
+		console.log("blocking", event)
 		return true
 	}
 

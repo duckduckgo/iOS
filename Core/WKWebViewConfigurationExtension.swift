@@ -95,7 +95,7 @@ fileprivate class Loader {
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
             "${whitelist}": whitelist ],
-                              andController:userContentController,
+                              into:userContentController,
                               forMainFrameOnly: false)
         
         loadEasylist()
@@ -106,16 +106,16 @@ fileprivate class Loader {
         Logger.log(text: "using cached easylist")
         
         if #available(iOS 10, *) {
-            javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
+            javascriptLoader.load(.bloom, into: userContentController, forMainFrameOnly: false)
         } else {
-            javascriptLoader.load(.bloomES2015, withController: userContentController, forMainFrameOnly: false)
+            javascriptLoader.load(.bloomES2015, into: userContentController, forMainFrameOnly: false)
         }
         
         javascriptLoader.load(script: .cachedEasylist, withReplacements: [
             "${easylist_privacy_json}": cachedEasylistPrivacy,
             "${easylist_general_json}": cachedEasylist,
             "${easylist_whitelist_json}": cachedEasylistWhitelist ],
-                              andController: userContentController,
+                              into: userContentController,
                               forMainFrameOnly: false)
     }
     
@@ -126,7 +126,7 @@ fileprivate class Loader {
             "${easylist_privacy}": restrictedDevice ? "" : easylistPrivacy,
             "${easylist_general}": restrictedDevice ? "" : easylist,
             "${easylist_whitelist}": easylistWhitelist ],
-                              andController: userContentController,
+                              into: userContentController,
                               forMainFrameOnly: false)
         
     }
@@ -152,7 +152,7 @@ fileprivate class Loader {
     
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         for script in scripts {
-            javascriptLoader.load(script, withController: userContentController, forMainFrameOnly: forMainFrameOnly)
+            javascriptLoader.load(script, into: userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
     

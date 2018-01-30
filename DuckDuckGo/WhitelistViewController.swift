@@ -35,12 +35,11 @@ class WhitelistViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard whitelistManager.count > 0 else {
-            return tableView.dequeueReusableCell(withIdentifier: "NoWhitelistCell")!
-        }
-        let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as! WhitelistItemCell
-        whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
-        return whitelistItemCell
+        
+        let cell = createCell(forRowAt: indexPath)
+        updateColor(cell)
+        return cell
+        
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -87,7 +86,22 @@ class WhitelistViewController: UITableViewController {
         guard (URL.isValidHostname(domain) || URL.isValidIpHost(domain)) else { return nil }
         return domain
     }
-
+    
+    private func updateColor(_ cell: UITableViewCell) {
+        if #available(iOS 10, *) { return }
+        cell.backgroundColor = UIColor.cellGrey
+    }
+    
+    private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard whitelistManager.count > 0 else {
+            return tableView.dequeueReusableCell(withIdentifier: "NoWhitelistCell")!
+        }
+        let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as! WhitelistItemCell
+        whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
+        updateColor(whitelistItemCell)
+        return whitelistItemCell
+    }
+    
 }
 
 class WhitelistItemCell: UITableViewCell {

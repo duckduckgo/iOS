@@ -248,6 +248,13 @@
                         <outletCollection property="margins" destination="d8F-NH-PbX" collectionClass="NSMutableArray" id="isa-wo-tJ5"/>
                         <outletCollection property="margins" destination="QO8-S9-afk" collectionClass="NSMutableArray" id="U45-GQ-aTd"/>
                         <outletCollection property="margins" destination="zJZ-MR-uhS" collectionClass="NSMutableArray" id="o3p-WG-avM"/>
+                        <outletCollection property="requireColor" destination="1kb-O5-IBX" collectionClass="NSMutableArray" id="fy7-1V-SWW"/>
+                        <outletCollection property="requireColor" destination="flX-Op-Ik6" collectionClass="NSMutableArray" id="fIF-uI-2Jg"/>
+                        <outletCollection property="requireColor" destination="qdD-7s-mmM" collectionClass="NSMutableArray" id="3hf-3h-mja"/>
+                        <outletCollection property="requireColor" destination="mSQ-M3-da5" collectionClass="NSMutableArray" id="BKS-JW-yin"/>
+                        <outletCollection property="requireColor" destination="iy0-gV-9MR" collectionClass="NSMutableArray" id="WPa-pK-T95"/>
+                        <outletCollection property="requireColor" destination="aJ8-VX-XrI" collectionClass="NSMutableArray" id="7IC-dW-9dd"/>
+                        <outletCollection property="requireColor" destination="TYF-GX-a3j" collectionClass="NSMutableArray" id="F2O-AU-NT3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>

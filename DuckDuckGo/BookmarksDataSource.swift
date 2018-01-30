@@ -46,13 +46,16 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
     
     private func createEmptyCell(_ tableView: UITableView) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier)!
+        updateColor(cell)
+        return cell
     }
     
     private func createBookmarkCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
         let bookmark = bookmarksManager.bookmark(atIndex: index)
         let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as! BookmarkCell
         cell.update(withBookmark: bookmark)
+        updateColor(cell)
         return cell
     }
     
@@ -73,5 +76,10 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         bookmarksManager.move(itemAtIndex: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    private func updateColor(_ cell: UITableViewCell) {
+        if #available(iOS 10, *) { return }
+        cell.backgroundColor = UIColor.cellGrey
     }
 }

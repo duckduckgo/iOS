@@ -106,3 +106,5 @@
 
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
+
+"unknown.error.occurred" = "An unknown error occured";

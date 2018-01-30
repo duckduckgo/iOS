@@ -35,11 +35,9 @@ class WhitelistViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = createCell(forRowAt: indexPath)
         updateColor(cell)
         return cell
-        
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -98,7 +96,6 @@ class WhitelistViewController: UITableViewController {
         }
         let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as! WhitelistItemCell
         whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
-        updateColor(whitelistItemCell)
         return whitelistItemCell
     }
     

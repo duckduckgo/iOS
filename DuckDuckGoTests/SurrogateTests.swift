@@ -37,10 +37,10 @@ class SurrogateTests: XCTestCase {
     }
     
     func testWhenSurrogatesFileStoredThenCanBeLoadedLater() {
-        let persister = SurrogateStore(groupIdentifier: "com.example.group")
+        let persister = SurrogateStore()
         persister.parseAndPersist(data: data)
         
-        let loader = SurrogateStore(groupIdentifier: "com.example.group")
+        let loader = SurrogateStore()
         XCTAssertNotNil(loader.jsFunctions)
         XCTAssertEqual(2, loader.jsFunctions?.count)
     }

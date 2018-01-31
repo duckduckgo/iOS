@@ -51,13 +51,13 @@ public class JavascriptLoader {
         load(script: script, withReplacements: [:], into: controller, forMainFrameOnly: forMainFrameOnly)
     }
 
-    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:], into controller: WKUserContentController, forMainFrameOnly: Bool) {
+    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:], into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
 
         var js = try! String(contentsOfFile: JavascriptLoader.path(for: script.rawValue))
         for (key, value) in replacements {
             js = js.replacingOccurrences(of: key, with: value)
         }
-        load(js: js, into: controller, forMainFrameOnly: forMainFrameOnly)
+        load(js: js, into: controller, forMainFrameOnly: forMainFrameOnly, injectionTime: injectionTime)
     }
     
     public func load(js: String, into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {

@@ -226,9 +226,9 @@ var duckduckgoContentBlocking = function() {
 		parentEntityUrl = getParentEntityUrl()
 
 		document.addEventListener("beforeload", function(event) {
-            if (trackerWhitelisted(event)) {
-                return false
-            }
+//            if (trackerWhitelisted(event)) {
+//                return false
+//            }
 
 			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)

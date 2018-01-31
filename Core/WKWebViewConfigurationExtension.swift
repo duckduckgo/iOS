@@ -84,6 +84,15 @@ fileprivate class Loader {
         } else {
             load(scripts: [ .messaging, .apbfilterES2015, .tlds ], forMainFrameOnly: false)
         }
+        
+        let store = SurrogateStore()
+        let functions = store.jsFunctions?.values.joined(separator: "\n\n")
+        javascriptLoader.load(script: .surrogate, withReplacements: [
+            "${surrogate_functions}": functions ?? "" ],
+                              into: userContentController,
+                              forMainFrameOnly: false,
+                              injectionTime: .atDocumentEnd)
+        
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {

@@ -1,4 +1,7 @@
 
+${surrogate_functions}
+
+/*
 document.addEventListener("DOMContentLoaded", function(event) {
 	if (!duckduckgoBlockerData.blockingEnabled) { return }
 
@@ -6,3 +9,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var temp = window["GoogleAnalyticsObject"]
 	window[temp] = ga
 }, true)
+*/

@@ -58,6 +58,8 @@ class PrivacyProtectionController: UIViewController {
             showBlockerListError()
         } else if let errorText = errorText {
             showError(withText: errorText)
+        } else if siteRating == nil {
+            showError(withText: UserText.unknownErrorOccurred)
         } else {
             showInitialScreen()
         }

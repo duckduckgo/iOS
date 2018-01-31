@@ -48,6 +48,14 @@ extension WKWebViewConfiguration {
 
 fileprivate class Loader {
     
+    // Need to refactor so that that easylist and disconnect use the cache here instead of in their loader/parsers
+    struct CacheNames {
+        
+        static let surrogateJson = "surrogateJson"
+        
+    }
+    
+    let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
     
     let id: String
@@ -84,18 +92,12 @@ fileprivate class Loader {
         } else {
             load(scripts: [ .messaging, .apbfilterES2015, .tlds ], forMainFrameOnly: false)
         }
-        
-        let store = SurrogateStore()
-        let functions = store.jsFunctions?.values.joined(separator: "\n\n")
-        javascriptLoader.load(script: .surrogate, withReplacements: [
-            "${surrogate_functions}": functions ?? "" ],
-                              into: userContentController,
-                              forMainFrameOnly: false,
-                              injectionTime: .atDocumentEnd)
-        
+                
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {
+        
+        let surrogates = loadSurrogateJson()
         let disconnectMeStore = DisconnectMeStore()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
@@ -103,12 +105,30 @@ fileprivate class Loader {
             "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
-            "${whitelist}": whitelist ],
+            "${whitelist}": whitelist,
+            "${surrogates}": surrogates
+            ],
                               into:userContentController,
                               forMainFrameOnly: false)
         
         loadEasylist()
     
+    }
+    
+    private func loadSurrogateJson() -> String {
+        if let surrogateJson = cache.get(named: CacheNames.surrogateJson) {
+            Logger.log(text: "Using cached surrogate json")
+            return surrogateJson
+        }
+        
+        let store = SurrogateStore()
+        guard let functions = store.jsFunctions else { return "{}" }
+        let functionUris = functions.mapValues({ "data:application/javascript;base64,\($0.toBase64())" })
+        guard let jsonData = try? JSONEncoder().encode(functionUris) else { return "{}" }
+        guard let surrogateJson = String(data: jsonData, encoding: .utf8) else { return "{}" }
+        cache.put(name: CacheNames.surrogateJson, value: surrogateJson)
+        Logger.log(text: "Caching surrogate json")
+        return surrogateJson
     }
     
     fileprivate func injectCompiledEasylist(_ cachedEasylistPrivacy: String, _ cachedEasylist: String, _ cachedEasylistWhitelist: String) {
@@ -142,7 +162,6 @@ fileprivate class Loader {
     
     private func loadEasylist() {
         let easylistStore = EasylistStore()
-        let cache = ContentBlockerStringCache()
         
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
@@ -174,6 +193,17 @@ fileprivate extension Set where Element == String {
             let separator = result != "{" ? ", " : ""
             return "\(result)\(separator) \"\(next)\" : true"
         }).appending("}")
+    }
+    
+}
+
+fileprivate extension String {
+    
+    func toBase64() -> String {
+        guard let data = self.data(using: String.Encoding.utf8) else {
+            return ""
+        }
+        return data.base64EncodedString()
     }
     
 }

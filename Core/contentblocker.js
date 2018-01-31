@@ -22,6 +22,26 @@ var duckduckgoContentBlocking = function() {
 	var parentEntityUrl = null
 	var topLevelUrl = null
 
+	// private 
+	function loadSurrogate(url) {
+        var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
+        for (var i = 0; i < suggorateKeys.length; i++) {
+        	var key = suggorateKeys[i]
+            if (url.endsWith(key)) {
+                var surrogate = duckduckgoBlockerData.surrogates[key]
+                var s = document.createElement("script")
+                s.type = "application/javascript"
+                s.async = true
+                s.src = surrogate
+                sp = document.getElementsByTagName("script")[0]
+                sp.parentNode.insertBefore(s, sp)
+                return true
+            }
+        }
+
+        return false
+	}
+
 	// private
 	function handleDetection(event, detectionMethod) {
 		if (isAssociatedFirstPartyDomain(event)) {
@@ -36,6 +56,10 @@ var duckduckgoContentBlocking = function() {
 	        blocked: blocked,
 	        method: detectionMethod
         })
+
+        if (blocked) {
+        	loadSurrogate(event.url)
+        }
 	}
 
 	// private
@@ -102,7 +126,6 @@ var duckduckgoContentBlocking = function() {
 
 		event.preventDefault()
 		event.stopPropagation()
-		console.log("blocking", event)
 		return true
 	}
 
@@ -226,11 +249,11 @@ var duckduckgoContentBlocking = function() {
 		parentEntityUrl = getParentEntityUrl()
 
 		document.addEventListener("beforeload", function(event) {
-//            if (trackerWhitelisted(event)) {
-//                return false
-//            }
+			if (trackerWhitelisted(event)) {
+				return false
+			}
 
-			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
+			return disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
 	}
 

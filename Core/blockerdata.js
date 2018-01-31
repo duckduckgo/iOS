@@ -26,6 +26,7 @@ var duckduckgoBlockerData = {
     whitelist: ${whitelist},
     easylist: {},
     easylistPrivacy: {},
-    easylistWhitelist: {}
+    easylistWhitelist: {},
+    surrogates: ${surrogates}
 
 }

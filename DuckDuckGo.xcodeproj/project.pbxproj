@@ -69,7 +69,6 @@
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* SurrogateStore.swift */; };
-		85A53ECC200D5F1A0010D13F /* surrogate.js in Resources */ = {isa = PBXBuildFile; fileRef = 85A53ECB200D5F1A0010D13F /* surrogate.js */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
 		85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */; };
 		85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */; };
@@ -425,7 +424,6 @@
 		85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionTrackerNetworksTests.swift; sourceTree = "<group>"; };
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		85A53EC9200D1FA20010D13F /* SurrogateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurrogateStore.swift; sourceTree = "<group>"; };
-		85A53ECB200D5F1A0010D13F /* surrogate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = surrogate.js; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
 		85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed.js"; path = "submodules/ios-js-support/src/bloom-filter-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
@@ -754,7 +752,6 @@
 				85F1C3C31F7A4C7500161346 /* easylist-cached.js */,
 				85F1C3C41F7A4C7500161346 /* easylist-parsing.js */,
 				85F1C3C51F7A4C7500161346 /* messaging.js */,
-				85A53ECB200D5F1A0010D13F /* surrogate.js */,
 			);
 			name = contentblocking;
 			sourceTree = "<group>";
@@ -2097,7 +2094,6 @@
 				85047B821F6827AD002A95D8 /* blockerdata.js in Resources */,
 				85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
-				85A53ECC200D5F1A0010D13F /* surrogate.js in Resources */,
 				85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */,
 				85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */,
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,

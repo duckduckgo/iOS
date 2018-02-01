@@ -138,10 +138,11 @@ fileprivate class Loader {
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
             let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
-            
+
             injectCompiledEasylist(cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
-            
-        } else if let easylist = easylistStore.easylist,
+
+        } else
+        if let easylist = easylistStore.easylist,
             let easylistPrivacy = easylistStore.easylistPrivacy,
             let easylistWhitelist = easylistStore.easylistWhitelist {
             

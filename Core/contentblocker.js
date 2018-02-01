@@ -78,16 +78,9 @@ var duckduckgoContentBlocking = function() {
 		return duckduckgoBlockerData.whitelist[topLevelUrl.host]
 	}
 
+	// private
 	function trackerWhitelisted(event) {
-        if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length == 0) { return }
-        
-		var config = {
-			domain: document.location.hostname,
-			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
-		}
-
-		var match = ABPFilterParser.matches(duckduckgoBlockerData.easylistWhitelist, event.url, config)
-		return match
+		return abpMatch(event, duckduckgoBlockerData.easylistWhitelist)
 	}
 
 	// private
@@ -184,15 +177,20 @@ var duckduckgoContentBlocking = function() {
 		return false
 	}
 
-	function checkEasylist(event, easylist, name) {
-		if (Object.keys(easylist).length == 0) { return }
+	function abpMatch(event, list) {
+		if (Object.keys(list).length == 0) { return }
 
 		var config = {
 			domain: document.location.hostname,
 			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
 		}
 
-		if (ABPFilterParser.matches(easylist, event.url, config)) {
+		var matchUrl = (event.url.startsWith("//") ? topLevelUrl.protocol : "") + event.url
+		return ABPFilterParser.matches(list, matchUrl, config)
+	}
+
+	function checkEasylist(event, easylist, name) {
+		if (abpMatch(event, easylist, name)) {
 			handleDetection(event, name)
 			return true
 		}
@@ -229,7 +227,7 @@ var duckduckgoContentBlocking = function() {
                 return false
             }
 
-			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
+			disconnectMeMatch(event) || easylistMatch(event) || easylistPrivacyMatch(event)
 		}, true)
 	}
 

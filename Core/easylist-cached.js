@@ -39,7 +39,7 @@
 
     function ddgRepair(parserData) {
         parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
-        parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionFilter)
+        parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionBloomFilter)
 
         // find occurences of ddg_set and replace them with a set
         ddgFixSets(parserData.filters)

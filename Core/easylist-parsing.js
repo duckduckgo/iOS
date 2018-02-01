@@ -53,6 +53,4 @@
         // no-op
     }
 
-    // Set.prototype.toJSON = old
-
 })()

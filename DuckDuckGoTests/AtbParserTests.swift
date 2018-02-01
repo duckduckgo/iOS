@@ -45,12 +45,12 @@ class AtbParserTests: XCTestCase {
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockJson/atb.json")
+        let validJson = data.fromJsonFile("MockFiles/atb.json")
         XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
     
     func testWhenJsonValidThenResultContainsAtb() {
-        let validJson = data.fromJsonFile("MockJson/atb.json")
+        let validJson = data.fromJsonFile("MockFiles/atb.json")
         let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.version, "v77-5")
     }

@@ -33,7 +33,7 @@ class JsonTestDataLoader {
     }
     
     func unexpected() -> Data {
-        return try! FileLoader().load(fileName: "MockJson/unexpected.json", fromBundle: bundle)
+        return try! FileLoader().load(fileName: "MockFiles/unexpected.json", fromBundle: bundle)
     }
     
     func fromJsonFile(_ fileName: String) -> Data {

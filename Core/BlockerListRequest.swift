@@ -28,9 +28,12 @@ class BlockerListRequest {
         case easylistPrivacy = "easyprivacy"
         case trackersWhitelist
         case httpsUpgrade = "https"
+        case surrogates
 
     }
 
+    var requestCount = 0
+    
     let etagStorage: BlockerListETagStorage
 
     init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
@@ -38,6 +41,7 @@ class BlockerListRequest {
     }
 
     func request(_ list: List, completion:@escaping (Data?) -> Void) {
+        requestCount += 1
         APIRequest.request(url: url(for: list)) { (response, error) in
 
             guard error == nil else {
@@ -75,6 +79,7 @@ class BlockerListRequest {
             case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
             case .httpsUpgrade: return appUrls.httpsUpgradeList
             case .trackersWhitelist: return appUrls.trackersWhitelist
+            case .surrogates: return appUrls.surrogates
         }
 
     }

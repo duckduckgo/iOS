@@ -29,7 +29,7 @@ class DisconnectMeStoreTests: XCTestCase {
     let defaultJsValue = "{\n\n}"
     
     override func setUp() {
-        trackerData = JsonTestDataLoader().fromJsonFile("MockJson/disconnect.json")
+        trackerData = JsonTestDataLoader().fromJsonFile("MockFiles/disconnect.json")
         cache = ContentBlockerStringCache()
         testee = DisconnectMeStore()
         clearAll()

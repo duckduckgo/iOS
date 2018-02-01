@@ -61,9 +61,9 @@ class SurrogateTests: XCTestCase {
 
         XCTAssertTrue(dict["example.com/script2.js"]?.hasPrefix("(function() {") ?? false)
         XCTAssertTrue(dict["example.com/script2.js"]?.contains("console.log(\"Sample function 2\")") ?? false)
-        XCTAssertTrue(dict["example.com/script2.js"]?.hasSuffix("})();") ?? false)
+        XCTAssertTrue(dict["example.com/script2.js"]?.hasSuffix("}) ();") ?? false)
 
     }
-
+ 
 }
 

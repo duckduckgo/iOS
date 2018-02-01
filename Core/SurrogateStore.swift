@@ -49,15 +49,16 @@ class SurrogateParser {
     static func parse(lines: [String]) -> [String: String] {
         var jsDict = [String: String]()
         
-        var functionName: String?
+        var resourceName: String?
         var jsFunction: String?
         
         for line in lines {
             
             guard !line.hasPrefix("#") else { continue }
             
+            // We can only cope with scripts anyway, see contentblocker.js -> loadSurrogate(url)
             if line.hasSuffix("application/javascript") {
-                functionName = line.components(separatedBy: " ")[0]
+                resourceName = line.components(separatedBy: " ")[0]
                 jsFunction = ""
                 continue
             }
@@ -66,11 +67,16 @@ class SurrogateParser {
             
             jsFunction = "\(jsFunction!)\(line)\n"
             
-            if line == "})();" {
-                jsDict[functionName!] = jsFunction?.trimWhitespace()
+            if line.trimWhitespace() == "" {
+                jsDict[resourceName!] = jsFunction?.trimWhitespace()
+                jsFunction = nil
             }
         }
         
+        if let resourceName = resourceName {
+            jsDict[resourceName] = jsFunction?.trimWhitespace()
+        }
+
         return jsDict
     }
     

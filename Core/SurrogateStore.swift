@@ -70,6 +70,7 @@ class SurrogateParser {
             if line.trimWhitespace() == "" {
                 jsDict[resourceName!] = jsFunction?.trimWhitespace()
                 jsFunction = nil
+                resourceName = nil
             }
         }
         

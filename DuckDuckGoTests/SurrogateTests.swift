@@ -29,8 +29,8 @@ class SurrogateTests: XCTestCase {
     var data: Data!
     
     override func setUp() {
-        guard let data = try? FileLoader().load(fileName: "MockFiles/surrogates.txt", fromBundle: bundle) else {
-            XCTFail("Failed to load MockFiles/surrogates.txt")
+        guard let data = try? FileLoader().load(fileName: "MockFiles/surrogates1.txt", fromBundle: bundle) else {
+            XCTFail("Failed to load MockFiles/surrogate1s.txt")
             return
         }
         self.data = data
@@ -65,5 +65,20 @@ class SurrogateTests: XCTestCase {
 
     }
  
+    func testWhenFileHasTrailingWhitespaceThenParsingSucceeds() {
+        guard let data = try? FileLoader().load(fileName: "MockFiles/surrogates2.txt", fromBundle: bundle) else {
+            XCTFail("Failed to load MockFiles/surrogates2.txt")
+            return
+        }
+
+        guard let surrogateFile = String(data: data, encoding: .utf8) else {
+            XCTFail("Failed to convert mock surrogate data in to a String")
+            return
+        }
+
+        let dict = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
+        XCTAssertEqual(1, dict.count)
+    }
+    
 }
 

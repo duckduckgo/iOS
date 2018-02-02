@@ -67,6 +67,7 @@ public class ContentBlockerStringCache {
     private func persistenceLocation(for name: String) -> URL {
         try? fileManager.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
         let location = cacheDir.appendingPathComponent(name)
+        Logger.log(text: "cache \(name) \(location)")
         return location
     }
 

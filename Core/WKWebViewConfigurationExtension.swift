@@ -162,7 +162,6 @@ fileprivate class Loader {
     }
     
     private func loadEasylist() {
-        let easylistStore = EasylistStore()
         
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
@@ -170,7 +169,11 @@ fileprivate class Loader {
 
             injectCompiledEasylist(cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
 
-        } else
+            return
+        }
+        
+        let easylistStore = EasylistStore()
+        
         if let easylist = easylistStore.easylist,
             let easylistPrivacy = easylistStore.easylistPrivacy,
             let easylistWhitelist = easylistStore.easylistWhitelist {

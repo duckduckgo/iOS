@@ -346,6 +346,7 @@ class TabViewController: WebViewController {
 fileprivate struct MessageHandlerNames {
     static let trackerDetected = "trackerDetectedMessage"
     static let cache = "cacheMessage"
+    static let log = "log"
 }
 
 extension TabViewController: WKScriptMessageHandler {
@@ -360,6 +361,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
+        case MessageHandlerNames.log:
+            handleLog(message: message)
+            
         default:
             assertionFailure("Unhandled message: \(message.name)")
 
@@ -367,6 +371,10 @@ extension TabViewController: WKScriptMessageHandler {
         
     }
     
+    private func handleLog(message: WKScriptMessage) {
+        Logger.log(text: String(describing: message.body))
+    }
+
     private func handleCache(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.cache)")
         guard let dict = message.body as? Dictionary<String, Any> else { return }
@@ -425,11 +433,13 @@ extension TabViewController: WebEventsDelegate {
         webView.scrollView.delegate = self
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
     }
     
     func detached(webView: WKWebView) {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.log)
     }
     
     func contentProcessDidTerminate(webView: WKWebView) {

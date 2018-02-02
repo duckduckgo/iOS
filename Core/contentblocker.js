@@ -22,44 +22,33 @@ var duckduckgoContentBlocking = function() {
 	var parentEntityUrl = null
 	var topLevelUrl = null
 
-	// private 
-	function loadSurrogate(url) {
-        var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
-        for (var i = 0; i < suggorateKeys.length; i++) {
-        	var key = suggorateKeys[i]
-            if (url.endsWith(key)) {
-                var surrogate = duckduckgoBlockerData.surrogates[key]
-                var s = document.createElement("script")
-                s.type = "application/javascript"
-                s.async = true
-                s.src = surrogate
-                sp = document.getElementsByTagName("script")[0]
-                sp.parentNode.insertBefore(s, sp)
-                return true
-            }
-        }
-
-        return false
-	}
-
 	// private
-	function handleDetection(event, detectionMethod) {
-		if (isAssociatedFirstPartyDomain(event)) {
-			// Completely ignore
-			return
+	function handleDetection(url, detectionMethod) {
+		if (isAssociatedFirstPartyDomain(url)) {
+			return null
 		}
 
-		var blocked = didBlock(event)
-        duckduckgoMessaging.trackerDetected({
-        	protectionId: duckduckgoBlockerData.protectionId,
-	        url: event.url,
-	        blocked: blocked,
-	        method: detectionMethod
-        })
+		if (!duckduckgoBlockerData.blockingEnabled) {
+			return {
+				method: detectionMethod,
+				block: false,
+				reason: "protection disabled"
+			}
+		}
 
-        if (blocked) {
-        	loadSurrogate(event.url)
-        }
+		if (currentDomainIsWhitelisted()) {
+			return {
+				method: detectionMethod,
+				block: false,
+				reason: "domain whitelisted"
+			}
+		}
+
+		return {
+			method: detectionMethod,
+			block: true,
+			reason: "tracker detected"
+		}
 	}
 
 	// private
@@ -82,44 +71,13 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function disconnectMeMatch(event) {
-		var url = toURL(event.url, topLevelUrl.protocol)
-		if (!url) {
-			return false
-		}
-
-		var result = DisconnectMe.parentTracker(url)
-		if (result && result.banned) {
-			handleDetection(event, "disconnectme")
-			return true
-		}		
-
-		return false
-	}
-
-	// private
 	function currentDomainIsWhitelisted() {
 		return duckduckgoBlockerData.whitelist[topLevelUrl.host]
 	}
 
 	// private
-	function trackerWhitelisted(event) {
-		return abpMatch(event, duckduckgoBlockerData.easylistWhitelist)
-	}
-
-	// private
-	function didBlock(event) {
-		if (!duckduckgoBlockerData.blockingEnabled) {
-			return false
-		}
-
-		if (currentDomainIsWhitelisted()) {
-			return false
-		}
-
-		event.preventDefault()
-		event.stopPropagation()
-		return true
+	function trackerWhitelisted(trackerUrl) {
+		return abpMatch(trackerUrl, duckduckgoBlockerData.easylistWhitelist)
 	}
 
 	// from https://stackoverflow.com/a/7616484/73479
@@ -180,8 +138,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function isAssociatedFirstPartyDomain(event) {
-		var urlToCheck = toURL(event.url, topLevelUrl.protocol)
+	function isAssociatedFirstPartyDomain(trackerUrl) {
+		var urlToCheck = toURL(trackerUrl, topLevelUrl.protocol)
 		if (urlToCheck == null) {
 			return false
 		}
@@ -201,37 +159,6 @@ var duckduckgoContentBlocking = function() {
 		return false
 	}
 
-	function abpMatch(event, list) {
-		if (Object.keys(list).length == 0) { return }
-
-		var config = {
-			domain: document.location.hostname,
-			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
-		}
-
-		var matchUrl = (event.url.startsWith("//") ? topLevelUrl.protocol : "") + event.url
-		return ABPFilterParser.matches(list, matchUrl, config)
-	}
-
-	function checkEasylist(event, easylist, name) {
-		if (abpMatch(event, easylist, name)) {
-			handleDetection(event, name)
-			return true
-		}
-
-		return false
-	}
-
-	// private
-	function easylistPrivacyMatch(event) {
-		return checkEasylist(event, duckduckgoBlockerData.easylistPrivacy, "easylist-privacy")
-	}
-
-	// private
-	function easylistMatch(event) {
-		return checkEasylist(event, duckduckgoBlockerData.easylist, "easylist")
-	}
-
 	// private
 	function getParentEntityUrl() {
 		var parentEntity = DisconnectMe.parentTracker(topLevelUrl)
@@ -241,24 +168,122 @@ var duckduckgoContentBlocking = function() {
 		return null
 	}
 
-	// public
-	function install(document) {
-		topLevelUrl = getTopLevelURL()
-		parentEntityUrl = getParentEntityUrl()
+	// private
+	function disconnectMeMatch(trackerUrl) {
+		var url = toURL(trackerUrl, topLevelUrl.protocol)
+		if (!url) {
+			return null
+		}
 
-		document.addEventListener("beforeload", function(event) {
-			if (trackerWhitelisted(event)) {
-				return false
-			}
+		var result = DisconnectMe.parentTracker(url)
+		if (result && result.banned) {			
+			return handleDetection(event, "disconnectme")
+		}		
 
-			return disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
-		}, true)
+		return null
 	}
 
+	// private
+	function abpMatch(trackerUrl, list) {
+		if (Object.keys(list).length == 0) { return }
+
+		var config = {
+			domain: document.location.hostname,
+			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
+		}
+
+		var matchUrl = (trackerUrl.startsWith("//") ? topLevelUrl.protocol : "") + trackerUrl
+		return ABPFilterParser.matches(list, matchUrl, config)
+	}
+
+	// private
+	function checkEasylist(trackerUrl, easylist, name) {
+		if (abpMatch(trackerUrl, easylist)) {			
+			return handleDetection(trackerUrl, name)
+		}
+		return null
+	}
+
+	// private
+	function easylistPrivacyMatch(trackerUrl) {
+		return checkEasylist(trackerUrl, duckduckgoBlockerData.easylistPrivacy, "easylist-privacy")
+	}
+
+	// private
+	function easylistMatch(trackerUrl) {
+		return checkEasylist(trackerUrl, duckduckgoBlockerData.easylist, "easylist")
+	}
+
+	// public 
+	function loadSurrogate(url) {
+        var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
+        for (var i = 0; i < suggorateKeys.length; i++) {
+        	var key = suggorateKeys[i]
+            if (url.endsWith(key)) {
+                var surrogate = duckduckgoBlockerData.surrogates[key]
+                var s = document.createElement("script")
+                s.type = "application/javascript"
+                s.async = true
+                s.src = surrogate
+                sp = document.getElementsByTagName("script")[0]
+                sp.parentNode.insertBefore(s, sp)
+                return true
+            }
+        }
+
+        return false
+	}
+
+	// public
+	function shouldBlock(trackerUrl, blockFunc) {
+		if (trackerWhitelisted(trackerUrl)) {
+			return false
+		}
+
+		var result = disconnectMeMatch(trackerUrl)
+		if (result == null) {
+			result = easylistPrivacyMatch(trackerUrl)
+			if (result == null) {
+				result = easylistMatch(trackerUrl)
+			}
+		}
+
+		if (result == null) {
+			return false;
+		}
+
+		if (result.block) {
+			blockFunc(trackerUrl)
+		}
+
+        duckduckgoMessaging.trackerDetected({
+        	protectionId: duckduckgoBlockerData.protectionId,
+	        url: trackerUrl,
+	        blocked: result.block,
+	        method: result.method
+        })	
+
+		return result.block
+	}
+
+	// Init 
+	(function() {
+		topLevelUrl = getTopLevelURL()
+		parentEntityUrl = getParentEntityUrl()
+		duckduckgoMessaging.log("content blocking initialised")
+	})()
+
 	return { 
-		install: install
+		loadSurrogate: loadSurrogate,
+		shouldBlock: shouldBlock
 	}
 }()
 
-duckduckgoContentBlocking.install(document)
 
+document.addEventListener("beforeload", function(event) {
+	duckduckgoContentBlocking.shouldBlock(event.url, function(url) {
+		duckduckgoContentBlocking.loadSurrogate(event.url)
+		event.preventDefault()
+		event.stopPropagation()		
+	})
+}, true)

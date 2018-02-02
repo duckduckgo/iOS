@@ -1,8 +1,8 @@
 //
-//  messaging.js
+//  mockmessaging.js
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,30 +20,15 @@
 var duckduckgoMessaging = function() {
 
 	function cache(name, value) {
-		try {
-			webkit.messageHandlers.cacheMessage.postMessage({
-				name: name, 
-				data: value
-			});
-		} catch(error) {
-			// webkit might not be defined
-		}
+		console.log("cache", name, value)
 	}
 
 	function trackerDetected(data) {
-		try {
-			webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
-		} catch(error) {
-			// webkit might not be defined
-		}
+		console.log("trackerDetected", data)
 	}
 
 	function log() {
-		try {
-			webkit.messageHandlers.log.postMessage(JSON.stringify(arguments));
-		} catch(error) {
-			// webkit might not be defined
-		}
+		console.log("logging", arguments)
 	}
 
 	return {

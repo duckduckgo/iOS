@@ -239,6 +239,7 @@ var duckduckgoContentBlocking = function() {
 	// public
 	function shouldBlock(trackerUrl, type, blockFunc) {
 		if (trackerWhitelisted(trackerUrl, type)) {
+			blockFunc(trackerUrl, false)
 			return false
 		}
 
@@ -257,12 +258,11 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (result == null) {
+			blockFunc(trackerUrl, false)
 			return false;
 		}
 
-		if (result.block) {
-			blockFunc(trackerUrl)
-		}
+		blockFunc(trackerUrl, result.block)
 
         duckduckgoMessaging.trackerDetected({
         	protectionId: duckduckgoBlockerData.protectionId,

@@ -26,6 +26,8 @@ class ContentBlockerTests: XCTestCase {
         static let iFrames = "http://localhost:8000/iframetrackers.html"
         static let resources = "http://localhost:8000/resourcetrackers.html"
         static let requests = "http://localhost:8000/requesttrackers.html"
+        static let imageSrc = "http://localhost:8000/image_src.html"
+        static let xhr = "http://localhost:8000/xhr.html"
     }
     
     struct PageElementIndex {
@@ -64,6 +66,14 @@ class ContentBlockerTests: XCTestCase {
         checkContentBlocking(onTestPage: TrackerPageUrl.requests)
     }
     
+    func testThatResourcesLoadedViaImageSrcAreBlocked() {
+        checkContentBlocking(onTestPage: TrackerPageUrl.imageSrc)
+    }
+
+    func testThatResourcesLoadedViaXhrAreBlocked() {
+        checkContentBlocking(onTestPage: TrackerPageUrl.xhr)
+    }
+
     func checkContentBlocking(onTestPage url: String, file: StaticString = #file, line: UInt = #line) {
         
         newTab()

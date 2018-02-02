@@ -72,13 +72,13 @@ class ContentBlockerTests: XCTestCase {
         
         waitForPageLoad()
 
-        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label + " Tracker Networks Blocked"
+        let expected = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label
 
         openContentBlocker()
         
-        let popoverTrackerCount = app.tables.staticTexts["trackerCount"].label
+        let actual = app.tables.staticTexts["trackerCount"].label.components(separatedBy: .whitespaces)[0]
 
-        XCTAssertEqual(popoverTrackerCount, webTrackerCount, file: file, line: line)
+        XCTAssertEqual(expected, actual, file: file, line: line)
     }
 
     private func showTabs() {

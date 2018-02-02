@@ -76,8 +76,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function trackerWhitelisted(trackerUrl) {
-		return abpMatch(trackerUrl, duckduckgoBlockerData.easylistWhitelist)
+	function trackerWhitelisted(trackerUrl, type) {
+		return abpMatch(trackerUrl, type, "whitelist", duckduckgoBlockerData.easylistWhitelist)
 	}
 
 	// from https://stackoverflow.com/a/7616484/73479
@@ -184,34 +184,36 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// private
-	function abpMatch(trackerUrl, list) {
+	function abpMatch(trackerUrl, type, name, list) {
 		if (Object.keys(list).length == 0) { return }
+
+		var typeMask = ABPFilterParser.elementTypes[type.toUpperCase()]
 
 		var config = {
 			domain: document.location.hostname,
-			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
+			elementTypeMask: typeMask
 		}
 
-		var matchUrl = (trackerUrl.startsWith("//") ? topLevelUrl.protocol : "") + trackerUrl
-		return ABPFilterParser.matches(list, matchUrl, config)
+		var result = ABPFilterParser.matches(list, trackerUrl, config)
+		return result
 	}
 
 	// private
-	function checkEasylist(trackerUrl, easylist, name) {
-		if (abpMatch(trackerUrl, easylist)) {			
+	function checkEasylist(trackerUrl, type, easylist, name) {
+		if (abpMatch(trackerUrl, type, name, easylist)) {			
 			return handleDetection(trackerUrl, name)
 		}
 		return null
 	}
 
 	// private
-	function easylistPrivacyMatch(trackerUrl) {
-		return checkEasylist(trackerUrl, duckduckgoBlockerData.easylistPrivacy, "easylist-privacy")
+	function easylistPrivacyMatch(trackerUrl, type) {
+		return checkEasylist(trackerUrl, type, duckduckgoBlockerData.easylistPrivacy, "easylist-privacy")
 	}
 
 	// private
-	function easylistMatch(trackerUrl) {
-		return checkEasylist(trackerUrl, duckduckgoBlockerData.easylist, "easylist")
+	function easylistMatch(trackerUrl, type) {
+		return checkEasylist(trackerUrl, type, duckduckgoBlockerData.easylist, "easylist")
 	}
 
 	// public 
@@ -235,16 +237,22 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	// public
-	function shouldBlock(trackerUrl, blockFunc) {
-		if (trackerWhitelisted(trackerUrl)) {
+	function shouldBlock(trackerUrl, type, blockFunc) {
+		if (trackerWhitelisted(trackerUrl, type)) {
 			return false
 		}
 
-		var result = disconnectMeMatch(trackerUrl)
-		if (result == null) {
-			result = easylistPrivacyMatch(trackerUrl)
-			if (result == null) {
-				result = easylistMatch(trackerUrl)
+		var detectors = [
+			disconnectMeMatch,
+			easylistPrivacyMatch,
+			easylistMatch
+		]
+
+		var result = null
+		for (var i = 0; i < detectors.length; i++) {
+			result = detectors[i](trackerUrl, type)
+			if (result != null) {
+				break;
 			}
 		}
 
@@ -260,7 +268,8 @@ var duckduckgoContentBlocking = function() {
         	protectionId: duckduckgoBlockerData.protectionId,
 	        url: trackerUrl,
 	        blocked: result.block,
-	        method: result.method
+	        method: result.method,
+	        type: type
         })	
 
 		return result.block
@@ -279,11 +288,3 @@ var duckduckgoContentBlocking = function() {
 	}
 }()
 
-
-document.addEventListener("beforeload", function(event) {
-	duckduckgoContentBlocking.shouldBlock(event.url, function(url) {
-		duckduckgoContentBlocking.loadSurrogate(event.url)
-		event.preventDefault()
-		event.stopPropagation()		
-	})
-}, true)

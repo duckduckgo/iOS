@@ -84,6 +84,7 @@ fileprivate class Loader {
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelist, and:  configuration.enabled, with: id)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+        load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {

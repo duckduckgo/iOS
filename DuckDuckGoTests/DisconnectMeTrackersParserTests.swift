@@ -39,19 +39,19 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
-        let mismatchedJson = data.fromJsonFile("MockJson/disconnect_mismatched.json")
+        let mismatchedJson = data.fromJsonFile("MockFiles/disconnect_mismatched.json")
         XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockJson/disconnect.json")
+        let validJson = data.fromJsonFile("MockFiles/disconnect.json")
         XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson))
     }
     
     func testWhenJsonValidThenResultContainsAllTrackers() {
-        let validJson = data.fromJsonFile("MockJson/disconnect.json")
+        let validJson = data.fromJsonFile("MockFiles/disconnect.json")
         let result = try! testee.convert(fromJsonData: validJson)
         XCTAssertEqual(result.count, 12)
         XCTAssertEqual(result["99anadurl.com"]?.networkName, "anadurl.com")
@@ -67,7 +67,7 @@ class DisconnectMeTrackersParserTests: XCTestCase {
     }
 
     func testWhenJsonValidButContainsDntEffElementInFirstPositionThenNoErrorThrown() {
-        let validJson = data.fromJsonFile("MockJson/disconnect_dnt.json")
+        let validJson = data.fromJsonFile("MockFiles/disconnect_dnt.json")
         XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson))
     }
 

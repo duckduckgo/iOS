@@ -39,18 +39,18 @@ class TermsOfServiceListParserTests: XCTestCase {
     }
     
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
-        let mismatchedJson = data.fromJsonFile("MockJson/tosdr_mismatched.json")
+        let mismatchedJson = data.fromJsonFile("MockFiles/tosdr_mismatched.json")
         XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
     
     func testWhenJsonValidThenNoErrorThrown() {
-        XCTAssertNoThrow(try testee.convert(fromJsonData: data.fromJsonFile("MockJson/tosdr.json")))
+        XCTAssertNoThrow(try testee.convert(fromJsonData: data.fromJsonFile("MockFiles/tosdr.json")))
     }
     
     func testWhenJsonValidThenResultContainsTerms() {
-        let result = try! testee.convert(fromJsonData: data.fromJsonFile("MockJson/tosdr.json"))
+        let result = try! testee.convert(fromJsonData: data.fromJsonFile("MockFiles/tosdr.json"))
         XCTAssertEqual(result.count, 2)
         XCTAssertEqual(result["example.com"]?.derivedScore, -1)
         XCTAssertEqual(result["anotherexample.com"]?.derivedScore, 0)

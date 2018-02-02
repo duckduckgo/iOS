@@ -118,28 +118,28 @@ class StatisticsLoaderTests: XCTestCase {
     
     func loadSuccessfulAtbStub() {
         stub(condition: isHost(appUrls.atb.host!)) { _ in
-            let path = OHPathForFile("MockJson/atb.json", type(of: self))!
+            let path = OHPathForFile("MockFiles/atb.json", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
     
     func loadUnsuccessfulAtbStub() {
         stub(condition: isHost(appUrls.atb.host!)) { _ in
-            let path = OHPathForFile("MockJson/invalid.json", type(of: self))!
+            let path = OHPathForFile("MockFiles/invalid.json", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }
     }
     
     func loadSuccessfulExiStub() {
         stub(condition: isPath(appUrls.exti(forAtb: "").path)) { _ -> OHHTTPStubsResponse in
-            let path = OHPathForFile("MockJson/empty", type(of: self))!
+            let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
     
     func loadUnsuccessfulExiStub() {
         stub(condition: isPath(appUrls.exti(forAtb: "").path)) { _ -> OHHTTPStubsResponse in
-            let path = OHPathForFile("MockJson/empty", type(of: self))!
+            let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }
     }

@@ -23,7 +23,7 @@ public class ContentBlockerStringCache {
 
     struct Constants {
         // bump the cache version if you know the cache should be invalidated on the next release
-        static let cacheVersion = 2
+        static let cacheVersion = 3
         static let cacheVersionKey = "com.duckduckgo.contentblockerstringcache.version"
     }
 

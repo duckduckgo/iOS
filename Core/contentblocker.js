@@ -177,7 +177,7 @@ var duckduckgoContentBlocking = function() {
 
 		var result = DisconnectMe.parentTracker(url)
 		if (result && result.banned) {			
-			return handleDetection(event, "disconnectme")
+			return handleDetection(trackerUrl, "disconnectme")
 		}		
 
 		return null

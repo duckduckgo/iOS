@@ -21,12 +21,21 @@
 import Foundation
 
 public class SiteRating {
-    public let protectionId: String
-    public var url: URL
-    public var hasOnlySecureContent: Bool
+    
+    public var url: URL {
+        didSet {
+            trackersBlocked.removeAll()
+            trackersDetected.removeAll()
+            hasOnlySecureContent = url.isHttps()
+        }
+    }
+    
     public var domain: String? {
         return url.host
     }
+
+    public let protectionId: String
+    public var hasOnlySecureContent: Bool
     public var finishedLoading = false
     public private (set) var trackersDetected = [DetectedTracker: Int]()
     public private (set) var trackersBlocked = [DetectedTracker: Int]()

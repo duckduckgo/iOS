@@ -120,18 +120,17 @@ class TabViewController: WebViewController {
     @objc func onContentBlockerConfigurationChanged() {
         // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            guard let siteRating = self.siteRating else { return }
-            self.reloadScripts(with: siteRating.protectionId, restrictedDevice: UIDevice.current.isSlow())
             self.webView?.reload()
         }
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
-        
-        siteRating = SiteRating(url: url)
-        reloadScripts(with: siteRating!.protectionId, restrictedDevice: UIDevice.current.isSlow())
-        updateSiteRating()
+
+        if let siteRating = siteRating {
+            siteRating.url = url
+            updateSiteRating()
+        }
     }
     
     private func resetNavigationBar() {
@@ -381,9 +380,6 @@ extension TabViewController: WKScriptMessageHandler {
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
-
-        guard let siteRating = siteRating else { return }
-        reloadScripts(with: siteRating.protectionId, restrictedDevice: UIDevice.current.isSlow())
     }
     
     struct TrackerDetectedKey {
@@ -403,7 +399,7 @@ extension TabViewController: WKScriptMessageHandler {
         guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
 
         guard protectionId == siteRating.protectionId else {
-            Logger.log(text: "id check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
+            Logger.log(text: "protectionId check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
             return
         }
 

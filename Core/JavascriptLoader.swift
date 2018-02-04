@@ -39,6 +39,7 @@ public class JavascriptLoader {
         case easylistParsing = "easylist-parsing"
         case blockerData = "blockerdata"
         case passwordInjection = "password-injection"
+        case surrogate
     }
 
     class func path(for jsFile: String) -> String {
@@ -47,16 +48,20 @@ public class JavascriptLoader {
         return path
     }
     
-    public func load(_ script: Script, withController controller: WKUserContentController, forMainFrameOnly: Bool) {
-        load(script: script, withReplacements: [:], andController: controller, forMainFrameOnly: forMainFrameOnly)
+    public func load(_ script: Script, into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
+        load(script: script, withReplacements: [:], into: controller, forMainFrameOnly: forMainFrameOnly)
     }
 
-    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:], andController controller: WKUserContentController, forMainFrameOnly: Bool) {
+    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:], into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
 
         var js = try! String(contentsOfFile: JavascriptLoader.path(for: script.rawValue))
         for (key, value) in replacements {
             js = js.replacingOccurrences(of: key, with: value)
         }
+        load(js: js, into: controller, forMainFrameOnly: forMainFrameOnly, injectionTime: injectionTime)
+    }
+    
+    public func load(js: String, into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
         controller.addUserScript(script)
     }

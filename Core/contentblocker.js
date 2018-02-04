@@ -22,6 +22,26 @@ var duckduckgoContentBlocking = function() {
 	var parentEntityUrl = null
 	var topLevelUrl = null
 
+	// private 
+	function loadSurrogate(url) {
+        var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
+        for (var i = 0; i < suggorateKeys.length; i++) {
+        	var key = suggorateKeys[i]
+            if (url.endsWith(key)) {
+                var surrogate = duckduckgoBlockerData.surrogates[key]
+                var s = document.createElement("script")
+                s.type = "application/javascript"
+                s.async = true
+                s.src = surrogate
+                sp = document.getElementsByTagName("script")[0]
+                sp.parentNode.insertBefore(s, sp)
+                return true
+            }
+        }
+
+        return false
+	}
+
 	// private
 	function handleDetection(event, detectionMethod) {
 		if (isAssociatedFirstPartyDomain(event)) {
@@ -36,6 +56,10 @@ var duckduckgoContentBlocking = function() {
 	        blocked: blocked,
 	        method: detectionMethod
         })
+
+        if (blocked) {
+        	loadSurrogate(event.url)
+        }
 	}
 
 	// private
@@ -79,6 +103,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	function trackerWhitelisted(event) {
+        if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length == 0) { return }
+        
 		var config = {
 			domain: document.location.hostname,
 			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
@@ -183,6 +209,8 @@ var duckduckgoContentBlocking = function() {
 	}
 
 	function checkEasylist(event, easylist, name) {
+		if (Object.keys(easylist).length == 0) { return }
+
 		var config = {
 			domain: document.location.hostname,
 			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap
@@ -225,7 +253,7 @@ var duckduckgoContentBlocking = function() {
 				return false
 			}
 
-			disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
+			return disconnectMeMatch(event) || easylistPrivacyMatch(event) || easylistMatch(event)
 		}, true)
 	}
 

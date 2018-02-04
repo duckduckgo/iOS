@@ -24,8 +24,6 @@
 
     document.addEventListener("beforeload", function(event) {
 
-        console.log(event)
-
         if (event.target.nodeName == "LINK") {
             type = event.target.rel
         } else if (event.target.nodeName == "IMG") {
@@ -79,15 +77,8 @@
     }
 
     xhr.send = function(body) {
-        var args = arguments
-        var instance = this
-        duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xhr", function(url, block) {
-            if (block) { 
-                duckduckgoMessaging.log("blocking xhr")
-                return 
-            }
-            originalSend.call(instance, arguments)
-        })
-    }
+        if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xhr", function(url, block) { } )) { return }
+        originalSend.apply(this, arguments)            
+    }   
 
 }) ()

@@ -1,6 +1,6 @@
 
 //
-//  messaging.js
+//  password-injection.js
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -22,20 +22,20 @@ var ddgPasswords = function() {
 
     function updateInput(input, value) {
 
-          input.focus()
-          input.blur()
-		  input.value = value
-	  	  input.style.border = "2px yellow solid"
+      input.focus()
+      input.blur()
+      input.value = value
+      input.style.border = "2px yellow solid"
 
     }
 
-    function populateField(form, type, value) {
+    function populateField(form, types, value) {
 
       var elements = form.getElementsByTagName("input")
-      for (var i = 0; i < form.elements.length; i++) {
+      for (var i = 0; i < elements.length; i++) {
         input = elements[i]
-        if (input.tagName == "INPUT" && input.type == type) {
-        	updateInput(input, value)
+        if (types.indexOf(input.type) != -1) {
+          updateInput(input, value)
           return 1
         }
       }
@@ -49,13 +49,13 @@ var ddgPasswords = function() {
       var forms = document.getElementsByTagName("form")
       for (var i = 0; i < forms.length; i++) {
         var form = forms[i]
-        usernames += populateField(form, "text", username)
-        passwords += populateField(form, "password", password)
+        usernames += populateField(form, ["text", "username", "email"], username)
+        passwords += populateField(form, ["password"], password)
       }
 
       return { 
-      	usernames: usernames, 
-      	passwords: passwords 
+        usernames: usernames, 
+        passwords: passwords 
       }
     }
 

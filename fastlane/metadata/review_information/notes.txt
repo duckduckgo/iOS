@@ -1,0 +1,1 @@
+Fixes for reported crashes and for cosmetic bugs on iOS 9

@@ -40,6 +40,7 @@ public class JavascriptLoader {
         case blockerData = "blockerdata"
         case passwordInjection = "password-injection"
         case surrogate
+        case detection
     }
 
     class func path(for jsFile: String) -> String {

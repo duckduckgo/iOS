@@ -84,6 +84,7 @@ fileprivate class Loader {
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelist, and:  configuration.enabled, with: id)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+        load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {
@@ -162,15 +163,19 @@ fileprivate class Loader {
     }
     
     private func loadEasylist() {
-        let easylistStore = EasylistStore()
         
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
             let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
-            
+
             injectCompiledEasylist(cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
-            
-        } else if let easylist = easylistStore.easylist,
+
+            return
+        }
+        
+        let easylistStore = EasylistStore()
+        
+        if let easylist = easylistStore.easylist,
             let easylistPrivacy = easylistStore.easylistPrivacy,
             let easylistWhitelist = easylistStore.easylistWhitelist {
             

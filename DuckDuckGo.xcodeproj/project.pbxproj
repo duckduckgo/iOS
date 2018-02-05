@@ -44,6 +44,7 @@
 		85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */; };
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
+		85325A8D2024BB7C003EB195 /* detection.js in Resources */ = {isa = PBXBuildFile; fileRef = 85325A8C2024BB7C003EB195 /* detection.js */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
 		85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */; };
@@ -401,6 +402,7 @@
 		85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionNetworkLeaderboardController.swift; sourceTree = "<group>"; };
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
+		85325A8C2024BB7C003EB195 /* detection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = detection.js; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
 		85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivacyProtection.xcassets; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 				85F1C3C31F7A4C7500161346 /* easylist-cached.js */,
 				85F1C3C41F7A4C7500161346 /* easylist-parsing.js */,
 				85F1C3C51F7A4C7500161346 /* messaging.js */,
+				85325A8C2024BB7C003EB195 /* detection.js */,
 			);
 			name = contentblocking;
 			sourceTree = "<group>";
@@ -2106,6 +2109,7 @@
 				85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */,
 				85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */,
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,
+				85325A8D2024BB7C003EB195 /* detection.js in Resources */,
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */,
 				856B0DB82016B1D700B7BED3 /* password-injection.js in Resources */,

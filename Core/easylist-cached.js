@@ -23,21 +23,41 @@
     duckduckgoBlockerData.easylistPrivacy = ${easylist_privacy_json}
     duckduckgoBlockerData.easylistWhitelist = ${easylist_whitelist_json}
 
-    function duckduckgoEasylistRepair(parserData) {
+    function ddgFixSets(filters) {
+        for (var i = 0; i < filters.length; i++) {
+
+            var options = filters[i].options
+            if (options == null) { continue }
+            if (options["binaryOptions"] == null) { continue }
+
+            var ddgSet = options.binaryOptions["ddg_set"]
+            if (ddgSet == null) { continue }
+
+            filters[i].options.binaryOptions = new Set(ddgSet)
+        }
+    }
+
+    function ddgRepair(parserData) {
         parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
-        parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionFilter)
+        parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionBloomFilter)
+
+        // find occurences of ddg_set and replace them with a set
+        ddgFixSets(parserData.filters)
+        ddgFixSets(parserData.exceptionFilters)
+        ddgFixSets(parserData.htmlRuleFilters)
+        ddgFixSets(parserData.noFingerprintFilters)
     }
 
     if (Object.keys(duckduckgoBlockerData.easylist).length > 0) {
-        duckduckgoEasylistRepair(duckduckgoBlockerData.easylist)
+        ddgRepair(duckduckgoBlockerData.easylist)
     }
 
     if (Object.keys(duckduckgoBlockerData.easylistPrivacy).length > 0) {
-        duckduckgoEasylistRepair(duckduckgoBlockerData.easylistPrivacy)
+        ddgRepair(duckduckgoBlockerData.easylistPrivacy)
     }
 
     if (Object.keys(duckduckgoBlockerData.easylistWhitelist).length > 0) {
-        duckduckgoEasylistRepair(duckduckgoBlockerData.easylistWhitelist)
+        ddgRepair(duckduckgoBlockerData.easylistWhitelist)
     }
 
 })()

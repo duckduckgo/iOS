@@ -21,12 +21,15 @@
 import Foundation
 
 public class SiteRating {
-    public let protectionId: String
-    public var url: URL
-    public var hasOnlySecureContent: Bool
+    
     public var domain: String? {
         return url.host
     }
+    
+    public let url: URL
+    public let protectionId: String
+    
+    public var hasOnlySecureContent: Bool
     public var finishedLoading = false
     public private (set) var trackersDetected = [DetectedTracker: Int]()
     public private (set) var trackersBlocked = [DetectedTracker: Int]()
@@ -35,8 +38,11 @@ public class SiteRating {
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init(url: URL, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
-        self.protectionId = UUID.init().uuidString
+    public init(url: URL, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(), protectionId: String = UUID.init().uuidString) {
+        
+        Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
+        
+        self.protectionId = protectionId
         self.url = url
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore

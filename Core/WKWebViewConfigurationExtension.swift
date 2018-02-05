@@ -48,6 +48,15 @@ extension WKWebViewConfiguration {
 
 fileprivate class Loader {
     
+    // TODO Need to refactor so that that easylist and disconnect use the cache here instead of in their loader/parsers
+    // https://app.asana.com/0/414709148257752/543604604366287
+    struct CacheNames {
+        
+        static let surrogateJson = "surrogateJson"
+        
+    }
+    
+    let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
     
     let id: String
@@ -75,6 +84,7 @@ fileprivate class Loader {
         loadContentBlockerDependencyScripts()
         loadBlockerData(with: whitelist, and:  configuration.enabled, with: id)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
+        load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {
@@ -84,9 +94,12 @@ fileprivate class Loader {
         } else {
             load(scripts: [ .messaging, .apbfilterES2015, .tlds ], forMainFrameOnly: false)
         }
+                
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {
+        
+        let surrogates = loadSurrogateJson()
         let disconnectMeStore = DisconnectMeStore()
         
         javascriptLoader.load(script: .blockerData, withReplacements: [
@@ -94,28 +107,46 @@ fileprivate class Loader {
             "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,
-            "${whitelist}": whitelist ],
-                              andController:userContentController,
+            "${whitelist}": whitelist,
+            "${surrogates}": surrogates
+            ],
+                              into:userContentController,
                               forMainFrameOnly: false)
         
         loadEasylist()
     
     }
     
+    private func loadSurrogateJson() -> String {
+        if let surrogateJson = cache.get(named: CacheNames.surrogateJson) {
+            Logger.log(text: "Using cached surrogate json")
+            return surrogateJson
+        }
+        
+        let store = SurrogateStore()
+        guard let functions = store.jsFunctions else { return "{}" }
+        let functionUris = functions.mapValues({ "data:application/javascript;base64,\($0.toBase64())" })
+        guard let jsonData = try? JSONEncoder().encode(functionUris) else { return "{}" }
+        guard let surrogateJson = String(data: jsonData, encoding: .utf8) else { return "{}" }
+        cache.put(name: CacheNames.surrogateJson, value: surrogateJson)
+        Logger.log(text: "Caching surrogate json")
+        return surrogateJson
+    }
+    
     fileprivate func injectCompiledEasylist(_ cachedEasylistPrivacy: String, _ cachedEasylist: String, _ cachedEasylistWhitelist: String) {
         Logger.log(text: "using cached easylist")
         
         if #available(iOS 10, *) {
-            javascriptLoader.load(.bloom, withController: userContentController, forMainFrameOnly: false)
+            javascriptLoader.load(.bloom, into: userContentController, forMainFrameOnly: false)
         } else {
-            javascriptLoader.load(.bloomES2015, withController: userContentController, forMainFrameOnly: false)
+            javascriptLoader.load(.bloomES2015, into: userContentController, forMainFrameOnly: false)
         }
         
         javascriptLoader.load(script: .cachedEasylist, withReplacements: [
             "${easylist_privacy_json}": cachedEasylistPrivacy,
             "${easylist_general_json}": cachedEasylist,
             "${easylist_whitelist_json}": cachedEasylistWhitelist ],
-                              andController: userContentController,
+                              into: userContentController,
                               forMainFrameOnly: false)
     }
     
@@ -126,22 +157,25 @@ fileprivate class Loader {
             "${easylist_privacy}": restrictedDevice ? "" : easylistPrivacy,
             "${easylist_general}": restrictedDevice ? "" : easylist,
             "${easylist_whitelist}": easylistWhitelist ],
-                              andController: userContentController,
+                              into: userContentController,
                               forMainFrameOnly: false)
         
     }
     
     private func loadEasylist() {
-        let easylistStore = EasylistStore()
-        let cache = ContentBlockerStringCache()
         
         if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
             let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
             let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
-            
+
             injectCompiledEasylist(cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
-            
-        } else if let easylist = easylistStore.easylist,
+
+            return
+        }
+        
+        let easylistStore = EasylistStore()
+        
+        if let easylist = easylistStore.easylist,
             let easylistPrivacy = easylistStore.easylistPrivacy,
             let easylistWhitelist = easylistStore.easylistWhitelist {
             
@@ -152,7 +186,7 @@ fileprivate class Loader {
     
     private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         for script in scripts {
-            javascriptLoader.load(script, withController: userContentController, forMainFrameOnly: forMainFrameOnly)
+            javascriptLoader.load(script, into: userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
     
@@ -165,6 +199,17 @@ fileprivate extension Set where Element == String {
             let separator = result != "{" ? ", " : ""
             return "\(result)\(separator) \"\(next)\" : true"
         }).appending("}")
+    }
+    
+}
+
+fileprivate extension String {
+    
+    func toBase64() -> String {
+        guard let data = self.data(using: String.Encoding.utf8) else {
+            return ""
+        }
+        return data.base64EncodedString()
     }
     
 }

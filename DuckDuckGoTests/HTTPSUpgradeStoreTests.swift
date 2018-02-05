@@ -44,7 +44,7 @@ class HTTPSUpgradeStoreTests: XCTestCase {
     }
 
     func testWhenLoadingValidJSONDomainsAndWildcardDomainsLoaded() {
-        let data = JsonTestDataLoader().fromJsonFile("MockJson/httpsupgrade.json")
+        let data = JsonTestDataLoader().fromJsonFile("MockFiles/httpsupgrade.json")
         let mockPersistence = MockHTTPSUpgradePersistence()
         let testee = HTTPSUpgradeStore(persistence: mockPersistence)
         testee.persist(data: data)

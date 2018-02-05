@@ -19,6 +19,16 @@
 
 (function (){
 
+    duckduckgoMessaging.log("parsing adblock files")
+ 
+    // from https://stackoverflow.com/a/46491780/73479
+    function Set_toJSON(key, value) {
+      if (typeof value === 'object' && value instanceof Set) {
+        return { "ddg_set" : [...value] };
+      }
+      return value;
+    }
+
     try {
 
         var easylistPrivacy = `${easylist_privacy}`
@@ -28,21 +38,20 @@
         if (easylistPrivacy != "") {
             ABPFilterParser.parse(easylistPrivacy, duckduckgoBlockerData.easylistPrivacy)
         }
-        duckduckgoMessaging.cache("easylist-privacy", JSON.stringify(duckduckgoBlockerData.easylistPrivacy))
+        duckduckgoMessaging.cache("easylist-privacy", JSON.stringify(duckduckgoBlockerData.easylistPrivacy, Set_toJSON))
 
         if (easylistGeneral != "") {
             ABPFilterParser.parse(easylistGeneral, duckduckgoBlockerData.easylist)
         }
-        duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist))
+        duckduckgoMessaging.cache("easylist", JSON.stringify(duckduckgoBlockerData.easylist, Set_toJSON))
         
         if (easylistWhitelist != "") {
             ABPFilterParser.parse(easylistWhitelist, duckduckgoBlockerData.easylistWhitelist)
         }
-        duckduckgoMessaging.cache("easylist-whitelist", JSON.stringify(duckduckgoBlockerData.easylistWhitelist))
+        duckduckgoMessaging.cache("easylist-whitelist", JSON.stringify(duckduckgoBlockerData.easylistWhitelist, Set_toJSON))
 
     } catch (error) {
         // no-op
     }
 
 })()
-

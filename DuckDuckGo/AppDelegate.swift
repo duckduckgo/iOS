@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
 
+    private var testing = false
     private var appIsLaunching = false
     var authWindow: UIWindow?
     var window: UIWindow?
@@ -38,11 +39,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        testing = ProcessInfo().arguments.contains("testing")
+        if testing {
+            window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+        }
+        
         appIsLaunching = true
         return true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        guard !testing else { return }
+        
         startMigration(application: application)
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()

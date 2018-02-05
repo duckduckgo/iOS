@@ -1,0 +1,12 @@
+example.com/script2.js application/javascript
+(function() {
+console.log("Sample function 2")
+//
+// This one has more lines
+//
+var ga = function() { }
+//
+}) ();
+
+
+

@@ -67,7 +67,7 @@ class TabViewController: WebViewController {
 
         return activeLink.merge(with: storedLink)
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
@@ -103,16 +103,6 @@ class TabViewController: WebViewController {
 
     }
 
-    override func goBack() {
-        siteRating = nil
-        super.goBack()
-    }
-    
-    override func goForward() {
-        siteRating = nil
-        super.goForward()
-    }
-
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
@@ -120,18 +110,17 @@ class TabViewController: WebViewController {
     @objc func onContentBlockerConfigurationChanged() {
         // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            guard let siteRating = self.siteRating else { return }
-            self.reloadScripts(with: siteRating.protectionId, restrictedDevice: UIDevice.current.isSlow())
             self.webView?.reload()
         }
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
-        
-        siteRating = SiteRating(url: url)
-        reloadScripts(with: siteRating!.protectionId, restrictedDevice: UIDevice.current.isSlow())
-        updateSiteRating()
+
+        if let siteRating = siteRating {
+            self.siteRating = SiteRating(url: url, protectionId: siteRating.protectionId)
+            updateSiteRating()
+        }
     }
     
     private func resetNavigationBar() {
@@ -346,6 +335,7 @@ class TabViewController: WebViewController {
 fileprivate struct MessageHandlerNames {
     static let trackerDetected = "trackerDetectedMessage"
     static let cache = "cacheMessage"
+    static let log = "log"
 }
 
 extension TabViewController: WKScriptMessageHandler {
@@ -360,6 +350,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
+        case MessageHandlerNames.log:
+            handleLog(message: message)
+            
         default:
             assertionFailure("Unhandled message: \(message.name)")
 
@@ -367,15 +360,16 @@ extension TabViewController: WKScriptMessageHandler {
         
     }
     
+    private func handleLog(message: WKScriptMessage) {
+        Logger.log(text: String(describing: message.body))
+    }
+
     private func handleCache(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.cache)")
         guard let dict = message.body as? Dictionary<String, Any> else { return }
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
-
-        guard let siteRating = siteRating else { return }
-        reloadScripts(with: siteRating.protectionId, restrictedDevice: UIDevice.current.isSlow())
     }
     
     struct TrackerDetectedKey {
@@ -395,7 +389,7 @@ extension TabViewController: WKScriptMessageHandler {
         guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
 
         guard protectionId == siteRating.protectionId else {
-            Logger.log(text: "id check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
+            Logger.log(text: "protectionId check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
             return
         }
 
@@ -425,11 +419,13 @@ extension TabViewController: WebEventsDelegate {
         webView.scrollView.delegate = self
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
     }
     
     func detached(webView: WKWebView) {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.log)
     }
     
     func contentProcessDidTerminate(webView: WKWebView) {

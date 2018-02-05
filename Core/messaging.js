@@ -38,10 +38,19 @@ var duckduckgoMessaging = function() {
 		}
 	}
 
+	function log() {
+		try {
+			webkit.messageHandlers.log.postMessage(JSON.stringify(arguments));
+		} catch(error) {
+			// webkit might not be defined
+		}
+	}
+
 	return {
 
 		cache: cache,
-		trackerDetected: trackerDetected
+		trackerDetected: trackerDetected,
+		log: log
 
 	}
 }()

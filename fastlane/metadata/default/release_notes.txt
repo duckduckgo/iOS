@@ -1,0 +1,3 @@
+* Improved tracker protection by blocking dymamically loaded scripts and other resources (via XHR and image.src).
+* Fixed bug where privacy protection may break websites when blocking scripts.
+* Minor speed improvements.

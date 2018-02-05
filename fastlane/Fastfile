@@ -9,43 +9,20 @@ default_platform :ios
 
 lane :release do 
 
-  # buildNumber = latest_testflight_build_number(
-  #       username: 'office@duckduckgo.com',
-  #       app_identifier: "com.duckduckgo.mobile.ios",
-  #       version: "7"
-  #     ) + 1
-  buildNumber = 896
-
-  increment_build_number({
-      build_number: buildNumber
-    })
-
   gym(
     scheme: "DuckDuckGo",
     export_method: "app-store"
   )
 
   deliver(
-    submit_for_review: false,
+    submit_for_review: true,
     automatic_release: false, 
-    phased_release: true,
+    phased_release: false,
     screenshots_path: "fastlane/screenshots",
+    metadata_path: "fastlane/metadata",
     username: "office@duckduckgo.com",
     force: true
   )
-
-end
-
-lane :screenshots do
-
-  gym(
-    scheme: "AppScreenshots",
-    export_method: "development",
-    export_options: { compileBitcode: false }
-  )
-
-   reset_simulators
-   snapshot
 
 end
 

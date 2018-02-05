@@ -26,6 +26,8 @@ class ContentBlockerTests: XCTestCase {
         static let iFrames = "http://localhost:8000/iframetrackers.html"
         static let resources = "http://localhost:8000/resourcetrackers.html"
         static let requests = "http://localhost:8000/requesttrackers.html"
+        static let imageSrc = "http://localhost:8000/image_src.html"
+        static let xhr = "http://localhost:8000/xhr.html"
     }
     
     struct PageElementIndex {
@@ -64,6 +66,14 @@ class ContentBlockerTests: XCTestCase {
         checkContentBlocking(onTestPage: TrackerPageUrl.requests)
     }
     
+    func testThatResourcesLoadedViaImageSrcAreBlocked() {
+        checkContentBlocking(onTestPage: TrackerPageUrl.imageSrc)
+    }
+
+    func testThatResourcesLoadedViaXhrAreBlocked() {
+        checkContentBlocking(onTestPage: TrackerPageUrl.xhr)
+    }
+
     func checkContentBlocking(onTestPage url: String, file: StaticString = #file, line: UInt = #line) {
         
         newTab()
@@ -72,13 +82,13 @@ class ContentBlockerTests: XCTestCase {
         
         waitForPageLoad()
 
-        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label + " Tracker Networks Blocked"
+        let expected = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label
 
         openContentBlocker()
         
-        let popoverTrackerCount = app.tables.staticTexts["trackerCount"].label
+        let actual = app.tables.staticTexts["trackerCount"].label.components(separatedBy: .whitespaces)[0]
 
-        XCTAssertEqual(popoverTrackerCount, webTrackerCount, file: file, line: line)
+        XCTAssertEqual(expected, actual, file: file, line: line)
     }
 
     private func showTabs() {
@@ -95,9 +105,10 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        guard app.staticTexts["Search Anonymously"].exists else { return }
-        app.pageIndicators["page 1 of 2"].tap()
-        app.buttons["Done"].tap()
+        let continueButton = XCUIApplication().buttons["Continue"]
+        guard continueButton.exists else { return }
+        continueButton.tap()
+        continueButton.tap()
         sleep(Timeout.postFirstLaunch)
     }
     

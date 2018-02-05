@@ -39,6 +39,7 @@ public class JavascriptLoader {
         case easylistParsing = "easylist-parsing"
         case blockerData = "blockerdata"
         case surrogate
+        case detection
     }
 
     class func path(for jsFile: String) -> String {

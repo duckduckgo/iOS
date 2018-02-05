@@ -23,7 +23,7 @@ public class ContentBlockerStringCache {
 
     struct Constants {
         // bump the cache version if you know the cache should be invalidated on the next release
-        static let cacheVersion = 2
+        static let cacheVersion = 3
         static let cacheVersionKey = "com.duckduckgo.contentblockerstringcache.version"
     }
 
@@ -66,7 +66,9 @@ public class ContentBlockerStringCache {
 
     private func persistenceLocation(for name: String) -> URL {
         try? fileManager.createDirectory(at: cacheDir, withIntermediateDirectories: true, attributes: nil)
-        return cacheDir.appendingPathComponent(name)
+        let location = cacheDir.appendingPathComponent(name)
+        Logger.log(text: "cache \(name) \(location)")
+        return location
     }
 
 }

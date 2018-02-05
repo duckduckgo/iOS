@@ -67,7 +67,7 @@ class TabViewController: WebViewController {
 
         return activeLink.merge(with: storedLink)
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
@@ -118,7 +118,7 @@ class TabViewController: WebViewController {
         guard let url = webView.url else { return }
 
         if let siteRating = siteRating {
-            siteRating.url = url
+            self.siteRating = SiteRating(url: url, protectionId: siteRating.protectionId)
             updateSiteRating()
         }
     }

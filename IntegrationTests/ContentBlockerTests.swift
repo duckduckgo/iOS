@@ -105,9 +105,10 @@ class ContentBlockerTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        guard app.staticTexts["Search Anonymously"].exists else { return }
-        app.pageIndicators["page 1 of 2"].tap()
-        app.buttons["Done"].tap()
+        let continueButton = XCUIApplication().buttons["Continue"]
+        guard continueButton.exists else { return }
+        continueButton.tap()
+        continueButton.tap()
         sleep(Timeout.postFirstLaunch)
     }
     

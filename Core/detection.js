@@ -19,7 +19,6 @@
 
 (function() {
 
-
     duckduckgoMessaging.log("installing beforeload detection")
 
     document.addEventListener("beforeload", function(event) {
@@ -36,11 +35,13 @@
 
         duckduckgoContentBlocking.shouldBlock(event.url, type, function(url, block) {
             if (!block) { return }
-            duckduckgoMessaging.log("blocking beforeload")
 
-            duckduckgoContentBlocking.loadSurrogate(event.url)
+            duckduckgoMessaging.log("blocking beforeload")
+            if (duckduckgoContentBlocking.loadSurrogate(event.url)) {                
+                duckduckgoMessaging.log("surrogate loaded for " + event.url)
+            }
             event.preventDefault()
-            event.stopPropagation()     
+            event.stopPropagation()
         })
     }, true)
 
@@ -79,11 +80,11 @@
     xhr.send = function(body) {
         duckduckgoMessaging.log(body)
         if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xhr", function(url, block) { } )) { 
+            duckduckgoMessaging.log("blocking xhr")
             xhr.abort()
             return 
         }
         originalSend.apply(this, arguments)            
     }   
-
  
 }) ()

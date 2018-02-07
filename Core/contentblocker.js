@@ -218,10 +218,13 @@ var duckduckgoContentBlocking = function() {
 
 	// public 
 	function loadSurrogate(url) {
+		var withoutQueryString = url.split("?")[0]        	
+		duckduckgoMessaging.log("looking for surrogate for " + withoutQueryString)
+
         var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
         for (var i = 0; i < suggorateKeys.length; i++) {
         	var key = suggorateKeys[i]
-            if (url.endsWith(key)) {
+            if (withoutQueryString.endsWith(key)) {
                 var surrogate = duckduckgoBlockerData.surrogates[key]
                 var s = document.createElement("script")
                 s.type = "application/javascript"

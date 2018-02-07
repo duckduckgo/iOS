@@ -77,8 +77,13 @@
     }
 
     xhr.send = function(body) {
-        if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xhr", function(url, block) { } )) { return }
+        duckduckgoMessaging.log(body)
+        if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xhr", function(url, block) { } )) { 
+            xhr.abort()
+            return 
+        }
         originalSend.apply(this, arguments)            
     }   
 
+ 
 }) ()

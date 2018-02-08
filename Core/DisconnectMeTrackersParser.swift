@@ -19,17 +19,23 @@
 
 
 import Foundation
-import SwiftyJSON
-
 
 public struct DisconnectMeTrackersParser {
     
     func convert(fromJsonData data: Data) throws -> [String: DisconnectMeTracker] {
-        guard let json = try? JSON(data: data) else {
+        
+        guard let anyJson = try? JSONSerialization.jsonObject(with: data) else {
             throw JsonError.invalidJson
         }
         
-        let jsonCategories = json["categories"]
+        guard let json = anyJson as? [String: Any] else {
+            throw JsonError.invalidJson
+        }
+        
+        guard let jsonCategories = json["categories"] as? [String: [Any]] else {
+            throw JsonError.invalidJson
+        }
+        
         var trackers = [String: DisconnectMeTracker]()
         for (categoryName, jsonTrackers) in jsonCategories {
             try parse(categoryName: categoryName, fromJson: jsonTrackers, into: &trackers)
@@ -37,24 +43,29 @@ public struct DisconnectMeTrackersParser {
         return trackers
     }
     
-    private func parse(categoryName: String, fromJson jsonTrackers: JSON, into trackers: inout [String: DisconnectMeTracker]) throws {
-        for jsonTracker in jsonTrackers.arrayValue {
+    private func parse(categoryName: String, fromJson jsonTrackers: [Any], into trackers: inout [String: DisconnectMeTracker]) throws {
+        let category = DisconnectMeTracker.Category.all.filter( { $0.rawValue == categoryName }).first
+
+        for jsonTracker in jsonTrackers {
             
-            guard let networkName = jsonTracker.first?.0 else { throw JsonError.typeMismatch }
-            guard let jsonTrackers = jsonTracker.first?.1.first(where: { $0.1.arrayObject != nil } )?.1.arrayObject else { throw JsonError.typeMismatch }
-
-            let category = DisconnectMeTracker.Category.all.filter( { $0.rawValue == categoryName }).first
-
-            guard let baseUrl = jsonTracker.first?.1.first?.0 else { throw JsonError.typeMismatch }
+            guard let tracker = jsonTracker as? [String: Any] else { throw JsonError.invalidJson }
+            guard let networkName = tracker.keys.first else { throw JsonError.typeMismatch }
+            guard let network = tracker[networkName] as? [String: Any] else { throw JsonError.typeMismatch }
+            guard let baseUrl = baseUrl(fromNetwork: network) else { throw JsonError.typeMismatch }
             guard let parentDomain = parseDomain(fromUrl: baseUrl) else { throw JsonError.typeMismatch }
-
+            guard let urls = network[baseUrl] as? [String] else { throw JsonError.typeMismatch }
+            
             trackers[parentDomain] = DisconnectMeTracker(url: parentDomain, networkName: networkName, category: category)
-
-            for url in jsonTrackers {
-                guard let url = url as? String else { continue }
+            for url in urls {
                 trackers[url] = DisconnectMeTracker(url: url, networkName: networkName, parentUrl: URL(string: baseUrl), category: category)
             }
+
         }
+    }
+    
+    private func baseUrl(fromNetwork network: [String: Any]) -> String? {
+        if let baseUrl = network.keys.first, baseUrl != "dnt" { return baseUrl }
+        return network.keys.dropFirst().first
     }
     
     private func parseDomain(fromUrl url: String) -> String? {
@@ -68,6 +79,6 @@ public struct DisconnectMeTrackersParser {
         }
         return host.replacingOccurrences(of: "www.", with: "")
     }
-
+    
 }
 

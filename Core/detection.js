@@ -46,45 +46,55 @@
     }, true)
 
 
-    duckduckgoMessaging.log("installing image src detection")
+    try {
+        duckduckgoMessaging.log("installing image src detection")
 
-    var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
-    delete Image.prototype.src;
-    Object.defineProperty(Image.prototype, 'src', {
-        get: function() {
-            return originalImageSrc.get.call(this)
-        },
-        set: function(value) {
-            var instance = this
-            duckduckgoContentBlocking.shouldBlock(value, "image", function(url, block) {
-                if (block) {
-                    duckduckgoMessaging.log("blocking image src")
-                }
-                originalImageSrc.set.call(instance, value);
-            })
-        }
-    })
+        var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
+        delete Image.prototype.src;
+        Object.defineProperty(Image.prototype, 'src', {
+            get: function() {
+                return originalImageSrc.get.call(this)
+            },
+            set: function(value) {
+                var instance = this
+                duckduckgoContentBlocking.shouldBlock(value, "image", function(url, block) {
+                    if (block) {
+                        duckduckgoMessaging.log("blocking image src")
+                    }
+                    originalImageSrc.set.call(instance, value);
+                })
+            }
+        })
 
-
-    duckduckgoMessaging.log("installing xhr detection")
-
-    var xhr = XMLHttpRequest.prototype
-    var originalOpen = xhr.open
-    var originalSend = xhr.send
-
-    xhr.open = function(method, url) {
-        this.trackerUrl = url;
-        return originalOpen.apply(this, arguments);
+    } catch(error) {
+        duckduckgoMessaging.log("failed to install image src detection")
     }
 
-    xhr.send = function(body) {
-        duckduckgoMessaging.log(body)
-        if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xhr", function(url, block) { } )) { 
-            duckduckgoMessaging.log("blocking xhr")
-            xhr.abort()
-            return 
+    try {
+        duckduckgoMessaging.log("installing xhr detection")
+
+        var xhr = XMLHttpRequest.prototype
+        var originalOpen = xhr.open
+        var originalSend = xhr.send
+
+        xhr.open = function(method, url) {
+            this.trackerUrl = url;
+            return originalOpen.apply(this, arguments);
         }
-        originalSend.apply(this, arguments)            
-    }   
+
+        xhr.send = function(body) {
+            duckduckgoMessaging.log(body)
+            if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xmlhttprequest", function(url, block) { } )) { 
+                duckduckgoMessaging.log("blocking xhr")
+                xhr.abort()
+                return 
+            }
+
+            duckduckgoMessaging.log("xhr ok: " + this.trackerUrl)        
+            originalSend.apply(this, arguments)            
+        }           
+    } catch(error) {
+        duckduckgoMessaging.log("failed to install xhr detection")
+    }
  
 }) ()

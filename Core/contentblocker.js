@@ -62,9 +62,10 @@ var duckduckgoContentBlocking = function() {
 
 	// private 
 	function getTopLevelURL() {
-		// can throw a security exception if called from a frame with document loaded from different url to top (mainly when blocking is disabled)
 		try {
-			return new URL(top.location.href)
+			// FROM: https://stackoverflow.com/a/7739035/73479
+			// FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+			return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
 		} catch(error) {
 			return new URL(location.href)
 		}

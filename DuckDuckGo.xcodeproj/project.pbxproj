@@ -206,7 +206,6 @@
 		F17BA43D1F1CD99800460FFA /* Device.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA4391F1CD99800460FFA /* Device.framework */; };
 		F17BA43E1F1CD99800460FFA /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA43A1F1CD99800460FFA /* Kingfisher.framework */; };
 		F17BA4401F1CD99800460FFA /* ToastSwiftFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA43C1F1CD99800460FFA /* ToastSwiftFramework.framework */; };
-		F17BA4421F1CDCC200460FFA /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA43B1F1CD99800460FFA /* SwiftyJSON.framework */; };
 		F17D72391E8B35C6003E8B0E /* AppUrlsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D72381E8B35C6003E8B0E /* AppUrlsTests.swift */; };
 		F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */; };
 		F18326871E60542100240060 /* JavascriptLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18326861E60542100240060 /* JavascriptLoader.swift */; };
@@ -657,7 +656,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1C81A741F33873800241DE6 /* Alamofire.framework in Frameworks */,
-				F17BA4421F1CDCC200460FFA /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

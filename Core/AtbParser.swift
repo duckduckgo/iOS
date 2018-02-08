@@ -19,20 +19,17 @@
 
 
 import Foundation
-import SwiftyJSON
 
 
 public struct AtbParser {
-
-    public init() {}
-    
     func convert(fromJsonData data: Data) throws -> Atb {
-        guard let json = try? JSON(data: data) else {
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(Atb.self, from: data)
+        } catch DecodingError.dataCorrupted {
             throw JsonError.invalidJson
-        }
-        guard let version = json["version"].string else {
+        } catch {
             throw JsonError.typeMismatch
         }
-        return Atb(version: version)
     }
 }

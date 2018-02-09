@@ -101,8 +101,10 @@
 "privacy.protection.encryption.no" = "No";
 "privacy.protection.encryption.unknown" = "Unknown";
 "privacy.protection.encryption.bits" = "%d bits";
+"privacy.protection.encryption.standard.message" = "An encrypted connection prevents eavesdropping of any personal information you send to a website.";
+"privacy.protection.encryption.mixed.message" = "This site has mixed encryption because some content is being served over unencrypted connections. Encrypted connections prevent eavesdropping of personal information you send to websites.";
 
-"privacy.protection.tracker.networks.major.message" = "Major tracker networks are more\nharmful because they can track and target\nyou across more of the internet.";
+"privacy.protection.tracker.networks.major.message" = "Major tracker networks are more harmful because they can track and target you across more of the internet.";
 
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";

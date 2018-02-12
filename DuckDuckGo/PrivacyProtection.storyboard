@@ -446,7 +446,7 @@
                                 <rect key="frame" x="0.0" y="5" width="375" height="812"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="XbD-tH-3K4" userLabel="Connection Status View">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-Ab-2VI">
@@ -457,25 +457,23 @@
                                             <state key="normal" image="PP Arrow Back"/>
                                         </button>
                                         <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd5-3d-xyR">
-                                            <rect key="frame" x="0.0" y="155" width="375" height="75"/>
+                                            <rect key="frame" x="0.0" y="155" width="375" height="85"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
-                                                    <rect key="frame" x="23.666666666666657" y="0.0" width="327" height="75"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="cfr-pR-GnE">
+                                                    <rect key="frame" x="23.666666666666657" y="0.0" width="327" height="85"/>
                                                     <attributedString key="attributedText">
-                                                        <fragment>
-                                                            <string key="content">An encrypted connection prevents eavesdropping
-of any personal information you send to a website.</string>
+                                                        <fragment content="An encrypted connection prevents eavesdropping of any personal information you send to a website.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35G-VL-OEY" userLabel="Custom Divider">
-                                                    <rect key="frame" x="20" y="73" width="335" height="2"/>
+                                                    <rect key="frame" x="20" y="83" width="335" height="2"/>
                                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="RJM-AD-S8t"/>
@@ -488,7 +486,7 @@ of any personal information you send to a website.</string>
                                                 <constraint firstItem="cfr-pR-GnE" firstAttribute="width" secondItem="Jd5-3d-xyR" secondAttribute="width" constant="-48" id="LBW-5V-TER"/>
                                                 <constraint firstItem="cfr-pR-GnE" firstAttribute="centerX" secondItem="Jd5-3d-xyR" secondAttribute="centerX" id="LYh-2X-sWB"/>
                                                 <constraint firstItem="35G-VL-OEY" firstAttribute="centerX" secondItem="Jd5-3d-xyR" secondAttribute="centerX" id="XgS-de-A1B"/>
-                                                <constraint firstAttribute="height" constant="75" id="ck0-1K-jCW"/>
+                                                <constraint firstAttribute="height" constant="85" id="ck0-1K-jCW"/>
                                                 <constraint firstItem="35G-VL-OEY" firstAttribute="width" secondItem="Jd5-3d-xyR" secondAttribute="width" constant="-40" id="m1Q-ga-S9X"/>
                                                 <constraint firstItem="cfr-pR-GnE" firstAttribute="height" secondItem="Jd5-3d-xyR" secondAttribute="height" id="mOn-kQ-FZe"/>
                                                 <constraint firstItem="cfr-pR-GnE" firstAttribute="centerY" secondItem="Jd5-3d-xyR" secondAttribute="centerY" id="xcO-w6-hTN"/>
@@ -558,7 +556,7 @@ of any personal information you send to a website.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Header" rowHeight="54" id="oAv-be-F2Z" customClass="PrivacyProtectionEncryptionHeaderCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="285.33333333333331" width="375" height="54"/>
+                                        <rect key="frame" x="0.0" y="295.33333333333331" width="375" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oAv-be-F2Z" id="5dA-ue-WjX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
@@ -583,7 +581,7 @@ of any personal information you send to a website.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="14" id="QuS-cY-xoL" customClass="PrivacyProtectionEncryptionDetailCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="339.33333333333337" width="375" height="14"/>
+                                        <rect key="frame" x="0.0" y="349.33333333333337" width="375" height="14"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QuS-cY-xoL" id="ha0-1b-qhG">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="14"/>
@@ -683,26 +681,26 @@ of any personal information you send to a website.</string>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vQ-S5-Xxv">
                                             <rect key="frame" x="0.0" y="155" width="375" height="75"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
-                                                    <rect key="frame" x="19.666666666666657" y="21.666666666666657" width="335" height="32"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
+                                                    <rect key="frame" x="19.666666666666657" y="22" width="335" height="32"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Trackers networks were found on ">
                                                             <attributes>
                                                                 <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="91%">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.74117999999999995" green="0.0" blue="0.090200000000000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content=" of web sites you’ve visited since Jan 23, 2017.">
                                                             <attributes>
                                                                 <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
@@ -790,7 +788,7 @@ of any personal information you send to a website.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Google" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mP-U5-LBV">
-                                                    <rect key="frame" x="16" y="10" width="84" height="14"/>
+                                                    <rect key="frame" x="16" y="10.333333333333336" width="84" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="84" id="fAv-vR-6yz"/>
                                                     </constraints>
@@ -799,7 +797,7 @@ of any personal information you send to a website.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HnN-83-lMn">
-                                                    <rect key="frame" x="324" y="10" width="35" height="14"/>
+                                                    <rect key="frame" x="324" y="10.333333333333336" width="35" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="Cds-GZ-p2n"/>
                                                     </constraints>
@@ -942,7 +940,7 @@ of any personal information you send to a website.</string>
                                 <rect key="frame" x="0.0" y="5" width="375" height="812"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="e4V-2n-13h" userLabel="Header">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Networks On" translatesAutoresizingMaskIntoConstraints="NO" id="q0F-D6-aaO">
@@ -961,26 +959,23 @@ of any personal information you send to a website.</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwM-eP-cbc">
-                                            <rect key="frame" x="0.0" y="155" width="375" height="75"/>
+                                            <rect key="frame" x="0.0" y="155" width="375" height="85"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYv-1m-cZo">
-                                                    <rect key="frame" x="37.666666666666657" y="16.666666666666657" width="299" height="42"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="VYv-1m-cZo">
+                                                    <rect key="frame" x="23.666666666666657" y="22.333333333333343" width="327" height="42"/>
                                                     <attributedString key="attributedText">
-                                                        <fragment>
-                                                            <string key="content">Tracker networks aggregate your web history
-into a data profile about you, used to target ads
-at you across the internet.</string>
+                                                        <fragment content="Tracker networks aggregate your web history into a data profile about you, used to target ads at you across the internet.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                     </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhE-Km-i1S">
-                                                    <rect key="frame" x="20.666666666666657" y="74" width="335" height="1"/>
+                                                    <rect key="frame" x="20.666666666666657" y="84" width="335" height="1"/>
                                                     <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="OnF-aa-04X"/>
@@ -993,9 +988,9 @@ at you across the internet.</string>
                                                 <constraint firstItem="AhE-Km-i1S" firstAttribute="width" secondItem="qwM-eP-cbc" secondAttribute="width" constant="-40" id="axf-Dd-LRV"/>
                                                 <constraint firstItem="VYv-1m-cZo" firstAttribute="centerX" secondItem="qwM-eP-cbc" secondAttribute="centerX" id="dSs-9x-MKs"/>
                                                 <constraint firstItem="VYv-1m-cZo" firstAttribute="centerY" secondItem="qwM-eP-cbc" secondAttribute="centerY" id="ez5-VY-kgQ"/>
-                                                <constraint firstItem="VYv-1m-cZo" firstAttribute="width" secondItem="qwM-eP-cbc" secondAttribute="width" constant="-76" id="jNR-Fa-KV9"/>
+                                                <constraint firstItem="VYv-1m-cZo" firstAttribute="width" secondItem="qwM-eP-cbc" secondAttribute="width" constant="-48" id="jNR-Fa-KV9"/>
                                                 <constraint firstItem="AhE-Km-i1S" firstAttribute="centerX" secondItem="qwM-eP-cbc" secondAttribute="centerX" id="kSs-YR-mDY"/>
-                                                <constraint firstAttribute="height" constant="75" id="sqm-5r-7fq"/>
+                                                <constraint firstAttribute="height" constant="85" id="sqm-5r-7fq"/>
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0O-GE-gIK">
@@ -1039,7 +1034,7 @@ at you across the internet.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Section" rowHeight="46" id="rBu-Hc-gjC" userLabel="Header Cell" customClass="PrivacyProtectionTrackerNetworksSectionCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="285.33333333333331" width="375" height="46"/>
+                                        <rect key="frame" x="0.0" y="295.33333333333331" width="375" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rBu-Hc-gjC" id="Wqt-kM-ZJG">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
@@ -1052,7 +1047,7 @@ at you across the internet.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Icon Connection Bad" translatesAutoresizingMaskIntoConstraints="NO" id="yTJ-9l-QhI">
-                                                    <rect key="frame" x="329" y="17" width="26" height="26"/>
+                                                    <rect key="frame" x="329" y="17.333333333333332" width="26" height="25.999999999999996"/>
                                                     <color key="tintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="26" id="0N0-Wl-6jv"/>
@@ -1074,14 +1069,14 @@ at you across the internet.</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Row" rowHeight="21" id="UFd-fT-gX0" userLabel="Row Cell" customClass="PrivacyProtectionTrackerNetworksRowCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="331.33333333333337" width="375" height="21"/>
+                                        <rect key="frame" x="0.0" y="341.33333333333337" width="375" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UFd-fT-gX0" id="qJg-oa-ngh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-35-znM">
-                                                    <rect key="frame" x="20" y="4" width="335" height="14"/>
+                                                    <rect key="frame" x="20" y="4.3333333333333321" width="335" height="14"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="www.tracker.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ctc-Wf-SyO">
                                                             <rect key="frame" x="0.0" y="0.0" width="278.33333333333331" height="14"/>
@@ -1150,7 +1145,7 @@ at you across the internet.</string>
                                 <rect key="frame" x="0.0" y="44" width="375" height="664"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="uDA-bS-Uwl" userLabel="Header">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Privacy Good On" translatesAutoresizingMaskIntoConstraints="NO" id="9WR-Wf-9ad">
@@ -1169,15 +1164,12 @@ at you across the internet.</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7a-BI-Cm8">
-                                            <rect key="frame" x="0.0" y="155" width="375" height="75"/>
+                                            <rect key="frame" x="0.0" y="155" width="375" height="85"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
-                                                    <rect key="frame" x="27.666666666666657" y="16.666666666666657" width="319" height="42"/>
+                                                    <rect key="frame" x="24.333333333333343" y="21.666666666666657" width="327" height="42"/>
                                                     <attributedString key="attributedText">
-                                                        <fragment>
-                                                            <string key="content">Privacy practices indicate how much the 
-personal information that you share 
-with a website is protected.</string>
+                                                        <fragment content="Privacy practices indicate how much the  personal information that you share with a website is protected.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <font key="NSFont" size="14" name="ProximaNova-Regular"/>
@@ -1188,7 +1180,7 @@ with a website is protected.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKS-ZX-vAo">
-                                                    <rect key="frame" x="20.666666666666657" y="74" width="335" height="1"/>
+                                                    <rect key="frame" x="20.666666666666657" y="84" width="335" height="1"/>
                                                     <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="oAJ-po-bBQ"/>
@@ -1197,9 +1189,9 @@ with a website is protected.</string>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="JrS-AS-COd" firstAttribute="width" secondItem="V7a-BI-Cm8" secondAttribute="width" constant="-56" id="HFe-6t-MBw"/>
+                                                <constraint firstItem="JrS-AS-COd" firstAttribute="width" secondItem="V7a-BI-Cm8" secondAttribute="width" constant="-48" id="HFe-6t-MBw"/>
                                                 <constraint firstAttribute="bottom" secondItem="xKS-ZX-vAo" secondAttribute="bottom" id="OvY-zp-SCN"/>
-                                                <constraint firstAttribute="height" constant="75" id="bsU-un-oOZ"/>
+                                                <constraint firstAttribute="height" constant="85" id="bsU-un-oOZ"/>
                                                 <constraint firstItem="xKS-ZX-vAo" firstAttribute="width" secondItem="V7a-BI-Cm8" secondAttribute="width" constant="-40" id="h0o-kJ-m7m"/>
                                                 <constraint firstItem="JrS-AS-COd" firstAttribute="centerX" secondItem="V7a-BI-Cm8" secondAttribute="centerX" id="ihL-lI-VCY"/>
                                                 <constraint firstItem="xKS-ZX-vAo" firstAttribute="centerX" secondItem="V7a-BI-Cm8" secondAttribute="centerX" id="pbB-ok-a3Y"/>
@@ -1247,7 +1239,7 @@ with a website is protected.</string>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="72t-tQ-5SV" imageView="WRK-Wt-JyD" style="IBUITableViewCellStyleDefault" id="LK0-gl-KUB" customClass="PrivacyProtectionPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="258" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="268" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LK0-gl-KUB" id="2Vq-On-UQN">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1268,7 +1260,7 @@ with a website is protected.</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPractices" rowHeight="300" id="dTH-6q-tGo" customClass="PrivacyProtectionNoPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="302" width="375" height="300"/>
+                                        <rect key="frame" x="0.0" y="312" width="375" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dTH-6q-tGo" id="9KP-Lk-xIX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
@@ -1311,7 +1303,7 @@ with a website is protected.</string>
                                 <rect key="frame" x="0.0" y="708" width="375" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLZ-Bg-d8p">
-                                        <rect key="frame" x="26" y="28" width="323" height="14"/>
+                                        <rect key="frame" x="26" y="28.333333333333371" width="323" height="14"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Using privacy practices info from ">
                                                 <attributes>
@@ -1470,7 +1462,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf1-HZ-e7d">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1504,7 +1496,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ge6-9h-2z5">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1538,7 +1530,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major Networks Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XzQ-fW-tzk">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1572,7 +1564,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Site is Major Tracker Network" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ax-Nd-tDU">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1606,7 +1598,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iF1-sO-WXk">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1662,7 +1654,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xH-3L-wpf">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1696,7 +1688,7 @@ with a website is protected.</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enhanced Grade" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dV-qp-Hz5">
-                                                    <rect key="frame" x="20" y="11" width="303" height="16"/>
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="303" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.24705882352941178" green="0.63137254901960782" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>

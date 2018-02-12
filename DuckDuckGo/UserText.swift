@@ -108,6 +108,8 @@ public struct UserText {
     public static let ppEncryptionNo = NSLocalizedString("privacy.protection.encryption.no", comment:  "No")
     public static let ppEncryptionUnknown = NSLocalizedString("privacy.protection.encryption.unknown", comment:  "Unknown")
     public static let ppEncryptionBits = NSLocalizedString("privacy.protection.encryption.bits", comment:  "%d bits")
+    public static let ppEncryptionStandardMessage = NSLocalizedString("privacy.protection.encryption.standard.message", comment: "An encrypted connection prevents eavesdropping of any personal information you send to a website.")
+    public static let ppEncryptionMixedMessage = NSLocalizedString("privacy.protection.encryption.mixed.message", comment: "This site has mixed encryption because some content is being served over unencrypted connections. Encrypted connections prevent eavesdropping of personal information you send to websites.")
 
     public static let ppTrackerNetworksMajorMessage = NSLocalizedString("privacy.protection.tracker.networks.major.message", comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
 

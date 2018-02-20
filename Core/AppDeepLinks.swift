@@ -37,12 +37,15 @@ public struct AppDeepLinks {
     
     public static func isQuickLink(url: URL) -> Bool {
         if let scheme = url.scheme {
-            return AppDeepLinks.quickLink.contains(scheme)
+            return AppDeepLinks.quickLink.lowercased().contains(scheme.lowercased())
         }
         return false
     }
     
     public static func query(fromQuickLink url: URL) -> String {
-        return url.absoluteString.replacingOccurrences(of: quickLink, with: "")
+        let components = NSURLComponents.init(url: url, resolvingAgainstBaseURL: true)!
+        components.scheme = nil // remove scheme
+        let string = String(components.url!.absoluteString.dropFirst(2)) // strip off '//' prefix
+        return string
     }
 }

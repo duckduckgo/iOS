@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */; };
 		830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375B1F6C06BF00E317A7 /* TermsOfService.swift */; };
 		830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */; };
@@ -328,6 +329,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewConfigurationExtension.swift; sourceTree = "<group>"; };
 		830C375B1F6C06BF00E317A7 /* TermsOfService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceStore.swift; sourceTree = "<group>"; };
@@ -1459,6 +1461,7 @@
 		F17D722C1E8B3563003E8B0E /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */,
 				F17D72381E8B35C6003E8B0E /* AppUrlsTests.swift */,
 				F143C2CB1E4A4B9100CFDE3A /* AppVersionTests.swift */,
 				F189AEE31F18FDAF001EBAE1 /* LinkTests.swift */,
@@ -2252,6 +2255,7 @@
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,
 				8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
+				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */,

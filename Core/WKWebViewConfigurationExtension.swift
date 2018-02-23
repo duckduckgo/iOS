@@ -74,6 +74,7 @@ fileprivate class Loader {
     }
     
     func load() {
+        Logger.log(text: "Loading scripts")
         loadDocumentLevelScripts()
         loadSiteMonitoringScripts()
     }

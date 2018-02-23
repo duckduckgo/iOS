@@ -433,12 +433,17 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
+        Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970, siteRating?.url.host, url?.host)
         delegate?.showBars()
-        resetSiteRating()
-        if let siteRating = siteRating {
-            reloadScripts(with: siteRating.protectionId, restrictedDevice: UIDevice.current.isSlow())
+
+        // if host is the same use same protection id and don't inject scripts, otherwise, reset and reload
+        if let siteRating = siteRating, siteRating.url.host == url?.host {
+            self.siteRating = SiteRating(url: siteRating.url, protectionId: siteRating.protectionId)
+        } else {
+            resetSiteRating()
+            reloadScripts(with: siteRating!.protectionId, restrictedDevice: UIDevice.current.isSlow())
         }
+        
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

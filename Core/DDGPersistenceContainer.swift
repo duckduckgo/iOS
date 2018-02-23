@@ -27,7 +27,7 @@ public class DDGPersistenceContainer {
     public let persistenceStoreCoordinator: NSPersistentStoreCoordinator
     public let managedObjectContext: NSManagedObjectContext
 
-    public init?(name: String) {
+    public init?(name: String, concurrencyType: NSManagedObjectContextConcurrencyType = .privateQueueConcurrencyType) {
         let mainBundle = Bundle.main
         let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
 
@@ -37,7 +37,7 @@ public class DDGPersistenceContainer {
         guard let persistenceStoreCoordinator = DDGPersistenceContainer.createPersistenceStoreCoordinator(name: name, model: managedObjectModel) else { return nil }
         self.persistenceStoreCoordinator = persistenceStoreCoordinator
 
-        managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        managedObjectContext = NSManagedObjectContext(concurrencyType: concurrencyType)
         managedObjectContext.persistentStoreCoordinator = persistenceStoreCoordinator
     }
 

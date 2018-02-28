@@ -28,8 +28,9 @@ open class WebViewController: UIViewController {
         static let url = "URL"
     }
     
-    private struct webViewErrorCodes {
-        static let frameLoadInterrupted = 102
+    private struct Constants {
+        static let frameLoadInterruptedErrorCode = 102
+        static let minimumProgress: Float = 0.1
     }
 
     var failingUrls = Set<String>()
@@ -147,7 +148,7 @@ open class WebViewController: UIViewController {
         switch(keyPath) {
 
         case webViewKeyPaths.estimatedProgress:
-            progressBar.progress = max(0.1, Float(webView.estimatedProgress))
+            progressBar.progress = max(Constants.minimumProgress, Float(webView.estimatedProgress))
 
         case webViewKeyPaths.hasOnlySecureContent:
             webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
@@ -188,7 +189,7 @@ open class WebViewController: UIViewController {
     
     private func showProgressIndicator() {
         progressBar.alpha = 1
-        progressBar.progress = 0.1
+        progressBar.progress = Constants.minimumProgress
     }
     
     private func hideProgressIndicator() {
@@ -239,7 +240,12 @@ open class WebViewController: UIViewController {
 
     open func reloadScripts(with protectionId: String, restrictedDevice: Bool) {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(with: protectionId, restrictedDevice: restrictedDevice)
+        webView.configuration.loadScripts(with: protectionId, restrictedDevice: restrictedDevice, contentBlocking: !isDuckDuckGoUrl())
+    }
+    
+    private func isDuckDuckGoUrl() -> Bool {
+        guard let url = url else { return false }
+        return appUrls.isDuckDuckGo(url: url)
     }
 
 }
@@ -296,7 +302,7 @@ extension WebViewController: WKNavigationDelegate {
         let error = error as NSError
         if let url = loadedURL,
             let domain = url.host,
-            error.code == webViewErrorCodes.frameLoadInterrupted {
+            error.code == Constants.frameLoadInterruptedErrorCode {
             failingUrls.insert(domain)
         }
         showErrorLater()

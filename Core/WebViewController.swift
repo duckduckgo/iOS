@@ -147,7 +147,7 @@ open class WebViewController: UIViewController {
         switch(keyPath) {
 
         case webViewKeyPaths.estimatedProgress:
-            progressBar.progress = Float(webView.estimatedProgress)
+            progressBar.progress = max(0.1, Float(webView.estimatedProgress))
 
         case webViewKeyPaths.hasOnlySecureContent:
             webEventsDelegate?.webView(webView, didUpdateHasOnlySecureContent: webView.hasOnlySecureContent)
@@ -188,6 +188,7 @@ open class WebViewController: UIViewController {
     
     private func showProgressIndicator() {
         progressBar.alpha = 1
+        progressBar.progress = 0.1
     }
     
     private func hideProgressIndicator() {
@@ -302,48 +303,49 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let decision = decidePolicyFor(navigationAction: navigationAction)
+        if decision == .allow && navigationAction.isTargettingMainFrame() {
+            showProgressIndicator()
+        }
+        decisionHandler(decision)
+    }
+    
+    private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
 
         guard let url = navigationAction.request.url else {
-            decisionHandler(.allow)
-            return
+            return .allow
         }
-
+        
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
-            decisionHandler(.cancel)
-            return
+            return .cancel
         }
-
+        
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
-                decisionHandler(.allow)
-                return
+                return .allow
         }
-
+        
         if appUrls.isDuckDuckGoSearch(url: url) {
             StatisticsLoader.shared.refreshRetentionAtb()
         }
-
+        
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
-            decisionHandler(.cancel)
-            return
+            return .cancel
         }
-
+        
         if !failingUrls.contains(url.host ?? ""),
             navigationAction.isTargettingMainFrame(),
             let upgradeUrl = httpsUpgrade.upgrade(url: url) {
             load(url: upgradeUrl)
-            decisionHandler(.cancel)
-            return
+            return .cancel
         }
-
+        
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
-            decisionHandler(.allow)
-            return
+            return .allow
         }
 
-        decisionHandler(.cancel)
-
+        return .cancel
     }
 
     private func showErrorLater() {

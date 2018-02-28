@@ -433,7 +433,7 @@ extension TabViewController: WebEventsDelegate {
     }
     
     func webpageDidStartLoading() {
-        Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970, siteRating?.url.host, url?.host)
+        Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         delegate?.showBars()
 
         // if host is the same use same protection id and don't inject scripts, otherwise, reset and reload

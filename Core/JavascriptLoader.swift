@@ -56,7 +56,7 @@ public class JavascriptLoader {
 
         var js = try! String(contentsOfFile: JavascriptLoader.path(for: script.rawValue))
         for (key, value) in replacements {
-            js = js.replacingOccurrences(of: key, with: value)
+            js = js.replacingOccurrences(of: key, with: value, options: .literal)
         }
         load(js: js, into: controller, forMainFrameOnly: forMainFrameOnly, injectionTime: injectionTime)
     }

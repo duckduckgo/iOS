@@ -68,7 +68,16 @@ class DisconnectMeTrackersParserTests: XCTestCase {
 
     func testWhenJsonValidButContainsDntEffElementInFirstPositionThenNoErrorThrown() {
         let validJson = data.fromJsonFile("MockFiles/disconnect_dnt.json")
-        XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson))
+        let result = try? testee.convert(fromJsonData: validJson)
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result?.count, 1)
+    }
+
+    func testWhenJsonValidButContainsDntEffElementInSecondPositionThenNoErrorThrown() {
+        let validJson = data.fromJsonFile("MockFiles/disconnect_dnt2.json")
+        let result = try? testee.convert(fromJsonData: validJson)
+        XCTAssertNotNil(result)
+        XCTAssertEqual(result?.count, 1)
     }
 
 }

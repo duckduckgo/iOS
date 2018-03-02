@@ -48,9 +48,8 @@ class SuggestionTableViewCell: UITableViewCell {
             NSAttributedStringKey.foregroundColor: UIColor.white
         ]
         
-        let count = (query.length() < text.length()) ? query.length() : text.length()
         let text = NSMutableAttributedString(string: text)
-        text.addAttributes(attributes, range: NSMakeRange(0, count))
+        text.addAttributes(attributes, range: NSMakeRange(0, text.length))
         label.attributedText = text
     }
 }

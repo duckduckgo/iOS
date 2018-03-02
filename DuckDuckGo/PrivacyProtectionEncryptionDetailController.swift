@@ -82,10 +82,12 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         unencryptedLabel.isHidden = true
         mixedContentLabel.isHidden = true
 
+        messageLabel.text = UserText.ppEncryptionStandardMessage
         if !siteRating.https {
             unencryptedLabel.isHidden = false
         } else if !siteRating.hasOnlySecureContent {
             mixedContentLabel.isHidden = false
+            messageLabel.text = UserText.ppEncryptionMixedMessage
         } else {
             encryptedLabel.isHidden = false
         }

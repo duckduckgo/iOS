@@ -21,8 +21,35 @@
 import Foundation
 
 
-public struct TermsOfService {
+public struct TermsOfService: Decodable {
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.classification = try? container.decode(Classification.self, forKey: .classification)
+        self.score = try container.decode(Int.self, forKey: .score)
+        let matchContainer = try container.nestedContainer(keyedBy: CodingKeys.Match.self, forKey: .match)
+        self.goodReasons = try matchContainer.decodeIfPresent([String].self, forKey: .good) ?? []
+        self.badReasons = try matchContainer.decodeIfPresent([String].self, forKey: .bad) ?? []
+    }
+    
+    public init(classification: Classification?, score: Int, goodReasons: [String], badReasons: [String]) {
+        self.classification = classification
+        self.score = score
+        self.goodReasons = goodReasons
+        self.badReasons = badReasons
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case classification = "class"
+        case score
+        case match
+        
+        enum Match: String, CodingKey {
+            case good
+            case bad
+        }
+    }
+    
     struct Lookups {
 
         static let classificationAsPractices: [Classification: PrivacyPractices] = [
@@ -98,8 +125,18 @@ public struct TermsOfService {
         return 0
     }
 
-    public enum Classification: String {
+    public enum Classification: String, Decodable {
         case a, b, c, d, e
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let lowercaseString = try container.decode(String.self).lowercased()
+            guard let classification = Classification(rawValue: lowercaseString) else {
+                let context = DecodingError.Context(codingPath: [], debugDescription: "Classification string didn't match")
+                throw DecodingError.typeMismatch(Classification.self, context)
+            }
+            self = classification
+        }
     }
 
     public enum PrivacyPractices {

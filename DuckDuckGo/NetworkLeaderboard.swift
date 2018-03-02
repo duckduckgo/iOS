@@ -38,7 +38,7 @@ class NetworkLeaderboard {
 
     }
 
-    private lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard")!
+    private lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard", concurrencyType: .mainQueueConcurrencyType)!
     private var userDefaults:UserDefaults!
 
     var startDate: Date? {

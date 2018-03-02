@@ -37,11 +37,15 @@ extension WKWebViewConfiguration {
         if #available(iOSApplicationExtension 10.0, *) {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
+        
+        configuration.allowsAirPlayForMediaPlayback = true
+        configuration.allowsInlineMediaPlayback = true
+        configuration.allowsPictureInPictureMediaPlayback = true
         return configuration
     }
     
-    public func loadScripts(with id: String, restrictedDevice: Bool) {
-        Loader(id, userContentController, restrictedDevice).load()
+    public func loadScripts(with id: String, restrictedDevice: Bool, contentBlocking: Bool) {
+        Loader(id, userContentController, restrictedDevice, contentBlocking).load()
     }
     
 }
@@ -62,23 +66,29 @@ fileprivate class Loader {
     let id: String
     let userContentController: WKUserContentController
     let restrictedDevice: Bool
+    let contentBlocking: Bool
 
-    init(_ id: String, _ userContentController: WKUserContentController, _ restrictedDevice: Bool) {
+    init(_ id: String, _ userContentController: WKUserContentController, _ restrictedDevice: Bool, _ contentBlocking: Bool) {
         self.id = id
         self.userContentController = userContentController
         self.restrictedDevice = restrictedDevice
+        self.contentBlocking = contentBlocking
     }
     
     func load() {
+        Logger.log(text: "Loading scripts")
         loadDocumentLevelScripts()
-        loadSiteMonitoringScripts()
+        
+        if contentBlocking {
+            loadContentBlockingScripts()
+        }
     }
     
     private func loadDocumentLevelScripts() {
         load(scripts: [ .document, .favicon ] )
     }
     
-    private func loadSiteMonitoringScripts() {
+    private func loadContentBlockingScripts() {
         let configuration = ContentBlockerConfigurationUserDefaults()
         let whitelist = configuration.domainWhitelist.toJsonLookupString()
         loadContentBlockerDependencyScripts()

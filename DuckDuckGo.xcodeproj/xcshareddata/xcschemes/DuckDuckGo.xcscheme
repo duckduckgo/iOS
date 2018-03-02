@@ -50,6 +50,16 @@
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "85CC936A203C402C00690089"
+               BuildableName = "SpeedTests.xctest"
+               BlueprintName = "SpeedTests"
+               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
@@ -90,6 +100,12 @@
             ReferencedContainer = "container:DuckDuckGo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "-com.apple.CoreData.ConcurrencyDebug 1"
+            isEnabled = "NO">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

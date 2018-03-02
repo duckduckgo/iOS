@@ -48,9 +48,14 @@ class Migration {
         }
 
         queue.async {
-            let bookmarksMigrated = self.migrateBookmarks(into: self.bookmarks)
-            let storiesMigrated = self.migrateStories(into: self.bookmarks)
-            self.userDefaults.set(true, forKey: Constants.migrationOccurredKey)
+            var bookmarksMigrated = 0
+            var storiesMigrated = 0
+            self.container.managedObjectContext.performAndWait {
+                bookmarksMigrated = self.migrateBookmarks(into: self.bookmarks)
+                storiesMigrated = self.migrateStories(into: self.bookmarks)
+                self.userDefaults.set(true, forKey: Constants.migrationOccurredKey)
+            }
+            
             completion(true, storiesMigrated, bookmarksMigrated)
         }
         

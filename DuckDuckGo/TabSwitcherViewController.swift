@@ -40,6 +40,11 @@ class TabSwitcherViewController: UIViewController {
         fireButton = toolbar.addFireButton { [weak self] in self?.onFirePressed() }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollToInitialTab()
@@ -50,10 +55,6 @@ class TabSwitcherViewController: UIViewController {
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        collectionView.reloadData()
     }
     
     private func refreshTitle() {

@@ -31,8 +31,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!
 
-    var majorOnly = false
-
     struct Section {
 
         let name: String
@@ -68,17 +66,21 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     func update() {
         guard isViewLoaded else { return }
-        sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: contentBlocker, majorNetworksOnly: majorOnly).build()
+        
+        sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers()).build()
         updateDomain()
         updateSubtitle()
         updateIcon()
         tableView.reloadData()
     }
+    
+    private func trackers() -> [DetectedTracker: Int] {
+        let protecting = siteRating.protecting(contentBlocker)
+        return protecting ? siteRating.trackersBlocked : siteRating.trackersDetected
+    }
 
     private func initMessage() {
-        if majorOnly {
-            messageLabel.text = UserText.ppTrackerNetworksMajorMessage
-        }
+        // messageLabel.text = UserText.ppTrackerNetworksMajorMessage
         messageLabel.adjustPlainTextLineHeight(1.286)
     }
 
@@ -87,35 +89,17 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateSubtitle() {
-        subtitleLabel.text = majorOnly ?
-            siteRating.majorNetworksText(contentBlocker: contentBlocker).uppercased() :
-            siteRating.networksText(contentBlocker: contentBlocker).uppercased()
+        subtitleLabel.text = siteRating.networksText(contentBlocker: contentBlocker).uppercased()
     }
 
     private func updateIcon() {
 
-        if majorOnly {
-            updateMajorNetworksIcon()
-        } else {
-            updateNetworksIcon()
-        }
-
-    }
-
-    private func updateNetworksIcon() {
-        if protecting() || siteRating.uniqueTrackersDetected == 0 {
-            iconImage.image = #imageLiteral(resourceName: "PP Hero Networks On")
-        } else {
-            iconImage.image = #imageLiteral(resourceName: "PP Hero Networks Bad")
-        }
-    }
-
-    private func updateMajorNetworksIcon() {
         if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")
         }
+
     }
 
     private func initTableView() {
@@ -171,40 +155,46 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 }
 
-struct SiteRatingTrackerNetworkSectionBuilder {
+class SiteRatingTrackerNetworkSectionBuilder {
     
-    let siteRating: SiteRating
-    let contentBlocker: ContentBlockerConfigurationStore
-    let majorNetworksOnly: Bool
+    let trackers: [DetectedTracker: Int]
+    let majorTrackerNetworksStore: MajorTrackerNetworkStore
+    
+    init(trackers: [DetectedTracker: Int], majorTrackerNetworksStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
+        self.trackers = trackers
+        self.majorTrackerNetworksStore = majorTrackerNetworksStore
+    }
     
     func build() -> [PrivacyProtectionTrackerNetworksController.Section] {
-
-        let protecting = siteRating.protecting(contentBlocker)
-        
-        if majorNetworksOnly {
-            return toSections(trackers: protecting ? siteRating.majorNetworkTrackersBlocked : siteRating.majorNetworkTrackersDetected)
-        } else {
-            return toSections(trackers: protecting ? siteRating.trackersBlocked : siteRating.trackersDetected)
-        }
+        return toSections(trackers: trackers)
     }
 
     private func toSections(trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
-        var sections = [String: PrivacyProtectionTrackerNetworksController.Section]()
+        var sections = [PrivacyProtectionTrackerNetworksController.Section]()
 
-        for tracker in trackers.keys {
+        let trackers = trackers.flatMap({ $0.key }).sorted(by: { $0.domain! < $1.domain! })
+        let majorTrackers = trackers.filter({ $0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.percentage(majorTrackerNetworksStore) > $1.percentage(majorTrackerNetworksStore) })
+        let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil && !$0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.networkName! < $1.networkName! })
+        let unknownTrackers = trackers.filter({ $0.networkName == nil })
+
+        for tracker in majorTrackers + nonMajorKnownTrackers + unknownTrackers {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
 
             let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: tracker.category ?? "")
-
-            if let section = sections[networkName] {
-                sections[networkName] = section.adding(row)
+            
+            if let sectionIndex = sections.index(where: { $0.name == networkName }) {
+                if row.name != networkName {
+                    let section = sections[sectionIndex]
+                    sections[sectionIndex] = section.adding(row)
+                }
             } else {
-                sections[networkName] = PrivacyProtectionTrackerNetworksController.Section(name: networkName, rows: [row])
+                let rows: [PrivacyProtectionTrackerNetworksController.Row] = (row.name == networkName) ? [] : [row]
+                sections.append(PrivacyProtectionTrackerNetworksController.Section(name: networkName, rows: rows))
             }
         }
 
-        return Array(sections.values).sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+        return sections
     }
 
 }
@@ -231,7 +221,7 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
         if let image = UIImage(named: "PP Network Icon \(section.name.lowercased())") {
             iconImage.image = image
         } else {
-            iconImage.image = #imageLiteral(resourceName: "PP Network Icon unknown")
+            iconImage.image = nil
         }
     }
 
@@ -245,6 +235,17 @@ fileprivate extension DetectedTracker {
             guard let networkName = networkName else { return domain! }
             return networkName
         }
+    }
+    
+    func isMajor(_ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Bool {
+        guard let networkName = networkName else { return false }
+        return majorTrackerNetworkStore.network(forName: networkName) != nil
+    }
+    
+    func percentage(_ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Int {
+        guard let networkName = networkName else { return 0 }
+        guard let majorNetwork = majorTrackerNetworkStore.network(forName: networkName) else { return 0 }
+        return majorNetwork.percentageOfPages
     }
 
 }

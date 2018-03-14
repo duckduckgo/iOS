@@ -56,7 +56,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     
     func testWhenNetworkExistsForMajorDomainNotInDisconnectItIsReturned() {
         let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString, networkName: "TrickyAds", category: .social ) ]
-        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Major", domain: "major.com", perentageOfPages: 5))
+        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Major", domain: "major.com", percentageOfPages: 5))
         let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
         let nameAndCategory = testee.networkNameAndCategory(forDomain: "major.com")
         XCTAssertEqual("Major", nameAndCategory.networkName)
@@ -159,7 +159,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 */
 
     func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassATOSScoreIsTen() {
-        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
+        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, percentageOfPages: 84))
         let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
         let score = testee.siteScore()
         XCTAssertEqual(10, score.before)

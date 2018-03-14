@@ -26,104 +26,135 @@ import XCTest
 
 class PrivacyProtectionTrackerNetworksTests: XCTestCase {
 
-    func testWhenNetworkNotKnownSingleSectionWithSingleRowOfSameDomainBuilt() {
-        let mockContentBlocker = MockContentBlockerConfigurationStore()
-        mockContentBlocker.addToWhitelist(domain: "edition.cnn.com")
+    func testWhenNetworkNotKnownSectionHasNoRows() {
+        let trackers = [DetectedTracker(url: "http://tracker1.com", networkName: nil, category: nil, blocked: false): 1]
         
-        let siteRating = SiteRating(url: URL(string: "https://edition.cnn.com")!)
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker1.com", networkName: nil, category: nil, blocked: false))
-        
-        let sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: mockContentBlocker, majorNetworksOnly: false).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
         
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("tracker1.com", sections[0].name)
-        XCTAssertEqual(1, sections[0].rows.count)
-        XCTAssertEqual("tracker1.com", sections[0].rows[0].name)
+        XCTAssertEqual(0, sections[0].rows.count)
     }
     
-    func testWhenDomainWhitelistedSectionsBuiltForNetworksDetected() {
-        let mockContentBlocker = MockContentBlockerConfigurationStore()
-        mockContentBlocker.addToWhitelist(domain: "edition.cnn.com")
+    func testNetworkHasMultipleTrackersThenGroupedCorrectly() {
         
-        let siteRating = SiteRating(url: URL(string: "https://edition.cnn.com")!)
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker1.com", networkName: "Network 1", category: nil, blocked: false))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: nil, blocked: false))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker3.com", networkName: "Network 2", category: nil, blocked: false))
+        let trackers = [
+            DetectedTracker(url: "http://tracker1.com", networkName: "Network 1", category: nil, blocked: false): 1,
+            DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: nil, blocked: false): 1,
+            DetectedTracker(url: "http://tracker3.com", networkName: "Network 2", category: nil, blocked: false): 1,
+        ]
         
-        let sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: mockContentBlocker, majorNetworksOnly: false).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
         
         XCTAssertEqual(2, sections.count)
         XCTAssertEqual(2, sections[0].rows.count)
         XCTAssertEqual(1, sections[1].rows.count)
     }
     
-    func testWhenDomainNotWhitelistedSectionsBuiltForNetworksBlocked() {
-        let mockContentBlocker = MockContentBlockerConfigurationStore()
-        
-        let siteRating = SiteRating(url: URL(string: "https://edition.cnn.com")!)
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker1.com", networkName: "Network 1", category: nil, blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: nil, blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker3.com", networkName: "Network 2", category: nil, blocked: false))
-        
-        let sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: mockContentBlocker, majorNetworksOnly: false).build()
-        
-        XCTAssertEqual(1, sections.count)
-        XCTAssertEqual(2, sections[0].rows.count)
-    }
 
     func testWhenMajorNetworkDetectedSectionBuiltWithRowPerUniqueMajorTracker() {
-        let mockContentBlocker = MockContentBlockerConfigurationStore()
         
-        let siteRating = SiteRating(url: URL(string: "https://edition.cnn.com")!, majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker1.com", networkName: "Major", category: "Category 1", blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Major", category: "Category 2", blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Major", category: "Category 3", blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 4", blocked: true))
-
-        let sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: mockContentBlocker, majorNetworksOnly: true).build()
+        let trackers = [
+            DetectedTracker(url: "http://tracker1.com", networkName: "Major 1", category: "Category 1", blocked: true): 1,
+            DetectedTracker(url: "http://tracker2.com", networkName: "Major 1", category: "Category 2", blocked: true): 1,
+            DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 3", blocked: true): 1,
+        ]
         
-        XCTAssertEqual(1, sections.count)
-        XCTAssertEqual("Major", sections[0].name)
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
+        
+        XCTAssertEqual(2, sections.count)
+        XCTAssertEqual("Major 1", sections[0].name)
         XCTAssertEqual(2, sections[0].rows.count)
         XCTAssertEqual("tracker1.com", sections[0].rows[0].name)
         XCTAssertEqual("tracker2.com", sections[0].rows[1].name)
-    }
-
-    func testWhenNetworkDetectedSectionBuiltWithRowPerUniqueTracker() {
-
-        let mockContentBlocker = MockContentBlockerConfigurationStore()
-        
-        let siteRating = SiteRating(url: URL(string: "https://edition.cnn.com")!)
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker1.com", networkName: "Network 1", category: "Category 1", blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: "Category 2", blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: "Category 2", blocked: true))
-        siteRating.trackerDetected(DetectedTracker(url: "http://tracker2.com", networkName: "Network 1", category: "Category 2", blocked: true))
-
-        let sections = SiteRatingTrackerNetworkSectionBuilder(siteRating: siteRating, contentBlocker: mockContentBlocker, majorNetworksOnly: false).build()
-        
-        XCTAssertEqual(1, sections.count)
-        XCTAssertEqual("Network 1", sections[0].name)
-        XCTAssertEqual(2, sections[0].rows.count)
-        XCTAssertEqual("tracker1.com", sections[0].rows[0].name)
-        XCTAssertEqual("Category 1", sections[0].rows[0].value)
-        XCTAssertEqual("tracker2.com", sections[0].rows[1].name)
-        XCTAssertEqual("Category 2", sections[0].rows[1].value)
     }
     
+    func testWhenMajorNetworksInTrackersThenSortedToTopOrderedByPercentage() {
+
+        let trackers = [
+            DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 1", blocked: true): 1,
+            DetectedTracker(url: "http://tracker1.com", networkName: "Major 1", category: "Category 2", blocked: true): 1,
+            DetectedTracker(url: "http://tracker2.com", networkName: "Major 2", category: "Category 3", blocked: true): 1,
+        ]
+        
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        
+        XCTAssertEqual(3, sections.count)
+        XCTAssertEqual("Major 2", sections[0].name)
+        XCTAssertEqual("Major 1", sections[1].name)
+        XCTAssertEqual("Minor", sections[2].name)
+
+    }
+
+    func testWhenMajorTrackersThenDomainsAreSorted() {
+
+        let trackers = [
+            DetectedTracker(url: "http://tracker3.com", networkName: "Major 1", category: "Category 1", blocked: true): 1,
+            DetectedTracker(url: "http://tracker1.com", networkName: "Major 1", category: "Category 2", blocked: true): 1,
+            DetectedTracker(url: "http://tracker2.com", networkName: "Major 1", category: "Category 3", blocked: true): 1,
+            ]
+        
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        
+        XCTAssertEqual(1, sections.count)
+        XCTAssertEqual("Major 1", sections[0].name)
+        XCTAssertEqual("tracker1.com", sections[0].rows[0].name)
+        XCTAssertEqual("tracker2.com", sections[0].rows[1].name)
+        XCTAssertEqual("tracker3.com", sections[0].rows[2].name)
+
+    }
+
+    func testWhenMinorTrackersThenDomainsAreSorted() {
+        
+        let trackers = [
+            DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 1", blocked: true): 1,
+            DetectedTracker(url: "http://tracker1.com", networkName: "Minor", category: "Category 2", blocked: true): 1,
+            DetectedTracker(url: "http://tracker2.com", networkName: "Minor", category: "Category 3", blocked: true): 1,
+            ]
+        
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        
+        XCTAssertEqual(1, sections.count)
+        XCTAssertEqual("Minor", sections[0].name)
+        XCTAssertEqual("tracker1.com", sections[0].rows[0].name)
+        XCTAssertEqual("tracker2.com", sections[0].rows[1].name)
+        XCTAssertEqual("tracker3.com", sections[0].rows[2].name)
+        
+    }
+
+    func testWhenUnknownTrackerNetworkThenDomainsAreSortedAndHaveOwnSection() {
+        
+        let trackers = [
+            DetectedTracker(url: "http://tracker3.com", networkName: nil, category: "Category 1", blocked: true): 1,
+            DetectedTracker(url: "http://tracker1.com", networkName: nil, category: "Category 2", blocked: true): 1,
+            DetectedTracker(url: "http://tracker2.com", networkName: nil, category: "Category 3", blocked: true): 1,
+            ]
+        
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        
+        XCTAssertEqual(3, sections.count)
+        XCTAssertEqual("tracker1.com", sections[0].name)
+        XCTAssertEqual("tracker2.com", sections[1].name)
+        XCTAssertEqual("tracker3.com", sections[2].name)
+        
+    }
+
 }
 
 fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+
+    let networks = [
+        MajorTrackerNetwork(name: "Major 1", domain: "major1.com", percentageOfPages: 25),
+        MajorTrackerNetwork(name: "Major 2", domain: "major2.com", percentageOfPages: 50),
+    ]
     
-    let majorTrackerNetwork = MajorTrackerNetwork(name: "Major", domain: "major.com", perentageOfPages: 20)
-    
+
     func network(forName name: String) -> MajorTrackerNetwork? {
-        if "Major" == name { return majorTrackerNetwork }
-        return nil
+        return networks.first(where: { $0.name == name })
     }
     
     func network(forDomain domain: String) -> MajorTrackerNetwork? {
-        if "major.com" == domain { return majorTrackerNetwork }
-        return nil
+        return networks.first(where: { $0.domain == domain })
     }
 
 }

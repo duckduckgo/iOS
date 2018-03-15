@@ -94,7 +94,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     private func updateIcon() {
 
-        if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
+        if protecting() || siteRating.uniqueTrackerNetworksDetected == 0 {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
         } else {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")

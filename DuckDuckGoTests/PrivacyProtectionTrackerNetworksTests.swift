@@ -139,6 +139,29 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
         
     }
 
+    func testWhenNoProtocolThenTrackerAddedByDomain() {
+        
+        let trackers = [
+            DetectedTracker(url: "//tracker.com", networkName: nil, category: "Category 1", blocked: true): 1,
+            ]
+        
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        
+        XCTAssertEqual(1, sections.count)
+        XCTAssertEqual("tracker.com", sections[0].name)
+    }
+
+    func testWhenNoDomainThenTrackerIgnored() {
+        
+        let trackers = [
+            DetectedTracker(url: "/tracker3.js", networkName: nil, category: "Category 1", blocked: true): 1,
+            ]
+        
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        
+        XCTAssertEqual(0, sections.count)
+    }
+
 }
 
 fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {

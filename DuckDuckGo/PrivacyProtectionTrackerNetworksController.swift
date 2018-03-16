@@ -80,7 +80,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func initMessage() {
-        // messageLabel.text = UserText.ppTrackerNetworksMajorMessage
         messageLabel.adjustPlainTextLineHeight(1.286)
     }
 
@@ -172,7 +171,7 @@ class SiteRatingTrackerNetworkSectionBuilder {
     private func toSections(trackers: [DetectedTracker: Int]) -> [PrivacyProtectionTrackerNetworksController.Section] {
         var sections = [PrivacyProtectionTrackerNetworksController.Section]()
 
-        // work around bug in first party detection - everything *should* have a URL
+        // work around bug in first party detection - everything *should* have a URL with host
         let trackers = trackers.flatMap({ $0.key }).filter( { $0.domain != nil } ).sorted(by: { $0.domain! < $1.domain! })
         
         // group by tracker types, sorted appropriately

@@ -101,8 +101,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(3, SiteRatingCache.shared.get(url: Url.https))
     }
 
-/*  Broken due to algorithm being broken.
-    func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersDetectedRoundedUpAndAfterScoreIsZero() {
+    func testWhenHTTPSAndClassATOSBeforeScoreIncreasesByOneForEveryTenTrackersDetectedRoundedDownAndAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
 
         for _ in 0 ..< 11 {
@@ -110,26 +109,25 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         }
 
         let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
-        XCTAssertEqual(0, score.after)
-    }
-
-    func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAfterScoreIsZero() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
-        testee.trackerDetected(MockTrackerBuilder.standard(blocked: false))
-        let score = testee.siteScore()
         XCTAssertEqual(1, score.before)
         XCTAssertEqual(0, score.after)
     }
 
-    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsZero() {
+    func testWhenSingleTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsZeroAndAfterScoreIsZero() {
+        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
+        testee.trackerDetected(MockTrackerBuilder.standard(blocked: false))
+        let score = testee.siteScore()
+        XCTAssertEqual(0, score.before)
+        XCTAssertEqual(0, score.after)
+    }
+
+    func testWhenObsecureTrackerDetectedAndHTTPSAndClassATOSBeforeScoreIsOneAndAfterScoreIsZero() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
         testee.trackerDetected(MockTrackerBuilder.ipTracker(blocked: true))
         let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
+        XCTAssertEqual(1, score.before)
         XCTAssertEqual(0, score.after)
     }
-*/
 
     func testWhenNoTrackersHTTPSAndClassATOSThenLoadsInsecureResourceScoreIsOne() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: .a, score: 0))
@@ -146,17 +144,15 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(1, score.after)
     }
 
-/*  Broken due to algorithm being broken.
-    func testWhenTrackerDetectedInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsTwoAfterScoreIsOne() {
+    func testWhenTrackerDetectedInMajorTrackerNetworkAndHTTPSAndClassATOSBeforeScoreIsOneAndAfterScoreIsOne() {
         let disconnectMeTrackers = [Url.https.host!: DisconnectMeTracker(url: Url.googleNetwork.absoluteString, networkName: "Google")]
-        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, perentageOfPages: 84))
+        let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, percentageOfPages: 84))
         let testee = SiteRating(url: URL(string: "https://another.com")!, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS, majorTrackerNetworkStore: networkStore)
         testee.trackerDetected(DetectedTracker(url: "https://tracky.com/tracker.js", networkName: nil, category: nil, blocked: false))
         let score = testee.siteScore()
-        XCTAssertEqual(2, score.before)
+        XCTAssertEqual(1, score.before)
         XCTAssertEqual(1, score.after)
     }
-*/
 
     func testWhenSiteIsMajorTrackerNetworkAndHTTPSAndClassATOSScoreIsTen() {
         let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Google", domain: Url.googleNetwork.host!, percentageOfPages: 84))

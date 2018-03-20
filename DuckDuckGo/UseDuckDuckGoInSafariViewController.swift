@@ -23,24 +23,11 @@ import Core
 
 class UseDuckDuckGoInSafariViewController: UIViewController {
   
-    struct Constants {
-        static let lineHeight: CGFloat = 1.375
-    }
-    
     @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var descriptionText: UILabel!
     
     private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureViews()
-    }
-
-    private func configureViews() {
-        descriptionText.adjustPlainTextLineHeight(Constants.lineHeight)
-    }
 
     @IBAction func onDonePressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

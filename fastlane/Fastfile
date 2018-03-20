@@ -26,3 +26,9 @@ lane :release do
 
 end
 
+lane :screenshots do 
+
+  reset_simulators
+  capture_screenshots
+
+end

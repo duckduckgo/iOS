@@ -73,15 +73,15 @@ extension SiteRating {
     }
 
     func networksSuccess(contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(contentBlocker) ? uniqueTrackerNetworksBlocked : uniqueTrackerNetworksDetected) <= 0
+        return (protecting(contentBlocker) ? uniqueTrackersBlocked : uniqueTrackersDetected) <= 0
     }
 
     func networksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackerNetworksBlocked)
+        return String(format: UserText.privacyProtectionTrackersBlocked, uniqueTrackersBlocked)
     }
 
     func networksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackerNetworksDetected)
+        return String(format: UserText.privacyProtectionTrackersFound, uniqueTrackersDetected)
     }
 
     func protecting(_ contentBlocker: ContentBlockerConfigurationStore) -> Bool {

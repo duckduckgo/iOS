@@ -68,7 +68,6 @@ class TrackerNetworkLeaderboardView: UIView {
     var leaderboard = NetworkLeaderboard.shared
 
     func didLoad() {
-        message.adjustPlainTextLineHeight(1.286)
         firstPill.didLoad()
         secondPill.didLoad()
         thirdPill.didLoad()
@@ -103,7 +102,6 @@ class TrackerNetworkPillView: UIView {
 
     func didLoad() {
         layer.cornerRadius = frame.size.height / 2
-        percentageLabel.adjustKern(1.2)
     }
 
     func update(network: PPTrackerNetwork, sitesVisited: Int) {

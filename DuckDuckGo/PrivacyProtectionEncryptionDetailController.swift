@@ -51,7 +51,6 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         initTableView()
         initHttpsStatus()
         initDomain()
-        messageLabel.adjustPlainTextLineHeight(1.286)
         beginCertificateInfoExtraction()
 
     }

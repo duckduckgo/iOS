@@ -1,8 +1,8 @@
 //
-//  AboutViewController.swift
+//  global.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,17 +17,10 @@
 //  limitations under the License.
 //
 
+import Foundation
 
-import UIKit
-import Core
-
-class AboutViewController: UIViewController {
-
-    @IBOutlet weak var descriptionText: UILabel!
-
-    @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
-        dismiss(animated: true) { 
-            UIApplication.shared.openURL(AppDeepLinks.aboutLink)
-        }
-    }
-}
+#if DEBUG
+let isDebugBuild = true
+#else
+let isDebugBuild = false
+#endif

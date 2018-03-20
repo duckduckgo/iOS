@@ -23,12 +23,7 @@ import Core
 
 class OnboardingTutorialPageViewController: UIViewController {
     
-    struct Constants {
-        static let lineHeight: CGFloat = 1.375
-    }
-    
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet var requiresLineHeightAdjustment: [UILabel]!
 
     private(set) var preferredBackgroundColor: UIColor?
 
@@ -40,14 +35,6 @@ class OnboardingTutorialPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         preferredBackgroundColor = view.backgroundColor
-        configureViews()
-    }
-
-    private func configureViews() {
-        guard requiresLineHeightAdjustment != nil else { return }
-        for label in requiresLineHeightAdjustment {
-            label.adjustPlainTextLineHeight(Constants.lineHeight)
-        }
     }
 
     var onboardingImage: UIImageView {

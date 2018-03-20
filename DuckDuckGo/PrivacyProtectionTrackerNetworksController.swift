@@ -56,7 +56,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     override func viewDidLoad() {
         initTableView()
-        initMessage()
         update()
     }
 
@@ -77,10 +76,6 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     private func trackers() -> [DetectedTracker: Int] {
         let protecting = siteRating.protecting(contentBlocker)
         return protecting ? siteRating.trackersBlocked : siteRating.trackersDetected
-    }
-
-    private func initMessage() {
-        messageLabel.adjustPlainTextLineHeight(1.286)
     }
 
     private func updateDomain() {

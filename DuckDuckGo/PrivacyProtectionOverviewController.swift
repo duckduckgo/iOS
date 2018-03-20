@@ -33,7 +33,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     @IBOutlet weak var encryptionCell: SummaryCell!
     @IBOutlet weak var trackersCell: SummaryCell!
-    @IBOutlet weak var majorTrackersCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
 
     fileprivate weak var popRecognizer: InteractivePopRecognizer!
@@ -54,10 +53,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
-        }
-
-        if let controller = segue.destination as? PrivacyProtectionTrackerNetworksController {
-            controller.majorOnly = segue.identifier == "Major"
         }
 
         if let header = segue.destination as? PrivacyProtectionHeaderController {
@@ -81,7 +76,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
         header.using(siteRating: siteRating, contentBlocker: contentBlocker)
         updateEncryption()
         updateTrackers()
-        updateMajorTrackers()
         updatePrivacyPractices()
     }
 
@@ -100,20 +94,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
         trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlocker)
 
         if protecting() || siteRating.uniqueTrackersDetected == 0 {
-            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Networks On")
+            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
         } else {
-            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Networks Bad")
+            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")
         }
 
-    }
-
-    private func updateMajorTrackers() {
-        majorTrackersCell.summaryLabel.text = siteRating.majorNetworksText(contentBlocker: contentBlocker)
-        if protecting() || siteRating.uniqueMajorTrackerNetworksDetected == 0 {
-            majorTrackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
-        } else {
-            majorTrackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")
-        }
     }
 
     private func updatePrivacyPractices() {

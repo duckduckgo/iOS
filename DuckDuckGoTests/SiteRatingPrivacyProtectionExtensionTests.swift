@@ -88,7 +88,7 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
 fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
     func network(forName name: String) -> MajorTrackerNetwork? {
-        return MajorTrackerNetwork(name: name, domain: name, perentageOfPages: 50)
+        return MajorTrackerNetwork(name: name, domain: name, percentageOfPages: 50)
     }
 
     func network(forDomain domain: String) -> MajorTrackerNetwork? {

@@ -29,12 +29,12 @@ public protocol MajorTrackerNetworkStore {
 
 public struct MajorTrackerNetwork {
 
-    let name: String
-    let domain: String
-    let perentageOfPages: Int
+    public let name: String
+    public let domain: String
+    public let percentageOfPages: Int
 
-    var score: Int {
-        return Int(ceil(Double(perentageOfPages) / 10.0))
+    public var score: Int {
+        return Int(ceil(Double(percentageOfPages) / 10.0))
     }
 
 }
@@ -62,16 +62,16 @@ public class InMemoryMajorNetworkStore: MajorTrackerNetworkStore {
 public class EmbeddedMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
 
     private static let networks = [
-        MajorTrackerNetwork(name: "google",     domain: "google.com",       perentageOfPages: 84),
-        MajorTrackerNetwork(name: "facebook",   domain: "facebook.com",     perentageOfPages: 36),
-        MajorTrackerNetwork(name: "twitter",    domain: "twitter.com",      perentageOfPages: 16),
-        MajorTrackerNetwork(name: "amazon.com", domain: "amazon.com",       perentageOfPages: 14),
-        MajorTrackerNetwork(name: "appnexus",   domain: "appnexus.com",     perentageOfPages: 10),
-        MajorTrackerNetwork(name: "oracle",     domain: "oracle.com",       perentageOfPages: 10),
-        MajorTrackerNetwork(name: "mediamath",  domain: "mediamath.com",    perentageOfPages: 9),
-        MajorTrackerNetwork(name: "yahoo!",     domain: "yahoo.com",        perentageOfPages: 9),
-        MajorTrackerNetwork(name: "stackpath",  domain: "stackpath.com",    perentageOfPages: 7),
-        MajorTrackerNetwork(name: "automattic", domain: "automattic.com",   perentageOfPages: 7),
+        MajorTrackerNetwork(name: "google",     domain: "google.com",       percentageOfPages: 84),
+        MajorTrackerNetwork(name: "facebook",   domain: "facebook.com",     percentageOfPages: 36),
+        MajorTrackerNetwork(name: "twitter",    domain: "twitter.com",      percentageOfPages: 16),
+        MajorTrackerNetwork(name: "amazon.com", domain: "amazon.com",       percentageOfPages: 14),
+        MajorTrackerNetwork(name: "appnexus",   domain: "appnexus.com",     percentageOfPages: 10),
+        MajorTrackerNetwork(name: "oracle",     domain: "oracle.com",       percentageOfPages: 10),
+        MajorTrackerNetwork(name: "mediamath",  domain: "mediamath.com",    percentageOfPages: 9),
+        MajorTrackerNetwork(name: "yahoo!",     domain: "yahoo.com",        percentageOfPages: 9),
+        MajorTrackerNetwork(name: "stackpath",  domain: "stackpath.com",    percentageOfPages: 7),
+        MajorTrackerNetwork(name: "automattic", domain: "automattic.com",   percentageOfPages: 7),
         ]
 
     public init() {

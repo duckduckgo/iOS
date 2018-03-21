@@ -39,5 +39,5 @@ rm -rf fastlane/screenshots
 fastlane screenshots
 
 cd fastlane/screenshots
-tar -czf ../screenshots.tar.gz *
+tar -czf ../screenshots_`date +"%Y_%d_%m"`.tar.gz *
 

@@ -49,7 +49,6 @@ class PrivacyProtectionPracticesController: UIViewController {
 
     override func viewDidLoad() {
         initTable()
-        messageLabel.adjustPlainTextLineHeight(1.286)
         update()
     }
 
@@ -109,9 +108,7 @@ extension PrivacyProtectionPracticesController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard rows.count > 0 else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NoPractices") as! PrivacyProtectionNoPracticesCell
-            cell.update()
-            return cell
+            return tableView.dequeueReusableCell(withIdentifier: "NoPractices") as! PrivacyProtectionNoPracticesCell
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionPracticesCell
@@ -148,7 +145,6 @@ class PrivacyProtectionPracticesCell: UITableViewCell {
     func update(row: PrivacyProtectionPracticesController.Row) {
         imageView?.image = row.good ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail")
         textLabel?.text = row.text
-        textLabel?.adjustPlainTextLineHeight(21 / 16)
     }
 
 }
@@ -156,10 +152,6 @@ class PrivacyProtectionPracticesCell: UITableViewCell {
 class PrivacyProtectionNoPracticesCell: UITableViewCell {
 
     @IBOutlet weak var message: UILabel!
-
-    func update() {
-        message.adjustPlainTextLineHeight(1.28)
-    }
 
 }
 

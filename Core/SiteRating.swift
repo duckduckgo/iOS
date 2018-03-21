@@ -71,7 +71,7 @@ public class SiteRating {
     }
 
     public var containsMajorTracker: Bool {
-        return majorNetworkTrackersDetected.count > 0
+        return trackersDetected.contains(where: { majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "") != nil })
     }
 
     public var containsIpTracker: Bool {

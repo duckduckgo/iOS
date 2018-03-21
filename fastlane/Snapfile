@@ -1,18 +1,22 @@
 
+# A list of devices you want to take the screenshots from
 devices([
-  "iPhone 6",
-  "iPhone 7 Plus",
-  "iPad Pro (12.9 inch)",
-  "iPad Pro (9.7 inch)",
+ "iPhone 5s", 
+ "iPhone 6", 
+ "iPhone 6 Plus", 
+ "iPhone 6s", 
+ "iPhone 6s Plus", 
+ "iPhone SE", 
+ "iPhone 7", 
+ "iPhone 7 Plus", 
+ "iPhone 8", 
+ "iPhone 8 Plus", 
+ "iPhone X"
 ])
 
-languages([
-  "en-US",
-])
+# The name of the scheme which contains the UI Tests
+scheme("UITests")
 
-scheme "AppScreenshots"
-
-output_directory "./fastlane/screenshots"
-
-clear_previous_screenshots true
+# remove the '#' to clear all previously generated screenshots before creating new ones
+clear_previous_screenshots(true)
 

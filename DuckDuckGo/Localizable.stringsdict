@@ -13,9 +13,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Network Found</string>
+			<string>%d Major Tracker Found</string>
 			<key>other</key>
-			<string>%d Major Tracker Networks Found</string>
+			<string>%d Major Trackers Found</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -29,9 +29,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Major Tracker Network Blocked</string>
+			<string>%d Major Tracker Blocked</string>
 			<key>other</key>
-			<string>%d Major Tracker Networks Blocked</string>
+			<string>%d Major Trackers Blocked</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.found</key>
@@ -45,9 +45,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Network Found</string>
+			<string>%d Tracker Found</string>
 			<key>other</key>
-			<string>%d Tracker Networks Found</string>
+			<string>%d Trackers Found</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -61,9 +61,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Tracker Network Blocked</string>
+			<string>%d Tracker Blocked</string>
 			<key>other</key>
-			<string>%d Tracker Networks Blocked</string>
+			<string>%d Trackers Blocked</string>
 		</dict>
 	</dict>
 </dict>

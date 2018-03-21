@@ -103,6 +103,7 @@
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fku-9C-PCe">
                                         <rect key="frame" x="327" y="24" width="24" height="24"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="settings"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Jd4-lU-zg2"/>
                                             <constraint firstAttribute="width" constant="24" id="Usp-Oq-WGs"/>

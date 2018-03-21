@@ -20,7 +20,7 @@
 
 # Inspired by https://elmland.blog/2017/08/31/reset-xcode-simulators/
 
-echo -ne 'Resetting iOS Simulators ... '; 
+echo -ne 'Reset iOS Simulators ... '; 
 osascript -e 'tell application "iOS Simulator" to quit'; 
 osascript -e 'tell application "Simulator" to quit'; 
 xcrun simctl erase all; 
@@ -35,5 +35,9 @@ if [ `which fastlane` -eq "" ]; then
    exit 2
 fi
 
+rm -rf fastlane/screenshots
 fastlane screenshots
+
+cd fastlane/screenshots
+tar -czf ../screenshots.tar.gz *
 

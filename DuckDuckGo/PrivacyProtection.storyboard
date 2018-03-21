@@ -1461,6 +1461,20 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e0b-NU-2I0" id="4WC-O8-gQ0">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="58W-Jj-gyT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                                    <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="7ds-jt-Uvu"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="58W-Jj-gyT" firstAttribute="width" secondItem="4WC-O8-gQ0" secondAttribute="width" id="6Ke-e6-edT"/>
+                                                <constraint firstItem="58W-Jj-gyT" firstAttribute="centerX" secondItem="4WC-O8-gQ0" secondAttribute="centerX" id="U81-xt-25R"/>
+                                                <constraint firstItem="58W-Jj-gyT" firstAttribute="top" secondItem="4WC-O8-gQ0" secondAttribute="top" id="ome-Tl-jKP"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Bfa-LO-5TA" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">

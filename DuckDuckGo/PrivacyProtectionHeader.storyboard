@@ -91,6 +91,9 @@
                                         </connections>
                                     </view>
                                 </subviews>
+                                <accessibility key="accessibilityConfiguration" identifier="header">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstItem="QfX-2n-ECb" firstAttribute="top" secondItem="dBn-cZ-MJt" secondAttribute="bottom" constant="8" id="7cy-Hl-Lzp"/>
                                     <constraint firstItem="dBn-cZ-MJt" firstAttribute="top" secondItem="3uq-Xe-QnG" secondAttribute="top" constant="20" id="BpN-lr-eqw"/>

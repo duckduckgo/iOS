@@ -36,52 +36,52 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
         let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major1", category: nil, blocked: true))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "major2", category: nil, blocked: true))
-        XCTAssertTrue(rating.majorNetworksBlockedText().contains("Networks Blocked"))
+        XCTAssertTrue(rating.majorNetworksBlockedText().contains("Trackers Blocked"))
     }
 
     func testMultipleMajorNetworksDetectedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major1", category: nil, blocked: false))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "major2", category: nil, blocked: false))
-        XCTAssertTrue(rating.majorNetworksDetectedText().contains("Networks Found"))
+        XCTAssertTrue(rating.majorNetworksDetectedText().contains("Trackers Found"))
     }
 
     func testMultipleNetworksBlockedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "minor1", category: nil, blocked: true))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "minor2", category: nil, blocked: true))
-        XCTAssertTrue(rating.networksBlockedText().contains("Networks Blocked"))
+        XCTAssertTrue(rating.networksBlockedText().contains("Trackers Blocked"))
     }
 
     func testMultipleNetworksDetectedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL)
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "minor1", category: nil, blocked: false))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "minor2", category: nil, blocked: false))
-        XCTAssertTrue(rating.networksDetectedText().contains("Networks Found"))
+        XCTAssertTrue(rating.networksDetectedText().contains("Trackers Found"))
     }
 
     func testSingleMajorNetworkBlockedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major", category: nil, blocked: true))
-        XCTAssertTrue(rating.majorNetworksBlockedText().contains("Network Blocked"))
+        XCTAssertTrue(rating.majorNetworksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleMajorNetworkDetectedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ], termsOfServiceStore: MockTermsOfServiceStore(), majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major", category: nil, blocked: false))
-        XCTAssertTrue(rating.majorNetworksDetectedText().contains("Network Found"))
+        XCTAssertTrue(rating.majorNetworksDetectedText().contains("Tracker Found"))
     }
 
     func testSingleNetworkBlockedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "minor", category: nil, blocked: true))
-        XCTAssertTrue(rating.networksBlockedText().contains("Network Blocked"))
+        XCTAssertTrue(rating.networksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleNetworkDetectedReturnsSinglularText() {
         let rating = SiteRating(url: Constants.pageURL)
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "minor", category: nil, blocked: false))
-        XCTAssertTrue(rating.networksDetectedText().contains("Network Found"))
+        XCTAssertTrue(rating.networksDetectedText().contains("Tracker Found"))
     }
 
 }

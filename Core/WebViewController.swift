@@ -44,13 +44,15 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
 
+    private var lastUpgradedDomain: String?
     private var lastError: Error?
     private var loadedURL: URL?
     private var shouldReloadOnError = false
     
     private lazy var appUrls: AppUrls = AppUrls()
     private lazy var httpsUpgrade = HTTPSUpgrade()
-
+    private lazy var tld = TLD()
+    
     public var name: String? {
         return webView.title
     }
@@ -205,7 +207,7 @@ open class WebViewController: UIViewController {
     open func goBack() {
         if isError {
             hideErrorMessage()
-            webEventsDelegate?.webpageDidStartLoading()
+            webEventsDelegate?.webpageDidStartLoading(httpsForced: false)
             webEventsDelegate?.webpageDidFinishLoading()
         } else {
             webView.goBack()
@@ -271,14 +273,15 @@ extension WebViewController: WKNavigationDelegate {
         ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
     }
 
-
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
         shouldReloadOnError = false
         favicon = nil
         hideErrorMessage()
         showProgressIndicator()
-        webEventsDelegate?.webpageDidStartLoading()
+        
+        let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
+        webEventsDelegate?.webpageDidStartLoading(httpsForced: httpsForced)
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -317,6 +320,13 @@ extension WebViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
+        
+        if navigationAction.isTargettingMainFrame()
+            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {
+            
+            lastUpgradedDomain = nil
+            
+        }
 
         guard let url = navigationAction.request.url else {
             return .allow
@@ -343,7 +353,10 @@ extension WebViewController: WKNavigationDelegate {
         if !failingUrls.contains(url.host ?? ""),
             navigationAction.isTargettingMainFrame(),
             let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+            
+            lastUpgradedDomain = upgradeUrl.host
             load(url: upgradeUrl)
+            
             return .cancel
         }
         

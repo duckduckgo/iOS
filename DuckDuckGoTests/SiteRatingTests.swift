@@ -128,4 +128,32 @@ class SiteRatingTests: XCTestCase {
         testee.trackerDetected(tracker)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksBlocked)
     }
+
+    func testWhenHttpsAndIsForcedThenEncryptionTypeIsForced() {
+        let testee = SiteRating(url: Url.https, httpsForced: true)
+        XCTAssertEqual(.forced, testee.encryptionType)
+    }
+
+    func testWhenHttpsAndNotHasOnlySecureContentAndIsForcedThenEncryptionTypeIsMixed() {
+        let testee = SiteRating(url: Url.https, httpsForced: true)
+        testee.hasOnlySecureContent = false
+        XCTAssertEqual(.mixed, testee.encryptionType)
+    }
+
+    func testWhenHttpsAndNotHasOnlySecureContentThenEncryptionTypeIsMixed() {
+        let testee = SiteRating(url: Url.https)
+        testee.hasOnlySecureContent = false
+        XCTAssertEqual(.mixed, testee.encryptionType)
+    }
+
+    func testWhenHttpsThenEncryptionTypeIsEncrypted() {
+        let testee = SiteRating(url: Url.https)
+        XCTAssertEqual(.encrypted, testee.encryptionType)
+    }
+
+    func testWhenHttpThenEncryptionTypeIsUnencrypted() {
+        let testee = SiteRating(url: Url.http)
+        XCTAssertEqual(.unencrypted, testee.encryptionType)
+    }
+    
 }

@@ -60,6 +60,7 @@ fileprivate class Loader {
         
     }
     
+    let tlds = TLD()
     let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
     
@@ -67,7 +68,7 @@ fileprivate class Loader {
     let userContentController: WKUserContentController
     let restrictedDevice: Bool
     let contentBlocking: Bool
-
+    
     init(_ id: String, _ userContentController: WKUserContentController, _ restrictedDevice: Bool, _ contentBlocking: Bool) {
         self.id = id
         self.userContentController = userContentController
@@ -100,11 +101,12 @@ fileprivate class Loader {
     private func loadContentBlockerDependencyScripts() {
 
         if #available(iOS 10, *) {
-            load(scripts: [ .messaging, .apbfilter, .tlds ], forMainFrameOnly: false)
+            load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)
         } else {
-            load(scripts: [ .messaging, .apbfilterES2015, .tlds ], forMainFrameOnly: false)
+            load(scripts: [ .messaging, .apbfilterES2015 ], forMainFrameOnly: false)
         }
-                
+        
+        javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}" : tlds.json ], into: userContentController, forMainFrameOnly: false)
     }
     
     private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {

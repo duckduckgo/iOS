@@ -36,8 +36,6 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
-    @IBOutlet weak var unencryptedLabel: UILabel!
-    @IBOutlet weak var mixedContentLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
     private weak var siteRating: SiteRating!
@@ -69,27 +67,30 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        if siteRating.hasOnlySecureContent {
+        
+        switch(siteRating.encryptionType) {
+            
+        case .encrypted:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
-        } else if siteRating.https {
+            encryptedLabel.text = UserText.ppEncryptionEncryptedHeading
+            messageLabel.text = UserText.ppEncryptionStandardMessage
+
+        case .mixed:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Off")
-        } else {
-            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
-        }
-
-        encryptedLabel.isHidden = true
-        unencryptedLabel.isHidden = true
-        mixedContentLabel.isHidden = true
-
-        messageLabel.text = UserText.ppEncryptionStandardMessage
-        if !siteRating.https {
-            unencryptedLabel.isHidden = false
-        } else if !siteRating.hasOnlySecureContent {
-            mixedContentLabel.isHidden = false
+            encryptedLabel.text = UserText.ppEncryptionMixedHeading
             messageLabel.text = UserText.ppEncryptionMixedMessage
-        } else {
-            encryptedLabel.isHidden = false
+            
+        case .forced:
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
+            encryptedLabel.text = UserText.ppEncryptionForcedHeading
+            messageLabel.text = UserText.ppEncryptionForcedMessage
+
+        default: // .unencrypted
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
+            encryptedLabel.text = UserText.ppEncryptionUnencryptedHeading
+            messageLabel.text = UserText.ppEncryptionStandardMessage
         }
+        
     }
 
     private func beginCertificateInfoExtraction() {

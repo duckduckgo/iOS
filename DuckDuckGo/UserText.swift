@@ -108,8 +108,15 @@ public struct UserText {
     public static let ppEncryptionNo = NSLocalizedString("privacy.protection.encryption.no", comment:  "No")
     public static let ppEncryptionUnknown = NSLocalizedString("privacy.protection.encryption.unknown", comment:  "Unknown")
     public static let ppEncryptionBits = NSLocalizedString("privacy.protection.encryption.bits", comment:  "%d bits")
+    
     public static let ppEncryptionStandardMessage = NSLocalizedString("privacy.protection.encryption.standard.message", comment: "An encrypted connection prevents eavesdropping of any personal information you send to a website.")
     public static let ppEncryptionMixedMessage = NSLocalizedString("privacy.protection.encryption.mixed.message", comment: "This site has mixed encryption because some content is being served over unencrypted connections. Encrypted connections prevent eavesdropping of personal information you send to websites.")
+    public static let ppEncryptionForcedMessage = NSLocalizedString("privacy.protection.encryption.forced.message", comment: "We've forced this site to use an encrypted connection, preventing eavesdropping of any personal information you send to it.")
+    
+    public static let ppEncryptionEncryptedHeading = NSLocalizedString("privacy.protection.encryption.encrypted.heading", comment:  "Encrypted")
+    public static let ppEncryptionForcedHeading = NSLocalizedString("privacy.protection.encryption.forced.heading", comment:  "Forced")
+    public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", comment:  "Mixed")
+    public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", comment:  "Unencrypted")
 
     public static let ppTrackerNetworksMajorMessage = NSLocalizedString("privacy.protection.tracker.networks.major.message", comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
 

@@ -65,10 +65,6 @@
 "monitoring.sitegrade.c" = "C";
 "monitoring.sitegrade.d" = "D";
 
-"privacy.protection.encryption.good.connection" = "Encrypted Connection";
-"privacy.protection.encryption.bad.connection" = "Unencrypted Connection";
-"privacy.protection.encryption.mixed.connection" = "Mixed Encryption";
-
 "privacy.protection.tos.unknown" = "Unknown Privacy Practices";
 "privacy.protection.tos.good" = "Good Privacy Practices";
 "privacy.protection.tos.mixed" = "Mixed Privacy Practices";
@@ -105,10 +101,10 @@
 "privacy.protection.encryption.mixed.message" = "This site has mixed encryption because some content is being served over unencrypted connections.";
 "privacy.protection.encryption.forced.message" = "We've forced this site to use an encrypted connection, preventing eavesdropping of any personal information you send to it.";
 
-"privacy.protection.encryption.encrypted.heading" = "ENCRYPTED CONNECTION";
-"privacy.protection.encryption.forced.heading" = "FORCED ENCRYPTION";
-"privacy.protection.encryption.mixed.heading" = "MIXED ENCRYPTION";
-"privacy.protection.encryption.unecrypted.heading" = "UNENCRYPTED CONNECTION";
+"privacy.protection.encryption.encrypted.heading" = "Encrypted Connection";
+"privacy.protection.encryption.forced.heading" = "Forced Encryption";
+"privacy.protection.encryption.mixed.heading" = "Mixed Encryption";
+"privacy.protection.encryption.unencrypted.heading" = "Unencrypted Connection";
 
 "privacy.protection.tracker.networks.major.message" = "Major tracker networks are more harmful because they can track and target you across more of the internet.";
 

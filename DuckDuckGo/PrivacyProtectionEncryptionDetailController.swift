@@ -68,26 +68,23 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func initHttpsStatus() {
         
+        encryptedLabel.text = siteRating.encryptedConnectionText().uppercased()
         switch(siteRating.encryptionType) {
             
         case .encrypted:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
-            encryptedLabel.text = UserText.ppEncryptionEncryptedHeading
             messageLabel.text = UserText.ppEncryptionStandardMessage
 
         case .mixed:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Off")
-            encryptedLabel.text = UserText.ppEncryptionMixedHeading
             messageLabel.text = UserText.ppEncryptionMixedMessage
             
         case .forced:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
-            encryptedLabel.text = UserText.ppEncryptionForcedHeading
             messageLabel.text = UserText.ppEncryptionForcedMessage
 
         default: // .unencrypted
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
-            encryptedLabel.text = UserText.ppEncryptionUnencryptedHeading
             messageLabel.text = UserText.ppEncryptionStandardMessage
         }
         

@@ -43,7 +43,6 @@ public class SiteRating {
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    // TODO don't have default for httpsForced
     public init(url: URL, httpsForced: Bool = false, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(), protectionId: String = UUID.init().uuidString) {
         
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")

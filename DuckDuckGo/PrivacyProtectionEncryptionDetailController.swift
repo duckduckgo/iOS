@@ -123,29 +123,41 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDelegate {
         header.update(section: sections[section].name)
         return header
     }
-
+    
 }
 
 extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return siteRating.https ? sections.count : 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.count
+        return siteRating.https ? sections[section].rows.count : 1
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].name
+        return siteRating.https ? sections[section].name : nil
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return siteRating.https ? cellForEncrypted(at: indexPath) : cellForUnencrypted()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return siteRating.https ? 22 : 180
+    }
+    
+    private func cellForEncrypted(at indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionEncryptionDetailCell
         cell.update(name: sections[indexPath.section].rows[indexPath.row].name, value: sections[indexPath.section].rows[indexPath.row].value)
         return cell
     }
 
+    private func cellForUnencrypted() -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: "Unencrypted")!
+    }
+    
 }
 
 fileprivate extension Data {

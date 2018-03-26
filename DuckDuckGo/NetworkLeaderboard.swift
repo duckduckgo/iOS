@@ -107,11 +107,9 @@ class NetworkLeaderboard {
             guard trackerNetwork != nil else { return }
         }
 
-        if !trackerNetwork.detectedOn!.contains(visitedSite!) {
-            trackerNetwork.detectedOnCount = ((trackerNetwork.detectedOn?.count ?? 0) + 1) as NSNumber
-        }
-
         trackerNetwork.addToDetectedOn(visitedSite!)
+        trackerNetwork.detectedOnCount = (trackerNetwork.detectedOn?.count ?? 0) as NSNumber
+        
         visitedSite?.addToNetworksDetected(trackerNetwork!)
         _ = container.save()
     }

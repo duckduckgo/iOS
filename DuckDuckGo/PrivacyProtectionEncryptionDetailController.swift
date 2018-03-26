@@ -119,7 +119,7 @@ extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisp
 extension PrivacyProtectionEncryptionDetailController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard siteRating.https else { return nil }        
+        guard siteRating.https else { return nil }
         let header = tableView.dequeueReusableCell(withIdentifier: "Header") as! PrivacyProtectionEncryptionHeaderCell
         header.update(section: sections[section].name)
         return header

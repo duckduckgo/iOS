@@ -59,6 +59,8 @@ class PrivacyProtectionFooterController: UIViewController {
 
 class TrackerNetworkLeaderboardView: UIView {
 
+    @IBOutlet weak var noStatsImage: UIImageView!
+    @IBOutlet weak var noStatsHeight: NSLayoutConstraint!
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
     @IBOutlet weak var thirdPill: TrackerNetworkPillView!
@@ -66,8 +68,13 @@ class TrackerNetworkLeaderboardView: UIView {
     @IBOutlet weak var forwardArrow: UIImageView!
 
     var leaderboard = NetworkLeaderboard.shared
+    
+    var imageHeight: CGFloat!
 
     func didLoad() {
+        
+        imageHeight = noStatsHeight.constant
+        
         firstPill.didLoad()
         secondPill.didLoad()
         thirdPill.didLoad()
@@ -78,6 +85,9 @@ class TrackerNetworkLeaderboardView: UIView {
 
         let shouldShow = leaderboard.shouldShow()
 
+        noStatsImage.isHidden = shouldShow
+        noStatsHeight.constant = shouldShow ? imageHeight / 2 : imageHeight
+        
         firstPill.isHidden = !shouldShow
         secondPill.isHidden = !shouldShow
         thirdPill.isHidden = !shouldShow
@@ -123,3 +133,4 @@ fileprivate extension PPTrackerNetwork {
     }
 
 }
+

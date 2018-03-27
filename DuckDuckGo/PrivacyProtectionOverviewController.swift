@@ -71,9 +71,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
+        let bounceThreshold = CGFloat(120)
         let offsetY = tableView.contentOffset.y
         
-        if offsetY > 120 {
+        if offsetY > bounceThreshold {
             dismiss(animated: true)
             return
         }

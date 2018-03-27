@@ -68,7 +68,19 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         return true
     }
-
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let bounceThreshold = CGFloat(120)
+        let offsetY = tableView.contentOffset.y
+        
+        if offsetY > bounceThreshold {
+            dismiss(animated: true)
+            return
+        }
+        
+    }
+    
     private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
@@ -80,14 +92,24 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
+        
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
-        if siteRating.hasOnlySecureContent {
-            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
-        } else if siteRating.https {
-            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
-        } else {
-            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
+        switch(siteRating.encryptionType) {
+            
+            case .encrypted:
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
+
+            case .forced:
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
+
+            case .mixed:
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
+            
+            default: // .unencrypted
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
+            
         }
+        
     }
 
     private func updateTrackers() {

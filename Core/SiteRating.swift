@@ -22,12 +22,17 @@ import Foundation
 
 public class SiteRating {
     
+    public enum EncryptionType {
+        case unencrypted, mixed, encrypted, forced
+    }
+    
     public var domain: String? {
         return url.host
     }
     
     public let url: URL
     public let protectionId: String
+    public let httpsForced: Bool
     
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
@@ -38,12 +43,13 @@ public class SiteRating {
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
     
-    public init(url: URL, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(), protectionId: String = UUID.init().uuidString) {
+    public init(url: URL, httpsForced: Bool = false, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(), protectionId: String = UUID.init().uuidString) {
         
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
         
         self.protectionId = protectionId
         self.url = url
+        self.httpsForced = httpsForced
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore
         self.majorTrackerNetworkStore = majorTrackerNetworkStore
@@ -54,6 +60,16 @@ public class SiteRating {
         return url.isHttps()
     }
 
+    public var encryptionType: EncryptionType {
+        if hasOnlySecureContent {
+            return httpsForced ? .forced : .encrypted
+        } else if https {
+            return .mixed
+        }
+        
+        return .unencrypted
+    }
+    
     public var uniqueMajorTrackerNetworksDetected: Int {
         return uniqueMajorTrackerNetworks(trackers: trackersDetected)
     }

@@ -589,6 +589,48 @@
                                             <outlet property="valueLabel" destination="J3L-KE-1Vb" id="sim-9Q-t3U"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Unencrypted" rowHeight="180" id="U2L-Z5-GZd" customClass="PrivacyProtectionEncryptionDetailCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="363.5" width="320" height="180"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U2L-Z5-GZd" id="8mk-HM-777">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WarningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Xh2-s0-IWl">
+                                                    <rect key="frame" x="134.5" y="47" width="52" height="45"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Data is Vulnerable" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2T4-dB-Wu0">
+                                                    <rect key="frame" x="23.5" y="112" width="273" height="16"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-HR-hpn">
+                                                    <rect key="frame" x="24" y="133" width="273" height="36"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="This connection is not encrypted, so be careful what you send.">
+                                                            <attributes>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2T4-dB-Wu0" firstAttribute="top" secondItem="Xh2-s0-IWl" secondAttribute="bottom" constant="20" id="9Qh-rG-5U6"/>
+                                                <constraint firstItem="Bzj-HR-hpn" firstAttribute="top" secondItem="2T4-dB-Wu0" secondAttribute="bottom" constant="5" id="MxZ-S5-6k7"/>
+                                                <constraint firstItem="2T4-dB-Wu0" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="ZKl-x6-b1D"/>
+                                                <constraint firstItem="Bzj-HR-hpn" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="bGW-CX-vm9"/>
+                                                <constraint firstItem="2T4-dB-Wu0" firstAttribute="width" secondItem="8mk-HM-777" secondAttribute="width" constant="-47" id="fs6-5W-p2I"/>
+                                                <constraint firstItem="Xh2-s0-IWl" firstAttribute="top" secondItem="8mk-HM-777" secondAttribute="top" constant="47" id="kOX-Sr-bb4"/>
+                                                <constraint firstItem="Bzj-HR-hpn" firstAttribute="width" secondItem="8mk-HM-777" secondAttribute="width" constant="-47" id="va5-fP-qmP"/>
+                                                <constraint firstItem="Xh2-s0-IWl" firstAttribute="centerX" secondItem="8mk-HM-777" secondAttribute="centerX" id="vdt-pq-H32"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -618,7 +660,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1565.5999999999999" y="1485.6071964017992"/>
+            <point key="canvasLocation" x="1563.75" y="1485.2112676056338"/>
         </scene>
         <!--Privacy Protection Network Leaderboard Controller-->
         <scene sceneID="t8U-i2-XtK">
@@ -1802,5 +1844,6 @@
         <image name="PP Inline A" width="16" height="16"/>
         <image name="PP Inline C" width="16" height="16"/>
         <image name="PP Unknown" width="53" height="53"/>
+        <image name="WarningIcon" width="52" height="45"/>
     </resources>
 </document>

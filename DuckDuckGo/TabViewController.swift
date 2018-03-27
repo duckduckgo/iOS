@@ -119,7 +119,6 @@ class TabViewController: WebViewController {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
 
-        httpsForced = false
         if let siteRating = siteRating {
             self.siteRating = SiteRating(url: url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
             updateSiteRating()

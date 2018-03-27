@@ -68,26 +68,31 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     private func initHttpsStatus() {
         
+        var message: String!
+        
         encryptedLabel.text = siteRating.encryptedConnectionText().uppercased()
         switch(siteRating.encryptionType) {
             
         case .encrypted:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
-            messageLabel.text = UserText.ppEncryptionStandardMessage
+            message = UserText.ppEncryptionStandardMessage
 
         case .mixed:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Off")
-            messageLabel.text = UserText.ppEncryptionMixedMessage
+            message = UserText.ppEncryptionMixedMessage
             
         case .forced:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
-            messageLabel.text = UserText.ppEncryptionForcedMessage
+            message = UserText.ppEncryptionForcedMessage
 
         default: // .unencrypted
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
-            messageLabel.text = UserText.ppEncryptionStandardMessage
+            message = UserText.ppEncryptionStandardMessage
         }
-        
+     
+        let attributes = messageLabel.attributedText?.attributes(at: 0, effectiveRange: nil)
+        messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
+
     }
 
     private func beginCertificateInfoExtraction() {

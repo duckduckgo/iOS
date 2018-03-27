@@ -36,8 +36,6 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
     @IBOutlet weak var encryptedLabel: UILabel!
-    @IBOutlet weak var unencryptedLabel: UILabel!
-    @IBOutlet weak var mixedContentLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
     private weak var siteRating: SiteRating!
@@ -69,27 +67,32 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        if siteRating.hasOnlySecureContent {
+        
+        var message: String!
+        
+        encryptedLabel.text = siteRating.encryptedConnectionText().uppercased()
+        switch(siteRating.encryptionType) {
+            
+        case .encrypted:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
-        } else if siteRating.https {
+            message = UserText.ppEncryptionStandardMessage
+
+        case .mixed:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Off")
-        } else {
+            message = UserText.ppEncryptionMixedMessage
+            
+        case .forced:
+            iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
+            message = UserText.ppEncryptionForcedMessage
+
+        default: // .unencrypted
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
+            message = UserText.ppEncryptionStandardMessage
         }
+     
+        let attributes = messageLabel.attributedText?.attributes(at: 0, effectiveRange: nil)
+        messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
 
-        encryptedLabel.isHidden = true
-        unencryptedLabel.isHidden = true
-        mixedContentLabel.isHidden = true
-
-        messageLabel.text = UserText.ppEncryptionStandardMessage
-        if !siteRating.https {
-            unencryptedLabel.isHidden = false
-        } else if !siteRating.hasOnlySecureContent {
-            mixedContentLabel.isHidden = false
-            messageLabel.text = UserText.ppEncryptionMixedMessage
-        } else {
-            encryptedLabel.isHidden = false
-        }
     }
 
     private func beginCertificateInfoExtraction() {

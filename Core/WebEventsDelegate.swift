@@ -35,7 +35,7 @@ public protocol WebEventsDelegate: class {
 
     func webView(_ webView: WKWebView, didChangeUrl url: URL?)
 
-    func webpageDidStartLoading()
+    func webpageDidStartLoading(httpsForced: Bool)
     
     func webpageDidFinishLoading()
     

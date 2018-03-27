@@ -92,14 +92,24 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
+        
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
-        if siteRating.hasOnlySecureContent {
-            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
-        } else if siteRating.https {
-            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
-        } else {
-            encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
+        switch(siteRating.encryptionType) {
+            
+            case .encrypted:
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
+
+            case .forced:
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
+
+            case .mixed:
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
+            
+            default: // .unencrypted
+                encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
+            
         }
+        
     }
 
     private func updateTrackers() {

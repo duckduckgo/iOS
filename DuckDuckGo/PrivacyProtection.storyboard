@@ -473,22 +473,10 @@
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-7f-pp3">
                                             <rect key="frame" x="20" y="116" width="280" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058823529407" green="0.57647058823529407" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UNENCRYPTED CONNECTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aT4-lx-qIx" userLabel="Unencrypted Label">
-                                            <rect key="frame" x="20" y="116" width="280" height="12"/>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MIXED ENCRYPTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-Pa-Z9c" userLabel="Mixed Encryption Label">
-                                            <rect key="frame" x="20" y="116" width="280" height="12"/>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSs-Zr-WkQ" userLabel="Tap View">
@@ -501,8 +489,6 @@
                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <gestureRecognizers/>
                                     <constraints>
-                                        <constraint firstItem="lcA-Pa-Z9c" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="CcK-1Y-Pwx"/>
-                                        <constraint firstItem="aT4-lx-qIx" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="GgS-OT-f2z"/>
                                         <constraint firstItem="8ma-gb-nuk" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="HK4-7Q-nwp"/>
                                         <constraint firstItem="KSV-Ab-2VI" firstAttribute="leading" secondItem="XbD-tH-3K4" secondAttribute="leading" constant="20" id="JOQ-hV-GKp"/>
                                         <constraint firstItem="Jd5-3d-xyR" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" id="M0S-1y-340"/>
@@ -513,11 +499,7 @@
                                         <constraint firstItem="FSs-Zr-WkQ" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" id="a0x-Kp-1fq"/>
                                         <constraint firstItem="F5w-e3-JfY" firstAttribute="top" secondItem="8ma-gb-nuk" secondAttribute="bottom" constant="5" id="b48-kj-EfE"/>
                                         <constraint firstItem="dZC-7f-pp3" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="bVy-Jp-9AO"/>
-                                        <constraint firstItem="lcA-Pa-Z9c" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="dAe-iu-DO1"/>
                                         <constraint firstItem="FSs-Zr-WkQ" firstAttribute="top" secondItem="XbD-tH-3K4" secondAttribute="top" id="hEp-Ka-gWh"/>
-                                        <constraint firstItem="aT4-lx-qIx" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="i7m-bI-XOV"/>
-                                        <constraint firstItem="lcA-Pa-Z9c" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="jyW-oP-1Lx"/>
-                                        <constraint firstItem="aT4-lx-qIx" firstAttribute="top" secondItem="F5w-e3-JfY" secondAttribute="bottom" constant="6" id="lGf-ac-2Nb"/>
                                         <constraint firstAttribute="bottom" secondItem="Jd5-3d-xyR" secondAttribute="bottom" id="n1T-QD-Z0A"/>
                                         <constraint firstItem="Jd5-3d-xyR" firstAttribute="centerX" secondItem="XbD-tH-3K4" secondAttribute="centerX" id="oJI-Lo-2QW"/>
                                         <constraint firstItem="F5w-e3-JfY" firstAttribute="width" secondItem="XbD-tH-3K4" secondAttribute="width" constant="-40" id="pP7-n3-4BJ"/>
@@ -648,9 +630,7 @@
                         <outlet property="encryptedLabel" destination="dZC-7f-pp3" id="EUt-Lm-BrG"/>
                         <outlet property="iconImage" destination="8ma-gb-nuk" id="cFw-wO-y2m"/>
                         <outlet property="messageLabel" destination="cfr-pR-GnE" id="OiQ-J7-Z2G"/>
-                        <outlet property="mixedContentLabel" destination="lcA-Pa-Z9c" id="kaf-7b-Qeb"/>
                         <outlet property="tableView" destination="deS-wD-kVs" id="BpX-8t-iqj"/>
-                        <outlet property="unencryptedLabel" destination="aT4-lx-qIx" id="YzO-Lq-mv7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dhu-pq-Kqh" userLabel="First Responder" sceneMemberID="firstResponder"/>

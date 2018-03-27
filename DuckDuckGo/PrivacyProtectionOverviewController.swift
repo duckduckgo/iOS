@@ -68,7 +68,19 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         return true
     }
-
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let bounceThreshold = CGFloat(120)
+        let offsetY = tableView.contentOffset.y
+        
+        if offsetY > bounceThreshold {
+            dismiss(animated: true)
+            return
+        }
+        
+    }
+    
     private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }

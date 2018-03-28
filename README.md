@@ -18,7 +18,7 @@ We use Carthage for dependency management. If you don't have Carthage installed 
 
 Run `carthage bootstrap --platform iOS` before opening the project in XCode
 
-You can also run the unit tests to do the above and ensure everythig seems in order: `./run_tests.sh`
+You can also run the unit tests to do the above and ensure everything seems in order: `./run_tests.sh`
 
 ### Fonts
 We use Proxima Nova fonts which are proprietary and cannot be committed to source control, see [fonts](https://github.com/duckduckgo/iOS/tree/develop/fonts/licensed). 

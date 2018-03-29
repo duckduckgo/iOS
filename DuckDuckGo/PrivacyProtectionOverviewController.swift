@@ -22,7 +22,10 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
 
-    let minFooterSize: CGFloat = 200
+    struct Constants {
+        static let minFooterSize: CGFloat = 200
+        static let bounceThreshold: CGFloat = 120
+    }
     
     let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
@@ -55,7 +58,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let footer = tableView.tableFooterView else { return }
-        footer.frame.size.height = max(minFooterSize, footer.frame.size.height)
+        footer.frame.size.height = max(Constants.minFooterSize, footer.frame.size.height)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -78,15 +81,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let bounceThreshold = CGFloat(120)
+        guard UIUserInterfaceIdiom.pad != UIDevice.current.userInterfaceIdiom else { return }
         let offsetY = tableView.contentOffset.y
-        
-        if offsetY > bounceThreshold {
+        if offsetY > Constants.bounceThreshold {
             dismiss(animated: true)
             return
         }
-        
     }
     
     private func update() {

@@ -22,6 +22,8 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
 
+    let minFooterSize: CGFloat = 200
+    
     let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Icon Privacy Bad On"),
@@ -48,6 +50,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
         adjustMargins()
 
         update()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let footer = tableView.tableFooterView else { return }
+        footer.frame.size.height = max(minFooterSize, footer.frame.size.height)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

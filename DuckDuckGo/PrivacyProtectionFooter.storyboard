@@ -53,9 +53,9 @@
                                 <color key="backgroundColor" red="0.2470588235" green="0.63137254899999995" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="6j5-MY-ozR"/>
-                                    <constraint firstAttribute="trailing" secondItem="Djl-H1-Nxl" secondAttribute="trailingMargin" constant="12" id="ATP-LH-ead"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Djl-H1-Nxl" secondAttribute="trailingMargin" constant="4" id="ATP-LH-ead"/>
                                     <constraint firstItem="Djl-H1-Nxl" firstAttribute="centerY" secondItem="hd5-yh-lIG" secondAttribute="centerY" id="Z12-F0-peq"/>
-                                    <constraint firstItem="Djl-H1-Nxl" firstAttribute="leading" secondItem="hd5-yh-lIG" secondAttribute="leadingMargin" constant="12" id="ad9-j8-MEZ"/>
+                                    <constraint firstItem="Djl-H1-Nxl" firstAttribute="leadingMargin" secondItem="hd5-yh-lIG" secondAttribute="leadingMargin" constant="12" id="ad9-j8-MEZ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jR-2G-yON">

@@ -23,9 +23,8 @@ import Core
 class PrivacyProtectionOverviewController: UITableViewController {
 
     struct Constants {
-        static let minFooterSize: CGFloat = 200
-        static let bounceThresholdOffset: CGFloat = 120
-        static let bounceThresholdPercent: CGFloat = 0.3
+        static let minFooterSizeGathering: CGFloat = 250
+        static let minFooterSizeWithData: CGFloat = 160
     }
     
     let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
@@ -82,7 +81,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
         
     private func updateFooterHeight() {
         guard let footer = tableView.tableFooterView else { return }
-        footer.frame.size.height = max(Constants.minFooterSize, footer.frame.size.height)
+        let minSize = NetworkLeaderboard.shared.shouldShow() ? Constants.minFooterSizeWithData : Constants.minFooterSizeGathering
+        footer.frame.size.height = max(minSize, footer.frame.size.height)
     }
     
     private func update() {

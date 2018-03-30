@@ -30,14 +30,16 @@ class PrivacyProtectionFooterController: UIViewController {
     var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         leaderboard.didLoad()
-        update()
+        // update()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         update()
     }
-
+    
     @IBAction func toggleProtection() {
         let contentBlockingOn = privacyProtectionSwitch.isOn
         self.contentBlocker.enabled = contentBlockingOn
@@ -59,22 +61,18 @@ class PrivacyProtectionFooterController: UIViewController {
 
 class TrackerNetworkLeaderboardView: UIView {
 
-    @IBOutlet weak var noStatsImage: UIImageView!
-    @IBOutlet weak var noStatsHeight: NSLayoutConstraint!
+    @IBOutlet weak var gatheringView: UIView!
+    @IBOutlet weak var scoresView: UIView!
+
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
     @IBOutlet weak var thirdPill: TrackerNetworkPillView!
-    @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var forwardArrow: UIImageView!
 
     var leaderboard = NetworkLeaderboard.shared
     
     var imageHeight: CGFloat!
 
     func didLoad() {
-        
-        imageHeight = noStatsHeight.constant
-        
         firstPill.didLoad()
         secondPill.didLoad()
         thirdPill.didLoad()
@@ -84,23 +82,24 @@ class TrackerNetworkLeaderboardView: UIView {
         let networksDetected = leaderboard.networksDetected()
 
         let shouldShow = leaderboard.shouldShow()
-
-        noStatsImage.isHidden = shouldShow
-        noStatsHeight.constant = shouldShow ? imageHeight / 2 : imageHeight
         
-        firstPill.isHidden = !shouldShow
-        secondPill.isHidden = !shouldShow
-        thirdPill.isHidden = !shouldShow
-        forwardArrow.isHidden = !shouldShow
-        message.isHidden = shouldShow
-
+        gatheringView.removeFromSuperview()
+        scoresView.removeFromSuperview()
+        
+        var activeView: UIView?
         if shouldShow {
             let sitesVisited = leaderboard.sitesVisited()
             firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
             secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
             thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
+            activeView = scoresView
+        } else {
+            activeView = gatheringView
         }
-
+        
+        addSubview(activeView!)
+        activeView?.frame.size.width = frame.size.width
+        activeView?.center = center
     }
 
 }

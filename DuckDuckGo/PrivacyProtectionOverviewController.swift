@@ -24,7 +24,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     struct Constants {
         static let minFooterSize: CGFloat = 200
-        static let bounceThreshold: CGFloat = 120
+        static let bounceThresholdOffset: CGFloat = 120
+        static let bounceThresholdPercent: CGFloat = 0.3
     }
     
     let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
@@ -54,13 +55,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         update()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let footer = tableView.tableFooterView else { return }
-        footer.frame.size.height = max(Constants.minFooterSize, footer.frame.size.height)
+        updateFooterHeight()
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
@@ -82,11 +82,28 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard UIUserInterfaceIdiom.pad != UIDevice.current.userInterfaceIdiom else { return }
-        let offsetY = tableView.contentOffset.y
-        if offsetY > Constants.bounceThreshold {
-            dismiss(animated: true)
-            return
+        
+        var shouldDismiss = false
+        let contentDiff = tableView.contentSize.height - tableView.frame.size.height
+        let contentOffsetY = tableView.contentOffset.y
+        if contentDiff > 0 {
+            let diff = contentOffsetY - contentDiff
+            let percentBounce = diff / contentDiff
+            shouldDismiss = percentBounce >= Constants.bounceThresholdPercent
+        } else {
+            shouldDismiss = contentOffsetY > Constants.bounceThresholdOffset
         }
+
+        if (shouldDismiss) {
+            dismiss(animated: true)
+        }
+        
+    }
+    
+    
+    private func updateFooterHeight() {
+        guard let footer = tableView.tableFooterView else { return }
+        footer.frame.size.height = max(Constants.minFooterSize, footer.frame.size.height)
     }
     
     private func update() {

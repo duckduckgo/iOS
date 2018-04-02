@@ -86,34 +86,16 @@ class TrackerNetworkLeaderboardView: UIView {
 
     func update() {
         let networksDetected = leaderboard.networksDetected()
-
         let shouldShow = leaderboard.shouldShow()
+        gatheringView.isHidden = shouldShow
+        scoresView.isHidden = !shouldShow
         
-        gatheringView.removeFromSuperview()
-        scoresView.removeFromSuperview()
-        
-        var activeView: UIView!
         if shouldShow {
             let sitesVisited = leaderboard.sitesVisited()
             firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
             secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
             thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
-            activeView = scoresView
-        } else {
-            activeView = gatheringView
-        }
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(activeView)
-        
-        // credit: https://stackoverflow.com/a/26181982/73479
-        let horizontalConstraint = NSLayoutConstraint(item: activeView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
-        let verticalConstraint = NSLayoutConstraint(item: activeView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
-        let widthConstraint = NSLayoutConstraint(item: activeView, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: activeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
-        self.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
-        
+        }        
     }
 
 }

@@ -32,7 +32,6 @@ class PrivacyProtectionFooterController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         leaderboard.didLoad()
-        // update()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -109,10 +108,10 @@ class TrackerNetworkLeaderboardView: UIView {
         addSubview(activeView)
         
         // credit: https://stackoverflow.com/a/26181982/73479
-        let horizontalConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-        let verticalConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
-        let widthConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 100)
-        let heightConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 100)
+        let horizontalConstraint = NSLayoutConstraint(item: activeView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
+        let verticalConstraint = NSLayoutConstraint(item: activeView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: activeView, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint(item: activeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         self.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
         
     }

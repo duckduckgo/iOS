@@ -24,7 +24,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     struct Constants {
         static let minFooterSizeGathering: CGFloat = 200
-        static let minFooterSizeWithData: CGFloat = 160
+        static let minFooterSizeWithData: CGFloat = 170
     }
     
     let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
@@ -57,7 +57,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        updateFooterHeight()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,18 +66,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-//        updateFooterHeight()
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-////        updateFooterHeight()
-//    }
-  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: nil) { context in 
-            print("*** viewWillTransition completion")
             self.updateFooterHeight()
         }
         
@@ -105,24 +97,18 @@ class PrivacyProtectionOverviewController: UITableViewController {
         
     private func updateFooterHeight() {
         guard let footer = tableView.tableFooterView else { return }
-        print("*** 1)", tableView.contentSize) // (375, 574)
-        
-        tableView.tableFooterView = nil
-        print("*** 2)", tableView.contentSize) // (375, 374)
 
-        print("*** 3)", tableView.frame) // (375, 682)
-        
-        let boundsHeight = tableView.frame.size.height
+        tableView.tableFooterView = nil
+
+        let frameHeight = tableView.frame.size.height
         let contentHeight = tableView.contentSize.height
 
         // let minSize = NetworkLeaderboard.shared.shouldShow() ? Constants.minFooterSizeWithData : Constants.minFooterSizeGathering
-        let height = max(200, boundsHeight - contentHeight)
-        print("*** 4)", height) 
+        let height = max(200, frameHeight - contentHeight)
 
         let frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: height)
         footer.frame = frame
         tableView.tableFooterView = footer
-        
 
     }
     

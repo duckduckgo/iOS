@@ -46,6 +46,13 @@ class PrivacyProtectionFooterController: UIViewController {
         update()
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.update()
+        }
+    }
+    
     private func update() {
         guard isViewLoaded else { return }
         leaderboard.update()
@@ -86,7 +93,7 @@ class TrackerNetworkLeaderboardView: UIView {
         gatheringView.removeFromSuperview()
         scoresView.removeFromSuperview()
         
-        var activeView: UIView?
+        var activeView: UIView!
         if shouldShow {
             let sitesVisited = leaderboard.sitesVisited()
             firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
@@ -97,9 +104,17 @@ class TrackerNetworkLeaderboardView: UIView {
             activeView = gatheringView
         }
         
-        addSubview(activeView!)
-        activeView?.frame.size.width = frame.size.width
-        activeView?.center = center
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(activeView)
+        
+        // credit: https://stackoverflow.com/a/26181982/73479
+        let horizontalConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        let verticalConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 100)
+        let heightConstraint = NSLayoutConstraint(item: activeView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 100)
+        self.addConstraints([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
+        
     }
 
 }

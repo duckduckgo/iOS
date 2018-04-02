@@ -88,8 +88,8 @@
                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="JbX-Lu-cAx">
-                            <rect key="frame" x="0.0" y="374" width="320" height="164"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <rect key="frame" x="0.0" y="374" width="320" height="200"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <connections>
                                 <outletCollection property="gestureRecognizers" destination="uVQ-4K-5eS" appends="YES" id="nNa-rb-pZI"/>
                                 <segue destination="CTQ-Ot-vex" kind="embed" id="Va6-aa-dCC"/>

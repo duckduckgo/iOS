@@ -190,14 +190,14 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="5NM-vg-MQe">
-                                                        <rect key="frame" x="302" y="42" width="10" height="16"/>
+                                                        <rect key="frame" x="290" y="42" width="10" height="16"/>
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="rO0-0v-ngG" firstAttribute="centerX" secondItem="MFi-fD-lyi" secondAttribute="centerX" id="LQR-Yh-7Ue"/>
                                                     <constraint firstItem="4AA-Ma-AG6" firstAttribute="top" secondItem="MFi-fD-lyi" secondAttribute="top" constant="20" id="OKZ-Xf-aKa"/>
                                                     <constraint firstItem="5NM-vg-MQe" firstAttribute="centerY" secondItem="MFi-fD-lyi" secondAttribute="centerY" id="PHh-s0-6CS"/>
-                                                    <constraint firstItem="MFi-fD-lyi" firstAttribute="trailing" secondItem="5NM-vg-MQe" secondAttribute="trailing" constant="8" id="bkM-0N-BDn"/>
+                                                    <constraint firstItem="MFi-fD-lyi" firstAttribute="trailing" secondItem="5NM-vg-MQe" secondAttribute="trailing" constant="20" id="bkM-0N-BDn"/>
                                                     <constraint firstAttribute="height" constant="100" id="sYc-fG-eBx"/>
                                                     <constraint firstItem="MFi-fD-lyi" firstAttribute="trailing" secondItem="4AA-Ma-AG6" secondAttribute="trailing" id="sge-iA-oPT"/>
                                                     <constraint firstItem="rO0-0v-ngG" firstAttribute="top" secondItem="4AA-Ma-AG6" secondAttribute="bottom" constant="18" id="tLl-1u-AQO"/>

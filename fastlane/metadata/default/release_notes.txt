@@ -1,8 +1,4 @@
 
-* Some minor speed improvements when browsing (including a community contribution, thanks!)
-* Better control of over videos - they no longer play full screen by default and you can now choose to full screen, over Airplay, or Picture-in-Picture
-* Fixed a bug which would render emojis incorrectly in our search suggestions
-* Fixed some UI problems on smaller devices and updated the text of our encryption screen to be a little clearer
-* Fixed our handling of links in to our app using a custom scheme which was case sensitive (community contribution, thanks!)
-* Tweaked how we handle CoreData (our internal database) which should fix some crashes (community contribution, thanks!)
+In this version we have:
 
+*

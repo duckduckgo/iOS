@@ -45,6 +45,8 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
+    fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
+    
     fileprivate var currentTab: TabViewController? {
         return tabManager?.current
     }
@@ -70,7 +72,7 @@ class MainViewController: UIViewController {
         }
 
         if let controller = segue.destination as? TabSwitcherViewController {
-            controller.transitioningDelegate = self
+            controller.transitioningDelegate = blurTransition
             controller.delegate = self
             controller.tabsModel = tabManager.model
             return
@@ -489,15 +491,4 @@ extension MainViewController: BookmarksDelegate {
         loadUrl(link.url)
     }
 }
-
-extension MainViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return BlurAnimatedTransitioning()
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DissolveAnimatedTransitioning()
-    }
-}
-
 

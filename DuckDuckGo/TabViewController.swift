@@ -35,6 +35,8 @@ class TabViewController: WebViewController {
     private weak var privacyController: PrivacyProtectionController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
+    
+    private var httpsForced: Bool = false
 
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let controller = UIStoryboard(name: "Tab", bundle: nil).instantiateViewController(withIdentifier: "TabViewController") as! TabViewController
@@ -118,7 +120,7 @@ class TabViewController: WebViewController {
         guard let url = webView.url else { return }
 
         if let siteRating = siteRating {
-            self.siteRating = SiteRating(url: url, protectionId: siteRating.protectionId)
+            self.siteRating = SiteRating(url: url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
             updateSiteRating()
         }
     }
@@ -136,12 +138,17 @@ class TabViewController: WebViewController {
     }
     
     func showPrivacyProtection() {
-        performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        if UIUserInterfaceIdiom.pad == UIDevice.current.userInterfaceIdiom {
+            performSegue(withIdentifier: "PrivacyProtectionTablet", sender: self)
+        } else {
+            performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        }
+        
     }
 
     fileprivate func resetSiteRating() {
         if let url = url {
-            siteRating = SiteRating(url: url)
+            siteRating = SiteRating(url: url, httpsForced: httpsForced)
         } else {
             siteRating = nil
         }
@@ -432,13 +439,14 @@ extension TabViewController: WebEventsDelegate {
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
     
-    func webpageDidStartLoading() {
+    func webpageDidStartLoading(httpsForced: Bool) {
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
+        self.httpsForced = httpsForced
         delegate?.showBars()
 
         // if host is the same use same protection id and don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host {
-            self.siteRating = SiteRating(url: siteRating.url, protectionId: siteRating.protectionId)
+            self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
         } else {
             resetSiteRating()
             reloadScripts(with: siteRating!.protectionId, restrictedDevice: UIDevice.current.isSlow())

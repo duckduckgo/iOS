@@ -132,6 +132,16 @@ class NetworkLeaderboardTests: XCTestCase {
         XCTAssertEqual(["google.com", "tracker.com"], leaderboard.networksDetected().map( { $0.name! }).sorted())
     }
 
+    func testWhenSingleSiteVisitedMultipleTimesAndSingleNetworkDetectedNetworkIsReturned() {
+        let leaderboard = NetworkLeaderboard()
+        leaderboard.visited(domain: "example.com")
+        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
+        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
+        leaderboard.network(named: "google.com", detectedWhileVisitingDomain: "example.com")
+        XCTAssertEqual("google.com", leaderboard.networksDetected()[0].name)
+        XCTAssertEqual(1, leaderboard.networksDetected()[0].detectedOn?.count)
+    }
+
     func testWhenSingleSiteVisitedAndSingleNetworkDetectedNetworkIsReturned() {
         let leaderboard = NetworkLeaderboard()
         leaderboard.visited(domain: "example.com")

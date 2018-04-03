@@ -30,13 +30,21 @@ extension SiteRating {
     ]
 
     func encryptedConnectionText() -> String {
-        if !https {
-            return UserText.privacyProtectionEncryptionBadConnection
-        } else if !hasOnlySecureContent {
-            return UserText.privacyProtectionEncryptionMixedConnection
-        } else {
-            return UserText.privacyProtectionEncryptionGoodConnection
+        
+        switch(encryptionType) {
+            case .encrypted:
+                return UserText.ppEncryptionEncryptedHeading
+            
+            case .mixed:
+                return UserText.ppEncryptionMixedHeading
+
+            case .forced:
+                return UserText.ppEncryptionForcedHeading
+            
+            default: // .unencrypted
+                return UserText.ppEncryptionUnencryptedHeading
         }
+        
     }
 
     func encryptedConnectionSuccess() -> Bool {

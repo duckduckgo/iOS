@@ -51,15 +51,18 @@ class UITests: XCTestCase {
         app.examinePrivacyDashboard("04_")
 
         app.searchFor("cnn.com")
-        app.examinePrivacyDashboard("05_")
-        
-        app.searchFor("evanscycles.com")
         app.examinePrivacyDashboard("06_")
 
-        app.toggleProtection("07_")
+        app.searchFor("evanscycles.com")
+        app.examinePrivacyDashboard("07_")
+        
+        app.searchFor("thehill.com")
         app.examinePrivacyDashboard("08_")
 
-        app.examineNetworkOffenders("09_")
+        app.toggleProtection("09_")
+        app.examinePrivacyDashboard("10_")
+
+        app.examineNetworkOffenders("11_")
         
     }
     

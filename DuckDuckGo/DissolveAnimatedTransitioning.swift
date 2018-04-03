@@ -27,7 +27,7 @@ class DissolveAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitio
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromView = transitionContext.view(forKey: .from)!
+        let fromView = transitionContext.containerView
         fromView.backgroundColor = UIColor.clear
         fromView.alpha = 1
         

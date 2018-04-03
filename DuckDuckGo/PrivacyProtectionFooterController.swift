@@ -30,24 +30,33 @@ class PrivacyProtectionFooterController: UIViewController {
     var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         leaderboard.didLoad()
-        update()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         update()
     }
-
+    
     @IBAction func toggleProtection() {
         let contentBlockingOn = privacyProtectionSwitch.isOn
         self.contentBlocker.enabled = contentBlockingOn
         update()
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.update()
+        }
+    }
+    
     private func update() {
         guard isViewLoaded else { return }
         leaderboard.update()
         updateProtectionToggle()
+        preferredContentSize = CGSize(width: view.frame.size.width, height: leaderboard.requiredHeight + privacyProtectionView.frame.height)
     }
 
     private func updateProtectionToggle() {
@@ -59,13 +68,20 @@ class PrivacyProtectionFooterController: UIViewController {
 
 class TrackerNetworkLeaderboardView: UIView {
 
+    @IBOutlet weak var gatheringView: UIView!
+    @IBOutlet weak var scoresView: UIView!
+
     @IBOutlet weak var firstPill: TrackerNetworkPillView!
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
     @IBOutlet weak var thirdPill: TrackerNetworkPillView!
-    @IBOutlet weak var message: UILabel!
-    @IBOutlet weak var forwardArrow: UIImageView!
 
+    var requiredHeight: CGFloat {
+        return gatheringView.isHidden ? scoresView.frame.size.height : gatheringView.frame.size.height
+    }
+    
     var leaderboard = NetworkLeaderboard.shared
+    
+    var imageHeight: CGFloat!
 
     func didLoad() {
         firstPill.didLoad()
@@ -75,22 +91,16 @@ class TrackerNetworkLeaderboardView: UIView {
 
     func update() {
         let networksDetected = leaderboard.networksDetected()
-
         let shouldShow = leaderboard.shouldShow()
-
-        firstPill.isHidden = !shouldShow
-        secondPill.isHidden = !shouldShow
-        thirdPill.isHidden = !shouldShow
-        forwardArrow.isHidden = !shouldShow
-        message.isHidden = shouldShow
-
+        gatheringView.isHidden = shouldShow
+        scoresView.isHidden = !shouldShow
+        
         if shouldShow {
             let sitesVisited = leaderboard.sitesVisited()
             firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
             secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
             thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
-        }
-
+        }        
     }
 
 }
@@ -123,3 +133,4 @@ fileprivate extension PPTrackerNetwork {
     }
 
 }
+

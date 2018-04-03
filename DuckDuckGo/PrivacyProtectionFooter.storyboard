@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,23 +24,23 @@
             <objects>
                 <viewController id="F3n-LI-9p5" customClass="PrivacyProtectionFooterController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7wS-3y-DDY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="164"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hd5-yh-lIG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Djl-H1-Nxl">
-                                        <rect key="frame" x="20" y="12.5" width="335" height="31"/>
+                                        <rect key="frame" x="20" y="13" width="288" height="31"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5v-ss-qJ7">
-                                                <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="239" height="31"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K5G-OG-RJ7">
-                                                <rect key="frame" x="286" y="0.0" width="51" height="31"/>
+                                                <rect key="frame" x="239" y="0.0" width="51" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="privacyProtectionToggle"/>
                                                 <color key="onTintColor" red="0.086274509799999996" green="0.3294117647" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
@@ -52,191 +53,244 @@
                                 <color key="backgroundColor" red="0.2470588235" green="0.63137254899999995" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="6j5-MY-ozR"/>
-                                    <constraint firstItem="Djl-H1-Nxl" firstAttribute="centerX" secondItem="hd5-yh-lIG" secondAttribute="centerX" id="IVS-hQ-b2x"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Djl-H1-Nxl" secondAttribute="trailingMargin" constant="4" id="ATP-LH-ead"/>
                                     <constraint firstItem="Djl-H1-Nxl" firstAttribute="centerY" secondItem="hd5-yh-lIG" secondAttribute="centerY" id="Z12-F0-peq"/>
-                                    <constraint firstItem="Djl-H1-Nxl" firstAttribute="width" secondItem="hd5-yh-lIG" secondAttribute="width" constant="-40" id="m3d-Rv-M8M"/>
+                                    <constraint firstItem="Djl-H1-Nxl" firstAttribute="leadingMargin" secondItem="hd5-yh-lIG" secondAttribute="leadingMargin" constant="12" id="ad9-j8-MEZ"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHX-zw-YEZ" customClass="TrackerNetworkLeaderboardView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="56" width="375" height="108"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jR-2G-yON">
+                                <rect key="frame" x="0.0" y="56" width="320" height="144"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="5bD-t8-byL">
-                                        <rect key="frame" x="341" y="51.5" width="10" height="16"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODR-4W-ERU">
-                                        <rect key="frame" x="81" y="20" width="213" height="12"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                        <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Al1-DF-wgF">
-                                        <rect key="frame" x="20" y="45" width="335" height="28"/>
-                                        <attributedString key="attributedText">
-                                            <fragment>
-                                                <string key="content">We're still collecting data to show how
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHX-zw-YEZ" customClass="TrackerNetworkLeaderboardView" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="-0.5" y="0.0" width="320" height="144"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLL-zs-goU">
+                                                <rect key="frame" x="0.0" y="22" width="320" height="100"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rO0-0v-ngG">
+                                                        <rect key="frame" x="38" y="50" width="244" height="28"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-FS-KoR" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="76" height="28"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ad-3b-bdk">
+                                                                        <rect key="frame" x="27" y="5" width="1" height="18"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <color key="backgroundColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </view>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PP Pill facebook" translatesAutoresizingMaskIntoConstraints="NO" id="wEQ-bw-4Fd">
+                                                                        <rect key="frame" x="9" y="8" width="13" height="13"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZN-i4-VWw">
+                                                                        <rect key="frame" x="33" y="4" width="36" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <attributedString key="attributedText">
+                                                                            <fragment content="88%">
+                                                                                <attributes>
+                                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                                    <font key="NSFont" size="16" name="ProximaNova-Bold"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                        </attributedString>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="76" id="Jcf-iD-NJ9"/>
+                                                                    <constraint firstAttribute="height" constant="28" id="psJ-BY-Lxg"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <outlet property="networkImage" destination="wEQ-bw-4Fd" id="SO4-Ct-3IG"/>
+                                                                    <outlet property="percentageLabel" destination="AZN-i4-VWw" id="gou-Y5-yZu"/>
+                                                                </connections>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlK-Ha-fz2" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                                <rect key="frame" x="84" y="0.0" width="76" height="28"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KLU-TZ-GnC">
+                                                                        <rect key="frame" x="27" y="5" width="1" height="18"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <color key="backgroundColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </view>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PP Pill amazon" translatesAutoresizingMaskIntoConstraints="NO" id="1l7-E5-DXw">
+                                                                        <rect key="frame" x="9" y="8" width="13" height="13"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNX-cn-hfq">
+                                                                        <rect key="frame" x="33" y="4" width="36" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <attributedString key="attributedText">
+                                                                            <fragment content="88%">
+                                                                                <attributes>
+                                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                                    <font key="NSFont" size="16" name="ProximaNova-Bold"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                        </attributedString>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="76" id="DGC-k6-BHi"/>
+                                                                    <constraint firstAttribute="height" constant="28" id="tID-CR-bSf"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <outlet property="networkImage" destination="1l7-E5-DXw" id="eem-PA-xRa"/>
+                                                                    <outlet property="percentageLabel" destination="UNX-cn-hfq" id="9eo-hu-9Qt"/>
+                                                                </connections>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EXP-Kf-rxq" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                                <rect key="frame" x="168" y="0.0" width="76" height="28"/>
+                                                                <subviews>
+                                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KWY-9w-e5C">
+                                                                        <rect key="frame" x="27" y="5" width="1" height="18"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <color key="backgroundColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </view>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PP Pill google" translatesAutoresizingMaskIntoConstraints="NO" id="mMm-E4-uFV">
+                                                                        <rect key="frame" x="9" y="8" width="13" height="13"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCL-fQ-ISt">
+                                                                        <rect key="frame" x="33" y="4" width="36" height="21"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <attributedString key="attributedText">
+                                                                            <fragment content="88%">
+                                                                                <attributes>
+                                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                                    <font key="NSFont" size="16" name="ProximaNova-Bold"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                        </attributedString>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="28" id="gnB-O6-94p"/>
+                                                                    <constraint firstAttribute="width" constant="76" id="onX-6e-VTe"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <outlet property="networkImage" destination="mMm-E4-uFV" id="YPL-NK-cua"/>
+                                                                    <outlet property="percentageLabel" destination="QCL-fQ-ISt" id="kG1-wi-PZo"/>
+                                                                </connections>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AA-Ma-AG6">
+                                                        <rect key="frame" x="0.0" y="20" width="320" height="12"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                                        <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="5NM-vg-MQe">
+                                                        <rect key="frame" x="290" y="42" width="10" height="16"/>
+                                                    </imageView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="rO0-0v-ngG" firstAttribute="centerX" secondItem="MFi-fD-lyi" secondAttribute="centerX" id="LQR-Yh-7Ue"/>
+                                                    <constraint firstItem="4AA-Ma-AG6" firstAttribute="top" secondItem="MFi-fD-lyi" secondAttribute="top" constant="20" id="OKZ-Xf-aKa"/>
+                                                    <constraint firstItem="5NM-vg-MQe" firstAttribute="centerY" secondItem="MFi-fD-lyi" secondAttribute="centerY" id="PHh-s0-6CS"/>
+                                                    <constraint firstItem="MFi-fD-lyi" firstAttribute="trailing" secondItem="5NM-vg-MQe" secondAttribute="trailing" constant="20" id="bkM-0N-BDn"/>
+                                                    <constraint firstAttribute="height" constant="100" id="sYc-fG-eBx"/>
+                                                    <constraint firstItem="MFi-fD-lyi" firstAttribute="trailing" secondItem="4AA-Ma-AG6" secondAttribute="trailing" id="sge-iA-oPT"/>
+                                                    <constraint firstItem="rO0-0v-ngG" firstAttribute="top" secondItem="4AA-Ma-AG6" secondAttribute="bottom" constant="18" id="tLl-1u-AQO"/>
+                                                    <constraint firstItem="4AA-Ma-AG6" firstAttribute="leading" secondItem="MFi-fD-lyi" secondAttribute="leading" id="zQJ-iU-wUh"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="MFi-fD-lyi"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frY-3a-m4a">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Leaderboard No Stats" translatesAutoresizingMaskIntoConstraints="NO" id="gPE-Br-bJP">
+                                                        <rect key="frame" x="111" y="8" width="98" height="48"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="48" id="LPU-2C-SJH"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK TOP OFFENDERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHx-Qp-lvj">
+                                                        <rect key="frame" x="0.0" y="72" width="320" height="12"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                                        <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqv-VR-7we">
+                                                        <rect key="frame" x="0.0" y="92" width="320" height="36"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment>
+                                                                <string key="content">We're still collecting data to show how
 many trackers we've blocked.</string>
-                                                <attributes>
-                                                    <color key="NSColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-FS-KoR" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="65" y="45" width="76" height="28"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ad-3b-bdk">
-                                                <rect key="frame" x="27" y="5" width="1" height="18"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <attributes>
+                                                                    <color key="NSColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="km0-kI-tep" firstAttribute="trailing" secondItem="pqv-VR-7we" secondAttribute="trailing" id="B3k-fx-gR2"/>
+                                                    <constraint firstItem="km0-kI-tep" firstAttribute="trailing" secondItem="zHx-Qp-lvj" secondAttribute="trailing" id="EiG-Ov-57A"/>
+                                                    <constraint firstItem="gPE-Br-bJP" firstAttribute="centerX" secondItem="km0-kI-tep" secondAttribute="centerX" id="FjC-tC-nLM"/>
+                                                    <constraint firstItem="pqv-VR-7we" firstAttribute="leading" secondItem="km0-kI-tep" secondAttribute="leading" id="IAZ-qS-bFB"/>
+                                                    <constraint firstItem="zHx-Qp-lvj" firstAttribute="top" secondItem="gPE-Br-bJP" secondAttribute="bottom" constant="16" id="LyG-sl-JNk"/>
+                                                    <constraint firstItem="gPE-Br-bJP" firstAttribute="top" secondItem="km0-kI-tep" secondAttribute="top" constant="8" id="UN6-04-ZFh"/>
+                                                    <constraint firstAttribute="height" constant="144" id="hPu-bR-eeW"/>
+                                                    <constraint firstItem="zHx-Qp-lvj" firstAttribute="leading" secondItem="km0-kI-tep" secondAttribute="leading" id="ss4-F4-Uj1"/>
+                                                    <constraint firstItem="pqv-VR-7we" firstAttribute="top" secondItem="zHx-Qp-lvj" secondAttribute="bottom" constant="8" id="ypo-wD-2N1"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="km0-kI-tep"/>
                                             </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PP Pill facebook" translatesAutoresizingMaskIntoConstraints="NO" id="wEQ-bw-4Fd">
-                                                <rect key="frame" x="9" y="8" width="13" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZN-i4-VWw">
-                                                <rect key="frame" x="33" y="4" width="36" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="88%">
-                                                        <attributes>
-                                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <font key="NSFont" size="16" name="ProximaNova-Bold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="networkOffenders">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="76" id="Jcf-iD-NJ9"/>
-                                            <constraint firstAttribute="height" constant="28" id="psJ-BY-Lxg"/>
+                                            <constraint firstItem="SLL-zs-goU" firstAttribute="width" secondItem="VHX-zw-YEZ" secondAttribute="width" id="3Gp-wa-qQ7"/>
+                                            <constraint firstItem="SLL-zs-goU" firstAttribute="centerX" secondItem="fnJ-7J-vsv" secondAttribute="centerX" id="6uv-cc-l1C"/>
+                                            <constraint firstItem="frY-3a-m4a" firstAttribute="centerY" secondItem="fnJ-7J-vsv" secondAttribute="centerY" id="9T2-sc-lAH"/>
+                                            <constraint firstItem="frY-3a-m4a" firstAttribute="width" secondItem="VHX-zw-YEZ" secondAttribute="width" id="A65-Lt-jq1"/>
+                                            <constraint firstAttribute="height" constant="144" id="CNL-RI-itC"/>
+                                            <constraint firstItem="SLL-zs-goU" firstAttribute="centerY" secondItem="fnJ-7J-vsv" secondAttribute="centerY" id="gAN-rS-InP"/>
+                                            <constraint firstItem="frY-3a-m4a" firstAttribute="centerX" secondItem="fnJ-7J-vsv" secondAttribute="centerX" id="k89-MR-pyW"/>
                                         </constraints>
+                                        <viewLayoutGuide key="safeArea" id="fnJ-7J-vsv"/>
                                         <connections>
-                                            <outlet property="networkImage" destination="wEQ-bw-4Fd" id="SO4-Ct-3IG"/>
-                                            <outlet property="percentageLabel" destination="AZN-i4-VWw" id="gou-Y5-yZu"/>
-                                        </connections>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlK-Ha-fz2" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="149" y="45" width="76" height="28"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KLU-TZ-GnC">
-                                                <rect key="frame" x="27" y="5" width="1" height="18"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PP Pill amazon" translatesAutoresizingMaskIntoConstraints="NO" id="1l7-E5-DXw">
-                                                <rect key="frame" x="9" y="8" width="13" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNX-cn-hfq">
-                                                <rect key="frame" x="33" y="4" width="36" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="88%">
-                                                        <attributes>
-                                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <font key="NSFont" size="16" name="ProximaNova-Bold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="76" id="DGC-k6-BHi"/>
-                                            <constraint firstAttribute="height" constant="28" id="tID-CR-bSf"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="networkImage" destination="1l7-E5-DXw" id="eem-PA-xRa"/>
-                                            <outlet property="percentageLabel" destination="UNX-cn-hfq" id="9eo-hu-9Qt"/>
-                                        </connections>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EXP-Kf-rxq" customClass="TrackerNetworkPillView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="233" y="45" width="76" height="28"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KWY-9w-e5C">
-                                                <rect key="frame" x="27" y="5" width="1" height="18"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PP Pill google" translatesAutoresizingMaskIntoConstraints="NO" id="mMm-E4-uFV">
-                                                <rect key="frame" x="9" y="8" width="13" height="13"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCL-fQ-ISt">
-                                                <rect key="frame" x="33" y="4" width="36" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="88%">
-                                                        <attributes>
-                                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <font key="NSFont" size="16" name="ProximaNova-Bold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="1.2" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="28" id="gnB-O6-94p"/>
-                                            <constraint firstAttribute="width" constant="76" id="onX-6e-VTe"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="networkImage" destination="mMm-E4-uFV" id="YPL-NK-cua"/>
-                                            <outlet property="percentageLabel" destination="QCL-fQ-ISt" id="kG1-wi-PZo"/>
+                                            <outlet property="firstPill" destination="Sk1-FS-KoR" id="jG8-2M-Uin"/>
+                                            <outlet property="gatheringView" destination="frY-3a-m4a" id="Tag-Di-ROj"/>
+                                            <outlet property="scoresView" destination="SLL-zs-goU" id="5Uy-Il-OhG"/>
+                                            <outlet property="secondPill" destination="qlK-Ha-fz2" id="MYW-hx-0PJ"/>
+                                            <outlet property="thirdPill" destination="EXP-Kf-rxq" id="4TW-4W-mI9"/>
                                         </connections>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="networkOffenders">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
                                 <constraints>
-                                    <constraint firstItem="qlK-Ha-fz2" firstAttribute="top" secondItem="ODR-4W-ERU" secondAttribute="bottom" constant="13" id="6Hf-Z6-Bej"/>
-                                    <constraint firstItem="qlK-Ha-fz2" firstAttribute="leading" secondItem="Sk1-FS-KoR" secondAttribute="trailing" constant="8" id="BoH-tz-rjl"/>
-                                    <constraint firstItem="ODR-4W-ERU" firstAttribute="centerX" secondItem="VHX-zw-YEZ" secondAttribute="centerX" id="Bsw-IV-Ua7"/>
-                                    <constraint firstItem="EXP-Kf-rxq" firstAttribute="centerY" secondItem="qlK-Ha-fz2" secondAttribute="centerY" id="DsU-ag-tgs"/>
-                                    <constraint firstItem="ODR-4W-ERU" firstAttribute="top" secondItem="VHX-zw-YEZ" secondAttribute="top" constant="20" id="PjZ-EZ-Mnk"/>
-                                    <constraint firstItem="5bD-t8-byL" firstAttribute="centerY" secondItem="VHX-zw-YEZ" secondAttribute="centerY" constant="5.5" id="Qho-ga-isy"/>
-                                    <constraint firstAttribute="height" constant="108" id="TdB-qG-h43"/>
-                                    <constraint firstItem="Al1-DF-wgF" firstAttribute="centerX" secondItem="VHX-zw-YEZ" secondAttribute="centerX" id="WdW-q7-jkT"/>
-                                    <constraint firstItem="qlK-Ha-fz2" firstAttribute="centerX" secondItem="VHX-zw-YEZ" secondAttribute="centerX" id="gpW-hC-LOR"/>
-                                    <constraint firstItem="Al1-DF-wgF" firstAttribute="top" secondItem="ODR-4W-ERU" secondAttribute="bottom" constant="13" id="hek-cl-DoK"/>
-                                    <constraint firstItem="EXP-Kf-rxq" firstAttribute="leading" secondItem="qlK-Ha-fz2" secondAttribute="trailing" constant="8" id="ivQ-Rq-5d5"/>
-                                    <constraint firstItem="Sk1-FS-KoR" firstAttribute="centerY" secondItem="qlK-Ha-fz2" secondAttribute="centerY" id="kJg-gJ-H7u"/>
-                                    <constraint firstItem="Al1-DF-wgF" firstAttribute="width" secondItem="VHX-zw-YEZ" secondAttribute="width" constant="-40" id="wcE-oM-1Od"/>
-                                    <constraint firstAttribute="trailing" secondItem="5bD-t8-byL" secondAttribute="trailing" constant="24" id="y03-8M-63m"/>
+                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="centerY" secondItem="4jR-2G-yON" secondAttribute="centerY" id="jSP-lB-dJb"/>
+                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="width" secondItem="4jR-2G-yON" secondAttribute="width" id="uWy-k1-zGw"/>
+                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="centerX" secondItem="4jR-2G-yON" secondAttribute="centerX" id="wgw-Qg-abz"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="firstPill" destination="Sk1-FS-KoR" id="Hej-N8-E9N"/>
-                                    <outlet property="forwardArrow" destination="5bD-t8-byL" id="M4O-fc-oe7"/>
-                                    <outlet property="message" destination="Al1-DF-wgF" id="OWt-n1-EgF"/>
-                                    <outlet property="secondPill" destination="qlK-Ha-fz2" id="Hgi-Y2-aXC"/>
-                                    <outlet property="thirdPill" destination="EXP-Kf-rxq" id="hDR-8j-gZG"/>
-                                </connections>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ile-lz-9ig" firstAttribute="bottom" secondItem="VHX-zw-YEZ" secondAttribute="bottom" id="0kY-qm-1nT"/>
-                            <constraint firstItem="VHX-zw-YEZ" firstAttribute="top" secondItem="hd5-yh-lIG" secondAttribute="bottom" id="7AO-8C-Fil"/>
+                            <constraint firstItem="4jR-2G-yON" firstAttribute="top" secondItem="hd5-yh-lIG" secondAttribute="bottom" id="4pr-Gt-fxb"/>
+                            <constraint firstItem="ile-lz-9ig" firstAttribute="bottom" secondItem="4jR-2G-yON" secondAttribute="bottom" id="5Qa-fa-WGb"/>
                             <constraint firstItem="hd5-yh-lIG" firstAttribute="centerX" secondItem="ile-lz-9ig" secondAttribute="centerX" id="Iv7-Be-J5t"/>
-                            <constraint firstItem="VHX-zw-YEZ" firstAttribute="width" secondItem="7wS-3y-DDY" secondAttribute="width" id="KLY-Hk-hew"/>
-                            <constraint firstItem="VHX-zw-YEZ" firstAttribute="centerX" secondItem="ile-lz-9ig" secondAttribute="centerX" id="QJ9-cI-c7W"/>
+                            <constraint firstItem="4jR-2G-yON" firstAttribute="width" secondItem="7wS-3y-DDY" secondAttribute="width" id="QZK-g6-uNh"/>
+                            <constraint firstItem="hd5-yh-lIG" firstAttribute="top" secondItem="ile-lz-9ig" secondAttribute="top" id="jWV-nz-rz1"/>
                             <constraint firstItem="hd5-yh-lIG" firstAttribute="width" secondItem="7wS-3y-DDY" secondAttribute="width" id="ueF-uB-MeP"/>
+                            <constraint firstItem="4jR-2G-yON" firstAttribute="centerX" secondItem="ile-lz-9ig" secondAttribute="centerX" id="yGg-In-H0d"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ile-lz-9ig"/>
                     </view>
-                    <size key="freeformSize" width="375" height="164"/>
+                    <size key="freeformSize" width="320" height="200"/>
                     <connections>
                         <outlet property="leaderboard" destination="VHX-zw-YEZ" id="8dT-TJ-jRf"/>
                         <outlet property="privacyProtectionSwitch" destination="K5G-OG-RJ7" id="7vq-r7-p9M"/>
@@ -250,6 +304,7 @@ many trackers we've blocked.</string>
     </scenes>
     <resources>
         <image name="PP Arrow Forward" width="10" height="16"/>
+        <image name="PP Network Leaderboard No Stats" width="98" height="48"/>
         <image name="PP Pill amazon" width="14" height="15"/>
         <image name="PP Pill facebook" width="8" height="15"/>
         <image name="PP Pill google" width="13" height="14"/>

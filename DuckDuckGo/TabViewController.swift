@@ -138,7 +138,12 @@ class TabViewController: WebViewController {
     }
     
     func showPrivacyProtection() {
-        performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        if UIUserInterfaceIdiom.pad == UIDevice.current.userInterfaceIdiom {
+            performSegue(withIdentifier: "PrivacyProtectionTablet", sender: self)
+        } else {
+            performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        }
+        
     }
 
     fileprivate func resetSiteRating() {

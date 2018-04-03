@@ -40,6 +40,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!
     private weak var header: PrivacyProtectionHeaderController!
+    private weak var footer: PrivacyProtectionFooterController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,19 @@ class PrivacyProtectionOverviewController: UITableViewController {
         update()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateFooterHeight()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil) { context in 
+            self.updateFooterHeight()
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
@@ -58,6 +72,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
         if let header = segue.destination as? PrivacyProtectionHeaderController {
             self.header = header
         }
+        
+        if let footer = segue.destination as? PrivacyProtectionFooterController {
+            self.footer = footer
+        }
+        
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -68,17 +87,22 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         return true
     }
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        let bounceThreshold = CGFloat(120)
-        let offsetY = tableView.contentOffset.y
-        
-        if offsetY > bounceThreshold {
-            dismiss(animated: true)
-            return
-        }
-        
+    private func updateFooterHeight() {
+        guard let footerView = tableView.tableFooterView else { return }
+
+        tableView.tableFooterView = nil
+
+        let frameHeight = tableView.frame.size.height
+        let contentHeight = tableView.contentSize.height
+
+        let minSize = footer.preferredContentSize.height
+        let height = max(minSize, frameHeight - contentHeight)
+
+        let frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: height)
+        footerView.frame = frame
+        tableView.tableFooterView = footerView
+        footer.leaderboard.isHidden = false
     }
     
     private func update() {
@@ -89,6 +113,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()
+        footer.leaderboard.isHidden = true
     }
 
     private func updateEncryption() {

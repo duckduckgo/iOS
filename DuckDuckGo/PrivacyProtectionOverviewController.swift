@@ -102,7 +102,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         let frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: height)
         footerView.frame = frame
         tableView.tableFooterView = footerView
-
+        footer.leaderboard.isHidden = false
     }
     
     private func update() {
@@ -113,6 +113,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()
+        footer.leaderboard.isHidden = true
     }
 
     private func updateEncryption() {

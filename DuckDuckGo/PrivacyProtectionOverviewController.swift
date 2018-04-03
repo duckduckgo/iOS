@@ -114,6 +114,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateTrackers()
         updatePrivacyPractices()
         footer.leaderboard.isHidden = true
+        updateFooterHeight()
     }
 
     private func updateEncryption() {

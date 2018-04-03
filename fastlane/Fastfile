@@ -26,6 +26,23 @@ lane :release do
 
 end
 
+lane :beta do 
+
+  gym(
+    scheme: "DuckDuckGo",
+    export_method: "app-store"
+  )
+
+  deliver(
+    submit_for_review: false,
+    automatic_release: false, 
+    phased_release: false,
+    username: "office@duckduckgo.com",
+    force: true
+  )
+
+end
+
 lane :screenshots do 
 
   reset_simulators

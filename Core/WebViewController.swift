@@ -26,6 +26,8 @@ open class WebViewController: UIViewController {
         static let estimatedProgress = "estimatedProgress"
         static let hasOnlySecureContent = "hasOnlySecureContent"
         static let url = "URL"
+        static let canGoBack = "canGoBack"
+        static let canGoForward = "canGoForward"
     }
     
     private struct Constants {
@@ -44,9 +46,10 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
 
+    public var loadedURL: URL?
+    
     private var lastUpgradedDomain: String?
     private var lastError: Error?
-    private var loadedURL: URL?
     private var shouldReloadOnError = false
     
     private lazy var appUrls: AppUrls = AppUrls()
@@ -100,6 +103,8 @@ open class WebViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -158,6 +163,12 @@ open class WebViewController: UIViewController {
         case webViewKeyPaths.url:
             urlDidChange()
             
+        case webViewKeyPaths.canGoBack:
+            canGoBackChanged()
+
+        case webViewKeyPaths.canGoForward:
+            canGoForwardChanged()
+
         default:
             Logger.log(text: "Unhandled keyPath \(keyPath)")
         }
@@ -167,6 +178,14 @@ open class WebViewController: UIViewController {
         webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
     }
     
+    private func canGoBackChanged() {
+        webEventsDelegate?.webpageCanGoBackForwardChanged()
+    }
+
+    private func canGoForwardChanged() {
+        webEventsDelegate?.webpageCanGoBackForwardChanged()
+    }
+
     private func onFaviconLoaded(_ favicon: URL) {
         self.favicon = favicon
         if let url = url {
@@ -207,6 +226,7 @@ open class WebViewController: UIViewController {
     open func goBack() {
         if isError {
             hideErrorMessage()
+            loadedURL = webView.url
             webEventsDelegate?.webpageDidStartLoading(httpsForced: false)
             webEventsDelegate?.webpageDidFinishLoading()
         } else {
@@ -224,6 +244,8 @@ open class WebViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
+        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)
     }
@@ -308,7 +330,7 @@ extension WebViewController: WKNavigationDelegate {
             error.code == Constants.frameLoadInterruptedErrorCode {
             failingUrls.insert(domain)
         }
-        showErrorLater()
+        showErrorNow()
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -367,12 +389,6 @@ extension WebViewController: WKNavigationDelegate {
         return .cancel
     }
 
-    private func showErrorLater() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.showErrorNow()
-        }
-    }
-    
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()

@@ -132,6 +132,7 @@ class MainViewController: UIViewController {
     
     @IBAction func onBackPressed() {
         currentTab?.goBack()
+        refreshOmniBar()
     }
     
     @IBAction func onForwardPressed() {
@@ -235,6 +236,8 @@ class MainViewController: UIViewController {
         }
 
         if !tab.isError {
+            omniBar.refreshText(forUrl: tab.loadedURL)
+        } else {
             omniBar.refreshText(forUrl: tab.link?.url)
         }
 

@@ -53,7 +53,7 @@ class TabViewController: WebViewController {
     
     public var link: Link? {
         if isError {
-            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
+            if let url = loadedURL ?? webView.url ?? URL(string: "") {
                 return Link(title: errorText, url: url)
             }
         }
@@ -467,9 +467,7 @@ extension TabViewController: WebEventsDelegate {
         updateSiteRating()
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.delegate?.tabLoadingStateDidChange(tab: self!)
-        }
+        delegate?.tabLoadingStateDidChange(tab: self)
     }
     
     func webpageDidFailToLoad() {
@@ -480,9 +478,7 @@ extension TabViewController: WebEventsDelegate {
         siteRating?.finishedLoading = true
         updateSiteRating()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.delegate?.tabLoadingStateDidChange(tab: self!)
-        }
+        self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
     func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
@@ -505,13 +501,15 @@ extension TabViewController: WebEventsDelegate {
         siteRating?.hasOnlySecureContent = hasOnlySecureContent
         updateSiteRating()
     }
-
-    func webView(_ webView: WKWebView, didChangeUrl url: URL?) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.delegate?.tabLoadingStateDidChange(tab: self!)
-        }
+    
+    func webpageCanGoBackForwardChanged() {
+        delegate?.tabLoadingStateDidChange(tab: self)
     }
-
+    
+    func webView(_ webView: WKWebView, didChangeUrl url: URL?) {
+        delegate?.tabLoadingStateDidChange(tab: self)
+    }
+    
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

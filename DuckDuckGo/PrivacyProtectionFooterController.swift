@@ -44,14 +44,7 @@ class PrivacyProtectionFooterController: UIViewController {
         self.contentBlocker.enabled = contentBlockingOn
         update()
     }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.update()
-        }
-    }
-    
+  
     private func update() {
         guard isViewLoaded else { return }
         leaderboard.update()

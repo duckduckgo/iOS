@@ -87,6 +87,25 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         return true
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+
+        let scrollViewHeight = scrollView.frame.size.height
+        guard scrollViewHeight > 0 else { return }
+        
+        let frameHeight = tableView.frame.size.height
+        let contentHeight = tableView.contentSize.height
+        let height = frameHeight - contentHeight
+        let distance = height + scrollView.contentOffset.y
+        let percent = distance / scrollViewHeight * 100
+        
+        let dismissThreshold: CGFloat = 30
+        if percent > dismissThreshold && scrollView.isDragging {
+            dismiss(animated: true)
+        }
+
+    }
         
     private func updateFooterHeight() {
         guard let footerView = tableView.tableFooterView else { return }
@@ -114,6 +133,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateTrackers()
         updatePrivacyPractices()
         footer.leaderboard.isHidden = true
+        updateFooterHeight()
     }
 
     private func updateEncryption() {

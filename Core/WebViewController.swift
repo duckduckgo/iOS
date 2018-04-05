@@ -175,7 +175,9 @@ open class WebViewController: UIViewController {
     }
     
     private func urlDidChange() {
-        webEventsDelegate?.webView(webView, didChangeUrl: webView.url)
+        DispatchQueue.main.async {
+            self.webEventsDelegate?.webView(self.webView, didChangeUrl: self.webView.url)
+        }
     }
     
     private func canGoBackChanged() {

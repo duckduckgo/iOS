@@ -1,4 +1,1 @@
-
-In this version we have:
-
-*
+This release we have focussed on improving the UI of our privacy dashboard, as well as other cosmetic fixes though out the app.

@@ -235,12 +235,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        if !tab.isError {
-            omniBar.refreshText(forUrl: tab.loadedURL)
-        } else {
-            omniBar.refreshText(forUrl: tab.link?.url)
-        }
-
+        omniBar.refreshText(forUrl: tab.url)
         omniBar.updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
     }

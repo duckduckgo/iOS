@@ -108,7 +108,7 @@
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
                         <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtectionTablet" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
                         </segue>
                         <segue destination="PZd-l7-wUN" kind="presentation" identifier="PrivacyProtection" id="5y1-1B-eCa"/>
                     </connections>

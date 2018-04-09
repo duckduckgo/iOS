@@ -72,7 +72,7 @@
                                                                 <constraint firstAttribute="height" constant="44" id="J5n-rB-XtL"/>
                                                                 <constraint firstAttribute="width" constant="44" id="qo9-0B-8Av"/>
                                                             </constraints>
-                                                            <state key="normal" image="Close"/>
+                                                            <state key="normal" image="Remove"/>
                                                             <connections>
                                                                 <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
                                                             </connections>
@@ -242,9 +242,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Close" width="12" height="12"/>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>
     </resources>
 </document>

@@ -59,7 +59,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="fBV-vf-OLd"/>
                                                         <constraint firstAttribute="width" constant="30" id="wRc-fh-LDz"/>
                                                     </constraints>
-                                                    <state key="normal" image="Plus"/>
+                                                    <state key="normal" image="Add"/>
                                                     <connections>
                                                         <action selector="onPlusButtonPressed:" destination="HV3-WA-HxT" eventType="touchUpInside" id="MC2-dB-gjU"/>
                                                     </connections>
@@ -76,7 +76,7 @@
                                                 <constraint firstItem="N97-eI-Lps" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="zf3-hI-TKf"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="label" destination="5ag-a1-mlA" id="jTa-51-N4b"/>
                                             <outlet property="plusButton" destination="N97-eI-Lps" id="2NX-0l-oBk"/>
@@ -140,7 +140,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Plus" width="16" height="16"/>
+        <image name="Add" width="14" height="14"/>
         <image name="SearchLoupe" width="22" height="22"/>
     </resources>
 </document>

@@ -25,10 +25,7 @@ import Device
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet var margins: [NSLayoutConstraint]!
-
-    @IBOutlet var requireColor: [UIView]!
-    
+    @IBOutlet var margins: [NSLayoutConstraint]!    
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
@@ -47,21 +44,12 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureColor()
         configureMargins()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
     }
     
-    private func configureColor() {
-        if #available(iOS 10, *) { return }
-        for view in requireColor {
-            view.backgroundColor = UIColor.cellGrey
-        }
-    }
-
     private func configureMargins() {
         guard #available(iOS 11, *) else { return }
         for margin in margins {

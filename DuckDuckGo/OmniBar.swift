@@ -26,9 +26,9 @@ extension OmniBar: NibLoading {}
 class OmniBar: UIView {
 
     @IBOutlet weak var searchContainer: UIView!
-    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var editingBackground: UIView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
@@ -82,8 +82,8 @@ class OmniBar: UIView {
             Logger.log(text: "OmniBar entering \(Type.name(newState))")
             state = newState
         }
-        setVisibility(dismissButton, hidden: !state.showDismiss)
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
+        setVisibility(editingBackground, hidden: !state.showEditingBackground)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
@@ -132,12 +132,6 @@ class OmniBar: UIView {
         } else {
             textField.text = url.absoluteString
         }
-    }
-    
-    
-    @IBAction func onDismissButtonPressed() {
-        resignFirstResponder()
-        omniDelegate?.onDismissed()
     }
     
     @IBAction func onTextEntered(_ sender: Any) {

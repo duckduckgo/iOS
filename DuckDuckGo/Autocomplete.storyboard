@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HV3-WA-HxT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HV3-WA-HxT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,7 +30,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3mS-sG-8Ub">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" red="0.36862745099999999" green="0.3803921569" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SuggestionTableViewCell" id="TNN-hI-k2q" userLabel="Suggestion" customClass="SuggestionTableViewCell" customModule="DuckDuckGo" customModuleProvider="target">
@@ -41,20 +41,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="Dnd-CT-WA4">
-                                                    <rect key="frame" x="24" y="13" width="18" height="18"/>
+                                                    <rect key="frame" x="15" y="13" width="18" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="T5P-xd-wAf"/>
                                                         <constraint firstAttribute="width" constant="18" id="xdy-eo-Oax"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ag-a1-mlA">
-                                                    <rect key="frame" x="54" y="12.5" width="263" height="19"/>
+                                                    <rect key="frame" x="49" y="14" width="272" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N97-eI-Lps">
-                                                    <rect key="frame" x="329" y="8" width="30" height="30"/>
+                                                    <rect key="frame" x="333" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="fBV-vf-OLd"/>
                                                         <constraint firstAttribute="width" constant="30" id="wRc-fh-LDz"/>
@@ -65,14 +65,14 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="leading" secondItem="Dnd-CT-WA4" secondAttribute="trailing" constant="12" id="3Jc-Oq-nOu"/>
+                                                <constraint firstItem="5ag-a1-mlA" firstAttribute="leading" secondItem="Dnd-CT-WA4" secondAttribute="trailing" constant="16" id="3Jc-Oq-nOu"/>
                                                 <constraint firstItem="5ag-a1-mlA" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="6Nb-BF-Gki"/>
                                                 <constraint firstItem="N97-eI-Lps" firstAttribute="leading" secondItem="5ag-a1-mlA" secondAttribute="trailing" constant="12" id="QLj-tb-zce"/>
                                                 <constraint firstItem="Dnd-CT-WA4" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="V9w-6x-WUQ"/>
-                                                <constraint firstItem="Dnd-CT-WA4" firstAttribute="leading" secondItem="QaM-hM-0gl" secondAttribute="leadingMargin" constant="16" id="emv-yc-ymv"/>
-                                                <constraint firstAttribute="trailing" secondItem="N97-eI-Lps" secondAttribute="trailing" constant="16" id="hm0-kg-rcx"/>
+                                                <constraint firstItem="Dnd-CT-WA4" firstAttribute="leading" secondItem="QaM-hM-0gl" secondAttribute="leadingMargin" id="emv-yc-ymv"/>
+                                                <constraint firstAttribute="trailing" secondItem="N97-eI-Lps" secondAttribute="trailing" constant="12" id="hm0-kg-rcx"/>
                                                 <constraint firstItem="N97-eI-Lps" firstAttribute="centerY" secondItem="QaM-hM-0gl" secondAttribute="centerY" id="zf3-hI-TKf"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -91,13 +91,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Suggestions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPe-Cv-14j">
-                                                    <rect key="frame" x="24" y="13.5" width="327" height="19"/>
+                                                    <rect key="frame" x="31" y="15" width="313" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="gPe-Cv-14j" firstAttribute="centerX" secondItem="snf-ah-e6i" secondAttribute="centerX" id="7cC-aU-gkP"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="gPe-Cv-14j" secondAttribute="trailing" constant="16" id="9qm-SN-smP"/>

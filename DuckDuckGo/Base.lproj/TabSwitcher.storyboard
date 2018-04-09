@@ -171,6 +171,12 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
+                                    <barButtonItem tag="1" image="Fire" id="h1S-c2-Spf">
+                                        <connections>
+                                            <action selector="onFirePressed" destination="G9p-Sf-e96" id="nP6-t4-jHf"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
                                     <barButtonItem systemItem="done" id="S1O-aT-Bgw">
                                         <connections>
                                             <action selector="onDonePressed:" destination="G9p-Sf-e96" id="yns-QI-PSf"/>
@@ -198,8 +204,8 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
+                        <outlet property="fireButton" destination="h1S-c2-Spf" id="s4r-Wr-7F1"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
-                        <outlet property="toolbar" destination="PrD-ff-flI" id="IUz-6K-N0F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -217,6 +223,7 @@
     </scenes>
     <resources>
         <image name="Close" width="12" height="12"/>
+        <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="16" height="16"/>
         <image name="Settings" width="23" height="22"/>
     </resources>

@@ -45,7 +45,12 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="E1h-db-76k"/>
+                                    <barButtonItem image="Fire" id="ntb-c7-mjV" userLabel="Bookmarks Button">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="onFirePressed" destination="C1X-Zd-UbA" id="bcZ-Ag-8pP"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
                                     <barButtonItem image="Bookmarks" id="M7u-mw-fly" userLabel="Bookmarks Button">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -89,6 +94,7 @@
                         <outlet property="backButton" destination="Kc6-IR-lKx" id="eo5-dT-718"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
                         <outlet property="customNavigationBar" destination="nQT-PV-ULm" id="OGt-AV-tQb"/>
+                        <outlet property="fireButton" destination="ntb-c7-mjV" id="llw-tb-jJd"/>
                         <outlet property="forwardButton" destination="cUp-YP-aMf" id="7WB-lN-1AY"/>
                         <outlet property="navBarTop" destination="BrS-Dd-c0g" id="1ta-NK-q4L"/>
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
@@ -126,9 +132,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Bookmarks" width="22" height="22"/>
+        <image name="Bookmarks" width="24" height="22"/>
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
+        <image name="Fire" width="19" height="24"/>
         <image name="Tabs" width="22" height="22"/>
     </resources>
 </document>

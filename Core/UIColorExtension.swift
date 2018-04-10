@@ -25,9 +25,9 @@ extension UIColor {
     public static var monitoringInactiveTint: UIColor {
         return midGray
     }
-
-    public static var coolGray: UIColor {
-        return UIColor(red: 149.0 / 255.0, green: 153.0 / 255.0, blue: 166.0 / 255.0, alpha: 1.0)
+    
+    public static var grayish: UIColor {
+        return UIColor(red: 170.0 / 255.0, green: 170.0 / 255.0, blue: 170.0 / 255.0, alpha: 1.0)
     }
     
     public static var silver: UIColor {

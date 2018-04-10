@@ -146,7 +146,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-EZ-1qW">
-                                            <rect key="frame" x="104" y="15.5" width="168.5" height="18"/>
+                                            <rect key="frame" x="103.5" y="15.5" width="168.5" height="18"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap " textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UDa-k3-lgX">
                                                     <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
@@ -184,21 +184,24 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem tag="1" systemItem="add" id="nYf-xs-PE7">
+                                    <barButtonItem systemItem="done" id="S1O-aT-Bgw">
                                         <connections>
-                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
+                                            <action selector="onDonePressed:" destination="G9p-Sf-e96" id="yns-QI-PSf"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
-                                    <barButtonItem tag="1" image="Fire" id="h1S-c2-Spf">
+                                    <barButtonItem image="Fire" id="h1S-c2-Spf">
                                         <connections>
                                             <action selector="onFirePressed" destination="G9p-Sf-e96" id="nP6-t4-jHf"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
-                                    <barButtonItem systemItem="done" id="S1O-aT-Bgw">
+                                    <barButtonItem image="NewTab" id="nYf-xs-PE7">
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Add"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="onDonePressed:" destination="G9p-Sf-e96" id="yns-QI-PSf"/>
+                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -244,6 +247,7 @@
     <resources>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="NewTab" width="22" height="22"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>
     </resources>

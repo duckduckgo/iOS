@@ -92,7 +92,7 @@ class ContentBlockerTests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.buttons["Tabs Button"].tap()
+        app.toolbars.buttons["Tabs"].tap()
     }
     
     private func addTab() {
@@ -119,8 +119,9 @@ class ContentBlockerTests: XCTestCase {
     
     private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
-        
-        let searchOrTypeUrlTextField = app.textFields["Search or type URL"]
+      
+        let searchOrTypeUrlTextField = app.searchFields["Search or type URL"]
+        searchOrTypeUrlTextField.tap()
         searchOrTypeUrlTextField.typeText(text)
         
         if submit {

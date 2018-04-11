@@ -238,7 +238,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="Dyd-bm-goj">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="tnr-Bk-bgU">
-                            <color key="tintColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="onDonePressed:" destination="fAo-H3-Yyo" id="syd-F9-Obf"/>
                             </connections>
@@ -326,7 +325,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="47.5" y="276" width="280" height="337"/>
+                                                <rect key="frame" x="47.5" y="276" width="280" height="282.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
@@ -365,7 +364,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="47.5" y="621" width="280" height="28"/>
+                                                <rect key="frame" x="47.5" y="566.5" width="280" height="28"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">

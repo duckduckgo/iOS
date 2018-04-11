@@ -1,1 +1,3 @@
 This release we have focussed on improving the UI of our privacy dashboard, as well as other cosmetic fixes though out the app.
+
+Additionally, we have fixed a bug in our tracker blocking logic which may have caused some sites to break.

@@ -86,8 +86,12 @@
             duckduckgoMessaging.log(body)
             if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xmlhttprequest", function(url, block) { } )) { 
                 duckduckgoMessaging.log("blocking xhr")
-                xhr.abort()
-                return 
+                try { 
+                    xhr.abort() 
+                    return 
+                } catch(error) { 
+
+                }
             }
 
             duckduckgoMessaging.log("xhr ok: " + this.trackerUrl)        

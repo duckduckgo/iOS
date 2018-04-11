@@ -132,7 +132,7 @@ class MainViewController: UIViewController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(forgetAllAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        present(controller: alert, fromButtonItem: fireButton)
+        present(controller: alert, fromView: toolbar)
     }
     
     @IBAction func onBackPressed() {

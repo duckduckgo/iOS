@@ -37,7 +37,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypz-s2-KJB">
                                 <rect key="frame" x="0.0" y="-80" width="568" height="80"/>
-                                <color key="backgroundColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="xhL-Yb-2Uf"/>
                                 </constraints>
@@ -78,7 +78,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.24313725489999999" green="0.25098039220000001" blue="0.27058823529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="t0t-53-xVf" firstAttribute="trailing" secondItem="cf7-Ja-fUU" secondAttribute="trailing" id="2jX-5z-Ssu"/>
@@ -108,7 +108,7 @@
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
                         <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtectionTablet" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
                         </segue>
                         <segue destination="PZd-l7-wUN" kind="presentation" identifier="PrivacyProtection" id="5y1-1B-eCa"/>
                     </connections>

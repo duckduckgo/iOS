@@ -22,8 +22,8 @@ import Foundation
 import Core
 
 protocol OmniBarState {
-    var showDismiss: Bool { get }
     var showSiteRating: Bool { get }
+    var showEditingBackground: Bool { get }
     var showClear: Bool { get }
     var showMenu: Bool { get }
     var showBookmarks: Bool { get }
@@ -37,8 +37,8 @@ protocol OmniBarState {
 }
 
 struct HomeEmptyEditingState: OmniBarState {
-    let showDismiss = true
     let showSiteRating = false
+    let showEditingBackground = true
     let showClear = false
     let showMenu = false
     let showBookmarks = true
@@ -52,8 +52,8 @@ struct HomeEmptyEditingState: OmniBarState {
 }
 
 struct HomeTextEditingState: OmniBarState {
-    let showDismiss = true
     let showSiteRating = false
+    let showEditingBackground = true
     let showClear = true
     let showMenu = false
     let showBookmarks = false
@@ -67,8 +67,8 @@ struct HomeTextEditingState: OmniBarState {
 }
 
 struct HomeNonEditingState: OmniBarState {
-    let showDismiss = false
     let showSiteRating = false
+    let showEditingBackground = false
     let showClear = false
     let showMenu = false
     let showBookmarks = true
@@ -82,10 +82,10 @@ struct HomeNonEditingState: OmniBarState {
 }
 
 struct BrowsingEmptyEditingState: OmniBarState {
-    let showMenu = false
+    let showSiteRating = true
+    let showEditingBackground = true
     let showClear = false
-    let showDismiss = true
-    let showSiteRating = false
+    let showMenu = false
     let showBookmarks = false
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState{ return BrowsingNonEditingState() }
@@ -97,10 +97,10 @@ struct BrowsingEmptyEditingState: OmniBarState {
 }
 
 struct BrowsingTextEditingState: OmniBarState {
-    let showMenu = false
+    let showSiteRating = true
+    let showEditingBackground = true
     let showClear = true
-    let showDismiss = true
-    let showSiteRating = false
+    let showMenu = false
     let showBookmarks = false
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState{ return BrowsingNonEditingState() }
@@ -112,8 +112,8 @@ struct BrowsingTextEditingState: OmniBarState {
 }
 
 struct BrowsingNonEditingState: OmniBarState {
-    let showDismiss = false
     let showSiteRating = true
+    let showEditingBackground = false
     let showClear = false
     let showMenu = true
     let showBookmarks = false

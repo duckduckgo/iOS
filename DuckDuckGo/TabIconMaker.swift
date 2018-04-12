@@ -23,9 +23,17 @@ import CoreText
 
 class TabIconMaker {
     
+    private struct Constants {
+        static let fontSize: CGFloat = 10
+        static let fontWeight: CGFloat = 5
+        static let xTextOffset: CGFloat = -2
+        static let yTextOffset: CGFloat = 7.5
+        static let maxTextTabs = 100
+    }
+    
     func icon(forTabs count: Int) -> UIImage {
         let image = #imageLiteral(resourceName: "Tabs")
-        let text = count < 100 ? "\(count)" : "~"
+        let text = count < Constants.maxTextTabs ? "\(count)" : "🦆"
 
         UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
         text.draw(in: CGRect(origin: point(forText: text), size: image.size), withAttributes: attributes(forText: text))
@@ -37,17 +45,18 @@ class TabIconMaker {
     }
     
     private func point(forText text: String) -> CGPoint {
-        if isSingleChar(text) {
-            return CGPoint(x: 5.5, y: 7.5)
-        }
-        return CGPoint(x: 2.7, y: 7.5)
+        return CGPoint(x: Constants.xTextOffset, y: Constants.yTextOffset)
     }
     
     private func attributes(forText text: String) -> [NSAttributedStringKey : Any] {
-        let size: CGFloat = 10
-        let weight: CGFloat = 5
-        let font = UIFont.systemFont(ofSize: size, weight: UIFont.Weight(weight))
-        return [ NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor : UIColor.white ]
+      
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        
+        let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
+        return [ NSAttributedStringKey.font: font,
+                 NSAttributedStringKey.foregroundColor : UIColor.white,
+                 NSAttributedStringKey.paragraphStyle : paragraphStyle]
     }
     
     private func isSingleChar(_ text: String) -> Bool {

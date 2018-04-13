@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var tabsButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
@@ -230,8 +231,14 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func refreshControls() {
+        refreshTabIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
+    }
+    
+    private func refreshTabIcon() {
+        let count = tabManager.count
+        tabsButton.image = (count == 0) ? #imageLiteral(resourceName: "Tabs") : TabIconMaker().icon(forTabs: count)
     }
     
     private func refreshOmniBar() {

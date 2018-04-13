@@ -56,7 +56,7 @@ class TabIconMaker {
         let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
         return [ NSAttributedStringKey.font: font,
                  NSAttributedStringKey.foregroundColor : UIColor.white,
-                 NSAttributedStringKey.paragraphStyle : paragraphStyle]
+                 NSAttributedStringKey.paragraphStyle : paragraphStyle ]
     }
     
     private func isSingleChar(_ text: String) -> Bool {

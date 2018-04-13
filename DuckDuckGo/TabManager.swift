@@ -76,7 +76,7 @@ class TabManager {
     }
     
     var count: Int {
-        return tabControllerCache.count
+        return model.count
     }
     
     func clearSelection() {

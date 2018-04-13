@@ -89,10 +89,7 @@ class TabViewController: WebViewController {
 
             if let siteRatingView = chromeDelegate.omniBar.siteRatingView {
                 controller.popoverPresentationController?.sourceView = siteRatingView
-                controller.popoverPresentationController?.sourceRect = CGRect(
-                    x: siteRatingView.frame.width / 2,
-                    y: siteRatingView.frame.height,
-                    width: 1, height: 1)
+                controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
             
             controller.delegate = self
@@ -143,7 +140,6 @@ class TabViewController: WebViewController {
         } else {
             performSegue(withIdentifier: "PrivacyProtection", sender: self)
         }
-        
     }
 
     fileprivate func resetSiteRating() {

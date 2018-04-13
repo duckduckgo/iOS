@@ -6,10 +6,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -39,7 +41,6 @@
                                     <constraint firstAttribute="width" constant="22" id="3is-x4-uWE"/>
                                     <constraint firstAttribute="height" constant="22" id="XXt-3T-rvh"/>
                                 </constraints>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="Settings"/>
                                 <connections>
                                     <segue destination="2xB-ij-q9e" kind="presentation" id="xf6-Fk-1xY"/>
@@ -71,7 +72,7 @@
                                                                 <constraint firstAttribute="height" constant="44" id="J5n-rB-XtL"/>
                                                                 <constraint firstAttribute="width" constant="44" id="qo9-0B-8Av"/>
                                                             </constraints>
-                                                            <state key="normal" image="Close"/>
+                                                            <state key="normal" image="Remove"/>
                                                             <connections>
                                                                 <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
                                                             </connections>
@@ -144,17 +145,35 @@
                                     <rect key="frame" x="0.0" y="90" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap 🔥 to forget everything" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-NJ-M9S">
-                                            <rect key="frame" x="8" y="17" width="359" height="17"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                                            <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-EZ-1qW">
+                                            <rect key="frame" x="103.5" y="15.5" width="168.5" height="18"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap " textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UDa-k3-lgX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fire" translatesAutoresizingMaskIntoConstraints="NO" id="t4R-VK-c57">
+                                                    <rect key="frame" x="28" y="0.0" width="14" height="18"/>
+                                                    <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="4tg-pv-RPr"/>
+                                                        <constraint firstAttribute="width" constant="14" id="6aP-yx-Trj"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" to forget everything" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-NJ-M9S">
+                                                    <rect key="frame" x="44" y="0.0" width="124.5" height="18"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="cf1-NJ-M9S" secondAttribute="trailing" id="Bmb-6e-nRh"/>
-                                        <constraint firstItem="cf1-NJ-M9S" firstAttribute="leading" secondItem="nEk-BZ-E8i" secondAttribute="leadingMargin" id="MaO-sV-XAc"/>
-                                        <constraint firstItem="cf1-NJ-M9S" firstAttribute="centerY" secondItem="nEk-BZ-E8i" secondAttribute="centerY" id="xbI-6m-SFt"/>
+                                        <constraint firstItem="lX8-EZ-1qW" firstAttribute="centerX" secondItem="nEk-BZ-E8i" secondAttribute="centerX" id="W7F-NG-Whd"/>
+                                        <constraint firstItem="lX8-EZ-1qW" firstAttribute="centerY" secondItem="nEk-BZ-E8i" secondAttribute="centerY" id="jl6-WE-Tq0"/>
                                     </constraints>
                                 </collectionReusableView>
                                 <connections>
@@ -165,23 +184,33 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-ff-flI">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem tag="1" systemItem="add" id="nYf-xs-PE7">
-                                        <connections>
-                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
                                     <barButtonItem systemItem="done" id="S1O-aT-Bgw">
                                         <connections>
                                             <action selector="onDonePressed:" destination="G9p-Sf-e96" id="yns-QI-PSf"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
+                                    <barButtonItem image="Fire" id="h1S-c2-Spf">
+                                        <connections>
+                                            <action selector="onFirePressed" destination="G9p-Sf-e96" id="nP6-t4-jHf"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
+                                    <barButtonItem image="NewTab" id="nYf-xs-PE7">
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Add"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onAddPressed:" destination="G9p-Sf-e96" id="DNG-FQ-8Bn"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.25098039220000001" green="0.25490196079999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" red="0.1843137255" green="0.19215686269999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="2c3-VD-tFG"/>
@@ -198,8 +227,8 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
+                        <outlet property="fireButton" destination="h1S-c2-Spf" id="s4r-Wr-7F1"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
-                        <outlet property="toolbar" destination="PrD-ff-flI" id="IUz-6K-N0F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -216,8 +245,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Close" width="12" height="12"/>
+        <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="NewTab" width="22" height="22"/>
+        <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>
     </resources>
 </document>

@@ -26,13 +26,14 @@ class MainViewController: UIViewController {
 
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
+    @IBOutlet weak var tabsButton: UIBarButtonItem!
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
 
-    weak var fireButton: UIView!
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
@@ -59,8 +60,6 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
-
-        fireButton = toolbar.addFireButton { [weak self] in self?.launchFireMenu() }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -128,6 +127,13 @@ class MainViewController: UIViewController {
         homeController?.willMove(toParentViewController: nil)
         homeController?.dismiss()
         homeController = nil
+    }
+    
+    @IBAction func onFirePressed() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(forgetAllAction())
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        present(controller: alert, fromView: toolbar)
     }
     
     @IBAction func onBackPressed() {
@@ -225,8 +231,14 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func refreshControls() {
+        refreshTabIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
+    }
+    
+    private func refreshTabIcon() {
+        let count = tabManager.count
+        tabsButton.image = (count == 0) ? #imageLiteral(resourceName: "Tabs") : TabIconMaker().icon(forTabs: count)
     }
     
     private func refreshOmniBar() {
@@ -277,13 +289,6 @@ class MainViewController: UIViewController {
         currentTab?.launchBrowsingMenu()
     }
     
-    private func launchFireMenu() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(forgetAllAction())
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        present(controller: alert, fromView: fireButton)
-    }
-
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] action in
             self?.forgetAll() {}

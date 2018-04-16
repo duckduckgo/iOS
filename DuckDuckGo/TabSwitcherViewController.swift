@@ -26,7 +26,7 @@ class TabSwitcherViewController: UIViewController {
     
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var toolbar: UIToolbar!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -75,7 +75,7 @@ class TabSwitcherViewController: UIViewController {
             self?.forgetAll()
         })
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
-        present(controller: alert, fromButtonItem: fireButton)
+        present(controller: alert, fromView: toolbar)
     }
     
     private func forgetAll() {

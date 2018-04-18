@@ -3,7 +3,7 @@
 
 github "duckduckgo/Kingfisher" ~> 3.10.3
 
-github "duckduckgo/Device.swift" ~> 1.1 
+github "duckduckgo/Device.swift" ~> 1.1.2
 
 github "duckduckgo/Toast-Swift" ~> 2.0.0
 

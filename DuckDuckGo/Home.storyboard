@@ -31,7 +31,7 @@
                                 <rect key="frame" x="0.0" y="10" width="375" height="667"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="pwM-bh-TMk">
-                                        <rect key="frame" x="20" y="174.5" width="335" height="250"/>
+                                        <rect key="frame" x="20" y="174.5" width="335" height="246"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
                                                 <rect key="frame" x="67" y="0.0" width="201" height="160"/>
@@ -40,19 +40,19 @@
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m48-2A-rff" customClass="RoundedRectangleView" customModule="Core">
-                                                <rect key="frame" x="0.0" y="200" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="200" width="335" height="46"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sH7-xn-wYA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="46"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or type URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWx-8c-7xM">
-                                                                <rect key="frame" x="18" y="17" width="269" height="16"/>
+                                                                <rect key="frame" x="18" y="15" width="269" height="16"/>
                                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                                 <color key="textColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="GHd-JT-J5r">
-                                                                <rect key="frame" x="295" y="14" width="22" height="22"/>
+                                                                <rect key="frame" x="295" y="12" width="22" height="22"/>
                                                                 <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="22" id="5H8-2B-DqE"/>
@@ -73,7 +73,7 @@
                                                 <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="7Zd-26-hkc"/>
+                                                    <constraint firstAttribute="height" constant="46" id="7Zd-26-hkc"/>
                                                     <constraint firstItem="sH7-xn-wYA" firstAttribute="leading" secondItem="m48-2A-rff" secondAttribute="leading" id="E3f-j9-wWJ"/>
                                                     <constraint firstItem="sH7-xn-wYA" firstAttribute="top" secondItem="m48-2A-rff" secondAttribute="top" id="PJq-Ae-bX6"/>
                                                     <constraint firstAttribute="trailing" secondItem="sH7-xn-wYA" secondAttribute="trailing" id="lNh-ga-Cyd"/>
@@ -81,7 +81,7 @@
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="4"/>
+                                                        <real key="value" value="20"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                         <real key="value" value="2"/>
@@ -119,7 +119,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="pwM-bh-TMk" secondAttribute="trailing" constant="20" id="HIA-K1-pE2"/>
                                     <constraint firstItem="pwM-bh-TMk" firstAttribute="leading" secondItem="eYX-Xc-kri" secondAttribute="leading" constant="20" id="e5Y-W7-YCP"/>
-                                    <constraint firstItem="pwM-bh-TMk" firstAttribute="centerY" secondItem="eYX-Xc-kri" secondAttribute="centerY" constant="-34" id="jR5-0V-F2Q"/>
+                                    <constraint firstItem="pwM-bh-TMk" firstAttribute="centerY" secondItem="eYX-Xc-kri" secondAttribute="centerY" constant="-36" id="jR5-0V-F2Q"/>
                                     <constraint firstItem="Fku-9C-PCe" firstAttribute="top" secondItem="eYX-Xc-kri" secondAttribute="top" constant="24" id="rcD-aS-v4Z"/>
                                     <constraint firstAttribute="trailing" secondItem="Fku-9C-PCe" secondAttribute="trailing" constant="24" id="uvr-yJ-gs3"/>
                                 </constraints>

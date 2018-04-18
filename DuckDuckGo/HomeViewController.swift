@@ -25,8 +25,6 @@ class HomeViewController: UIViewController {
     
     private struct Constants {
         static let animationDuration = 0.25
-        static let omnibarCornerRadius: CGFloat = 20
-        static let searchBarCornerRadius: CGFloat = 4
     }
     
     @IBOutlet weak var passiveContent: UIView!
@@ -96,7 +94,7 @@ class HomeViewController: UIViewController {
     }
     
     private func moveSearchBarUp() {
-        guard let omniSearch = chromeDelegate?.omniBar.searchContainer else { return }
+        guard let omniSearch = chromeDelegate?.omniBar.editingBackground else { return }
         guard let convertedOrigin = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
         
         let xScale = omniSearch.frame.size.width / searchBar.frame.size.width
@@ -104,13 +102,11 @@ class HomeViewController: UIViewController {
         let xIdentityScale = searchBar.frame.size.width / omniSearch.frame.size.width
         let yIdentityScale = searchBar.frame.size.height / omniSearch.frame.size.height
         let searchBarToOmniTextRatio: CGFloat = 0.875
-        let searchTextMarginChange: CGFloat = -34
         passiveContent.transform.ty = -convertedOrigin.y
         searchBar.transform = CGAffineTransform(scaleX: xScale, y: yScale)
-        searchBar.layer.cornerRadius = Constants.omnibarCornerRadius
         searchBarContent.transform = CGAffineTransform(scaleX: xIdentityScale, y: yIdentityScale)
         searchText.transform = CGAffineTransform(scaleX: searchBarToOmniTextRatio, y: searchBarToOmniTextRatio)
-        searchText.transform.tx = searchTextMarginChange
+        searchText.transform.tx = -searchText.frame.origin.x
         searchImage.alpha = 0
     }
     
@@ -119,7 +115,6 @@ class HomeViewController: UIViewController {
         searchBar.transform = CGAffineTransform.identity
         searchBarContent.transform = CGAffineTransform.identity
         searchText.transform = CGAffineTransform.identity
-        searchBar.layer.cornerRadius = Constants.searchBarCornerRadius
         searchImage.alpha = 1
     }
     

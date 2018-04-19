@@ -96,6 +96,7 @@
                         <outlet property="fireButton" destination="ntb-c7-mjV" id="llw-tb-jJd"/>
                         <outlet property="forwardButton" destination="cUp-YP-aMf" id="7WB-lN-1AY"/>
                         <outlet property="navBarTop" destination="BrS-Dd-c0g" id="1ta-NK-q4L"/>
+                        <outlet property="tabsButton" destination="K7o-WL-SC5" id="K5w-s3-8x3"/>
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
                         <segue destination="454-th-ep1" kind="presentation" identifier="Onboarding" modalTransitionStyle="flipHorizontal" id="uIC-hz-aFs"/>

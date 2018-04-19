@@ -227,8 +227,8 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>
-                        <outlet property="fireButton" destination="h1S-c2-Spf" id="s4r-Wr-7F1"/>
                         <outlet property="titleView" destination="Cy7-Lb-veV" id="p6U-i5-pwf"/>
+                        <outlet property="toolbar" destination="PrD-ff-flI" id="6c2-zx-gsM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnY-zc-eeZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

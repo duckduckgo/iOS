@@ -44,7 +44,7 @@
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cf7-Ja-fUU">
                                 <rect key="frame" x="0.0" y="0.0" width="568" height="2"/>
-                                <color key="progressTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="progressTintColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </progressView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd4-Oi-JP2">
                                 <rect key="frame" x="0.0" y="10" width="568" height="300"/>

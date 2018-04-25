@@ -153,8 +153,8 @@ fileprivate class Loader {
         }
         
         javascriptLoader.load(script: .cachedEasylist, withReplacements: [
-            "${easylist_privacy_json}": "",
-            "${easylist_general_json}": "",
+            "${easylist_privacy_json}": "{}",
+            "${easylist_general_json}": "{}",
             "${easylist_whitelist_json}": cachedEasylistWhitelist ],
                               into: userContentController,
                               forMainFrameOnly: false)
@@ -164,8 +164,8 @@ fileprivate class Loader {
         Logger.log(text: "parsing easylist")
         
         javascriptLoader.load(script: .easylistParsing, withReplacements: [
-            "${easylist_privacy}": "{}",
-            "${easylist_general}": "{}",
+            "${easylist_privacy}": "",
+            "${easylist_general}": "",
             "${easylist_whitelist}": easylistWhitelist ],
                               into: userContentController,
                               forMainFrameOnly: false)

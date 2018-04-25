@@ -94,6 +94,7 @@
 		85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */; };
 		85C11E432090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */; };
 		85C11E452090668F00BFFEB4 /* FeatureManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */; };
+		85C11E472090716C00BFFEB4 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E462090716C00BFFEB4 /* FeatureManager.swift */; };
 		85C271CF1FCDB869007216B4 /* MajorTrackerNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271CD1FCDB7DE007216B4 /* MajorTrackerNetworkTests.swift */; };
 		85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271D01FCF33C8007216B4 /* DetectedTracker.swift */; };
 		85C271D81FD0311A007216B4 /* HTTPSUpgradeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271D71FD0311A007216B4 /* HTTPSUpgradeStore.swift */; };
@@ -458,6 +459,7 @@
 		85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManagerTests.swift; sourceTree = "<group>"; };
 		85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsVariantStorageTests.swift; sourceTree = "<group>"; };
 		85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManagerTests.swift; sourceTree = "<group>"; };
+		85C11E462090716C00BFFEB4 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		85C271CD1FCDB7DE007216B4 /* MajorTrackerNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajorTrackerNetworkTests.swift; sourceTree = "<group>"; };
 		85C271D01FCF33C8007216B4 /* DetectedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedTracker.swift; sourceTree = "<group>"; };
 		85C271D71FD0311A007216B4 /* HTTPSUpgradeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeStore.swift; sourceTree = "<group>"; };
@@ -1045,6 +1047,7 @@
 			isa = PBXGroup;
 			children = (
 				85C11E3D20904B8400BFFEB4 /* VariantManager.swift */,
+				85C11E462090716C00BFFEB4 /* FeatureManager.swift */,
 			);
 			name = Variants;
 			sourceTree = "<group>";
@@ -2513,6 +2516,7 @@
 				F1134EC61F40E3B400B73467 /* AppVersion.swift in Sources */,
 				85C271D81FD0311A007216B4 /* HTTPSUpgradeStore.swift in Sources */,
 				F143C33C1E4A9A9200CFDE3A /* WebViewController.swift in Sources */,
+				85C11E472090716C00BFFEB4 /* FeatureManager.swift in Sources */,
 				F1134EA61F3E2AF400B73467 /* StatisticsStore.swift in Sources */,
 				F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */,
 				F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */,

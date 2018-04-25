@@ -1,9 +1,20 @@
 //
 //  FeatureManagerTests.swift
-//  UnitTests
+//  DuckDuckGo
 //
-//  Created by Chris Brind on 25/04/2018.
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import Foundation
@@ -16,64 +27,28 @@ class FeatureManagerTests: XCTestCase {
     func testWhenVariantIsM3ThenHomeRowOnboardingAndReminderAreEnabled() {
         
         let featureManager = FeatureManager(variantManager: MockVariantManager(currentVariant: "m3"))
-        XCTAssertTrue(featureManager.feature(named: "homerow_onboarding").isEnabled)
-        XCTAssertTrue(featureManager.feature(named: "homerow_reminder").isEnabled)
+        XCTAssertTrue(featureManager.feature(named: .homerow_onboarding).isEnabled)
+        XCTAssertTrue(featureManager.feature(named: .homerow_reminder).isEnabled)
         
     }
 
     func testWhenVariantIsM2ThenHomeRowOnboardingIsEnabledAndReminderIsNotEnabled() {
         
         let featureManager = FeatureManager(variantManager: MockVariantManager(currentVariant: "m2"))
-        XCTAssertTrue(featureManager.feature(named: "homerow_onboarding").isEnabled)
-        XCTAssertFalse(featureManager.feature(named: "homerow_reminder").isEnabled)
+        XCTAssertTrue(featureManager.feature(named: .homerow_onboarding).isEnabled)
+        XCTAssertFalse(featureManager.feature(named: .homerow_reminder).isEnabled)
         
     }
 
     func testWhenVariantIsM1ThenHomeRowOnboardingAndReminderAreNotEnabled() {
 
         let featureManager = FeatureManager(variantManager: MockVariantManager(currentVariant: "m1"))
-        XCTAssertFalse(featureManager.feature(named: "homerow_onboarding").isEnabled)
-        XCTAssertFalse(featureManager.feature(named: "homerow_reminder").isEnabled)
-
-    }
-
-    func testWhenUnknownFeatureIsRequestedThenDisabledFeatureReturned() {
-        
-        let featureManager = FeatureManager(variantManager: MockVariantManager(currentVariant: "m1"))
-        let feature = featureManager.feature(named: "example")
-        XCTAssertEqual("example", feature.name)
-        XCTAssertFalse(feature.isEnabled)
+        XCTAssertFalse(featureManager.feature(named: .homerow_onboarding).isEnabled)
+        XCTAssertFalse(featureManager.feature(named: .homerow_reminder).isEnabled)
 
     }
 
 }
-
-class FeatureManager {
-    
-    struct Feature {
-        let name: String
-        let isEnabled: Bool
-    }
-    
-    let featuresEnabledForVariants: [String: [String]] = [
-        "homerow_onboarding": ["m2", "m3"],
-        "homerow_reminder": ["m3"]
-    ]
-    
-    private let variantManager: VariantManager
-    
-    init(variantManager: VariantManager = DefaultVariantManager()) {
-        self.variantManager = variantManager
-    }
-    
-    func feature(named: String) -> Feature {
-        let variants = featuresEnabledForVariants[named, default: []]
-        let enabled = variants.contains(variantManager.currentVariant)
-        return Feature(name: named, isEnabled: enabled)
-    }
-    
-}
-
 
 struct MockVariantManager: VariantManager {
     

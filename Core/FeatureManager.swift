@@ -20,18 +20,22 @@
 
 import Foundation
 
-public class FeatureManager {
+public enum FeatureName: String {
+    case homerow_onboarding, homerow_reminder
+}
+
+public struct Feature {
+    public let name: String
+    public let isEnabled: Bool
+}
+
+public protocol FeatureManager {
     
-    public enum FeatureName: String {
-        
-        case homerow_onboarding, homerow_reminder
-        
-    }
+    func feature(named: FeatureName) -> Feature
     
-    public struct Feature {
-        public let name: String
-        public let isEnabled: Bool
-    }
+}
+
+public class DefaultFeatureManager: FeatureManager {
     
     // in future this may be downloaded as json from the server
     let featuresEnabledForVariants: [FeatureName: [String]] = [

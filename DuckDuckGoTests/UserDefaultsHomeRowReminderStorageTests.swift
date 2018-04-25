@@ -1,8 +1,8 @@
 //
-//  UserDefaultVariantStorageTests.swift
+//  UserDefaultsHomeRowReminderStorageTests.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,32 +17,32 @@
 //  limitations under the License.
 //
 
+
 import XCTest
-import Core
+@testable import Core
+@testable import DuckDuckGo
 
-import Foundation
+class UserDefaultsHomeRowReminderStorageTests: XCTestCase {
 
-class UserDefaultVariantStorageTests: XCTestCase {
-    
-    let defaultsName = "UserDefaultVariantStorageTests"
+    let defaultsName = "UserDefaultsHomeRowReminderStorageTests"
     
     override func setUp() {
         UserDefaults(suiteName: defaultsName)?.removePersistentDomain(forName: defaultsName)
     }
-
-    func testWhenVariantIsSetThenItIsStored() {
-        createStorage().currentVariant = "testVariant"
-        XCTAssertEqual("testVariant", createStorage().currentVariant)
+    
+    func testWhenFirstDateSetThenItIsStored() {
+        createStorage().firstAccessDate = Date()
+        XCTAssertNotNil(createStorage().firstAccessDate)
     }
     
     func testWhenNewThenValuesAreDefault() {
-        XCTAssertNil(createStorage().currentVariant)
+        XCTAssertNil(createStorage().firstAccessDate)
+        XCTAssertFalse(createStorage().shown)
     }
 
-    private func createStorage() -> VariantStorage {
-        let testUserDefaults = UserDefaults(suiteName: defaultsName)!
-        let storage = UserDefaultsVariantStorage(userDefaults: testUserDefaults)
-        return storage
+    func createStorage() -> UserDefaultsHomeRowReminderStorage {
+        let userDefaults = UserDefaults(suiteName: defaultsName)!
+        return UserDefaultsHomeRowReminderStorage(userDefaults: userDefaults)
     }
     
 }

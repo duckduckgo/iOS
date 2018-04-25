@@ -95,6 +95,9 @@
 		85C11E432090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */; };
 		85C11E452090668F00BFFEB4 /* FeatureManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */; };
 		85C11E472090716C00BFFEB4 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E462090716C00BFFEB4 /* FeatureManager.swift */; };
+		85C11E4C2090888C00BFFEB4 /* HomeRowReminderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */; };
+		85C11E512090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E502090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift */; };
+		85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E522090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift */; };
 		85C271CF1FCDB869007216B4 /* MajorTrackerNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271CD1FCDB7DE007216B4 /* MajorTrackerNetworkTests.swift */; };
 		85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271D01FCF33C8007216B4 /* DetectedTracker.swift */; };
 		85C271D81FD0311A007216B4 /* HTTPSUpgradeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271D71FD0311A007216B4 /* HTTPSUpgradeStore.swift */; };
@@ -460,6 +463,9 @@
 		85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsVariantStorageTests.swift; sourceTree = "<group>"; };
 		85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManagerTests.swift; sourceTree = "<group>"; };
 		85C11E462090716C00BFFEB4 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
+		85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminderFeature.swift; sourceTree = "<group>"; };
+		85C11E502090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminderFeatureTests.swift; sourceTree = "<group>"; };
+		85C11E522090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHomeRowReminderStorageTests.swift; sourceTree = "<group>"; };
 		85C271CD1FCDB7DE007216B4 /* MajorTrackerNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajorTrackerNetworkTests.swift; sourceTree = "<group>"; };
 		85C271D01FCF33C8007216B4 /* DetectedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedTracker.swift; sourceTree = "<group>"; };
 		85C271D71FD0311A007216B4 /* HTTPSUpgradeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradeStore.swift; sourceTree = "<group>"; };
@@ -894,23 +900,24 @@
 			isa = PBXGroup;
 			children = (
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
+				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				F1C5ECF31E37812900C599A4 /* Application */,
-				85ECA7EA1F2A825C0018EBEB /* Migration */,
-				F1C5ECFA1E37B15B00C599A4 /* Main */,
-				F13B4BF31F18C73A00814661 /* Home */,
-				F13B4BF41F18C74500814661 /* Tabs */,
-				F1386BA21E6846320062FC3C /* TabSwitcher */,
-				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
-				F1E249411EF2075C008C947A /* SiteMonitoring */,
+				85C11E4A209084DE00BFFEB4 /* Features */,
+				F13B4BF31F18C73A00814661 /* Home */,
+				F1C5ECFA1E37B15B00C599A4 /* Main */,
+				85ECA7EA1F2A825C0018EBEB /* Migration */,
+				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
-				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1AB2B401E3F75A000868554 /* Settings */,
+				F1E249411EF2075C008C947A /* SiteMonitoring */,
+				F13B4BF41F18C74500814661 /* Tabs */,
+				F1386BA21E6846320062FC3C /* TabSwitcher */,
+				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
-				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 			);
 			path = DuckDuckGo;
 			sourceTree = "<group>";
@@ -1060,6 +1067,23 @@
 				85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */,
 			);
 			name = Variants;
+			sourceTree = "<group>";
+		};
+		85C11E4A209084DE00BFFEB4 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */,
+			);
+			name = Features;
+			sourceTree = "<group>";
+		};
+		85C11E4D2090893900BFFEB4 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				85C11E502090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift */,
+				85C11E522090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift */,
+			);
+			name = Features;
 			sourceTree = "<group>";
 		};
 		85C271D41FD02CB8007216B4 /* HTTPSUpgrade */ = {
@@ -1272,11 +1296,12 @@
 			isa = PBXGroup;
 			children = (
 				F17669A21E411D63003D3222 /* Application */,
+				85C11E4D2090893900BFFEB4 /* Features */,
 				85ECA7EF1F2A82F10018EBEB /* Migration */,
-				F13B4BF71F18C9E800814661 /* Tabs */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
 				85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */,
 				F1126DFA1EA5CA730016A6C7 /* Settings */,
+				F13B4BF71F18C9E800814661 /* Tabs */,
 				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
 				F194FAF91F14E605009B4DF8 /* UserInterface */,
 			);
@@ -2319,6 +2344,7 @@
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
+				85C11E4C2090888C00BFFEB4 /* HomeRowReminderFeature.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
@@ -2393,6 +2419,7 @@
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
 				F12790EA1EBBDE75001D3AEC /* InterfaceMeasurementTests.swift in Sources */,
+				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				F16393F51ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift in Sources */,
 				85C271DB1FD0366F007216B4 /* HTTPSUpgradeTests.swift in Sources */,
 				85C11E432090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift in Sources */,
@@ -2428,6 +2455,7 @@
 				85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */,
 				F17D72391E8B35C6003E8B0E /* AppUrlsTests.swift in Sources */,
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
+				85C11E512090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift in Sources */,
 				F11E23091ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

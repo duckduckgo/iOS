@@ -85,17 +85,17 @@ public class Arc4RandomUniformVariantRNG: VariantRNG {
 
 public class UserDefaultsVariantStorage: VariantStorage {
     
-    struct Constants {
-        static let variantKey = "com.duckduckgo.variant"
+    struct Keys {
+        static let variant = "com.duckduckgo.variant"
     }
     
     public var currentVariant: String? {
         set {
-            userDefaults.set(newValue, forKey: Constants.variantKey)
+            userDefaults.set(newValue, forKey: Keys.variant)
         }
         
         get {
-            return userDefaults.string(forKey: Constants.variantKey)
+            return userDefaults.string(forKey: Keys.variant)
         }
     }
     

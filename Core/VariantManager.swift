@@ -31,7 +31,13 @@ public protocol VariantStorage: class {
     
 }
 
-public class VariantManager {
+public protocol VariantManager {
+    
+    var currentVariant: String { get }
+    
+}
+
+public class DefaultVariantManager: VariantManager {
     
     public var currentVariant: String {
         if let variant = storage.currentVariant {

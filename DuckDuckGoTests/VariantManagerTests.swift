@@ -24,7 +24,7 @@ class VariantManagerTests: XCTestCase {
     
     func testWhenNewAndUsingDefaultRNGThenReturnsValidVariant() {
         
-        let subject = VariantManager(variants: ["v1"], storage: MockVariantStorage())
+        let subject = DefaultVariantManager(variants: ["v1"], storage: MockVariantStorage())
         XCTAssertEqual("v1", subject.currentVariant)
 
     }
@@ -33,23 +33,23 @@ class VariantManagerTests: XCTestCase {
 
         let mockVariantStorage = MockVariantStorage()
         mockVariantStorage.currentVariant = "x1"
-        let subject = VariantManager(storage: mockVariantStorage)
+        let subject = DefaultVariantManager(storage: mockVariantStorage)
         XCTAssertEqual("x1", subject.currentVariant)
         XCTAssertEqual("x1", mockVariantStorage.currentVariant)
 
     }
     
     func testWhenNewWithDefaultVariantsThenReturnsRandomVariant() {
-        XCTAssertEqual("m1", VariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 0)).currentVariant)
-        XCTAssertEqual("m1", VariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 1)).currentVariant)
-        XCTAssertEqual("m2", VariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 2)).currentVariant)
-        XCTAssertEqual("m3", VariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 3)).currentVariant)
+        XCTAssertEqual("m1", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 0)).currentVariant)
+        XCTAssertEqual("m1", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 1)).currentVariant)
+        XCTAssertEqual("m2", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 2)).currentVariant)
+        XCTAssertEqual("m3", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 3)).currentVariant)
     }
     
     func testWhenNewThenReturnsRandomVariantAndSavesIt() {
         
         let mockVariantStorage = MockVariantStorage()
-        let subject = VariantManager(variants: ["v1"], storage: mockVariantStorage, rng: MockVariantRNG(returnValue: 0))
+        let subject = DefaultVariantManager(variants: ["v1"], storage: mockVariantStorage, rng: MockVariantRNG(returnValue: 0))
         XCTAssertEqual("v1", subject.currentVariant)
         XCTAssertEqual("v1", mockVariantStorage.currentVariant)
         

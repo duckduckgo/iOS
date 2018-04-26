@@ -56,13 +56,17 @@
                 return originalImageSrc.get.call(this)
             },
             set: function(value) {
+
                 var instance = this
                 duckduckgoContentBlocking.shouldBlock(value, "image", function(url, block) {
                     if (block) {
-                        duckduckgoMessaging.log("blocking image src")
+                        duckduckgoMessaging.log("blocking image src: " + url)
+                    } else {
+                        originalImageSrc.set.call(instance, value);
+                        duckduckgoMessaging.log("allowing image src: " + url)
                     }
-                    originalImageSrc.set.call(instance, value);
                 })
+                
             }
         })
 
@@ -83,15 +87,20 @@
         }
 
         xhr.send = function(body) {
-            duckduckgoMessaging.log(body)
-            if (duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xmlhttprequest", function(url, block) { } )) { 
-                duckduckgoMessaging.log("blocking xhr")
-                xhr.abort()
-                return 
-            }
 
-            duckduckgoMessaging.log("xhr ok: " + this.trackerUrl)        
-            originalSend.apply(this, arguments)            
+            var instance = this
+            duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xmlhttprequest", function(url, block) {
+
+                if (block) {
+                    instance.abort()
+                    duckduckgoMessaging.log("blocked xhr: " + url)
+                } else {
+                    duckduckgoMessaging.log("alloowing xhr: " + url)        
+                    originalSend.apply(instance, arguments)            
+                } 
+
+            })
+
         }           
     } catch(error) {
         duckduckgoMessaging.log("failed to install xhr detection")

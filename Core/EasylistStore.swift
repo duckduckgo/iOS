@@ -38,16 +38,16 @@ class EasylistStore {
 
     var hasData: Bool {
         get {
-            return exists(type: .easylist) && exists(type: .easylistPrivacy)
+            return exists(type: .easylistWhitelist)
         }
     }
-
+    
     var easylistPrivacy: String? {
         get {
             return load(.easylistPrivacy)
         }
     }
-
+    
     var easylist: String? {
         get {
             return load(.easylist)
@@ -104,6 +104,11 @@ class EasylistStore {
 
     private func persist(escapedEasylist: String, to: URL) throws {
         try escapedEasylist.write(to: to, atomically: true, encoding: .utf8)
+    }
+    
+    func removeLegacyLists() {
+        invalidateCache(named:  CacheNames.easylist)
+        invalidateCache(named:  CacheNames.easylistPrivacy)
     }
 
     private func escapedString(from data: Data) -> String? {

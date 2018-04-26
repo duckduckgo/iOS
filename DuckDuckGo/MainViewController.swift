@@ -62,11 +62,6 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        startOnboardingFlowOrShowKeyboard()
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.destination.childViewControllers.count > 0,
@@ -116,6 +111,7 @@ class MainViewController: UIViewController {
             refreshControls()
         } else {
             attachHomeScreen(active: false)
+            startOnboardingFlowOrShowKeyboard()
         }
     }
     

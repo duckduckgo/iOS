@@ -22,7 +22,7 @@ class HomeRowOnboardingFeature {
     
     private var featureManager: FeatureManager
     
-    init(featureManager: FeatureManager) {
+    init(featureManager: FeatureManager = DefaultFeatureManager()) {
         self.featureManager = featureManager
     }
     

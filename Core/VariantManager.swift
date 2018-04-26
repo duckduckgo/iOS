@@ -40,10 +40,14 @@ public protocol VariantManager {
 public class DefaultVariantManager: VariantManager {
     
     public var currentVariant: String {
-        if let variant = storage.currentVariant {
+        if let variant = ProcessInfo().argument(named: "ddg_variant") {
             return variant
         }
         
+        if let variant = storage.currentVariant {
+            return variant
+        }
+
         let variant = selectVariant()
         storage.currentVariant = variant
         return variant
@@ -103,6 +107,20 @@ public class UserDefaultsVariantStorage: VariantStorage {
 
     public init(userDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults
+    }
+    
+}
+
+fileprivate extension ProcessInfo {
+    
+    func argument(named name: String) -> String? {
+        let argSwitch = "-\(name)"
+        for index in 0 ..< arguments.count {
+            guard arguments[index] == argSwitch else { continue }
+            guard index + 1 < arguments.count else { return nil }
+            return arguments[index + 1]
+        }
+        return nil
     }
     
 }

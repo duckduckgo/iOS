@@ -44,8 +44,8 @@ extension WKWebViewConfiguration {
         return configuration
     }
     
-    public func loadScripts(with id: String, restrictedDevice: Bool, contentBlocking: Bool) {
-        Loader(id, userContentController, restrictedDevice, contentBlocking).load()
+    public func loadScripts(with id: String, contentBlocking: Bool) {
+        Loader(id, userContentController, contentBlocking).load()
     }
     
 }
@@ -66,13 +66,11 @@ fileprivate class Loader {
     
     let id: String
     let userContentController: WKUserContentController
-    let restrictedDevice: Bool
     let contentBlocking: Bool
     
-    init(_ id: String, _ userContentController: WKUserContentController, _ restrictedDevice: Bool, _ contentBlocking: Bool) {
+    init(_ id: String, _ userContentController: WKUserContentController, _ contentBlocking: Bool) {
         self.id = id
         self.userContentController = userContentController
-        self.restrictedDevice = restrictedDevice
         self.contentBlocking = contentBlocking
     }
     
@@ -145,7 +143,7 @@ fileprivate class Loader {
         return surrogateJson
     }
     
-    fileprivate func injectCompiledEasylist(_ cachedEasylistPrivacy: String, _ cachedEasylist: String, _ cachedEasylistWhitelist: String) {
+    fileprivate func injectCompiledEasylist(_ cachedEasylistWhitelist: String) {
         Logger.log(text: "using cached easylist")
         
         if #available(iOS 10, *) {
@@ -155,19 +153,19 @@ fileprivate class Loader {
         }
         
         javascriptLoader.load(script: .cachedEasylist, withReplacements: [
-            "${easylist_privacy_json}": cachedEasylistPrivacy,
-            "${easylist_general_json}": cachedEasylist,
+            "${easylist_privacy_json}": "{}",
+            "${easylist_general_json}": "{}",
             "${easylist_whitelist_json}": cachedEasylistWhitelist ],
                               into: userContentController,
                               forMainFrameOnly: false)
     }
     
-    fileprivate func injectRawEasylist(_ easylistPrivacy: String, _ easylist: String, _ easylistWhitelist: String) {
+    fileprivate func injectRawEasylist(_ easylistWhitelist: String) {
         Logger.log(text: "parsing easylist")
         
         javascriptLoader.load(script: .easylistParsing, withReplacements: [
-            "${easylist_privacy}": restrictedDevice ? "" : easylistPrivacy,
-            "${easylist_general}": restrictedDevice ? "" : easylist,
+            "${easylist_privacy}": "",
+            "${easylist_general}": "",
             "${easylist_whitelist}": easylistWhitelist ],
                               into: userContentController,
                               forMainFrameOnly: false)
@@ -176,23 +174,14 @@ fileprivate class Loader {
     
     private func loadEasylist() {
         
-        if let cachedEasylist = cache.get(named: EasylistStore.CacheNames.easylist),
-            let cachedEasylistPrivacy = cache.get(named: EasylistStore.CacheNames.easylistPrivacy),
-            let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
-
-            injectCompiledEasylist(cachedEasylistPrivacy, cachedEasylist, cachedEasylistWhitelist)
-
+        if let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
+            injectCompiledEasylist(cachedEasylistWhitelist)
             return
         }
         
         let easylistStore = EasylistStore()
-        
-        if let easylist = easylistStore.easylist,
-            let easylistPrivacy = easylistStore.easylistPrivacy,
-            let easylistWhitelist = easylistStore.easylistWhitelist {
-            
-            injectRawEasylist(easylistPrivacy, easylist, easylistWhitelist)
-            
+        if let easylistWhitelist = easylistStore.easylistWhitelist {
+            injectRawEasylist(easylistWhitelist)
         }
     }
     

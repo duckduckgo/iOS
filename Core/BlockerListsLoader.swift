@@ -41,6 +41,7 @@ public class BlockerListsLoader {
     public func start(completion: BlockerListsLoaderCompletion?) {
 
         DispatchQueue.global(qos: .background).async {
+            
             let semaphore = DispatchSemaphore(value: 0)
             let numberOfRequests = self.startRequests(with: semaphore)
 
@@ -51,7 +52,7 @@ public class BlockerListsLoader {
             Logger.log(items: "BlockerListsLoader", "completed", self.newDataItems)
             completion?(self.newDataItems > 0)
         }
-
+        easylistStore.removeLegacyLists()
     }
 
     private func startRequests(with semaphore: DispatchSemaphore) -> Int {
@@ -62,22 +63,6 @@ public class BlockerListsLoader {
             if let data = data {
                 self.newDataItems += 1
                 try? self.disconnectStore.persist(data: data)
-            }
-            semaphore.signal()
-        }
-
-        blockerListRequest.request(.easylist) { (data) in
-            if let data = data {
-                self.newDataItems += 1
-                self.easylistStore.persistEasylist(data: data)
-            }
-            semaphore.signal()
-        }
-
-        blockerListRequest.request(.easylistPrivacy) { (data) in
-            if let data = data {
-                self.newDataItems += 1
-                self.easylistStore.persistEasylistPrivacy(data: data)
             }
             semaphore.signal()
         }
@@ -108,5 +93,4 @@ public class BlockerListsLoader {
 
         return blockerListRequest.requestCount
     }
-
 }

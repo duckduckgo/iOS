@@ -256,7 +256,6 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniBar()
-        homeController?.omniBarWasDismissed()
     }
     
     fileprivate func refreshBackForwardButtons() {

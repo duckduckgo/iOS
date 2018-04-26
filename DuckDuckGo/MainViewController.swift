@@ -62,6 +62,11 @@ class MainViewController: UIViewController {
         addLaunchTabNotificationObserver()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startOnboardingFlowOrShowKeyboard()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.destination.childViewControllers.count > 0,
@@ -77,6 +82,19 @@ class MainViewController: UIViewController {
             return
         }
 
+    }
+
+    private func startOnboardingFlowOrShowKeyboard() {
+        let settings = TutorialSettings()
+        if !settings.hasSeenOnboarding {
+            startOnboardingFlow()
+        } else {
+            omniBar.becomeFirstResponder()
+        }
+    }
+
+    private func startOnboardingFlow() {
+        performSegue(withIdentifier: "Onboarding", sender: self)
     }
 
     private func configureTabManager() {

@@ -26,10 +26,15 @@ class HomeViewController: UIViewController {
     private struct Constants {
         static let animationDuration = 0.25
     }
-    
+
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
+
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-    
+
+    var frame: CGRect!
+
     static func loadFromStoryboard(active: Bool) -> HomeViewController {
         let controller = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
         return controller
@@ -37,15 +42,34 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        frame = view.frame
         enterActiveMode()
+        infoViewHeight.constant = 0
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        chromeDelegate?.omniBar.becomeFirstResponder()  
     }
     
     @objc func onKeyboardChangeFrame(notification: NSNotification) {
-        print(#function, "***", notification.userInfo)
-        /*
-Optional([AnyHashable("UIKeyboardCenterBeginUserInfoKey"): NSPoint: {207, 849}, AnyHashable("UIKeyboardIsLocalUserInfoKey"): 1, AnyHashable("UIKeyboardCenterEndUserInfoKey"): NSPoint: {207, 623}, AnyHashable("UIKeyboardBoundsUserInfoKey"): NSRect: {{0, 0}, {414, 226}}, AnyHashable("UIKeyboardFrameEndUserInfoKey"): NSRect: {{0, 510}, {414, 226}}, AnyHashable("UIKeyboardAnimationCurveUserInfoKey"): 7, AnyHashable("UIKeyboardFrameBeginUserInfoKey"): NSRect: {{0, 736}, {414, 226}}, AnyHashable("UIKeyboardAnimationDurationUserInfoKey"): 0.25])
-        */
+        let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as! CGRect
+        let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        let diff = beginFrame.origin.y - endFrame.origin.y
+
+        if diff > 0 {
+            bottomConstraint.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0) + 16
+        } else {
+            bottomConstraint.constant = 16
+        }
+
+        view.setNeedsUpdateConstraints()
+        
+        let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func enterActiveMode() {
@@ -63,5 +87,5 @@ Optional([AnyHashable("UIKeyboardCenterBeginUserInfoKey"): NSPoint: {207, 849}, 
         removeFromParentViewController()
         view.removeFromSuperview()
     }
-    
+
 }

@@ -1,1 +1,1 @@
-In this release we redesigned the header, added new icons, improved color contrast and added some other UI enhancements.
+In this release we tweaked our startpage searchbar, streamlined our content blocking and added some other stability enhancements

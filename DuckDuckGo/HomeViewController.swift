@@ -35,9 +35,8 @@ class HomeViewController: UIViewController {
 
     var frame: CGRect!
 
-    static func loadFromStoryboard(active: Bool) -> HomeViewController {
-        let controller = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        return controller
+    static func loadFromStoryboard() -> HomeViewController {
+        return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
     override func viewDidLoad() {
@@ -48,14 +47,22 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        chromeDelegate?.omniBar.becomeFirstResponder()  
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(#function, "***")
+        chromeDelegate?.omniBar.becomeFirstResponder()
     }
-    
+
+    @IBAction func hideKeyboard() {
+        print(#function, "***")
+        chromeDelegate?.omniBar.resignFirstResponder()
+    }
+
     @objc func onKeyboardChangeFrame(notification: NSNotification) {
-        let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as! CGRect
-        let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! CGRect
+        guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }
+        guard let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else { return }
+
         let diff = beginFrame.origin.y - endFrame.origin.y
 
         if diff > 0 {
@@ -66,7 +73,6 @@ class HomeViewController: UIViewController {
 
         view.setNeedsUpdateConstraints()
         
-        let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! Double
         UIView.animate(withDuration: duration) {
             self.view.layoutIfNeeded()
         }

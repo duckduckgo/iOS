@@ -23,6 +23,8 @@ protocol BrowserChromeDelegate: class {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool)
     func setNavigationBarHidden(_ hidden: Bool)
+    func hideKeyboard()
+
     var isToolbarHidden: Bool { get }
     var omniBar: OmniBar! { get }
     var toolbarHeight: CGFloat { get }
@@ -50,6 +52,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard dragging else { return }
+
+        delegate.hideKeyboard()
 
         if let lastOffset = lastOffset {
 

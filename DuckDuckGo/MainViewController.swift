@@ -110,7 +110,7 @@ class MainViewController: UIViewController {
             addToView(tab: tab)
             refreshControls()
         } else {
-            attachHomeScreen(active: false)
+            attachHomeScreen()
             startOnboardingFlowOrShowKeyboard()
         }
     }
@@ -122,10 +122,10 @@ class MainViewController: UIViewController {
         customNavigationBar.addSubview(omniBar)
     }
     
-    fileprivate func attachHomeScreen(active: Bool = true)  {
+    fileprivate func attachHomeScreen()  {
         removeHomeScreen()
 
-        let controller = HomeViewController.loadFromStoryboard(active: active)
+        let controller = HomeViewController.loadFromStoryboard()
         homeController = controller
 
         controller.chromeDelegate = self
@@ -228,7 +228,7 @@ class MainViewController: UIViewController {
         if let currentTab = currentTab {
             select(tab: currentTab)
         } else {
-            attachHomeScreen(active: false)
+            attachHomeScreen()
         }
     }
     
@@ -237,7 +237,7 @@ class MainViewController: UIViewController {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
             self.tabManager.removeAll()
-            self.attachHomeScreen(active: false)
+            self.attachHomeScreen()
             completion()
         }
         let window = UIApplication.shared.keyWindow
@@ -320,6 +320,10 @@ extension MainViewController: BrowserChromeDelegate {
 
     struct ChromeAnimationConstants {
         static let duration = 0.3
+    }
+
+    func hideKeyboard() {
+        omniBar.resignFirstResponder()
     }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
@@ -419,8 +423,8 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 extension MainViewController: HomeControllerDelegate {
     
     func homeDidActivateOmniBar(home: HomeViewController) {
+        print(#function, "***")
         omniBar.clear()
-        omniBar.becomeFirstResponder()
     }
     
     func homeDidDeactivateOmniBar(home: HomeViewController) {

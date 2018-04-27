@@ -20,8 +20,8 @@ import Core
 
 class HomeRowOnboardingFeature {
     
-    private var featureManager: FeatureManager
-    
+    private let featureManager: FeatureManager
+
     init(featureManager: FeatureManager = DefaultFeatureManager()) {
         self.featureManager = featureManager
     }

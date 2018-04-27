@@ -29,7 +29,7 @@ class StatisticsLoaderTests: XCTestCase {
     
     override func setUp() {
         mockStatisticsStore = MockStatisticsStore()
-        testee = StatisticsLoader(statisticsStore: mockStatisticsStore)
+        testee = StatisticsLoader(statisticsStore: mockStatisticsStore, variantManager: MockVariantManager(currentVariant: "x1"))
     }
     
     override func tearDown() {
@@ -37,7 +37,7 @@ class StatisticsLoaderTests: XCTestCase {
         super.tearDown()
     }
     
-    func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdated() {
+    func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {
         
         loadSuccessfulAtbStub()
         loadSuccessfulExiStub()
@@ -45,7 +45,7 @@ class StatisticsLoaderTests: XCTestCase {
         let expect = expectation(description: "Successfult atb and exti updates store")
         testee.load { () in
             XCTAssertTrue(self.mockStatisticsStore.hasInstallStatistics)
-            XCTAssertEqual(self.mockStatisticsStore.atb, "v77-5mi")
+            XCTAssertEqual(self.mockStatisticsStore.atb, "v77-5x1")
             XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "v77-5")
             expect.fulfill()
         }

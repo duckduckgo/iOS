@@ -24,25 +24,44 @@ import Core
 
 class FeatureManagerTests: XCTestCase {
 
-    func testWhenVariantIsM3ThenHomeRowOnboardingAndReminderAreEnabled() {
-        
-        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m3"))
+    var statistics: StatisticsStore!
+
+    override func setUp() {
+        super.setUp()
+        statistics = MockStatisticsStore()
+    }
+
+    func testWhenVariantIsM3NoAtbThenHomeRowOnboardingAndReminderAreEnabled() {
+
+        statistics.atb = nil
+        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m3"), statistics: statistics)
+        XCTAssertTrue(featureManager.feature(named: .homerow_onboarding).isEnabled)
+        XCTAssertTrue(featureManager.feature(named: .homerow_reminder).isEnabled)
+
+    }
+
+    func testWhenVariantIsM3AndMatchingAtbThenHomeRowOnboardingAndReminderAreEnabled() {
+
+        statistics.atb = "something_m3"
+        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m3"), statistics: statistics)
         XCTAssertTrue(featureManager.feature(named: .homerow_onboarding).isEnabled)
         XCTAssertTrue(featureManager.feature(named: .homerow_reminder).isEnabled)
         
     }
 
-    func testWhenVariantIsM2ThenHomeRowOnboardingIsEnabledAndReminderIsNotEnabled() {
+    func testWhenVariantIsM2AndMatchingAtbThenHomeRowOnboardingIsEnabledAndReminderIsNotEnabled() {
         
-        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m2"))
+        statistics.atb = "something_m2"
+        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m2"), statistics: statistics)
         XCTAssertTrue(featureManager.feature(named: .homerow_onboarding).isEnabled)
         XCTAssertFalse(featureManager.feature(named: .homerow_reminder).isEnabled)
         
     }
 
-    func testWhenVariantIsM1ThenHomeRowOnboardingAndReminderAreNotEnabled() {
+    func testWhenVariantIsM1AndMatchingAtbThenHomeRowOnboardingAndReminderAreNotEnabled() {
 
-        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m1"))
+        statistics.atb = "something_m1"
+        let featureManager = DefaultFeatureManager(variantManager: MockVariantManager(currentVariant: "m1"), statistics: statistics)
         XCTAssertFalse(featureManager.feature(named: .homerow_onboarding).isEnabled)
         XCTAssertFalse(featureManager.feature(named: .homerow_reminder).isEnabled)
 

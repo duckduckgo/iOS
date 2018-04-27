@@ -20,7 +20,7 @@
 
 import Foundation
 
-public protocol StatisticsStore {
+public protocol StatisticsStore: class {
     
     var hasInstallStatistics: Bool { get }
     var atb: String? { get set }

@@ -43,7 +43,12 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         frame = view.frame
         enterActiveMode()
-        infoViewHeight.constant = 0
+
+        if !HomeRowOnboardingFeature().showNow() {
+            infoViewHeight.constant = 0
+            view.layoutIfNeeded()
+        }
+
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
 

@@ -44,15 +44,30 @@ public class DefaultFeatureManager: FeatureManager {
     ]
     
     private let variantManager: VariantManager
+    private let statistics: StatisticsStore
     
-    public init(variantManager: VariantManager = DefaultVariantManager()) {
+    public init(variantManager: VariantManager = DefaultVariantManager(), statistics: StatisticsStore = StatisticsUserDefaults()) {
         self.variantManager = variantManager
+        self.statistics = statistics
     }
     
     public func feature(named: FeatureName) -> Feature {
         let variants = featuresEnabledForVariants[named, default: []]
-        let enabled = variants.contains(variantManager.currentVariant)
+        let enabled = validAtb() && variants.contains(variantManager.currentVariant)
         return Feature(name: named.rawValue, isEnabled: enabled)
+    }
+
+    private func validAtb() -> Bool {
+        guard let atb = statistics.atb else {
+            // no atb yet means new install, so we're good to use the variant
+            return true
+        }
+
+        if !atb.hasSuffix(variantManager.currentVariant) {
+            // existing atb should match current variant
+            return false
+        }
+        return true
     }
     
 }

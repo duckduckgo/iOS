@@ -22,8 +22,6 @@ import Foundation
 
 public struct Atb: Decodable {
     
-    public static let variant = "mi"
-
     let version: String
 
 }

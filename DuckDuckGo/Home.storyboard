@@ -22,19 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fku-9C-PCe">
-                                <rect key="frame" x="321" y="44" width="24" height="24"/>
-                                <accessibility key="accessibilityConfiguration" identifier="settings"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="Jd4-lU-zg2"/>
-                                    <constraint firstAttribute="width" constant="24" id="Usp-Oq-WGs"/>
-                                </constraints>
-                                <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" image="Settings"/>
-                                <connections>
-                                    <segue destination="Dad-qS-z4K" kind="presentation" modalPresentationStyle="currentContext" id="MtS-xn-LUm"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
                                 <rect key="frame" x="16" y="523" width="343" height="128"/>
                                 <subviews>
@@ -60,6 +47,19 @@
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
                                 </connections>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fku-9C-PCe">
+                                <rect key="frame" x="321" y="44" width="24" height="24"/>
+                                <accessibility key="accessibilityConfiguration" identifier="settings"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="Jd4-lU-zg2"/>
+                                    <constraint firstAttribute="width" constant="24" id="Usp-Oq-WGs"/>
+                                </constraints>
+                                <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Settings"/>
+                                <connections>
+                                    <segue destination="Dad-qS-z4K" kind="presentation" modalPresentationStyle="currentContext" id="MtS-xn-LUm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -107,6 +107,7 @@
                     <view key="view" contentMode="scaleToFill" id="XEC-eh-FFG">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="128"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="jv6-bF-Ow8"/>
                     </view>
                 </viewController>

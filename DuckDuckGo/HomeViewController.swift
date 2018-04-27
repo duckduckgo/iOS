@@ -44,7 +44,8 @@ class HomeViewController: UIViewController {
         frame = view.frame
         enterActiveMode()
 
-        if !HomeRowOnboardingFeature().showNow() {
+        let feature = HomeRowOnboardingFeature()
+        if !feature.showNow() {
             infoViewHeight.constant = 0
             view.layoutIfNeeded()
         }

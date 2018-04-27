@@ -18,16 +18,55 @@
 //
 import Core
 
+protocol HomeRowOnboardingFeatureStorage: class {
+    
+    var dismissed:Bool { get set }
+    
+}
+
 class HomeRowOnboardingFeature {
     
+    private let storage: HomeRowOnboardingFeatureStorage
     private let featureManager: FeatureManager
 
-    init(featureManager: FeatureManager = DefaultFeatureManager()) {
+    init(storage: HomeRowOnboardingFeatureStorage = UserDefaultsHomeRowOnboardingFeatureStorage(), featureManager: FeatureManager = DefaultFeatureManager()) {
+        self.storage = storage
         self.featureManager = featureManager
     }
     
     func showNow() -> Bool {
+        guard !storage.dismissed else { return false }
         return self.featureManager.feature(named: .homerow_onboarding).isEnabled
+    }
+    
+    func dismissed() {
+        storage.dismissed = true
+    }
+    
+}
+
+class UserDefaultsHomeRowOnboardingFeatureStorage: HomeRowOnboardingFeatureStorage {
+    
+    struct Keys {
+        static let dismissed = "com.duckduckgo.homerow.onboarding.dismissed"
+    }
+    
+    var dismissed: Bool {
+        
+        set {
+            userDefaults.set(newValue, forKey: Keys.dismissed)
+        }
+        
+        get {
+            return userDefaults.bool(forKey: Keys.dismissed)
+        }
+        
+    }
+    
+    private let userDefaults: UserDefaults
+    
+    public init(userDefaults: UserDefaults = UserDefaults.standard) {
+        self.userDefaults = userDefaults
     }
     
 }

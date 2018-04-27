@@ -23,12 +23,33 @@ import XCTest
 
 class HomeRowOnboardingFeatureTests: XCTestCase {
 
-    func testWhenFeatureIsDisabledThenDontShowNow() {
-        XCTAssertFalse(HomeRowOnboardingFeature(featureManager: MockFeatureManager(enabled: false)).showNow())
+    func testWhenDismissedThenDismissedStateStored() {
+        let storage = MockHomeRowOnboardingFeatureStorage(dismissed: true)
+        let feature = HomeRowOnboardingFeature(storage: storage, featureManager: MockFeatureManager(enabled: true))
+        feature.dismissed()
+        XCTAssertTrue(storage.dismissed)
+    }
+    
+    func testWhenFeatureHasBeenDismissedAndIsEnabledThenDontShowNow() {
+        XCTAssertFalse(HomeRowOnboardingFeature(storage: MockHomeRowOnboardingFeatureStorage(dismissed: true), featureManager: MockFeatureManager(enabled: true)).showNow())
     }
 
-    func testWhenFeatureIsEnabledThenShowNow() {
-        XCTAssertTrue(HomeRowOnboardingFeature(featureManager: MockFeatureManager(enabled: true)).showNow())
+    func testWhenFeatureHasNotBeenDismissedIsDisabledThenDontShowNow() {
+        XCTAssertFalse(HomeRowOnboardingFeature(storage: MockHomeRowOnboardingFeatureStorage(dismissed: false), featureManager: MockFeatureManager(enabled: false)).showNow())
+    }
+
+    func testWhenFeatureHasNotBeenDismissedAndIsEnabledThenShowNow() {
+        XCTAssertTrue(HomeRowOnboardingFeature(storage: MockHomeRowOnboardingFeatureStorage(dismissed: false), featureManager: MockFeatureManager(enabled: true)).showNow())
+    }
+    
+}
+
+class MockHomeRowOnboardingFeatureStorage: HomeRowOnboardingFeatureStorage {
+    
+    var dismissed: Bool = false
+    
+    init(dismissed: Bool) {
+        self.dismissed = dismissed
     }
     
 }

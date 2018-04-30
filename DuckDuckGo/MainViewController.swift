@@ -33,7 +33,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
-
+    @IBOutlet weak var containerViewTop: NSLayoutConstraint!
+    
+    var reminderShown: Bool = false
+    
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
@@ -78,7 +81,7 @@ class MainViewController: UIViewController {
         }
 
     }
-
+ 
     private func startOnboardingFlowOrShowKeyboard() {
         let settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
@@ -373,6 +376,16 @@ extension MainViewController: BrowserChromeDelegate {
 
 }
 
+extension MainViewController: NotificationViewDelegate {
+    
+    func tapped(_ view: NotificationView) {
+    }
+    
+    func dismised(_ view: NotificationView) {
+    }
+    
+}
+
 extension MainViewController: OmniBarDelegate {
     
     func onOmniQueryUpdated(_ updatedQuery: String) {
@@ -382,6 +395,19 @@ extension MainViewController: OmniBarDelegate {
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
         dismissAutcompleteSuggestions()
+        
+        let notificationView = NotificationView.loadFromNib()
+        notificationView.setTitle(text: "Take DuckDuckGo home")
+        notificationView.setMessage(text: "Add DuckDuckGo to your dock for quick and easy access!")
+        notificationView.delegate = self
+        containerView.addSubview(notificationView)
+        containerView.clipsToBounds = true
+        notificationView.frame.origin.y = -notificationView.frame.size.height
+        
+        UIView.animate(withDuration: 0.5) {
+            notificationView.frame.origin.y = 0
+        }
+        
     }
     
     func onSiteRatingPressed() {

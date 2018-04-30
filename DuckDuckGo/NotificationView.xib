@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-bold.otf">
+            <string>ProximaNova-Bold</string>
+        </array>
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NotificationView" customModule="DuckDuckGo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RfY-Jn-v2f">
+                    <rect key="frame" x="16" y="8" width="290" height="24"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="lXr-2g-RAA">
+                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="edl-Yk-oJi"/>
+                                <constraint firstAttribute="width" constant="24" id="mRf-l7-I7p"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the notification title." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UiU-H5-9SS">
+                            <rect key="frame" x="32" y="0.0" width="258" height="24"/>
+                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Remove" translatesAutoresizingMaskIntoConstraints="NO" id="6H3-g4-gsd">
+                    <rect key="frame" x="322" y="24" width="12" height="12"/>
+                    <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="8nU-Lb-rKq"/>
+                        <constraint firstAttribute="width" constant="12" id="kiz-hw-3Gw"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the notification message which could get long enough to wrap if someone were to come up with some long copy." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iZ-dM-hf4">
+                    <rect key="frame" x="16" y="40" width="290" height="45"/>
+                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
+                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.4039215686" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="4iZ-dM-hf4" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="1Ms-no-8uO"/>
+                <constraint firstItem="6H3-g4-gsd" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="FYR-Bd-Shk"/>
+                <constraint firstItem="RfY-Jn-v2f" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="KXb-sS-Gak"/>
+                <constraint firstItem="6H3-g4-gsd" firstAttribute="leading" secondItem="4iZ-dM-hf4" secondAttribute="trailing" constant="16" id="Vi9-Fb-Ylo"/>
+                <constraint firstItem="4iZ-dM-hf4" firstAttribute="top" secondItem="RfY-Jn-v2f" secondAttribute="bottom" constant="8" id="Xnf-pJ-8I2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="6H3-g4-gsd" secondAttribute="trailing" constant="16" id="gWV-le-AI5"/>
+                <constraint firstItem="RfY-Jn-v2f" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="rIh-f7-fbX"/>
+                <constraint firstItem="6H3-g4-gsd" firstAttribute="leading" secondItem="RfY-Jn-v2f" secondAttribute="trailing" constant="16" id="zod-FU-MMa"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="icon" destination="lXr-2g-RAA" id="Egn-MR-m29"/>
+                <outlet property="messageLabel" destination="4iZ-dM-hf4" id="11J-ns-icO"/>
+                <outlet property="titleLabel" destination="UiU-H5-9SS" id="eKm-VI-YaD"/>
+            </connections>
+            <point key="canvasLocation" x="-47" y="-200"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="GlobeSmall" width="16" height="16"/>
+        <image name="Remove" width="12" height="12"/>
+    </resources>
+</document>

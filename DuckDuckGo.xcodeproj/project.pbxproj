@@ -81,6 +81,8 @@
 		85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* SurrogateStore.swift */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
 		85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668A209603840014CF04 /* HomeRow.storyboard */; };
+		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
+		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
 		85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */; };
 		85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */; };
 		85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */; };
@@ -454,6 +456,8 @@
 		85A53EC9200D1FA20010D13F /* SurrogateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurrogateStore.swift; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
 		85AE668A209603840014CF04 /* HomeRow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeRow.storyboard; sourceTree = "<group>"; };
+		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
+		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed.js"; path = "submodules/ios-js-support/src/bloom-filter-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed-es2015.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed-es2015.js"; sourceTree = SOURCE_ROOT; };
@@ -909,15 +913,16 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
-				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
+				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
 				85C11E4A209084DE00BFFEB4 /* Features */,
 				F13B4BF31F18C73A00814661 /* Home */,
+				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				85ECA7EA1F2A825C0018EBEB /* Migration */,
+				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
@@ -1058,6 +1063,15 @@
 				859872231F5743D800041CB8 /* FireAnimation.xib */,
 			);
 			name = FireAnimation;
+			sourceTree = "<group>";
+		};
+		85AE668C20971FCA0014CF04 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				85AE668D2097206E0014CF04 /* NotificationView.xib */,
+				85AE668F209724120014CF04 /* NotificationView.swift */,
+			);
+			name = Notifications;
 			sourceTree = "<group>";
 		};
 		85C11E3C20904B4F00BFFEB4 /* Variants */ = {
@@ -2171,6 +2185,7 @@
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
 				F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */,
 				859872241F5743D800041CB8 /* FireAnimation.xib in Resources */,
+				85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */,
 				85A313972028E78A00327D00 /* release_notes.txt in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
@@ -2366,6 +2381,7 @@
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
+				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,

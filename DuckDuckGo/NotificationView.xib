@@ -83,6 +83,70 @@
             </connections>
             <point key="canvasLocation" x="-61" y="-189"/>
         </view>
+        <view contentMode="scaleToFill" id="xkU-t5-Y5a" customClass="NotificationView" customModule="DuckDuckGo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="509" height="95"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3Xd-t5-2Ox">
+                    <rect key="frame" x="134.5" y="8" width="240" height="24"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="9Gm-dR-TfQ">
+                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="BW0-9F-lEU"/>
+                                <constraint firstAttribute="width" constant="24" id="F6F-tC-Hp7"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the notification title." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c95-VZ-Fb2">
+                            <rect key="frame" x="32" y="0.0" width="208" height="24"/>
+                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
+                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the notification message which could get long enough to wrap if someone were to come up with some long copy." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9m-JJ-fZq">
+                    <rect key="frame" x="54.5" y="40" width="400" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="GT2-Di-HjM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
+                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stu-VD-BA0">
+                    <rect key="frame" x="477" y="8" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="OD3-O5-dAA"/>
+                        <constraint firstAttribute="height" constant="24" id="gXl-nc-aee"/>
+                    </constraints>
+                    <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" image="Remove"/>
+                    <connections>
+                        <action selector="dismiss" destination="xkU-t5-Y5a" eventType="touchUpInside" id="Md5-mb-g88"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.4039215686" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="DOF-nw-63K" firstAttribute="trailing" secondItem="Stu-VD-BA0" secondAttribute="trailing" constant="8" id="5xj-dN-hsm"/>
+                <constraint firstItem="Stu-VD-BA0" firstAttribute="top" secondItem="DOF-nw-63K" secondAttribute="top" constant="8" id="Fu3-ax-ATi"/>
+                <constraint firstItem="3Xd-t5-2Ox" firstAttribute="top" secondItem="DOF-nw-63K" secondAttribute="top" constant="8" id="Geb-On-CCM"/>
+                <constraint firstItem="S9m-JJ-fZq" firstAttribute="centerX" secondItem="DOF-nw-63K" secondAttribute="centerX" id="HfZ-F9-pZc"/>
+                <constraint firstItem="3Xd-t5-2Ox" firstAttribute="centerX" secondItem="DOF-nw-63K" secondAttribute="centerX" id="XXj-Fu-bSC"/>
+                <constraint firstItem="S9m-JJ-fZq" firstAttribute="top" secondItem="c95-VZ-Fb2" secondAttribute="bottom" constant="8" id="mY1-gh-YEW"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="DOF-nw-63K"/>
+            <connections>
+                <outlet property="icon" destination="9Gm-dR-TfQ" id="HEM-OD-nzf"/>
+                <outlet property="messageLabel" destination="S9m-JJ-fZq" id="J5v-AU-Whd"/>
+                <outlet property="titleLabel" destination="c95-VZ-Fb2" id="oIP-7d-xHA"/>
+            </connections>
+            <point key="canvasLocation" x="-326.5" y="56.5"/>
+        </view>
     </objects>
     <resources>
         <image name="GlobeSmall" width="16" height="16"/>

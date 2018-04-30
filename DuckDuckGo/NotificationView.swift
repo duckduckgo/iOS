@@ -41,7 +41,7 @@ class NotificationView: UIView {
         self.tapGesture = tapGesture
     }
 
-    func tap() {
+    @objc func tap() {
         delegate?.tapped(self)
     }
     
@@ -91,7 +91,8 @@ class NotificationView: UIView {
     }
     
     static func loadFromNib() -> NotificationView {
-        return Bundle.main.loadNibNamed("NotificationView", owner: self, options: nil)![0] as! NotificationView
+        let index = UIDevice.current.userInterfaceIdiom == .phone ? 0 : 1
+        return Bundle.main.loadNibNamed("NotificationView", owner: self, options: nil)![index] as! NotificationView
     }
     
 }

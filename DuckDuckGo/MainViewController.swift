@@ -345,13 +345,14 @@ extension MainViewController: BrowserChromeDelegate {
     struct ChromeAnimationConstants {
         static let duration = 0.3
     }
-
-    func hideKeyboard() {
+    
+    private func hideKeyboard() {
         omniBar.resignFirstResponder()
     }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
-
+        if hidden { hideKeyboard() }
+        
         updateToolbarConstant(hidden)
         updateNavBarConstant(hidden)
 
@@ -373,6 +374,8 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
+        if hidden { hideKeyboard() }
+        
         updateNavBarConstant(hidden)
         omniBar.alpha = hidden ? 0 : 1
     }

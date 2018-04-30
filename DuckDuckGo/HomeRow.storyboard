@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A5s-B8-hd1">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -23,23 +23,23 @@
             <objects>
                 <viewController storyboardIdentifier="instructions" id="A5s-B8-hd1" customClass="HomeRowInstructionsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5FH-Wc-1VD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WkQ-rU-dTC">
-                                <rect key="frame" x="30" y="70" width="315" height="547"/>
+                                <rect key="frame" x="32.666666666666657" y="186" width="310" height="450"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZO-bI-rzI">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="114"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take DuckDuckGo Home" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tah-vQ-mf9">
-                                                <rect key="frame" x="8" y="53" width="299" height="17"/>
+                                                <rect key="frame" x="8" y="53" width="294" height="17"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock for quick and easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-QY-3H3">
-                                                <rect key="frame" x="48" y="78" width="219" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock for quick and easy access!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-QY-3H3">
+                                                <rect key="frame" x="48" y="78" width="214" height="24"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -49,14 +49,14 @@
                                         <constraints>
                                             <constraint firstItem="f6f-QY-3H3" firstAttribute="width" secondItem="gZO-bI-rzI" secondAttribute="width" priority="900" constant="-96" id="1O5-Yv-h3i"/>
                                             <constraint firstItem="f6f-QY-3H3" firstAttribute="top" secondItem="Tah-vQ-mf9" secondAttribute="bottom" constant="8" id="2cU-0K-3zb"/>
+                                            <constraint firstAttribute="bottom" secondItem="f6f-QY-3H3" secondAttribute="bottom" constant="12" id="9ox-pS-gRd"/>
                                             <constraint firstItem="f6f-QY-3H3" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="DAZ-CU-l8a"/>
                                             <constraint firstItem="Tah-vQ-mf9" firstAttribute="width" secondItem="gZO-bI-rzI" secondAttribute="width" constant="-16" id="bIG-dv-IMp"/>
                                             <constraint firstItem="Tah-vQ-mf9" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="kqB-0F-mMP"/>
-                                            <constraint firstAttribute="height" constant="128" id="qNn-H5-VVi"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="202-p3-edP">
-                                        <rect key="frame" x="285" y="8" width="22" height="22"/>
+                                        <rect key="frame" x="280" y="8" width="22" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="QFp-vW-B8j"/>
                                             <constraint firstAttribute="height" constant="22" id="y5x-Ew-BiU"/>
@@ -68,13 +68,13 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😀" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSV-eN-3fL">
-                                        <rect key="frame" x="146" y="20" width="23" height="21"/>
+                                        <rect key="frame" x="143.66666666666669" y="20" width="23" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBH-J5-aEO">
-                                        <rect key="frame" x="15.5" y="493" width="283" height="38"/>
+                                        <rect key="frame" x="15.666666666666686" y="396" width="278" height="38"/>
                                         <color key="backgroundColor" red="0.4039215686" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="Azr-V1-kLw"/>
@@ -95,8 +95,10 @@
                                     <constraint firstAttribute="trailing" secondItem="202-p3-edP" secondAttribute="trailing" constant="8" id="3lw-UN-fTJ"/>
                                     <constraint firstItem="DBH-J5-aEO" firstAttribute="width" secondItem="WkQ-rU-dTC" secondAttribute="width" constant="-32" id="OO8-D3-aVQ"/>
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="centerX" secondItem="WkQ-rU-dTC" secondAttribute="centerX" id="PC4-xd-C15"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="450" id="Rkf-Qz-zdJ"/>
                                     <constraint firstItem="202-p3-edP" firstAttribute="top" secondItem="WkQ-rU-dTC" secondAttribute="top" constant="8" id="Z20-1w-fu8"/>
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="top" secondItem="pSV-eN-3fL" secondAttribute="bottom" constant="-41" id="gCd-i7-Au6"/>
+                                    <constraint firstAttribute="width" constant="310" id="lzm-iB-os4"/>
                                     <constraint firstItem="pSV-eN-3fL" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="mAs-RO-POn"/>
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="top" secondItem="WkQ-rU-dTC" secondAttribute="top" id="mYz-6B-4wR"/>
                                     <constraint firstAttribute="bottom" secondItem="DBH-J5-aEO" secondAttribute="bottom" constant="16" id="qdx-hp-DaB"/>
@@ -105,9 +107,9 @@
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="width" secondItem="5FH-Wc-1VD" secondAttribute="width" constant="-60" id="Jpn-RB-hko"/>
+                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="width" secondItem="5FH-Wc-1VD" secondAttribute="width" priority="900" constant="-60" id="Jpn-RB-hko"/>
                             <constraint firstItem="WkQ-rU-dTC" firstAttribute="centerX" secondItem="BWH-9E-4lY" secondAttribute="centerX" id="bNy-3d-dos"/>
-                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="height" secondItem="5FH-Wc-1VD" secondAttribute="height" constant="-120" id="hkX-km-B4e"/>
+                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="height" secondItem="5FH-Wc-1VD" secondAttribute="height" priority="900" constant="-40" id="hkX-km-B4e"/>
                             <constraint firstItem="WkQ-rU-dTC" firstAttribute="centerY" secondItem="BWH-9E-4lY" secondAttribute="centerY" id="mVM-pU-PHt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BWH-9E-4lY"/>

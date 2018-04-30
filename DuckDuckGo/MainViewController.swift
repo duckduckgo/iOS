@@ -324,6 +324,8 @@ class MainViewController: UIViewController {
 //        guard feature.showNow() else { return }
         
         let notificationView = NotificationView.loadFromNib()
+        
+        // TODO extract in to translation files
         notificationView.setTitle(text: "Take DuckDuckGo home")
         notificationView.setMessage(text: "Add DuckDuckGo to your dock for quick and easy access!")
         notificationView.delegate = self

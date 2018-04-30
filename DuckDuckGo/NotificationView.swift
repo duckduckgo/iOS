@@ -22,12 +22,26 @@ class NotificationView: UIView {
     @IBOutlet weak var messageLabel: UILabel!
     
     weak var delegate: NotificationViewDelegate?
+
+    var tapGesture: UITapGestureRecognizer?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        sharedInit()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        sharedInit()
+    }
+    
+    func sharedInit() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(NotificationView.tap))
+        addGestureRecognizer(tapGesture)
+        self.tapGesture = tapGesture
     }
 
-    @IBAction func tap() {
+    func tap() {
         delegate?.tapped(self)
     }
     

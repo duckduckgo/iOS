@@ -80,16 +80,9 @@
                 <outlet property="icon" destination="lXr-2g-RAA" id="Egn-MR-m29"/>
                 <outlet property="messageLabel" destination="4iZ-dM-hf4" id="11J-ns-icO"/>
                 <outlet property="titleLabel" destination="UiU-H5-9SS" id="eKm-VI-YaD"/>
-                <outletCollection property="gestureRecognizers" destination="8LR-NO-FaL" appends="YES" id="Cgk-RN-v4T"/>
             </connections>
             <point key="canvasLocation" x="-61" y="-189"/>
         </view>
-        <tapGestureRecognizer id="8LR-NO-FaL">
-            <connections>
-                <action selector="tap" destination="iN0-l3-epB" id="ayA-is-iqp"/>
-                <outlet property="delegate" destination="iN0-l3-epB" id="8eZ-yC-h1k"/>
-            </connections>
-        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="GlobeSmall" width="16" height="16"/>

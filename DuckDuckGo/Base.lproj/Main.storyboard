@@ -101,6 +101,7 @@
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
                         <segue destination="454-th-ep1" kind="presentation" identifier="Onboarding" modalTransitionStyle="flipHorizontal" id="uIC-hz-aFs"/>
                         <segue destination="Lcg-P1-w26" kind="presentation" identifier="instructions" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="vjb-jn-qZe"/>
+                        <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
@@ -113,7 +114,7 @@
                 <viewControllerPlaceholder storyboardName="Bookmarks" id="0sP-vt-2ZT" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1kp-XV-T5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="45" y="470"/>
+            <point key="canvasLocation" x="-25" y="470"/>
         </scene>
         <!--HomeRow-->
         <scene sceneID="ct1-fI-xYV">
@@ -131,13 +132,21 @@
             </objects>
             <point key="canvasLocation" x="859" y="99"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="bSV-mo-fgW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Settings" id="xj8-BF-A9c" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AdC-gU-UaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="462" y="470"/>
+        </scene>
         <!--TabSwitcher-->
         <scene sceneID="ylt-D6-E7x">
             <objects>
                 <viewControllerPlaceholder storyboardName="TabSwitcher" id="p9L-cF-4aL" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X9j-nR-zze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="422" y="470"/>
+            <point key="canvasLocation" x="219" y="470"/>
         </scene>
     </scenes>
     <resources>

@@ -34,10 +34,6 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     
-    private struct TableIndex {
-        static let sendFeedback = IndexPath(item: 1, section: 2)
-    }
-    
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -70,9 +66,6 @@ class SettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath == TableIndex.sendFeedback {
-            sendFeedback()
-        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -88,7 +81,7 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    private func sendFeedback() {
+    @IBAction func sendFeedback() {
         let appVersion = versionProvider.localized
         let device = UIDevice.current.deviceType.displayName
         let osName = UIDevice.current.systemName

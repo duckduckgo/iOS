@@ -50,17 +50,30 @@
                                             <outletCollection property="gestureRecognizers" destination="OGU-a7-Gzp" appends="YES" id="Qkn-rj-vUq"/>
                                         </connections>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNe-xl-P9P">
+                                        <rect key="frame" x="317" y="0.0" width="26" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="26" id="35f-1o-m2P"/>
+                                            <constraint firstAttribute="height" constant="26" id="8XL-yx-yX2"/>
+                                        </constraints>
+                                        <state key="normal" image="Remove"/>
+                                        <connections>
+                                            <action selector="dismissInstructions" destination="LJ1-RN-ckE" eventType="touchUpInside" id="cwo-K3-3py"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="wf8-Us-utp" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="1Gb-32-Q21"/>
                                     <constraint firstAttribute="trailing" secondItem="wf8-Us-utp" secondAttribute="trailing" constant="8" id="8JI-cL-NgB"/>
                                     <constraint firstAttribute="height" constant="80" id="ELS-YG-Sxt"/>
+                                    <constraint firstAttribute="trailing" secondItem="uNe-xl-P9P" secondAttribute="trailing" id="PIB-AU-E3m"/>
                                     <constraint firstItem="gbL-c9-Iji" firstAttribute="width" secondItem="5Rf-oV-2W5" secondAttribute="width" id="TrP-js-Koc"/>
                                     <constraint firstItem="wf8-Us-utp" firstAttribute="leading" secondItem="saG-dg-Yh9" secondAttribute="trailing" constant="8" id="Wiq-Rl-6H8"/>
                                     <constraint firstItem="saG-dg-Yh9" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="dtu-7F-Pnr"/>
                                     <constraint firstItem="gbL-c9-Iji" firstAttribute="height" secondItem="5Rf-oV-2W5" secondAttribute="height" id="eYg-pf-ztQ"/>
                                     <constraint firstItem="gbL-c9-Iji" firstAttribute="centerX" secondItem="5Rf-oV-2W5" secondAttribute="centerX" id="rS6-Tt-9Ey"/>
+                                    <constraint firstItem="uNe-xl-P9P" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" id="tJM-im-uoK"/>
                                     <constraint firstItem="saG-dg-Yh9" firstAttribute="leading" secondItem="5Rf-oV-2W5" secondAttribute="leading" constant="8" id="wLW-lc-ByM"/>
                                     <constraint firstItem="gbL-c9-Iji" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="y9Z-I7-vGs"/>
                                 </constraints>
@@ -82,7 +95,7 @@
                                 <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Settings"/>
                                 <connections>
-                                    <segue destination="Dad-qS-z4K" kind="presentation" modalPresentationStyle="currentContext" id="MtS-xn-LUm"/>
+                                    <action selector="showSettings" destination="LJ1-RN-ckE" eventType="touchUpInside" id="Ovt-56-FNL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -105,6 +118,7 @@
                     <navigationItem key="navigationItem" id="7ah-Pp-alq"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="iP8-nF-jOV" id="3lU-ad-ySg"/>
+                        <outlet property="infoView" destination="5Rf-oV-2W5" id="ksq-NB-phQ"/>
                         <outlet property="infoViewHeight" destination="ELS-YG-Sxt" id="GGV-Lb-tV6"/>
                     </connections>
                 </viewController>
@@ -122,17 +136,10 @@
             </objects>
             <point key="canvasLocation" x="1181.5999999999999" y="-331.48425787106447"/>
         </scene>
-        <!--Settings-->
-        <scene sceneID="8wR-5i-kof">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Settings" id="Dad-qS-z4K" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vyZ-o3-1D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1798" y="-450"/>
-        </scene>
     </scenes>
     <resources>
         <image name="LogoWithText" width="201" height="160"/>
+        <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>
     </resources>
 </document>

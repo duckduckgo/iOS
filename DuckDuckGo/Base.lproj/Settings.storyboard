@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w88-u3-TgK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="w88-u3-TgK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
         <!--Settings-->
         <scene sceneID="tpH-1C-rxA">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="fAo-H3-Yyo" customClass="SettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController definesPresentationContext="YES" clearsSelectionOnViewWillAppear="NO" id="fAo-H3-Yyo" customClass="SettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Us0-75-vOB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,42 +66,12 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="flX-Op-Ik6">
-                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flX-Op-Ik6" id="Ime-ez-dSU">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bYP-6u-2g9">
-                                                    <rect key="frame" x="24" y="14" width="301" height="16"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="B5X-ND-d0g">
-                                                            <rect key="frame" x="0.0" y="0.0" width="301" height="16"/>
-                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="bYP-6u-2g9" firstAttribute="leading" secondItem="Ime-ez-dSU" secondAttribute="leadingMargin" constant="8" id="LLP-tP-lWg"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="bYP-6u-2g9" secondAttribute="trailing" constant="8" id="d8F-NH-PbX"/>
-                                                <constraint firstItem="bYP-6u-2g9" firstAttribute="centerY" secondItem="Ime-ez-dSU" secondAttribute="centerY" id="qv0-Cf-1Ob"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <segue destination="VNm-a5-bBg" kind="presentation" id="nsG-hh-w8v"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening." id="zMK-jc-4bJ">
+                            <tableViewSection headerTitle="Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="FHC-1z-Z3v" style="IBUITableViewCellStyleDefault" id="qdD-7s-mmM">
-                                        <rect key="frame" x="0.0" y="207" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qdD-7s-mmM" id="RVQ-jf-2kf">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -122,7 +92,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mSQ-M3-da5">
-                                        <rect key="frame" x="0.0" y="251" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="207" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mSQ-M3-da5" id="uF1-dD-wAq">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -156,10 +126,74 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Other" footerTitle="" id="dOj-jn-mSN">
+                            <tableViewSection headerTitle="Help" id="zMK-jc-4bJ" userLabel="Help">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="flX-Op-Ik6">
+                                        <rect key="frame" x="0.0" y="335" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flX-Op-Ik6" id="Ime-ez-dSU">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bYP-6u-2g9">
+                                                    <rect key="frame" x="24" y="14" width="301" height="16"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="B5X-ND-d0g">
+                                                            <rect key="frame" x="0.0" y="0.0" width="301" height="16"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bYP-6u-2g9" firstAttribute="leading" secondItem="Ime-ez-dSU" secondAttribute="leadingMargin" constant="8" id="LLP-tP-lWg"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bYP-6u-2g9" secondAttribute="trailing" constant="8" id="d8F-NH-PbX"/>
+                                                <constraint firstItem="bYP-6u-2g9" firstAttribute="centerY" secondItem="Ime-ez-dSU" secondAttribute="centerY" id="qv0-Cf-1Ob"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="VNm-a5-bBg" kind="presentation" id="nsG-hh-w8v"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="pfh-oL-Cic">
+                                        <rect key="frame" x="0.0" y="379" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pfh-oL-Cic" id="Ikg-ak-nRy">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Xp-NU-z4Q">
+                                                    <rect key="frame" x="24" y="14" width="301" height="16"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="HoL-C1-y9r">
+                                                            <rect key="frame" x="0.0" y="0.0" width="301" height="16"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="0Xp-NU-z4Q" firstAttribute="leading" secondItem="Ikg-ak-nRy" secondAttribute="leadingMargin" constant="8" id="Cm1-Dn-Z6L"/>
+                                                <constraint firstItem="0Xp-NU-z4Q" firstAttribute="centerY" secondItem="Ikg-ak-nRy" secondAttribute="centerY" id="dyC-ER-ml1"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="0Xp-NU-z4Q" secondAttribute="trailing" constant="8" id="nQN-NO-7j3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="4xy-dB-g65" kind="presentation" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="oYY-cW-kRQ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Other" footerTitle="" id="FpT-1C-xtx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="oM7-1o-9oY" style="IBUITableViewCellStyleDefault" id="iy0-gV-9MR">
-                                        <rect key="frame" x="0.0" y="386.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="486.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -186,7 +220,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="m23-t6-9cb" style="IBUITableViewCellStyleDefault" id="aJ8-VX-XrI">
-                                        <rect key="frame" x="0.0" y="430.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="530.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ8-VX-XrI" id="9Mf-ZL-aUg">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -202,9 +236,12 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="0TO-1x-wGv" appends="YES" id="ndf-Pv-I8d"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleSubtitle" id="TYF-GX-a3j">
-                                        <rect key="frame" x="0.0" y="474.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="574.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -250,13 +287,19 @@
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
                         <outletCollection property="margins" destination="leX-6S-yqR" collectionClass="NSMutableArray" id="2hh-JC-egM"/>
                         <outletCollection property="margins" destination="y8a-BQ-8Bc" collectionClass="NSMutableArray" id="3g6-Iu-GP1"/>
+                        <outletCollection property="margins" destination="zJZ-MR-uhS" collectionClass="NSMutableArray" id="o3p-WG-avM"/>
+                        <outletCollection property="margins" destination="QO8-S9-afk" collectionClass="NSMutableArray" id="U45-GQ-aTd"/>
                         <outletCollection property="margins" destination="LLP-tP-lWg" collectionClass="NSMutableArray" id="NoF-39-Wzp"/>
                         <outletCollection property="margins" destination="d8F-NH-PbX" collectionClass="NSMutableArray" id="isa-wo-tJ5"/>
-                        <outletCollection property="margins" destination="QO8-S9-afk" collectionClass="NSMutableArray" id="U45-GQ-aTd"/>
-                        <outletCollection property="margins" destination="zJZ-MR-uhS" collectionClass="NSMutableArray" id="o3p-WG-avM"/>
+                        <outletCollection property="margins" destination="Cm1-Dn-Z6L" collectionClass="NSMutableArray" id="DOr-e7-FBo"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0TO-1x-wGv" userLabel="Send Feedback Tap">
+                    <connections>
+                        <action selector="sendFeedback" destination="fAo-H3-Yyo" id="53g-CE-YCb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1933.3333333333335" y="52.989130434782609"/>
         </scene>
@@ -281,13 +324,21 @@
             </objects>
             <point key="canvasLocation" x="1207" y="53"/>
         </scene>
+        <!--HomeRow-->
+        <scene sceneID="1st-ge-O35">
+            <objects>
+                <viewControllerPlaceholder storyboardName="HomeRow" id="4xy-dB-g65" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f7V-ze-SNX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1792" y="607"/>
+        </scene>
         <!--UseDuckDuckGoInSafari-->
         <scene sceneID="8YY-rV-1E3">
             <objects>
                 <viewControllerPlaceholder storyboardName="SettingsTutorials" referencedIdentifier="UseDuckDuckGoInSafari" id="VNm-a5-bBg" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mkU-kG-PHh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1892" y="529"/>
+            <point key="canvasLocation" x="2083" y="607"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="Z9e-Sp-3fR">
@@ -422,7 +473,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW2-iC-9BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2937" y="-116"/>
+            <point key="canvasLocation" x="3027" y="-290"/>
         </scene>
         <!--Whitelist-->
         <scene sceneID="tsd-dd-bMe">
@@ -522,7 +573,7 @@ upgraded by Privacy Protection.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bjs-Ft-LTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2661.5999999999999" y="856.82158920539734"/>
+            <point key="canvasLocation" x="3027" y="589"/>
         </scene>
     </scenes>
     <resources>

@@ -27,6 +27,8 @@ protocol HomeControllerDelegate: class {
     func homeDidDeactivateOmniBar(home: HomeViewController)
     
     func showInstructions(_ home: HomeViewController)
+    
+    func showSettings(_ home: HomeViewController)
 
     func home(_ home: HomeViewController, didRequestUrl url: URL)
 

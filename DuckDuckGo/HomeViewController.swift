@@ -29,6 +29,7 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var infoView: UIView!
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -43,18 +44,24 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         frame = view.frame
         enterActiveMode()
-
-        let feature = HomeRowOnboardingFeature()
-        if !feature.showNow() {
-            infoViewHeight.constant = 0
-        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let feature = HomeRowOnboardingFeature()
+        if !feature.showNow() {
+            hideInstructions()
+        }
+    
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print(#function, "***")
+
         chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
@@ -66,6 +73,20 @@ class HomeViewController: UIViewController {
     @IBAction func showInstructions() {
         print(#function, "***")
         delegate?.showInstructions(self)
+        dismissInstructions()
+    }
+    
+    @IBAction func dismissInstructions() {
+        print(#function, "***")
+        HomeRowOnboardingFeature().dismissed()
+        hideInstructions()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @IBAction func showSettings() {
+        delegate?.showSettings(self)
     }
 
     @objc func onKeyboardChangeFrame(notification: NSNotification) {
@@ -93,6 +114,11 @@ class HomeViewController: UIViewController {
         delegate?.homeDidActivateOmniBar(home: self)
     }
 
+    private func hideInstructions() {
+        infoView.isHidden = true
+        infoViewHeight.constant = 0
+    }
+    
     func load(url: URL) {
         delegate?.home(self, didRequestUrl: url)
     }

@@ -37,7 +37,7 @@ class HomeRowReminderFeature {
     private var featureManager: FeatureManager
     private var storage: HomeRowReminderFeatureStorage
     
-    init(featureManager: FeatureManager, storage: HomeRowReminderFeatureStorage) {
+    init(featureManager: FeatureManager = DefaultFeatureManager(), storage: HomeRowReminderFeatureStorage = UserDefaultsHomeRowReminderStorage()) {
         self.featureManager = featureManager
         self.storage = storage
     }

@@ -309,9 +309,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func launchSettings() {
-        let controller = SettingsViewController.loadFromStoryboard()
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
+        performSegue(withIdentifier: "Settings", sender: self)
     }
 
 }
@@ -446,6 +444,10 @@ extension MainViewController: HomeControllerDelegate {
     
     func showInstructions(_ home: HomeViewController) {
         performSegue(withIdentifier: "instructions", sender: self)
+    }
+    
+    func showSettings(_ home: HomeViewController) {
+        launchSettings()
     }
     
 }

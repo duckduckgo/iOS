@@ -47,9 +47,8 @@ class HomeViewController: UIViewController {
         let feature = HomeRowOnboardingFeature()
         if !feature.showNow() {
             infoViewHeight.constant = 0
-            view.layoutIfNeeded()
         }
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
 
@@ -62,6 +61,11 @@ class HomeViewController: UIViewController {
     @IBAction func hideKeyboard() {
         print(#function, "***")
         chromeDelegate?.omniBar.resignFirstResponder()
+    }
+    
+    @IBAction func showInstructions() {
+        print(#function, "***")
+        delegate?.showInstructions(self)
     }
 
     @objc func onKeyboardChangeFrame(notification: NSNotification) {

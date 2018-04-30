@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A5s-B8-hd1">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Home Row Instructions View Controller-->
+        <scene sceneID="Mbn-6e-RDk">
+            <objects>
+                <viewController storyboardIdentifier="instructions" id="A5s-B8-hd1" customClass="HomeRowInstructionsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5FH-Wc-1VD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WkQ-rU-dTC">
+                                <rect key="frame" x="30" y="70" width="315" height="547"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZO-bI-rzI">
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="128"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take DuckDuckGo Home" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tah-vQ-mf9">
+                                                <rect key="frame" x="8" y="53" width="299" height="17"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock for quick and easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-QY-3H3">
+                                                <rect key="frame" x="48" y="78" width="219" height="24"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.40392156862745099" green="0.68235294117647061" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="f6f-QY-3H3" firstAttribute="width" secondItem="gZO-bI-rzI" secondAttribute="width" priority="900" constant="-96" id="1O5-Yv-h3i"/>
+                                            <constraint firstItem="f6f-QY-3H3" firstAttribute="top" secondItem="Tah-vQ-mf9" secondAttribute="bottom" constant="8" id="2cU-0K-3zb"/>
+                                            <constraint firstItem="f6f-QY-3H3" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="DAZ-CU-l8a"/>
+                                            <constraint firstItem="Tah-vQ-mf9" firstAttribute="width" secondItem="gZO-bI-rzI" secondAttribute="width" constant="-16" id="bIG-dv-IMp"/>
+                                            <constraint firstItem="Tah-vQ-mf9" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="kqB-0F-mMP"/>
+                                            <constraint firstAttribute="height" constant="128" id="qNn-H5-VVi"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="202-p3-edP">
+                                        <rect key="frame" x="285" y="8" width="22" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="22" id="QFp-vW-B8j"/>
+                                            <constraint firstAttribute="height" constant="22" id="y5x-Ew-BiU"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.69411764705882351" green="0.83529411764705885" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Remove"/>
+                                        <connections>
+                                            <action selector="dismiss" destination="A5s-B8-hd1" eventType="touchUpInside" id="UAF-fV-Omn"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😀" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSV-eN-3fL">
+                                        <rect key="frame" x="146" y="20" width="23" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBH-J5-aEO">
+                                        <rect key="frame" x="15.5" y="493" width="283" height="38"/>
+                                        <color key="backgroundColor" red="0.4039215686" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="38" id="Azr-V1-kLw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                        <state key="normal" title="Got it!">
+                                            <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismiss" destination="A5s-B8-hd1" eventType="touchUpInside" id="1v6-Uy-jdj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Tah-vQ-mf9" firstAttribute="top" secondItem="pSV-eN-3fL" secondAttribute="bottom" constant="12" id="2f4-w8-mHQ"/>
+                                    <constraint firstItem="DBH-J5-aEO" firstAttribute="centerX" secondItem="WkQ-rU-dTC" secondAttribute="centerX" id="2fz-Nb-cpE"/>
+                                    <constraint firstAttribute="trailing" secondItem="202-p3-edP" secondAttribute="trailing" constant="8" id="3lw-UN-fTJ"/>
+                                    <constraint firstItem="DBH-J5-aEO" firstAttribute="width" secondItem="WkQ-rU-dTC" secondAttribute="width" constant="-32" id="OO8-D3-aVQ"/>
+                                    <constraint firstItem="gZO-bI-rzI" firstAttribute="centerX" secondItem="WkQ-rU-dTC" secondAttribute="centerX" id="PC4-xd-C15"/>
+                                    <constraint firstItem="202-p3-edP" firstAttribute="top" secondItem="WkQ-rU-dTC" secondAttribute="top" constant="8" id="Z20-1w-fu8"/>
+                                    <constraint firstItem="gZO-bI-rzI" firstAttribute="top" secondItem="pSV-eN-3fL" secondAttribute="bottom" constant="-41" id="gCd-i7-Au6"/>
+                                    <constraint firstItem="pSV-eN-3fL" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="mAs-RO-POn"/>
+                                    <constraint firstItem="gZO-bI-rzI" firstAttribute="top" secondItem="WkQ-rU-dTC" secondAttribute="top" id="mYz-6B-4wR"/>
+                                    <constraint firstAttribute="bottom" secondItem="DBH-J5-aEO" secondAttribute="bottom" constant="16" id="qdx-hp-DaB"/>
+                                    <constraint firstItem="gZO-bI-rzI" firstAttribute="width" secondItem="WkQ-rU-dTC" secondAttribute="width" id="w56-MU-bGt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="width" secondItem="5FH-Wc-1VD" secondAttribute="width" constant="-60" id="Jpn-RB-hko"/>
+                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="centerX" secondItem="BWH-9E-4lY" secondAttribute="centerX" id="bNy-3d-dos"/>
+                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="height" secondItem="5FH-Wc-1VD" secondAttribute="height" constant="-120" id="hkX-km-B4e"/>
+                            <constraint firstItem="WkQ-rU-dTC" firstAttribute="centerY" secondItem="BWH-9E-4lY" secondAttribute="centerY" id="mVM-pU-PHt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BWH-9E-4lY"/>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="DBH-J5-aEO" id="dTU-jl-S8L"/>
+                        <outlet property="containerView" destination="WkQ-rU-dTC" id="Z5H-iy-ZLo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o1q-8J-8fw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1675" y="-7"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Remove" width="12" height="12"/>
+    </resources>
+</document>

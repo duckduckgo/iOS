@@ -9,11 +9,16 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Home View Controller-->
         <scene sceneID="iIP-Az-GLU">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LJ1-RN-ckE" customClass="HomeViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LJ1-RN-ckE" customClass="HomeViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hb5-8e-q7S"/>
                         <viewControllerLayoutGuide type="bottom" id="ct2-28-dU6"/>
@@ -23,25 +28,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
-                                <rect key="frame" x="16" y="523" width="343" height="128"/>
+                                <rect key="frame" x="16" y="571" width="343" height="80"/>
                                 <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qiM-1T-iQy">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="128"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="saG-dg-Yh9">
+                                        <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="64" id="MSc-G7-g8p"/>
+                                            <constraint firstAttribute="height" constant="64" id="WBF-Vz-0pK"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See how to add DuckDuckGo to your iOS dock" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-Us-utp">
+                                        <rect key="frame" x="80" y="33.5" width="255" height="12"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbL-c9-Iji" userLabel="TapView">
+                                        <rect key="frame" x="-0.5" y="0.0" width="343" height="80"/>
+                                        <gestureRecognizers/>
                                         <connections>
-                                            <segue destination="ocM-Ii-c1I" kind="embed" id="8Jx-AX-jnn"/>
+                                            <outletCollection property="gestureRecognizers" destination="OGU-a7-Gzp" appends="YES" id="Qkn-rj-vUq"/>
                                         </connections>
-                                    </containerView>
+                                    </view>
                                 </subviews>
+                                <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="ELS-YG-Sxt"/>
-                                    <constraint firstItem="qiM-1T-iQy" firstAttribute="leading" secondItem="5Rf-oV-2W5" secondAttribute="leading" id="Sds-gP-bZ1"/>
-                                    <constraint firstItem="qiM-1T-iQy" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" id="UUG-4n-gIS"/>
-                                    <constraint firstAttribute="trailing" secondItem="qiM-1T-iQy" secondAttribute="trailing" id="bEA-xg-XuM"/>
-                                    <constraint firstAttribute="bottom" secondItem="qiM-1T-iQy" secondAttribute="bottom" id="nJI-9N-y1W"/>
+                                    <constraint firstItem="wf8-Us-utp" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="1Gb-32-Q21"/>
+                                    <constraint firstAttribute="trailing" secondItem="wf8-Us-utp" secondAttribute="trailing" constant="8" id="8JI-cL-NgB"/>
+                                    <constraint firstAttribute="height" constant="80" id="ELS-YG-Sxt"/>
+                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="width" secondItem="5Rf-oV-2W5" secondAttribute="width" id="TrP-js-Koc"/>
+                                    <constraint firstItem="wf8-Us-utp" firstAttribute="leading" secondItem="saG-dg-Yh9" secondAttribute="trailing" constant="8" id="Wiq-Rl-6H8"/>
+                                    <constraint firstItem="saG-dg-Yh9" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="dtu-7F-Pnr"/>
+                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="height" secondItem="5Rf-oV-2W5" secondAttribute="height" id="eYg-pf-ztQ"/>
+                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="centerX" secondItem="5Rf-oV-2W5" secondAttribute="centerX" id="rS6-Tt-9Ey"/>
+                                    <constraint firstItem="saG-dg-Yh9" firstAttribute="leading" secondItem="5Rf-oV-2W5" secondAttribute="leading" constant="8" id="wLW-lc-ByM"/>
+                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="y9Z-I7-vGs"/>
                                 </constraints>
                             </view>
                             <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
-                                <rect key="frame" x="0.0" y="20" width="375" height="503"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="551"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
@@ -89,6 +114,11 @@
                         <action selector="hideKeyboard" destination="LJ1-RN-ckE" id="h1r-Ul-pVa"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="OGU-a7-Gzp">
+                    <connections>
+                        <action selector="showInstructions" destination="LJ1-RN-ckE" id="HqE-a5-V2h"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1181.5999999999999" y="-331.48425787106447"/>
         </scene>
@@ -99,21 +129,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vyZ-o3-1D5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1798" y="-450"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="p9f-8f-ayW">
-            <objects>
-                <viewController id="ocM-Ii-c1I" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XEC-eh-FFG">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="128"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="jv6-bF-Ow8"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pk7-On-l7S" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2006" y="-117"/>
         </scene>
     </scenes>
     <resources>

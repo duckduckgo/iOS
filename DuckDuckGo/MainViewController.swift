@@ -443,6 +443,11 @@ extension MainViewController: HomeControllerDelegate {
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         loadUrlInNewTab(url)
     }
+    
+    func showInstructions(_ home: HomeViewController) {
+        performSegue(withIdentifier: "instructions", sender: self)
+    }
+    
 }
 
 extension MainViewController: TabDelegate {

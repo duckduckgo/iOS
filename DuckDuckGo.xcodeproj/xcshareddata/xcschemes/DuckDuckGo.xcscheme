@@ -98,7 +98,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-ddg_variant m1"
+            argument = "-ddg_variant m3"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

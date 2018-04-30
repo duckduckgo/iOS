@@ -23,24 +23,16 @@ class NotificationView: UIView {
     
     weak var delegate: NotificationViewDelegate?
     
-    override var frame: CGRect {
-        didSet {
-            print(#function, "frame", frame)
-        }
-    }
- 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        sharedInit()
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        sharedInit()
     }
 
-    func sharedInit() {
-        // TODO
+    @IBAction func tap() {
+        delegate?.tapped(self)
+    }
+    
+    @IBAction func dismiss() {
+        delegate?.dismised(self)
     }
     
     func setMessage(text: String) {
@@ -59,10 +51,8 @@ class NotificationView: UIView {
     }
  
     func update() {
-        print(#function, "frame", frame)
-        
         guard let superview = superview else { return }
-        let height = titleLabel.frame.height + messageLabel.frame.height + 32
+        let height = titleLabel.frame.height + messageLabel.frame.height + 24
 
         frame.size.width = superview.frame.width
         frame.size.height = height
@@ -76,6 +66,14 @@ class NotificationView: UIView {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         update()
+    }
+    
+    func hide() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.alpha = 0
+        }, completion: { completed in
+            self.removeFromSuperview()
+        })
     }
     
     static func loadFromNib() -> NotificationView {

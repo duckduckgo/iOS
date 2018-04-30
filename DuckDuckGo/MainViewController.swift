@@ -314,7 +314,30 @@ class MainViewController: UIViewController {
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
+    
+    fileprivate func launchInstructions() {
+        performSegue(withIdentifier: "instructions", sender: self)
+    }
 
+    func showDockReminder() {
+//        let feature = HomeRowReminderFeature()
+//        guard feature.showNow() else { return }
+        
+        let notificationView = NotificationView.loadFromNib()
+        notificationView.setTitle(text: "Take DuckDuckGo home")
+        notificationView.setMessage(text: "Add DuckDuckGo to your dock for quick and easy access!")
+        notificationView.delegate = self
+        containerView.addSubview(notificationView)
+        containerView.clipsToBounds = true
+        notificationView.frame.origin.y = -notificationView.frame.size.height
+        
+        UIView.animate(withDuration: 0.5) {
+            notificationView.frame.origin.y = 0
+        }
+        
+//        feature.setShown()
+    }
+    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -379,9 +402,12 @@ extension MainViewController: BrowserChromeDelegate {
 extension MainViewController: NotificationViewDelegate {
     
     func tapped(_ view: NotificationView) {
+        launchInstructions()
+        view.hide()
     }
     
     func dismised(_ view: NotificationView) {
+        view.hide()
     }
     
 }
@@ -395,19 +421,7 @@ extension MainViewController: OmniBarDelegate {
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
         dismissAutcompleteSuggestions()
-        
-        let notificationView = NotificationView.loadFromNib()
-        notificationView.setTitle(text: "Take DuckDuckGo home")
-        notificationView.setMessage(text: "Add DuckDuckGo to your dock for quick and easy access!")
-        notificationView.delegate = self
-        containerView.addSubview(notificationView)
-        containerView.clipsToBounds = true
-        notificationView.frame.origin.y = -notificationView.frame.size.height
-        
-        UIView.animate(withDuration: 0.5) {
-            notificationView.frame.origin.y = 0
-        }
-        
+        showDockReminder()
     }
     
     func onSiteRatingPressed() {
@@ -469,7 +483,7 @@ extension MainViewController: HomeControllerDelegate {
     }
     
     func showInstructions(_ home: HomeViewController) {
-        performSegue(withIdentifier: "instructions", sender: self)
+        launchInstructions()
     }
     
     func showSettings(_ home: HomeViewController) {

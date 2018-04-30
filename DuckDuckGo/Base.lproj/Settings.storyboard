@@ -185,7 +185,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="4xy-dB-g65" kind="presentation" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="oYY-cW-kRQ"/>
+                                            <segue destination="4xy-dB-g65" kind="presentation" modalPresentationStyle="overFullScreen" id="oYY-cW-kRQ"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

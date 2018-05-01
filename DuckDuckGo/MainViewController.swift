@@ -319,7 +319,7 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "instructions", sender: self)
     }
 
-    func showDockReminder() {
+    func showHomeRowReminder() {
 //        let feature = HomeRowReminderFeature()
 //        guard feature.showNow() else { return }
         
@@ -426,7 +426,7 @@ extension MainViewController: OmniBarDelegate {
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
         dismissAutcompleteSuggestions()
-        showDockReminder()
+        showHomeRowReminder()
     }
     
     func onSiteRatingPressed() {
@@ -452,6 +452,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         loadQuery(suggestion)
+        showHomeRowReminder()
     }
     
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {

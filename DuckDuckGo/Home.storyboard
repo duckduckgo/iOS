@@ -28,58 +28,64 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
-                                <rect key="frame" x="16" y="571" width="343" height="80"/>
+                                <rect key="frame" x="16" y="595" width="343" height="56"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="saG-dg-Yh9">
-                                        <rect key="frame" x="8" y="8" width="64" height="64"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="64" id="MSc-G7-g8p"/>
-                                            <constraint firstAttribute="height" constant="64" id="WBF-Vz-0pK"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See how to add DuckDuckGo to your iOS dock" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-Us-utp">
-                                        <rect key="frame" x="80" y="33.5" width="255" height="12"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbL-c9-Iji" userLabel="TapView">
-                                        <rect key="frame" x="-0.5" y="0.0" width="343" height="80"/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="OGU-a7-Gzp" appends="YES" id="Qkn-rj-vUq"/>
-                                        </connections>
-                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNe-xl-P9P">
-                                        <rect key="frame" x="317" y="0.0" width="26" height="26"/>
+                                        <rect key="frame" x="327" y="8" width="8" height="8"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="26" id="35f-1o-m2P"/>
-                                            <constraint firstAttribute="height" constant="26" id="8XL-yx-yX2"/>
+                                            <constraint firstAttribute="width" constant="8" id="35f-1o-m2P"/>
+                                            <constraint firstAttribute="height" constant="8" id="8XL-yx-yX2"/>
                                         </constraints>
                                         <state key="normal" image="Remove"/>
                                         <connections>
                                             <action selector="dismissInstructions" destination="LJ1-RN-ckE" eventType="touchUpInside" id="cwo-K3-3py"/>
                                         </connections>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GUH-RS-Q2r">
+                                        <rect key="frame" x="42.5" y="7.5" width="258.5" height="41"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="saG-dg-Yh9">
+                                                <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="41" id="MSc-G7-g8p"/>
+                                                    <constraint firstAttribute="height" constant="41" id="WBF-Vz-0pK"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-Us-utp">
+                                                <rect key="frame" x="49" y="0.0" width="209.5" height="41"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
+                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oQq-w5-IXv">
+                                        <rect key="frame" x="319" y="0.0" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="RmU-Pr-uQB"/>
+                                            <constraint firstAttribute="height" constant="24" id="jx9-4R-5Gu"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="pPw-Qa-xGd" appends="YES" id="hxu-5w-sHJ"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.18431372549019609" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="wf8-Us-utp" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="1Gb-32-Q21"/>
-                                    <constraint firstAttribute="trailing" secondItem="wf8-Us-utp" secondAttribute="trailing" constant="8" id="8JI-cL-NgB"/>
-                                    <constraint firstAttribute="height" constant="80" id="ELS-YG-Sxt"/>
-                                    <constraint firstAttribute="trailing" secondItem="uNe-xl-P9P" secondAttribute="trailing" id="PIB-AU-E3m"/>
-                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="width" secondItem="5Rf-oV-2W5" secondAttribute="width" id="TrP-js-Koc"/>
-                                    <constraint firstItem="wf8-Us-utp" firstAttribute="leading" secondItem="saG-dg-Yh9" secondAttribute="trailing" constant="8" id="Wiq-Rl-6H8"/>
-                                    <constraint firstItem="saG-dg-Yh9" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="dtu-7F-Pnr"/>
-                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="height" secondItem="5Rf-oV-2W5" secondAttribute="height" id="eYg-pf-ztQ"/>
-                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="centerX" secondItem="5Rf-oV-2W5" secondAttribute="centerX" id="rS6-Tt-9Ey"/>
-                                    <constraint firstItem="uNe-xl-P9P" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" id="tJM-im-uoK"/>
-                                    <constraint firstItem="saG-dg-Yh9" firstAttribute="leading" secondItem="5Rf-oV-2W5" secondAttribute="leading" constant="8" id="wLW-lc-ByM"/>
-                                    <constraint firstItem="gbL-c9-Iji" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="y9Z-I7-vGs"/>
+                                    <constraint firstAttribute="height" constant="56" id="ELS-YG-Sxt"/>
+                                    <constraint firstAttribute="trailing" secondItem="uNe-xl-P9P" secondAttribute="trailing" constant="8" id="PIB-AU-E3m"/>
+                                    <constraint firstItem="GUH-RS-Q2r" firstAttribute="centerX" secondItem="5Rf-oV-2W5" secondAttribute="centerX" id="Uy7-vY-IM8"/>
+                                    <constraint firstItem="oQq-w5-IXv" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" id="sUV-Lz-QAM"/>
+                                    <constraint firstAttribute="trailing" secondItem="oQq-w5-IXv" secondAttribute="trailing" id="stF-I3-W0O"/>
+                                    <constraint firstItem="uNe-xl-P9P" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" constant="8" id="tJM-im-uoK"/>
+                                    <constraint firstItem="GUH-RS-Q2r" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="uQc-nE-fiH"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="OGU-a7-Gzp" appends="YES" id="lWj-1U-OOO"/>
+                                </connections>
                             </view>
                             <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
-                                <rect key="frame" x="0.0" y="20" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="575"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
@@ -123,14 +129,19 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vtg-6j-Bq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="eXK-Fh-980">
+                <tapGestureRecognizer id="eXK-Fh-980" userLabel="Keyboard Tap">
                     <connections>
                         <action selector="hideKeyboard" destination="LJ1-RN-ckE" id="h1r-Ul-pVa"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="OGU-a7-Gzp">
+                <tapGestureRecognizer id="OGU-a7-Gzp" userLabel="Show Instruction Tap">
                     <connections>
                         <action selector="showInstructions" destination="LJ1-RN-ckE" id="HqE-a5-V2h"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="pPw-Qa-xGd" userLabel="Hide Instruction Tap">
+                    <connections>
+                        <action selector="dismissInstructions" destination="LJ1-RN-ckE" id="fkd-SK-F7Z"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -138,6 +149,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="HomeRowIcon" width="43" height="43"/>
         <image name="LogoWithText" width="201" height="160"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>

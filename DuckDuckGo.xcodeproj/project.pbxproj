@@ -83,6 +83,7 @@
 		85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668A209603840014CF04 /* HomeRow.storyboard */; };
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
 		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
+		85AE66942098BAC10014CF04 /* home-row-instructions.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85AE66932098BAC10014CF04 /* home-row-instructions.mp4 */; };
 		85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */; };
 		85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */; };
 		85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */; };
@@ -458,6 +459,7 @@
 		85AE668A209603840014CF04 /* HomeRow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeRow.storyboard; sourceTree = "<group>"; };
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		85AE66932098BAC10014CF04 /* home-row-instructions.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "home-row-instructions.mp4"; sourceTree = "<group>"; };
 		85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed.js"; path = "submodules/ios-js-support/src/bloom-filter-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed-es2015.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed-es2015.js"; sourceTree = SOURCE_ROOT; };
@@ -954,6 +956,7 @@
 		84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */ = {
 			isa = PBXGroup;
 			children = (
+				85AE66932098BAC10014CF04 /* home-row-instructions.mp4 */,
 				F143C2B11E49D78C00CFDE3A /* Assets.xcassets */,
 				F1A169F21F3B2A8A00BE3E3B /* FlamesAnimation.xcassets */,
 				F18641FF1E949E1900B2A911 /* Fonts */,
@@ -2178,6 +2181,7 @@
 				F1A169F31F3B2A8A00BE3E3B /* FlamesAnimation.xcassets in Resources */,
 				F1E4A4471EE894CD006F2EAE /* Autocomplete.storyboard in Resources */,
 				F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */,
+				85AE66942098BAC10014CF04 /* home-row-instructions.mp4 in Resources */,
 				850819D61FDB68F9006561FD /* Onboarding.xcassets in Resources */,
 				8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,

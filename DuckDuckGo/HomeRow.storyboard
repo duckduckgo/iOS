@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A5s-B8-hd1">
-    <device id="retina5_9" orientation="portrait">
+    <device id="retina4_0" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -23,23 +23,34 @@
             <objects>
                 <viewController storyboardIdentifier="instructions" id="A5s-B8-hd1" customClass="HomeRowInstructionsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5FH-Wc-1VD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WkQ-rU-dTC">
-                                <rect key="frame" x="32.666666666666657" y="186" width="310" height="450"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WkQ-rU-dTC">
+                                <rect key="frame" x="136" y="20" width="296" height="280"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-IP-PMy">
+                                        <rect key="frame" x="0.0" y="54" width="296" height="266"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="266" id="Brm-Rw-XFc"/>
+                                            <constraint firstAttribute="width" constant="296" id="Tjv-GE-9Jo"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="aXr-hX-rNT" appends="YES" id="gwR-9b-WPK"/>
+                                        </connections>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gZO-bI-rzI">
-                                        <rect key="frame" x="0.0" y="0.0" width="310" height="115"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="296" height="115"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take DuckDuckGo Home" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tah-vQ-mf9">
-                                                <rect key="frame" x="8" y="51" width="294" height="17"/>
+                                                <rect key="frame" x="8" y="51" width="280" height="17"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock for quick and easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-QY-3H3">
-                                                <rect key="frame" x="48.666666666666657" y="79" width="213.99999999999997" height="24"/>
+                                                <rect key="frame" x="48.5" y="79" width="200" height="24"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -56,7 +67,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="202-p3-edP">
-                                        <rect key="frame" x="280" y="8" width="22" height="22"/>
+                                        <rect key="frame" x="266" y="8" width="22" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="QFp-vW-B8j"/>
                                             <constraint firstAttribute="height" constant="22" id="y5x-Ew-BiU"/>
@@ -68,10 +79,10 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Smile" translatesAutoresizingMaskIntoConstraints="NO" id="iS2-VE-m9O">
-                                        <rect key="frame" x="146" y="20" width="18" height="18"/>
+                                        <rect key="frame" x="138.5" y="20" width="18" height="18"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBH-J5-aEO">
-                                        <rect key="frame" x="15.666666666666686" y="396" width="278" height="38"/>
+                                        <rect key="frame" x="15.5" y="234" width="264" height="38"/>
                                         <color key="backgroundColor" red="0.40000000000000002" green="0.68627450980392157" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="Azr-V1-kLw"/>
@@ -93,16 +104,24 @@
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="top" secondItem="iS2-VE-m9O" secondAttribute="bottom" constant="-38" id="EO1-00-Vai"/>
                                     <constraint firstItem="DBH-J5-aEO" firstAttribute="width" secondItem="WkQ-rU-dTC" secondAttribute="width" constant="-32" id="OO8-D3-aVQ"/>
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="centerX" secondItem="WkQ-rU-dTC" secondAttribute="centerX" id="PC4-xd-C15"/>
+                                    <constraint firstItem="DBH-J5-aEO" firstAttribute="top" secondItem="xKc-IP-PMy" secondAttribute="bottom" constant="16" id="PhI-Ys-hLb">
+                                        <variation key="heightClass=compact" constant="-86"/>
+                                    </constraint>
+                                    <constraint firstItem="xKc-IP-PMy" firstAttribute="centerX" secondItem="WkQ-rU-dTC" secondAttribute="centerX" id="RAx-gh-8eu"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="450" id="Rkf-Qz-zdJ"/>
                                     <constraint firstItem="202-p3-edP" firstAttribute="top" secondItem="WkQ-rU-dTC" secondAttribute="top" constant="8" id="Z20-1w-fu8"/>
                                     <constraint firstItem="iS2-VE-m9O" firstAttribute="centerX" secondItem="gZO-bI-rzI" secondAttribute="centerX" id="bx3-Yy-rgD"/>
-                                    <constraint firstAttribute="width" constant="310" id="lzm-iB-os4"/>
+                                    <constraint firstAttribute="width" constant="296" id="lzm-iB-os4"/>
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="top" secondItem="WkQ-rU-dTC" secondAttribute="top" id="mYz-6B-4wR"/>
-                                    <constraint firstAttribute="bottom" secondItem="DBH-J5-aEO" secondAttribute="bottom" constant="16" id="qdx-hp-DaB"/>
+                                    <constraint firstAttribute="bottom" secondItem="DBH-J5-aEO" secondAttribute="bottom" constant="16" id="qdx-hp-DaB">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="8"/>
+                                    </constraint>
+                                    <constraint firstItem="xKc-IP-PMy" firstAttribute="width" secondItem="WkQ-rU-dTC" secondAttribute="width" id="vkg-sY-tQh"/>
                                     <constraint firstItem="gZO-bI-rzI" firstAttribute="width" secondItem="WkQ-rU-dTC" secondAttribute="width" id="w56-MU-bGt"/>
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="WkQ-rU-dTC" firstAttribute="width" secondItem="5FH-Wc-1VD" secondAttribute="width" priority="900" constant="-60" id="Jpn-RB-hko"/>
                             <constraint firstItem="WkQ-rU-dTC" firstAttribute="centerX" secondItem="BWH-9E-4lY" secondAttribute="centerX" id="bNy-3d-dos"/>
@@ -114,9 +133,15 @@
                     <connections>
                         <outlet property="button" destination="DBH-J5-aEO" id="dTU-jl-S8L"/>
                         <outlet property="containerView" destination="WkQ-rU-dTC" id="Z5H-iy-ZLo"/>
+                        <outlet property="videoContainerView" destination="xKc-IP-PMy" id="RhP-PT-fjw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o1q-8J-8fw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="aXr-hX-rNT" userLabel="Play Video Tap">
+                    <connections>
+                        <action selector="playVideo" destination="A5s-B8-hd1" id="gRd-LK-ZkC"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1675" y="-7"/>
         </scene>

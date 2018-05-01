@@ -74,20 +74,14 @@ class NotificationView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        print("***", #function)
         update()
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
+        print("***", #function)
         update()
-    }
-    
-    func hide() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.alpha = 0
-        }, completion: { completed in
-            self.removeFromSuperview()
-        })
     }
     
     static func loadFromNib() -> NotificationView {

@@ -21,6 +21,20 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
                                 <rect key="frame" x="0.0" y="72" width="414" height="620"/>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-0B-l2J">
+                                <rect key="frame" x="0.0" y="72" width="414" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="g5u-N0-iSI"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiL-6e-jxs" userLabel="Status BG">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="nR4-nW-Mja"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
                                 <rect key="frame" x="0.0" y="20" width="414" height="52"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -73,11 +87,17 @@
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Ylj-oJ-fqD" firstAttribute="top" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="8aN-zm-DQU"/>
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="top" secondItem="uBn-Md-Q2c" secondAttribute="top" id="BrS-Dd-c0g"/>
+                            <constraint firstItem="iiL-6e-jxs" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="CfL-Ud-UIC"/>
+                            <constraint firstItem="iiL-6e-jxs" firstAttribute="centerX" secondItem="uBn-Md-Q2c" secondAttribute="centerX" id="GYY-82-9YX"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="top" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" id="N6y-rD-Nne"/>
+                            <constraint firstItem="lJT-0B-l2J" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="NuH-hE-pWg"/>
+                            <constraint firstItem="lJT-0B-l2J" firstAttribute="top" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="P7O-RF-g4h"/>
                             <constraint firstItem="Ylj-oJ-fqD" firstAttribute="leading" secondItem="Vxt-xD-aBt" secondAttribute="leading" id="Piz-bL-YZd"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="bottom" secondItem="uBn-Md-Q2c" secondAttribute="bottom" id="UsQ-i7-pjr"/>
+                            <constraint firstItem="lJT-0B-l2J" firstAttribute="centerX" secondItem="uBn-Md-Q2c" secondAttribute="centerX" id="d7x-EX-84Q"/>
+                            <constraint firstAttribute="top" secondItem="iiL-6e-jxs" secondAttribute="top" id="ea4-zN-0Co"/>
+                            <constraint firstItem="Ylj-oJ-fqD" firstAttribute="top" secondItem="lJT-0B-l2J" secondAttribute="bottom" id="h5k-Sy-jb2"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="m5V-dn-y07"/>
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="centerX" secondItem="Vxt-xD-aBt" secondAttribute="centerX" id="mvu-GD-IuW"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="centerX" secondItem="Vxt-xD-aBt" secondAttribute="centerX" id="qlX-4E-B0z"/>
@@ -96,6 +116,9 @@
                         <outlet property="fireButton" destination="ntb-c7-mjV" id="llw-tb-jJd"/>
                         <outlet property="forwardButton" destination="cUp-YP-aMf" id="7WB-lN-1AY"/>
                         <outlet property="navBarTop" destination="BrS-Dd-c0g" id="1ta-NK-q4L"/>
+                        <outlet property="notificationContainer" destination="lJT-0B-l2J" id="mM8-Jf-tfY"/>
+                        <outlet property="notificationContainerHeight" destination="g5u-N0-iSI" id="QUq-JS-Eqd"/>
+                        <outlet property="notificationContainerTop" destination="P7O-RF-g4h" id="4qK-Ti-ONY"/>
                         <outlet property="tabsButton" destination="K7o-WL-SC5" id="K5w-s3-8x3"/>
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>

@@ -33,7 +33,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
-    @IBOutlet weak var containerViewTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var notificationContainer: UIView!
+    @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
     var reminderShown: Bool = false
     
@@ -319,24 +322,47 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "instructions", sender: self)
     }
 
+    
+    weak var notificationView: NotificationView?
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        notificationView?.layoutSubviews()
+        let height = notificationView?.frame.size.height ?? 0
+        notificationContainerHeight.constant = height    
+        print(#function, "***", height)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print(#function, "***")
+    }
+    
     func showHomeRowReminder() {
+
 //        let feature = HomeRowReminderFeature()
 //        guard feature.showNow() else { return }
-        
+
         let notificationView = NotificationView.loadFromNib()
         
         // TODO extract in to translation files
         notificationView.setTitle(text: "Take DuckDuckGo home")
         notificationView.setMessage(text: "Add DuckDuckGo to your dock for quick and easy access!")
         notificationView.delegate = self
-        containerView.addSubview(notificationView)
-        containerView.clipsToBounds = true
-        notificationView.frame.origin.y = -notificationView.frame.size.height
+        notificationContainer.addSubview(notificationView)
+        notificationContainer.clipsToBounds = true
+        notificationContainerTop.constant = -notificationView.frame.size.height
+        notificationContainerHeight.constant = (notificationView.frame.size.height * 2)
+        self.notificationView = notificationView
         
-        UIView.animate(withDuration: 0.5) {
-            notificationView.frame.origin.y = 0
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.notificationContainerTop.constant = 0
+            self.notificationContainerHeight.constant = notificationView.frame.size.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         }
-        
+
 //        feature.setShown()
     }
     
@@ -406,13 +432,26 @@ extension MainViewController: BrowserChromeDelegate {
 
 extension MainViewController: NotificationViewDelegate {
     
+    fileprivate func hideNotification() {
+        
+        notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
+        notificationContainerHeight.constant = 0
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { completed in
+            self.notificationContainerTop.constant = 0
+            self.notificationView?.removeFromSuperview()
+        })
+        
+    }
+    
     func tapped(_ view: NotificationView) {
         launchInstructions()
-        view.hide()
+        hideNotification()
     }
     
     func dismised(_ view: NotificationView) {
-        view.hide()
+        hideNotification()
     }
     
 }

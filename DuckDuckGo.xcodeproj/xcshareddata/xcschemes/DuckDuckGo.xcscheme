@@ -99,7 +99,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ddg_variant m3"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

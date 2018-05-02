@@ -336,9 +336,7 @@ class MainViewController: UIViewController {
         notificationView.setTitle(text: title)
         notificationView.setMessage(text: message)
         notificationContainer.addSubview(notificationView)
-        notificationContainer.clipsToBounds = true
         notificationContainerTop.constant = -notificationView.frame.size.height
-        notificationContainerHeight.constant = (notificationView.frame.size.height * 2)
         self.notificationView = notificationView
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

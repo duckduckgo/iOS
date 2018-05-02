@@ -66,7 +66,8 @@ class HomeRowReminderFeatureTests: XCTestCase {
     }
     
     private func setReminderTimeElapsed() {
-        storage.firstAccessDate = Date(timeIntervalSinceNow: 60 * 60 * 24 * HomeRowReminderFeature.Constants.reminderTimeInDays * 1.1) // 3.1 days ago
+        let threeAndABitDaysAgo = -(60 * 60 * 24 * HomeRowReminderFeature.Constants.reminderTimeInDays * 1.1)
+        storage.firstAccessDate = Date(timeIntervalSinceNow: threeAndABitDaysAgo)
     }
 
 }

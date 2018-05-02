@@ -66,7 +66,7 @@ class HomeRowReminderFeature {
             storage.firstAccessDate = Date()
             return false
         }
-        let days = date.timeIntervalSinceNow / 24 / 60 / 60
+        let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
         return days > Constants.reminderTimeInDays
     }
     

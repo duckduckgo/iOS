@@ -55,33 +55,28 @@ class HomeViewController: UIViewController {
         
         let feature = HomeRowOnboardingFeature()
         if !feature.showNow() {
-            hideInstructions()
+            hideCallToAction()
         }
     
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(#function, "***")
-
         chromeDelegate?.omniBar.becomeFirstResponder()
     }
 
     @IBAction func hideKeyboard() {
-        print(#function, "***")
         chromeDelegate?.omniBar.resignFirstResponder()
     }
     
     @IBAction func showInstructions() {
-        print(#function, "***")
         delegate?.showInstructions(self)
         dismissInstructions()
     }
     
     @IBAction func dismissInstructions() {
-        print(#function, "***")
         HomeRowOnboardingFeature().dismissed()
-        hideInstructions()
+        hideCallToAction()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -123,7 +118,7 @@ class HomeViewController: UIViewController {
         delegate?.homeDidActivateOmniBar(home: self)
     }
 
-    private func hideInstructions() {
+    private func hideCallToAction() {
         infoView.isHidden = true
         infoViewHeight.constant = 0
     }

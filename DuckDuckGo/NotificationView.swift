@@ -80,18 +80,15 @@ class NotificationView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("***", #function)
         update()
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        print("***", #function)
         update()
     }
     
     deinit {
-        print("***", #function)
         dismissHandler = nil
     }
     

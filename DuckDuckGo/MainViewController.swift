@@ -327,12 +327,6 @@ class MainViewController: UIViewController {
         notificationView?.layoutSubviews()
         let height = notificationView?.frame.size.height ?? 0
         notificationContainerHeight.constant = height    
-        print(#function, "***", height)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print(#function, "***")
     }
     
     func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
@@ -500,7 +494,6 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 extension MainViewController: HomeControllerDelegate {
     
     func homeDidActivateOmniBar(home: HomeViewController) {
-        print(#function, "***")
         omniBar.clear()
     }
     

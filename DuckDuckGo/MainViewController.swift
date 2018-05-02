@@ -38,14 +38,14 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
-    var reminderShown: Bool = false
+    weak var notificationView: NotificationView?
     
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
-
+    
     private lazy var appUrls: AppUrls = AppUrls()
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
@@ -322,9 +322,6 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "instructions", sender: self)
     }
 
-    
-    weak var notificationView: NotificationView?
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         notificationView?.layoutSubviews()
@@ -338,17 +335,12 @@ class MainViewController: UIViewController {
         print(#function, "***")
     }
     
-    func showHomeRowReminder() {
-
-//        let feature = HomeRowReminderFeature()
-//        guard feature.showNow() else { return }
-
-        let notificationView = NotificationView.loadFromNib()
+    func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
         
-        // TODO extract in to translation files
-        notificationView.setTitle(text: "Take DuckDuckGo home")
-        notificationView.setMessage(text: "Add DuckDuckGo to your dock for quick and easy access!")
-        notificationView.delegate = self
+        let notificationView = NotificationView.loadFromNib(dismissHandler: dismissHandler)
+        
+        notificationView.setTitle(text: title)
+        notificationView.setMessage(text: message)
         notificationContainer.addSubview(notificationView)
         notificationContainer.clipsToBounds = true
         notificationContainerTop.constant = -notificationView.frame.size.height
@@ -362,8 +354,36 @@ class MainViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         }
+        
+    }
+    
+    func hideNotification() {
+        
+        notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
+        notificationContainerHeight.constant = 0
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { completed in
+            self.notificationContainerTop.constant = 0
+            self.notificationView?.removeFromSuperview()
+        })
+        
+    }
 
-//        feature.setShown()
+    func showHomeRowReminder() {
+
+        let feature = HomeRowReminderFeature()
+        guard feature.showNow() else { return }
+
+        showNotification(title: "Take DuckDuckGo home", message: "Add DuckDuckGo to your dock for easy access!") { tapped in
+            if tapped {
+                self.launchInstructions()
+            }
+            
+            self.hideNotification()
+        }
+        
+        feature.setShown()
     }
     
 }
@@ -428,32 +448,6 @@ extension MainViewController: BrowserChromeDelegate {
         navBarTop.constant = hidden ? -self.customNavigationBar.frame.size.height : 0
     }
 
-}
-
-extension MainViewController: NotificationViewDelegate {
-    
-    fileprivate func hideNotification() {
-        
-        notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
-        notificationContainerHeight.constant = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: { completed in
-            self.notificationContainerTop.constant = 0
-            self.notificationView?.removeFromSuperview()
-        })
-        
-    }
-    
-    func tapped(_ view: NotificationView) {
-        launchInstructions()
-        hideNotification()
-    }
-    
-    func dismised(_ view: NotificationView) {
-        hideNotification()
-    }
-    
 }
 
 extension MainViewController: OmniBarDelegate {

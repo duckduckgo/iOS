@@ -19,20 +19,15 @@
 
 import UIKit
 
-protocol NotificationViewDelegate: class {
-    
-    func dismised(_ view: NotificationView)
-    func tapped(_ view: NotificationView)
-    
-}
-
 class NotificationView: UIView {
+    
+    typealias DismissHandler = ((_ tapped: Bool) -> Void)
     
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     
-    weak var delegate: NotificationViewDelegate?
+    var dismissHandler: DismissHandler?
 
     var tapGesture: UITapGestureRecognizer?
     
@@ -53,11 +48,11 @@ class NotificationView: UIView {
     }
 
     @objc func tap() {
-        delegate?.tapped(self)
+        dismissHandler?(true)
     }
     
     @IBAction func dismiss() {
-        delegate?.dismised(self)
+        dismissHandler?(false)
     }
     
     func setMessage(text: String) {
@@ -95,9 +90,16 @@ class NotificationView: UIView {
         update()
     }
     
-    static func loadFromNib() -> NotificationView {
+    deinit {
+        print("***", #function)
+        dismissHandler = nil
+    }
+    
+    static func loadFromNib(dismissHandler: @escaping DismissHandler) -> NotificationView {
         let index = UIDevice.current.userInterfaceIdiom == .phone ? 0 : 1
-        return Bundle.main.loadNibNamed("NotificationView", owner: self, options: nil)![index] as! NotificationView
+        let notificationView = Bundle.main.loadNibNamed("NotificationView", owner: self, options: nil)![index] as! NotificationView
+        notificationView.dismissHandler = dismissHandler
+        return notificationView
     }
     
 }

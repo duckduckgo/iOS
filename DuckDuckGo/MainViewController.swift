@@ -375,7 +375,7 @@ class MainViewController: UIViewController {
         let feature = HomeRowReminderFeature()
         guard feature.showNow() else { return }
 
-        showNotification(title: "Take DuckDuckGo home", message: "Add DuckDuckGo to your dock for easy access!") { tapped in
+        showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
             if tapped {
                 self.launchInstructions()
             }

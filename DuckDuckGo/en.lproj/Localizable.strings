@@ -112,3 +112,6 @@
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
 "unknown.error.occurred" = "An unknown error occured";
+
+"home.row.reminder.title" = "Take DuckDuckGo home";
+"home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";

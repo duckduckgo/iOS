@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -24,14 +24,14 @@
                         <viewControllerLayoutGuide type="bottom" id="ct2-28-dU6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="klK-ZJ-wmA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
-                                <rect key="frame" x="16" y="595" width="343" height="56"/>
+                                <rect key="frame" x="16" y="303" width="635" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNe-xl-P9P">
-                                        <rect key="frame" x="327" y="8" width="8" height="8"/>
+                                        <rect key="frame" x="619" y="8" width="8" height="8"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="8" id="35f-1o-m2P"/>
                                             <constraint firstAttribute="height" constant="8" id="8XL-yx-yX2"/>
@@ -42,7 +42,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GUH-RS-Q2r">
-                                        <rect key="frame" x="42.5" y="7.5" width="258.5" height="41"/>
+                                        <rect key="frame" x="188.5" y="7.5" width="258.5" height="41"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="saG-dg-Yh9">
                                                 <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
@@ -60,7 +60,7 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oQq-w5-IXv">
-                                        <rect key="frame" x="319" y="0.0" width="24" height="24"/>
+                                        <rect key="frame" x="611" y="0.0" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="RmU-Pr-uQB"/>
                                             <constraint firstAttribute="height" constant="24" id="jx9-4R-5Gu"/>
@@ -85,15 +85,15 @@
                                 </connections>
                             </view>
                             <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
-                                <rect key="frame" x="0.0" y="20" width="375" height="575"/>
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="303"/>
                                 <gestureRecognizers/>
-                                <variation key="heightClass=compact" image="Logo"/>
+                                <variation key="heightClass=compact" image="LogoLandscape"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fku-9C-PCe">
-                                <rect key="frame" x="321" y="44" width="24" height="24"/>
+                                <rect key="frame" x="613" y="24" width="24" height="24"/>
                                 <accessibility key="accessibilityConfiguration" identifier="settings"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="Jd4-lU-zg2"/>
@@ -151,7 +151,7 @@
     </scenes>
     <resources>
         <image name="HomeRowIcon" width="43" height="43"/>
-        <image name="Logo" width="119" height="119"/>
+        <image name="LogoLandscape" width="316" height="94"/>
         <image name="LogoWithText" width="201" height="160"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>

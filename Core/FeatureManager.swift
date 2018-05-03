@@ -21,7 +21,7 @@
 import Foundation
 
 public enum FeatureName: String {
-    case homerow_onboarding, homerow_reminder
+    case homeRowOnboarding, homeRowReminder
 }
 
 public struct Feature {
@@ -39,16 +39,14 @@ public class DefaultFeatureManager: FeatureManager {
     
     // in future this may be downloaded as json from the server
     let featuresEnabledForVariants: [FeatureName: [String]] = [
-        FeatureName.homerow_onboarding: ["m2", "m3"],
-        FeatureName.homerow_reminder: ["m3"]
+        FeatureName.homeRowOnboarding: ["m2", "m3"],
+        FeatureName.homeRowReminder: ["m3"]
     ]
     
     private let variantManager: VariantManager
-    private let statistics: StatisticsStore
     
-    public init(variantManager: VariantManager = DefaultVariantManager(), statistics: StatisticsStore = StatisticsUserDefaults()) {
+    public init(variantManager: VariantManager = DefaultVariantManager()) {
         self.variantManager = variantManager
-        self.statistics = statistics
     }
     
     public func feature(named: FeatureName) -> Feature {

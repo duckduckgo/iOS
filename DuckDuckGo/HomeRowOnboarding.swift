@@ -37,7 +37,7 @@ class HomeRowOnboarding {
     
     func showNow() -> Bool {
         guard !storage.dismissed else { return false }
-        return self.featureManager.feature(named: .homerow_onboarding).isEnabled
+        return self.featureManager.feature(named: .homeRowOnboarding).isEnabled
     }
     
     func dismissed() {

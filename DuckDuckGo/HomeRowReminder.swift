@@ -58,7 +58,7 @@ class HomeRowReminder {
     }
     
     private func isEnabled() -> Bool {
-        return featureManager.feature(named: .homerow_reminder).isEnabled
+        return featureManager.feature(named: .homeRowReminder).isEnabled
     }
     
     private func hasReminderTimeElapsed() -> Bool {

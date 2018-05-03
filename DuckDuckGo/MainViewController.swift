@@ -350,7 +350,7 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
 
-        let feature = HomeRowReminderFeature()
+        let feature = HomeRowReminder()
         guard feature.showNow() else { return }
 
         showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in

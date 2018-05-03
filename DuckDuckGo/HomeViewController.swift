@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let feature = HomeRowOnboardingFeature()
+        let feature = HomeRowOnboarding()
         if !feature.showNow() {
             hideCallToAction()
         }    
@@ -69,7 +69,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func dismissInstructions() {
-        HomeRowOnboardingFeature().dismissed()
+        HomeRowOnboarding().dismissed()
         hideCallToAction()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()

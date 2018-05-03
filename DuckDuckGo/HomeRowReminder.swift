@@ -1,5 +1,5 @@
 //
-//  HomeRowReminderFeature.swift
+//  HomeRowReminder.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,14 +19,14 @@
 
 import Core
 
-protocol HomeRowReminderFeatureStorage {
+protocol HomeRowReminderStorage {
     
     var firstAccessDate: Date? { get set }
     var shown: Bool { get set }
     
 }
 
-class HomeRowReminderFeature {
+class HomeRowReminder {
     
     struct Constants {
         
@@ -35,9 +35,9 @@ class HomeRowReminderFeature {
     }
     
     private var featureManager: FeatureManager
-    private var storage: HomeRowReminderFeatureStorage
+    private var storage: HomeRowReminderStorage
     
-    init(featureManager: FeatureManager = DefaultFeatureManager(), storage: HomeRowReminderFeatureStorage = UserDefaultsHomeRowReminderStorage()) {
+    init(featureManager: FeatureManager = DefaultFeatureManager(), storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage()) {
         self.featureManager = featureManager
         self.storage = storage
     }
@@ -72,7 +72,7 @@ class HomeRowReminderFeature {
     
 }
 
-public class UserDefaultsHomeRowReminderStorage: HomeRowReminderFeatureStorage {
+public class UserDefaultsHomeRowReminderStorage: HomeRowReminderStorage {
     
     struct Keys {
         static let firstAccessDate = "com.duckduckgo.homerow.reminder.firstAccessDate"

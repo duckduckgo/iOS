@@ -1,5 +1,5 @@
 //
-//  HomeRowOnboardingFeature.swift
+//  HomeRowOnboarding.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,18 +19,18 @@
 
 import Core
 
-protocol HomeRowOnboardingFeatureStorage: class {
+protocol HomeRowOnboardingStorage: class {
     
     var dismissed:Bool { get set }
     
 }
 
-class HomeRowOnboardingFeature {
+class HomeRowOnboarding {
     
-    private let storage: HomeRowOnboardingFeatureStorage
+    private let storage: HomeRowOnboardingStorage
     private let featureManager: FeatureManager
 
-    init(storage: HomeRowOnboardingFeatureStorage = UserDefaultsHomeRowOnboardingFeatureStorage(), featureManager: FeatureManager = DefaultFeatureManager()) {
+    init(storage: HomeRowOnboardingStorage = UserDefaultsHomeRowOnboardingFeatureStorage(), featureManager: FeatureManager = DefaultFeatureManager()) {
         self.storage = storage
         self.featureManager = featureManager
     }
@@ -46,7 +46,7 @@ class HomeRowOnboardingFeature {
     
 }
 
-class UserDefaultsHomeRowOnboardingFeatureStorage: HomeRowOnboardingFeatureStorage {
+class UserDefaultsHomeRowOnboardingFeatureStorage: HomeRowOnboardingStorage {
     
     struct Keys {
         static let dismissed = "com.duckduckgo.homerow.onboarding.dismissed"

@@ -50,8 +50,8 @@ class HomeRowInstructionsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        HomeRowOnboardingFeature().dismissed()
-        HomeRowReminderFeature().setShown()
+        HomeRowOnboarding().dismissed()
+        HomeRowReminder().setShown()
     }
  
     @IBAction func dismiss() {

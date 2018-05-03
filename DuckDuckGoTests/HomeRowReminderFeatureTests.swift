@@ -32,7 +32,7 @@ class HomeRowReminderFeatureTests: XCTestCase {
 
     func testWhenFeatureIsEnabledAndFirstAccessedThenDateIsStored() {
 
-        let feature = HomeRowReminderFeature(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
         _ = feature.showNow()
         XCTAssertNotNil(storage.firstAccessDate)
         
@@ -41,7 +41,7 @@ class HomeRowReminderFeatureTests: XCTestCase {
     func testWhenFeatureEnabledAndTimeHasElapseAndAlreadyShownThenDontShow() {
         setReminderTimeElapsed()
 
-        let feature = HomeRowReminderFeature(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
         feature.setShown()
         
         XCTAssertFalse(feature.showNow())
@@ -50,23 +50,23 @@ class HomeRowReminderFeatureTests: XCTestCase {
     func testWhenFeatureEnabledAndIsNewAndTimeHasElapsedThenShow() {
         setReminderTimeElapsed()
         
-        let feature = HomeRowReminderFeature(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
         XCTAssertTrue(feature.showNow())
     }
 
     func testWhenFeatureEnabledAndIsNewAndTimeNotElapsedThenDontShow() {
-        let feature = HomeRowReminderFeature(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
         XCTAssertFalse(feature.showNow())
     }
 
     func testWhenFeatureNotEnabledAndTimeElapsedThenDontShow() {
         setReminderTimeElapsed()
-        let feature = HomeRowReminderFeature(featureManager: MockFeatureManager(enabled: false), storage: storage)
+        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: false), storage: storage)
         XCTAssertFalse(feature.showNow())
     }
     
     private func setReminderTimeElapsed() {
-        let threeAndABitDaysAgo = -(60 * 60 * 24 * HomeRowReminderFeature.Constants.reminderTimeInDays * 1.1)
+        let threeAndABitDaysAgo = -(60 * 60 * 24 * HomeRowReminder.Constants.reminderTimeInDays * 1.1)
         storage.firstAccessDate = Date(timeIntervalSinceNow: threeAndABitDaysAgo)
     }
 
@@ -82,7 +82,7 @@ struct MockFeatureManager: FeatureManager {
     
 }
 
-class MockHomeRowReminderFeatureStorage: HomeRowReminderFeatureStorage {
+class MockHomeRowReminderFeatureStorage: HomeRowReminderStorage {
 
     var firstAccessDate: Date?
     var shown: Bool = false

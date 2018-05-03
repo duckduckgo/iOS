@@ -100,10 +100,10 @@
 		85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */; };
 		85C11E452090668F00BFFEB4 /* FeatureManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */; };
 		85C11E472090716C00BFFEB4 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E462090716C00BFFEB4 /* FeatureManager.swift */; };
-		85C11E4C2090888C00BFFEB4 /* HomeRowReminderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */; };
+		85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */; };
 		85C11E512090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E502090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift */; };
 		85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E522090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift */; };
-		85C11E552090BDB800BFFEB4 /* HomeRowOnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E542090BDB800BFFEB4 /* HomeRowOnboardingFeature.swift */; };
+		85C11E552090BDB800BFFEB4 /* HomeRowOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E542090BDB800BFFEB4 /* HomeRowOnboarding.swift */; };
 		85C11E572090C13600BFFEB4 /* HomeRowOnboardingFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E562090C13600BFFEB4 /* HomeRowOnboardingFeatureTests.swift */; };
 		85C271CF1FCDB869007216B4 /* MajorTrackerNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271CD1FCDB7DE007216B4 /* MajorTrackerNetworkTests.swift */; };
 		85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271D01FCF33C8007216B4 /* DetectedTracker.swift */; };
@@ -475,10 +475,10 @@
 		85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManagerTests.swift; sourceTree = "<group>"; };
 		85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManagerTests.swift; sourceTree = "<group>"; };
 		85C11E462090716C00BFFEB4 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
-		85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminderFeature.swift; sourceTree = "<group>"; };
+		85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminder.swift; sourceTree = "<group>"; };
 		85C11E502090895C00BFFEB4 /* HomeRowReminderFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminderFeatureTests.swift; sourceTree = "<group>"; };
 		85C11E522090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHomeRowReminderStorageTests.swift; sourceTree = "<group>"; };
-		85C11E542090BDB800BFFEB4 /* HomeRowOnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowOnboardingFeature.swift; sourceTree = "<group>"; };
+		85C11E542090BDB800BFFEB4 /* HomeRowOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowOnboarding.swift; sourceTree = "<group>"; };
 		85C11E562090C13600BFFEB4 /* HomeRowOnboardingFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowOnboardingFeatureTests.swift; sourceTree = "<group>"; };
 		85C271CD1FCDB7DE007216B4 /* MajorTrackerNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajorTrackerNetworkTests.swift; sourceTree = "<group>"; };
 		85C271D01FCF33C8007216B4 /* DetectedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectedTracker.swift; sourceTree = "<group>"; };
@@ -1087,8 +1087,8 @@
 		85C11E4A209084DE00BFFEB4 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */,
-				85C11E542090BDB800BFFEB4 /* HomeRowOnboardingFeature.swift */,
+				85C11E4B2090888C00BFFEB4 /* HomeRowReminder.swift */,
+				85C11E542090BDB800BFFEB4 /* HomeRowOnboarding.swift */,
 				857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */,
 				85AE668A209603840014CF04 /* HomeRow.storyboard */,
 			);
@@ -2369,7 +2369,7 @@
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
-				85C11E4C2090888C00BFFEB4 /* HomeRowReminderFeature.swift in Sources */,
+				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
@@ -2400,7 +2400,7 @@
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
-				85C11E552090BDB800BFFEB4 /* HomeRowOnboardingFeature.swift in Sources */,
+				85C11E552090BDB800BFFEB4 /* HomeRowOnboarding.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,

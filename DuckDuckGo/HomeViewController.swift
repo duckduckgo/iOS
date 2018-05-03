@@ -23,10 +23,6 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    private struct Constants {
-        static let animationDuration = 0.25
-    }
-
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
     @IBOutlet weak var infoView: UIView!

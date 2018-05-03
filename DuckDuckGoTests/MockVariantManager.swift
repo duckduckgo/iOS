@@ -24,7 +24,7 @@ struct MockVariantManager: VariantManager {
     
     var currentVariant: Variant?
     
-    func assignVariant() {
+    func assignVariantIfNeeded() {
     }
-    
+
 }

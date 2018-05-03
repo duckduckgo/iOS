@@ -21,12 +21,24 @@ import XCTest
 @testable import Core
 
 class VariantManagerTests: XCTestCase {
-    
+
+    func testWhenExistingUserThenAssignIfNeededDoesNothing() {
+
+        let mockStore = MockStatisticsStore()
+        mockStore.atb = "atb"
+        mockStore.retentionAtb = "ratb"
+
+        let subject = DefaultVariantManager(variants: [Variant.defaultVariants[0]], storage: mockStore, rng: MockVariantRNG(returnValue: 0))
+        subject.assignVariantIfNeeded()
+        XCTAssertNil(subject.currentVariant)
+
+    }
+
     func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
         
         let variant = Variant(name: "anything", percent: 100, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
-        subject.assignVariant()
+        subject.assignVariantIfNeeded()
         XCTAssertEqual(variant.name, subject.currentVariant?.name)
 
     }
@@ -54,7 +66,7 @@ class VariantManagerTests: XCTestCase {
         
         let mockStore = MockStatisticsStore()
         let subject = DefaultVariantManager(variants: [Variant.defaultVariants[0]], storage: mockStore, rng: MockVariantRNG(returnValue: 0))
-        subject.assignVariant()
+        subject.assignVariantIfNeeded()
         XCTAssertEqual("m1", subject.currentVariant?.name)
         XCTAssertEqual("m1", mockStore.variant)
         
@@ -74,7 +86,7 @@ class VariantManagerTests: XCTestCase {
     
     private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
         let variantManager = DefaultVariantManager(storage: MockStatisticsStore(), rng: rng)
-        variantManager.assignVariant()
+        variantManager.assignVariantIfNeeded()
         return variantManager
     }
     

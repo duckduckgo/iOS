@@ -48,7 +48,7 @@ public protocol VariantRNG {
 public protocol VariantManager {
     
     var currentVariant: Variant? { get }
-    func assignVariant()
+    func assignVariantIfNeeded()
     
 }
 
@@ -68,9 +68,20 @@ public class DefaultVariantManager: VariantManager {
         self.rng = rng
     }
     
-    public func assignVariant() {
+    public func assignVariantIfNeeded() {
+        guard !storage.hasInstallStatistics else {
+            Logger.log(text: "no new variant needed for existing user")
+            return
+        }
+
+        if let variant = currentVariant {
+            Logger.log(text: "already assigned variant: \(variant)")
+            return
+        }
+
         let variant = selectVariant()
         storage.variant = variant?.name
+        Logger.log(text: "newly assigned variant: \(currentVariant as Any)")
     }
     
     private func selectVariant() -> Variant? {

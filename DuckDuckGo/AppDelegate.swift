@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
-        assignVariantIfNeeded()
+        DefaultVariantManager().assignVariantIfNeeded()
         
         appIsLaunching = true
         return true
@@ -101,15 +101,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: private
     
-    private func assignVariantIfNeeded() {
-        let variantManager: VariantManager = DefaultVariantManager()
-        if let variant = variantManager.currentVariant {
-            Logger.log(text: "already assigned variant: \(variant)")
-            return
-        }
-        variantManager.assignVariant()
-        Logger.log(text: "newly assigned variant: \(variantManager.currentVariant as Any)")
-    }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)

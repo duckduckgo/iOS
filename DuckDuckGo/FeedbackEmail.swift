@@ -27,11 +27,11 @@ public struct FeedbackEmail {
     let subject: String
     let body: String
     
-    init(appVersion: String, device: String, osName: String, osVersion: String) {
+    init(appVersion: String, variant: String, device: String, osName: String, osVersion: String) {
         let osText = "(\(osName) \(osVersion))"
         mailTo = AppEmails.feedback
         subject = UserText.feedbackEmailSubject
-        body = String(format: UserText.feedbackEmailBody, appVersion, device, osText)
+        body = String(format: UserText.feedbackEmailBody, appVersion, variant, device, osText)
     }
 }
 

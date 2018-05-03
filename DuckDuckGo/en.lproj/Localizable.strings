@@ -54,7 +54,7 @@
 "alert.title.add.to.whitelist.placeholder" = "www.example.com";
 
 "feedbackemail.subject" = "DuckDuckGo for iOS feedback";
-"feedbackemail.body" = "I'm running %@ on an %@ %@. Here's my feedback:\n";
+"feedbackemail.body" = "I'm running %@ \"%@\" on an %@ %@. Here's my feedback:\n";
 
 "navigation.title.edit" = "Edit";
 

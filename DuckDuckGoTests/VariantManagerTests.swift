@@ -22,9 +22,10 @@ import Core
 
 class VariantManagerTests: XCTestCase {
     
-    func testWhenNewAndUsingDefaultRNGThenReturnsValidVariant() {
+    func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
         
         let subject = DefaultVariantManager(variants: ["v1"], storage: MockVariantStorage())
+        subject.assignVariant()
         XCTAssertEqual("v1", subject.currentVariant)
 
     }
@@ -39,20 +40,35 @@ class VariantManagerTests: XCTestCase {
 
     }
     
-    func testWhenNewWithDefaultVariantsThenReturnsRandomVariant() {
-        XCTAssertEqual("m1", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 0)).currentVariant)
-        XCTAssertEqual("m1", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 1)).currentVariant)
-        XCTAssertEqual("m2", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 2)).currentVariant)
-        XCTAssertEqual("m3", DefaultVariantManager(storage: MockVariantStorage(), rng: MockVariantRNG(returnValue: 3)).currentVariant)
+    func testWhenVariantAssignedWithDefaultVariantsThenReturnsRandomVariant() {
+        XCTAssertEqual("m1", assignedVariantManager(withRNG: MockVariantRNG(returnValue: 0)).currentVariant)
+        XCTAssertEqual("m1", assignedVariantManager(withRNG: MockVariantRNG(returnValue: 1)).currentVariant)
+        XCTAssertEqual("m2", assignedVariantManager(withRNG: MockVariantRNG(returnValue: 2)).currentVariant)
+        XCTAssertEqual("m3", assignedVariantManager(withRNG: MockVariantRNG(returnValue: 3)).currentVariant)
     }
     
-    func testWhenNewThenReturnsRandomVariantAndSavesIt() {
+    func testWhenVariantAssignedThenReturnsRandomVariantAndSavesIt() {
         
         let mockVariantStorage = MockVariantStorage()
         let subject = DefaultVariantManager(variants: ["v1"], storage: mockVariantStorage, rng: MockVariantRNG(returnValue: 0))
+        subject.assignVariant()
         XCTAssertEqual("v1", subject.currentVariant)
         XCTAssertEqual("v1", mockVariantStorage.currentVariant)
         
+    }
+    
+    func testWhenNewThenCurrentVariantIsNil() {
+        
+        let mockVariantStorage = MockVariantStorage()
+        let subject = DefaultVariantManager(variants: ["v1"], storage: mockVariantStorage, rng: MockVariantRNG(returnValue: 0))
+        XCTAssertNil(subject.currentVariant)
+        
+    }
+    
+    private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
+        let variantManager = DefaultVariantManager(storage: MockVariantStorage(), rng: rng)
+        variantManager.assignVariant()
+        return variantManager
     }
     
 }

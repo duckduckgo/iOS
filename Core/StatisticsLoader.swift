@@ -63,7 +63,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
 
-        let installAtb = atb.version + variantManager.currentVariant
+        let installAtb = atb.version + (variantManager.currentVariant ?? "")
         let retentionAtb = atb.version
         
         APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in

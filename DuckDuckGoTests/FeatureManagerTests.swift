@@ -71,6 +71,9 @@ class FeatureManagerTests: XCTestCase {
 
 struct MockVariantManager: VariantManager {
     
-    var currentVariant: String
+    var currentVariant: String?
+    
+    func assignVariant() {
+    }
     
 }

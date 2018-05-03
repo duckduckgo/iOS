@@ -1077,15 +1077,6 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
-		85C11E3C20904B4F00BFFEB4 /* Variants */ = {
-			isa = PBXGroup;
-			children = (
-				85C11E3D20904B8400BFFEB4 /* VariantManager.swift */,
-				85C11E462090716C00BFFEB4 /* FeatureManager.swift */,
-			);
-			name = Variants;
-			sourceTree = "<group>";
-		};
 		85C11E3F20904BA900BFFEB4 /* Variants */ = {
 			isa = PBXGroup;
 			children = (
@@ -1201,6 +1192,8 @@
 		F1134EA71F3E2B3500B73467 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				85C11E462090716C00BFFEB4 /* FeatureManager.swift */,
+				85C11E3D20904B8400BFFEB4 /* VariantManager.swift */,
 				F1134EB41F40AEEA00B73467 /* StatisticsLoader.swift */,
 				F1134EB11F40AC6A00B73467 /* Domain */,
 				F1134EAE1F40AB2300B73467 /* Parser */,
@@ -1422,7 +1415,6 @@
 				F1134EA71F3E2B3500B73467 /* Statistics */,
 				F143C32A1E4A9A2700CFDE3A /* UserInterface */,
 				F143C3191E4A99DD00CFDE3A /* Utilities */,
-				85C11E3C20904B4F00BFFEB4 /* Variants */,
 				F143C3311E4A9A6A00CFDE3A /* Web */,
 			);
 			path = Core;

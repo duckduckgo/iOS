@@ -33,20 +33,15 @@ public protocol VariantStorage: class {
 
 public protocol VariantManager {
     
-    var currentVariant: String { get }
+    var currentVariant: String? { get }
+    func assignVariant()
     
 }
 
 public class DefaultVariantManager: VariantManager {
     
-    public var currentVariant: String {
-        if let variant = storage.currentVariant {
-            return variant
-        }
-
-        let variant = selectVariant()
-        storage.currentVariant = variant
-        return variant
+    public var currentVariant: String? {
+        return storage.currentVariant
     }
     
     private let variants: [String]
@@ -65,6 +60,11 @@ public class DefaultVariantManager: VariantManager {
         self.variants = variants
         self.storage = storage
         self.rng = rng
+    }
+    
+    public func assignVariant() {
+        let variant = selectVariant()
+        storage.currentVariant = variant
     }
     
     private func selectVariant() -> String {

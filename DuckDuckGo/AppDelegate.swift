@@ -44,13 +44,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
         
+        // assign it here, because "did become active" is already too late and "viewWillAppear"
+        // has already been called on the HomeViewController so won't show the home row CTA
+        assignVariantIfNeeded()
+        
         appIsLaunching = true
         return true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-        
+
         startMigration(application: application)
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()
@@ -95,7 +99,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
 
-    // MARK: prvate
+    // MARK: private
+    
+    private func assignVariantIfNeeded() {
+        let variantManager: VariantManager = DefaultVariantManager()
+        if let variant = variantManager.currentVariant {
+            Logger.log(text: "already assigned variant: \(variant)")
+            return
+        }
+        variantManager.assignVariant()
+        Logger.log(text: "newly assigned variant: \(variantManager.currentVariant as Any)")
+    }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)

@@ -1,5 +1,5 @@
 //
-//  HomeRowReminderFeatureTests.swift
+//  HomeRowReminderTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -22,17 +22,19 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-class HomeRowReminderFeatureTests: XCTestCase {
+class HomeRowReminderTests: XCTestCase {
 
-    var storage: MockHomeRowReminderFeatureStorage!
+    var storage: MockHomeRowReminderStorage!
+    var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowReminder ]))
+    var disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
     
     override func setUp() {
-        storage = MockHomeRowReminderFeatureStorage()
+        storage = MockHomeRowReminderStorage()
     }
 
     func testWhenFeatureIsEnabledAndFirstAccessedThenDateIsStored() {
 
-        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
         _ = feature.showNow()
         XCTAssertNotNil(storage.firstAccessDate)
         
@@ -40,8 +42,8 @@ class HomeRowReminderFeatureTests: XCTestCase {
     
     func testWhenFeatureEnabledAndTimeHasElapseAndAlreadyShownThenDontShow() {
         setReminderTimeElapsed()
-
-        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        
+        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
         feature.setShown()
         
         XCTAssertFalse(feature.showNow())
@@ -50,18 +52,18 @@ class HomeRowReminderFeatureTests: XCTestCase {
     func testWhenFeatureEnabledAndIsNewAndTimeHasElapsedThenShow() {
         setReminderTimeElapsed()
         
-        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
         XCTAssertTrue(feature.showNow())
     }
 
     func testWhenFeatureEnabledAndIsNewAndTimeNotElapsedThenDontShow() {
-        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: true), storage: storage)
+        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
         XCTAssertFalse(feature.showNow())
     }
 
     func testWhenFeatureNotEnabledAndTimeElapsedThenDontShow() {
         setReminderTimeElapsed()
-        let feature = HomeRowReminder(featureManager: MockFeatureManager(enabled: false), storage: storage)
+        let feature = HomeRowReminder(variantManager: disabledVariantManager, storage: storage)
         XCTAssertFalse(feature.showNow())
     }
     
@@ -72,17 +74,7 @@ class HomeRowReminderFeatureTests: XCTestCase {
 
 }
 
-struct MockFeatureManager: FeatureManager {
-    
-    let enabled: Bool
-    
-    func feature(named: FeatureName) -> Feature {
-        return Feature(name: named.rawValue, isEnabled: enabled)
-    }
-    
-}
-
-class MockHomeRowReminderFeatureStorage: HomeRowReminderStorage {
+class MockHomeRowReminderStorage: HomeRowReminderStorage {
 
     var firstAccessDate: Date?
     var shown: Bool = false

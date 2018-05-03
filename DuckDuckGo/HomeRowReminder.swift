@@ -34,11 +34,11 @@ class HomeRowReminder {
         
     }
     
-    private var featureManager: FeatureManager
+    private var variantManager: VariantManager
     private var storage: HomeRowReminderStorage
     
-    init(featureManager: FeatureManager = DefaultFeatureManager(), storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage()) {
-        self.featureManager = featureManager
+    init(variantManager: VariantManager = DefaultVariantManager(), storage: HomeRowReminderStorage = UserDefaultsHomeRowReminderStorage()) {
+        self.variantManager = variantManager
         self.storage = storage
     }
     
@@ -58,7 +58,8 @@ class HomeRowReminder {
     }
     
     private func isEnabled() -> Bool {
-        return featureManager.feature(named: .homeRowReminder).isEnabled
+        guard let variant = variantManager.currentVariant else { return false }
+        return variant.features.contains(.homeRowReminder)
     }
     
     private func hasReminderTimeElapsed() -> Bool {

@@ -1,5 +1,5 @@
 //
-//  HomeRowOnboardingFeatureTests.swift
+//  HomeRowOnboardingTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -21,30 +21,33 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-class HomeRowOnboardingFeatureTests: XCTestCase {
+class HomeRowOnboardingTests: XCTestCase {
+
+    var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowOnboarding ]))
+    var disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
 
     func testWhenDismissedThenDismissedStateStored() {
-        let storage = MockHomeRowOnboardingFeatureStorage(dismissed: true)
-        let feature = HomeRowOnboarding(storage: storage, featureManager: MockFeatureManager(enabled: true))
+        let storage = MockHomeRowOnboardingStorage(dismissed: true)
+        let feature = HomeRowOnboarding(storage: storage, variantManager: enabledVariantManager)
         feature.dismissed()
         XCTAssertTrue(storage.dismissed)
     }
     
     func testWhenFeatureHasBeenDismissedAndIsEnabledThenDontShowNow() {
-        XCTAssertFalse(HomeRowOnboarding(storage: MockHomeRowOnboardingFeatureStorage(dismissed: true), featureManager: MockFeatureManager(enabled: true)).showNow())
+        XCTAssertFalse(HomeRowOnboarding(storage: MockHomeRowOnboardingStorage(dismissed: true), variantManager: enabledVariantManager).showNow())
     }
 
-    func testWhenFeatureHasNotBeenDismissedIsDisabledThenDontShowNow() {
-        XCTAssertFalse(HomeRowOnboarding(storage: MockHomeRowOnboardingFeatureStorage(dismissed: false), featureManager: MockFeatureManager(enabled: false)).showNow())
+    func testWhenFeatureHasNotBeenDismissedAndIsDisabledThenDontShowNow() {
+        XCTAssertFalse(HomeRowOnboarding(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: disabledVariantManager).showNow())
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsEnabledThenShowNow() {
-        XCTAssertTrue(HomeRowOnboarding(storage: MockHomeRowOnboardingFeatureStorage(dismissed: false), featureManager: MockFeatureManager(enabled: true)).showNow())
+        XCTAssertTrue(HomeRowOnboarding(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledVariantManager).showNow())
     }
     
 }
 
-class MockHomeRowOnboardingFeatureStorage: HomeRowOnboardingStorage {
+class MockHomeRowOnboardingStorage: HomeRowOnboardingStorage {
     
     var dismissed: Bool = false
     

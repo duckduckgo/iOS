@@ -19,6 +19,26 @@
 
 import Foundation
 
+public enum FeatureName {
+    
+    case homeRowOnboarding, homeRowReminder
+    
+}
+
+public struct Variant {
+    
+    public static let defaultVariants = [
+        Variant(name: "m1", percent: 50, features: []),
+        Variant(name: "m2", percent: 25, features: [.homeRowOnboarding]),
+        Variant(name: "m3", percent: 25, features: [.homeRowOnboarding, .homeRowReminder]),
+    ]
+    
+    public let name: String
+    public let percent: Int
+    public let features: [FeatureName]
+    
+}
+
 public protocol VariantRNG {
     
     func nextInt(upperBound: Int) -> Int
@@ -27,30 +47,22 @@ public protocol VariantRNG {
 
 public protocol VariantManager {
     
-    var currentVariant: String? { get }
+    var currentVariant: Variant? { get }
     func assignVariant()
     
 }
 
 public class DefaultVariantManager: VariantManager {
     
-    public var currentVariant: String? {
-        return storage.variant
+    public var currentVariant: Variant? {
+        return variants.first(where: { $0.name == storage.variant })
     }
     
-    private let variants: [String]
+    private let variants: [Variant]
     private let storage: StatisticsStore
     private let rng: VariantRNG
     
-    /**
-     
-     - Parameters:
-        - variants: defaults to 3 possible variants "m1", "m2" or "m3" with a weighting of 50%, 25%, 25% respectively expressed as list with repeating elements to represent weighting
-        - rng: defaults to arc4random_uniform based random number generation
-        - storage: defaults to UserDefaults based storage of current variant
-
-    */
-    public init(variants: [String] = ["m1", "m1", "m2", "m3"], storage: StatisticsStore = StatisticsUserDefaults(), rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+    public init(variants: [Variant] = Variant.defaultVariants, storage: StatisticsStore = StatisticsUserDefaults(), rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
         self.variants = variants
         self.storage = storage
         self.rng = rng
@@ -58,11 +70,21 @@ public class DefaultVariantManager: VariantManager {
     
     public func assignVariant() {
         let variant = selectVariant()
-        storage.variant = variant
+        storage.variant = variant?.name
     }
     
-    private func selectVariant() -> String {
-        return variants[rng.nextInt(upperBound: variants.count)]
+    private func selectVariant() -> Variant? {
+        let randomPercent = rng.nextInt(upperBound: 100)
+
+        var runningTotal = 0
+        for variant in variants {
+            runningTotal += variant.percent
+            if randomPercent < runningTotal {
+                return variant
+            }
+        }
+        
+        return nil
     }
     
 }

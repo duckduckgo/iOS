@@ -28,16 +28,17 @@ protocol HomeRowOnboardingStorage: class {
 class HomeRowOnboarding {
     
     private let storage: HomeRowOnboardingStorage
-    private let featureManager: FeatureManager
+    private let variantManager: VariantManager
 
-    init(storage: HomeRowOnboardingStorage = UserDefaultsHomeRowOnboardingFeatureStorage(), featureManager: FeatureManager = DefaultFeatureManager()) {
+    init(storage: HomeRowOnboardingStorage = UserDefaultsHomeRowOnboardingFeatureStorage(), variantManager: VariantManager = DefaultVariantManager()) {
         self.storage = storage
-        self.featureManager = featureManager
+        self.variantManager = variantManager
     }
     
     func showNow() -> Bool {
         guard !storage.dismissed else { return false }
-        return self.featureManager.feature(named: .homeRowOnboarding).isEnabled
+        guard let variant = variantManager.currentVariant else { return false }
+        return variant.features.contains(.homeRowOnboarding)
     }
     
     func dismissed() {

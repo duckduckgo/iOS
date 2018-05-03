@@ -56,15 +56,9 @@ class HomeViewController: UIViewController {
         let feature = HomeRowOnboardingFeature()
         if !feature.showNow() {
             hideCallToAction()
-        }
-    
+        }    
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        chromeDelegate?.omniBar.becomeFirstResponder()
-    }
-
     @IBAction func hideKeyboard() {
         chromeDelegate?.omniBar.resignFirstResponder()
     }

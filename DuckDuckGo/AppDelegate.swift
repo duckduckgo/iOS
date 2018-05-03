@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         startMigration(application: application)
         StatisticsLoader.shared.load()
+        startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
             BlockerListsLoader().start(completion: nil)
@@ -121,6 +122,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         authWindow = nil
     }
     
+    private func startOnboardingFlowIfNotSeenBefore() {
+        let settings = TutorialSettings()
+        if !settings.hasSeenOnboarding {
+            startOnboardingFlow()
+        }
+    }
+    
     private func startMigration(application: UIApplication) {
         // This should happen so fast that it's complete by the time the user finishes onboarding.  
         Migration().start { occurred, storiesMigrated, bookmarksMigrated in
@@ -133,6 +141,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    private func startOnboardingFlow() {
+        guard let main = mainViewController else { return }
+        main.performSegue(withIdentifier: "Onboarding", sender: self)
+    }
+
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         clearNavigationStack()

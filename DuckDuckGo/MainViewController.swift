@@ -85,19 +85,6 @@ class MainViewController: UIViewController {
 
     }
  
-    private func startOnboardingFlowOrShowKeyboard() {
-        let settings = TutorialSettings()
-        if !settings.hasSeenOnboarding {
-            startOnboardingFlow()
-        } else {
-            omniBar.becomeFirstResponder()
-        }
-    }
-
-    private func startOnboardingFlow() {
-        performSegue(withIdentifier: "Onboarding", sender: self)
-    }
-
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
@@ -117,7 +104,6 @@ class MainViewController: UIViewController {
             refreshControls()
         } else {
             attachHomeScreen()
-            startOnboardingFlowOrShowKeyboard()
         }
     }
     

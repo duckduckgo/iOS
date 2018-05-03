@@ -24,7 +24,7 @@ class VariantManagerTests: XCTestCase {
     
     func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
         
-        let subject = DefaultVariantManager(variants: ["v1"], storage: MockVariantStorage())
+        let subject = DefaultVariantManager(variants: ["v1"], storage: MockStatisticsStore())
         subject.assignVariant()
         XCTAssertEqual("v1", subject.currentVariant)
 
@@ -32,11 +32,11 @@ class VariantManagerTests: XCTestCase {
     
     func testWhenAlreadyInitialsedThenReturnsPreviouslySelectedVariant() {
 
-        let mockVariantStorage = MockVariantStorage()
-        mockVariantStorage.currentVariant = "x1"
-        let subject = DefaultVariantManager(storage: mockVariantStorage)
+        let mockStore = MockStatisticsStore()
+        mockStore.variant = "x1"
+        let subject = DefaultVariantManager(storage: mockStore)
         XCTAssertEqual("x1", subject.currentVariant)
-        XCTAssertEqual("x1", mockVariantStorage.currentVariant)
+        XCTAssertEqual("x1", mockStore.variant)
 
     }
     
@@ -49,33 +49,27 @@ class VariantManagerTests: XCTestCase {
     
     func testWhenVariantAssignedThenReturnsRandomVariantAndSavesIt() {
         
-        let mockVariantStorage = MockVariantStorage()
-        let subject = DefaultVariantManager(variants: ["v1"], storage: mockVariantStorage, rng: MockVariantRNG(returnValue: 0))
+        let mockStore = MockStatisticsStore()
+        let subject = DefaultVariantManager(variants: ["v1"], storage: mockStore, rng: MockVariantRNG(returnValue: 0))
         subject.assignVariant()
         XCTAssertEqual("v1", subject.currentVariant)
-        XCTAssertEqual("v1", mockVariantStorage.currentVariant)
+        XCTAssertEqual("v1", mockStore.variant)
         
     }
     
     func testWhenNewThenCurrentVariantIsNil() {
         
-        let mockVariantStorage = MockVariantStorage()
-        let subject = DefaultVariantManager(variants: ["v1"], storage: mockVariantStorage, rng: MockVariantRNG(returnValue: 0))
+        let mockStore = MockStatisticsStore()
+        let subject = DefaultVariantManager(variants: ["v1"], storage: mockStore, rng: MockVariantRNG(returnValue: 0))
         XCTAssertNil(subject.currentVariant)
         
     }
     
     private func assignedVariantManager(withRNG rng: VariantRNG) -> VariantManager {
-        let variantManager = DefaultVariantManager(storage: MockVariantStorage(), rng: rng)
+        let variantManager = DefaultVariantManager(storage: MockStatisticsStore(), rng: rng)
         variantManager.assignVariant()
         return variantManager
     }
-    
-}
-
-class MockVariantStorage: VariantStorage {
-    
-    var currentVariant: String?
     
 }
 

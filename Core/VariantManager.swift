@@ -25,12 +25,6 @@ public protocol VariantRNG {
     
 }
 
-public protocol VariantStorage: class {
-    
-    var currentVariant: String? { get set }
-    
-}
-
 public protocol VariantManager {
     
     var currentVariant: String? { get }
@@ -41,11 +35,11 @@ public protocol VariantManager {
 public class DefaultVariantManager: VariantManager {
     
     public var currentVariant: String? {
-        return storage.currentVariant
+        return storage.variant
     }
     
     private let variants: [String]
-    private let storage: VariantStorage
+    private let storage: StatisticsStore
     private let rng: VariantRNG
     
     /**
@@ -56,7 +50,7 @@ public class DefaultVariantManager: VariantManager {
         - storage: defaults to UserDefaults based storage of current variant
 
     */
-    public init(variants: [String] = ["m1", "m1", "m2", "m3"], storage: VariantStorage = UserDefaultsVariantStorage(), rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+    public init(variants: [String] = ["m1", "m1", "m2", "m3"], storage: StatisticsStore = StatisticsUserDefaults(), rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
         self.variants = variants
         self.storage = storage
         self.rng = rng
@@ -64,7 +58,7 @@ public class DefaultVariantManager: VariantManager {
     
     public func assignVariant() {
         let variant = selectVariant()
-        storage.currentVariant = variant
+        storage.variant = variant
     }
     
     private func selectVariant() -> String {
@@ -79,30 +73,6 @@ public class Arc4RandomUniformVariantRNG: VariantRNG {
     
     public func nextInt(upperBound: Int) -> Int {
         return Int(arc4random_uniform(UInt32(upperBound)))
-    }
-    
-}
-
-public class UserDefaultsVariantStorage: VariantStorage {
-    
-    struct Keys {
-        static let variant = "com.duckduckgo.variant"
-    }
-    
-    public var currentVariant: String? {
-        set {
-            userDefaults.set(newValue, forKey: Keys.variant)
-        }
-        
-        get {
-            return userDefaults.string(forKey: Keys.variant)
-        }
-    }
-    
-    private let userDefaults: UserDefaults
-
-    public init(userDefaults: UserDefaults = UserDefaults.standard) {
-        self.userDefaults = userDefaults
     }
     
 }

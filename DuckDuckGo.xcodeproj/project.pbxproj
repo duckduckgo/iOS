@@ -98,7 +98,6 @@
 		85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */; };
 		85C11E3E20904B8400BFFEB4 /* VariantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E3D20904B8400BFFEB4 /* VariantManager.swift */; };
 		85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */; };
-		85C11E432090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */; };
 		85C11E452090668F00BFFEB4 /* FeatureManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */; };
 		85C11E472090716C00BFFEB4 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E462090716C00BFFEB4 /* FeatureManager.swift */; };
 		85C11E4C2090888C00BFFEB4 /* HomeRowReminderFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */; };
@@ -474,7 +473,6 @@
 		85BD869E1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionInfoDisplaying.swift; sourceTree = "<group>"; };
 		85C11E3D20904B8400BFFEB4 /* VariantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManager.swift; sourceTree = "<group>"; };
 		85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantManagerTests.swift; sourceTree = "<group>"; };
-		85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsVariantStorageTests.swift; sourceTree = "<group>"; };
 		85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManagerTests.swift; sourceTree = "<group>"; };
 		85C11E462090716C00BFFEB4 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		85C11E4B2090888C00BFFEB4 /* HomeRowReminderFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowReminderFeature.swift; sourceTree = "<group>"; };
@@ -1081,7 +1079,6 @@
 			isa = PBXGroup;
 			children = (
 				85C11E442090668F00BFFEB4 /* FeatureManagerTests.swift */,
-				85C11E422090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift */,
 				85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */,
 			);
 			name = Variants;
@@ -2452,7 +2449,6 @@
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				F16393F51ECCA85900DDD653 /* ContentBlockerUserDefaultsTests.swift in Sources */,
 				85C271DB1FD0366F007216B4 /* HTTPSUpgradeTests.swift in Sources */,
-				85C11E432090652200BFFEB4 /* UserDefaultsVariantStorageTests.swift in Sources */,
 				F1DA2F7D1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift in Sources */,
 				85C11E572090C13600BFFEB4 /* HomeRowOnboardingFeatureTests.swift in Sources */,
 				F14208C91F33457A0034198A /* MockContentBlockerConfigurationStore.swift in Sources */,

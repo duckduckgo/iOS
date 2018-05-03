@@ -29,7 +29,7 @@ class StatisticsLoaderTests: XCTestCase {
     
     override func setUp() {
         mockStatisticsStore = MockStatisticsStore()
-        testee = StatisticsLoader(statisticsStore: mockStatisticsStore, variantManager: MockVariantManager(currentVariant: "x1"))
+        testee = StatisticsLoader(statisticsStore: mockStatisticsStore)
     }
     
     override func tearDown() {
@@ -38,6 +38,8 @@ class StatisticsLoaderTests: XCTestCase {
     }
     
     func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {
+        
+        mockStatisticsStore.variant = "x1"
         
         loadSuccessfulAtbStub()
         loadSuccessfulExiStub()

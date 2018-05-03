@@ -27,13 +27,11 @@ public class StatisticsLoader {
     public static let shared = StatisticsLoader()
 
     private let statisticsStore: StatisticsStore
-    private let variantManager: VariantManager
     private let appUrls = AppUrls()
     private let parser = AtbParser()
     
-    init(statisticsStore: StatisticsStore = StatisticsUserDefaults(), variantManager: VariantManager = DefaultVariantManager()) {
+    init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
-        self.variantManager = variantManager
     }
     
     public func load(completion: @escaping Completion = {}) {
@@ -63,7 +61,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
 
-        let installAtb = atb.version + (variantManager.currentVariant ?? "")
+        let installAtb = atb.version + (statisticsStore.variant ?? "")
         let retentionAtb = atb.version
         
         APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in

@@ -25,4 +25,6 @@ public protocol StatisticsStore: class {
     var hasInstallStatistics: Bool { get }
     var atb: String? { get set }
     var retentionAtb: String? { get set }
+    var variant: String? { get set }
+    
 }

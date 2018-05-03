@@ -27,6 +27,7 @@ public class StatisticsUserDefaults: StatisticsStore {
     private struct Keys {
         static let atb = "com.duckduckgo.statistics.atb.key"
         static let retentionAtb = "com.duckduckgo.statistics.retentionatb.key"
+        static let variant = "com.duckduckgo.statistics.variant.key"
     }
     
     private var userDefaults: UserDefaults? {
@@ -58,5 +59,15 @@ public class StatisticsUserDefaults: StatisticsStore {
             userDefaults?.setValue(newValue, forKey: Keys.retentionAtb)
         }
     }
+    
+    public var variant: String? {
+        get {
+            return userDefaults?.string(forKey: Keys.variant)
+        }
+        
+        set{
+            userDefaults?.setValue(newValue, forKey: Keys.variant)
+        }
+    }
+    
 }
-

@@ -87,6 +87,7 @@
                             <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
                                 <rect key="frame" x="0.0" y="20" width="375" height="575"/>
                                 <gestureRecognizers/>
+                                <variation key="heightClass=compact" image="Logo"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
                                 </connections>
@@ -150,6 +151,7 @@
     </scenes>
     <resources>
         <image name="HomeRowIcon" width="43" height="43"/>
+        <image name="Logo" width="119" height="119"/>
         <image name="LogoWithText" width="201" height="160"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="23" height="22"/>

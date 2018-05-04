@@ -145,11 +145,11 @@ public class SiteRating {
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
-        return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil }).compactMap({ $0.networkName })).count
+        return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil }).flatMap({ $0.networkName })).count
     }
 
     private func uniqueTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
-        return Set(trackers.keys.compactMap({ $0.networkName ?? $0.domain })).count
+        return Set(trackers.keys.flatMap({ $0.networkName ?? $0.domain })).count
     }
 
 }

@@ -167,7 +167,7 @@ class SiteRatingTrackerNetworkSectionBuilder {
         var sections = [PrivacyProtectionTrackerNetworksController.Section]()
 
         // work around bug in first party detection - everything *should* have a URL with host
-        let trackers = trackers.compactMap({ $0.key }).filter( { $0.domain != nil } ).sorted(by: { $0.domain! < $1.domain! })
+        let trackers = trackers.flatMap({ $0.key }).filter( { $0.domain != nil } ).sorted(by: { $0.domain! < $1.domain! })
         
         // group by tracker types, sorted appropriately
         let majorTrackers = trackers.filter({ $0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.percentage(majorTrackerNetworksStore) > $1.percentage(majorTrackerNetworksStore) })

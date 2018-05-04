@@ -1,1 +1,1 @@
-In this release we tweaked our startpage searchbar, streamlined our content blocking and added some other stability enhancements
+In this release we fixed a bug in the last release which prevented users from logging in to email and social media sites.

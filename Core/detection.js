@@ -87,16 +87,16 @@
         }
 
         xhr.send = function(body) {
-
+ 
+            var sendArgs = arguments
             var instance = this
             duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xmlhttprequest", function(url, block) {
-
                 if (block) {
                     instance.abort()
                     duckduckgoMessaging.log("blocked xhr: " + url)
                 } else {
-                    duckduckgoMessaging.log("alloowing xhr: " + url)        
-                    originalSend.apply(instance, arguments)            
+                    duckduckgoMessaging.log("allowing xhr: " + url)
+                    originalSend.apply(instance, sendArgs)
                 } 
 
             })

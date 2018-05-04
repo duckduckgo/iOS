@@ -145,10 +145,9 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
     
     private func finishOnboardingFlow() {
-        dismiss(animated: true) {
-            var settings = TutorialSettings()
-            settings.hasSeenOnboarding = true
-        }
+        var settings = TutorialSettings()
+        settings.hasSeenOnboarding = true
+        dismiss(animated: true)
     }
 
     fileprivate var currentController: UIViewController {

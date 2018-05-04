@@ -29,4 +29,6 @@ class MockStatisticsStore: StatisticsStore {
         return atb != nil && retentionAtb != nil
     }
     
+    var variant: String?
+    
 }

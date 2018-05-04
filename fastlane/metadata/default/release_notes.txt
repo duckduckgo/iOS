@@ -1,1 +1,3 @@
 In this release we have tweaked the start page of the app and are starting an experiment to see if we can encourage new users to add us to their iOS dock.
+
+We have also fixed a problem which prevented some users from logging in to social media sites.

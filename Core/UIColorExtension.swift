@@ -58,6 +58,10 @@ extension UIColor {
         return UIColor(red: 106.0 / 255.0, green: 187.0 / 255.0, blue: 224.0 / 255.0, alpha: 1.0)
     }
     
+    public static var greyishBrownTwo: UIColor {
+        return UIColor(red: 77.0 / 255.0, green: 77.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
+    }
+    
     public func combine(withColor other: UIColor, ratio: CGFloat) -> UIColor {
         let otherRatio = 1 - ratio
         let red = (redComponent * ratio) + (other.redComponent * otherRatio)

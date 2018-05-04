@@ -25,7 +25,8 @@ public class StatisticsLoader {
     public typealias Completion =  (() -> Void)
     
     public static let shared = StatisticsLoader()
-    private var statisticsStore: StatisticsStore
+
+    private let statisticsStore: StatisticsStore
     private let appUrls = AppUrls()
     private let parser = AtbParser()
     
@@ -60,7 +61,7 @@ public class StatisticsLoader {
     
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
 
-        let installAtb = atb.version + Atb.variant
+        let installAtb = atb.version + (statisticsStore.variant ?? "")
         let retentionAtb = atb.version
         
         APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in

@@ -23,113 +23,105 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    private struct Constants {
-        static let animationDuration = 0.25
-    }
-    
-    @IBOutlet weak var passiveContent: UIView!
-    @IBOutlet weak var searchBar: UIView!
-    @IBOutlet weak var searchBarContent: UIView!
-    @IBOutlet weak var searchImage: UIImageView!
-    @IBOutlet weak var searchText: UILabel!
-    
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var infoView: UIView!
+
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-    private var active = false
-    
-    static func loadFromStoryboard(active: Bool) -> HomeViewController {
-        let controller = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        controller.active = active
-        return controller
+
+    var frame: CGRect!
+
+    static func loadFromStoryboard() -> HomeViewController {
+        return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        frame = view.frame
+        
+        updateInfoView()
+        activateOmniBar()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if active {
-            enterActiveMode()
-        } else {
-            enterPassiveMode()
+        
+        let feature = HomeRowOnboarding()
+        if !feature.showNow() {
+            hideCallToAction()
+        }    
+    }
+    
+    @IBAction func hideKeyboard() {
+        chromeDelegate?.omniBar.resignFirstResponder()
+    }
+    
+    @IBAction func showInstructions() {
+        delegate?.showInstructions(self)
+        dismissInstructions()
+    }
+    
+    @IBAction func dismissInstructions() {
+        HomeRowOnboarding().dismissed()
+        hideCallToAction()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
         }
     }
     
-    @IBAction func onEnterActiveModeTapped(_ sender: Any) {
-         enterActiveModeAnimated()
+    @IBAction func showSettings() {
+        delegate?.showSettings(self)
+    }
+
+    @objc func onKeyboardChangeFrame(notification: NSNotification) {
+        guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }
+        guard let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else { return }
+
+        let diff = beginFrame.origin.y - endFrame.origin.y
+
+        if diff > 0 {
+            bottomConstraint.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0) + 16
+        } else {
+            bottomConstraint.constant = 16
+        }
+
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
     }
     
-    private func enterActiveModeAnimated() {
-        UIView.animate(withDuration: Constants.animationDuration, animations: {
-            self.moveSearchBarUp()
-        }, completion: { _ in
-            self.enterActiveMode()
-        })
+    private func updateInfoView() {
+        infoView.layer.cornerRadius = 5
+        infoView.layer.borderColor = UIColor.greyishBrownTwo.cgColor
+        infoView.layer.borderWidth = 1
+        infoView.layer.masksToBounds = true
     }
     
-    private func enterActiveMode() {
+    private func activateOmniBar() {
         chromeDelegate?.setNavigationBarHidden(false)
-        passiveContent.isHidden = true
         delegate?.homeDidActivateOmniBar(home: self)
     }
 
-    @IBAction func onEnterPassiveModeTapped(_ sender: Any) {
-        enterPassiveModeAnimated()
-    }
-    
-    private func enterPassiveModeAnimated() {
-        chromeDelegate?.setNavigationBarHidden(true)
-        passiveContent.isHidden = false
-        UIView.animate(withDuration: Constants.animationDuration, animations: {
-            self.resetSearchBar()
-        }, completion: { _ in
-            self.enterPassiveMode()
-        })
-    }
-    
-    private func enterPassiveMode() {
-        chromeDelegate?.setNavigationBarHidden(true)
-        passiveContent.isHidden = false
-        delegate?.homeDidDeactivateOmniBar(home: self)
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    }
-    
-    private func moveSearchBarUp() {
-        guard let omniSearch = chromeDelegate?.omniBar.editingBackground else { return }
-        guard let convertedOrigin = searchBar.superview?.convert(searchBar.frame.origin, to: passiveContent) else { return }
-        
-        let xScale = omniSearch.frame.size.width / searchBar.frame.size.width
-        let yScale = omniSearch.frame.size.height / searchBar.frame.size.height
-        let xIdentityScale = searchBar.frame.size.width / omniSearch.frame.size.width
-        let yIdentityScale = searchBar.frame.size.height / omniSearch.frame.size.height
-        let searchBarToOmniTextRatio: CGFloat = 0.875
-        passiveContent.transform.ty = -convertedOrigin.y
-        searchBar.transform = CGAffineTransform(scaleX: xScale, y: yScale)
-        searchBarContent.transform = CGAffineTransform(scaleX: xIdentityScale, y: yIdentityScale)
-        searchText.transform = CGAffineTransform(scaleX: searchBarToOmniTextRatio, y: searchBarToOmniTextRatio)
-        searchText.transform.tx = -searchText.frame.origin.x
-        searchImage.alpha = 0
-    }
-    
-    private func resetSearchBar() {
-        passiveContent.transform = CGAffineTransform.identity
-        searchBar.transform = CGAffineTransform.identity
-        searchBarContent.transform = CGAffineTransform.identity
-        searchText.transform = CGAffineTransform.identity
-        searchImage.alpha = 1
+    private func hideCallToAction() {
+        infoView.isHidden = true
+        infoViewHeight.constant = 0
     }
     
     func load(url: URL) {
         delegate?.home(self, didRequestUrl: url)
     }
     
-    func omniBarWasDismissed() {
-        enterPassiveModeAnimated()
-    }
-
     func dismiss() {
         delegate = nil
         chromeDelegate = nil
         removeFromParentViewController()
         view.removeFromSuperview()
     }
+
 }

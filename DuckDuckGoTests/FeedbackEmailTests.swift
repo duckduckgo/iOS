@@ -27,10 +27,10 @@ class FeedbackEmailTests: XCTestCase {
     
     let expectedEmail = "ios@duckduckgo.com"
     let expectedSubject = "DuckDuckGo for iOS feedback"
-    let expectedBody = "I'm running DuckDuckGo 7 (567) on an iPhone 6 (iOS 10.6). Here's my feedback:\n"
+    let expectedBody = "I'm running DuckDuckGo 7 (567) \"v1\" on an iPhone 6 (iOS 10.6). Here's my feedback:\n"
     
     override func setUp() {
-        testee = FeedbackEmail(appVersion: "DuckDuckGo 7 (567)", device: "iPhone 6", osName: "iOS", osVersion: "10.6")
+        testee = FeedbackEmail(appVersion: "DuckDuckGo 7 (567)", variant: "v1", device: "iPhone 6", osName: "iOS", osVersion: "10.6")
     }
     
     func testThatMailToIsCorrect() {

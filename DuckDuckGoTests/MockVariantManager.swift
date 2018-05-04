@@ -1,8 +1,8 @@
 //
-//  FeedbackEmail.swift
+//  MockVariantManager.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,21 +17,14 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import Core
 
-public struct FeedbackEmail {
+struct MockVariantManager: VariantManager {
     
-    let mailTo: String
-    let subject: String
-    let body: String
+    var currentVariant: Variant?
     
-    init(appVersion: String, variant: String, device: String, osName: String, osVersion: String) {
-        let osText = "(\(osName) \(osVersion))"
-        mailTo = AppEmails.feedback
-        subject = UserText.feedbackEmailSubject
-        body = String(format: UserText.feedbackEmailBody, appVersion, variant, device, osText)
+    func assignVariantIfNeeded() {
     }
-}
 
+}

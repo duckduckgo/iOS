@@ -1,1 +1,1 @@
-In this release we tweaked our startpage searchbar, streamlined our content blocking and added some other stability enhancements
+In this release we have tweaked the start page of the app and are starting an experiment to see if we can encourage new users to add us to their iOS dock.

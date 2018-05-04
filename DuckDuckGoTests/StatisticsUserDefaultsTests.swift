@@ -28,6 +28,7 @@ class StatisticsUserDefaultsTests: XCTestCase {
         static let userDefaultsSuit = "StatisticsUserDefaultsTestSuit"
         static let atb = "atb"
         static let retentionAtb = "retentionAtb"
+        static let variant = "testVariant"
     }
     
     var testee: StatisticsUserDefaults!
@@ -37,10 +38,16 @@ class StatisticsUserDefaultsTests: XCTestCase {
         testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }
 
+    func testWhenVariantSetThenDefaultsIsUpdated() {
+        testee.variant = Constants.variant
+        XCTAssertEqual(testee.variant, Constants.variant)
+    }
+    
     func testWhenFirstInitialisedThenHasStatisticsIsFalseAndAtbValuesNil() {
         XCTAssertNil(testee.atb)
         XCTAssertNil(testee.retentionAtb)
         XCTAssertFalse(testee.hasInstallStatistics)
+        XCTAssertNil(testee.variant)
     }
 
     func testWhenAtbValuesBothSetThenHasStatisticsIsTrue() {

@@ -33,13 +33,19 @@ class MainViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
-
+    
+    @IBOutlet weak var notificationContainer: UIView!
+    @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
+    @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
+    
+    weak var notificationView: NotificationView?
+    
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
-
+    
     private lazy var appUrls: AppUrls = AppUrls()
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
@@ -78,7 +84,7 @@ class MainViewController: UIViewController {
         }
 
     }
-
+ 
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()
         tabManager = TabManager(model: tabsModel, delegate: self)
@@ -97,7 +103,7 @@ class MainViewController: UIViewController {
             addToView(tab: tab)
             refreshControls()
         } else {
-            attachHomeScreen(active: false)
+            attachHomeScreen()
         }
     }
     
@@ -108,10 +114,10 @@ class MainViewController: UIViewController {
         customNavigationBar.addSubview(omniBar)
     }
     
-    fileprivate func attachHomeScreen(active: Bool = true)  {
+    fileprivate func attachHomeScreen()  {
         removeHomeScreen()
 
-        let controller = HomeViewController.loadFromStoryboard(active: active)
+        let controller = HomeViewController.loadFromStoryboard()
         homeController = controller
 
         controller.chromeDelegate = self
@@ -214,7 +220,7 @@ class MainViewController: UIViewController {
         if let currentTab = currentTab {
             select(tab: currentTab)
         } else {
-            attachHomeScreen(active: false)
+            attachHomeScreen()
         }
     }
     
@@ -223,7 +229,7 @@ class MainViewController: UIViewController {
         WebCacheManager.clear() {}
         FireAnimation.animate() {
             self.tabManager.removeAll()
-            self.attachHomeScreen(active: false)
+            self.attachHomeScreen()
             completion()
         }
         let window = UIApplication.shared.keyWindow
@@ -256,7 +262,6 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         dismissAutcompleteSuggestions()
         refreshOmniBar()
-        homeController?.omniBarWasDismissed()
     }
     
     fileprivate func refreshBackForwardButtons() {
@@ -296,11 +301,69 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func launchSettings() {
-        let controller = SettingsViewController.loadFromStoryboard()
-        controller.modalPresentationStyle = .overCurrentContext
-        present(controller, animated: true, completion: nil)
+        performSegue(withIdentifier: "Settings", sender: self)
+    }
+    
+    fileprivate func launchInstructions() {
+        performSegue(withIdentifier: "instructions", sender: self)
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        notificationView?.layoutSubviews()
+        let height = notificationView?.frame.size.height ?? 0
+        notificationContainerHeight.constant = height    
+    }
+    
+    func showNotification(title: String, message: String, dismissHandler: @escaping NotificationView.DismissHandler) {
+        
+        let notificationView = NotificationView.loadFromNib(dismissHandler: dismissHandler)
+        
+        notificationView.setTitle(text: title)
+        notificationView.setMessage(text: message)
+        notificationContainer.addSubview(notificationView)
+        notificationContainerTop.constant = -notificationView.frame.size.height
+        self.notificationView = notificationView
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.notificationContainerTop.constant = 0
+            self.notificationContainerHeight.constant = notificationView.frame.size.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+    }
+    
+    func hideNotification() {
+        
+        notificationContainerTop.constant = -(notificationView?.frame.size.height ?? 0)
+        notificationContainerHeight.constant = 0
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: { completed in
+            self.notificationContainerTop.constant = 0
+            self.notificationView?.removeFromSuperview()
+        })
+        
+    }
+
+    func showHomeRowReminder() {
+
+        let feature = HomeRowReminder()
+        guard feature.showNow() else { return }
+
+        showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+            if tapped {
+                self.launchInstructions()
+            }
+            
+            self.hideNotification()
+        }
+        
+        feature.setShown()
+    }
+    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -308,9 +371,14 @@ extension MainViewController: BrowserChromeDelegate {
     struct ChromeAnimationConstants {
         static let duration = 0.3
     }
+    
+    private func hideKeyboard() {
+        omniBar.resignFirstResponder()
+    }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
-
+        if hidden { hideKeyboard() }
+        
         updateToolbarConstant(hidden)
         updateNavBarConstant(hidden)
 
@@ -332,6 +400,8 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     func setNavigationBarHidden(_ hidden: Bool) {
+        if hidden { hideKeyboard() }
+        
         updateNavBarConstant(hidden)
         omniBar.alpha = hidden ? 0 : 1
     }
@@ -367,6 +437,7 @@ extension MainViewController: OmniBarDelegate {
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
         dismissAutcompleteSuggestions()
+        showHomeRowReminder()
     }
     
     func onSiteRatingPressed() {
@@ -392,6 +463,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         loadQuery(suggestion)
+        showHomeRowReminder()
     }
     
     func autocomplete(pressedPlusButtonForSuggestion suggestion: String) {
@@ -407,7 +479,6 @@ extension MainViewController: HomeControllerDelegate {
     
     func homeDidActivateOmniBar(home: HomeViewController) {
         omniBar.clear()
-        omniBar.becomeFirstResponder()
     }
     
     func homeDidDeactivateOmniBar(home: HomeViewController) {
@@ -426,6 +497,15 @@ extension MainViewController: HomeControllerDelegate {
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         loadUrlInNewTab(url)
     }
+    
+    func showInstructions(_ home: HomeViewController) {
+        launchInstructions()
+    }
+    
+    func showSettings(_ home: HomeViewController) {
+        launchSettings()
+    }
+    
 }
 
 extension MainViewController: TabDelegate {
@@ -469,6 +549,7 @@ extension MainViewController: TabSwitcherDelegate {
     
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         attachHomeScreen()
+        omniBar.becomeFirstResponder()
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {

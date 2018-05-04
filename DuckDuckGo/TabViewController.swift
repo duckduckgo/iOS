@@ -419,7 +419,6 @@ extension TabViewController: WKScriptMessageHandler {
 extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
-        webView.scrollView.delegate = self
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
@@ -540,16 +539,6 @@ extension TabViewController {
             return true
         }
         return super.gestureRecognizer(gestureRecognizer, shouldBeRequiredToFailBy: otherGestureRecognizer)
-    }
-}
-
-extension TabViewController: UIScrollViewDelegate {
-    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if chromeDelegate?.isToolbarHidden == true {
-            showBars()
-            return false
-        }
-        return true
     }
 }
 

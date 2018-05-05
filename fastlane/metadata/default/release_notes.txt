@@ -1,3 +1,1 @@
-In this release we have tweaked the start page of the app and are starting an experiment to see if we can encourage new users to add us to their iOS dock.
-
-We have also fixed a bug in the last release which prevented users from logging in to email and social media sites.
+In this release we fixed a bug in the last release which prevented users from logging in to email and social media sites.

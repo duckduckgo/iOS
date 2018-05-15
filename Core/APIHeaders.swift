@@ -24,9 +24,11 @@ public class APIHeaders {
 
     public var defaultHeaders: HTTPHeaders  {
         get {
+            let fullVersion = "\(appVersion.versionNumber).\(appVersion.buildNumber)"
+            let osVersion = UIDevice.current.systemVersion
+            let userAgent = "ddg_ios/\(fullVersion) (\(appVersion.identifier); iOS \(osVersion))"
             var headers = Alamofire.SessionManager.defaultHTTPHeaders
-            let agent = "ddg_ios/\(appVersion.versionNumber).\(appVersion.buildNumber) (\(appVersion.identifier); iOS \(UIDevice.current.systemVersion))"
-            headers[Name.userAgent] = agent
+            headers[Name.userAgent] = userAgent
             return headers
         }
     }

@@ -13,6 +13,7 @@
 		830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */; };
 		830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */; };
 		830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */; };
+		8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8331AEDD20AA37560024962B /* APIHeaders.swift */; };
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
@@ -372,6 +373,7 @@
 		830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceListParser.swift; sourceTree = "<group>"; };
 		830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceParserTests.swift; sourceTree = "<group>"; };
 		8325A1201F68AFD900FF31B5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8331AEDD20AA37560024962B /* APIHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHeaders.swift; sourceTree = "<group>"; };
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
 		8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
 		8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStoreTests.swift; sourceTree = "<group>"; };
@@ -1270,6 +1272,7 @@
 			children = (
 				8570656F1F6ABFA40044DCB1 /* APIRequest.swift */,
 				F11E22F81ED33D8600523BC9 /* ApiRequestError.swift */,
+				8331AEDD20AA37560024962B /* APIHeaders.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2531,6 +2534,7 @@
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,
 				F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
+				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,

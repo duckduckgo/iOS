@@ -30,19 +30,14 @@ public class APIRequest {
 
         var data: Data?
         var etag: String?
-
+        
     }
 
-    struct HeaderNames {
-
-        static let etag = "ETag"
-
-    }
-
-    static func request(url: URL, completion: @escaping APIRequestCompletion) {
+    @discardableResult static func request(url: URL, completion: @escaping APIRequestCompletion) -> Request {
+        
         Logger.log(text: "Requesting \(url)")
-
-        Alamofire.request(url)
+        
+        return Alamofire.request(url, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
 
@@ -51,13 +46,11 @@ public class APIRequest {
                 if let error = response.error {
                     completion(nil, error)
                 } else {
-                    let etag = response.response?.headerValue(for: HeaderNames.etag)
+                    let etag = response.response?.headerValue(for: APIHeaders.Name.etag)
                     completion(Response(data: response.data, etag: etag), nil)
                 }
             }
-
     }
-
 }
 
 fileprivate extension HTTPURLResponse {

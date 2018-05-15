@@ -36,7 +36,10 @@ class AutocompleteRequest {
     
     func execute(completion: @escaping Completion)  {
         let parser = autocompleteParser
-        task = URLSession.shared.dataTask(with: URLRequest(url: url)) { [weak self] (data, response, error) -> Void in
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        
+        task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) -> Void in
             guard let weakSelf = self else { return }
             do {
                 let suggestions = try weakSelf.processResult(parser: parser, data: data, error: error)

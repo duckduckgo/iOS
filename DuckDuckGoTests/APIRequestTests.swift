@@ -31,6 +31,36 @@ class APIRequestTests: XCTestCase {
         super.tearDown()
     }
 
+    func testWhenRequestMadeThenUserAgentIsAdded() {
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: nil)
+        }
+        
+        let expect = expectation(description: "testWhenRequestMadeThenUserAgentIsAdded")
+        let request = APIRequest.request(url: url) { (data, error) in
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+        let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
+    }
+    
+    func testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded() {
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: [ APIHeaders.Name.userAgent: "old ua"])
+        }
+        
+        let expect = expectation(description: "testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded")
+        let request = APIRequest.request(url: url) { (data, error) in
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+        let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
+    }
+    
     func testWhenStatus200WithEtagThenRequestCompletesWithEtag() {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": "an etag"] )
@@ -43,9 +73,7 @@ class APIRequestTests: XCTestCase {
             expect.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)
-
     }
-    
 
     func testWhenStatus200ThenRequestCompletesWithData() {
         stub(condition: isHost(host)) { _ in

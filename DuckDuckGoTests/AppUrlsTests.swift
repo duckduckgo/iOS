@@ -47,13 +47,13 @@ class AppUrlsTests: XCTestCase {
         let actual = testee.applyStatsParams(for: URL(string: "http://duckduckgo.com?atb=wrong&t=wrong&tappv=wrong")!)
         XCTAssertEqual(actual.getParam(name: "atb"), "x")
         XCTAssertEqual(actual.getParam(name: "t"), "ddg_ios")
-        XCTAssertEqual(actual.getParam(name: "tappv"), "ios_7_900")
+        XCTAssertEqual(actual.getParam(name: "tappv"), "ios_7.900")
     }
 
     func testWhenAtbMatchesThenHasMobileStatsParamsIsTrue() {
         mockStatisticsStore.atb = "x"
         let testee = AppUrls(version: versionWithMockBundle, statisticsStore: mockStatisticsStore)
-        let result = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios&tappv=ios_7_900")!)
+        let result = testee.hasCorrectMobileStatsParams(url: URL(string: "http://duckduckgo.com?atb=x&t=ddg_ios&tappv=ios_7.900")!)
         XCTAssertTrue(result)
     }
 
@@ -190,7 +190,7 @@ class AppUrlsTests: XCTestCase {
         
         let testee = AppUrls(version: AppVersion(bundle: mockBundle), statisticsStore: mockStatisticsStore)
         let url = testee.searchUrl(text: "query")
-        XCTAssertEqual(url.getParam(name: "tappv"), "ios_1.2.9_657")
+        XCTAssertEqual(url.getParam(name: "tappv"), "ios_1.2.9.657")
     }
 
     func testWhenAtbValuesExistInStatisticsStoreThenSearchUrlCreatesUrlWithAtb() {

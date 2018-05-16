@@ -152,7 +152,7 @@ public struct AppUrls {
     }
 
     private var appVersion: String {
-        return "\(ParamValue.appVersion)_\(version.versionNumber)_\(version.buildNumber)"
+        return "\(ParamValue.appVersion)_\(version.versionNumber).\(version.buildNumber)"
     }
     
     public func autocompleteUrl(forText text: String) -> URL {

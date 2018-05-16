@@ -41,7 +41,6 @@ class HomeViewController: UIViewController {
         frame = view.frame
         
         updateInfoView()
-        activateOmniBar()
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
@@ -97,11 +96,6 @@ class HomeViewController: UIViewController {
         infoView.layer.borderColor = UIColor.greyishBrownTwo.cgColor
         infoView.layer.borderWidth = 1
         infoView.layer.masksToBounds = true
-    }
-    
-    private func activateOmniBar() {
-        chromeDelegate?.setNavigationBarHidden(false)
-        delegate?.homeDidActivateOmniBar(home: self)
     }
 
     private func hideCallToAction() {

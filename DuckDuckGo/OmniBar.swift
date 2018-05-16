@@ -35,7 +35,7 @@ class OmniBar: UIView {
     @IBOutlet weak var settingsButton: UIButton!
     
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: OmniBarState = HomeEmptyEditingState()    
+    fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
     static func loadFromXib() -> OmniBar {

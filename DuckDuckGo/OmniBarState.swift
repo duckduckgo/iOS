@@ -78,7 +78,7 @@ struct HomeNonEditingState: OmniBarState {
     var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
-    var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
 }
 
 struct BrowsingEmptyEditingState: OmniBarState {
@@ -123,5 +123,5 @@ struct BrowsingNonEditingState: OmniBarState {
     var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return self }
-    var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
 }

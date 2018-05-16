@@ -122,6 +122,7 @@ class MainViewController: UIViewController {
 
         controller.chromeDelegate = self
         controller.delegate = self
+        omniBar.clear()
 
         addToView(controller: controller)
 
@@ -480,20 +481,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-    
-    func homeDidActivateOmniBar(home: HomeViewController) {
-        omniBar.clear()
-    }
-    
-    func homeDidDeactivateOmniBar(home: HomeViewController) {
-        dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
-    }
-    
-    func homeDidRequestForgetAll(home: HomeViewController) {
-        forgetAll() {}
-    }
-    
+
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
@@ -502,10 +490,14 @@ extension MainViewController: HomeControllerDelegate {
         loadUrlInNewTab(url)
     }
     
+    func homeDidDeactivateOmniBar(home: HomeViewController) {
+        dismissAutcompleteSuggestions()
+        omniBar.resignFirstResponder()
+    }
+    
     func showInstructions(_ home: HomeViewController) {
         launchInstructions()
     }
-    
 }
 
 extension MainViewController: TabDelegate {

@@ -92,24 +92,10 @@
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
                                 </connections>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fku-9C-PCe">
-                                <rect key="frame" x="613" y="24" width="24" height="24"/>
-                                <accessibility key="accessibilityConfiguration" identifier="settings"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="Jd4-lU-zg2"/>
-                                    <constraint firstAttribute="width" constant="24" id="Usp-Oq-WGs"/>
-                                </constraints>
-                                <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" image="Settings"/>
-                                <connections>
-                                    <action selector="showSettings" destination="LJ1-RN-ckE" eventType="touchUpInside" id="Ovt-56-FNL"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="Fku-9C-PCe" secondAttribute="trailing" constant="30" id="Aka-4u-rrC"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" constant="-32" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="mpe-gG-Xvo" secondAttribute="trailing" id="LdU-fc-TTq"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="top" secondItem="mpe-gG-Xvo" secondAttribute="bottom" id="UXK-YT-WhW"/>
@@ -117,7 +103,6 @@
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" constant="16" id="iP8-nF-jOV"/>
                             <constraint firstItem="mpe-gG-Xvo" firstAttribute="leading" secondItem="ijV-Vn-w9w" secondAttribute="leading" id="n4h-08-Av4"/>
                             <constraint firstItem="mpe-gG-Xvo" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" id="ulD-vQ-5pq"/>
-                            <constraint firstItem="Fku-9C-PCe" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="24" id="wD9-dV-5Hq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ijV-Vn-w9w"/>
                     </view>
@@ -154,6 +139,5 @@
         <image name="LogoLandscape" width="316" height="94"/>
         <image name="LogoWithText" width="201" height="160"/>
         <image name="Remove" width="12" height="12"/>
-        <image name="Settings" width="23" height="22"/>
     </resources>
 </document>

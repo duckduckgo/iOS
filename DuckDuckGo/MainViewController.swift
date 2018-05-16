@@ -455,6 +455,10 @@ extension MainViewController: OmniBarDelegate {
     func onDismissed() {
         dismissOmniBar()
     }
+    
+    func onSettingsPressed() {
+        launchSettings()
+    }
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -500,10 +504,6 @@ extension MainViewController: HomeControllerDelegate {
     
     func showInstructions(_ home: HomeViewController) {
         launchInstructions()
-    }
-    
-    func showSettings(_ home: HomeViewController) {
-        launchSettings()
     }
     
 }

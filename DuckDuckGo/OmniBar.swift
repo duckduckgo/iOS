@@ -32,7 +32,8 @@ class OmniBar: UIView {
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
-
+    @IBOutlet weak var settingsButton: UIButton!
+    
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeEmptyEditingState()    
     private lazy var appUrls: AppUrls = AppUrls()
@@ -161,6 +162,10 @@ class OmniBar: UIView {
     
     @IBAction func onBookmarksButtonPressed(_ sender: Any) {
         omniDelegate?.onBookmarksPressed()
+    }
+    
+    @IBAction func onSettingsButtonPressed(_ sender: Any) {
+        omniDelegate?.onSettingsPressed()
     }
 }
 

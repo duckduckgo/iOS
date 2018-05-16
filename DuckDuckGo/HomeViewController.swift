@@ -71,10 +71,6 @@ class HomeViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
-    
-    @IBAction func showSettings() {
-        delegate?.showSettings(self)
-    }
 
     @objc func onKeyboardChangeFrame(notification: NSNotification) {
         guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }

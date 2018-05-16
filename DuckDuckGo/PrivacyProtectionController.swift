@@ -181,6 +181,10 @@ extension PrivacyProtectionController: OmniBarDelegate {
     func onBookmarksPressed() {
         // shouldn't get called
     }
+    
+    func onSettingsPressed() {
+        // shouldn't get called
+    }
 
 }
 

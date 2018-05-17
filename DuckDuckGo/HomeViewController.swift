@@ -31,6 +31,8 @@ class HomeViewController: UIViewController {
     weak var chromeDelegate: BrowserChromeDelegate?
 
     var frame: CGRect!
+    
+    private var viewLoadingHasSettled = false
 
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -51,7 +53,14 @@ class HomeViewController: UIViewController {
         let feature = HomeRowOnboarding()
         if !feature.showNow() {
             hideCallToAction()
-        }    
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.viewLoadingHasSettled = true
+        }
     }
     
     @IBAction func hideKeyboard() {
@@ -75,7 +84,7 @@ class HomeViewController: UIViewController {
         guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }
         guard let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else { return }
-
+       
         let diff = beginFrame.origin.y - endFrame.origin.y
 
         if diff > 0 {
@@ -85,9 +94,9 @@ class HomeViewController: UIViewController {
         }
 
         view.setNeedsUpdateConstraints()
-        
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
+
+        if (viewLoadingHasSettled) {
+            UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
         }
     }
     

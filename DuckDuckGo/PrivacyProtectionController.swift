@@ -111,8 +111,9 @@ class PrivacyProtectionController: UIViewController {
 
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
+        guard let siteRating = siteRating else { return }
         omniBar.updateSiteRating(siteRating)
-        omniBar.refreshText(forUrl: siteRating?.url)
+        omniBar.refreshText(forUrl: siteRating.url)
         updateViewControllers()
     }
 

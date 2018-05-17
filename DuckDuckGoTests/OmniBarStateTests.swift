@@ -32,6 +32,7 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertTrue(testee.showBookmarks)
+        XCTAssertTrue(testee.showSettings)
     }
     
     func testWhenInHomeEmptyEditingStateThenEditingStartedMaintainsState() {
@@ -71,6 +72,7 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
     }
     
     func testWhenInHomeTextEditingStateThenEditingStartedMaintainsState() {
@@ -109,7 +111,8 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
-        XCTAssertTrue(testee.showBookmarks)
+        XCTAssertFalse(testee.showBookmarks)
+        XCTAssertTrue(testee.showSettings)
     }
     
     func testWhenInHomeNonEditingStateThenEditingStartedTransitionsToEmptyEditingState() {
@@ -149,6 +152,7 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
     }
     
     func testWhenInBrowsingEmptyEditingStateThenEditingStartedMaintainsState() {
@@ -188,6 +192,7 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
     }
     
     func testWhenInBrowsingTextEditingStateThenEditingStartedMaintainsState() {
@@ -227,6 +232,7 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showClear)
         XCTAssertTrue(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
     }
     
     func testWhenInBrowsingNonEditingStateThenEditingStartedTransitionsToTextEditingState() {

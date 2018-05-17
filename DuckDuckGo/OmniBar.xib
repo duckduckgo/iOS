@@ -133,9 +133,6 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
                     <rect key="frame" x="344" y="13" width="23" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="23" id="xNO-7z-eF7"/>
-                    </constraints>
                     <color key="tintColor" red="0.8744631584" green="0.8852589998" blue="0.8852589998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <state key="normal" image="Settings"/>
                     <connections>
@@ -151,6 +148,7 @@
                 <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="8" id="JTa-RA-Isu"/>
                 <constraint firstItem="1rB-5w-de3" firstAttribute="centerY" secondItem="N6K-Lj-Fn6" secondAttribute="centerY" id="Z2r-9H-b4u"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" constant="4" id="oce-E1-4Nw"/>
+                <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="5D5-iT-bUk" secondAttribute="trailing" priority="750" constant="8" id="tY7-iY-5EI"/>
                 <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="1rB-5w-de3" secondAttribute="trailing" constant="8" id="uKO-eG-Cih"/>
                 <constraint firstItem="1rB-5w-de3" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="6" id="x26-4u-hqT"/>
             </constraints>
@@ -163,6 +161,7 @@
                 <outlet property="editingBackground" destination="Atk-JN-lv8" id="E2d-Lx-OrN"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
+                <outlet property="searchContainerToSettingsConstraint" destination="x26-4u-hqT" id="7Z7-xL-lZP"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>

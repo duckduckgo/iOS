@@ -34,6 +34,8 @@ class OmniBar: UIView {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     
+    @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
+    
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
@@ -88,6 +90,8 @@ class OmniBar: UIView {
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
+        setVisibility(settingsButton, hidden: !state.showSettings)
+        searchContainerToSettingsConstraint.priority = state.showSettings ? .defaultHigh : .defaultLow
     }
     
     /*

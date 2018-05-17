@@ -122,7 +122,6 @@ class MainViewController: UIViewController {
 
         controller.chromeDelegate = self
         controller.delegate = self
-        omniBar.clear()
 
         addToView(controller: controller)
 

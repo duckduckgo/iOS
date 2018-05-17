@@ -35,6 +35,11 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSettings)
     }
     
+    func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
+        let testee = HomeEmptyEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
+    }
+    
     func testWhenInHomeEmptyEditingStateThenEditingStartedMaintainsState() {
         let testee = HomeEmptyEditingState()
         XCTAssertEqual(testee.onEditingStartedState.name, HomeEmptyEditingState().name)
@@ -73,6 +78,11 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringHomeTextEditingStateThenTextIsCleared() {
+        let testee = HomeTextEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
     }
     
     func testWhenInHomeTextEditingStateThenEditingStartedMaintainsState() {
@@ -115,6 +125,11 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSettings)
     }
     
+    func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
+        let testee = HomeNonEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
+    }
+    
     func testWhenInHomeNonEditingStateThenEditingStartedTransitionsToEmptyEditingState() {
         let testee = HomeNonEditingState()
         XCTAssertEqual(testee.onEditingStartedState.name, HomeEmptyEditingState().name)
@@ -153,6 +168,11 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
+        let testee = BrowsingEmptyEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
     }
     
     func testWhenInBrowsingEmptyEditingStateThenEditingStartedMaintainsState() {
@@ -195,6 +215,11 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
     }
     
+    func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
+        let testee = BrowsingTextEditingState()
+        XCTAssertFalse(testee.clearTextOnStart)
+    }
+    
     func testWhenInBrowsingTextEditingStateThenEditingStartedMaintainsState() {
         let testee = BrowsingTextEditingState()
         XCTAssertEqual(testee.onEditingStartedState.name, BrowsingTextEditingState().name)
@@ -233,6 +258,11 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {
+        let testee = BrowsingTextEditingState()
+        XCTAssertFalse(testee.clearTextOnStart)
     }
     
     func testWhenInBrowsingNonEditingStateThenEditingStartedTransitionsToTextEditingState() {

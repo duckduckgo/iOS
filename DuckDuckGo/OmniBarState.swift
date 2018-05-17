@@ -22,6 +22,7 @@ import Foundation
 import Core
 
 protocol OmniBarState {
+    var clearTextOnStart: Bool { get }
     var showSiteRating: Bool { get }
     var showEditingBackground: Bool { get }
     var showClear: Bool { get }
@@ -38,6 +39,7 @@ protocol OmniBarState {
 }
 
 struct HomeEmptyEditingState: OmniBarState {
+    var clearTextOnStart = true
     let showSiteRating = false
     let showEditingBackground = true
     let showClear = false
@@ -54,6 +56,7 @@ struct HomeEmptyEditingState: OmniBarState {
 }
 
 struct HomeTextEditingState: OmniBarState {
+    var clearTextOnStart = true
     let showSiteRating = false
     let showEditingBackground = true
     let showClear = true
@@ -70,6 +73,7 @@ struct HomeTextEditingState: OmniBarState {
 }
 
 struct HomeNonEditingState: OmniBarState {
+    var clearTextOnStart = true
     let showSiteRating = false
     let showEditingBackground = false
     let showClear = false
@@ -86,6 +90,7 @@ struct HomeNonEditingState: OmniBarState {
 }
 
 struct BrowsingEmptyEditingState: OmniBarState {
+    var clearTextOnStart = true
     let showSiteRating = true
     let showEditingBackground = true
     let showClear = false
@@ -102,6 +107,7 @@ struct BrowsingEmptyEditingState: OmniBarState {
 }
 
 struct BrowsingTextEditingState: OmniBarState {
+    var clearTextOnStart = false
     let showSiteRating = true
     let showEditingBackground = true
     let showClear = true
@@ -118,6 +124,7 @@ struct BrowsingTextEditingState: OmniBarState {
 }
 
 struct BrowsingNonEditingState: OmniBarState {
+    var clearTextOnStart = false
     let showSiteRating = true
     let showEditingBackground = false
     let showClear = false

@@ -83,8 +83,12 @@ class OmniBar: UIView {
     fileprivate func refreshState(_ newState: OmniBarState) {
         if type(of: state) != type(of: newState)  {
             Logger.log(text: "OmniBar entering \(Type.name(newState))")
+            if (newState.clearTextOnStart) {
+                clear()
+            }
             state = newState
         }
+        
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(editingBackground, hidden: !state.showEditingBackground)
         setVisibility(clearButton, hidden: !state.showClear)
@@ -117,7 +121,7 @@ class OmniBar: UIView {
         siteRatingView.update(siteRating: siteRating)
     }
     
-    func clear() {
+    private func clear() {
         textField.text = nil
     }
     
@@ -152,7 +156,6 @@ class OmniBar: UIView {
     }
     
     @IBAction func onClearButtonPressed(_ sender: Any) {
-        clear()
         refreshState(state.onTextClearedState)
     }
     

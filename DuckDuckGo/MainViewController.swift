@@ -511,6 +511,7 @@ extension MainViewController: TabDelegate {
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
         attachHomeScreen()
+        omniBar.becomeFirstResponder()
     }
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {

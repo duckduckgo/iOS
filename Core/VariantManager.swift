@@ -28,9 +28,9 @@ public enum FeatureName {
 public struct Variant {
     
     public static let defaultVariants = [
-        Variant(name: "m1", percent: 50, features: []),
-        Variant(name: "m2", percent: 25, features: [.homeRowOnboarding]),
-        Variant(name: "m3", percent: 25, features: [.homeRowOnboarding, .homeRowReminder]),
+        Variant(name: "mb", percent: 50, features: []),
+        Variant(name: "mc", percent: 25, features: [.homeRowOnboarding]),
+        Variant(name: "md", percent: 25, features: [.homeRowOnboarding, .homeRowReminder]),
     ]
     
     public let name: String

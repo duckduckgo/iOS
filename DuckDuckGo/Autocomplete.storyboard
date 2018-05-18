@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HV3-WA-HxT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HV3-WA-HxT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -99,7 +99,6 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="gPe-Cv-14j" firstAttribute="centerX" secondItem="snf-ah-e6i" secondAttribute="centerX" id="7cC-aU-gkP"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="gPe-Cv-14j" secondAttribute="trailing" constant="16" id="9qm-SN-smP"/>
                                                 <constraint firstItem="gPe-Cv-14j" firstAttribute="centerY" secondItem="snf-ah-e6i" secondAttribute="centerY" id="FMX-qm-AGD"/>
                                                 <constraint firstItem="gPe-Cv-14j" firstAttribute="leading" secondItem="snf-ah-e6i" secondAttribute="leadingMargin" constant="16" id="sDn-CZ-bgQ"/>

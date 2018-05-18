@@ -22,5 +22,3 @@ DuckDuckGoでは、ユーザーが検索・閲覧を行う際に、閲覧する�
 当社の個人情報保護方針：https://duckduckgo.com/privacy/
 
 https://github.com/duckduckgo/iOSで、オープンソースをご覧ください。
-
-当社へのご連絡は、いつでもios@duckduckgo.com宛にお寄せください。皆様からご連絡いただけるのを楽しみにしています！

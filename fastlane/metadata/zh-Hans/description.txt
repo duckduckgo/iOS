@@ -22,5 +22,3 @@ DuckDuckGo认为，面对互联网，人们大可不必谈虎色变，而且提�
 我们的隐私政策：https://duckduckgo.com/privacy/
 
 获取开源代码，请访问https://github.com/duckduckgo/iOS。
-
-可通过电邮ios@duckduckgo.com随时与我们联系。期待您的来信！

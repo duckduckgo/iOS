@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         handleShortCutItem(shortcutItem)
     }
 
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
         clearNavigationStack()
         if AppDeepLinks.isQuickLink(url: url) {

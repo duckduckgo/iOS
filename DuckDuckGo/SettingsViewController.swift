@@ -82,19 +82,7 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func sendFeedback() {
-        let appVersion = versionProvider.localized
-        let device = UIDevice.current.deviceType.displayName
-        let osName = UIDevice.current.systemName
-        let osVersion = UIDevice.current.systemVersion
-        let variant = DefaultVariantManager().currentVariant?.name ?? "-"
-        
-        let feedback = FeedbackEmail(appVersion: appVersion, variant: variant, device: device, osName: osName, osVersion: osVersion)
-        guard let mail = MFMailComposeViewController.create() else { return }
-        mail.mailComposeDelegate = self
-        mail.setToRecipients([feedback.mailTo])
-        mail.setSubject(feedback.subject)
-        mail.setMessageBody(feedback.body, isHTML: false)
-        present(mail, animated: true, completion: nil)
+        UIApplication.shared.openURL(AppDeepLinks.feedbackLink)
     }
     
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

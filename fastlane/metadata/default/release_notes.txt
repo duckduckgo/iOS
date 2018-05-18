@@ -1,1 +1,1 @@
-In this release we have tweaked the start page of the app and are starting an experiment to see if we can encourage new users to add us to their iOS dock.
+In this release we have tweaked the start page of the app and are starting an experiment to see if we can encourage new users to add us to their iOS dock. We also updated the "Send feedback" option to use an anonymous web url rather than an email.

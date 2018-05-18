@@ -22,5 +22,3 @@ More Privacy Education: https://spreadprivacy.com/tag/privacy-newsletter/
 Our Privacy Policy: https://duckduckgo.com/privacy/
 
 Open source at https://github.com/duckduckgo/iOS.
-
-You can always reach us via email at ios@duckduckgo.com. We'd love to hear from you!

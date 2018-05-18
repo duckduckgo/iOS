@@ -22,5 +22,3 @@ Selengkapnya tentang Pendidikan Privasi: https://spreadprivacy.com/tag/privacy-n
 Kebijakan Privasi Kami: https://duckduckgo.com/privacy/
 
 Sumber terbuka di https://github.com/duckduckgo/iOS.
-
-Anda selalu bisa menghubungi kami melalui email di ios@duckduckgo.com. Kami senang mendengar dari Anda!

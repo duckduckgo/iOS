@@ -22,5 +22,3 @@ Weitere Datenschutz-Tipps: https://spreadprivacy.com/tag/privacy-newsletter/
 Unsere Datenschutzrichtlinie: https://duckduckgo.com/privacy/
 
 Open Source unter https://github.com/duckduckgo/iOS.
-
-Sie können uns stets per E-Mail an Ios@duckduckgo.com erreichen. Wir würden gerne von Ihnen hören!

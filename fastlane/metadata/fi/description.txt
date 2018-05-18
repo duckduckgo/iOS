@@ -22,5 +22,3 @@ Lisätietoa yksityisyydestä: https://spreadprivacy.com/tag/privacy-newsletter/
 Tietosuojakäytäntömme: https://duckduckgo.com/privacy/
 
 Avoin lähdekoodi: https://github.com/duckduckgo/iOS.
-
-Voit lähettää meille sähköpostia osoitteeseen ios@duckduckgo.com. Haluamme kuulla mielipiteesi!

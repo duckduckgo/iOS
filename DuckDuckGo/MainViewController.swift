@@ -455,6 +455,10 @@ extension MainViewController: OmniBarDelegate {
     func onDismissed() {
         dismissOmniBar()
     }
+    
+    func onSettingsPressed() {
+        launchSettings()
+    }
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -476,20 +480,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-    
-    func homeDidActivateOmniBar(home: HomeViewController) {
-        omniBar.clear()
-    }
-    
-    func homeDidDeactivateOmniBar(home: HomeViewController) {
-        dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
-    }
-    
-    func homeDidRequestForgetAll(home: HomeViewController) {
-        forgetAll() {}
-    }
-    
+
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
@@ -498,14 +489,14 @@ extension MainViewController: HomeControllerDelegate {
         loadUrlInNewTab(url)
     }
     
+    func homeDidDeactivateOmniBar(home: HomeViewController) {
+        dismissAutcompleteSuggestions()
+        omniBar.resignFirstResponder()
+    }
+    
     func showInstructions(_ home: HomeViewController) {
         launchInstructions()
     }
-    
-    func showSettings(_ home: HomeViewController) {
-        launchSettings()
-    }
-    
 }
 
 extension MainViewController: TabDelegate {
@@ -519,6 +510,7 @@ extension MainViewController: TabDelegate {
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
         attachHomeScreen()
+        omniBar.becomeFirstResponder()
     }
     
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {

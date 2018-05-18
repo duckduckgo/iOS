@@ -32,6 +32,12 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertTrue(testee.showBookmarks)
+        XCTAssertTrue(testee.showSettings)
+    }
+    
+    func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
+        let testee = HomeEmptyEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
     }
     
     func testWhenInHomeEmptyEditingStateThenEditingStartedMaintainsState() {
@@ -71,6 +77,12 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringHomeTextEditingStateThenTextIsCleared() {
+        let testee = HomeTextEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
     }
     
     func testWhenInHomeTextEditingStateThenEditingStartedMaintainsState() {
@@ -109,7 +121,13 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
-        XCTAssertTrue(testee.showBookmarks)
+        XCTAssertFalse(testee.showBookmarks)
+        XCTAssertTrue(testee.showSettings)
+    }
+    
+    func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
+        let testee = HomeNonEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
     }
     
     func testWhenInHomeNonEditingStateThenEditingStartedTransitionsToEmptyEditingState() {
@@ -137,9 +155,9 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
     }
     
-    func testWhenInHomeNonEditingStateThenBrowsingStoppedTransitionsToHomeEmptyEditingState() {
+    func testWhenInHomeNonEditingStateThenBrowsingStoppedTransitionsToHomeNonEditingState() {
         let testee = HomeNonEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeEmptyEditingState().name)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeNonEditingState().name)
     }
     
     func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShow() {
@@ -149,6 +167,12 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
+        let testee = BrowsingEmptyEditingState()
+        XCTAssertTrue(testee.clearTextOnStart)
     }
     
     func testWhenInBrowsingEmptyEditingStateThenEditingStartedMaintainsState() {
@@ -188,6 +212,12 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
+        let testee = BrowsingTextEditingState()
+        XCTAssertFalse(testee.clearTextOnStart)
     }
     
     func testWhenInBrowsingTextEditingStateThenEditingStartedMaintainsState() {
@@ -227,6 +257,12 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showClear)
         XCTAssertTrue(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
+    }
+    
+    func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {
+        let testee = BrowsingTextEditingState()
+        XCTAssertFalse(testee.clearTextOnStart)
     }
     
     func testWhenInBrowsingNonEditingStateThenEditingStartedTransitionsToTextEditingState() {
@@ -254,8 +290,8 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStartedState.name, BrowsingNonEditingState().name)
     }
     
-    func testWhenInBrowsingNonEditingStateThenBrowsingStoppedTransitionsToHomeEmptyEditingState() {
+    func testWhenInBrowsingNonEditingStateThenBrowsingStoppedTransitionsToHomeNonEditingState() {
         let testee = BrowsingNonEditingState()
-        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeEmptyEditingState().name)
+        XCTAssertEqual(testee.onBrowsingStoppedState.name, HomeNonEditingState().name)
     }
 }

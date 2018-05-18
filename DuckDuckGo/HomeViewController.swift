@@ -31,6 +31,8 @@ class HomeViewController: UIViewController {
     weak var chromeDelegate: BrowserChromeDelegate?
 
     var frame: CGRect!
+    
+    private var viewHasAppeared = false
 
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -41,7 +43,6 @@ class HomeViewController: UIViewController {
         frame = view.frame
         
         updateInfoView()
-        activateOmniBar()
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
@@ -52,7 +53,12 @@ class HomeViewController: UIViewController {
         let feature = HomeRowOnboarding()
         if !feature.showNow() {
             hideCallToAction()
-        }    
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewHasAppeared = true
     }
     
     @IBAction func hideKeyboard() {
@@ -71,16 +77,12 @@ class HomeViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
-    
-    @IBAction func showSettings() {
-        delegate?.showSettings(self)
-    }
 
     @objc func onKeyboardChangeFrame(notification: NSNotification) {
         guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }
         guard let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else { return }
-
+       
         let diff = beginFrame.origin.y - endFrame.origin.y
 
         if diff > 0 {
@@ -90,9 +92,9 @@ class HomeViewController: UIViewController {
         }
 
         view.setNeedsUpdateConstraints()
-        
-        UIView.animate(withDuration: duration) {
-            self.view.layoutIfNeeded()
+
+        if (viewHasAppeared) {
+            UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
         }
     }
     
@@ -101,11 +103,6 @@ class HomeViewController: UIViewController {
         infoView.layer.borderColor = UIColor.greyishBrownTwo.cgColor
         infoView.layer.borderWidth = 1
         infoView.layer.masksToBounds = true
-    }
-    
-    private func activateOmniBar() {
-        chromeDelegate?.setNavigationBarHidden(false)
-        delegate?.homeDidActivateOmniBar(home: self)
     }
 
     private func hideCallToAction() {

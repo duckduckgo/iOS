@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
 
     var frame: CGRect!
     
-    private var viewLoadingHasSettled = false
+    private var viewHasAppeared = false
 
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -58,9 +58,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.viewLoadingHasSettled = true
-        }
+        viewHasAppeared = true
     }
     
     @IBAction func hideKeyboard() {
@@ -95,7 +93,7 @@ class HomeViewController: UIViewController {
 
         view.setNeedsUpdateConstraints()
 
-        if (viewLoadingHasSettled) {
+        if (viewHasAppeared) {
             UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
         }
     }

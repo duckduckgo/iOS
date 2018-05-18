@@ -21,6 +21,4 @@ Tips om personvern på enheter: https://spreadprivacy.com/tag/device-privacy-tip
 Mer personvernutdanning: https://spreadprivacy.com/tag/privacy-newsletter/
 Vår personvernerklæring: https://duckduckgo.com/privacy/
  
-Åpen kilde https://github.com/duckduckgo/iOS .
- 
-Du kan alltid nå oss via e-post på ios@duckduckgo.com . Vi vil gjerne høre fra deg!
+Åpen kilde https://github.com/duckduckgo/iOS.

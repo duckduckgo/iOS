@@ -22,5 +22,3 @@ Fler tips för ditt sekretesskydd: https://spreadprivacy.com/tag/privacy-newslet
 Vår integritetspolicy: https://duckduckgo.com/privacy/
 
 Öppen källkod på https://github.com/duckduckgo/iOS.
-
-Du når oss alltid via e-post på ios@duckduckgo.com. Hör gärna av dig till oss!

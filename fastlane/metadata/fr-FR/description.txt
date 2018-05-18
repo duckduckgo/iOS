@@ -22,5 +22,3 @@ Plus d’informations sur la confidentialité : https://spreadprivacy.com/tag/p
 Notre politique de confidentialité : https://duckduckgo.com/privacy/
 
 Code source libre à l’adresse https://github.com/duckduckgo/iOS.
-
-Vous pouvez à tout moment nous joindre par e-mail à l’adresse ios@duckduckgo.com. Nous aimerions recevoir de vos nouvelles !

@@ -22,5 +22,3 @@ Gizlilik Hakkında Daha Fazla Eğitim: https://spreadprivacy.com/tag/privacy-new
 Gizlilik Politikamız: https://duckduckgo.com/privacy/
 
 Açık kaynak adresi: https://github.com/duckduckgo/iOS.
-
-Bize ulaşmak için her zaman ios@duckduckgo.com adresine yazabilirsiniz. Sizden haber almaktan büyük memnuniyet duyacağız!

@@ -3,9 +3,6 @@
 
 We are excited to engage the community in development and will open up this project to contributions soon.
 
-If you are trying to contribute in other ways, that happens over at [DuckDuckHack](http://duckduckhack.com) or on [GitHub](http://github.com/duckduckgo).
-
-
 ## Building
 
 ### Submodules
@@ -25,7 +22,7 @@ We use Proxima Nova fonts which are proprietary and cannot be committed to sourc
 
 ## Discuss
 
-Contact us at ios@duckduckgo.com if you want to get more involved, have questions or want to chat.
+Contact us at https://duckduckgo.com/feedback if you have feedback, questions or want to chat.
 
 ## License
 DuckDuckGo Search & Stories is distributed under the Apache 2.0 [license](https://github.com/duckduckgo/ios/blob/master/LICENSE).

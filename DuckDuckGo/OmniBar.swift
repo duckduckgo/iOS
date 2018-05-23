@@ -32,9 +32,12 @@ class OmniBar: UIView {
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
-
+    @IBOutlet weak var settingsButton: UIButton!
+    
+    @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
+    
     weak var omniDelegate: OmniBarDelegate?
-    fileprivate var state: OmniBarState = HomeEmptyEditingState()    
+    fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
     
     static func loadFromXib() -> OmniBar {
@@ -80,13 +83,19 @@ class OmniBar: UIView {
     fileprivate func refreshState(_ newState: OmniBarState) {
         if type(of: state) != type(of: newState)  {
             Logger.log(text: "OmniBar entering \(Type.name(newState))")
+            if (newState.clearTextOnStart) {
+                clear()
+            }
             state = newState
         }
+        
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(editingBackground, hidden: !state.showEditingBackground)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
+        setVisibility(settingsButton, hidden: !state.showSettings)
+        searchContainerToSettingsConstraint.priority = state.showSettings ? .defaultHigh : .defaultLow
     }
     
     /*
@@ -112,7 +121,7 @@ class OmniBar: UIView {
         siteRatingView.update(siteRating: siteRating)
     }
     
-    func clear() {
+    private func clear() {
         textField.text = nil
     }
     
@@ -147,7 +156,6 @@ class OmniBar: UIView {
     }
     
     @IBAction func onClearButtonPressed(_ sender: Any) {
-        clear()
         refreshState(state.onTextClearedState)
     }
     
@@ -161,6 +169,10 @@ class OmniBar: UIView {
     
     @IBAction func onBookmarksButtonPressed(_ sender: Any) {
         omniDelegate?.onBookmarksPressed()
+    }
+    
+    @IBAction func onSettingsButtonPressed(_ sender: Any) {
+        omniDelegate?.onSettingsPressed()
     }
 }
 

@@ -22,6 +22,3 @@ Más información sobre privacidad: https://spreadprivacy.com/tag/privacy-newsle
 Nuestra política de privacidad: https://duckduckgo.com/privacy/
 
 Código abierto en https://github.com/duckduckgo/iOS.
-
-Puede comunicarse con nosotros por correo electrónico a través deios@duckduckgo.com.
-¡Nos gustaría conocer su opinión!

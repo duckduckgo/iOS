@@ -22,5 +22,3 @@ DuckDuckGo 앱은 탭, 북마크, 자동 입력 등 표준 브라우징 기능�
 DuckDuckGo 개인정보 보호방침: https://duckduckgo.com/privacy/
 
 오픈소스: https://github.com/duckduckgo/iOS
-
-이메일 ios@duckduckgo.com을 통해 언제든지 DuckDuckGo와 연락하실 수 있습니다. 여러분의 의견을 기다립니다!

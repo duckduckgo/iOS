@@ -128,8 +128,8 @@ public struct AppUrls {
     }
     
     /**
-     Generates a search url with the source (t) https://duck.co/help/privacy/t,
-     app version and cohort (atb) https://duck.co/help/privacy/atb
+     Generates a search url with the source (t) https://duck.co/help/privacy/t
+     and cohort (atb) https://duck.co/help/privacy/atb
      */
     public func searchUrl(text: String) -> URL {
         let searchUrl = home.addParam(name: Param.search, value: text)

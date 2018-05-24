@@ -311,7 +311,7 @@ class TabViewController: WebViewController {
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if shouldOpenExternally(url: url) {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url, options: [:])
             return false
         }
         return true

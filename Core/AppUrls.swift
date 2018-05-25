@@ -44,21 +44,17 @@ public struct AppUrls {
     private struct Param {
         static let search = "q"
         static let source = "t"
-        static let appVersion = "tappv"
         static let atb = "atb"
         static let setAtb = "set_atb"
     }
 
     private struct ParamValue {
         static let source = "ddg_ios"
-        static let appVersion = "ios"
     }
     
-    let version: AppVersion
     let statisticsStore: StatisticsStore
     
-    public init(version: AppVersion = AppVersion(), statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
-        self.version = version
+    public init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
     }
 
@@ -132,8 +128,8 @@ public struct AppUrls {
     }
     
     /**
-     Generates a search url with the source (t) https://duck.co/help/privacy/t,
-     app version and cohort (atb) https://duck.co/help/privacy/atb
+     Generates a search url with the source (t) https://duck.co/help/privacy/t
+     and cohort (atb) https://duck.co/help/privacy/atb
      */
     public func searchUrl(text: String) -> URL {
         let searchUrl = home.addParam(name: Param.search, value: text)
@@ -142,17 +138,11 @@ public struct AppUrls {
 
     public func applyStatsParams(for url: URL) -> URL {
         var searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
-        searchUrl = searchUrl.addParam(name: Param.appVersion, value: appVersion)
-
         if let atb = statisticsStore.atb {
             searchUrl = searchUrl.addParam(name: Param.atb, value: atb)
         }
         
         return searchUrl
-    }
-
-    private var appVersion: String {
-        return "\(ParamValue.appVersion)_\(version.versionNumber).\(version.buildNumber)"
     }
     
     public func autocompleteUrl(forText text: String) -> URL {
@@ -167,7 +157,6 @@ public struct AppUrls {
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
         guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
-        guard let version = url.getParam(name: Param.appVersion), version == appVersion else { return false }
         if let atb = statisticsStore.atb {
             return atb == url.getParam(name: Param.atb)
         }

@@ -46,7 +46,9 @@ class MainViewController: UIViewController {
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
     
+    private let webCacheManager = WebCacheManager.instance
     private lazy var appUrls: AppUrls = AppUrls()
+
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -58,9 +60,15 @@ class MainViewController: UIViewController {
         return tabManager?.current
     }
 
+    var preloader: WebViewPreloader? = WebViewPreloader()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        preloader?.preloadThen {
+            self.preloader = nil
+        }
+        
         chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
         configureTabManager()
@@ -213,6 +221,7 @@ class MainViewController: UIViewController {
         containerView.addSubview(controller.view)
         controller.view.frame = containerView.bounds
         controller.didMove(toParentViewController: self)
+        
     }
 
     fileprivate func remove(tabAt index: Int) {
@@ -226,7 +235,7 @@ class MainViewController: UIViewController {
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         ServerTrustCache.shared.clear()
-        WebCacheManager.clear() {}
+        webCacheManager.clear()
         FireAnimation.animate() {
             self.tabManager.removeAll()
             self.attachHomeScreen()
@@ -568,3 +577,26 @@ extension MainViewController: BookmarksDelegate {
     }
 }
 
+// This preloads a webview so that the datastore can then receive cookies, otherwise nothing happens until subsequent webviews are shown
+// Seems to be related to the bug discussed here: https://forums.developer.apple.com/thread/99674
+class WebViewPreloader: NSObject, WKNavigationDelegate {
+    
+    var webView = WKWebView(frame: CGRect.zero)
+    
+    var completion: (() -> Void)?
+    
+    func preloadThen(_ completion: @escaping () -> Void) {
+        self.completion = completion
+        webView.navigationDelegate = self
+        webView.load(URLRequest(url: URL(string: "about:blank")!))
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        completion?()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        completion?()
+    }
+    
+}

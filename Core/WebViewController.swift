@@ -111,6 +111,8 @@ open class WebViewController: UIViewController {
         webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
         
+        WebCacheManager.instance.injectCookies(dataStore: webView.configuration.websiteDataStore)
+        
         if let url = url {
             load(url: url)
         }

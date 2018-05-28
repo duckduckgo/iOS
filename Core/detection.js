@@ -84,8 +84,8 @@
             var trackerUrl = null
             duckduckgoContentBlocking.shouldBlock(url, "xmlhttprequest", function(url, block) {                                                  
                 trackerUrl = block ? "about:blank" : url 
-                duckduckgoMessaging.log("sending xhr " + url + " to " + trackerUrl)
             })
+            duckduckgoMessaging.log("sending xhr " + url + " to " + trackerUrl)
             return originalOpen.apply(this, [method, trackerUrl]);
         }
 

@@ -80,13 +80,14 @@
         var xhr = XMLHttpRequest.prototype
         var originalOpen = xhr.open
 
-        xhr.open = function(method, url) {
-            var trackerUrl = null
+        xhr.open = function() {
+            var args = arguments
+            var url = arguments[1]
             duckduckgoContentBlocking.shouldBlock(url, "xmlhttprequest", function(url, block) {                                                  
-                trackerUrl = block ? "about:blank" : url 
+                args[1] = block ? "about:blank" : url 
             })
-            duckduckgoMessaging.log("sending xhr " + url + " to " + trackerUrl)
-            return originalOpen.apply(this, [method, trackerUrl]);
+            duckduckgoMessaging.log("sending xhr " + url + " to " + args[1])
+            return originalOpen.apply(this, args);
         }
 
     } catch(error) {

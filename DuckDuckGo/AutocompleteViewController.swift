@@ -54,9 +54,16 @@ class AutocompleteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        adjustForInCall()
         configureNavigationBar()
     }
-    
+
+    // If auto complete is used after the in-call banner is shown it has the wrong y position (should be zero)
+    private func adjustForInCall() {
+        let frame = self.view.frame
+        self.view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+    }
+
     private func configureNavigationBar() {
         hidesBarsOnSwipeDefault = navigationController?.hidesBarsOnSwipe ?? hidesBarsOnSwipeDefault
         navigationController?.hidesBarsOnSwipe = false

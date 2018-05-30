@@ -28,8 +28,6 @@ public class WebCacheManager {
         static let cookieDomain = "duckduckgo.com"
     }
     
-    private var cookies = [HTTPCookie]()
-    
     private var allDataTypes: Set<String> {
         return WKWebsiteDataStore.allWebsiteDataTypes()
     }
@@ -39,15 +37,18 @@ public class WebCacheManager {
     }
     
     private init() {
-        self.cookies = HTTPCookieStorage.shared.cookies ?? []
     }
 
-    public func injectCookies(dataStore: WKWebsiteDataStore) {
-        
+    public func consumeCookies(intoDataStore dataStore: WKWebsiteDataStore) {
         if #available(iOS 11, *) {
-            for cookie in cookies {
+            
+            let storage = HTTPCookieStorage.shared
+            for cookie in storage.cookies ?? [] {
+                Logger.log(items: "consuming cookie", cookie.domain, cookie.name, cookie.value)
                 dataStore.httpCookieStore.setCookie(cookie)
+                storage.deleteCookie(cookie)
             }
+            
         }
     }
     
@@ -66,9 +67,10 @@ public class WebCacheManager {
     func extractAllowedCookies(in cookieStore: WKHTTPCookieStore) {
         
         cookieStore.getAllCookies { cookies in
-            self.cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
+            let cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
             let storage = HTTPCookieStorage.shared
-            for cookie in self.cookies {
+            for cookie in cookies {
+                Logger.log(items: "storing cookie", cookie.domain, cookie.name, cookie.value)
                 storage.setCookie(cookie)
             }
         }

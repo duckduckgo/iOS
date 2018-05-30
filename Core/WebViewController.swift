@@ -112,7 +112,7 @@ open class WebViewController: UIViewController {
         webEventsDelegate?.attached(webView: webView)
         
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-            WebCacheManager.instance.injectCookies(dataStore: self.webView.configuration.websiteDataStore)
+            WebCacheManager.instance.consumeCookies(intoDataStore: self.webView.configuration.websiteDataStore)
             if let url = self.url {
                 self.load(url: url)
             }

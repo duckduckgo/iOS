@@ -41,14 +41,12 @@ public class WebCacheManager {
 
     public func consumeCookies(intoDataStore dataStore: WKWebsiteDataStore) {
         if #available(iOS 11, *) {
-            
             let storage = HTTPCookieStorage.shared
             for cookie in storage.cookies ?? [] {
                 Logger.log(items: "consuming cookie", cookie.domain, cookie.name, cookie.value)
                 dataStore.httpCookieStore.setCookie(cookie)
                 storage.deleteCookie(cookie)
-            }
-            
+            }            
         }
     }
     
@@ -57,24 +55,22 @@ public class WebCacheManager {
      */
     public func clear() {
         if #available(iOS 11, *) {
-            extractAllowedCookies(in: dataStore.httpCookieStore)
+            extractAllowedCookiesThenClear(in: dataStore.httpCookieStore)
+        } else {
+            dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) { }
         }
-        
-        dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) {}
     }
 
     @available(iOS 11, *)
-    func extractAllowedCookies(in cookieStore: WKHTTPCookieStore) {
-        
+    func extractAllowedCookiesThenClear(in cookieStore: WKHTTPCookieStore) {
         cookieStore.getAllCookies { cookies in
             let cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
             let storage = HTTPCookieStorage.shared
             for cookie in cookies {
-                Logger.log(items: "storing cookie", cookie.domain, cookie.name, cookie.value)
                 storage.setCookie(cookie)
             }
+            self.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
         }
-        
     }
     
 }

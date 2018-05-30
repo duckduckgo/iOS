@@ -46,9 +46,7 @@ public class WebCacheManager {
         
         if #available(iOS 11, *) {
             for cookie in cookies {
-                dataStore.httpCookieStore.setCookie(cookie) {
-                    // no-op
-                }
+                dataStore.httpCookieStore.setCookie(cookie)
             }
         }
     }
@@ -61,15 +59,13 @@ public class WebCacheManager {
             extractAllowedCookies(in: dataStore.httpCookieStore)
         }
         
-        dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) {
-            // no-op
-        }
+        dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) {}
     }
 
     @available(iOS 11, *)
     func extractAllowedCookies(in cookieStore: WKHTTPCookieStore) {
         
-        cookieStore.getAllCookies { (cookies) in
+        cookieStore.getAllCookies { cookies in
             self.cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
             let storage = HTTPCookieStorage.shared
             for cookie in self.cookies {

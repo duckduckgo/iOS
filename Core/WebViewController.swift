@@ -111,11 +111,13 @@ open class WebViewController: UIViewController {
         webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
         
-        WebCacheManager.instance.injectCookies(dataStore: webView.configuration.websiteDataStore)
-        
-        if let url = url {
-            load(url: url)
+        webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            WebCacheManager.instance.injectCookies(dataStore: self.webView.configuration.websiteDataStore)
+            if let url = self.url {
+                self.load(url: url)
+            }
         }
+        
     }
     
     private func attachLongPressHandler(webView: WKWebView) {

@@ -60,14 +60,8 @@ class MainViewController: UIViewController {
         return tabManager?.current
     }
 
-    var preloader: WebViewPreloader? = WebViewPreloader()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        preloader?.preloadThen {
-            self.preloader = nil
-        }
         
         chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
@@ -577,26 +571,3 @@ extension MainViewController: BookmarksDelegate {
     }
 }
 
-// This preloads a webview so that the datastore can then receive cookies, otherwise nothing happens until subsequent webviews are shown
-// Seems to be related to the bug discussed here: https://forums.developer.apple.com/thread/99674
-class WebViewPreloader: NSObject, WKNavigationDelegate {
-    
-    var webView = WKWebView(frame: CGRect.zero)
-    
-    var completion: (() -> Void)?
-    
-    func preloadThen(_ completion: @escaping () -> Void) {
-        self.completion = completion
-        webView.navigationDelegate = self
-        webView.load(URLRequest(url: URL(string: "about:blank")!))
-    }
-
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        completion?()
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        completion?()
-    }
-    
-}

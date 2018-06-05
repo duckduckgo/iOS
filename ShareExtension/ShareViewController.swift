@@ -19,6 +19,7 @@
 
 import UIKit
 import Social
+import Core
 
 class ShareViewController: SLComposeServiceViewController {
     
@@ -57,7 +58,7 @@ class ShareViewController: SLComposeServiceViewController {
     private func loadUrl(fromUrlProvider urlProvider: NSItemProvider) {
         urlProvider.loadItem(forTypeIdentifier: Identifier.url, options: nil) { [weak self] (item, error) in
             if let url = item as? URL {
-                self?.open(query: url.absoluteString)
+                self?.open(url: url)
             }
         }
     }
@@ -65,13 +66,12 @@ class ShareViewController: SLComposeServiceViewController {
     private func loadText(fromTextProvider textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: Identifier.text, options: nil) { [weak self] (item, error) in
             guard let query = item as? String else { return }
-            self?.open(query: query)
+            self?.open(url: AppUrls().url(forQuery: query))
         }
     }
-    
-    private func open(query: String) {
+    private func open(url: URL) {
         let selector = sel_registerName(Constants.openURLSelector)
-        let deepLink = URL(string: "\(AppDeepLinks.quickLink)\(query)")!
+        let deepLink = URL(string: "\(AppDeepLinks.quickLink)\(url)")!
 
         var responder = self as UIResponder?
         while (responder != nil) {

@@ -39,7 +39,7 @@ public class WebCacheManager {
         
         let cookieStorage = CookieStorage()
         for cookie in cookieStorage.cookies {
-            dataStore.httpCookieStore.setCookie(cookie)
+            WebCacheManager.dataStore.httpCookieStore.setCookie(cookie)
         }
         cookieStorage.clear()
     }
@@ -49,9 +49,9 @@ public class WebCacheManager {
      */
     public static func clear() {
         if #available(iOS 11, *) {
-            extractAllowedCookiesThenClear(in: dataStore.httpCookieStore)
+            extractAllowedCookiesThenClear(in: WebCacheManager.dataStore.httpCookieStore)
         } else {
-            dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) { }
+            WebCacheManager.dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) { }
         }
     }
 
@@ -64,7 +64,7 @@ public class WebCacheManager {
                 cookieStorage.setCookie(cookie)
                 
             }
-            self.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
+            WebCacheManager.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
         }
     }
     

@@ -20,6 +20,7 @@
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
 		8382E9F2207D61F000708757 /* TabIconMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382E9F1207D61F000708757 /* TabIconMaker.swift */; };
 		838306B320C704050045E854 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
+		838306E320C733010045E854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 838306E120C733010045E854 /* InfoPlist.strings */; };
 		8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390446E20BDCE10006461CD /* ShareViewController.swift */; };
 		8390447220BDCE10006461CD /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8390447020BDCE10006461CD /* MainInterface.storyboard */; };
 		8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8390446C20BDCE10006461CD /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -402,6 +403,7 @@
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
 		8382E9F1207D61F000708757 /* TabIconMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIconMaker.swift; sourceTree = "<group>"; };
+		838306E220C733010045E854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8390446C20BDCE10006461CD /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8390446E20BDCE10006461CD /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		8390447120BDCE10006461CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				8390446E20BDCE10006461CD /* ShareViewController.swift */,
 				8390447020BDCE10006461CD /* MainInterface.storyboard */,
 				8390447320BDCE10006461CD /* Info.plist */,
+				838306E120C733010045E854 /* InfoPlist.strings */,
 			);
 			path = ShareExtension;
 			sourceTree = "<group>";
@@ -2204,6 +2207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8390447220BDCE10006461CD /* MainInterface.storyboard in Resources */,
+				838306E320C733010045E854 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2694,6 +2698,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		838306E120C733010045E854 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				838306E220C733010045E854 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		8390447020BDCE10006461CD /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

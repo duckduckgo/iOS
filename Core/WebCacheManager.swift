@@ -22,24 +22,19 @@ import WebKit
 
 public class WebCacheManager {
 
-    public static var instance = WebCacheManager()
-    
     private struct Constants {
         static let cookieDomain = "duckduckgo.com"
     }
     
-    private var allDataTypes: Set<String> {
+    private static var allDataTypes: Set<String> {
         return WKWebsiteDataStore.allWebsiteDataTypes()
     }
     
-    private var dataStore: WKWebsiteDataStore {
+    private static var dataStore: WKWebsiteDataStore {
         return WKWebsiteDataStore.default()
     }
     
-    private init() {
-    }
-
-    public func consumeCookies(intoDataStore dataStore: WKWebsiteDataStore) {
+    public static func consumeCookies(intoDataStore dataStore: WKWebsiteDataStore) {
         if #available(iOS 11, *) {
             let storage = HTTPCookieStorage.shared
             for cookie in storage.cookies ?? [] {
@@ -53,7 +48,7 @@ public class WebCacheManager {
     /**
      Clears the cache of all data, except duckduckgo cookies
      */
-    public func clear() {
+    public static func clear() {
         if #available(iOS 11, *) {
             extractAllowedCookiesThenClear(in: dataStore.httpCookieStore)
         } else {
@@ -62,7 +57,7 @@ public class WebCacheManager {
     }
 
     @available(iOS 11, *)
-    func extractAllowedCookiesThenClear(in cookieStore: WKHTTPCookieStore) {
+    private static func extractAllowedCookiesThenClear(in cookieStore: WKHTTPCookieStore) {
         cookieStore.getAllCookies { cookies in
             let cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
             let storage = HTTPCookieStorage.shared

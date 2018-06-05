@@ -46,7 +46,6 @@ class MainViewController: UIViewController {
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
     
-    private let webCacheManager = WebCacheManager.instance
     private lazy var appUrls: AppUrls = AppUrls()
 
     fileprivate var tabManager: TabManager!
@@ -229,7 +228,7 @@ class MainViewController: UIViewController {
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         ServerTrustCache.shared.clear()
-        webCacheManager.clear()
+        WebCacheManager.clear()
         FireAnimation.animate() {
             self.tabManager.removeAll()
             self.attachHomeScreen()

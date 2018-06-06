@@ -23,10 +23,10 @@ import WebKit
 public class WebCacheManager {
 
     private struct Constants {
-        static let internalCache = "duckduckgo.com"
+        static let cookieDomain = "duckduckgo.com"
     }
     
-    private static var allData: Set<String> {
+    private static var allDataTypes: Set<String> {
         return WKWebsiteDataStore.allWebsiteDataTypes()
     }
     
@@ -34,33 +34,38 @@ public class WebCacheManager {
         return WKWebsiteDataStore.default()
     }
     
-    /**
-     Provides a summary of the external (non-duckduckgo) cached data
-     */
-    public static func summary(completionHandler: @escaping (_ summary: WebCacheSummary) -> Void) {
-         dataStore.fetchDataRecords(ofTypes: allData, completionHandler: { records in
-            let count = records.reduce(0) { (count, record) in
-                if record.displayName == Constants.internalCache {
-                    return count
-                }
-                return count + record.dataTypes.count
-            }
-            Logger.log(text: String(format: "Web cache retrieved, there are %d items in the cache", count))
-            completionHandler(WebCacheSummary(count: count))
-        })
+    public static func consumeCookies() {
+        guard #available(iOS 11, *) else { return }
+        
+        let cookieStorage = CookieStorage()
+        for cookie in cookieStorage.cookies {
+            WebCacheManager.dataStore.httpCookieStore.setCookie(cookie)
+        }
+        cookieStorage.clear()
     }
     
     /**
-     Clears the cache of all external (non-duckduckgo) data
+     Clears the cache of all data, except duckduckgo cookies
      */
-    public static func clear(completionHandler: @escaping () -> Void) {
-        dataStore.fetchDataRecords(ofTypes: allData) { records in
-            let externalRecords = records.filter { $0.displayName != Constants.internalCache }
-            dataStore.removeData(ofTypes: allData, for: externalRecords) {
-                Logger.log(text: "External cache cleared")
-                completionHandler()
-            }
+    public static func clear() {
+        if #available(iOS 11, *) {
+            extractAllowedCookiesThenClear(in: WebCacheManager.dataStore.httpCookieStore)
+        } else {
+            WebCacheManager.dataStore.removeData(ofTypes: allDataTypes, modifiedSince: Date.distantPast) { }
         }
     }
-}
+
+    @available(iOS 11, *)
+    private static func extractAllowedCookiesThenClear(in cookieStore: WKHTTPCookieStore) {
+        let cookieStorage = CookieStorage()
+        cookieStore.getAllCookies { cookies in
+            let cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
+            for cookie in cookies {
+                cookieStorage.setCookie(cookie)
+                
+            }
+            WebCacheManager.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
+        }
+    }
     
+}

@@ -47,6 +47,7 @@ class MainViewController: UIViewController {
     fileprivate var autocompleteController: AutocompleteViewController?
     
     private lazy var appUrls: AppUrls = AppUrls()
+
     fileprivate var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
@@ -60,7 +61,7 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         chromeManager = BrowserChromeManager(delegate: self)
         attachOmniBar()
         configureTabManager()
@@ -213,6 +214,7 @@ class MainViewController: UIViewController {
         containerView.addSubview(controller.view)
         controller.view.frame = containerView.bounds
         controller.didMove(toParentViewController: self)
+        
     }
 
     fileprivate func remove(tabAt index: Int) {
@@ -226,7 +228,7 @@ class MainViewController: UIViewController {
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         ServerTrustCache.shared.clear()
-        WebCacheManager.clear() {}
+        WebCacheManager.clear()
         FireAnimation.animate() {
             self.tabManager.removeAll()
             self.attachHomeScreen()

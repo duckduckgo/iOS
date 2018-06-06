@@ -82,7 +82,7 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func sendFeedback() {
-        UIApplication.shared.openURL(AppDeepLinks.feedbackLink)
+        UIApplication.shared.open(AppDeepLinks.feedbackLink, options: [:])
     }
     
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

@@ -79,29 +79,17 @@
 
         var xhr = XMLHttpRequest.prototype
         var originalOpen = xhr.open
-        var originalSend = xhr.send
 
-        xhr.open = function(method, url) {
-            this.trackerUrl = url;
-            return originalOpen.apply(this, arguments);
+        xhr.open = function() {
+            var args = arguments
+            var url = arguments[1]
+            duckduckgoContentBlocking.shouldBlock(url, "xmlhttprequest", function(url, block) {                                                  
+                args[1] = block ? "about:blank" : url 
+            })
+            duckduckgoMessaging.log("sending xhr " + url + " to " + args[1])
+            return originalOpen.apply(this, args);
         }
 
-        xhr.send = function(body) {
- 
-            var sendArgs = arguments
-            var instance = this
-            duckduckgoContentBlocking.shouldBlock(this.trackerUrl, "xmlhttprequest", function(url, block) {
-                if (block) {
-                    instance.abort()
-                    duckduckgoMessaging.log("blocked xhr: " + url)
-                } else {
-                    duckduckgoMessaging.log("allowing xhr: " + url)
-                    originalSend.apply(instance, sendArgs)
-                } 
-
-            })
-
-        }           
     } catch(error) {
         duckduckgoMessaging.log("failed to install xhr detection")
     }

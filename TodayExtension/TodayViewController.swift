@@ -127,7 +127,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
         let clearAccessory = UIButton()
         clearAccessory.tag = index
         clearAccessory.sizeToFit()
-        clearAccessory.setImage(#imageLiteral(resourceName: "Close"), for: .normal)
+        clearAccessory.setImage(#imageLiteral(resourceName: "Remove"), for: .normal)
         clearAccessory.tintColor = UIColor.white
         clearAccessory.addTarget(self, action: #selector(onClearTapped(sender:)), for: .touchUpInside)
         return clearAccessory

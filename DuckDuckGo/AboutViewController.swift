@@ -27,7 +27,7 @@ class AboutViewController: UIViewController {
 
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
         dismiss(animated: true) { 
-            UIApplication.shared.openURL(AppDeepLinks.aboutLink)
+            UIApplication.shared.open(AppDeepLinks.aboutLink, options: [:])
         }
     }
 }

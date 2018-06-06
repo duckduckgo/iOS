@@ -41,6 +41,8 @@ extension WKWebViewConfiguration {
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsPictureInPictureMediaPlayback = true
+        configuration.ignoresViewportScaleLimits = true
+        
         return configuration
     }
     

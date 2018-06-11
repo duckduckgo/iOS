@@ -49,11 +49,7 @@ open class WebViewController: UIViewController {
     public var loadedURL: URL?
     
     private var lastUpgradedDomain: String?
-    private var lastError: Error? {
-        didSet {
-            print("*** set lastError", lastError as Any)
-        }
-    }
+    private var lastError: Error? 
     private var shouldReloadOnError = false
     
     private lazy var appUrls: AppUrls = AppUrls()
@@ -406,7 +402,6 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     private func showErrorNow() {
-        print("***", #function, lastError as Any)
         guard let error = lastError else { return }
         hideProgressIndicator()
         showError(message: error.localizedDescription)

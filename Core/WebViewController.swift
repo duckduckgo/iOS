@@ -61,7 +61,7 @@ open class WebViewController: UIViewController {
     }
     
     public var url: URL? {
-        return isError ? loadedURL : webView.url
+        return isError ? loadedURL : webView?.url
     }
     
     public var favicon: URL?

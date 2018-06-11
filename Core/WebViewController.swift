@@ -49,7 +49,11 @@ open class WebViewController: UIViewController {
     public var loadedURL: URL?
     
     private var lastUpgradedDomain: String?
-    private var lastError: Error?
+    private var lastError: Error? {
+        didSet {
+            print("*** set lastError", lastError as Any)
+        }
+    }
     private var shouldReloadOnError = false
     
     private lazy var appUrls: AppUrls = AppUrls()
@@ -331,12 +335,18 @@ extension WebViewController: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         lastError = error
         let error = error as NSError
+        
+        // prevent loops where a site keeps redirecting to itself (e.g. bbc)
         if let url = loadedURL,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {
             failingUrls.insert(domain)
         }
-        showErrorNow()
+        
+        // wait before showing errors in case they recover automatically
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.showErrorNow()
+        }
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -396,6 +406,7 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     private func showErrorNow() {
+        print("***", #function, lastError as Any)
         guard let error = lastError else { return }
         hideProgressIndicator()
         showError(message: error.localizedDescription)

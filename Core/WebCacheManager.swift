@@ -64,7 +64,10 @@ public class WebCacheManager {
                 cookieStorage.setCookie(cookie)
                 
             }
-            WebCacheManager.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
+            
+            DispatchQueue.main.async {
+                WebCacheManager.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
+            }
         }
     }
     

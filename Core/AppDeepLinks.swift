@@ -44,9 +44,6 @@ public struct AppDeepLinks {
     }
     
     public static func query(fromQuickLink url: URL) -> String {
-        let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true)!
-        components.scheme = nil // remove scheme
-        let string = String(components.url!.absoluteString.dropFirst(2)) // strip off '//' prefix
-        return string
+        return url.absoluteString.replacingOccurrences(of: quickLink , with: "", options: .caseInsensitive)
     }
 }

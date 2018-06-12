@@ -1,1 +1,1 @@
-In this release we added pinch-to-zoom scaling across all websites, improved our data clearing when pressing the fire button and made tracker blocking and privacy dashboard stability improvements.
+In this release we added share support allowing you to share text and links from other apps to open them in DuckDuckGo.

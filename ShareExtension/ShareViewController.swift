@@ -35,22 +35,28 @@ class ShareViewController: SLComposeServiceViewController {
     override func configurationItems() -> [Any]! {
         if let urlProvider = getItemProvider(identifier: Identifier.url) {
             loadUrl(fromUrlProvider: urlProvider)
-        }
-        if let textProvider = getItemProvider(identifier: Identifier.text) {
+        } else if let textProvider = getItemProvider(identifier: Identifier.text) {
             loadText(fromTextProvider: textProvider)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.cancel()
         }
         return []
     }
     
     private func getItemProvider(identifier: String) -> NSItemProvider? {
+
         guard let item = extensionContext?.inputItems.first as? NSExtensionItem else {
             return nil
         }
-        guard let itemProvider = item.attachments?.first as? NSItemProvider else {
-            return nil
-        }
-        if itemProvider.hasItemConformingToTypeIdentifier(identifier) {
-            return itemProvider
+    
+        guard let attachments = item.attachments else { return nil }
+        
+        for attachment in attachments {
+            guard let itemProvider = attachment as? NSItemProvider else { break }
+            if itemProvider.hasItemConformingToTypeIdentifier(identifier) {
+                return itemProvider
+            }
         }
         return nil
     }
@@ -69,6 +75,7 @@ class ShareViewController: SLComposeServiceViewController {
             self?.open(url: AppUrls().url(forQuery: query))
         }
     }
+
     private func open(url: URL) {
         let selector = sel_registerName(Constants.openURLSelector)
         let deepLink = URL(string: "\(AppDeepLinks.quickLink)\(url)")!
@@ -77,13 +84,9 @@ class ShareViewController: SLComposeServiceViewController {
         while (responder != nil) {
             if responder!.responds(to: selector) {
                 _ = responder?.perform(selector, with: deepLink, with: {})
+                break
             }
             responder = responder!.next
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.cancel()
-        }
     }
-    
 }

@@ -34,8 +34,13 @@ public class StatisticsUserDefaults: StatisticsStore {
         return UserDefaults(suiteName: groupName)
     }
     
-    public init(groupName: String =  "group.com.duckduckgo.statistics") {
+    public init(groupName: String = "group.com.duckduckgo.statistics") {
         self.groupName = groupName
+        
+        if let atb = atb, let variant = variant, atb.hasSuffix(variant) {
+            self.atb = String(atb.dropLast(variant.count))
+        }
+        
     }
     
     public var hasInstallStatistics: Bool {
@@ -68,6 +73,11 @@ public class StatisticsUserDefaults: StatisticsStore {
         set{
             userDefaults?.setValue(newValue, forKey: Keys.variant)
         }
+    }
+    
+    public var atbWithVariant: String? {
+        guard let atb = atb else { return nil }
+        return "\(atb)\(variant ?? "")"
     }
     
 }

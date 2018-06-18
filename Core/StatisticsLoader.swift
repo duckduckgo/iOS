@@ -70,7 +70,7 @@ public class StatisticsLoader {
                 completion()
                 return
             }
-            self.statisticsStore.atb = installAtb
+            self.statisticsStore.atb = atb.version
             self.statisticsStore.retentionAtb = retentionAtb
             completion()
         }

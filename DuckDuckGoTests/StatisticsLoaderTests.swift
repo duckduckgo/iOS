@@ -47,7 +47,7 @@ class StatisticsLoaderTests: XCTestCase {
         let expect = expectation(description: "Successfult atb and exti updates store")
         testee.load { () in
             XCTAssertTrue(self.mockStatisticsStore.hasInstallStatistics)
-            XCTAssertEqual(self.mockStatisticsStore.atb, "v77-5x1")
+            XCTAssertEqual(self.mockStatisticsStore.atb, "v77-5")
             XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "v77-5")
             expect.fulfill()
         }

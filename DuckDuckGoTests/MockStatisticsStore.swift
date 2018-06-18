@@ -31,4 +31,6 @@ class MockStatisticsStore: StatisticsStore {
     
     var variant: String?
     
+    var atbWithVariant: String?
+    
 }

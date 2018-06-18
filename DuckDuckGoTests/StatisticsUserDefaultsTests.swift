@@ -37,7 +37,27 @@ class StatisticsUserDefaultsTests: XCTestCase {
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
         testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }
+    
+    func testWhenStoreIsConstructedAndCombinedAtbVariantExistsThenAtbIsCleanedUp() {
+        testee.atb = "\(Constants.atb)\(Constants.variant)"
+        testee.variant = Constants.variant
 
+        let newInstance = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
+        XCTAssertEqual(newInstance.atb, Constants.atb)
+    }
+
+    func testWhenAtbAndVariantThenAtbWithVariantThenReturnsAtbWithVariant() {
+        testee.atb = Constants.atb
+        testee.variant = Constants.variant
+        XCTAssertEqual(testee.atbWithVariant, "\(Constants.atb)\(Constants.variant)")
+    }
+    
+    func testWhenAtbAndNoVariantThenAtbWithVariantThenReturnsAtb() {
+        testee.atb = Constants.atb
+        testee.variant = nil
+        XCTAssertEqual(testee.atbWithVariant, Constants.atb)
+    }
+    
     func testWhenVariantSetThenDefaultsIsUpdated() {
         testee.variant = Constants.variant
         XCTAssertEqual(testee.variant, Constants.variant)

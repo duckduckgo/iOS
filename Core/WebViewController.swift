@@ -245,8 +245,6 @@ open class WebViewController: UIViewController {
     }
     
     public func tearDown() {
-        guard let webView = webView else { return }
-        self.webView = nil
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))

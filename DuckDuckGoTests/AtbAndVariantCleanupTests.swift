@@ -44,7 +44,7 @@ class AtbAndVariantCleanupTests: XCTestCase {
         
     }
     
-    func testWhenVariantIsNInCurrentExperimentThenVariantIsNotRemovedFromStorage() {
+    func testWhenVariantIsInCurrentExperimentThenVariantIsNotRemovedFromStorage() {
 
         let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant, percent: 100, features: []))
         

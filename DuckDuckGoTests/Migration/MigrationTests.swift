@@ -137,7 +137,6 @@ class MigrationTests: XCTestCase {
             let link = self.self.bookmarksManager.bookmark(atIndex: 0)
             XCTAssertEqual("example.com", link.title)
             XCTAssertEqual("http://www.example.com", link.url.absoluteString)
-            XCTAssertNil(link.favicon)
             
             expectation.fulfill()
         }

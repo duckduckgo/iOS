@@ -86,7 +86,7 @@ fileprivate class Loader {
     }
     
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document, .favicon ] )
+        load(scripts: [ .document ] )
     }
     
     private func loadContentBlockingScripts() {

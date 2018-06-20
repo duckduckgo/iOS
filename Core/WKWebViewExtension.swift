@@ -51,13 +51,5 @@ extension WKWebView {
         return url
     }
     
-    public func getFavicon(completion: @escaping (URL?) -> Void) {
-        let javascript = "duckduckgoFavicon.getFavicon()"
-        evaluateJavaScript(javascript) { (result, error) in
-            guard let urlString = result as? String else { completion(nil); return }
-            guard let url = URL(string: urlString) else { completion(nil); return }
-            completion(url)
-        }
-    }
 }
 

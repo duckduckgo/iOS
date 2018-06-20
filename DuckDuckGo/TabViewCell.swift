@@ -45,7 +45,7 @@ class TabViewCell: UICollectionViewCell {
         isHidden = false
         title.text = tab.link?.title ?? ""
         link.text = tab.link?.url.absoluteString ?? ""
-        configureFavicon(tab.link?.favicon)
+        configureFavicon(forDomain: tab.link?.url.host)
     }
     
     @IBAction func deleteTab() {
@@ -61,10 +61,12 @@ class TabViewCell: UICollectionViewCell {
         
     }
     
-    private func configureFavicon(_ faviconUrl: URL?) {
+    private func configureFavicon(forDomain domain: String?) {
         let placeholder = #imageLiteral(resourceName: "GlobeSmall")
         favicon.image = placeholder
-        if let favicon = favicon {
+        
+        if let domain = domain {
+            let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
             favicon.kf.setImage(with: faviconUrl, placeholder: placeholder)
         }
     }

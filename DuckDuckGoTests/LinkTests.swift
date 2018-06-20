@@ -29,7 +29,6 @@ class LinkTests: XCTestCase {
         static let anotherTitle = "Another title"
         static let url = URL(string: "https://example.com")!
         static let anotherUrl = URL(string: "https://anothertUrl.com")!
-        static let anotherFavicon = URL(string: "https://anothertfavicon.com")!
     }
     
     func testWhenSameObjectThenEqualsPasses() {

@@ -64,8 +64,6 @@ open class WebViewController: UIViewController {
         return isError ? loadedURL : webView?.url
     }
     
-    public var favicon: URL?
-    
     public var canGoBack: Bool {
         let webViewCanGoBack = webView.canGoBack
         let navigatedToError = webView.url != nil && isError
@@ -297,7 +295,6 @@ extension WebViewController: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         lastError = nil
         shouldReloadOnError = false
-        favicon = nil
         hideErrorMessage()
         showProgressIndicator()
         

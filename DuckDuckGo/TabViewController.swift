@@ -439,8 +439,8 @@ extension TabViewController: WebEventsDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        // if host is the same use same protection id and don't inject scripts, otherwise, reset and reload
-        if let siteRating = siteRating, siteRating.url.host == url?.host {
+        // if host and scheme are the same, use same protection id and don't inject scripts, otherwise, reset and reload
+        if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
             self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
         } else {
             resetSiteRating()

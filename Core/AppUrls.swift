@@ -39,6 +39,8 @@ public struct AppUrls {
         static let surrogates = "\(home)/contentblocking.js?l=surrogates"
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"
+        
+        static let faviconService = "\(home)/ip3/%@.ico"
     }
 
     private struct Param {
@@ -125,6 +127,11 @@ public struct AppUrls {
     public func exti(forAtb atb: String) -> URL {
         let extiUrl = URL(string: Url.exti)!
         return extiUrl.addParam(name: Param.atb, value: atb)
+    }
+    
+    public func faviconUrl(forDomain domain: String) -> URL {
+        let urlString = String(format: Url.faviconService, domain)
+        return URL(string: urlString)!
     }
     
     /**

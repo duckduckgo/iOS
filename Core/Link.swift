@@ -25,39 +25,30 @@ public class Link: NSObject, NSCoding {
     private struct NSCodingKeys {
         static let title = "title"
         static let url = "url"
-        static let favicon = "favicon"
     }
 
     public let title: String?
     public let url: URL
-    public let favicon: URL?
     
-    public required init(title: String?, url: URL, favicon: URL? = nil) {
+    public required init(title: String?, url: URL) {
         self.title = title
         self.url = url
-        self.favicon = favicon
     }
     
     public convenience required init?(coder decoder: NSCoder) {
         guard let url = decoder.decodeObject(forKey: NSCodingKeys.url) as? URL else { return nil }
         let title = decoder.decodeObject(forKey: NSCodingKeys.title) as? String
-        let favicon = decoder.decodeObject(forKey: NSCodingKeys.favicon) as? URL
-        self.init(title: title, url: url, favicon: favicon)
+        self.init(title: title, url: url)
     }
     
     public func encode(with coder: NSCoder) {
         coder.encode(title, forKey: NSCodingKeys.title)
         coder.encode(url, forKey: NSCodingKeys.url)
-        coder.encode(favicon, forKey: NSCodingKeys.favicon)
-    }
-    
-    public var hasFavicon: Bool {
-        return favicon != nil
     }
     
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Link else { return false }
-        return title == other.title && url == other.url && favicon == other.favicon
+        return title == other.title && url == other.url
     }
     
     /**
@@ -70,7 +61,6 @@ public class Link: NSObject, NSCoding {
         }
     
         let mergeTitle = (title == nil || title!.isEmpty) ? other.title : title
-        let mergeFavicon = favicon ?? other.favicon
-        return Link(title: mergeTitle, url: url, favicon: mergeFavicon)
+        return Link(title: mergeTitle, url: url)
     }
 }

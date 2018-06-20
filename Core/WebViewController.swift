@@ -192,13 +192,6 @@ open class WebViewController: UIViewController {
         webEventsDelegate?.webpageCanGoBackForwardChanged()
     }
 
-    private func onFaviconLoaded(_ favicon: URL) {
-        self.favicon = favicon
-        if let url = url {
-            webEventsDelegate?.faviconWasUpdated(favicon, forUrl: url)
-        }
-    }
-
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
@@ -314,11 +307,6 @@ extension WebViewController: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
-        webView.getFavicon(completion: { [weak self] (favicon) in
-            if let favicon = favicon {
-                self?.onFaviconLoaded(favicon)
-            }
-        })
         webEventsDelegate?.webpageDidFinishLoading()
     }
 

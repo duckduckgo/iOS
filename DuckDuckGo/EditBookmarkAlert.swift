@@ -44,7 +44,7 @@ class EditBookmarkAlert {
             if let title = editBox.textFields?[0].text,
                 let urlString = editBox.textFields?[1].text,
                 let url = URL(string: urlString) {
-                let newBookmark = Link(title: title, url: url, favicon: bookmark.favicon)
+                let newBookmark = Link(title: title, url: url)
                 completion(newBookmark)
             }
         }

@@ -26,7 +26,6 @@ public class JavascriptLoader {
     
     public enum Script: String {
         case document
-        case favicon
         case disconnectme
         case contentblocker
         case apbfilter = "abp-filter-parser-packed"

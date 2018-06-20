@@ -23,5 +23,4 @@ import Foundation
 public protocol BookmarkStore {
     var bookmarks: [Link]? { get set }
     func addBookmark(_ bookmark: Link)
-    func updateFavicon(_ favicon: URL, forBookmarksWithUrl: URL)
 }

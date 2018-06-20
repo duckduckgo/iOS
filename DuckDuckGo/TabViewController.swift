@@ -62,7 +62,7 @@ class TabViewController: WebViewController {
             return tabModel.link
         }
         
-        let activeLink = Link(title: name, url: url, favicon: favicon)
+        let activeLink = Link(title: name, url: url)
         guard let storedLink = tabModel.link else {
             return activeLink
         }
@@ -474,13 +474,6 @@ extension TabViewController: WebEventsDelegate {
         updateSiteRating()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.delegate?.tabLoadingStateDidChange(tab: self)
-    }
-    
-    func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
-        let bookmarks = BookmarkUserDefaults()
-        bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
-        tabModel.link = link
-        delegate?.tabLoadingStateDidChange(tab: self)
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {

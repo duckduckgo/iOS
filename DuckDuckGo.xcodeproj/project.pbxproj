@@ -146,7 +146,6 @@
 		85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6191A20D293AC003904D1 /* HomeRowCTA.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
-		F10307681E7D67BA0059FEC7 /* favicon.js in Resources */ = {isa = PBXBuildFile; fileRef = F10307671E7D67BA0059FEC7 /* favicon.js */; };
 		F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076A1E800DC30059FEC7 /* BookmarksManager.swift */; };
 		F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */; };
 		F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */; };
@@ -562,7 +561,6 @@
 		85F6191A20D293AC003904D1 /* HomeRowCTA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRowCTA.swift; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
-		F10307671E7D67BA0059FEC7 /* favicon.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = favicon.js; sourceTree = "<group>"; };
 		F103076A1E800DC30059FEC7 /* BookmarksManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
 		F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBookmarkAlert.swift; sourceTree = "<group>"; };
 		F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
@@ -1674,7 +1672,6 @@
 			children = (
 				835750931F8E9A610059E07B /* contentblocking */,
 				F18608DF1E5E649400361C30 /* document.js */,
-				F10307671E7D67BA0059FEC7 /* favicon.js */,
 				85BA79941F71B37100F59015 /* tlds.js */,
 			);
 			name = Javascript;
@@ -2335,7 +2332,6 @@
 				85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */,
 				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
-				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
 				85F1C3C61F7A4C7500161346 /* easylist-cached.js in Resources */,
 				85F1C3C81F7A4C7500161346 /* messaging.js in Resources */,
 			);

@@ -44,14 +44,16 @@ class BookmarkCell: UITableViewCell {
     func update(withBookmark bookmark: Link) {
         self.bookmark = bookmark
         title.text = bookmark.title
-        configureFavicon(bookmark.favicon)
+        configureFavicon(forDomain: bookmark.url.host)
     }
     
-    private func configureFavicon(_ favicon: URL?) {
+    private func configureFavicon(forDomain domain: String?) {
         let placeholder = #imageLiteral(resourceName: "GlobeSmall")
         linkImage.image = placeholder
-        if let favicon = favicon {
-            linkImage.kf.setImage(with: favicon, placeholder: placeholder)
+        
+        if let domain = domain {
+            let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
+            linkImage.kf.setImage(with: faviconUrl, placeholder: placeholder)
         }
     }
 }

@@ -444,9 +444,11 @@ extension TabViewController: WebEventsDelegate {
             self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
         } else {
             resetSiteRating()
-            reloadScripts(with: siteRating!.protectionId)
+            if let protectionId = siteRating?.protectionId {
+                reloadScripts(with: protectionId)
+            }
         }
-        
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true

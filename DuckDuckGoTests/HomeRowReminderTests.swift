@@ -25,48 +25,42 @@ import XCTest
 class HomeRowReminderTests: XCTestCase {
 
     var storage: MockHomeRowReminderStorage!
-    var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowReminder ]))
+    var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
     var disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
     
     override func setUp() {
         storage = MockHomeRowReminderStorage()
     }
 
-    func testWhenFeatureIsEnabledAndFirstAccessedThenDateIsStored() {
+    func testWhenFeatureFirstAccessedThenDateIsStored() {
 
-        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
+        let feature = HomeRowReminder(storage: storage)
         _ = feature.showNow()
         XCTAssertNotNil(storage.firstAccessDate)
         
     }
     
-    func testWhenFeatureEnabledAndTimeHasElapseAndAlreadyShownThenDontShow() {
+    func testWhenTimeHasElapseAndAlreadyShownThenDontShow() {
         setReminderTimeElapsed()
         
-        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
+        let feature = HomeRowReminder(storage: storage)
         feature.setShown()
         
         XCTAssertFalse(feature.showNow())
     }
     
-    func testWhenFeatureEnabledAndIsNewAndTimeHasElapsedThenShow() {
+    func testWhenIsNewAndTimeHasElapsedThenShow() {
         setReminderTimeElapsed()
         
-        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
+        let feature = HomeRowReminder(storage: storage)
         XCTAssertTrue(feature.showNow())
     }
 
-    func testWhenFeatureEnabledAndIsNewAndTimeNotElapsedThenDontShow() {
-        let feature = HomeRowReminder(variantManager: enabledVariantManager, storage: storage)
+    func testWhenIsNewAndTimeNotElapsedThenDontShow() {
+        let feature = HomeRowReminder(storage: storage)
         XCTAssertFalse(feature.showNow())
     }
 
-    func testWhenFeatureNotEnabledAndTimeElapsedThenDontShow() {
-        setReminderTimeElapsed()
-        let feature = HomeRowReminder(variantManager: disabledVariantManager, storage: storage)
-        XCTAssertFalse(feature.showNow())
-    }
-    
     private func setReminderTimeElapsed() {
         let threeAndABitDaysAgo = -(60 * 60 * 24 * HomeRowReminder.Constants.reminderTimeInDays * 1.1)
         storage.firstAccessDate = Date(timeIntervalSinceNow: threeAndABitDaysAgo)

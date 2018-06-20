@@ -50,10 +50,13 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let feature = HomeRowOnboarding()
-        if !feature.showNow() {
+        let feature = HomeRowCTA()
+        if let type = feature.ctaToShow() {
+            applyHomeRowCTA(type: type)
+        } else {
             hideCallToAction()
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,7 +74,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func dismissInstructions() {
-        HomeRowOnboarding().dismissed()
+        HomeRowCTA().dismissed()
         hideCallToAction()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -108,6 +111,10 @@ class HomeViewController: UIViewController {
     private func hideCallToAction() {
         infoView.isHidden = true
         infoViewHeight.constant = 0
+    }
+    
+    private func applyHomeRowCTA(type: HomeRowCTA.CTAType) {
+        // TODO: we're currently showing the default CTA. When experiment 2 starts there may be more options, so show the right one here.
     }
     
     func load(url: URL) {

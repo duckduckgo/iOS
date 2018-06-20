@@ -98,8 +98,8 @@ public struct AppUrls {
 
     public var atb: URL {
         var url = URL(string: Url.atb)!
-        if let atb = statisticsStore.atb, let setAtb = statisticsStore.retentionAtb {
-            url = url.addParam(name: Param.atb, value: atb)
+        if let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.retentionAtb {
+            url = url.addParam(name: Param.atb, value: atbWithVariant)
             url = url.addParam(name: Param.setAtb, value: setAtb)
         }
         return url
@@ -145,8 +145,8 @@ public struct AppUrls {
 
     public func applyStatsParams(for url: URL) -> URL {
         var searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
-        if let atb = statisticsStore.atb {
-            searchUrl = searchUrl.addParam(name: Param.atb, value: atb)
+        if let atbWithVariant = statisticsStore.atbWithVariant {
+            searchUrl = searchUrl.addParam(name: Param.atb, value: atbWithVariant)
         }
         
         return searchUrl
@@ -164,8 +164,8 @@ public struct AppUrls {
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
         guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
-        if let atb = statisticsStore.atb {
-            return atb == url.getParam(name: Param.atb)
+        if let atbWithVariant = statisticsStore.atbWithVariant {
+            return atbWithVariant == url.getParam(name: Param.atb)
         }
         return true
     }

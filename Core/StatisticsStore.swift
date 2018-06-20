@@ -26,5 +26,7 @@ public protocol StatisticsStore: class {
     var atb: String? { get set }
     var retentionAtb: String? { get set }
     var variant: String? { get set }
+
+    var atbWithVariant: String? { get }
     
 }

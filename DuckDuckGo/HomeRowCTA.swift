@@ -29,7 +29,7 @@ class HomeRowCTA {
     
     enum CTAType {
         
-        case `default`, alternative1, alternative2
+        case `default`, alternative1
         
     }
     
@@ -49,8 +49,6 @@ class HomeRowCTA {
             return .default
         } else if variant.features.contains(.homeRowCTAAlternative1) {
             return .alternative1
-        } else if variant.features.contains(.homeRowCTAAlternative2) {
-            return .alternative2
         }
         
         return nil
@@ -58,6 +56,12 @@ class HomeRowCTA {
     
     func dismissed() {
         storage.dismissed = true
+    }
+    
+    func shown() {
+        if ctaToShow() == .default {
+            storage.dismissed = true
+        }
     }
     
 }

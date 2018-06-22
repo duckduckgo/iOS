@@ -23,18 +23,33 @@ import XCTest
 
 class HomeRowCTATests: XCTestCase {
 
-    var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
-    var disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
+    let enabledAlternativeVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTAAlternative1 ]))
+    let enabledDefaultVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
+    let disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
+
+    func testWhenShownAndAlternativeCTAThenDismissedNotSet() {
+        let storage = MockHomeRowOnboardingStorage(dismissed: false)
+        let feature = HomeRowCTA(storage: storage, variantManager: enabledAlternativeVariantManager)
+        feature.shown()
+        XCTAssertFalse(storage.dismissed)
+    }
+
+    func testWhenShownAndDefaultCTAThenDismissedStateStored() {
+        let storage = MockHomeRowOnboardingStorage(dismissed: false)
+        let feature = HomeRowCTA(storage: storage, variantManager: enabledDefaultVariantManager)
+        feature.shown()
+        XCTAssertTrue(storage.dismissed)
+    }
 
     func testWhenDismissedThenDismissedStateStored() {
-        let storage = MockHomeRowOnboardingStorage(dismissed: true)
-        let feature = HomeRowCTA(storage: storage, variantManager: enabledVariantManager)
+        let storage = MockHomeRowOnboardingStorage(dismissed: false)
+        let feature = HomeRowCTA(storage: storage, variantManager: enabledDefaultVariantManager)
         feature.dismissed()
         XCTAssertTrue(storage.dismissed)
     }
     
     func testWhenFeatureHasBeenDismissedAndIsEnabledThenDontShowNow() {
-        XCTAssertNil(HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: true), variantManager: enabledVariantManager).ctaToShow())
+        XCTAssertNil(HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: true), variantManager: enabledDefaultVariantManager).ctaToShow())
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsDisabledThenDontShowNow() {
@@ -42,9 +57,13 @@ class HomeRowCTATests: XCTestCase {
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsEnabledThenDefaultCTA() {
-        XCTAssertEqual(.default, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledVariantManager).ctaToShow())
+        XCTAssertEqual(.default, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledDefaultVariantManager).ctaToShow())
     }
-    
+
+    func testWhenFeatureHasNotBeenDismissedAndIsAlternativeAndEnabledThenAlternativeCTA() {
+        XCTAssertEqual(.alternative1, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledAlternativeVariantManager).ctaToShow())
+    }
+
 }
 
 class MockHomeRowOnboardingStorage: HomeRowCTAStorage {

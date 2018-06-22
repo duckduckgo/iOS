@@ -61,7 +61,10 @@ class HomeViewController: UIViewController {
     }
 
     @IBAction func hideKeyboard() {
-        chromeDelegate?.omniBar.resignFirstResponder()
+        // without this the keyboard hides instantly and abruptly
+        UIView.animate(withDuration: 0.5) {
+            self.chromeDelegate?.omniBar.resignFirstResponder()
+        }
     }
     
     @IBAction func showInstructions() {
@@ -106,14 +109,21 @@ class HomeViewController: UIViewController {
     
     private func applyHomeRowCTA(type: HomeRowCTA.CTAType) {
         guard homeRowCTAController == nil else { return }
-        let childViewController = loadCTAViewController(forType: type)
-
-        addChildViewController(childViewController)
-        ctaContainer.addSubview(childViewController.view)
-        ctaContainerHeight.constant = childViewController.preferredContentSize.height
-        childViewController.view.frame = ctaContainer.bounds
-        childViewController.didMove(toParentViewController: self)
         
+        let childViewController = loadCTAViewController(forType: type)
+        addChildViewController(childViewController)
+        
+        switch(type) {
+            
+        case .experiment1:
+                updateUIForExperiment1(childViewController)
+            
+        case .experiment2:
+                updateUIForExperiment2(childViewController)
+            
+        }
+        
+        childViewController.didMove(toParentViewController: self)
         self.homeRowCTAController = childViewController
     }
     
@@ -133,4 +143,16 @@ class HomeViewController: UIViewController {
         return storyboard.instantiateViewController(withIdentifier: type.rawValue)
     }
 
+    private func updateUIForExperiment1(_ childViewController: UIViewController) {
+        ctaContainer.addSubview(childViewController.view)
+        childViewController.view.frame = ctaContainer.bounds
+
+        ctaContainerHeight.constant = childViewController.preferredContentSize.height
+    }
+ 
+    private func updateUIForExperiment2(_ childViewController: UIViewController) {
+        view.addSubview(childViewController.view)
+        childViewController.view.frame = view.bounds
+    }
+    
 }

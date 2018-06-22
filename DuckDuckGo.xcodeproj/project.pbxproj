@@ -94,6 +94,7 @@
 		85A313972028E78A00327D00 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 85A313962028E78A00327D00 /* release_notes.txt */; };
 		85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* SurrogateStore.swift */; };
 		85A9C37520DD005700073340 /* HomeRowCTAExperiment1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A9C37420DD005700073340 /* HomeRowCTAExperiment1ViewController.swift */; };
+		85A9C37720DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A9C37620DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
 		85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668A209603840014CF04 /* HomeRow.storyboard */; };
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
@@ -508,6 +509,7 @@
 		85A313962028E78A00327D00 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = release_notes.txt; path = fastlane/metadata/default/release_notes.txt; sourceTree = "<group>"; };
 		85A53EC9200D1FA20010D13F /* SurrogateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurrogateStore.swift; sourceTree = "<group>"; };
 		85A9C37420DD005700073340 /* HomeRowCTAExperiment1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowCTAExperiment1ViewController.swift; sourceTree = "<group>"; };
+		85A9C37620DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowCTAExperiment2ViewController.swift; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
 		85AE668A209603840014CF04 /* HomeRow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeRow.storyboard; sourceTree = "<group>"; };
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
@@ -1151,6 +1153,7 @@
 				857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */,
 				85AE668A209603840014CF04 /* HomeRow.storyboard */,
 				85A9C37420DD005700073340 /* HomeRowCTAExperiment1ViewController.swift */,
+				85A9C37620DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift */,
 			);
 			name = HomeRow;
 			sourceTree = "<group>";
@@ -2495,6 +2498,7 @@
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
+				85A9C37720DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,

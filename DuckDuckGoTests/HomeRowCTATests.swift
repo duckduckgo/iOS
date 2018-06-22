@@ -57,11 +57,11 @@ class HomeRowCTATests: XCTestCase {
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsEnabledThenDefaultCTA() {
-        XCTAssertEqual(.default, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledDefaultVariantManager).ctaToShow())
+        XCTAssertEqual(.experiment1, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledDefaultVariantManager).ctaToShow())
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsAlternativeAndEnabledThenAlternativeCTA() {
-        XCTAssertEqual(.alternative1, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledAlternativeVariantManager).ctaToShow())
+        XCTAssertEqual(.experiment2, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledAlternativeVariantManager).ctaToShow())
     }
 
 }

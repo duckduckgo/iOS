@@ -27,9 +27,9 @@ protocol HomeRowCTAStorage: class {
 
 class HomeRowCTA {
     
-    enum CTAType {
+    enum CTAType: String {
         
-        case `default`, alternative1
+        case experiment1, experiment2
         
     }
     
@@ -43,12 +43,12 @@ class HomeRowCTA {
     
     func ctaToShow() -> CTAType? {
         guard !storage.dismissed else { return nil }
-        guard let variant = variantManager.currentVariant else { return .default }
+        guard let variant = variantManager.currentVariant else { return .experiment1 }
         
         if variant.features.contains(.homeRowCTADefault) {
-            return .default
+            return .experiment1
         } else if variant.features.contains(.homeRowCTAAlternative1) {
-            return .alternative1
+            return .experiment2
         }
         
         return nil
@@ -59,7 +59,7 @@ class HomeRowCTA {
     }
     
     func shown() {
-        if ctaToShow() == .default {
+        if ctaToShow() == .experiment1 {
             storage.dismissed = true
         }
     }

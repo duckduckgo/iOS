@@ -85,6 +85,10 @@ class MainViewController: UIViewController {
         }
 
     }
+    
+    func showOnboarding() {
+        performSegue(withIdentifier: "Onboarding", sender: self)
+    }
  
     private func configureTabManager() {
         let tabsModel = TabsModel.get() ?? TabsModel()

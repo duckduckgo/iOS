@@ -42,17 +42,16 @@ class HomeRowCTA {
     }
     
     func ctaToShow() -> CTAType? {
-//        guard !storage.dismissed else { return nil }
-//        guard let variant = variantManager.currentVariant else { return .experiment1 }
-//
-//        if variant.features.contains(.homeRowCTADefault) {
-//            return .experiment1
-//        } else if variant.features.contains(.homeRowCTAAlternative1) {
-//            return .experiment2
-//        }
-//
-//        return nil
-        return .experiment1
+        guard !storage.dismissed else { return nil }
+        guard let variant = variantManager.currentVariant else { return .experiment1 }
+
+        if variant.features.contains(.homeRowCTADefault) {
+            return .experiment1
+        } else if variant.features.contains(.homeRowCTAAlternative1) {
+            return .experiment2
+        }
+
+        return nil
     }
     
     func dismissed() {

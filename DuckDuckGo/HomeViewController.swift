@@ -49,8 +49,6 @@ class HomeViewController: UIViewController {
         let feature = HomeRowCTA()
         if let type = feature.ctaToShow() {
             applyHomeRowCTA(type: type)
-        } else {
-            hideCallToAction()
         }
         
     }

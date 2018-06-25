@@ -146,7 +146,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="590" y="52"/>
+            <point key="canvasLocation" x="41" y="12"/>
         </scene>
         <!--Home RowCTA Experiment1 View Controller-->
         <scene sceneID="1ux-XO-5EG">
@@ -168,33 +168,24 @@
                                         <state key="normal" image="Remove"/>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vCv-i8-hoq">
-                                        <rect key="frame" x="49" y="7.6666666666666856" width="258.33333333333331" height="41"/>
+                                        <rect key="frame" x="48.666666666666657" y="7.6666666666666856" width="258.33333333333337" height="41"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="TOE-bp-6py">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="TOE-bp-6py">
                                                 <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="41" id="Bm3-Yn-THQ"/>
                                                     <constraint firstAttribute="height" constant="41" id="ao0-je-6XP"/>
                                                 </constraints>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="0Sr-O3-7MD" appends="YES" id="I5a-4a-UFj"/>
-                                                </connections>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6M-UZ-DQ4">
+                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6M-UZ-DQ4">
                                                 <rect key="frame" x="49.000000000000014" y="0.0" width="209.33333333333337" height="41"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="0Sr-O3-7MD" appends="YES" id="hYv-W1-tBQ"/>
-                                                </connections>
                                             </label>
                                         </subviews>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="0Sr-O3-7MD" appends="YES" id="ih5-fP-goW"/>
-                                        </connections>
                                     </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m71-sz-p9t">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m71-sz-p9t" userLabel="No Thanks Tap View">
                                         <rect key="frame" x="331" y="0.0" width="24" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="HdQ-K1-y7f"/>
@@ -204,17 +195,33 @@
                                             <outletCollection property="gestureRecognizers" destination="2Ko-hc-W1a" appends="YES" id="xg2-jg-Oai"/>
                                         </connections>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsq-cV-Nqp" userLabel="Show Me Tap View">
+                                        <rect key="frame" x="48.666666666666657" y="7.6666666666666856" width="258.33333333333337" height="41"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="0Sr-O3-7MD" appends="YES" id="zHp-WZ-PWI"/>
+                                        </connections>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.1843137255" green="0.1843137255" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="vCv-i8-hoq" firstAttribute="centerY" secondItem="dEg-17-sZH" secondAttribute="centerY" id="3oI-Jg-dsQ"/>
+                                    <constraint firstItem="fsq-cV-Nqp" firstAttribute="centerY" secondItem="vCv-i8-hoq" secondAttribute="centerY" id="64C-1T-nmu"/>
                                     <constraint firstAttribute="trailing" secondItem="m71-sz-p9t" secondAttribute="trailing" id="9DM-7l-htU"/>
                                     <constraint firstItem="vCv-i8-hoq" firstAttribute="centerX" secondItem="dEg-17-sZH" secondAttribute="centerX" id="EsX-aT-1Ik"/>
+                                    <constraint firstItem="fsq-cV-Nqp" firstAttribute="height" secondItem="vCv-i8-hoq" secondAttribute="height" id="HBZ-0a-KOd"/>
                                     <constraint firstAttribute="height" constant="56" id="XnB-Qx-lgj"/>
+                                    <constraint firstAttribute="width" constant="400" id="bZv-ut-mkH"/>
+                                    <constraint firstItem="fsq-cV-Nqp" firstAttribute="width" secondItem="vCv-i8-hoq" secondAttribute="width" id="iAX-Xc-b77"/>
+                                    <constraint firstItem="fsq-cV-Nqp" firstAttribute="centerX" secondItem="vCv-i8-hoq" secondAttribute="centerX" id="jU1-YK-3Yg"/>
                                     <constraint firstAttribute="trailing" secondItem="vvV-f0-s72" secondAttribute="trailing" constant="8" id="pJD-4m-kuF"/>
                                     <constraint firstItem="vvV-f0-s72" firstAttribute="top" secondItem="dEg-17-sZH" secondAttribute="top" constant="8" id="tDR-jg-gQS"/>
                                     <constraint firstItem="m71-sz-p9t" firstAttribute="top" secondItem="dEg-17-sZH" secondAttribute="top" id="tM7-zW-EhB"/>
                                 </constraints>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="bZv-ut-mkH"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <constraints>
@@ -223,10 +230,21 @@
                             <constraint firstItem="dEg-17-sZH" firstAttribute="centerY" secondItem="tcg-Xk-IHG" secondAttribute="centerY" id="bCd-CJ-E8H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tcg-Xk-IHG"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="4Cj-Vv-gM3"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="4Cj-Vv-gM3"/>
+                            </mask>
+                        </variation>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="320" height="80"/>
                     <connections>
                         <outlet property="infoView" destination="dEg-17-sZH" id="HWA-0m-m58"/>
+                        <segue destination="A5s-B8-hd1" kind="presentation" identifier="showMe" modalPresentationStyle="overFullScreen" id="VmH-qU-gdr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FGi-tJ-C6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -238,7 +256,6 @@
                 <tapGestureRecognizer id="0Sr-O3-7MD" userLabel="Show Me">
                     <connections>
                         <action selector="showMe" destination="sHu-fM-IFI" id="BWN-me-H48"/>
-                        <segue destination="A5s-B8-hd1" kind="presentation" modalPresentationStyle="overFullScreen" id="5lp-hH-nEu"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -264,7 +281,7 @@
                                 <rect key="frame" x="0.0" y="548" width="375" height="230"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="85U-Xp-nI5">
-                                        <rect key="frame" x="153.66666666666666" y="-35" width="68" height="70"/>
+                                        <rect key="frame" x="154.33333333333334" y="-35" width="68" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="7jR-ez-A6L"/>
                                             <constraint firstAttribute="width" constant="68" id="x92-hb-TSY"/>
@@ -297,7 +314,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3sx-41-aLA">
-                                        <rect key="frame" x="146.66666666666666" y="177" width="83" height="29"/>
+                                        <rect key="frame" x="146.33333333333334" y="177" width="83" height="29"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <state key="normal" title="No Thanks">
                                             <color key="titleColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -311,7 +328,9 @@
                                 <constraints>
                                     <constraint firstItem="FrX-Ea-dXs" firstAttribute="top" secondItem="d5O-3x-jCk" secondAttribute="top" constant="51" id="9WJ-Xi-pe3"/>
                                     <constraint firstItem="lCM-g3-rDK" firstAttribute="width" secondItem="d5O-3x-jCk" secondAttribute="width" constant="-20" id="AGu-43-4Cn"/>
-                                    <constraint firstAttribute="width" constant="320" id="GoP-jZ-7LL"/>
+                                    <constraint firstAttribute="width" constant="400" id="GoP-jZ-7LL"/>
+                                    <constraint firstAttribute="bottom" secondItem="3sx-41-aLA" secondAttribute="bottom" constant="12" id="JbN-fl-3kW"/>
+                                    <constraint firstAttribute="height" constant="210" id="K7S-kB-5bu"/>
                                     <constraint firstItem="85U-Xp-nI5" firstAttribute="centerX" secondItem="d5O-3x-jCk" secondAttribute="centerX" id="ON5-W7-oLT"/>
                                     <constraint firstItem="sei-SR-UZd" firstAttribute="width" secondItem="d5O-3x-jCk" secondAttribute="width" constant="-20" id="Vve-23-wMF"/>
                                     <constraint firstItem="lCM-g3-rDK" firstAttribute="centerX" secondItem="d5O-3x-jCk" secondAttribute="centerX" id="aSJ-k5-bFE"/>
@@ -325,9 +344,19 @@
                                     <constraint firstItem="3sx-41-aLA" firstAttribute="centerX" secondItem="d5O-3x-jCk" secondAttribute="centerX" id="wdb-A1-1pd"/>
                                     <constraint firstItem="sei-SR-UZd" firstAttribute="centerX" secondItem="d5O-3x-jCk" secondAttribute="centerX" id="zFS-S8-zuP"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="j6w-xv-L4y"/>
+                                        <exclude reference="s9I-CL-abp"/>
+                                    </mask>
+                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="GoP-jZ-7LL"/>
+                                        <exclude reference="K7S-kB-5bu"/>
+                                        <include reference="j6w-xv-L4y"/>
+                                        <exclude reference="JbN-fl-3kW"/>
+                                        <include reference="s9I-CL-abp"/>
                                     </mask>
                                 </variation>
                             </view>

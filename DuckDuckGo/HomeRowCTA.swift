@@ -52,7 +52,7 @@ class HomeRowCTA {
 //        }
 //
 //        return nil
-        return .experiment2
+        return .experiment1
     }
     
     func dismissed() {

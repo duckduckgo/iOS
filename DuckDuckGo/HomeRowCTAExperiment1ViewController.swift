@@ -18,6 +18,7 @@ class HomeRowCTAExperiment1ViewController: UIViewController {
     }
     
     @IBAction func showMe() {
+        performSegue(withIdentifier: "showMe", sender: self)
         dismiss()
     }
     

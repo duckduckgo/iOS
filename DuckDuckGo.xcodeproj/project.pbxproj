@@ -24,6 +24,8 @@
 		8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390446E20BDCE10006461CD /* ShareViewController.swift */; };
 		8390447220BDCE10006461CD /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8390447020BDCE10006461CD /* MainInterface.storyboard */; };
 		8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8390446C20BDCE10006461CD /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		839F46B620DD9D31003B8A66 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F46B520DD9D31003B8A66 /* FeedbackViewController.swift */; };
+		83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83A23D6220DC330000051F39 /* Feedback.storyboard */; };
 		83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B8BDAD20AB0DA90076D6A1 /* APIHeadersTests.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
@@ -425,6 +427,8 @@
 		8390446E20BDCE10006461CD /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		8390447120BDCE10006461CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		8390447320BDCE10006461CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		839F46B520DD9D31003B8A66 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		83A23D6220DC330000051F39 /* Feedback.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		83B8BDAD20AB0DA90076D6A1 /* APIHeadersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHeadersTests.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
 		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -921,6 +925,15 @@
 			path = ShareExtension;
 			sourceTree = "<group>";
 		};
+		839F119520DBC489007CD8C2 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				83A23D6220DC330000051F39 /* Feedback.storyboard */,
+				839F46B520DD9D31003B8A66 /* FeedbackViewController.swift */,
+			);
+			name = Feedback;
+			sourceTree = "<group>";
+		};
 		83DBCA791F7BBB5000DFD170 /* TopSitesReport */ = {
 			isa = PBXGroup;
 			children = (
@@ -992,6 +1005,7 @@
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
+				839F119520DBC489007CD8C2 /* Feedback */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F1E249411EF2075C008C947A /* SiteMonitoring */,
 				F13B4BF41F18C74500814661 /* Tabs */,
@@ -2280,6 +2294,7 @@
 				85A313972028E78A00327D00 /* release_notes.txt in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
+				83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */,
 				85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */,
 				850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
@@ -2475,6 +2490,7 @@
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
+				839F46B620DD9D31003B8A66 /* FeedbackViewController.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,

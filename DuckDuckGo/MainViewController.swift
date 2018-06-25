@@ -88,6 +88,7 @@ class MainViewController: UIViewController {
     
     func showOnboarding() {
         performSegue(withIdentifier: "Onboarding", sender: self)
+        homeController?.resetHomeRowCTAAnimations()
     }
  
     private func configureTabManager() {

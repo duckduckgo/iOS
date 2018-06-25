@@ -57,6 +57,10 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         viewHasAppeared = true
     }
+    
+    func resetHomeRowCTAAnimations() {
+        hideHomeRowCTA()
+    }
 
     @IBAction func hideKeyboard() {
         // without this the keyboard hides instantly and abruptly
@@ -72,7 +76,7 @@ class HomeViewController: UIViewController {
     
     @IBAction func dismissInstructions() {
         HomeRowCTA().dismissed()
-        hideCallToAction()
+        hideHomeRowCTA()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -99,7 +103,7 @@ class HomeViewController: UIViewController {
     }
 
     
-    private func hideCallToAction() {
+    private func hideHomeRowCTA() {
         homeRowCTAController?.view.removeFromSuperview()
         homeRowCTAController?.removeFromParentViewController()
         homeRowCTAController = nil

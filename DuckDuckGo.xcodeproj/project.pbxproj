@@ -95,6 +95,7 @@
 		85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* SurrogateStore.swift */; };
 		85A9C37520DD005700073340 /* HomeRowCTAExperiment1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A9C37420DD005700073340 /* HomeRowCTAExperiment1ViewController.swift */; };
 		85A9C37720DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A9C37620DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift */; };
+		85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A9C37820E0E00C00073340 /* HomeRow.xcassets */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
 		85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668A209603840014CF04 /* HomeRow.storyboard */; };
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
@@ -510,6 +511,7 @@
 		85A53EC9200D1FA20010D13F /* SurrogateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurrogateStore.swift; sourceTree = "<group>"; };
 		85A9C37420DD005700073340 /* HomeRowCTAExperiment1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowCTAExperiment1ViewController.swift; sourceTree = "<group>"; };
 		85A9C37620DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowCTAExperiment2ViewController.swift; sourceTree = "<group>"; };
+		85A9C37820E0E00C00073340 /* HomeRow.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeRow.xcassets; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
 		85AE668A209603840014CF04 /* HomeRow.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeRow.storyboard; sourceTree = "<group>"; };
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
@@ -1154,6 +1156,7 @@
 				85AE668A209603840014CF04 /* HomeRow.storyboard */,
 				85A9C37420DD005700073340 /* HomeRowCTAExperiment1ViewController.swift */,
 				85A9C37620DD2DC200073340 /* HomeRowCTAExperiment2ViewController.swift */,
+				85A9C37820E0E00C00073340 /* HomeRow.xcassets */,
 			);
 			name = HomeRow;
 			sourceTree = "<group>";
@@ -2295,6 +2298,7 @@
 				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
+				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				85081A051FE05D40006561FD /* Localizable.stringsdict in Resources */,

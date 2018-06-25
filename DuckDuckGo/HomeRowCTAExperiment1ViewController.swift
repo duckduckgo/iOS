@@ -14,8 +14,20 @@ class HomeRowCTAExperiment1ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("***", #function)
         configureInfoView()
+    }
+    
+    @IBAction func showMe() {
+        dismiss()
+    }
+    
+    @IBAction func noThanks() {
+        dismiss()
+    }
+    
+    private func dismiss() {
+        HomeRowCTA().dismissed()
+        view.alpha = 0.0
     }
     
     private func configureInfoView() {

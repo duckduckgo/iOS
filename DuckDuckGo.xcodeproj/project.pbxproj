@@ -921,13 +921,6 @@
 			path = ShareExtension;
 			sourceTree = "<group>";
 		};
-		839F119520DBC489007CD8C2 /* Feedback */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Feedback;
-			sourceTree = "<group>";
-		};
 		83DBCA791F7BBB5000DFD170 /* TopSitesReport */ = {
 			isa = PBXGroup;
 			children = (
@@ -1103,7 +1096,6 @@
 		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
 			isa = PBXGroup;
 			children = (
-				839F119520DBC489007CD8C2 /* Feedback */,
 				85200F9F1FBC5A67001AF290 /* UI */,
 				85200F9E1FBC5A4E001AF290 /* CertificateBuilder */,
 				85200F9B1FBC59FF001AF290 /* NetworkLeaderboard */,

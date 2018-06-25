@@ -23,23 +23,13 @@ import Core
 
 class UseDuckDuckGoInSafariViewController: UIViewController {
   
-    @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var descriptionText: UILabel!
-    
-    private lazy var interfaceMeasurement = InterfaceMeasurement(forScreen: UIScreen.main)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.blur(style: .dark)
+    }
 
     @IBAction func onDonePressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-
-    var onboardingImage: UIImageView {
-        return image
-    }
-
-    var preferredBackgroundColor: UIColor {
-        return UIColor.softBlue
-    }
-
 }
 

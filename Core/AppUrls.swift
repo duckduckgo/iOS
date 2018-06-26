@@ -39,7 +39,7 @@ public struct AppUrls {
         static let surrogates = "\(home)/contentblocking.js?l=surrogates"
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"
-        
+        static let feedback = "\(home)/feedback.js?type=app-feedback"
         static let faviconService = "\(home)/ip3/%@.ico"
     }
 
@@ -94,6 +94,10 @@ public struct AppUrls {
     
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
+    }
+    
+    public var feedback: URL {
+        return URL(string: Url.feedback)!
     }
 
     public var atb: URL {

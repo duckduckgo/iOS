@@ -53,9 +53,6 @@
 "alert.title.add.to.whitelist" = "Add to Whitelist";
 "alert.title.add.to.whitelist.placeholder" = "www.example.com";
 
-"feedbackemail.subject" = "DuckDuckGo for iOS feedback";
-"feedbackemail.body" = "I'm running %@ \"%@\" on an %@ %@. Here's my feedback:\n";
-
 "navigation.title.edit" = "Edit";
 
 "monitoring.connection.secure" = "Secure connection";
@@ -115,3 +112,7 @@
 
 "home.row.reminder.title" = "Take DuckDuckGo home";
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
+
+"feedback.comment.general.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible.";
+"feedback.comment.brokenSite.placeholder" = "Which website content or functionality is breaking? Please be as specific as possible.";
+"feedback.submitted.confirmation" = "Thank You! Feedback submitted.";

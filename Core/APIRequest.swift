@@ -33,11 +33,11 @@ public class APIRequest {
         
     }
 
-    @discardableResult static func request(url: URL, completion: @escaping APIRequestCompletion) -> Request {
+    @discardableResult public static func request(url: URL, method: HTTPMethod = .get, parameters: [String : Any]? = nil, completion: @escaping APIRequestCompletion) -> Request {
         
         Logger.log(text: "Requesting \(url)")
-        
-        return Alamofire.request(url, headers: APIHeaders().defaultHeaders)
+   
+        return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
 
@@ -51,6 +51,7 @@ public class APIRequest {
                 }
             }
     }
+    
 }
 
 fileprivate extension HTTPURLResponse {

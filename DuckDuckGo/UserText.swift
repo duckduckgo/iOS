@@ -34,10 +34,7 @@ public struct UserText {
     
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
-    
-    public static let feedbackEmailSubject = NSLocalizedString("feedbackemail.subject", comment: "Feedback email subject text ")
-    public static let feedbackEmailBody = NSLocalizedString("feedbackemail.body", comment: "Feedback email body text")
-    
+        
     public static let actionPasteAndGo = NSLocalizedString("action.title.pasteAndGo", comment: "Paste and Go action")
     public static let actionRefresh = NSLocalizedString("action.title.refresh", comment: "Refresh action")
     public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
@@ -129,4 +126,8 @@ public struct UserText {
     
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
+    
+    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment:  "General feedback comment placeholder")
+    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment:  "Broken site feedback comment placeholder")
+    public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
 }

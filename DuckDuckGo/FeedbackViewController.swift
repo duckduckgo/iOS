@@ -62,12 +62,11 @@ class FeedbackViewController: UIViewController {
     }
     
     private func configureViews() {
-        messageTextView.delegate = self
-        messageTextView.layer.borderWidth = 1
-        messageTextView.layer.borderColor = UIColor.mercury.cgColor
         urlTextField.layer.borderWidth = 1
         urlTextField.layer.borderColor = UIColor.mercury.cgColor
         urlTextField.layer.sublayerTransform = CATransform3DMakeTranslation(ViewConstants.urlTextPadding, 0, 0)
+        messageTextView.layer.borderWidth = 1
+        messageTextView.layer.borderColor = UIColor.mercury.cgColor
     }
     
     private func registerForKeyboardNotifications() {
@@ -171,9 +170,18 @@ class FeedbackViewController: UIViewController {
 }
 
 extension FeedbackViewController: UITextViewDelegate {
+    
     func textViewDidChange(_ textView: UITextView) {
         messagePlaceholderText.isHidden = !textView.text.isEmpty
         feedbackModel.message = textView.text
         refreshButton()
+    }
+}
+
+extension FeedbackViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        messageTextView.becomeFirstResponder()
+        return false
     }
 }

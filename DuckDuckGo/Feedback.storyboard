@@ -241,7 +241,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F4B-7R-fiU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer cancelsTouchesInView="NO" id="mo1-It-jF6">
+                <tapGestureRecognizer id="mo1-It-jF6">
                     <connections>
                         <action selector="onTapped:" destination="LPY-wu-U34" id="rMu-9o-LWp"/>
                     </connections>

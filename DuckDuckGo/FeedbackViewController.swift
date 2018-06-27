@@ -128,16 +128,21 @@ class FeedbackViewController: UIViewController {
         if messageTextView.isFirstResponder && urlTextField.text?.isEmpty ?? true {
             urlTextField.becomeFirstResponder()
         }
-        messagePlaceholderText.text = UserText.feedbackBrokenSitePlaceholder
+        updateMessagePlaceholder(withText: UserText.feedbackBrokenSitePlaceholder)
     }
     
     private func hideBrokenSite() {
         urlTextFieldHeight.constant = 0
         urlTextField.isHidden = true
-        messagePlaceholderText.text = UserText.feedbackGeneralPlaceholder
+        updateMessagePlaceholder(withText: UserText.feedbackGeneralPlaceholder)
         if urlTextField.isFirstResponder {
             messageTextView.becomeFirstResponder()
         }
+    }
+    
+    private func updateMessagePlaceholder(withText text: String) {
+        let attributes = messagePlaceholderText!.attributedText!.attributes(at: 0, effectiveRange: nil)
+        messagePlaceholderText.attributedText = NSAttributedString(string: text, attributes: attributes)
     }
     
     @IBAction func onUrlChanged(_ sender: UITextField) {

@@ -93,9 +93,13 @@
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a broken site" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSK-zf-19O">
                                                 <rect key="frame" x="16" y="188" width="261" height="15"/>
+                                                <gestureRecognizers/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                                 <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="i8G-nq-ZGt"/>
+                                                </connections>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter URL" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Vcg-ur-bnB">
                                                 <rect key="frame" x="16" y="223" width="318" height="38"/>
@@ -222,6 +226,9 @@
                             <constraint firstItem="Ndo-C8-MVE" firstAttribute="bottom" secondItem="WPd-Ki-cRC" secondAttribute="bottom" id="mbD-zO-11z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WPd-Ki-cRC"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="MvJ-Jw-F7N"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="brokenSiteSwitch" destination="2Mx-Am-aGe" id="ft6-dN-kUr"/>
@@ -234,6 +241,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F4B-7R-fiU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="mo1-It-jF6">
+                    <connections>
+                        <action selector="onTapped:" destination="LPY-wu-U34" id="rMu-9o-LWp"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="339.13043478260875" y="189.13043478260872"/>
         </scene>

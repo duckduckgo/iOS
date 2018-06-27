@@ -102,6 +102,10 @@ class FeedbackViewController: UIViewController {
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
+    @IBAction func onTapped(_ sender: Any) {
+        firstResponder()?.resignFirstResponder()
+    }
+    
     private func firstResponder() -> UIView? {
         if urlTextField.isFirstResponder {
             return urlTextField

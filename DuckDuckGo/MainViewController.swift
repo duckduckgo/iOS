@@ -83,7 +83,11 @@ class MainViewController: UIViewController {
             controller.tabsModel = tabManager.model
             return
         }
-
+        
+        if let controller = segue.destination as? FeedbackViewController {
+            controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
+            return
+        }
     }
  
     private func configureTabManager() {
@@ -301,7 +305,11 @@ class MainViewController: UIViewController {
             self?.forgetAll() {}
         }
     }
-
+    
+    fileprivate func launchReportBrokenSite() {
+        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
+    }
+    
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
@@ -525,6 +533,10 @@ extension MainViewController: TabDelegate {
         }
     }
     
+    func tabDidRequestReportBrokenSite(tab: TabViewController) {
+        launchReportBrokenSite()
+    }
+
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
     }

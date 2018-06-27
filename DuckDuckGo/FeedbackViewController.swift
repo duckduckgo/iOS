@@ -32,6 +32,7 @@ class FeedbackViewController: UIViewController {
     }
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var brokenSiteSwitch: UISwitch!
     @IBOutlet weak var urlTextFieldHeight: NSLayoutConstraint!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
@@ -43,9 +44,21 @@ class FeedbackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.blur(style: .dark)
+        loadModel()
         configureViews()
         registerForKeyboardNotifications()
         refreshMode()
+    }
+    
+    func prepareForSegue(isBrokenSite: Bool, url: String?) {
+        feedbackModel.isBrokenSite = isBrokenSite
+        feedbackModel.url = url
+    }
+    
+    private func loadModel() {
+        brokenSiteSwitch.isOn = feedbackModel.isBrokenSite
+        messageTextView.text = feedbackModel.message
+        urlTextField.text = feedbackModel.url
     }
     
     private func configureViews() {
@@ -84,6 +97,12 @@ class FeedbackViewController: UIViewController {
         }
     }
     
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
     private func firstResponder() -> UIView? {
         if urlTextField.isFirstResponder {
             return urlTextField
@@ -92,12 +111,6 @@ class FeedbackViewController: UIViewController {
             return messageTextView
         }
         return nil
-    }
-    
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        let contentInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
     }
     
     @IBAction func onBrokenSiteChanged(_ sender: UISwitch) {

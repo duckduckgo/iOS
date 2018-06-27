@@ -52,6 +52,7 @@ public struct UserText {
     public static let actionRemoveFromWhitelist = NSLocalizedString("action.title.remove.from.whitelist", comment: "Remove from Whitelist action")
     public static let actionSaveBookmark = NSLocalizedString("action.title.save.bookmark", comment: "Save Bookmark action")
     public static let actionRemoveBookmark = NSLocalizedString("action.title.remove.bookmark", comment: "Remove Bookmark action")
+    public static let actionReportBrokenSite = NSLocalizedString("action.title.reportBrokenSite", comment: "Report broken site action")
     public static let actionSettings = NSLocalizedString("action.title.settings", comment: "Settings action")
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", comment: "Save Bookmark action")
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")

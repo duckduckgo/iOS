@@ -220,6 +220,7 @@
                         <viewLayoutGuide key="safeArea" id="WPd-Ki-cRC"/>
                     </view>
                     <connections>
+                        <outlet property="brokenSiteSwitch" destination="2Mx-Am-aGe" id="ft6-dN-kUr"/>
                         <outlet property="messagePlaceholderText" destination="m3D-p0-uDK" id="zKD-xw-gV8"/>
                         <outlet property="messageTextView" destination="FyA-HP-yKI" id="WGo-9I-MdR"/>
                         <outlet property="scrollView" destination="Ndo-C8-MVE" id="sob-ne-g5o"/>

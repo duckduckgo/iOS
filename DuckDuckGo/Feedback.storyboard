@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LPY-wu-U34">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Feedback View Controller-->
+        <scene sceneID="EKL-c4-qRh">
+            <objects>
+                <viewController id="LPY-wu-U34" customClass="FeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uxf-LL-2nG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndo-C8-MVE">
+                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t35-hd-tUe">
+                                        <rect key="frame" x="32" y="118" width="350" height="480"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjr-ca-FDA">
+                                                <rect key="frame" x="0.0" y="0.0" width="350" height="160"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HeartIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QbI-di-eSr">
+                                                        <rect key="frame" x="161.66666666666666" y="26" width="26" height="26"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share Your Feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cum-ec-gq1">
+                                                        <rect key="frame" x="16" y="63" width="318" height="21"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="21"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82c-Hv-K8w">
+                                                        <rect key="frame" x="25" y="95" width="300" height="28"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="Anonymously share your feedback to help us improve the DuckDuckGo Privacy Browser">
+                                                                <attributes>
+                                                                    <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="cum-ec-gq1" secondAttribute="trailing" constant="16" id="4yN-zu-shf"/>
+                                                    <constraint firstItem="cum-ec-gq1" firstAttribute="leading" secondItem="qjr-ca-FDA" secondAttribute="leading" constant="16" id="GT5-SR-Z3W"/>
+                                                    <constraint firstAttribute="trailing" secondItem="82c-Hv-K8w" secondAttribute="trailing" constant="25" id="GyC-jo-0Ma"/>
+                                                    <constraint firstAttribute="height" constant="160" id="MPo-BM-aCC"/>
+                                                    <constraint firstItem="82c-Hv-K8w" firstAttribute="leading" secondItem="qjr-ca-FDA" secondAttribute="leading" constant="25" id="NMW-MP-phT"/>
+                                                    <constraint firstItem="cum-ec-gq1" firstAttribute="centerX" secondItem="qjr-ca-FDA" secondAttribute="centerX" id="a76-aY-sNe"/>
+                                                    <constraint firstItem="82c-Hv-K8w" firstAttribute="top" secondItem="cum-ec-gq1" secondAttribute="bottom" constant="11" id="bPJ-sU-C0q"/>
+                                                    <constraint firstItem="82c-Hv-K8w" firstAttribute="centerX" secondItem="qjr-ca-FDA" secondAttribute="centerX" id="eZv-fQ-MC8"/>
+                                                    <constraint firstItem="QbI-di-eSr" firstAttribute="centerX" secondItem="qjr-ca-FDA" secondAttribute="centerX" id="fDJ-Xd-vGT"/>
+                                                    <constraint firstItem="cum-ec-gq1" firstAttribute="top" secondItem="QbI-di-eSr" secondAttribute="bottom" constant="11" id="lJ8-b7-RF6"/>
+                                                    <constraint firstItem="QbI-di-eSr" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="top" constant="26" id="oJP-Mf-fGM"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EJ2-Ly-fTI">
+                                                <rect key="frame" x="320" y="7.6666666666666572" width="22" height="22"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="22" id="O16-xP-zeY"/>
+                                                    <constraint firstAttribute="width" constant="22" id="bct-7J-v7I"/>
+                                                </constraints>
+                                                <color key="tintColor" red="0.69411764710000001" green="0.83529411760000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="Remove"/>
+                                                <connections>
+                                                    <action selector="onClosePressed:" destination="LPY-wu-U34" eventType="touchUpInside" id="0bE-Gi-rKL"/>
+                                                </connections>
+                                            </button>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Mx-Am-aGe">
+                                                <rect key="frame" x="285" y="180" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="onBrokenSiteChanged:" destination="LPY-wu-U34" eventType="valueChanged" id="UwJ-Bc-KbW"/>
+                                                </connections>
+                                            </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a broken site" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSK-zf-19O">
+                                                <rect key="frame" x="16" y="188" width="261" height="15"/>
+                                                <gestureRecognizers/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
+                                                <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="i8G-nq-ZGt"/>
+                                                </connections>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter URL" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Vcg-ur-bnB">
+                                                <rect key="frame" x="16" y="223" width="318" height="38"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="SeZ-x1-0n2"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="url"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onUrlChanged:" destination="LPY-wu-U34" eventType="editingChanged" id="nIN-cR-tO7"/>
+                                                    <outlet property="delegate" destination="LPY-wu-U34" id="lPX-aH-uBZ"/>
+                                                </connections>
+                                            </textField>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FyA-HP-yKI">
+                                                <rect key="frame" x="16" y="267" width="318" height="127"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="delegate" destination="LPY-wu-U34" id="ibT-lp-ZzS"/>
+                                                </connections>
+                                            </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3D-p0-uDK">
+                                                <rect key="frame" x="22" y="272" width="306" height="57"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="How can the app be improved? What do you love? What's breaking? Please be as specific as possible.">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3500000000000001" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pu-MH-Czk">
+                                                <rect key="frame" x="16" y="414" width="318" height="38"/>
+                                                <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="ino-ju-H1v"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                <state key="normal" title="Submit Feedback">
+                                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onSubmitPressed:" destination="LPY-wu-U34" eventType="touchUpInside" id="TEF-Np-M96"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="0pu-MH-Czk" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" constant="-32" id="2DB-gj-g10"/>
+                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="top" constant="5" id="50d-oo-uzz"/>
+                                            <constraint firstItem="gSK-zf-19O" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="bottom" constant="28" id="BUn-DY-9lw"/>
+                                            <constraint firstItem="2Mx-Am-aGe" firstAttribute="leading" secondItem="gSK-zf-19O" secondAttribute="trailing" constant="8" id="ESI-nY-45B"/>
+                                            <constraint firstItem="qjr-ca-FDA" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" id="G20-hv-7eo"/>
+                                            <constraint firstItem="2Mx-Am-aGe" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="bottom" constant="20" id="IaN-bH-LzP"/>
+                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="leading" secondItem="FyA-HP-yKI" secondAttribute="leading" constant="6" id="KnY-0D-ihu"/>
+                                            <constraint firstItem="EJ2-Ly-fTI" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" constant="8" id="Kze-aw-ydI"/>
+                                            <constraint firstItem="0pu-MH-Czk" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="bottom" constant="20" id="OkU-db-W1M"/>
+                                            <constraint firstItem="qjr-ca-FDA" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" id="P1e-8F-oXp"/>
+                                            <constraint firstAttribute="trailing" secondItem="2Mx-Am-aGe" secondAttribute="trailing" constant="16" id="Plv-yC-4Jj"/>
+                                            <constraint firstItem="gSK-zf-19O" firstAttribute="leading" secondItem="t35-hd-tUe" secondAttribute="leading" constant="16" id="S7j-AT-a2g"/>
+                                            <constraint firstItem="Vcg-ur-bnB" firstAttribute="leading" secondItem="t35-hd-tUe" secondAttribute="leading" constant="16" id="XbC-mO-cee"/>
+                                            <constraint firstItem="FyA-HP-yKI" firstAttribute="leading" secondItem="t35-hd-tUe" secondAttribute="leading" constant="16" id="adr-uR-Oop"/>
+                                            <constraint firstItem="2Mx-Am-aGe" firstAttribute="centerY" secondItem="gSK-zf-19O" secondAttribute="centerY" id="awB-e6-a0s"/>
+                                            <constraint firstItem="FyA-HP-yKI" firstAttribute="trailing" secondItem="m3D-p0-uDK" secondAttribute="trailing" constant="6" id="ehv-hr-RIR"/>
+                                            <constraint firstItem="0pu-MH-Czk" firstAttribute="centerX" secondItem="t35-hd-tUe" secondAttribute="centerX" id="kdf-OJ-hFP"/>
+                                            <constraint firstAttribute="trailing" secondItem="FyA-HP-yKI" secondAttribute="trailing" constant="16" id="l4l-IF-9IX"/>
+                                            <constraint firstAttribute="height" constant="480" id="l6q-bo-l5s"/>
+                                            <constraint firstItem="Vcg-ur-bnB" firstAttribute="top" secondItem="2Mx-Am-aGe" secondAttribute="bottom" constant="12" id="lBz-kd-0E5"/>
+                                            <constraint firstAttribute="bottom" secondItem="0pu-MH-Czk" secondAttribute="bottom" constant="28" id="ok1-pw-Mhe"/>
+                                            <constraint firstAttribute="trailing" secondItem="EJ2-Ly-fTI" secondAttribute="trailing" constant="8" id="t2T-gp-jLK"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="350" id="uTc-Na-4f3">
+                                                <variation key="widthClass=regular" constant="500"/>
+                                            </constraint>
+                                            <constraint firstItem="qjr-ca-FDA" firstAttribute="centerX" secondItem="t35-hd-tUe" secondAttribute="centerX" id="vXP-J4-AGI"/>
+                                            <constraint firstAttribute="trailing" secondItem="Vcg-ur-bnB" secondAttribute="trailing" constant="16" id="wdz-Hx-3S7"/>
+                                            <constraint firstItem="FyA-HP-yKI" firstAttribute="top" secondItem="Vcg-ur-bnB" secondAttribute="bottom" constant="6" id="wsx-eB-DIE"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="t35-hd-tUe" firstAttribute="top" secondItem="Ndo-C8-MVE" secondAttribute="top" priority="700" constant="30" id="DYU-rw-auG"/>
+                                    <constraint firstItem="t35-hd-tUe" firstAttribute="width" secondItem="Ndo-C8-MVE" secondAttribute="width" priority="900" constant="-32" id="H59-pl-abY"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="t35-hd-tUe" secondAttribute="bottom" constant="30" id="MKB-dk-2vU"/>
+                                    <constraint firstAttribute="trailing" secondItem="t35-hd-tUe" secondAttribute="trailing" priority="900" id="Rqc-3L-okv"/>
+                                    <constraint firstItem="t35-hd-tUe" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ndo-C8-MVE" secondAttribute="top" constant="30" id="b9k-uU-EXI"/>
+                                    <constraint firstItem="t35-hd-tUe" firstAttribute="centerY" secondItem="Ndo-C8-MVE" secondAttribute="centerY" priority="900" id="gOp-li-9L5"/>
+                                    <constraint firstItem="t35-hd-tUe" firstAttribute="leading" secondItem="Ndo-C8-MVE" secondAttribute="leading" priority="900" id="iia-Ur-6sr"/>
+                                    <constraint firstAttribute="bottom" secondItem="t35-hd-tUe" secondAttribute="bottom" priority="700" constant="30" id="rax-7v-3QP"/>
+                                    <constraint firstItem="t35-hd-tUe" firstAttribute="centerX" secondItem="Ndo-C8-MVE" secondAttribute="centerX" id="zVf-8g-1N6"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ndo-C8-MVE" firstAttribute="top" secondItem="WPd-Ki-cRC" secondAttribute="top" id="94w-OT-0fY"/>
+                            <constraint firstItem="Ndo-C8-MVE" firstAttribute="leading" secondItem="WPd-Ki-cRC" secondAttribute="leading" id="DQP-yi-6ZQ"/>
+                            <constraint firstItem="WPd-Ki-cRC" firstAttribute="trailing" secondItem="Ndo-C8-MVE" secondAttribute="trailing" id="Pgu-p4-7NZ"/>
+                            <constraint firstItem="Ndo-C8-MVE" firstAttribute="bottom" secondItem="WPd-Ki-cRC" secondAttribute="bottom" id="mbD-zO-11z"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="WPd-Ki-cRC"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="MvJ-Jw-F7N"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="brokenSiteSwitch" destination="2Mx-Am-aGe" id="ft6-dN-kUr"/>
+                        <outlet property="messagePlaceholderText" destination="m3D-p0-uDK" id="zKD-xw-gV8"/>
+                        <outlet property="messageTextView" destination="FyA-HP-yKI" id="WGo-9I-MdR"/>
+                        <outlet property="scrollView" destination="Ndo-C8-MVE" id="sob-ne-g5o"/>
+                        <outlet property="submitButton" destination="0pu-MH-Czk" id="0p0-SZ-oaj"/>
+                        <outlet property="urlTextField" destination="Vcg-ur-bnB" id="A6n-hb-7f2"/>
+                        <outlet property="urlTextFieldHeight" destination="SeZ-x1-0n2" id="NQh-cS-6Xo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F4B-7R-fiU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="mo1-It-jF6">
+                    <connections>
+                        <action selector="onTapped:" destination="LPY-wu-U34" id="rMu-9o-LWp"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="339.13043478260875" y="189.13043478260872"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="HeartIcon" width="26" height="26"/>
+        <image name="Remove" width="12" height="12"/>
+    </resources>
+</document>

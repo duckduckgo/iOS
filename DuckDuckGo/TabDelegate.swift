@@ -30,7 +30,9 @@ protocol TabDelegate: class {
     func tabLoadingStateDidChange(tab: TabViewController)
     
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?)
-
+    
+    func tabDidRequestReportBrokenSite(tab: TabViewController)
+    
     func tabDidRequestSettings(tab: TabViewController)
     
     func tabContentProcessDidTerminate(tab: TabViewController)

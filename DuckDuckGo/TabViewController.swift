@@ -180,7 +180,8 @@ class TabViewController: WebViewController {
                 alert.addAction(shareAction(forLink: link))
             }
         }
-        
+
+        alert.addAction(reportBrokenSiteAction())
         alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
@@ -298,6 +299,14 @@ class TabViewController: WebViewController {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let webView = self?.webView else { return }
             self?.presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
+        }
+    }
+
+    private func reportBrokenSiteAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionReportBrokenSite, style: .default) { [weak self] action in
+            if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestReportBrokenSite(tab: weakSelf)
+            }
         }
     }
     

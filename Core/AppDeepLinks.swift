@@ -27,7 +27,6 @@ public struct AppDeepLinks {
     public static let quickLink = "ddgQuickLink://"
     
     public static let aboutLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/about")!
-    public static let feedbackLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/feedback")!
 
     public static func isLaunch(url: URL) -> Bool {
         if let scheme = url.scheme {

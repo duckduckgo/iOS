@@ -129,9 +129,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func startOnboardingFlowIfNotSeenBefore() {
+        guard let main = mainViewController else { return }
         let settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
-            startOnboardingFlow()
+            main.showOnboarding()
         }
     }
     
@@ -147,11 +148,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func startOnboardingFlow() {
-        guard let main = mainViewController else { return }
-        main.performSegue(withIdentifier: "Onboarding", sender: self)
-    }
-
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         clearNavigationStack()

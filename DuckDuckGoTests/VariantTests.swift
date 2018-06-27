@@ -23,9 +23,7 @@ import XCTest
 class VariantTests: XCTestCase {
     
     func testDefaultVariantsPercentageTotalIs100() {
-        // No variants at the moment, so let this test pass, and then fail again once variants are reintroduced to remind us that it needs to be udpated
-        // XCTAssertEqual(100, Variant.defaultVariants.reduce(0, { $0 + $1.percent }))
-        XCTAssertEqual(0, Variant.defaultVariants.reduce(0, { $0 + $1.percent }))
+        XCTAssertEqual(100, Variant.defaultVariants.reduce(0, { $0 + $1.percent }))
     }
 
 }

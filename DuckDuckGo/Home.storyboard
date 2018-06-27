@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="landscape">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -9,11 +9,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="proximanova-semibold.otf">
-            <string>ProximaNova-Semibold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Home View Controller-->
         <scene sceneID="iIP-Az-GLU">
@@ -24,68 +19,17 @@
                         <viewControllerLayoutGuide type="bottom" id="ct2-28-dU6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="klK-ZJ-wmA">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
-                                <rect key="frame" x="16" y="303" width="635" height="56"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNe-xl-P9P">
-                                        <rect key="frame" x="619" y="8" width="8" height="8"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="8" id="35f-1o-m2P"/>
-                                            <constraint firstAttribute="height" constant="8" id="8XL-yx-yX2"/>
-                                        </constraints>
-                                        <state key="normal" image="Remove"/>
-                                        <connections>
-                                            <action selector="dismissInstructions" destination="LJ1-RN-ckE" eventType="touchUpInside" id="cwo-K3-3py"/>
-                                        </connections>
-                                    </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GUH-RS-Q2r">
-                                        <rect key="frame" x="188.5" y="7.5" width="258.5" height="41"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="saG-dg-Yh9">
-                                                <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="41" id="MSc-G7-g8p"/>
-                                                    <constraint firstAttribute="height" constant="41" id="WBF-Vz-0pK"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wf8-Us-utp">
-                                                <rect key="frame" x="49" y="0.0" width="209.5" height="41"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
-                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oQq-w5-IXv">
-                                        <rect key="frame" x="611" y="0.0" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="24" id="RmU-Pr-uQB"/>
-                                            <constraint firstAttribute="height" constant="24" id="jx9-4R-5Gu"/>
-                                        </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="pPw-Qa-xGd" appends="YES" id="hxu-5w-sHJ"/>
-                                        </connections>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.18431372549019609" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="ELS-YG-Sxt"/>
-                                    <constraint firstAttribute="trailing" secondItem="uNe-xl-P9P" secondAttribute="trailing" constant="8" id="PIB-AU-E3m"/>
-                                    <constraint firstItem="GUH-RS-Q2r" firstAttribute="centerX" secondItem="5Rf-oV-2W5" secondAttribute="centerX" id="Uy7-vY-IM8"/>
-                                    <constraint firstItem="oQq-w5-IXv" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" id="sUV-Lz-QAM"/>
-                                    <constraint firstAttribute="trailing" secondItem="oQq-w5-IXv" secondAttribute="trailing" id="stF-I3-W0O"/>
-                                    <constraint firstItem="uNe-xl-P9P" firstAttribute="top" secondItem="5Rf-oV-2W5" secondAttribute="top" constant="8" id="tJM-im-uoK"/>
-                                    <constraint firstItem="GUH-RS-Q2r" firstAttribute="centerY" secondItem="5Rf-oV-2W5" secondAttribute="centerY" id="uQc-nE-fiH"/>
+                                    <constraint firstAttribute="height" id="ELS-YG-Sxt"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="OGU-a7-Gzp" appends="YES" id="lWj-1U-OOO"/>
-                                </connections>
                             </view>
                             <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="303"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <gestureRecognizers/>
                                 <variation key="heightClass=compact" image="LogoLandscape"/>
                                 <connections>
@@ -96,11 +40,11 @@
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" constant="-32" id="GIH-4s-2om"/>
+                            <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="mpe-gG-Xvo" secondAttribute="trailing" id="LdU-fc-TTq"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="top" secondItem="mpe-gG-Xvo" secondAttribute="bottom" id="UXK-YT-WhW"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
-                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" constant="16" id="iP8-nF-jOV"/>
+                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
                             <constraint firstItem="mpe-gG-Xvo" firstAttribute="leading" secondItem="ijV-Vn-w9w" secondAttribute="leading" id="n4h-08-Av4"/>
                             <constraint firstItem="mpe-gG-Xvo" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" id="ulD-vQ-5pq"/>
                         </constraints>
@@ -109,9 +53,9 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="7ah-Pp-alq"/>
                     <connections>
-                        <outlet property="bottomConstraint" destination="iP8-nF-jOV" id="3lU-ad-ySg"/>
-                        <outlet property="infoView" destination="5Rf-oV-2W5" id="ksq-NB-phQ"/>
-                        <outlet property="infoViewHeight" destination="ELS-YG-Sxt" id="GGV-Lb-tV6"/>
+                        <outlet property="ctaContainer" destination="5Rf-oV-2W5" id="KSc-be-02P"/>
+                        <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
+                        <outlet property="ctaContainerHeight" destination="ELS-YG-Sxt" id="i4n-tW-SQJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vtg-6j-Bq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -120,24 +64,12 @@
                         <action selector="hideKeyboard" destination="LJ1-RN-ckE" id="h1r-Ul-pVa"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="OGU-a7-Gzp" userLabel="Show Instruction Tap">
-                    <connections>
-                        <action selector="showInstructions" destination="LJ1-RN-ckE" id="HqE-a5-V2h"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="pPw-Qa-xGd" userLabel="Hide Instruction Tap">
-                    <connections>
-                        <action selector="dismissInstructions" destination="LJ1-RN-ckE" id="fkd-SK-F7Z"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1181.5999999999999" y="-331.48425787106447"/>
         </scene>
     </scenes>
     <resources>
-        <image name="HomeRowIcon" width="43" height="43"/>
         <image name="LogoLandscape" width="316" height="94"/>
         <image name="LogoWithText" width="201" height="160"/>
-        <image name="Remove" width="12" height="12"/>
     </resources>
 </document>

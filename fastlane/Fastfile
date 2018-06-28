@@ -36,6 +36,14 @@ end
 
 lane :beta do 
 
+  version_number = get_version_number(
+    target: "DuckDuckGo"
+  )
+
+  increment_version_number(
+    version_number: version_number,
+  )
+
   gym(
     scheme: "DuckDuckGo",
     export_method: "app-store"

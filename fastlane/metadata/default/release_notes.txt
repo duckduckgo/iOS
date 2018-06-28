@@ -1,1 +1,1 @@
-In this release we added share support allowing you to share text and links from other apps to open them in DuckDuckGo.
+In this release we added a new feedback form so that you can quickly report broken sites and tell us how you feel about the app. We have additionally updated our tutorial screens and fixed some bugs.

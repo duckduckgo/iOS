@@ -19,35 +19,54 @@
 
 import Core
 
-protocol HomeRowOnboardingStorage: class {
+protocol HomeRowCTAStorage: class {
     
     var dismissed:Bool { get set }
     
 }
 
-class HomeRowOnboarding {
+class HomeRowCTA {
     
-    private let storage: HomeRowOnboardingStorage
+    enum CTAType: String {
+        
+        case experiment1, experiment2
+        
+    }
+    
+    private let storage: HomeRowCTAStorage
     private let variantManager: VariantManager
 
-    init(storage: HomeRowOnboardingStorage = UserDefaultsHomeRowOnboardingFeatureStorage(), variantManager: VariantManager = DefaultVariantManager()) {
+    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(), variantManager: VariantManager = DefaultVariantManager()) {
         self.storage = storage
         self.variantManager = variantManager
     }
     
-    func showNow() -> Bool {
-        guard !storage.dismissed else { return false }
-        guard let variant = variantManager.currentVariant else { return false }
-        return variant.features.contains(.homeRowOnboarding)
+    func ctaToShow() -> CTAType? {
+        guard !storage.dismissed else { return nil }
+        guard let variant = variantManager.currentVariant else { return .experiment1 }
+
+        if variant.features.contains(.homeRowCTADefault) {
+            return .experiment1
+        } else if variant.features.contains(.homeRowCTAAlternative1) {
+            return .experiment2
+        }
+
+        return nil
     }
     
     func dismissed() {
         storage.dismissed = true
     }
     
+    func shown() {
+        if ctaToShow() == .experiment1 {
+            storage.dismissed = true
+        }
+    }
+    
 }
 
-class UserDefaultsHomeRowOnboardingFeatureStorage: HomeRowOnboardingStorage {
+class UserDefaultsHomeRowCTAStorage: HomeRowCTAStorage {
     
     struct Keys {
         static let dismissed = "com.duckduckgo.homerow.onboarding.dismissed"

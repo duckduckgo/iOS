@@ -75,7 +75,7 @@ class Migration {
             guard let urlString = bookmark["url"] else { continue }
             guard let url = URL(string: urlString!) else { continue }
             
-            bookmarks.save(bookmark: Link(title: title, url: url, favicon: nil))
+            bookmarks.save(bookmark: Link(title: title, url: url))
             bookmarkCount += 1
         }
         
@@ -91,7 +91,7 @@ class Migration {
             guard let urlString = story.urlString else { continue }
             guard let url = URL(string: urlString) else { continue }
             
-            bookmarks.save(bookmark: Link(title: story.title, url: url, favicon: nil))
+            bookmarks.save(bookmark: Link(title: story.title, url: url))
             storyCount += 1
         }
         

@@ -41,8 +41,6 @@ public protocol WebEventsDelegate: class {
     
     func webpageDidFailToLoad()
     
-    func faviconWasUpdated(_ favicon: URL, forUrl: URL)
-    
     func webpageCanGoBackForwardChanged()
 
 }

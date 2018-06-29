@@ -21,16 +21,15 @@ import Foundation
 
 public enum FeatureName {
     
-    case homeRowOnboarding, homeRowReminder
+    case homeRowCTADefault, homeRowCTAAlternative1
     
 }
 
 public struct Variant {
     
-    public static let defaultVariants = [
-        Variant(name: "mb", percent: 50, features: []),
-        Variant(name: "mc", percent: 25, features: [.homeRowOnboarding]),
-        Variant(name: "md", percent: 25, features: [.homeRowOnboarding, .homeRowReminder]),
+    public static let defaultVariants: [Variant] = [
+        Variant(name: "me", percent: 50, features: [ .homeRowCTADefault ]),
+        Variant(name: "mf", percent: 50, features: [ .homeRowCTAAlternative1 ])
     ]
     
     public let name: String

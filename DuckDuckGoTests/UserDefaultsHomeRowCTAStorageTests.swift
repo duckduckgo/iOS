@@ -1,5 +1,5 @@
 //
-//  UserDefaultsHomeRowOnboardingFeatureStorageTests.swift
+//  UserDefaultsHomeRowCTAStorageTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -22,7 +22,7 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-class UserDefaultsHomeRowOnboardingFeatureStorageTests: XCTestCase {
+class UserDefaultsHomeRowCTAStorageTests: XCTestCase {
     
     let defaultsName = "UserDefaultsHomeRowOnboardingFeatureStorageTests"
     
@@ -39,9 +39,9 @@ class UserDefaultsHomeRowOnboardingFeatureStorageTests: XCTestCase {
         XCTAssertFalse(createStorage().dismissed)
     }
     
-    func createStorage() -> UserDefaultsHomeRowOnboardingFeatureStorage {
+    func createStorage() -> UserDefaultsHomeRowCTAStorage {
         let userDefaults = UserDefaults(suiteName: defaultsName)!
-        return UserDefaultsHomeRowOnboardingFeatureStorage(userDefaults: userDefaults)
+        return UserDefaultsHomeRowCTAStorage(userDefaults: userDefaults)
     }
     
 }

@@ -23,16 +23,16 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var infoViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var infoView: UIView!
-
+    @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
+    @IBOutlet weak var ctaContainerHeight: NSLayoutConstraint!
+    @IBOutlet weak var ctaContainer: UIView!
+    
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
-
-    var frame: CGRect!
+    weak var homeRowCTAController: UIViewController?
     
     private var viewHasAppeared = false
+    private var defaultVerticalAlignConstant: CGFloat = 0
 
     static func loadFromStoryboard() -> HomeViewController {
         return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -40,20 +40,17 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        frame = view.frame
-        
-        updateInfoView()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let feature = HomeRowOnboarding()
-        if !feature.showNow() {
-            hideCallToAction()
+        let feature = HomeRowCTA()
+        if let type = feature.ctaToShow() {
+            applyHomeRowCTA(type: type)
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,8 +58,15 @@ class HomeViewController: UIViewController {
         viewHasAppeared = true
     }
     
+    func resetHomeRowCTAAnimations() {
+        hideHomeRowCTA()
+    }
+
     @IBAction func hideKeyboard() {
-        chromeDelegate?.omniBar.resignFirstResponder()
+        // without this the keyboard hides instantly and abruptly
+        UIView.animate(withDuration: 0.5) {
+            self.chromeDelegate?.omniBar.resignFirstResponder()
+        }
     }
     
     @IBAction func showInstructions() {
@@ -71,8 +75,8 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func dismissInstructions() {
-        HomeRowOnboarding().dismissed()
-        hideCallToAction()
+        HomeRowCTA().dismissed()
+        hideHomeRowCTA()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -82,32 +86,47 @@ class HomeViewController: UIViewController {
         guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }
         guard let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else { return }
-       
+
         let diff = beginFrame.origin.y - endFrame.origin.y
 
         if diff > 0 {
-            bottomConstraint.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0) + 16
+            ctaContainerBottom.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0)
         } else {
-            bottomConstraint.constant = 16
+            ctaContainerBottom.constant = 0
         }
 
         view.setNeedsUpdateConstraints()
 
-        if (viewHasAppeared) {
+        if viewHasAppeared {
             UIView.animate(withDuration: duration) { self.view.layoutIfNeeded() }
         }
     }
-    
-    private func updateInfoView() {
-        infoView.layer.cornerRadius = 5
-        infoView.layer.borderColor = UIColor.greyishBrownTwo.cgColor
-        infoView.layer.borderWidth = 1
-        infoView.layer.masksToBounds = true
-    }
 
-    private func hideCallToAction() {
-        infoView.isHidden = true
-        infoViewHeight.constant = 0
+    
+    private func hideHomeRowCTA() {
+        homeRowCTAController?.view.removeFromSuperview()
+        homeRowCTAController?.removeFromParentViewController()
+        homeRowCTAController = nil
+    }
+    
+    private func applyHomeRowCTA(type: HomeRowCTA.CTAType) {
+        guard homeRowCTAController == nil else { return }
+        
+        let childViewController = loadCTAViewController(forType: type)
+        addChildViewController(childViewController)
+        
+        switch(type) {
+            
+        case .experiment1:
+                updateUIForExperiment1(childViewController)
+            
+        case .experiment2:
+                updateUIForExperiment2(childViewController)
+            
+        }
+        
+        childViewController.didMove(toParentViewController: self)
+        self.homeRowCTAController = childViewController
     }
     
     func load(url: URL) {
@@ -120,5 +139,22 @@ class HomeViewController: UIViewController {
         removeFromParentViewController()
         view.removeFromSuperview()
     }
+    
+    private func loadCTAViewController(forType type: HomeRowCTA.CTAType) -> UIViewController {
+        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: type.rawValue)
+    }
 
+    private func updateUIForExperiment1(_ childViewController: UIViewController) {
+        ctaContainer.addSubview(childViewController.view)
+        childViewController.view.frame = ctaContainer.bounds
+
+        ctaContainerHeight.constant = childViewController.preferredContentSize.height
+    }
+ 
+    private func updateUIForExperiment2(_ childViewController: UIViewController) {
+        view.addSubview(childViewController.view)
+        childViewController.view.frame = view.bounds
+    }
+    
 }

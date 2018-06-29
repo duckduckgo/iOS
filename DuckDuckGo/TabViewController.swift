@@ -62,7 +62,7 @@ class TabViewController: WebViewController {
             return tabModel.link
         }
         
-        let activeLink = Link(title: name, url: url, favicon: favicon)
+        let activeLink = Link(title: name, url: url)
         guard let storedLink = tabModel.link else {
             return activeLink
         }
@@ -180,7 +180,8 @@ class TabViewController: WebViewController {
                 alert.addAction(shareAction(forLink: link))
             }
         }
-        
+
+        alert.addAction(reportBrokenSiteAction())
         alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
@@ -298,6 +299,14 @@ class TabViewController: WebViewController {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] action in
             guard let webView = self?.webView else { return }
             self?.presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
+        }
+    }
+
+    private func reportBrokenSiteAction() -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionReportBrokenSite, style: .default) { [weak self] action in
+            if let weakSelf = self {
+                weakSelf.delegate?.tabDidRequestReportBrokenSite(tab: weakSelf)
+            }
         }
     }
     
@@ -439,14 +448,16 @@ extension TabViewController: WebEventsDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        // if host is the same use same protection id and don't inject scripts, otherwise, reset and reload
-        if let siteRating = siteRating, siteRating.url.host == url?.host {
+        // if host and scheme are the same, use same protection id and don't inject scripts, otherwise, reset and reload
+        if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
             self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
         } else {
             resetSiteRating()
-            reloadScripts(with: siteRating!.protectionId)
+            if let protectionId = siteRating?.protectionId {
+                reloadScripts(with: protectionId)
+            }
         }
-        
+
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -474,13 +485,6 @@ extension TabViewController: WebEventsDelegate {
         updateSiteRating()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.delegate?.tabLoadingStateDidChange(tab: self)
-    }
-    
-    func faviconWasUpdated(_ favicon: URL, forUrl url: URL) {
-        let bookmarks = BookmarkUserDefaults()
-        bookmarks.updateFavicon(favicon, forBookmarksWithUrl: url)
-        tabModel.link = link
-        delegate?.tabLoadingStateDidChange(tab: self)
     }
     
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool {

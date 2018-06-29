@@ -81,10 +81,6 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    @IBAction func sendFeedback() {
-        UIApplication.shared.open(AppDeepLinks.feedbackLink, options: [:])
-    }
-    
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }

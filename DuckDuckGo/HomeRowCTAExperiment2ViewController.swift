@@ -23,7 +23,7 @@ class HomeRowCTAExperiment2ViewController: UIViewController {
     
     struct Constants {
         
-        static let appearanceAnimationDuration = 1.0
+        static let appearanceAnimationDuration = 0.5
         
     }
     

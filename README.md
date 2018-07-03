@@ -3,6 +3,10 @@
 
 We are excited to engage the community in development and will open up this project to contributions soon.
 
+
+## We are hiring!
+We are looking for a Senior Cross-Platform/iOS engineer to help shape our mobile apps. We embrace diverse perspectives, and seek out passionate, self-motivated people, committed to our shared vision of raising the standard of trust online. Visit our [careers](https://duckduckgo.com/hiring/#open) page to find out more!
+
 ## Building
 
 ### Submodules

@@ -1,6 +1,6 @@
 before_install:
   - brew update
-  - brew install swiftlint
+  - brew upgrade swiftlint
 language: objective-c
 osx_image: xcode9.3
 cache:

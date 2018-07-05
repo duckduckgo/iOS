@@ -22,13 +22,13 @@ import WebKit
 public protocol WebEventsDelegate: class {
 
     func attached(webView: WKWebView)
-    
+
     func detached(webView: WKWebView)
 
     func contentProcessDidTerminate(webView: WKWebView)
-    
+
     func webView(_ webView: WKWebView, shouldLoadUrl url: URL, forDocument documentUrl: URL) -> Bool
-    
+
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point)
 
     func webView(_ webView: WKWebView, didUpdateHasOnlySecureContent hasOnlySecureContent: Bool)
@@ -36,11 +36,11 @@ public protocol WebEventsDelegate: class {
     func webView(_ webView: WKWebView, didChangeUrl url: URL?)
 
     func webpageDidStartLoading(httpsForced: Bool)
-    
+
     func webpageDidFinishLoading()
-    
+
     func webpageDidFailToLoad()
-    
+
     func webpageCanGoBackForwardChanged()
 
 }

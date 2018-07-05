@@ -17,73 +17,72 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
 class LinkTests: XCTestCase {
-    
+
     struct Constants {
         static let title = "A title"
         static let anotherTitle = "Another title"
         static let url = URL(string: "https://example.com")!
         static let anotherUrl = URL(string: "https://anothertUrl.com")!
     }
-    
+
     func testWhenSameObjectThenEqualsPasses() {
         let link = Link(title: Constants.title, url: Constants.url)
         XCTAssertEqual(link, link)
     }
-    
+
     func testWhenSameDataThenEqualsPasses() {
         let lhs = Link(title: Constants.title, url: Constants.url)
         let rhs = Link(title: Constants.title, url: Constants.url)
         XCTAssertEqual(lhs, rhs)
     }
-    
+
     func testWhenTitleDifferentThenEqualsFails() {
         let lhs = Link(title: Constants.title, url: Constants.url)
         let rhs = Link(title: Constants.anotherTitle, url: Constants.url)
         XCTAssertNotEqual(lhs, rhs)
     }
-    
+
     func testWhenUrlDifferentThenEqualsFails() {
         let lhs = Link(title: Constants.title, url: Constants.url)
         let rhs = Link(title: Constants.title, url: Constants.anotherUrl)
         XCTAssertNotEqual(lhs, rhs)
     }
-    
+
     func testWhenDifferentTypeThenEqualsFails() {
         let link = Link(title: Constants.title, url: Constants.url)
         XCTAssertFalse(link.isEqual(NSObject()))
     }
-    
+
     func testWhenMergingWithSameUrlAndBothHaveTitlesThenPrimaryTitleIsUsed() {
         let primay = Link(title: "primary", url: URL(string: "www.example.com")!)
         let secondary = Link(title: "secondary", url: URL(string: "www.example.com")!)
         let result = primay.merge(with: secondary)
-        XCTAssertEqual(result.title, "primary");
+        XCTAssertEqual(result.title, "primary")
     }
-    
+
     func testWhenMergingWithSameUrlAndOnlyPrimaryHasTitleThenPrimaryTitleIsUsed() {
         let primay = Link(title: "primary", url: URL(string: "www.example.com")!)
         let secondary = Link(title: nil, url: URL(string: "www.example.com")!)
         let result = primay.merge(with: secondary)
-        XCTAssertEqual(result.title, "primary");
+        XCTAssertEqual(result.title, "primary")
     }
-    
+
     func testWhenMergingWithSameUrlAndOnlySecondaryHasTitleThenSecondaryTitleIsUsed() {
         let primay = Link(title: nil, url: URL(string: "www.example.com")!)
         let secondary = Link(title: "secondary", url: URL(string: "www.example.com")!)
         let result = primay.merge(with: secondary)
-        XCTAssertEqual(result.title, "secondary");
+        XCTAssertEqual(result.title, "secondary")
     }
-    
+
     func testWhenMergingDifferentUrlsThenSecondaryDataIsIgnored() {
         let primay = Link(title: nil, url: URL(string: "www.primary.example.com")!)
         let secondary = Link(title: "secondary", url: URL(string: "www.seconday.example.com")!)
         let result = primay.merge(with: secondary)
-        XCTAssertNil(result.title);
+        XCTAssertNil(result.title)
     }
 }

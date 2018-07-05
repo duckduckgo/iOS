@@ -17,27 +17,26 @@
 //  limitations under the License.
 //
 
-
 import Core
 
 class DissolveAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-    
+
     struct Constants {
         static let duration = 0.25
     }
-    
+
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let fromView = transitionContext.containerView
         fromView.backgroundColor = UIColor.clear
         fromView.alpha = 1
-        
+
         UIView.animate(withDuration: Constants.duration, animations: {
             fromView.alpha = 0.0
-        }, completion: { (value: Bool) in
+        }, completion: { (_: Bool) in
             transitionContext.completeTransition(true)
         })
     }
-    
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return Constants.duration
     }

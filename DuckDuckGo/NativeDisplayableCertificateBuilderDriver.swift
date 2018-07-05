@@ -98,7 +98,7 @@ fileprivate extension SecKey {
 
         if #available(iOS 10.0, *) {
             key.externalRepresentation = SecKeyCopyExternalRepresentation(self, nil) as Data?
-            
+
             guard let attrs: NSDictionary = SecKeyCopyAttributes(self) else { return key }
 
             key.bitSize = attrs[kSecAttrKeySizeInBits] as? Int

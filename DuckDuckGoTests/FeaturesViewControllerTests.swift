@@ -17,11 +17,9 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
-
 
 class TutorialPageViewControllerTests: XCTestCase {
     func testLoadPage2() {

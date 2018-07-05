@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import XCTest
 
@@ -86,7 +85,7 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
 }
 
-fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
+private class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
     func network(forName name: String) -> MajorTrackerNetwork? {
         return MajorTrackerNetwork(name: name, domain: name, percentageOfPages: 50)
     }
@@ -96,9 +95,8 @@ fileprivate class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
     }
 }
 
-fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
+private class MockTermsOfServiceStore: TermsOfServiceStore {
 
-    var terms = [String : TermsOfService]()
+    var terms = [String: TermsOfService]()
 
 }
-

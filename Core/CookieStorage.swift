@@ -20,15 +20,15 @@
 import Foundation
 
 class CookieStorage {
-    
+
     struct Constants {
         static let key = "com.duckduckgo.allowedCookies"
     }
-    
+
     private var userDefaults: UserDefaults
-    
+
     var cookies: [HTTPCookie] {
-        
+
         var storedCookies = [HTTPCookie]()
         if let cookies = userDefaults.object(forKey: Constants.key) as? [[String: Any?]] {
             for cookieData in cookies {
@@ -36,26 +36,26 @@ class CookieStorage {
                 cookieData.forEach({
                     properties[HTTPCookiePropertyKey(rawValue: $0.key)] = $0.value
                 })
-                
+
                 if let cookie = HTTPCookie(properties: properties) {
                     Logger.log(items: "read cookie", cookie.domain, cookie.name, cookie.value)
                     storedCookies.append(cookie)
                 }
             }
         }
-        
+
         return storedCookies
     }
-    
+
     init(userDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults
     }
-    
+
     func clear() {
         userDefaults.removeObject(forKey: Constants.key)
         Logger.log(items: "cleared cookies")
     }
-    
+
     func setCookie(_ cookie: HTTPCookie) {
         Logger.log(items: "storing cookie", cookie.domain, cookie.name, cookie.value)
         var cookieData = [String: Any?]()

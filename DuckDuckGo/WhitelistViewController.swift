@@ -62,7 +62,7 @@ class WhitelistViewController: UITableViewController {
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
         addSiteBox.addTextField { (textField) in textField.placeholder = placeholder }
-        addSiteBox.addAction(UIAlertAction.init(title: add, style: .default, handler: { action in self.addSite(from: addSiteBox) }))
+        addSiteBox.addAction(UIAlertAction.init(title: add, style: .default, handler: { _ in self.addSite(from: addSiteBox) }))
         addSiteBox.addAction(UIAlertAction.init(title: cancel, style: .cancel, handler: nil))
         present(addSiteBox, animated: true, completion: nil)
 
@@ -82,16 +82,18 @@ class WhitelistViewController: UITableViewController {
         guard (URL.isValidHostname(domain) || URL.isValidIpHost(domain)) else { return nil }
         return domain
     }
-  
+
     private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         guard whitelistManager.count > 0 else {
             return tableView.dequeueReusableCell(withIdentifier: "NoWhitelistCell")!
         }
-        let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as! WhitelistItemCell
+        guard let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as? WhitelistItemCell else {
+            fatalError("Failed to dequeue cell as WhitelistItemCell")
+        }
         whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
         return whitelistItemCell
     }
-    
+
 }
 
 class WhitelistItemCell: UITableViewCell {

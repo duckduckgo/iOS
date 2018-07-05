@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
 class SiteRatingTests: XCTestCase {
-    
+
     struct Url {
         static let noHost = URL(string: "nohost")!
         static let withHost = URL(string: "http://host")!
@@ -33,7 +32,7 @@ class SiteRatingTests: XCTestCase {
         static let tracker = "http://www.atracker.com"
         static let differentTracker = "http://www.anothertracker.com"
     }
-    
+
     struct TrackerMock {
         static let blockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: true)
         static let unblockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: false)
@@ -56,17 +55,17 @@ class SiteRatingTests: XCTestCase {
         let testee = SiteRating(url: Url.withHost)
         XCTAssertNotNil(testee)
     }
-    
+
     func testWhenHttpThenHttpsIsFalse() {
         let testee = SiteRating(url: Url.http)
         XCTAssertFalse(testee.https)
     }
-    
+
     func testWhenHttpsThenHttpsIsTrue() {
         let testee = SiteRating(url: Url.https)
         XCTAssertTrue(testee.https)
     }
-    
+
     func testCountsAreInitiallyZero() {
         let testee = SiteRating(url: Url.https)
         XCTAssertEqual(testee.totalTrackersDetected, 0)
@@ -74,7 +73,7 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
         XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
     }
-    
+
     func testWhenUniqueTrackersAreBlockedThenAllDetectionAndBlockCountsIncremenet() {
         let testee = SiteRating(url: Url.https)
         testee.trackerDetected(TrackerMock.blockedTracker)
@@ -84,7 +83,7 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.totalTrackersBlocked, 2)
         XCTAssertEqual(testee.uniqueTrackersBlocked, 2)
     }
-    
+
     func testWhenRepeatTrackersAreBlockedThenUniqueCountsOnlyIncrementOnce() {
         let testee = SiteRating(url: Url.https)
         testee.trackerDetected(TrackerMock.blockedTracker)
@@ -94,7 +93,7 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.totalTrackersBlocked, 2)
         XCTAssertEqual(testee.uniqueTrackersBlocked, 1)
     }
-    
+
     func testWhenNotBlockerThenDetectedCountsIncrementButBlockCountsDoNot() {
         let testee = SiteRating(url: Url.https)
         testee.trackerDetected(TrackerMock.unblockedTracker)
@@ -108,12 +107,12 @@ class SiteRatingTests: XCTestCase {
         let testee = SiteRating(url: Url.google)
         XCTAssertNotNil(testee.termsOfService)
     }
-    
+
     func testWhenUrlDoeNotHaveTosThenTosIsNil() {
         let testee = SiteRating(url: Url.http)
         XCTAssertNil(testee.termsOfService)
     }
-    
+
     func testUniqueMajorTrackersDetected() {
         let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: false)
         let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: DisconnectMeTracker(url: "", networkName: "")])
@@ -155,5 +154,5 @@ class SiteRatingTests: XCTestCase {
         let testee = SiteRating(url: Url.http)
         XCTAssertEqual(.unencrypted, testee.encryptionType)
     }
-    
+
 }

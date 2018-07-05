@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 extension String {
@@ -25,14 +24,16 @@ extension String {
     public func trimWhitespace() -> String {
         return trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    
+
     public func length() -> Int {
         return count
     }
 
     public func matches(pattern: String) -> Bool {
-        let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-        let matches = regex.matches(in: self, options: .anchored, range:NSMakeRange(0, count))
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
+            return false
+        }
+        let matches = regex.matches(in: self, options: .anchored, range: NSRange(location: 0, length: count))
         return matches.count == 1
     }
 
@@ -40,5 +41,5 @@ extension String {
     public func format(arguments: CVarArg...) -> String {
         return String(format: self, arguments: arguments)
     }
-    
+
 }

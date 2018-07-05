@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
@@ -30,23 +29,22 @@ class SiteGradeTests: XCTestCase {
     func testWhenScoreIsLessThanZeroThenGradeIsA() {
         XCTAssertEqual(SiteGrade.a, SiteGrade.grade(fromScore: -100))
     }
-    
+
     func testWhenScoreIsOneThenGradeIsB() {
         XCTAssertEqual(SiteGrade.b, SiteGrade.grade(fromScore: 1))
     }
-    
+
     func testWhenScoreIsTwoThenGradeIsC() {
         XCTAssertEqual(SiteGrade.c, SiteGrade.grade(fromScore: 2))
     }
-    
+
     func testWhenScoreIsThreeThenGradeIsD() {
         XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 3))
     }
-    
+
     func testWhenScoreIsFourThenGradeIsD() {
         XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 4))
     }
-    
 
     func testWhenScoreIsGreaterThan4ThenGradeIsD() {
         XCTAssertEqual(SiteGrade.d, SiteGrade.grade(fromScore: 100))

@@ -32,7 +32,7 @@ class LaunchTabNotification {
         func remove() {
             NotificationCenter.default.removeObserver(observer)
         }
-        
+
     }
 
     private static let urlUserInfo = "url"
@@ -42,7 +42,7 @@ class LaunchTabNotification {
     }
 
     class func addObserver(handler: @escaping (String) -> Void) -> Observer {
-        let observer = NotificationCenter.default.addObserver(forName: .launchTab , object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: .launchTab, object: nil, queue: nil) { notification in
             guard let urlString = notification.userInfo?[urlUserInfo] as? String else { return }
             handler(urlString)
         }

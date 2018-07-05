@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import ToastSwiftFramework
 
-fileprivate struct ViewConstants {
+private struct ViewConstants {
     static let marginBottom: CGFloat = 80
 }
 
@@ -32,5 +31,5 @@ extension UIView {
         let y = bounds.size.height - ViewConstants.marginBottom
         makeToast(text, duration: duration, position: CGPoint(x: x, y: y))
     }
-    
+
 }

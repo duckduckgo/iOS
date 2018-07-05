@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
-    
+
     @IBOutlet weak var swipeGestureRecogniser: UISwipeGestureRecognizer!
     @IBOutlet weak var button: UIButton!
 
@@ -34,9 +33,12 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
 
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateInitialViewController() as! OnboardingViewController
+        guard let controller = storyboard.instantiateInitialViewController() as? OnboardingViewController else {
+            fatalError("Failed to instantiate view controller as OnboardingViewController")
+        }
+        return controller
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureScrollView()
@@ -51,7 +53,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
         scrollView?.delegate = self
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? UIPageViewController {
             prepare(forPageControllerSegue: controller)
@@ -88,12 +90,12 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         controller.delegate = self
         goToPage(index: 0)
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         guard let next = pendingViewControllers.first as? OnboardingTutorialPageViewController else { return }
         transitioningToPage = next
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
                             previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if !completed {
@@ -107,24 +109,24 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         }
         transitioningToPage = nil
     }
-    
+
     private func configureDisplay(forPage index: Int) {
         currentPageIndex = index
         currentPage.resetImage()
         view.backgroundColor = currentPage.preferredBackgroundColor
     }
-    
+
     fileprivate func transition(withRatio ratio: CGFloat) {
         transitionBackgroundColor(withRatio: ratio)
         shrinkImages(withRatio: ratio)
     }
-    
+
     private func transitionBackgroundColor(withRatio ratio: CGFloat) {
         guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
         guard let currentColor = currentPage.preferredBackgroundColor else { return }
         view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
     }
-    
+
     private func shrinkImages(withRatio ratio: CGFloat) {
         guard let transitioningToPage = transitioningToPage else { return }
         let currentImageScale = 1 - (0.3 * (1 - ratio))
@@ -133,17 +135,17 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
         let nextImageScale = 1 - (0.3 * ratio)
         transitioningToPage.scaleImage(nextImageScale)
     }
-    
+
     private func goToPage(index: Int) {
         let controllers = [dataSource.controller(forIndex: index)]
         pageController.setViewControllers(controllers, direction: .forward, animated: true, completion: nil)
         configureDisplay(forPage: index)
     }
-    
+
     @IBAction func onLastPageSwiped(_ sender: Any) {
         finishOnboardingFlow()
     }
-    
+
     private func finishOnboardingFlow() {
         var settings = TutorialSettings()
         settings.hasSeenOnboarding = true
@@ -155,7 +157,10 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
 
     fileprivate var currentPage: OnboardingTutorialPageViewController {
-        return currentController as! OnboardingTutorialPageViewController
+        guard let controller = currentController as? OnboardingTutorialPageViewController else {
+            fatalError("currentController is not OnboardingTutorialPageViewController")
+        }
+        return controller
     }
 }
 
@@ -163,11 +168,11 @@ extension OnboardingViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
+
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
+
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return dataSource.isLastPage(controller: currentController)
     }

@@ -17,13 +17,11 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import WebKit
 
-
 public class JavascriptLoader {
-    
+
     public enum Script: String {
         case document
         case disconnectme
@@ -46,21 +44,28 @@ public class JavascriptLoader {
         let path = bundle.path(forResource: jsFile, ofType: "js")!
         return path
     }
-    
-    public func load(_ script: Script, into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
+
+    public func load(_ script: Script, into controller: WKUserContentController, forMainFrameOnly: Bool,
+                     injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
         load(script: script, withReplacements: [:], into: controller, forMainFrameOnly: forMainFrameOnly)
     }
 
-    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:], into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
+    public func load(script: JavascriptLoader.Script, withReplacements replacements: [String: String] = [:],
+                     into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
 
-        var js = try! String(contentsOfFile: JavascriptLoader.path(for: script.rawValue))
+        var js = try? String(contentsOfFile: JavascriptLoader.path(for: script.rawValue))
         for (key, value) in replacements {
-            js = js.replacingOccurrences(of: key, with: value, options: .literal)
+            js = js?.replacingOccurrences(of: key, with: value, options: .literal)
         }
-        load(js: js, into: controller, forMainFrameOnly: forMainFrameOnly, injectionTime: injectionTime)
+
+        if let js = js {
+            load(js: js, into: controller, forMainFrameOnly: forMainFrameOnly, injectionTime: injectionTime)
+        }
     }
-    
-    public func load(js: String, into controller: WKUserContentController, forMainFrameOnly: Bool, injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
+
+    public func load(js: String, into controller: WKUserContentController, forMainFrameOnly: Bool,
+                     injectionTime: WKUserScriptInjectionTime = .atDocumentStart) {
+        
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
         controller.addUserScript(script)
     }

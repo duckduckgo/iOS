@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 // Based on
@@ -50,11 +49,11 @@ public extension SiteRating {
         beforeScore += ipTrackerScore
 
         beforeScore += Int(floor(Double(totalTrackersDetected) / 10))
-        
+
         if afterScore == 0 && termsOfService?.classification != .a {
             afterScore = 1
         }
-        
+
         if beforeScore == 0 && termsOfService?.classification != .a {
             beforeScore = 1
         }
@@ -90,20 +89,20 @@ public extension SiteRating {
     var isMajorTrackerNetwork: Bool {
         return isMajorTrackerScore > 0
     }
-    
+
     private var ipTrackerScore: Int {
         return containsIpTracker ? 1 : 0
     }
-    
+
     public var termsOfServiceScore: Int {
         guard let termsOfService = termsOfService else {
             return 0
         }
-        
+
         return termsOfService.derivedScore
     }
-    
-    public var scoreDict: [String : Any] {
+
+    public var scoreDict: [String: Any] {
         let grade = siteGrade()
         return [
             "score": [
@@ -121,33 +120,35 @@ public extension SiteRating {
             ]
         ]
     }
-    
+
     public var scoreDescription: String {
-        let json = try! JSONSerialization.data(withJSONObject: scoreDict, options: .prettyPrinted)
+        guard let json = try? JSONSerialization.data(withJSONObject: scoreDict, options: .prettyPrinted) else {
+            return "{}"
+        }
         return String(data: json, encoding: .utf8)!
     }
 
     public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
         let lowercasedDomain = domain.lowercased()
-        if let tracker = disconnectMeTrackers.first(where: { lowercasedDomain == $0.key || lowercasedDomain.hasSuffix(".\($0.key)") } )?.value {
+        if let tracker = disconnectMeTrackers.first(where: { lowercasedDomain == $0.key || lowercasedDomain.hasSuffix(".\($0.key)") })?.value {
             return ( tracker.networkName, tracker.category?.rawValue )
         }
-        
+
         if let majorNetwork = majorTrackerNetworkStore.network(forDomain: lowercasedDomain) {
             return ( majorNetwork.name, nil )
         }
-        
+
         return ( nil, nil )
     }
 
 }
 
 public class SiteRatingCache {
-    
+
     public static let shared = SiteRatingCache()
-    
+
     private var cachedScores = [String: Int]()
-    
+
     /**
      Adds a score to the cache. Only replaces a preexisting score if
      the new score is higher
@@ -156,7 +157,7 @@ public class SiteRatingCache {
     func add(url: URL, score: Int) -> Bool {
         return compareAndSet(url: url, score: score)
     }
-    
+
     private func compareAndSet(url: URL, score current: Int) -> Bool {
         let key = cacheKey(forUrl: url)
         if let previous = cachedScores[key], previous > current {
@@ -165,16 +166,16 @@ public class SiteRatingCache {
         cachedScores[key] = current
         return true
     }
-    
+
     func get(url: URL) -> Int? {
         let key = cacheKey(forUrl: url)
         return cachedScores[key]
     }
-    
+
     func reset() {
         cachedScores =  [String: Int]()
     }
-    
+
     private func cacheKey(forUrl url: URL) -> String {
         guard let domain = url.host else {
             return url.absoluteString
@@ -193,5 +194,3 @@ fileprivate extension DetectedTracker {
     }
 
 }
-
-

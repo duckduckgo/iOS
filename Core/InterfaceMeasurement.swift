@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import CoreGraphics
 
@@ -27,13 +26,13 @@ public struct InterfaceMeasurement {
 
     private static let iPhone4Size = CGSize(width: 320, height: 480)
     private static let iPhone5Size = CGSize(width: 320, height: 568)
-    
+
     private let screen: UIScreen
-    
+
     public init(forScreen screen: UIScreen) {
         self.screen = screen
     }
-    
+
     public var isSmallScreenDevice: Bool {
         return hasiPhone4ScreenSize || hasiPhone5ScreenSize
     }
@@ -55,4 +54,3 @@ public struct InterfaceMeasurement {
     }
 
 }
-

@@ -127,7 +127,7 @@ class BlockerListRequestTests: XCTestCase {
 
 }
 
-fileprivate class MockEtagStorage: BlockerListETagStorage {
+private class MockEtagStorage: BlockerListETagStorage {
 
     var lastEtagSet: String?
     var etagToReturn: String?
@@ -141,4 +141,3 @@ fileprivate class MockEtagStorage: BlockerListETagStorage {
     }
 
 }
-

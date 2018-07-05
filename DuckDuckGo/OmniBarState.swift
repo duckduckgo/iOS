@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import Core
 
@@ -64,7 +63,7 @@ struct HomeTextEditingState: OmniBarState {
     let showBookmarks = false
     let showSettings = false
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState{ return HomeNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return self }
@@ -81,7 +80,7 @@ struct HomeNonEditingState: OmniBarState {
     let showBookmarks = false
     let showSettings = true
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState{ return self }
+    var onEditingStoppedState: OmniBarState { return self }
     var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
     var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
@@ -98,7 +97,7 @@ struct BrowsingEmptyEditingState: OmniBarState {
     let showBookmarks = false
     let showSettings = false
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState{ return BrowsingNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return self }
     var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
@@ -115,7 +114,7 @@ struct BrowsingTextEditingState: OmniBarState {
     let showBookmarks = false
     let showSettings = false
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState{ return BrowsingNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return self }
@@ -132,7 +131,7 @@ struct BrowsingNonEditingState: OmniBarState {
     let showBookmarks = false
     let showSettings = false
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState{ return self }
+    var onEditingStoppedState: OmniBarState { return self }
     var onEditingStartedState: OmniBarState { return BrowsingTextEditingState() }
     var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }

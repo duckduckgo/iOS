@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
 class TermsOfServiceListParserTests: XCTestCase {
-    
+
     private var data = JsonTestDataLoader()
     private var testee = TermsOfServiceListParser()
 
@@ -31,26 +30,29 @@ class TermsOfServiceListParserTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
-    
+
     func testWhenJsonInvalidThenInvalidJsonErrorThrown() {
         XCTAssertThrowsError(try testee.convert(fromJsonData: data.invalid()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
-    
+
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
         let mismatchedJson = data.fromJsonFile("MockFiles/tosdr_mismatched.json")
         XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
-    
+
     func testWhenJsonValidThenNoErrorThrown() {
         XCTAssertNoThrow(try testee.convert(fromJsonData: data.fromJsonFile("MockFiles/tosdr.json")))
     }
-    
+
     func testWhenJsonValidThenResultContainsTerms() {
-        let result = try! testee.convert(fromJsonData: data.fromJsonFile("MockFiles/tosdr.json"))
+        guard let result = try? testee.convert(fromJsonData: data.fromJsonFile("MockFiles/tosdr.json")) else {
+            XCTFail("Failed to convert from json data")
+            return
+        }
         XCTAssertEqual(result.count, 2)
         XCTAssertEqual(result["example.com"]?.derivedScore, -1)
         XCTAssertEqual(result["anotherexample.com"]?.derivedScore, 0)

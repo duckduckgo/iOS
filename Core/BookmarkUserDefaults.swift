@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class BookmarkUserDefaults: BookmarkStore {
@@ -25,7 +24,7 @@ public class BookmarkUserDefaults: BookmarkStore {
     public struct Constants {
         public static let groupName = "group.com.duckduckgo.bookmarks"
     }
-    
+
     private struct Keys {
         static let bookmarkKey = "com.duckduckgo.bookmarks.bookmarkKey"
     }
@@ -35,7 +34,7 @@ public class BookmarkUserDefaults: BookmarkStore {
     public init(userDefaults: UserDefaults = UserDefaults(suiteName: Constants.groupName)!) {
         self.userDefaults = userDefaults
     }
-    
+
     public var bookmarks: [Link]? {
         get {
             if let data = userDefaults.data(forKey: Keys.bookmarkKey) {
@@ -50,11 +49,11 @@ public class BookmarkUserDefaults: BookmarkStore {
             }
         }
     }
-    
+
     public func addBookmark(_ bookmark: Link) {
         var newBookmarks = bookmarks ?? [Link]()
         newBookmarks.append(bookmark)
         bookmarks = newBookmarks
     }
-    
+
 }

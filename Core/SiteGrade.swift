@@ -17,16 +17,15 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public enum SiteGrade: String {
-    
+
     case a
     case b
     case c
     case d
-    
+
     static func grade(fromScore score: Int) -> SiteGrade {
         switch score {
         case Int.min ... 0: return .a

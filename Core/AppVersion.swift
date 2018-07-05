@@ -17,39 +17,37 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public struct AppVersion {
-    
+
     struct Keys {
         static let name = kCFBundleNameKey as String
         static let identifier = kCFBundleIdentifierKey as String
         static let buildNumber = kCFBundleVersionKey as String
         static let versionNumber = "CFBundleShortVersionString"
     }
-    
+
     private let bundle: InfoBundle
-    
+
     public init(bundle: InfoBundle = Bundle.main) {
         self.bundle = bundle
     }
-    
+
     public var name: String {
         return bundle.object(forInfoDictionaryKey: Keys.name) as? String ?? ""
     }
-    
+
     public var identifier: String {
         return bundle.object(forInfoDictionaryKey: Keys.identifier) as? String ?? ""
     }
-    
+
     public var versionNumber: String {
         return bundle.object(forInfoDictionaryKey: Keys.versionNumber) as? String ?? ""
     }
-    
+
     public var buildNumber: String {
         return bundle.object(forInfoDictionaryKey: Keys.buildNumber) as? String ?? ""
     }
 
 }
-

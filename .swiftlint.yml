@@ -1,0 +1,17 @@
+
+disabled_rules:
+  - identifier_name
+  - trailing_whitespace
+
+# Rule Config
+line_length: 150
+type_name:
+  min_length: 3
+  max_length:
+    warning: 80
+    error: 100
+
+# General Config
+excluded:
+  - Carthage
+

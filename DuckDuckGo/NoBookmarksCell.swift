@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 class NoBookmarksCell: UITableViewCell {

@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
@@ -33,17 +32,17 @@ class OmniBar: UIView {
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
-    
+
     @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
-    
+
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
-    
+
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         configureTextField()
@@ -51,44 +50,44 @@ class OmniBar: UIView {
         configureSiteRating()
         refreshState(state)
     }
-    
+
     private func configureTextField() {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo, attributes: [NSAttributedStringKey.foregroundColor: UIColor.grayish])
         textField.delegate = self
     }
-    
+
     private func configureEditingMenu() {
         let title = UserText.actionPasteAndGo
         UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(pasteAndGo))]
     }
-    
+
     private func configureSiteRating() {
         siteRatingView.refresh()
     }
-    
+
     @objc func pasteAndGo(sender: UIMenuItem) {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()
     }
-    
+
     func startBrowsing() {
         refreshState(state.onBrowsingStartedState)
     }
-    
+
     func stopBrowsing() {
         refreshState(state.onBrowsingStoppedState)
     }
-    
+
     fileprivate func refreshState(_ newState: OmniBarState) {
-        if type(of: state) != type(of: newState)  {
+        if type(of: state) != type(of: newState) {
             Logger.log(text: "OmniBar entering \(Type.name(newState))")
             if (newState.clearTextOnStart) {
                 clear()
             }
             state = newState
         }
-        
+
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
         setVisibility(editingBackground, hidden: !state.showEditingBackground)
         setVisibility(clearButton, hidden: !state.showClear)
@@ -97,7 +96,7 @@ class OmniBar: UIView {
         setVisibility(settingsButton, hidden: !state.showSettings)
         searchContainerToSettingsConstraint.priority = state.showSettings ? .defaultHigh : .defaultLow
     }
-    
+
     /*
      Superfluous check to overcome apple bug in stack view where setting value more than
      once causes issues, related to http://www.openradar.me/22819594
@@ -108,25 +107,25 @@ class OmniBar: UIView {
             view.isHidden = hidden
         }
     }
-    
+
     @discardableResult override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
-    
+
     @discardableResult override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
     }
-    
+
     func updateSiteRating(_ siteRating: SiteRating?) {
         siteRatingView.update(siteRating: siteRating)
     }
-    
+
     private func clear() {
         textField.text = nil
     }
-    
+
     func refreshText(forUrl url: URL?) {
-        
+
         if textField.isEditing {
             return
         }
@@ -142,11 +141,11 @@ class OmniBar: UIView {
             textField.text = url.absoluteString
         }
     }
-    
+
     @IBAction func onTextEntered(_ sender: Any) {
         onQuerySubmitted()
     }
-    
+
     func onQuerySubmitted() {
         guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
             return
@@ -154,37 +153,37 @@ class OmniBar: UIView {
         resignFirstResponder()
         omniDelegate?.onOmniQuerySubmitted(query)
     }
-    
+
     @IBAction func onClearButtonPressed(_ sender: Any) {
         refreshState(state.onTextClearedState)
     }
-    
+
     @IBAction func onSiteRatingPressed(_ sender: Any) {
         omniDelegate?.onSiteRatingPressed()
     }
-    
+
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
         omniDelegate?.onMenuPressed()
     }
-    
+
     @IBAction func onBookmarksButtonPressed(_ sender: Any) {
         omniDelegate?.onBookmarksPressed()
     }
-    
+
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
         omniDelegate?.onSettingsPressed()
     }
 }
 
 extension OmniBar: UITextFieldDelegate {
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         refreshState(state.onEditingStartedState)
         DispatchQueue.main.async {
             self.textField.selectAll(nil)
         }
     }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let oldQuery = textField.text else { return true }
         guard let queryRange = oldQuery.range(from: range) else { return true }
@@ -197,7 +196,7 @@ extension OmniBar: UITextFieldDelegate {
         }
         return true
     }
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text, text.isEmpty {
             omniDelegate?.onDismissed()
@@ -217,4 +216,3 @@ extension String {
         return from ..< to
     }
 }
-

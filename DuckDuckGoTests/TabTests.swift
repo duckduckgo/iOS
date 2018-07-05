@@ -17,19 +17,18 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
 class TabTests: XCTestCase {
-    
+
     struct Constants {
         static let title = "A title"
         static let url = URL(string: "https://example.com")!
         static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
-    
+
     func testWhenSameObjectThenEqualsPasses() {
         let link = Link(title: Constants.title, url: Constants.url)
         let tab = Tab(link: link)

@@ -17,13 +17,12 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
 class TabsModelTests: XCTestCase {
-    
+
     private var emptyModel: TabsModel {
         return TabsModel()
     }
@@ -33,7 +32,7 @@ class TabsModelTests: XCTestCase {
         model.add(tab: Tab(link: nil))
         return model
     }
-    
+
     private var filledModel: TabsModel {
         let model = TabsModel()
         model.add(tab: Tab(link: nil))
@@ -41,15 +40,15 @@ class TabsModelTests: XCTestCase {
         model.add(tab: Tab(link: nil))
         return model
     }
-    
+
     func testCountIsInitiallyZero() {
         XCTAssertEqual(TabsModel().count, 0)
     }
-    
+
     func testCurrentIsInitiallyNil() {
         XCTAssertNil(TabsModel().currentIndex)
     }
-    
+
     func testWhenTabExistsThenIndexReturned() {
         let tab = Tab(link: nil)
         let testee = filledModel
@@ -69,7 +68,7 @@ class TabsModelTests: XCTestCase {
         XCTAssertEqual(testee.count, 1)
         XCTAssertEqual(testee.currentIndex, 0)
     }
-    
+
     func testWhenAdditionalItemAddedThenCountIsIncrementedAndCurrentIsSetToNewIndex() {
         let testee = filledModel
         XCTAssertEqual(testee.count, 3)
@@ -78,26 +77,26 @@ class TabsModelTests: XCTestCase {
         XCTAssertEqual(testee.count, 4)
         XCTAssertEqual(testee.currentIndex, 3)
     }
-    
+
     func testWhenItemRemovedThenCountDecrements() {
         let testee = filledModel
         XCTAssertEqual(testee.count, 3)
         testee.remove(at: 0)
         XCTAssertEqual(testee.count, 2)
     }
-    
+
     func testWhenFinalItemRemovedThenCountIsZero() {
         let testee = singleModel
         testee.remove(at: 0)
         XCTAssertEqual(testee.count, 0)
     }
-    
+
     func testWhenFinalItemRemovedThenModelIsEmpty() {
         let testee = singleModel
         testee.remove(at: 0)
         XCTAssertTrue(testee.isEmpty)
     }
-    
+
     func testWhenPreviousItemRemovedThenCurrentIndexDecrements() {
         let testee = filledModel
         testee.select(tabAt: 2)
@@ -118,21 +117,21 @@ class TabsModelTests: XCTestCase {
         testee.remove(at: 0)
         XCTAssertEqual(testee.currentIndex, 0)
     }
-    
+
     func testWhenCurrentIsOnlyItemAndItIsRemovedThenCurrentIsNil() {
         let testee = singleModel
         testee.select(tabAt: 0)
         testee.remove(at: 0)
         XCTAssertNil(testee.currentIndex)
     }
-    
+
     func testWhenNoSelectionAndFinalItemRemovedThenCurrentIsNil() {
         let testee = singleModel
         testee.clearSelection()
         testee.remove(at: 0)
         XCTAssertNil(testee.currentIndex)
     }
-    
+
     func testWhenAllClearedThenCountIsZeroAndCurrentIsNil() {
         let testee = filledModel
         testee.clearAll()

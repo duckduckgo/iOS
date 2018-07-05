@@ -55,15 +55,15 @@ class PrivacyProtectionOverviewController: UITableViewController {
         super.viewDidAppear(animated)
         updateFooterHeight()
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: nil) { context in 
+        coordinator.animate(alongsideTransition: nil) { _ in
             self.updateFooterHeight()
         }
-        
+
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, contentBlocker: contentBlocker)
@@ -72,11 +72,11 @@ class PrivacyProtectionOverviewController: UITableViewController {
         if let header = segue.destination as? PrivacyProtectionHeaderController {
             self.header = header
         }
-        
+
         if let footer = segue.destination as? PrivacyProtectionFooterController {
             self.footer = footer
         }
-        
+
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -87,26 +87,26 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         return true
     }
-    
+
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard UIDevice.current.userInterfaceIdiom == .phone else { return }
 
         let scrollViewHeight = scrollView.frame.size.height
         guard scrollViewHeight > 0 else { return }
-        
+
         let frameHeight = tableView.frame.size.height
         let contentHeight = tableView.contentSize.height
         let height = frameHeight - contentHeight
         let distance = height + scrollView.contentOffset.y
         let percent = distance / scrollViewHeight * 100
-        
+
         let dismissThreshold: CGFloat = 30
         if percent > dismissThreshold && scrollView.isDragging {
             dismiss(animated: true)
         }
 
     }
-        
+
     private func updateFooterHeight() {
         guard let footerView = tableView.tableFooterView else { return }
 
@@ -123,7 +123,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         tableView.tableFooterView = footerView
         footer.leaderboard.isHidden = false
     }
-    
+
     private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
@@ -137,10 +137,10 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
 
     private func updateEncryption() {
-        
+
         encryptionCell.summaryLabel.text = siteRating.encryptedConnectionText()
         switch(siteRating.encryptionType) {
-            
+
             case .encrypted:
                 encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection On")
 
@@ -149,12 +149,12 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
             case .mixed:
                 encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
-            
+
             default: // .unencrypted
                 encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
-            
+
         }
-        
+
     }
 
     private func updateTrackers() {
@@ -225,7 +225,7 @@ class ProtectionUpgradedView: UIView {
 
 }
 
-fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
+private class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
 
     var navigationController: UINavigationController
 
@@ -243,5 +243,3 @@ fileprivate class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegat
         return true
     }
 }
-
-

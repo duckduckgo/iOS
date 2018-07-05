@@ -17,16 +17,14 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 
-
 class UIFontExtensionTests: XCTestCase {
-    
+
     private struct Constants {
         static let fontSize: CGFloat = 16
     }
-    
+
     func testThatAppFontIsNotNil() {
         XCTAssertNotNil(UIFont.appFont(ofSize: Constants.fontSize))
     }
@@ -38,10 +36,8 @@ class UIFontExtensionTests: XCTestCase {
     func testThatSemiBoldAppFontIsNotNil() {
         XCTAssertNotNil(UIFont.semiBoldAppFont(ofSize: Constants.fontSize))
     }
-    
+
     func testThatBoldAppFontIsNotNil() {
         XCTAssertNotNil(UIFont.boldAppFont(ofSize: Constants.fontSize))
     }
 }
-
-

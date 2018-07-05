@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 extension UIColor {
@@ -25,11 +24,11 @@ extension UIColor {
     public static var monitoringInactiveTint: UIColor {
         return midGray
     }
-    
+
     public static var grayish: UIColor {
         return UIColor(red: 170.0 / 255.0, green: 170.0 / 255.0, blue: 170.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var silver: UIColor {
         return UIColor(red: 176.0 / 255.0, green: 181.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0)
     }
@@ -45,31 +44,31 @@ extension UIColor {
     public static var nastyGreen: UIColor {
         return UIColor(red: 101.0 / 255.0, green: 187.0 / 255.0, blue: 70.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var lightOliveGreen: UIColor {
         return UIColor(red: 147.0 / 255.0, green: 192.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var squash: UIColor {
         return UIColor(red: 237.0 / 255.0, green: 158.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var dullRed: UIColor {
         return UIColor(red: 221.0 / 255.0, green: 88.0 / 255.0, blue: 56.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var softBlue: UIColor {
         return UIColor(red: 106.0 / 255.0, green: 187.0 / 255.0, blue: 224.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var cornflowerBlue: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 143.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
     }
-    
+
     public static var greyishBrownTwo: UIColor {
         return UIColor(red: 77.0 / 255.0, green: 77.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
     }
-    
+
     public func combine(withColor other: UIColor, ratio: CGFloat) -> UIColor {
         let otherRatio = 1 - ratio
         let red = (redComponent * ratio) + (other.redComponent * otherRatio)
@@ -84,19 +83,19 @@ extension UIColor {
         getRed(&redComponent, green: nil, blue: nil, alpha: nil)
         return redComponent
     }
-    
+
     public var greenComponent: CGFloat {
         var greenComponent: CGFloat = 0
         getRed(nil, green: &greenComponent, blue: nil, alpha: nil)
         return greenComponent
     }
-    
+
     public var blueComponent: CGFloat {
         var blueComponent: CGFloat = 0
         getRed(nil, green: nil, blue: &blueComponent, alpha: nil)
         return blueComponent
     }
-    
+
     public var alphaComponent: CGFloat {
         var alphaComponent: CGFloat = 0
         getRed(nil, green: nil, blue: nil, alpha: &alphaComponent)

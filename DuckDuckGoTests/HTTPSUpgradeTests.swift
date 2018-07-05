@@ -34,12 +34,12 @@ class HTTPSUpgradeTests: XCTestCase {
 
     func testWhenURLIsHttpAndCanBeUpgradedReturnsUpgradedURL() {
         let testee = HTTPSUpgrade(persistence: MockHTTPSUpgradePersistence(hasDomain: true))
-        XCTAssertEqual(URL(string:"https://www.example.com"), testee.upgrade(url: URL(string:"http://www.example.com")!))
+        XCTAssertEqual(URL(string: "https://www.example.com"), testee.upgrade(url: URL(string: "http://www.example.com")!))
     }
 
 }
 
-fileprivate class MockHTTPSUpgradePersistence: HTTPSUpgradePersistence {
+private class MockHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
     private let hasDomain: Bool
 

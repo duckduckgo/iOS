@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 
 class URLExtensionTests: XCTestCase {
@@ -39,26 +38,26 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11"))
         XCTAssertTrue(URL.isWebUrl(text: "localhost"))
     }
-    
+
     func testWhenHostIsInvalidThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "t est.com"))
         XCTAssertFalse(URL.isWebUrl(text: "test!com.com"))
         XCTAssertFalse(URL.isWebUrl(text: "121.33.33."))
         XCTAssertFalse(URL.isWebUrl(text: "localhostt"))
     }
-    
+
     func testWhenSchemeIsValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com"))
         XCTAssertTrue(URL.isWebUrl(text: "http://121.33.2.11"))
         XCTAssertTrue(URL.isWebUrl(text: "http://localhost"))
     }
-    
+
     func testWhenSchemeIsInvalidThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "asdas://test.com"))
         XCTAssertFalse(URL.isWebUrl(text: "asdas://121.33.2.11"))
         XCTAssertFalse(URL.isWebUrl(text: "asdas://localhost"))
     }
-    
+
     func testWhenTextIsIncompleteSchemeThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http"))
         XCTAssertFalse(URL.isWebUrl(text: "http:"))
@@ -67,7 +66,7 @@ class URLExtensionTests: XCTestCase {
         XCTAssertFalse(URL.isWebUrl(text: "https:"))
         XCTAssertFalse(URL.isWebUrl(text: "https:/"))
     }
-    
+
     func testWhenPathIsValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com/path"))
         XCTAssertTrue(URL.isWebUrl(text: "http://121.33.2.11/path"))
@@ -76,7 +75,7 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl(text: "121.33.2.11/path"))
         XCTAssertTrue(URL.isWebUrl(text: "localhost/path"))
     }
-    
+
     func testWhenPathIsInvalidThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http://test.com/pa th"))
         XCTAssertFalse(URL.isWebUrl(text: "http://121.33.2.11/pa th"))
@@ -85,7 +84,7 @@ class URLExtensionTests: XCTestCase {
         XCTAssertFalse(URL.isWebUrl(text: "121.33.2.11/pa th"))
         XCTAssertFalse(URL.isWebUrl(text: "localhost/pa th"))
     }
-    
+
     func testWhenParamsAreValidThenIsWebUrlIsTrue() {
         XCTAssertTrue(URL.isWebUrl(text: "http://test.com?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "http://121.33.2.11?s=dafas&d=342"))
@@ -95,19 +94,19 @@ class URLExtensionTests: XCTestCase {
         XCTAssertTrue(URL.isWebUrl(text: "localhost?s=dafas&d=342"))
         XCTAssertTrue(URL.isWebUrl(text: "https://m.facebook.com/?refsrc=https%3A%2F%2Fwww.facebook.com%2F&_rdr"))
     }
-    
+
     func testWhenGivenSimpleStringThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "randomtext"))
     }
-    
+
     func testWhenGivenStringWithDotPrefixThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: ".randomtext"))
     }
-    
+
     func testWhenGivenStringWithDotSuffixThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "randomtext."))
     }
-    
+
     func testWhenGivenNumberThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "33"))
     }
@@ -123,86 +122,86 @@ class URLExtensionTests: XCTestCase {
         let result = URL.webUrl(fromText: "http://test .com")
         XCTAssertNil(result)
     }
-    
+
     func testWhenWebUrlCalledWithoutSchemeThenSchemeIsAdded() {
         let result = URL.webUrl(fromText: "test.com")
         XCTAssertNotNil(result)
         XCTAssertEqual("http://test.com", result?.absoluteString)
     }
-    
+
     func testWhenDecodingThenPercentageEncodedTextIsReversed() {
         let input = "test%20%22%25-.%3C%3E%5C%5E_%60%7B%7C~"
         let expected = "test \"%-.<>\\^_`{|~"
         let actual = URL.decode(query: input)
         XCTAssertEqual(expected, actual)
     }
-    
+
     func testWhenParamExistsThenGetParamReturnsCorrectValue() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
         let expected = "secondValue"
         let actual = url?.getParam(name: "secondParam")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenParamDoesNotExistThenGetParamIsNil() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
         let result = url?.getParam(name: "someOtherParam")
         XCTAssertNil(result)
     }
-    
+
     func testWhenParamExistsThenRemovingReturnUrlWithoutParam() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
         let expected = URL(string: "http://test.com?secondParam=secondValue")
         let actual = url?.removeParam(name: "firstParam")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenParamDoesNotExistThenRemovingReturnsSameUrl() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=secondValue")
         let actual = url?.removeParam(name: "someOtherParam")
         XCTAssertEqual(actual, url)
     }
-    
+
     func testWhenRemovingAParamThenRemainingUrlWebPlusesAreEncodedToEnsureTheyAreMaintainedAsSpaces_bugFix() {
         let url = URL(string: "http://test.com?firstParam=firstValue&secondParam=45+%2B+5")
         let expected = URL(string: "http://test.com?secondParam=45%20+%205")
         let actual = url?.removeParam(name: "firstParam")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenNoParamsThenAddingAppendsQuery() {
         let url = URL(string: "http://test.com")
         let expected = URL(string: "http://test.com?aParam=aValue")
         let actual = url?.addParam(name: "aParam", value: "aValue")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenParamDoesNotExistThenAddingParamAppendsItToExistingQuery() {
         let url = URL(string: "http://test.com?firstParam=firstValue")
         let expected = URL(string: "http://test.com?firstParam=firstValue&anotherParam=anotherValue")
         let actual = url?.addParam(name: "anotherParam", value: "anotherValue")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenParamHasInvalidCharactersThenAddingParamAppendsEncodedVersion() {
         let url = URL(string: "http://test.com")
         let expected = URL(string: "http://test.com?aParam=43%20%2B%205")
         let actual = url?.addParam(name: "aParam", value: "43 + 5")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenParamExistsThenAddingNewValueUpdatesParam() {
         let url = URL(string: "http://test.com?firstParam=firstValue")
         let expected = URL(string: "http://test.com?firstParam=newValue")
         let actual = url?.addParam(name: "firstParam", value: "newValue")
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testWhenUrlProtocolIsHttpThenIsHttpsIsFalse() {
         let url = URL(string: "http://test.com")!
         XCTAssertFalse(url.isHttps())
     }
-    
+
     func testWhenUrlProtocolIsHttpsThenIsHttpsIsTrue() {
         let url = URL(string: "https://test.com")!
         XCTAssertTrue(url.isHttps())

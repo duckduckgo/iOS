@@ -17,29 +17,28 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 import Kingfisher
 
 protocol TabViewCellDelegate: class {
-    
+
     func deleteTab(tab: Tab)
-    
+
 }
 
 class TabViewCell: UICollectionViewCell {
-    
+
     static let reuseIdentifier = "TabCell"
-    
+
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
-    
+
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
-    
+
     func update(withTab tab: Tab) {
         self.tab = tab
         isHidden = false
@@ -47,24 +46,24 @@ class TabViewCell: UICollectionViewCell {
         link.text = tab.link?.url.absoluteString ?? ""
         configureFavicon(forDomain: tab.link?.url.host)
     }
-    
+
     @IBAction func deleteTab() {
-        
+
         guard let tab = tab else { return }
-        
+
         UIView.animate(withDuration: 0.3, animations: {
             self.transform.tx = -self.superview!.frame.width * 1.5
-        }, completion: { completed in
+        }, completion: { _ in
             self.isHidden = true
             self.delegate?.deleteTab(tab: tab)
         })
-        
+
     }
-    
+
     private func configureFavicon(forDomain domain: String?) {
         let placeholder = #imageLiteral(resourceName: "GlobeSmall")
         favicon.image = placeholder
-        
+
         if let domain = domain {
             let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
             favicon.kf.setImage(with: faviconUrl, placeholder: placeholder)

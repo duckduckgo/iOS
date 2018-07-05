@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import Core
 
 extension AppVersion {
-    
+
     public var localized: String {
         guard versionNumber != buildNumber else {
             return String.localizedStringWithFormat(UserText.appInfo, name, versionNumber)

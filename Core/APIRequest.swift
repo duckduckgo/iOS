@@ -17,10 +17,8 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import Alamofire
-
 
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 
@@ -30,13 +28,13 @@ public class APIRequest {
 
         var data: Data?
         var etag: String?
-        
+
     }
 
-    @discardableResult public static func request(url: URL, method: HTTPMethod = .get, parameters: [String : Any]? = nil, completion: @escaping APIRequestCompletion) -> Request {
-        
+    @discardableResult public static func request(url: URL, method: HTTPMethod = .get, parameters: [String: Any]? = nil, completion: @escaping APIRequestCompletion) -> Request {
+
         Logger.log(text: "Requesting \(url)")
-   
+
         return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
@@ -51,7 +49,7 @@ public class APIRequest {
                 }
             }
     }
-    
+
 }
 
 fileprivate extension HTTPURLResponse {
@@ -62,4 +60,3 @@ fileprivate extension HTTPURLResponse {
     }
 
 }
-

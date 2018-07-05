@@ -17,14 +17,13 @@
 //  limitations under the License.
 //
 
-
 import WebKit
 
 extension WKWebView {
-    
+
     public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Void) {
         let javascript = "duckduckgoDocument.getHrefFromPoint(\(x), \(y))"
-        evaluateJavaScript(javascript) { (result, error) in
+        evaluateJavaScript(javascript) { (result, _) in
             if let text = result as? String {
                 let url = URL(string: text)
                 completion(url)
@@ -33,23 +32,22 @@ extension WKWebView {
             }
         }
     }
-    
+
     public func getUrlAtPointSynchronously(x: Int, y: Int) -> URL? {
         var complete = false
         var url: URL?
         let javascript = "duckduckgoDocument.getHrefFromPoint(\(x), \(y))"
-        evaluateJavaScript(javascript) { (result, error) in
+        evaluateJavaScript(javascript) { (result, _) in
             if let text = result as? String {
                 url = URL(string: text)
             }
             complete = true
         }
-        
+
         while (!complete) {
             RunLoop.current.run(mode: .defaultRunLoopMode, before: .distantFuture)
         }
         return url
     }
-    
-}
 
+}

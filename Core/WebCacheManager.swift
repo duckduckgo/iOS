@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import WebKit
 
 public class WebCacheManager {
@@ -25,25 +24,25 @@ public class WebCacheManager {
     private struct Constants {
         static let cookieDomain = "duckduckgo.com"
     }
-    
+
     private static var allDataTypes: Set<String> {
         return WKWebsiteDataStore.allWebsiteDataTypes()
     }
-    
+
     private static var dataStore: WKWebsiteDataStore {
         return WKWebsiteDataStore.default()
     }
-    
+
     public static func consumeCookies() {
         guard #available(iOS 11, *) else { return }
-        
+
         let cookieStorage = CookieStorage()
         for cookie in cookieStorage.cookies {
             WebCacheManager.dataStore.httpCookieStore.setCookie(cookie)
         }
         cookieStorage.clear()
     }
-    
+
     /**
      Clears the cache of all data, except duckduckgo cookies
      */
@@ -62,13 +61,13 @@ public class WebCacheManager {
             let cookies = cookies.filter({ $0.domain == Constants.cookieDomain })
             for cookie in cookies {
                 cookieStorage.setCookie(cookie)
-                
+
             }
-            
+
             DispatchQueue.main.async {
                 WebCacheManager.dataStore.removeData(ofTypes: self.allDataTypes, modifiedSince: Date.distantPast) {}
             }
         }
     }
-    
+
 }

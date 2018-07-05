@@ -17,24 +17,22 @@
 //  limitations under the License.
 //
 
-
 import Core
 
-
 public struct UserText {
-    
+
     public static let appTitle = NSLocalizedString("app.title", comment: "DuckDuckGo")
     public static let appInfo = NSLocalizedString("app.info", comment: "DuckDuckGo version")
-    public static let appInfoWithBuild = NSLocalizedString("app.infoWithBuild", comment:  "DuckDuckGo version (build)")
+    public static let appInfoWithBuild = NSLocalizedString("app.infoWithBuild", comment: "DuckDuckGo version (build)")
     public static let appUnlock = NSLocalizedString("app.authentication.unlock", comment: "Unlock DuckDuckGo")
     public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo Home")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or type URL")
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Session cleared")
     public static let webSaveLinkDone = NSLocalizedString("web.url.save.done", comment: "Bookmark saved")
-    
+
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
-        
+
     public static let actionPasteAndGo = NSLocalizedString("action.title.pasteAndGo", comment: "Paste and Go action")
     public static let actionRefresh = NSLocalizedString("action.title.refresh", comment: "Refresh action")
     public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
@@ -78,57 +76,57 @@ public struct UserText {
     public static let privacyProtectionReloadBlockerLists = NSLocalizedString("privacy.protection.reload.blocker.lists", comment: "This can be caused by a loss of internet connection when loading the content blocking rules.")
 
     public static let ppEncryptionCertError = NSLocalizedString("privacy.protection.encryption.cert.error", comment: "Error extracting certificate")
-    public static let ppEncryptionSubjectName = NSLocalizedString("privacy.protection.encryption.subject.name", comment:  "Subject Name")
-    public static let ppEncryptionPublicKey = NSLocalizedString("privacy.protection.encryption.public.key", comment:  "Public Key")
-    public static let ppEncryptionIssuer = NSLocalizedString("privacy.protection.encryption.issuer", comment:  "Issuer")
-    public static let ppEncryptionSummary = NSLocalizedString("privacy.protection.encryption.summary", comment:  "Summary")
-    public static let ppEncryptionCommonName = NSLocalizedString("privacy.protection.encryption.common.name", comment:  "Common Name")
-    public static let ppEncryptionEmail = NSLocalizedString("privacy.protection.encryption.email", comment:  "Email")
-    public static let ppEncryptionAlgorithm = NSLocalizedString("privacy.protection.encryption.algorithm", comment:  "Algorithm")
-    public static let ppEncryptionKeySize = NSLocalizedString("privacy.protection.encryption.key.size", comment:  "Key Size")
-    public static let ppEncryptionEffectiveSize = NSLocalizedString("privacy.protection.encryption.effective.size", comment:  "Effective Size")
-    public static let ppEncryptionUsageDecrypt = NSLocalizedString("privacy.protection.encryption.usage.decrypt", comment:  "Decrypt")
-    public static let ppEncryptionUsageEncrypt = NSLocalizedString("privacy.protection.encryption.usage.encrypt", comment:  "Encrypt")
-    public static let ppEncryptionUsageDerive = NSLocalizedString("privacy.protection.encryption.usage.derive", comment:  "Derive")
-    public static let ppEncryptionUsageWrap = NSLocalizedString("privacy.protection.encryption.usage.wrap", comment:  "Wrap")
-    public static let ppEncryptionUsageUnwrap = NSLocalizedString("privacy.protection.encryption.usage.unwrap", comment:  "Unwrap")
-    public static let ppEncryptionUsageSign = NSLocalizedString("privacy.protection.encryption.usage.sign", comment:  "Sign")
-    public static let ppEncryptionUsageVerify = NSLocalizedString("privacy.protection.encryption.usage.verify", comment:  "Verify")
-    public static let ppEncryptionUsage = NSLocalizedString("privacy.protection.encryption.usage", comment:  "Usage")
-    public static let ppEncryptionPermanent = NSLocalizedString("privacy.protection.encryption.permanent", comment:  "Permanent")
-    public static let ppEncryptionId = NSLocalizedString("privacy.protection.encryption.id", comment:  "ID")
-    public static let ppEncryptionKey = NSLocalizedString("privacy.protection.encryption.key", comment:  "Key")
-    public static let ppEncryptionYes = NSLocalizedString("privacy.protection.encryption.yes", comment:  "Yes")
-    public static let ppEncryptionNo = NSLocalizedString("privacy.protection.encryption.no", comment:  "No")
-    public static let ppEncryptionUnknown = NSLocalizedString("privacy.protection.encryption.unknown", comment:  "Unknown")
-    public static let ppEncryptionBits = NSLocalizedString("privacy.protection.encryption.bits", comment:  "%d bits")
-    
+    public static let ppEncryptionSubjectName = NSLocalizedString("privacy.protection.encryption.subject.name", comment: "Subject Name")
+    public static let ppEncryptionPublicKey = NSLocalizedString("privacy.protection.encryption.public.key", comment: "Public Key")
+    public static let ppEncryptionIssuer = NSLocalizedString("privacy.protection.encryption.issuer", comment: "Issuer")
+    public static let ppEncryptionSummary = NSLocalizedString("privacy.protection.encryption.summary", comment: "Summary")
+    public static let ppEncryptionCommonName = NSLocalizedString("privacy.protection.encryption.common.name", comment: "Common Name")
+    public static let ppEncryptionEmail = NSLocalizedString("privacy.protection.encryption.email", comment: "Email")
+    public static let ppEncryptionAlgorithm = NSLocalizedString("privacy.protection.encryption.algorithm", comment: "Algorithm")
+    public static let ppEncryptionKeySize = NSLocalizedString("privacy.protection.encryption.key.size", comment: "Key Size")
+    public static let ppEncryptionEffectiveSize = NSLocalizedString("privacy.protection.encryption.effective.size", comment: "Effective Size")
+    public static let ppEncryptionUsageDecrypt = NSLocalizedString("privacy.protection.encryption.usage.decrypt", comment: "Decrypt")
+    public static let ppEncryptionUsageEncrypt = NSLocalizedString("privacy.protection.encryption.usage.encrypt", comment: "Encrypt")
+    public static let ppEncryptionUsageDerive = NSLocalizedString("privacy.protection.encryption.usage.derive", comment: "Derive")
+    public static let ppEncryptionUsageWrap = NSLocalizedString("privacy.protection.encryption.usage.wrap", comment: "Wrap")
+    public static let ppEncryptionUsageUnwrap = NSLocalizedString("privacy.protection.encryption.usage.unwrap", comment: "Unwrap")
+    public static let ppEncryptionUsageSign = NSLocalizedString("privacy.protection.encryption.usage.sign", comment: "Sign")
+    public static let ppEncryptionUsageVerify = NSLocalizedString("privacy.protection.encryption.usage.verify", comment: "Verify")
+    public static let ppEncryptionUsage = NSLocalizedString("privacy.protection.encryption.usage", comment: "Usage")
+    public static let ppEncryptionPermanent = NSLocalizedString("privacy.protection.encryption.permanent", comment: "Permanent")
+    public static let ppEncryptionId = NSLocalizedString("privacy.protection.encryption.id", comment: "ID")
+    public static let ppEncryptionKey = NSLocalizedString("privacy.protection.encryption.key", comment: "Key")
+    public static let ppEncryptionYes = NSLocalizedString("privacy.protection.encryption.yes", comment: "Yes")
+    public static let ppEncryptionNo = NSLocalizedString("privacy.protection.encryption.no", comment: "No")
+    public static let ppEncryptionUnknown = NSLocalizedString("privacy.protection.encryption.unknown", comment: "Unknown")
+    public static let ppEncryptionBits = NSLocalizedString("privacy.protection.encryption.bits", comment: "%d bits")
+
     public static let ppEncryptionStandardMessage = NSLocalizedString("privacy.protection.encryption.standard.message", comment: "An encrypted connection prevents eavesdropping of any personal information you send to a website.")
     public static let ppEncryptionMixedMessage = NSLocalizedString("privacy.protection.encryption.mixed.message", comment: "This site has mixed encryption because some content is being served over unencrypted connections. Encrypted connections prevent eavesdropping of personal information you send to websites.")
     public static let ppEncryptionForcedMessage = NSLocalizedString("privacy.protection.encryption.forced.message", comment: "We've forced this site to use an encrypted connection, preventing eavesdropping of any personal information you send to it.")
-    
-    public static let ppEncryptionEncryptedHeading = NSLocalizedString("privacy.protection.encryption.encrypted.heading", comment:  "Encrypted")
-    public static let ppEncryptionForcedHeading = NSLocalizedString("privacy.protection.encryption.forced.heading", comment:  "Forced")
-    public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", comment:  "Mixed")
-    public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", comment:  "Unencrypted")
+
+    public static let ppEncryptionEncryptedHeading = NSLocalizedString("privacy.protection.encryption.encrypted.heading", comment: "Encrypted")
+    public static let ppEncryptionForcedHeading = NSLocalizedString("privacy.protection.encryption.forced.heading", comment: "Forced")
+    public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", comment: "Mixed")
+    public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", comment: "Unencrypted")
 
     public static let ppTrackerNetworksMajorMessage = NSLocalizedString("privacy.protection.tracker.networks.major.message", comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
 
-    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment:  "Trackers networks were found on %@ of web sites you’ve visited since %@.")
+    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment: "Trackers networks were found on %@ of web sites you’ve visited since %@.")
 
-    public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
+    public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment: "Unknown tracker networks")
 
-    public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", comment:  "Unknown error occurred")
-    
+    public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", comment: "Unknown error occurred")
+
     public static func forSiteGrade(_ grade: SiteGrade) -> String {
         let key = "monitoring.sitegrade.\(grade.rawValue)"
         return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")
     }
-    
-    public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
-    public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
-    
-    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment:  "General feedback comment placeholder")
-    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment:  "Broken site feedback comment placeholder")
-    public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
+
+    public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment: "Home Row Reminder Title")
+    public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment: "Home Row Reminder Message")
+
+    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment: "General feedback comment placeholder")
+    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment: "Broken site feedback comment placeholder")
+    public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment: "Feedback submitted confirmation")
 }

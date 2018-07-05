@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 extension UIFont {
-    
+
     private enum Name: String {
         case ProximaNovaRegular = "ProximaNova-Regular"
         case ProximaNovaLight = "ProximaNova-Light"
@@ -33,7 +32,7 @@ extension UIFont {
         return UIFont(name: Name.ProximaNovaRegular.rawValue, size: size) ??
                UIFont.systemFont(ofSize: size)
     }
-    
+
     public static func lightAppFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: Name.ProximaNovaLight.rawValue, size: size) ??
                UIFont.systemFont(ofSize: size, weight: UIFont.Weight.light)
@@ -43,7 +42,7 @@ extension UIFont {
         return UIFont(name: Name.ProximaNovaSemibold.rawValue, size: size) ??
                UIFont.systemFont(ofSize: size, weight: UIFont.Weight.semibold)
     }
-    
+
     public static func boldAppFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: Name.ProximaNovaBold.rawValue, size: size) ??
                UIFont.boldSystemFont(ofSize: size)

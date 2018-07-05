@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
@@ -27,10 +26,10 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
         static let googleNetwork = URL(string: "https://google.com")!
-        
+
         static let duckduckgo = URL(string: "http://duckduckgo.com")!
     }
-    
+
     struct MockTrackerBuilder {
 
         static func standard(category: String = "", blocked: Bool) -> DetectedTracker {
@@ -53,7 +52,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     override func setUp() {
         SiteRatingCache.shared.reset()
     }
-    
+
     func testWhenNetworkExistsForMajorDomainNotInDisconnectItIsReturned() {
         let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString, networkName: "TrickyAds", category: .social ) ]
         let networkStore = MockMajorTrackerNetworkStore().adding(network: MajorTrackerNetwork(name: "Major", domain: "major.com", percentageOfPages: 5))
@@ -78,7 +77,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
         XCTAssertEqual("Social", nameAndCategory.category)
     }
-    
+
     func testWhenHighScoreCachedResultIsGradeD() {
         _ = SiteRatingCache.shared.add(url: Url.https, score: 10)
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
@@ -178,7 +177,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         XCTAssertEqual(1, score.before)
         XCTAssertEqual(1, score.after)
     }
-    
+
     func testWhenTOSIsNegativeThenScoreOfOneIsUnchanged() {
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!, classification: nil, score: -10))
         let score = testee.siteScore()
@@ -230,9 +229,9 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
 }
 
-fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
+private class MockTermsOfServiceStore: TermsOfServiceStore {
 
-    var terms = [String : TermsOfService]()
+    var terms = [String: TermsOfService]()
 
     func add(domain: String, classification: TermsOfService.Classification?, score: Int, goodReasons: [String] = [], badReasons: [String] = []) -> MockTermsOfServiceStore {
         terms[domain] = TermsOfService(classification: classification, score: score, goodReasons: goodReasons, badReasons: badReasons)
@@ -241,7 +240,7 @@ fileprivate class MockTermsOfServiceStore: TermsOfServiceStore {
 
 }
 
-fileprivate class MockMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
+private class MockMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
 
     override init(networks: [MajorTrackerNetwork] = []) {
         super.init(networks: networks)
@@ -254,4 +253,3 @@ fileprivate class MockMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
     }
 
 }
-

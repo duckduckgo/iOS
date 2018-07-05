@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import Core
 
@@ -32,7 +31,7 @@ struct TutorialSettings {
         static let lastVersionSeen = "com.duckduckgo.tutorials.lastVersionSeen"
         static let hasSeenOnboarding = "com.duckduckgo.tutorials.hasSeenOnboarding"
     }
-    
+
     private func userDefaults() -> UserDefaults {
         return UserDefaults.standard
     }
@@ -42,7 +41,7 @@ struct TutorialSettings {
             return userDefaults().integer(forKey: Keys.lastVersionSeen)
         }
     }
-    
+
     public var hasSeenOnboarding: Bool {
         get {
             if Constants.onboardingVersion > lastVersionSeen {

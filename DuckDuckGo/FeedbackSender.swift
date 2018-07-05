@@ -26,30 +26,30 @@ protocol FeedbackSender {
 }
 
 struct FeedbackSubmitter: FeedbackSender {
-    
+
     private enum Reason: String {
         case general = "general"
         case brokenSite = "broken_site"
     }
-    
+
     private let statisticsStore: StatisticsStore
     private let versionProvider: AppVersion
-    
+
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults(), versionProvider: AppVersion = AppVersion()) {
         self.statisticsStore = statisticsStore
         self.versionProvider = versionProvider
     }
-    
+
     public func submitBrokenSite(url: String, message: String) {
         submitFeedback(reason: .brokenSite, url: url, comment: message)
     }
-    
+
     public func submitMessage(message: String) {
         submitFeedback(reason: .general, url: nil, comment: message)
     }
-    
+
     private func submitFeedback(reason: Reason, url: String?, comment: String) {
-        
+
         let parameters = [
             "reason": reason.rawValue,
             "url": url ?? "",
@@ -57,12 +57,12 @@ struct FeedbackSubmitter: FeedbackSender {
             "platform": "iOS",
             "os": UIDevice.current.systemVersion,
             "manufacturer": "Apple",
-            "model" : UIDevice.current.deviceType.displayName,
+            "model": UIDevice.current.deviceType.displayName,
             "v": versionProvider.localized,
             "atb": statisticsStore.atbWithVariant ?? ""
         ]
-        
-        APIRequest.request(url: AppUrls().feedback, method: .post, parameters:  parameters) { response, error in
+
+        APIRequest.request(url: AppUrls().feedback, method: .post, parameters: parameters) { _, error in
             if let error = error {
                 Logger.log(text: "Feedback request failed, \(error.localizedDescription)")
             } else {

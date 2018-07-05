@@ -22,16 +22,16 @@ import Social
 import Core
 
 class ShareViewController: SLComposeServiceViewController {
-    
+
     struct Identifier {
         static let url = "public.url"
         static let text = "public.plain-text"
     }
-    
+
     struct Constants {
         static let openURLSelector = "openURL:"
     }
-    
+
     override func configurationItems() -> [Any]! {
         if let urlProvider = getItemProvider(identifier: Identifier.url) {
             loadUrl(fromUrlProvider: urlProvider)
@@ -43,15 +43,15 @@ class ShareViewController: SLComposeServiceViewController {
         }
         return []
     }
-    
+
     private func getItemProvider(identifier: String) -> NSItemProvider? {
 
         guard let item = extensionContext?.inputItems.first as? NSExtensionItem else {
             return nil
         }
-    
+
         guard let attachments = item.attachments else { return nil }
-        
+
         for attachment in attachments {
             guard let itemProvider = attachment as? NSItemProvider else { break }
             if itemProvider.hasItemConformingToTypeIdentifier(identifier) {
@@ -60,17 +60,17 @@ class ShareViewController: SLComposeServiceViewController {
         }
         return nil
     }
-    
+
     private func loadUrl(fromUrlProvider urlProvider: NSItemProvider) {
-        urlProvider.loadItem(forTypeIdentifier: Identifier.url, options: nil) { [weak self] (item, error) in
+        urlProvider.loadItem(forTypeIdentifier: Identifier.url, options: nil) { [weak self] (item, _) in
             if let url = item as? URL {
                 self?.open(url: url)
             }
         }
     }
-    
+
     private func loadText(fromTextProvider textProvider: NSItemProvider) {
-        textProvider.loadItem(forTypeIdentifier: Identifier.text, options: nil) { [weak self] (item, error) in
+        textProvider.loadItem(forTypeIdentifier: Identifier.text, options: nil) { [weak self] (item, _) in
             guard let query = item as? String else { return }
             self?.open(url: AppUrls().url(forQuery: query))
         }

@@ -17,12 +17,13 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 extension NSAttributedString {
     public func withText(_ text: String) -> NSAttributedString {
-        let mutableText = mutableCopy() as! NSMutableAttributedString
+        guard let mutableText = mutableCopy() as? NSMutableAttributedString else {
+            return NSAttributedString(string: text)
+        }
         mutableText.mutableString.setString(text)
         return mutableText
     }

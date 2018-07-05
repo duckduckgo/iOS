@@ -24,15 +24,15 @@ class MockContentBlockerConfigurationStore: ContentBlockerConfigurationStore {
     var domainWhitelist = Set<String>()
     var protecting = true
     var enabled = true
-    
+
     func whitelisted(domain: String) -> Bool {
         return domainWhitelist.contains(domain)
     }
-    
+
     func addToWhitelist(domain: String) {
         domainWhitelist.insert(domain)
     }
-    
+
     func removeFromWhitelist(domain: String) {
         domainWhitelist.remove(domain)
     }

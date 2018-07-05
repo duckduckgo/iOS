@@ -21,9 +21,9 @@ import Foundation
 import Core
 
 struct MockVariantManager: VariantManager {
-    
+
     var currentVariant: Variant?
-    
+
     func assignVariantIfNeeded() {
     }
 

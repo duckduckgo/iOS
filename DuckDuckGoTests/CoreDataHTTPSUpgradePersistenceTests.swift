@@ -28,7 +28,7 @@ class CoreDataHTTPSUpgradePersistenceTests: XCTestCase {
         testee = CoreDataHTTPSUpgradePersistence()
         testee.reset()
     }
-    
+
     func testWhenDomainIsMixedCaseDomainIsStillFound() {
         testee.persist(domains: [ "www.bbc.co.uk", "apple.com" ], wildcardDomains: [ "*.example.com", "*.cnn.com" ])
         XCTAssertTrue(testee.hasDomain("APPLE.com"))

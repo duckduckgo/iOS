@@ -21,19 +21,19 @@ import Foundation
 import Alamofire
 
 public class APIHeaders {
-    
+
     struct Name {
         static let userAgent = "User-Agent"
         static let etag = "ETag"
     }
-    
+
     private let appVersion: AppVersion
-    
+
     public init(appVersion: AppVersion = AppVersion()) {
         self.appVersion = appVersion
     }
 
-    public var defaultHeaders: HTTPHeaders  {
+    public var defaultHeaders: HTTPHeaders {
         get {
             let fullVersion = "\(appVersion.versionNumber).\(appVersion.buildNumber)"
             let osVersion = UIDevice.current.systemVersion
@@ -43,5 +43,5 @@ public class APIHeaders {
             return headers
         }
     }
-    
+
 }

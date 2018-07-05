@@ -20,10 +20,10 @@
 import Foundation
 
 public class AtbAndVariantCleanup {
-    
+
     public static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(), variantManager: VariantManager = DefaultVariantManager()) {
         guard let variant = statisticsStorage.variant else { return }
-        
+
         // clean up ATB
         if let atb = statisticsStorage.atb, atb.hasSuffix(variant) {
             statisticsStorage.atb = String(atb.dropLast(variant.count))
@@ -33,7 +33,7 @@ public class AtbAndVariantCleanup {
         if variantManager.currentVariant == nil {
             statisticsStorage.variant = nil
         }
-        
+
     }
 
 }

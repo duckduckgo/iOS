@@ -17,31 +17,30 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class StatisticsUserDefaults: StatisticsStore {
-    
+
     private let groupName: String
-    
+
     private struct Keys {
         static let atb = "com.duckduckgo.statistics.atb.key"
         static let retentionAtb = "com.duckduckgo.statistics.retentionatb.key"
         static let variant = "com.duckduckgo.statistics.variant.key"
     }
-    
+
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
-    
+
     public init(groupName: String = "group.com.duckduckgo.statistics") {
         self.groupName = groupName
     }
-    
+
     public var hasInstallStatistics: Bool {
         return atb != nil && retentionAtb != nil
     }
-    
+
     public var atb: String? {
         get {
             return userDefaults?.string(forKey: Keys.atb)
@@ -59,20 +58,20 @@ public class StatisticsUserDefaults: StatisticsStore {
             userDefaults?.setValue(newValue, forKey: Keys.retentionAtb)
         }
     }
-    
+
     public var variant: String? {
         get {
             return userDefaults?.string(forKey: Keys.variant)
         }
-        
-        set{
+
+        set {
             userDefaults?.setValue(newValue, forKey: Keys.variant)
         }
     }
-    
+
     public var atbWithVariant: String? {
         guard let atb = atb else { return nil }
         return "\(atb)\(variant ?? "")"
     }
-    
+
 }

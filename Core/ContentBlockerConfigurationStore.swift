@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public struct ContentBlockerConfigurationChangedNotification {
@@ -25,15 +24,15 @@ public struct ContentBlockerConfigurationChangedNotification {
 }
 
 public protocol ContentBlockerConfigurationStore: class {
-    
+
     var domainWhitelist: Set<String> { get }
 
     var enabled: Bool { get set }
-    
+
     func whitelisted(domain: String) -> Bool
-    
+
     func addToWhitelist(domain: String)
-    
+
     func removeFromWhitelist(domain: String)
 
     func protecting(domain: String?) -> Bool

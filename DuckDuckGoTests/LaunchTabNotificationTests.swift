@@ -34,7 +34,7 @@ class LaunchTabNotificationTests: XCTestCase {
 
     func testWhenNotificationPostedItIsHandled() {
         var x: String?
-        let _ = LaunchTabNotification.addObserver { urlString in
+        _ = LaunchTabNotification.addObserver { urlString in
             x = urlString
         }
         LaunchTabNotification.postLaunchTabNotification(urlString: "y")

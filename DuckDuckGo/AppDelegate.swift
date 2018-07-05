@@ -17,13 +17,12 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
     private struct ShortcutKey {
         static let search = "com.duckduckgo.mobile.ios.newsearch"
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
@@ -33,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var appIsLaunching = false
     var authWindow: UIWindow?
     var window: UIWindow?
-    
+
     private lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
 
     // MARK: lifecycle
@@ -43,12 +42,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
-        
+
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
-        
+
         appIsLaunching = true
         return true
     }
@@ -67,11 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initialiseBackgroundFetch(application)
         }
     }
-    
+
     func applicationWillEnterForeground(_ application: UIApplication) {
         beginAuthentication()
     }
-    
+
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayAuthenticationWindow()
     }
@@ -80,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         handleShortCutItem(shortcutItem)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
         clearNavigationStack()
         if AppDeepLinks.isQuickLink(url: url) {
@@ -101,7 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     // MARK: private
-    
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
@@ -115,19 +113,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         authWindow?.makeKeyAndVisible()
         window?.isHidden = true
     }
-    
+
     private func beginAuthentication() {
         guard let controller = authWindow?.rootViewController as? AuthenticationViewController else { return }
-        controller.beginAuthentication() { [weak self] in
+        controller.beginAuthentication { [weak self] in
             self?.completeAuthentication()
         }
     }
-    
+
     private func completeAuthentication() {
         window?.makeKeyAndVisible()
         authWindow = nil
     }
-    
+
     private func startOnboardingFlowIfNotSeenBefore() {
         guard let main = mainViewController else { return }
         let settings = TutorialSettings()
@@ -135,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             main.showOnboarding()
         }
     }
-    
+
     private func startMigration(application: UIApplication) {
         // This should happen so fast that it's complete by the time the user finishes onboarding.  
         Migration().start { occurred, storiesMigrated, bookmarksMigrated in
@@ -147,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
+
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         clearNavigationStack()
@@ -158,11 +156,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query)
         }
     }
-    
+
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
-    
+
     private func clearNavigationStack() {
         if let presented = mainViewController?.presentedViewController {
             presented.dismiss(animated: false) { [weak self] in
@@ -171,4 +169,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
-

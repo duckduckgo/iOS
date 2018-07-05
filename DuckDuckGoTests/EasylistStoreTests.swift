@@ -38,7 +38,7 @@ class EasylistStoreTests: XCTestCase {
         store.persistEasylistPrivacy(data: value.data(using: .utf8)!)
 
         XCTAssertNil(ContentBlockerStringCache().get(named: EasylistStore.CacheNames.easylistPrivacy))
-        
+
     }
 
     func testWhenEasylistPersistedCacheIsInvalidated() {
@@ -86,7 +86,7 @@ class EasylistStoreTests: XCTestCase {
         let store = EasylistStore()
         store.persistEasylist(data: "\(value)`".data(using: .utf8)!)
         XCTAssertEqual("\(value)\\`", store.easylist)
-        
+
     }
 
     func testWhenEasylistPrivacyPersistedValueIsAvailable() {
@@ -95,9 +95,8 @@ class EasylistStoreTests: XCTestCase {
         let store = EasylistStore()
         store.persistEasylistPrivacy(data: value.data(using: .utf8)!)
         XCTAssertEqual(value, store.easylistPrivacy)
-        
-    }
 
+    }
 
     func testWhenEasylistPersistedValueIsAvailable() {
 

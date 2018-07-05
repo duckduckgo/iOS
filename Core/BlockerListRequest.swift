@@ -33,7 +33,7 @@ class BlockerListRequest {
     }
 
     var requestCount = 0
-    
+
     let etagStorage: BlockerListETagStorage
 
     init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
@@ -83,7 +83,7 @@ class BlockerListRequest {
         }
 
     }
-    
+
 }
 
 protocol BlockerListETagStorage {
@@ -107,7 +107,5 @@ class UserDefaultsETagStorage: BlockerListETagStorage {
     func set(etag: String?, for list: BlockerListRequest.List) {
         defaults?.set(etag, forKey: list.rawValue)
     }
-    
+
 }
-
-

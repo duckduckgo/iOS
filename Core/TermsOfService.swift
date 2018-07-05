@@ -17,9 +17,7 @@
 //  limitations under the License.
 //
 
-
 import Foundation
-
 
 public struct TermsOfService: Decodable {
 
@@ -31,25 +29,25 @@ public struct TermsOfService: Decodable {
         self.goodReasons = try matchContainer.decodeIfPresent([String].self, forKey: .good) ?? []
         self.badReasons = try matchContainer.decodeIfPresent([String].self, forKey: .bad) ?? []
     }
-    
+
     public init(classification: Classification?, score: Int, goodReasons: [String], badReasons: [String]) {
         self.classification = classification
         self.score = score
         self.goodReasons = goodReasons
         self.badReasons = badReasons
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case classification = "class"
         case score
         case match
-        
+
         enum Match: String, CodingKey {
             case good
             case bad
         }
     }
-    
+
     struct Lookups {
 
         static let classificationAsPractices: [Classification: PrivacyPractices] = [
@@ -57,7 +55,7 @@ public struct TermsOfService: Decodable {
             .b: .mixed,
             .c: .poor,
             .d: .poor,
-            .e: .poor,
+            .e: .poor
             ]
 
         static let classificationScores: [Classification: Int] = [
@@ -65,13 +63,13 @@ public struct TermsOfService: Decodable {
             .b: 0,
             .c: 0,
             .d: 1,
-            .e: 2,
+            .e: 2
             ]
 
         static let derivedScoreAsPractices: [Int: PrivacyPractices] = [
             -1: .good,
             0: .mixed,
-            1: .poor,
+            1: .poor
             ]
 
     }
@@ -114,7 +112,7 @@ public struct TermsOfService: Decodable {
         if let practices = practices {
             return practices
         }
-        
+
         return .unknown
     }
 
@@ -127,7 +125,7 @@ public struct TermsOfService: Decodable {
 
     public enum Classification: String, Decodable {
         case a, b, c, d, e
-        
+
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             let lowercaseString = try container.decode(String.self).lowercased()

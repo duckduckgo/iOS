@@ -23,8 +23,8 @@ extension FireAnimation: NibLoading {}
 
 class FireAnimation: UIView {
 
-    @IBOutlet var image:UIImageView!
-    @IBOutlet var offset:NSLayoutConstraint!
+    @IBOutlet var image: UIImageView!
+    @IBOutlet var offset: NSLayoutConstraint!
 
     struct Constants {
         static let animationDuration = 1.2
@@ -33,7 +33,7 @@ class FireAnimation: UIView {
     }
 
     static func animate(completion: @escaping () -> Void) {
-        
+
         guard let window = UIApplication.shared.keyWindow else {
             completion()
             return
@@ -61,7 +61,6 @@ class FireAnimation: UIView {
         }
 
     }
-
 
     private static var animatedImages: [UIImage] {
         var images = [UIImage]()

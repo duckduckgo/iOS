@@ -47,7 +47,7 @@ class HomeRowCTATests: XCTestCase {
         feature.dismissed()
         XCTAssertTrue(storage.dismissed)
     }
-    
+
     func testWhenFeatureHasBeenDismissedAndIsEnabledThenDontShowNow() {
         XCTAssertNil(HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: true), variantManager: enabledDefaultVariantManager).ctaToShow())
     }
@@ -67,11 +67,11 @@ class HomeRowCTATests: XCTestCase {
 }
 
 class MockHomeRowOnboardingStorage: HomeRowCTAStorage {
-    
+
     var dismissed: Bool = false
-    
+
     init(dismissed: Bool) {
         self.dismissed = dismissed
     }
-    
+
 }

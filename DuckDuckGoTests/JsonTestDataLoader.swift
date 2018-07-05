@@ -17,29 +17,33 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 @testable import Core
 
-
 class JsonTestDataLoader {
-    
+
     func empty() -> Data {
         return "".data(using: .utf16)!
     }
-    
+
     func invalid() -> Data {
         return "{[}".data(using: .utf16)!
     }
-    
+
     func unexpected() -> Data {
-        return try! FileLoader().load(fileName: "MockFiles/unexpected.json", fromBundle: bundle)
+        guard let data = try? FileLoader().load(fileName: "MockFiles/unexpected.json", fromBundle: bundle) else {
+            fatalError("Failed to load MockFiles/unexpected.json")
+        }
+        return data
     }
-    
+
     func fromJsonFile(_ fileName: String) -> Data {
-        return try! FileLoader().load(fileName: fileName, fromBundle: bundle)
+        guard let data = try? FileLoader().load(fileName: fileName, fromBundle: bundle) else {
+            fatalError("Unable to load \(fileName)")
+        }
+        return data
     }
-    
+
     private var bundle: Bundle {
         return Bundle(for: type(of: self))
     }

@@ -17,31 +17,30 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
 class UserDefaultsHomeRowCTAStorageTests: XCTestCase {
-    
+
     let defaultsName = "UserDefaultsHomeRowOnboardingFeatureStorageTests"
-    
+
     override func setUp() {
         UserDefaults(suiteName: defaultsName)?.removePersistentDomain(forName: defaultsName)
     }
-    
+
     func testWhenDismissedSetThenItIsStored() {
         createStorage().dismissed = true
         XCTAssertTrue(createStorage().dismissed)
     }
-    
+
     func testWhenNewThenValuesAreDefault() {
         XCTAssertFalse(createStorage().dismissed)
     }
-    
+
     func createStorage() -> UserDefaultsHomeRowCTAStorage {
         let userDefaults = UserDefaults(suiteName: defaultsName)!
         return UserDefaultsHomeRowCTAStorage(userDefaults: userDefaults)
     }
-    
+
 }

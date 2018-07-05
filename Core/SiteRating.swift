@@ -17,23 +17,22 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class SiteRating {
-    
+
     public enum EncryptionType {
         case unencrypted, mixed, encrypted, forced
     }
-    
+
     public var domain: String? {
         return url.host
     }
-    
+
     public let url: URL
     public let protectionId: String
     public let httpsForced: Bool
-    
+
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
     public private (set) var trackersDetected = [DetectedTracker: Int]()
@@ -42,11 +41,11 @@ public class SiteRating {
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
-    
+
     public init(url: URL, httpsForced: Bool = false, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(), protectionId: String = UUID.init().uuidString) {
-        
+
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
-        
+
         self.protectionId = protectionId
         self.url = url
         self.httpsForced = httpsForced
@@ -55,7 +54,7 @@ public class SiteRating {
         self.majorTrackerNetworkStore = majorTrackerNetworkStore
         self.hasOnlySecureContent = url.isHttps()
     }
-    
+
     public var https: Bool {
         return url.isHttps()
     }
@@ -66,10 +65,10 @@ public class SiteRating {
         } else if https {
             return .mixed
         }
-        
+
         return .unencrypted
     }
-    
+
     public var uniqueMajorTrackerNetworksDetected: Int {
         return uniqueMajorTrackerNetworks(trackers: trackersDetected)
     }
@@ -91,42 +90,42 @@ public class SiteRating {
     }
 
     public var containsIpTracker: Bool {
-        return trackersDetected.contains(where: { $0.key.isIpTracker } )
+        return trackersDetected.contains(where: { $0.key.isIpTracker })
     }
-    
+
     public var termsOfService: TermsOfService? {
         guard let domain = self.domain else { return nil }
-        if let tos = termsOfServiceStore.terms.first( where: { domain.hasSuffix($0.0) } )?.value {
+        if let tos = termsOfServiceStore.terms.first( where: { domain.hasSuffix($0.0) })?.value {
             return tos
         }
 
         // if not TOS found for this site use the parent's (e.g. google.co.uk should use google.com)
         let storeDomain = associatedDomain(for: domain) ?? domain
-        return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) } )?.value
+        return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) })?.value
     }
 
     public func trackerDetected(_ tracker: DetectedTracker) {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
-        
+
         if tracker.blocked {
             let blockCount = trackersBlocked[tracker] ?? 0
             trackersBlocked[tracker] = blockCount + 1
         }
     }
-    
+
     public var uniqueTrackersDetected: Int {
         return trackersDetected.count
     }
-    
+
     public var uniqueTrackersBlocked: Int {
         return trackersBlocked.count
     }
-    
+
     public var totalTrackersDetected: Int {
         return trackersDetected.reduce(0) { $0 + $1.value }
     }
-    
+
     public var totalTrackersBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
     }

@@ -68,7 +68,7 @@ class HomeRowInstructionsViewController: UIViewController {
     private func addVideo() {
         let movieURL = Bundle.main.url(forResource: "home-row-instructions", withExtension: "mp4")!
         player = AVPlayer(url: movieURL)
-        _ = try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
+        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
 
         layer = AVPlayerLayer(player: player)
         videoContainerView.layer.addSublayer(layer!)

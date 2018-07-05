@@ -36,7 +36,10 @@ class SiteRatingTests: XCTestCase {
     struct TrackerMock {
         static let blockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: true)
         static let unblockedTracker = DetectedTracker(url: Url.tracker, networkName: Url.tracker, category: "tracker", blocked: false)
-        static let differentTracker = DetectedTracker(url: Url.differentTracker, networkName: Url.differentTracker, category: "tracker", blocked: true)
+        static let differentTracker = DetectedTracker(url: Url.differentTracker,
+                                                      networkName: Url.differentTracker,
+                                                      category: "tracker",
+                                                      blocked: true)
     }
 
     func testWhenAssociatedUrlHasTosThenTosReturned() {

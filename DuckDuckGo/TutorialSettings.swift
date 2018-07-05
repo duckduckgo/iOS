@@ -37,9 +37,7 @@ struct TutorialSettings {
     }
 
     public var lastVersionSeen: Int {
-        get {
-            return userDefaults().integer(forKey: Keys.lastVersionSeen)
-        }
+        return userDefaults().integer(forKey: Keys.lastVersionSeen)
     }
 
     public var hasSeenOnboarding: Bool {

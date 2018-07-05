@@ -61,7 +61,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        chromeManager = BrowserChromeManager(delegate: self)
+        chromeManager = BrowserChromeManager()
+        chromeManager.delegate = self
         attachOmniBar()
         configureTabManager()
         loadInitialView()
@@ -421,11 +422,11 @@ extension MainViewController: BrowserChromeDelegate {
     }
 
     var isToolbarHidden: Bool {
-        get { return toolbar.alpha < 1 }
+        return toolbar.alpha < 1
     }
 
     var toolbarHeight: CGFloat {
-        get { return toolbar.frame.size.height }
+        return toolbar.frame.size.height
     }
 
     private func updateToolbarConstant(_ hidden: Bool) {

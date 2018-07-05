@@ -33,9 +33,7 @@ public class DisconnectMeStore {
     }
 
     var hasData: Bool {
-        get {
-            return (try? persistenceLocation.checkResourceIsReachable()) ?? false
-        }
+        return (try? persistenceLocation.checkResourceIsReachable()) ?? false
     }
 
     public var trackers: [String: DisconnectMeTracker] {

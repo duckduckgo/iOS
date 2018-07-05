@@ -38,16 +38,12 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     }
 
-    let delegate: BrowserChromeDelegate
+    weak var delegate: BrowserChromeDelegate?
 
     var dragging = false
     var hidden = false
     var lastOffset: CGPoint?
     var cumulative: CGFloat = 0
-
-    init(delegate: BrowserChromeDelegate) {
-        self.delegate = delegate
-    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard dragging else { return }
@@ -92,7 +88,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     private func updateBars(_ shouldHide: Bool) {
         guard shouldHide != hidden else { return }
         hidden = shouldHide
-        delegate.setBarsHidden(shouldHide, animated: true)
+        delegate?.setBarsHidden(shouldHide, animated: true)
     }
 
     func reset() {

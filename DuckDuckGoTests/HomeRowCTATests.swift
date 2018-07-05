@@ -23,9 +23,12 @@ import XCTest
 
 class HomeRowCTATests: XCTestCase {
 
-    let enabledAlternativeVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTAAlternative1 ]))
-    let enabledDefaultVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
-    let disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
+    let enabledAlternativeVariantManager = MockVariantManager(currentVariant:
+        Variant(name: "anything", percent: 100, features: [ .homeRowCTAAlternative1 ]))
+    let enabledDefaultVariantManager = MockVariantManager(currentVariant:
+        Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
+    let disabledVariantManager = MockVariantManager(currentVariant:
+        Variant(name: "anything", percent: 100, features: [ ]))
 
     func testWhenShownAndAlternativeCTAThenDismissedNotSet() {
         let storage = MockHomeRowOnboardingStorage(dismissed: false)
@@ -57,11 +60,13 @@ class HomeRowCTATests: XCTestCase {
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsEnabledThenDefaultCTA() {
-        XCTAssertEqual(.experiment1, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledDefaultVariantManager).ctaToShow())
+        XCTAssertEqual(.experiment1, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false),
+                                                variantManager: enabledDefaultVariantManager).ctaToShow())
     }
 
     func testWhenFeatureHasNotBeenDismissedAndIsAlternativeAndEnabledThenAlternativeCTA() {
-        XCTAssertEqual(.experiment2, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false), variantManager: enabledAlternativeVariantManager).ctaToShow())
+        XCTAssertEqual(.experiment2, HomeRowCTA(storage: MockHomeRowOnboardingStorage(dismissed: false),
+                                                variantManager: enabledAlternativeVariantManager).ctaToShow())
     }
 
 }

@@ -61,7 +61,9 @@ public class DefaultVariantManager: VariantManager {
     private let storage: StatisticsStore
     private let rng: VariantRNG
 
-    public init(variants: [Variant] = Variant.defaultVariants, storage: StatisticsStore = StatisticsUserDefaults(), rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+    public init(variants: [Variant] = Variant.defaultVariants,
+                storage: StatisticsStore = StatisticsUserDefaults(),
+                rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
         self.variants = variants
         self.storage = storage
         self.rng = rng

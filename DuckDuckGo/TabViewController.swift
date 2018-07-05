@@ -105,7 +105,10 @@ class TabViewController: WebViewController {
     }
 
     private func addContentBlockerConfigurationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onContentBlockerConfigurationChanged),
+                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               object: nil)
     }
 
     @objc func onContentBlockerConfigurationChanged() {
@@ -356,7 +359,7 @@ extension TabViewController: WKScriptMessageHandler {
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
-        switch(message.name) {
+        switch message.name {
 
         case MessageHandlerNames.cache:
             handleCache(message: message)
@@ -380,7 +383,7 @@ extension TabViewController: WKScriptMessageHandler {
 
     private func handleCache(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.cache)")
-        guard let dict = message.body as? Dictionary<String, Any> else { return }
+        guard let dict = message.body as? [String: Any] else { return }
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
@@ -397,7 +400,7 @@ extension TabViewController: WKScriptMessageHandler {
         Logger.log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
 
         guard let siteRating = siteRating else { return }
-        guard let dict = message.body as? Dictionary<String, Any> else { return }
+        guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
         guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
@@ -540,7 +543,8 @@ extension TabViewController {
         return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
     }
 
-    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                    shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == showBarsTapGestureRecogniser {
             return true
         }

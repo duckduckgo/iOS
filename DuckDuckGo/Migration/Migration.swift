@@ -40,7 +40,8 @@ class Migration {
         self.bookmarks = bookmarks
     }
 
-    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping (_ occured: Bool, _ stories: Int, _ bookmarks: Int) -> Void) {
+    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background),
+               completion: @escaping (_ occured: Bool, _ stories: Int, _ bookmarks: Int) -> Void) {
 
         if userDefaults.bool(forKey: Constants.migrationOccurredKey) {
             completion(false, 0, 0)

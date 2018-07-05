@@ -31,7 +31,8 @@ public class APIRequest {
 
     }
 
-    @discardableResult public static func request(url: URL, method: HTTPMethod = .get, parameters: [String: Any]? = nil, completion: @escaping APIRequestCompletion) -> Request {
+    @discardableResult public static func request(url: URL, method: HTTPMethod = .get, parameters: [String: Any]? = nil,
+                                                  completion: @escaping APIRequestCompletion) -> Request {
 
         Logger.log(text: "Requesting \(url)")
 
@@ -39,7 +40,8 @@ public class APIRequest {
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
 
-                Logger.log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode)) and headers \(String(describing: response.response?.allHeaderFields))")
+                Logger.log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode))")
+                Logger.log(text: " and headers \(String(describing: response.response?.allHeaderFields))")
 
                 if let error = response.error {
                     completion(nil, error)

@@ -24,9 +24,7 @@ public class WhitelistManager {
     private let contentBlockerConfigurationStore: ContentBlockerConfigurationStore
 
     public var count: Int {
-        get {
-            return contentBlockerConfigurationStore.domainWhitelist.count
-        }
+        return contentBlockerConfigurationStore.domainWhitelist.count
     }
 
     private var domains: [String]?

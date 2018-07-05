@@ -38,21 +38,11 @@ class SaveBookmarkActivity: UIActivity {
     }
 
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
-        for item in activityItems {
-            if item is Link {
-                return true
-            }
-        }
-        return false
+        return activityItems.contains(where: { $0 is Link })
     }
 
     override func prepare(withActivityItems activityItems: [Any]) {
-        for item in activityItems {
-            if let link = item as? Link {
-                bookmark = link
-                return
-            }
-        }
+        bookmark = activityItems.first(where: { $0 is Link }) as? Link
     }
 
     override var activityViewController: UIViewController? {

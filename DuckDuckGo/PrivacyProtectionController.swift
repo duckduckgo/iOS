@@ -80,7 +80,8 @@ class PrivacyProtectionController: UIViewController {
     }
 
     private func showInitialScreen() {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen") as? PrivacyProtectionOverviewController else { return }
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen")
+            as? PrivacyProtectionOverviewController else { return }
         embeddedController.pushViewController(controller, animated: true)
         updateViewControllers()
     }
@@ -191,7 +192,10 @@ extension PrivacyProtectionController: OmniBarDelegate {
 
 extension PrivacyProtectionController: UIViewControllerTransitioningDelegate {
 
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
         return SlideInFromBelowOmniBarTransitioning()
     }
 
@@ -220,7 +224,9 @@ private class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerAnima
         containerView.insertSubview(toController.view, at: 0)
 
         UIView.animate(withDuration: AnimationConstants.outDuration, animations: {
-            fromController.contentContainer.transform.ty = -fromController.contentContainer.frame.size.height - fromController.omniBarContainer.frame.height - AnimationConstants.tyOffset
+            fromController.contentContainer.transform.ty = -fromController.contentContainer.frame.size.height -
+                fromController.omniBarContainer.frame.height -
+                AnimationConstants.tyOffset
         }, completion: { (_: Bool) in
             transitionContext.completeTransition(true)
         })
@@ -254,7 +260,9 @@ private class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAn
         let toColor = toController.view.backgroundColor
         toController.view.backgroundColor = UIColor.clear
 
-        toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height - toController.omniBarContainer.frame.height - AnimationConstants.tyOffset
+        toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height
+            - toController.omniBarContainer.frame.height
+            - AnimationConstants.tyOffset
 
         UIView.animate(withDuration: AnimationConstants.inDuration, animations: {
             toController.contentContainer.transform.ty = 0

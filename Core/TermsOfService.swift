@@ -84,9 +84,7 @@ public struct TermsOfService: Decodable {
     }
 
     public var hasUnknownPractices: Bool {
-        get {
-            return !hasReasons
-        }
+        return !hasReasons
     }
 
     public var derivedScore: Int {

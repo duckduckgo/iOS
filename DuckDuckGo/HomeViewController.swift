@@ -118,7 +118,7 @@ class HomeViewController: UIViewController {
         let childViewController = loadCTAViewController(forType: type)
         addChildViewController(childViewController)
 
-        switch(type) {
+        switch type {
 
         case .experiment1:
                 updateUIForExperiment1(childViewController)

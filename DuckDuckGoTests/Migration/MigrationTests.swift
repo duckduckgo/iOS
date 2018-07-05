@@ -152,10 +152,10 @@ class MigrationTests: XCTestCase {
     func testSeveralFavouriteStoriesMigratedToBookmarks() {
 
         let feed = initialise(feed: migration.createFeed())
-        createStory(in: feed).saved = NSNumber(booleanLiteral: false)
-        createStory(in: feed).saved = NSNumber(booleanLiteral: true)
-        createStory(in: feed).saved = NSNumber(booleanLiteral: false)
-        createStory(in: feed).saved = NSNumber(booleanLiteral: true)
+        createStory(in: feed).saved = false
+        createStory(in: feed).saved = true
+        createStory(in: feed).saved = false
+        createStory(in: feed).saved = true
         XCTAssert(container.save())
 
         let expectation = XCTestExpectation(description: "testSeveralFavouriteStoriesMigratedToBookmarks")
@@ -174,8 +174,8 @@ class MigrationTests: XCTestCase {
     func testOnlyFavouriteStoryMigratedToBookmarks() {
 
         let feed = initialise(feed: migration.createFeed())
-        createStory(in: feed).saved = NSNumber(booleanLiteral: false)
-        createStory(in: feed).saved = NSNumber(booleanLiteral: true)
+        createStory(in: feed).saved = false
+        createStory(in: feed).saved = true
         XCTAssert(container.save())
 
         let expectation = XCTestExpectation(description: "testFavouriteStoriesMigratedToBookmarks")
@@ -232,8 +232,8 @@ class MigrationTests: XCTestCase {
 
     private func initialise(feed: DDGStoryFeed) -> DDGStoryFeed {
         feed.id = "fake id"
-        feed.enabledByDefault = NSNumber(booleanLiteral: true)
-        feed.imageDownloaded = NSNumber(booleanLiteral: false)
+        feed.enabledByDefault = true
+        feed.imageDownloaded = false
         return feed
     }
 
@@ -241,9 +241,9 @@ class MigrationTests: XCTestCase {
         let story = migration.createStory(in: feed)
         story.title = "A title"
         story.urlString = "http://example.com"
-        story.saved = NSNumber(booleanLiteral: true)
-        story.htmlDownloaded = NSNumber(booleanLiteral: false)
-        story.imageDownloaded = NSNumber(booleanLiteral: false)
+        story.saved = true
+        story.htmlDownloaded = false
+        story.imageDownloaded = false
         return story
     }
 

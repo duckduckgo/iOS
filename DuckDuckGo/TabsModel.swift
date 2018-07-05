@@ -99,12 +99,7 @@ public class TabsModel: NSObject, NSCoding {
     }
 
     func indexOf(tab: Tab) -> Int? {
-        for (index, current) in tabs.enumerated() {
-            if current === tab {
-                return index
-            }
-        }
-        return nil
+        return tabs.enumerated().first(where: { $1 === tab  })?.offset
     }
 
     func clearAll() {

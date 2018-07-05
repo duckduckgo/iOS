@@ -21,7 +21,8 @@ import Foundation
 
 public class AtbAndVariantCleanup {
 
-    public static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(), variantManager: VariantManager = DefaultVariantManager()) {
+    public static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(),
+                               variantManager: VariantManager = DefaultVariantManager()) {
         guard let variant = statisticsStorage.variant else { return }
 
         // clean up ATB

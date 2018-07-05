@@ -50,15 +50,15 @@ class FireAnimation: UIView {
 
         UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .curveEaseOut, animations: {
             anim.transform.ty = -(anim.offset.constant * 2)
-        }) { _ in
+        }, completion: { _ in
             completion()
-        }
+        })
 
         UIView.animate(withDuration: Constants.endAnimationDuration, delay: Constants.endDelayDuration, options: .curveEaseOut, animations: {
             anim.alpha = 0
-        }) { _ in
+        }, completion: { _ in
             anim.removeFromSuperview()
-        }
+        })
 
     }
 

@@ -81,7 +81,7 @@ class ShareViewController: SLComposeServiceViewController {
         let deepLink = URL(string: "\(AppDeepLinks.quickLink)\(url)")!
 
         var responder = self as UIResponder?
-        while (responder != nil) {
+        while responder != nil {
             if responder!.responds(to: selector) {
                 _ = responder?.perform(selector, with: deepLink, with: {})
                 break

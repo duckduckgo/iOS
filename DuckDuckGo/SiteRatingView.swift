@@ -52,7 +52,10 @@ public class SiteRatingView: UIView {
     }
 
     private func addContentBlockerConfigurationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onContentBlockerConfigurationChanged),
+                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               object: nil)
     }
 
     @objc func onContentBlockerConfigurationChanged() {

@@ -85,7 +85,8 @@ open class WebViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive),
+                                               name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
 
     @objc func onApplicationWillResignActive() {
@@ -150,11 +151,14 @@ open class WebViewController: UIViewController {
         webView.load(urlRequest)
     }
 
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+    open override func observeValue(forKeyPath keyPath: String?,
+                                    of object: Any?,
+                                    change: [NSKeyValueChangeKey: Any]?,
+                                    context: UnsafeMutableRawPointer?) {
 
         guard let keyPath = keyPath else { return }
 
-        switch(keyPath) {
+        switch keyPath {
 
         case WebViewKeyPaths.estimatedProgress:
             progressBar.progress = max(Constants.minimumProgress, Float(webView.estimatedProgress))
@@ -271,7 +275,10 @@ open class WebViewController: UIViewController {
 
 extension WebViewController: WKUIDelegate {
 
-    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    public func webView(_ webView: WKWebView,
+                        createWebViewWith configuration: WKWebViewConfiguration,
+                        for navigationAction: WKNavigationAction,
+                        windowFeatures: WKWindowFeatures) -> WKWebView? {
         webView.load(navigationAction.request)
         return nil
     }
@@ -284,7 +291,10 @@ extension WebViewController: WKUIDelegate {
 
 extension WebViewController: WKNavigationDelegate {
 
-    public func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+    public func webView(_ webView: WKWebView,
+                        didReceive challenge: URLAuthenticationChallenge,
+                        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        
         completionHandler(.performDefaultHandling, nil)
         guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
         ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
@@ -328,7 +338,10 @@ extension WebViewController: WKNavigationDelegate {
         }
     }
 
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    public func webView(_ webView: WKWebView,
+                        decidePolicyFor navigationAction: WKNavigationAction,
+                        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
         let decision = decidePolicyFor(navigationAction: navigationAction)
         if decision == .allow && navigationAction.isTargettingMainFrame() {
             showProgressIndicator()
@@ -407,7 +420,9 @@ extension WebViewController: UIGestureRecognizerDelegate {
         return url != nil
     }
 
-    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
         return gestureRecognizer is WebLongPressGestureRecognizer
     }
 }

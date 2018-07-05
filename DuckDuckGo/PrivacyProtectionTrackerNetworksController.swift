@@ -174,8 +174,10 @@ class SiteRatingTrackerNetworkSectionBuilder {
         let trackers = trackers.compactMap({ $0.key }).filter({ $0.domain != nil }).sorted(by: { $0.domain! < $1.domain! })
 
         // group by tracker types, sorted appropriately
-        let majorTrackers = trackers.filter({ $0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.percentage(majorTrackerNetworksStore) > $1.percentage(majorTrackerNetworksStore) })
-        let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil && !$0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.networkName! < $1.networkName! })
+        let majorTrackers = trackers.filter({ $0.isMajor(majorTrackerNetworksStore) })
+            .sorted(by: { $0.percentage(majorTrackerNetworksStore) > $1.percentage(majorTrackerNetworksStore) })
+        let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil &&
+            !$0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.networkName! < $1.networkName! })
         let unknownTrackers = trackers.filter({ $0.networkName == nil })
 
         for tracker in majorTrackers + nonMajorKnownTrackers + unknownTrackers {
@@ -231,11 +233,9 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
 fileprivate extension DetectedTracker {
 
     var networkNameForDisplay: String {
-        get {
-            guard !isIpTracker else { return UserText.ppTrackerNetworkUnknown }
-            guard let networkName = networkName else { return domain! }
-            return networkName
-        }
+        guard !isIpTracker else { return UserText.ppTrackerNetworkUnknown }
+        guard let networkName = networkName else { return domain! }
+        return networkName
     }
 
     func isMajor(_ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Bool {

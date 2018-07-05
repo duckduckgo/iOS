@@ -30,7 +30,10 @@ class CompositeTransition: NSObject, UIViewControllerTransitioningDelegate {
         super.init()
     }
 
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
         return presentingController
     }
 

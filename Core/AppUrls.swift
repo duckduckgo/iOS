@@ -161,7 +161,7 @@ public struct AppUrls {
 
     public func isDuckDuckGoSearch(url: URL) -> Bool {
         if !isDuckDuckGo(url: url) { return false }
-        guard let _ = url.getParam(name: Param.search) else { return false }
+        guard url.getParam(name: Param.search) != nil else { return false }
         return true
     }
 

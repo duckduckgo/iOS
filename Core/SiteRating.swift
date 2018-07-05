@@ -42,7 +42,12 @@ public class SiteRating {
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
 
-    public init(url: URL, httpsForced: Bool = false, disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers, termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(), protectionId: String = UUID.init().uuidString) {
+    public init(url: URL,
+                httpsForced: Bool = false,
+                disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
+                termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(),
+                majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(),
+                protectionId: String = UUID.init().uuidString) {
 
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
 
@@ -144,7 +149,11 @@ public class SiteRating {
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
-        return Set(trackers.keys.filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil }).compactMap({ $0.networkName })).count
+        let trackers = trackers
+            .keys
+            .filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil })
+            .compactMap({ $0.networkName })
+        return Set(trackers).count
     }
 
     private func uniqueTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {

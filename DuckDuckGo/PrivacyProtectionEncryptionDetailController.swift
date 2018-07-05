@@ -71,7 +71,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         var message: String!
 
         encryptedLabel.text = siteRating.encryptedConnectionText().uppercased()
-        switch(siteRating.encryptionType) {
+        switch siteRating.encryptionType {
 
         case .encrypted:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
@@ -217,7 +217,8 @@ extension DisplayableCertificate {
 
         var issuer: DisplayableCertificate! = self.issuer
         while issuer != nil {
-            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: issuer.commonName ?? UserText.ppEncryptionIssuer, rows: issuer.buildIdentitySection()))
+            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: issuer.commonName ?? UserText.ppEncryptionIssuer,
+                                                                                rows: issuer.buildIdentitySection()))
 
             if let issuerKey = issuer.publicKey {
                 sections.append(PrivacyProtectionEncryptionDetailController.Section(name: UserText.ppEncryptionPublicKey, rows: issuerKey.toRows()))
@@ -240,7 +241,8 @@ extension DisplayableCertificate {
         }
 
         if let issuer = issuer {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionIssuer, value: issuer.commonName ?? UserText.ppEncryptionUnknown))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionIssuer,
+                                                                        value: issuer.commonName ?? UserText.ppEncryptionUnknown))
         }
 
         return rows
@@ -255,11 +257,13 @@ extension DisplayableKey {
 
         rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionAlgorithm, value: type ?? ""))
         if let bitSize = bitSize {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionKeySize, value: UserText.ppEncryptionBits.format(arguments: bitSize)))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionKeySize,
+                                                                        value: UserText.ppEncryptionBits.format(arguments: bitSize)))
         }
 
         if let effectiveSize = effectiveSize {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionEffectiveSize, value: UserText.ppEncryptionBits.format(arguments: effectiveSize)))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionEffectiveSize,
+                                                                        value: UserText.ppEncryptionBits.format(arguments: effectiveSize)))
         }
 
         let usage = [

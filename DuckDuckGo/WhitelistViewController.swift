@@ -79,7 +79,7 @@ class WhitelistViewController: UITableViewController {
 
     private func domain(from field: UITextField) -> String? {
         guard let domain = field.text?.trimWhitespace() else { return nil }
-        guard (URL.isValidHostname(domain) || URL.isValidIpHost(domain)) else { return nil }
+        guard URL.isValidHostname(domain) || URL.isValidIpHost(domain) else { return nil }
         return domain
     }
 

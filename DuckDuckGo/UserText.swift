@@ -56,7 +56,8 @@ public struct UserText {
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
-    public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
+    public static let alertAddToWhitelistPlaceholder =
+        NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
 
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
 
@@ -65,15 +66,18 @@ public struct UserText {
 
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
-    public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
-    public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
+    public static let privacyProtectionMajorTrackersBlocked =
+        NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
+    public static let privacyProtectionMajorTrackersFound =
+        NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
 
     public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", comment: "Unknown Privacy Practices")
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", comment: "Good Privacy Practices")
     public static let privacyProtectionTOSMixed = NSLocalizedString("privacy.protection.tos.mixed", comment: "Mixed Privacy Practices")
     public static let privacyProtectionTOSPoor = NSLocalizedString("privacy.protection.tos.poor", comment: "Poor Privacy Practices")
 
-    public static let privacyProtectionReloadBlockerLists = NSLocalizedString("privacy.protection.reload.blocker.lists", comment: "This can be caused by a loss of internet connection when loading the content blocking rules.")
+    public static let privacyProtectionReloadBlockerLists = NSLocalizedString("privacy.protection.reload.blocker.lists",
+                          comment: "This can be caused by a loss of internet connection when loading the content blocking rules.")
 
     public static let ppEncryptionCertError = NSLocalizedString("privacy.protection.encryption.cert.error", comment: "Error extracting certificate")
     public static let ppEncryptionSubjectName = NSLocalizedString("privacy.protection.encryption.subject.name", comment: "Subject Name")
@@ -101,18 +105,29 @@ public struct UserText {
     public static let ppEncryptionUnknown = NSLocalizedString("privacy.protection.encryption.unknown", comment: "Unknown")
     public static let ppEncryptionBits = NSLocalizedString("privacy.protection.encryption.bits", comment: "%d bits")
 
-    public static let ppEncryptionStandardMessage = NSLocalizedString("privacy.protection.encryption.standard.message", comment: "An encrypted connection prevents eavesdropping of any personal information you send to a website.")
-    public static let ppEncryptionMixedMessage = NSLocalizedString("privacy.protection.encryption.mixed.message", comment: "This site has mixed encryption because some content is being served over unencrypted connections. Encrypted connections prevent eavesdropping of personal information you send to websites.")
-    public static let ppEncryptionForcedMessage = NSLocalizedString("privacy.protection.encryption.forced.message", comment: "We've forced this site to use an encrypted connection, preventing eavesdropping of any personal information you send to it.")
+    public static let ppEncryptionStandardMessage =
+        NSLocalizedString("privacy.protection.encryption.standard.message",
+                          comment: "An encrypted connection prevents eavesdropping of any personal information you send to a website.")
+    public static let ppEncryptionMixedMessage =
+        NSLocalizedString("privacy.protection.encryption.mixed.message",
+                          comment: "This site has mixed encryption because some content is being served over unencrypted connections. "
+                            + "Encrypted connections prevent eavesdropping of personal information you send to websites.")
+    public static let ppEncryptionForcedMessage =
+        NSLocalizedString("privacy.protection.encryption.forced.message",
+                        comment: "We've forced this site to use an encrypted connection, "
+                            + "preventing eavesdropping of any personal information you send to it.")
 
     public static let ppEncryptionEncryptedHeading = NSLocalizedString("privacy.protection.encryption.encrypted.heading", comment: "Encrypted")
     public static let ppEncryptionForcedHeading = NSLocalizedString("privacy.protection.encryption.forced.heading", comment: "Forced")
     public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", comment: "Mixed")
     public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", comment: "Unencrypted")
 
-    public static let ppTrackerNetworksMajorMessage = NSLocalizedString("privacy.protection.tracker.networks.major.message", comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
+    public static let ppTrackerNetworksMajorMessage =
+        NSLocalizedString("privacy.protection.tracker.networks.major.message",
+                          comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
 
-    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment: "Trackers networks were found on %@ of web sites you’ve visited since %@.")
+    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard",
+                                                               comment: "Trackers networks were found on %@ of web sites you’ve visited since %@.")
 
     public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment: "Unknown tracker networks")
 
@@ -126,7 +141,10 @@ public struct UserText {
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment: "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment: "Home Row Reminder Message")
 
-    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment: "General feedback comment placeholder")
-    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment: "Broken site feedback comment placeholder")
-    public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment: "Feedback submitted confirmation")
+    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder",
+                                                                     comment: "General feedback comment placeholder")
+    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder",
+                                                                        comment: "Broken site feedback comment placeholder")
+    public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation",
+                                                                        comment: "Feedback submitted confirmation")
 }

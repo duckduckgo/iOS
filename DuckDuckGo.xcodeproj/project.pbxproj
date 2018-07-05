@@ -2426,7 +2426,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n#   count=0\n#   for file_path in $(git ls-files -om --exclude-from=.gitignore | grep \".swift$\"); do\n#      export SCRIPT_INPUT_FILE_$count=$file_path\n#      count=$((count + 1))\n#   done\n#   for file_path in $(git diff --cached --name-only | grep \".swift$\"); do\n#      export SCRIPT_INPUT_FILE_$count=$file_path\n#      count=$((count + 1))\n#   done\n#\n#   if count gt 0 do; then\n#      export SCRIPT_INPUT_FILE_COUNT=$count\n#      swiftlint lint --use-script-input-files\n#   fi\n   swiftlint lint\nelse\n   echo \"warning: SwiftLint not installed. Install using `brew install swiftlint`\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\n#   count=0\n#   for file_path in $(git ls-files -om --exclude-from=.gitignore | grep \".swift$\"); do\n#      export SCRIPT_INPUT_FILE_$count=$file_path\n#      count=$((count + 1))\n#   done\n#   for file_path in $(git diff --cached --name-only | grep \".swift$\"); do\n#      export SCRIPT_INPUT_FILE_$count=$file_path\n#      count=$((count + 1))\n#   done\n#\n#   if count gt 0 do; then\n#      export SCRIPT_INPUT_FILE_COUNT=$count\n#      swiftlint lint --use-script-input-files\n#   fi\n   swiftlint lint\nelse\n   echo \"error: SwiftLint not installed. Install using `brew install swiftlint`\"\n   exit 1\nfi";
 		};
 		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
 			isa = PBXShellScriptBuildPhase;

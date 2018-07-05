@@ -38,7 +38,10 @@ class EditBookmarkAlert {
         return editBox
     }
 
-    private static func saveAction(editBox: UIAlertController, originalBookmark bookmark: Link, completion: @escaping SaveCompletion) -> UIAlertAction {
+    private static func saveAction(editBox: UIAlertController,
+                                   originalBookmark bookmark: Link,
+                                   completion: @escaping SaveCompletion) -> UIAlertAction {
+        
         return UIAlertAction(title: UserText.actionSave, style: .default) { (_) in
             if let title = editBox.textFields?[0].text,
                 let urlString = editBox.textFields?[1].text,

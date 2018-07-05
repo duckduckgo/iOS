@@ -72,8 +72,8 @@ class HomeRowCTAExperiment2ViewController: UIViewController {
     }
 
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeRowCTAExperiment2ViewController.onKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeRowCTAExperiment2ViewController.onKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
     }
 
     private func animateOnFirstAppearance() {

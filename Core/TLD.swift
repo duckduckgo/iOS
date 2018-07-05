@@ -40,13 +40,13 @@ class TLD {
     func domain(_ host: String?) -> String? {
         guard let host = host else { return nil }
 
-        var parts = Array<String>(host.components(separatedBy: ".").reversed())
+        var parts = [String](host.components(separatedBy: ".").reversed())
         var stack = ""
 
         for index in 0 ..< parts.count {
             let part = parts[index]
             stack = !stack.isEmpty ? part + "." + stack : part
-            guard let _ = tlds[stack] else { break }
+            guard tlds[stack] != nil else { break }
         }
 
         return stack

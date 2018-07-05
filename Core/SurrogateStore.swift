@@ -27,7 +27,7 @@ class SurrogateStore {
 
     init(groupIdentifier: String = ContentBlockerStoreConstants.groupName) {
         self.groupIdentifier = groupIdentifier
-        jsFunctions = NSDictionary(contentsOf: persistenceLocation()) as? Dictionary<String, String>
+        jsFunctions = NSDictionary(contentsOf: persistenceLocation()) as? [String: String]
     }
 
     func parseAndPersist(data: Data) {

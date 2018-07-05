@@ -29,9 +29,7 @@ public class BlockerListsLoader {
     private var surrogateStore = SurrogateStore()
 
     public var hasData: Bool {
-        get {
-            return disconnectStore.hasData && easylistStore.hasData
-        }
+        return disconnectStore.hasData && easylistStore.hasData
     }
 
     private var newDataItems = 0

@@ -54,8 +54,6 @@ extension WKWebViewConfiguration {
 
 private class Loader {
 
-    // TODO Need to refactor so that that easylist and disconnect use the cache here instead of in their loader/parsers
-    // https://app.asana.com/0/414709148257752/543604604366287
     struct CacheNames {
 
         static let surrogateJson = "surrogateJson"

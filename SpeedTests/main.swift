@@ -80,7 +80,9 @@ do {
     for index in 0 ..< base.count {
         let baseTiming = base[index]
         let comparisonTiming = comparison[index]
-        diffs.append(URLTime(url: baseTiming.url, time: baseTiming.time - comparisonTiming.time, trackers: baseTiming.trackers - comparisonTiming.trackers))
+        diffs.append(URLTime(url: baseTiming.url,
+                             time: baseTiming.time - comparisonTiming.time,
+                             trackers: baseTiming.trackers - comparisonTiming.trackers))
     }
 
     let encoder = JSONEncoder()

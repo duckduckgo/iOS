@@ -67,6 +67,7 @@ class AppDeepLinksTests: XCTestCase {
     }
 
     func testWhenQuickLinkIsExtractedThenURLFragmentPreserved() {
-        XCTAssertEqual(AppDeepLinks.query(fromQuickLink: URL(string: "ddgquicklink://foo.bar/baz/123#hello-world?A=b&c=D")!), "foo.bar/baz/123#hello-world?A=b&c=D")
+        XCTAssertEqual(AppDeepLinks.query(fromQuickLink: URL(string: "ddgquicklink://foo.bar/baz/123#hello-world?A=b&c=D")!),
+                       "foo.bar/baz/123#hello-world?A=b&c=D")
     }
 }

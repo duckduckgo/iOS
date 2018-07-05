@@ -37,27 +37,19 @@ class EasylistStore {
     }
 
     var hasData: Bool {
-        get {
-            return exists(type: .easylistWhitelist)
-        }
+        return exists(type: .easylistWhitelist)
     }
 
     var easylistPrivacy: String? {
-        get {
-            return load(.easylistPrivacy)
-        }
+        return load(.easylistPrivacy)
     }
 
     var easylist: String? {
-        get {
-            return load(.easylist)
-        }
+        return load(.easylist)
     }
 
     var easylistWhitelist: String? {
-        get {
-            return load(.easylistWhitelist)
-        }
+        return load(.easylistWhitelist)
     }
 
     func load(_ type: Easylist) -> String? {

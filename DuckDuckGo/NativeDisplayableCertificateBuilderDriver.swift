@@ -123,7 +123,7 @@ fileprivate extension SecKey {
 
     @available(iOS 10, *)
     private func typeToString(_ type: String) -> String? {
-        switch(type as CFString) {
+        switch type as CFString {
         case kSecAttrKeyTypeRSA: return "RSA"
         case kSecAttrKeyTypeEC: return "Elliptic Curve"
         case kSecAttrKeyTypeECSECPrimeRandom: return "Elliptic Curve (Prime Random)"

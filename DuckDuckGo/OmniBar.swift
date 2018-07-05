@@ -52,7 +52,8 @@ class OmniBar: UIView {
     }
 
     private func configureTextField() {
-        textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo, attributes: [NSAttributedStringKey.foregroundColor: UIColor.grayish])
+        textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
+                                                             attributes: [NSAttributedStringKey.foregroundColor: UIColor.grayish])
         textField.delegate = self
     }
 
@@ -82,7 +83,7 @@ class OmniBar: UIView {
     fileprivate func refreshState(_ newState: OmniBarState) {
         if type(of: state) != type(of: newState) {
             Logger.log(text: "OmniBar entering \(Type.name(newState))")
-            if (newState.clearTextOnStart) {
+            if newState.clearTextOnStart {
                 clear()
             }
             state = newState

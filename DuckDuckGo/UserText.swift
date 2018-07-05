@@ -24,8 +24,6 @@ import Core
 public struct UserText {
     
     public static let appTitle = NSLocalizedString("app.title", comment: "DuckDuckGo")
-    public static let appInfo = NSLocalizedString("app.info", comment: "DuckDuckGo version")
-    public static let appInfoWithBuild = NSLocalizedString("app.infoWithBuild", comment:  "DuckDuckGo version (build)")
     public static let appUnlock = NSLocalizedString("app.authentication.unlock", comment: "Unlock DuckDuckGo")
     public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo Home")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or type URL")

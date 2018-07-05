@@ -37,18 +37,18 @@ class AppVersionExtensionTests: XCTestCase {
         mockBundle = MockBundle()
         testee = AppVersion(bundle: mockBundle)
     }
+
+    func testVersionAndBuildContainsCorrectInformation() {
+        mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
+        mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
+        mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.build)
+        XCTAssertEqual("2.0.4.14", testee.versionNumberAndBuild)
+    }
     
     func testLocalisedTextContainsNameVersionAndBuild() {
         mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
         mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
         mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.build)
-        XCTAssertEqual("DuckDuckGo 2.0.4 (14)", testee.localized)
-    }
-    
-    func testLocalisedTextContainsNameAndVersionButNotBuildWhenBuildAndVersionSame() {
-        mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
-        mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
-        mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.version)
-        XCTAssertEqual("DuckDuckGo 2.0.4", testee.localized)
+        XCTAssertEqual("DuckDuckGo 2.0.4.14", testee.localized)
     }
 }

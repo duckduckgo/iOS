@@ -58,7 +58,7 @@ struct FeedbackSubmitter: FeedbackSender {
             "os": UIDevice.current.systemVersion,
             "manufacturer": "Apple",
             "model" : UIDevice.current.deviceType.displayName,
-            "v": versionProvider.localized,
+            "v": versionProvider.versionNumberAndBuild,
             "atb": statisticsStore.atbWithVariant ?? ""
         ]
         

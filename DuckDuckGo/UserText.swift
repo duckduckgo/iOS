@@ -23,7 +23,6 @@ import Core
 
 public struct UserText {
     
-    public static let appTitle = NSLocalizedString("app.title", comment: "DuckDuckGo")
     public static let appUnlock = NSLocalizedString("app.authentication.unlock", comment: "Unlock DuckDuckGo")
     public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo Home")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or type URL")

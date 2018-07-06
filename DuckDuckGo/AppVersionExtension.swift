@@ -20,12 +20,12 @@
 import Core
 
 extension AppVersion {
-
-    public var localized: String {
-        guard versionNumber != buildNumber else {
-            return String.localizedStringWithFormat(UserText.appInfo, name, versionNumber)
-        }
-        return String.localizedStringWithFormat(UserText.appInfoWithBuild, name, versionNumber, buildNumber)
+    
+    public var versionAndBuildNumber: String {
+        return "\(versionNumber).\(buildNumber)"
     }
-
+    
+    public var localized: String {
+        return "\(name) \(versionAndBuildNumber)"
+    }
 }

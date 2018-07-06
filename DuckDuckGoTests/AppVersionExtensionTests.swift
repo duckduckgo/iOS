@@ -42,7 +42,7 @@ class AppVersionExtensionTests: XCTestCase {
         mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
         mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
         mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.build)
-        XCTAssertEqual("2.0.4.14", testee.versionNumberAndBuild)
+        XCTAssertEqual("2.0.4.14", testee.versionAndBuildNumber)
     }
     
     func testLocalisedTextContainsNameVersionAndBuild() {

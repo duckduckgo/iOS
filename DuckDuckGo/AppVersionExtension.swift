@@ -22,11 +22,11 @@ import Core
 
 extension AppVersion {
     
-    public var versionNumberAndBuild: String {
+    public var versionAndBuildNumber: String {
         return "\(versionNumber).\(buildNumber)"
     }
     
     public var localized: String {
-        return "\(name) \(versionNumberAndBuild)"
+        return "\(name) \(versionAndBuildNumber)"
     }
 }

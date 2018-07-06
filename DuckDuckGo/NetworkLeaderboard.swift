@@ -82,8 +82,8 @@ class NetworkLeaderboard {
             setStartDate()
         }
 
-        let object = NSEntityDescription.insertNewObject(forEntityName: EntityNames.visitedSite, into: container.managedObjectContext)
-        if let visitedSite = object as? PPVisitedSite {
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.visitedSite, into: container.managedObjectContext)
+        if let visitedSite = managedObject as? PPVisitedSite {
             visitedSite.domain = domain
         }
         _ = container.save()
@@ -104,8 +104,8 @@ class NetworkLeaderboard {
 
         var trackerNetwork: PPTrackerNetwork? = findNetwork(byName: network)
         if trackerNetwork == nil {
-            let object = NSEntityDescription.insertNewObject(forEntityName: EntityNames.trackerNetwork, into: container.managedObjectContext)
-            trackerNetwork = object as? PPTrackerNetwork
+            let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.trackerNetwork, into: container.managedObjectContext)
+            trackerNetwork = managedObject as? PPTrackerNetwork
             trackerNetwork?.name = network
             guard trackerNetwork != nil else { return }
         }

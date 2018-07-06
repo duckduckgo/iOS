@@ -1,10 +1,14 @@
 
 disabled_rules:
-  - identifier_name
   - trailing_whitespace
 
 # Rule Config
 line_length: 150
+identifier_name:
+  min_length: 1
+  max_length:
+    warning: 40
+    error: 60
 type_name:
   min_length: 3
   max_length:

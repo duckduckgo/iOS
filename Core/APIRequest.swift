@@ -23,42 +23,45 @@ import Alamofire
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 
 public class APIRequest {
-
+    
     public struct Response {
-
+        
         var data: Data?
         var etag: String?
-
+        
     }
-
-    @discardableResult public static func request(url: URL, method: HTTPMethod = .get, parameters: [String: Any]? = nil,
-                                                  completion: @escaping APIRequestCompletion) -> Request {
-
+    
+    @discardableResult
+    public static func request(url: URL,
+                               method: HTTPMethod = .get,
+                               parameters: [String: Any]? = nil,
+                               completion: @escaping APIRequestCompletion) -> Request {
+        
         Logger.log(text: "Requesting \(url)")
-
+        
         return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
             .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
-
+                
                 Logger.log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode))")
                 Logger.log(text: " and headers \(String(describing: response.response?.allHeaderFields))")
-
+                
                 if let error = response.error {
                     completion(nil, error)
                 } else {
                     let etag = response.response?.headerValue(for: APIHeaders.Name.etag)
                     completion(Response(data: response.data, etag: etag), nil)
                 }
-            }
+        }
     }
-
+    
 }
 
 fileprivate extension HTTPURLResponse {
-
+    
     func headerValue(for name: String) -> String? {
         let lname = name.lowercased()
         return allHeaderFields.filter { ($0.key as? String)?.lowercased() == lname }.first?.value as? String
     }
-
+    
 }

@@ -1,7 +1,7 @@
 ## General
 
 * We care about clean code and aim to make this codebase as self-documenting and readable as possible.
-* We primarily use Swift 
+* We primarily use Swift and the conventions enforced by Swift Lint except for the tweaks listed in [.swiftlint.yml](../.swiftlint.yml).  To see rules and how they apply to this project, from the project root directory execute `swiftlint rules`.
 * There may be instances of code that pre-dates our use of this style guide, these can be refactored as we encounter them.
 
 **IDE Setup:**

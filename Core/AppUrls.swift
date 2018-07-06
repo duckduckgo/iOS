@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public struct AppUrls {
@@ -53,9 +52,9 @@ public struct AppUrls {
     private struct ParamValue {
         static let source = "ddg_ios"
     }
-    
+
     let statisticsStore: StatisticsStore
-    
+
     public init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
     }
@@ -91,11 +90,11 @@ public struct AppUrls {
     public var trackersWhitelist: URL {
         return URL(string: Url.trackersWhitelist)!
     }
-    
+
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
     }
-    
+
     public var feedback: URL {
         return URL(string: Url.feedback)!
     }
@@ -108,7 +107,7 @@ public struct AppUrls {
         }
         return url
     }
-    
+
     public func isDuckDuckGo(url: URL) -> Bool {
         guard let host = url.host else { return false }
         return host == Url.domain || host.hasSuffix(".\(Url.domain)")
@@ -127,17 +126,17 @@ public struct AppUrls {
         }
         return searchUrl(text: query)
     }
-    
+
     public func exti(forAtb atb: String) -> URL {
         let extiUrl = URL(string: Url.exti)!
         return extiUrl.addParam(name: Param.atb, value: atb)
     }
-    
+
     public func faviconUrl(forDomain domain: String) -> URL {
         let urlString = String(format: Url.faviconService, domain)
         return URL(string: urlString)!
     }
-    
+
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
@@ -152,17 +151,17 @@ public struct AppUrls {
         if let atbWithVariant = statisticsStore.atbWithVariant {
             searchUrl = searchUrl.addParam(name: Param.atb, value: atbWithVariant)
         }
-        
+
         return searchUrl
     }
-    
+
     public func autocompleteUrl(forText text: String) -> URL {
         return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
 
     public func isDuckDuckGoSearch(url: URL) -> Bool {
         if !isDuckDuckGo(url: url) { return false }
-        guard let _ = url.getParam(name: Param.search) else { return false }
+        guard url.getParam(name: Param.search) != nil else { return false }
         return true
     }
 

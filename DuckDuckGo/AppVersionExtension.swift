@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Core
 
 extension AppVersion {

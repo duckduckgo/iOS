@@ -20,7 +20,7 @@
 import Core
 
 class BookmarksManager {
-    
+
     private let dataStore: BookmarkUserDefaults
 
     init(dataStore: BookmarkUserDefaults = BookmarkUserDefaults()) {
@@ -30,26 +30,26 @@ class BookmarksManager {
     var isEmpty: Bool {
         return dataStore.bookmarks?.isEmpty ?? true
     }
-    
+
     var count: Int {
         return dataStore.bookmarks?.count ?? 0
     }
-    
+
     func bookmark(atIndex index: Int) -> Link {
         return dataStore.bookmarks![index]
     }
-    
+
     func save(bookmark: Link) {
         dataStore.addBookmark(bookmark)
     }
-    
+
     func delete(itemAtIndex index: Int) {
         if var newBookmarks = dataStore.bookmarks {
             newBookmarks.remove(at: index)
             dataStore.bookmarks = newBookmarks
         }
     }
-    
+
     func move(itemAtIndex oldIndex: Int, to newIndex: Int) {
         if var newBookmarks = dataStore.bookmarks {
             let link = newBookmarks.remove(at: oldIndex)
@@ -57,7 +57,7 @@ class BookmarksManager {
             dataStore.bookmarks = newBookmarks
         }
     }
-    
+
     func update(index: Int, withBookmark newBookmark: Link) {
         if var newBookmarks = dataStore.bookmarks {
             _ = newBookmarks.remove(at: index)
@@ -65,7 +65,7 @@ class BookmarksManager {
             dataStore.bookmarks = newBookmarks
         }
     }
-    
+
     func clear() {
         dataStore.bookmarks = [Link]()
     }

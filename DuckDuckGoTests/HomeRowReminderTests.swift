@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 @testable import DuckDuckGo
@@ -27,7 +26,7 @@ class HomeRowReminderTests: XCTestCase {
     var storage: MockHomeRowReminderStorage!
     var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
     var disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
-    
+
     override func setUp() {
         storage = MockHomeRowReminderStorage()
     }
@@ -37,21 +36,21 @@ class HomeRowReminderTests: XCTestCase {
         let feature = HomeRowReminder(storage: storage)
         _ = feature.showNow()
         XCTAssertNotNil(storage.firstAccessDate)
-        
+
     }
-    
+
     func testWhenTimeHasElapseAndAlreadyShownThenDontShow() {
         setReminderTimeElapsed()
-        
+
         let feature = HomeRowReminder(storage: storage)
         feature.setShown()
-        
+
         XCTAssertFalse(feature.showNow())
     }
-    
+
     func testWhenIsNewAndTimeHasElapsedThenShow() {
         setReminderTimeElapsed()
-        
+
         let feature = HomeRowReminder(storage: storage)
         XCTAssertTrue(feature.showNow())
     }
@@ -72,5 +71,5 @@ class MockHomeRowReminderStorage: HomeRowReminderStorage {
 
     var firstAccessDate: Date?
     var shown: Bool = false
-        
+
 }

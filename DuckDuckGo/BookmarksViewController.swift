@@ -17,16 +17,15 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 class BookmarksViewController: UITableViewController {
-    
+
     @IBOutlet weak var editButton: UIBarButtonItem!
-    
+
     weak var delegate: BookmarksDelegate?
-    
+
     fileprivate lazy var dataSource = BookmarksDataSource()
 
     override func viewDidLoad() {
@@ -47,15 +46,15 @@ class BookmarksViewController: UITableViewController {
     private func addAplicationActiveObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onApplicationBecameActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
-    
+
     private func configureTableView() {
         tableView.dataSource = dataSource
     }
-    
+
     @objc func onApplicationBecameActive(notification: NSNotification) {
         tableView.reloadData()
     }
-    
+
     private func refreshEditButton() {
         if dataSource.isEmpty {
             disableEditButton()
@@ -63,11 +62,11 @@ class BookmarksViewController: UITableViewController {
             enableEditButton()
         }
     }
-    
+
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
         startEditing()
     }
-    
+
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
         if tableView.isEditing && !dataSource.isEmpty {
             finishEditing()
@@ -75,27 +74,27 @@ class BookmarksViewController: UITableViewController {
             dismiss()
         }
     }
-    
+
     private func startEditing() {
         tableView.isEditing = true
         disableEditButton()
     }
-    
+
     private func finishEditing() {
         tableView.isEditing = false
         refreshEditButton()
     }
-    
+
     private func enableEditButton() {
         editButton.title = UserText.navigationTitleEdit
         editButton.isEnabled = true
     }
-    
+
     private func disableEditButton() {
         editButton.title = ""
         editButton.isEnabled = false
     }
-    
+
     fileprivate func showEditBookmarkAlert(forIndex index: Int) {
         let title = UserText.alertEditBookmark
         let bookmark = dataSource.bookmark(atIndex: index)
@@ -107,21 +106,20 @@ class BookmarksViewController: UITableViewController {
         )
         present(alert, animated: true)
     }
-    
+
     private func updateBookmark(_ updatedBookmark: Link, atIndex index: Int) {
         let bookmarksManager = BookmarksManager()
         bookmarksManager.update(index: index, withBookmark: updatedBookmark)
         tableView.reloadData()
     }
-    
+
     fileprivate func selectBookmark(_ bookmark: Link) {
         dismiss()
-        delegate?.bookmarksDidSelect(link:  bookmark)
+        delegate?.bookmarksDidSelect(link: bookmark)
     }
-    
+
     private func dismiss() {
         dismiss(animated: true, completion: nil)
     }
 
 }
-

@@ -18,5 +18,5 @@
 //
 
 protocol AppSettings {
-    var autocomplete: Bool { get set }    
+    var autocomplete: Bool { get set }
 }

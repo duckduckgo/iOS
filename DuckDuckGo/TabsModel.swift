@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import Core
 
@@ -27,15 +26,15 @@ public class TabsModel: NSObject, NSCoding {
         static let currentIndex = "currentIndex"
         static let tabs = "tabs"
     }
-    
+
     private(set) var currentIndex: Int?
     private(set) var tabs: [Tab]
-    
+
     public init(tabs: [Tab] = [Tab](), currentIndex: Int? = nil) {
         self.tabs = tabs
         self.currentIndex = currentIndex
     }
-    
+
     public convenience required init?(coder decoder: NSCoder) {
         guard let tabs = decoder.decodeObject(forKey: NSCodingKeys.tabs) as? [Tab] else { return nil }
         var currentIndex = decoder.decodeObject(forKey: NSCodingKeys.currentIndex) as? Int
@@ -44,24 +43,24 @@ public class TabsModel: NSObject, NSCoding {
         }
         self.init(tabs: tabs, currentIndex: currentIndex)
     }
-    
+
     public func encode(with coder: NSCoder) {
         coder.encode(tabs, forKey: NSCodingKeys.tabs)
         coder.encode(currentIndex, forKey: NSCodingKeys.currentIndex)
     }
-    
+
     var isEmpty: Bool {
         return tabs.isEmpty
     }
-    
+
     var count: Int {
         return tabs.count
     }
-    
+
     func select(tabAt index: Int) {
         currentIndex = index
     }
-    
+
     func clearSelection() {
         currentIndex = nil
     }
@@ -69,45 +68,40 @@ public class TabsModel: NSObject, NSCoding {
     func get(tabAt index: Int) -> Tab {
         return tabs[index]
     }
-    
+
     func add(tab: Tab) {
         tabs.append(tab)
         currentIndex = indexOf(tab: tab)
     }
-    
+
     func remove(at index: Int) {
-        
+
         tabs.remove(at: index)
 
         guard let current = currentIndex else { return }
-        
+
         if tabs.isEmpty {
             currentIndex = nil
             return
         }
-        
+
         if current == 0 || current < index {
             return
         }
-        
+
         currentIndex = current - 1
     }
-    
+
     func remove(tab: Tab) {
         if let index = indexOf(tab: tab) {
             remove(at: index)
         }
     }
-    
+
     func indexOf(tab: Tab) -> Int? {
-        for (index, current) in tabs.enumerated() {
-            if current === tab {
-                return index
-            }
-        }
-        return nil
+        return tabs.enumerated().first(where: { $1 === tab  })?.offset
     }
-    
+
     func clearAll() {
         for tab in tabs {
             remove(tab: tab)

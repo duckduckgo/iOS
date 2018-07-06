@@ -159,7 +159,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         guard !hoveringView.isHidden else { return }
         UIView.animate(withDuration: 0.3, animations: {
             self.hoveringView.alpha = 0
-        }, completion: { (completed) in
+        }, completion: { (_) in
             self.dismissHoveringView()
         })
     }
@@ -184,7 +184,9 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
         let network = networksDetected[indexPath.row]
         let percent = drama ? 0 : 100 * Int(truncating: network.detectedOnCount!) / sitesVisited
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionNetworkLeaderboardCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? PrivacyProtectionNetworkLeaderboardCell else {
+            fatalError("Failed to dequeue cell as PrivacyProtectionNetworkLeaderboardCell")
+        }
         cell.update(network: network.name!, percent: percent)
         return cell
     }

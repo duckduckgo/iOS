@@ -17,16 +17,15 @@
 //  limitations under the License.
 //
 
-
 import Core
 
 protocol TabSwitcherDelegate: class {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController)
-    
+
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab)
-    
+
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab)
-    
+
     func tabSwitcherDidRequestForgetAll(tabSwitcher: TabSwitcherViewController)
 }

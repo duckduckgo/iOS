@@ -17,35 +17,33 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class AppUserDefaults: AppSettings {
-    
+
     private let groupName: String
-    
+
     private struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
     }
-    
+
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: groupName)
     }
-    
+
     init(groupName: String =  "group.com.duckduckgo.app") {
         self.groupName = groupName
     }
 
     var autocomplete: Bool {
-        
+
         get {
             return userDefaults?.bool(forKey: Keys.autocompleteKey, defaultValue: true) ?? true
         }
-        
+
         set {
             userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
         }
-        
+
     }
 }
-

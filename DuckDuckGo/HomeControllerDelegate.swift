@@ -17,16 +17,15 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 protocol HomeControllerDelegate: class {
-    
+
     func home(_ home: HomeViewController, didRequestUrl url: URL)
 
     func home(_ home: HomeViewController, didRequestQuery query: String)
-    
+
     func homeDidDeactivateOmniBar(home: HomeViewController)
-    
+
     func showInstructions(_ home: HomeViewController)
 }

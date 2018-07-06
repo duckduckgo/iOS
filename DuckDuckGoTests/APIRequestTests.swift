@@ -22,7 +22,7 @@ import OHHTTPStubs
 @testable import Core
 
 class APIRequestTests: XCTestCase {
-    
+
     let host = AppUrls().disconnectMeBlockList.host!
     let url = AppUrls().disconnectMeBlockList
 
@@ -35,32 +35,32 @@ class APIRequestTests: XCTestCase {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
-        
+
         let expect = expectation(description: "testWhenRequestMadeThenUserAgentIsAdded")
-        let request = APIRequest.request(url: url) { (data, error) in
+        let request = APIRequest.request(url: url) { (_, _) in
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1.0, handler: nil)
         let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
     }
-    
+
     func testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded() {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: [ APIHeaders.Name.userAgent: "old ua"])
         }
-        
+
         let expect = expectation(description: "testWhenRequestWithUserAgentMadeThenUserAgentIsUpdaded")
-        let request = APIRequest.request(url: url) { (data, error) in
+        let request = APIRequest.request(url: url) { (_, _) in
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1.0, handler: nil)
         let userAgent = request.request!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
     }
-    
+
     func testWhenStatus200WithEtagThenRequestCompletesWithEtag() {
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 200, headers: [ "ETag": "an etag"] )
@@ -91,13 +91,13 @@ class APIRequestTests: XCTestCase {
     }
 
     func testWhenStatusCodeIs300ThenRequestCompletestWithError() {
-        
+
         stub(condition: isHost(host)) { _ in
             return fixture(filePath: self.validJson(), status: 300, headers: nil)
         }
-        
+
         let expect = expectation(description: "testWhenStatusCodeIs300ThenRequestCompletestWithError")
-        APIRequest.request(url: url) { (data, error) in
+        APIRequest.request(url: url) { (_, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
         }
@@ -111,7 +111,7 @@ class APIRequestTests: XCTestCase {
         }
 
         let expect = expectation(description: "testWhenStatusCodeIsGreaterThan300ThenRequestCompletestWithError")
-        APIRequest.request(url: url) { (data, error) in
+        APIRequest.request(url: url) { (_, error) in
             XCTAssertNotNil(error)
             expect.fulfill()
         }
@@ -121,7 +121,5 @@ class APIRequestTests: XCTestCase {
     func validJson() -> String {
         return OHPathForFile("MockFiles/disconnect.json", type(of: self))!
     }
-    
+
 }
-
-

@@ -17,21 +17,18 @@
 //  limitations under the License.
 //
 
-
 import Foundation
-
 
 import UIKit
 import Core
 
-
 public class SiteRatingView: UIView {
 
     static let gradeImages: [SiteGrade: UIImage] = [
-        .a : #imageLiteral(resourceName: "PP Indicator Grade A"),
-        .b : #imageLiteral(resourceName: "PP Indicator Grade B"),
-        .c : #imageLiteral(resourceName: "PP Indicator Grade C"),
-        .d : #imageLiteral(resourceName: "PP Indicator Grade D")
+        .a: #imageLiteral(resourceName: "PP Indicator Grade A"),
+        .b: #imageLiteral(resourceName: "PP Indicator Grade B"),
+        .c: #imageLiteral(resourceName: "PP Indicator Grade C"),
+        .d: #imageLiteral(resourceName: "PP Indicator Grade D")
     ]
 
     @IBOutlet weak var circleIndicator: UIImageView!
@@ -41,21 +38,26 @@ public class SiteRatingView: UIView {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        let view = Bundle.main.loadNibNamed("SiteRatingView", owner: self, options: nil)![0] as! UIView
+        guard let view = Bundle.main.loadNibNamed("SiteRatingView", owner: self, options: nil)![0] as? UIView else {
+            fatalError("Failed to load view SiteRatingView")
+        }
         self.addSubview(view)
         view.frame = self.bounds
         addContentBlockerConfigurationObserver()
     }
-    
+
     public override func layoutSubviews() {
         super.layoutSubviews()
         refresh()
     }
 
     private func addContentBlockerConfigurationObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentBlockerConfigurationChanged), name: ContentBlockerConfigurationChangedNotification.name, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onContentBlockerConfigurationChanged),
+                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               object: nil)
     }
-    
+
     @objc func onContentBlockerConfigurationChanged() {
         refresh()
     }
@@ -64,13 +66,13 @@ public class SiteRatingView: UIView {
         self.siteRating = siteRating
         refresh()
     }
-    
+
     public func refresh() {
         circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
 
         guard BlockerListsLoader().hasData else { return }
         guard let siteRating = siteRating else { return }
-        
+
         let grades = siteRating.siteGrade()
         let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.after : grades.before
         circleIndicator.image = SiteRatingView.gradeImages[grade]

@@ -17,22 +17,21 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
 class AppVersionExtensionTests: XCTestCase {
-    
+
     struct Constants {
         static let name = "DuckDuckGo"
         static let version = "2.0.4"
         static let build = "14"
     }
-    
+
     private var mockBundle: MockBundle!
     private var testee: AppVersion!
-    
+
     override func setUp() {
         mockBundle = MockBundle()
         testee = AppVersion(bundle: mockBundle)

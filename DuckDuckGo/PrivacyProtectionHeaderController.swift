@@ -26,14 +26,14 @@ class PrivacyProtectionHeaderController: UIViewController {
         .a: #imageLiteral(resourceName: "PP Grade A On"),
         .b: #imageLiteral(resourceName: "PP Grade B On"),
         .c: #imageLiteral(resourceName: "PP Grade C On"),
-        .d: #imageLiteral(resourceName: "PP Grade D On"),
+        .d: #imageLiteral(resourceName: "PP Grade D On")
         ]
 
     private static let gradesOff: [SiteGrade: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A Off"),
         .b: #imageLiteral(resourceName: "PP Grade B Off"),
         .c: #imageLiteral(resourceName: "PP Grade C Off"),
-        .d: #imageLiteral(resourceName: "PP Grade D Off"),
+        .d: #imageLiteral(resourceName: "PP Grade D Off")
         ]
 
     @IBOutlet weak var gradeImage: UIImageView!
@@ -84,4 +84,3 @@ extension PrivacyProtectionHeaderController: PrivacyProtectionInfoDisplaying {
     }
 
 }
-

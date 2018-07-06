@@ -67,12 +67,12 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     }
 
     private func initHttpsStatus() {
-        
+
         var message: String!
-        
+
         encryptedLabel.text = siteRating.encryptedConnectionText().uppercased()
-        switch(siteRating.encryptionType) {
-            
+        switch siteRating.encryptionType {
+
         case .encrypted:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
             message = UserText.ppEncryptionStandardMessage
@@ -80,7 +80,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
         case .mixed:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Off")
             message = UserText.ppEncryptionMixedMessage
-            
+
         case .forced:
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection On")
             message = UserText.ppEncryptionForcedMessage
@@ -89,7 +89,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
             iconImage.image = #imageLiteral(resourceName: "PP Hero Connection Bad")
             message = UserText.ppEncryptionStandardMessage
         }
-     
+
         let attributes = messageLabel.attributedText?.attributes(at: 0, effectiveRange: nil)
         messageLabel.attributedText = NSAttributedString(string: message, attributes: attributes)
 
@@ -123,11 +123,13 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard siteRating.https else { return nil }
-        let header = tableView.dequeueReusableCell(withIdentifier: "Header") as! PrivacyProtectionEncryptionHeaderCell
+        guard let header = tableView.dequeueReusableCell(withIdentifier: "Header") as? PrivacyProtectionEncryptionHeaderCell else {
+            fatalError("Failed to dequeue cell as PrivacyProtectionEncryptionHeaderCell")
+        }
         header.update(section: sections[section].name)
         return header
     }
-    
+
 }
 
 extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
@@ -147,13 +149,15 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return siteRating.https ? cellForEncrypted(at: indexPath) : cellForUnencrypted()
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return siteRating.https ? 22 : 180
     }
-    
+
     private func cellForEncrypted(at indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionEncryptionDetailCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? PrivacyProtectionEncryptionDetailCell else {
+            fatalError("Failed to dequeue cell as PrivacyProtectionEncryptionDetailCell")
+        }
         cell.update(name: sections[indexPath.section].rows[indexPath.row].name, value: sections[indexPath.section].rows[indexPath.row].value)
         return cell
     }
@@ -161,7 +165,7 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
     private func cellForUnencrypted() -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: "Unencrypted")!
     }
-    
+
 }
 
 fileprivate extension Data {
@@ -213,7 +217,8 @@ extension DisplayableCertificate {
 
         var issuer: DisplayableCertificate! = self.issuer
         while issuer != nil {
-            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: issuer.commonName ?? UserText.ppEncryptionIssuer, rows: issuer.buildIdentitySection()))
+            sections.append(PrivacyProtectionEncryptionDetailController.Section(name: issuer.commonName ?? UserText.ppEncryptionIssuer,
+                                                                                rows: issuer.buildIdentitySection()))
 
             if let issuerKey = issuer.publicKey {
                 sections.append(PrivacyProtectionEncryptionDetailController.Section(name: UserText.ppEncryptionPublicKey, rows: issuerKey.toRows()))
@@ -236,13 +241,12 @@ extension DisplayableCertificate {
         }
 
         if let issuer = issuer {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionIssuer, value: issuer.commonName ?? UserText.ppEncryptionUnknown))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionIssuer,
+                                                                        value: issuer.commonName ?? UserText.ppEncryptionUnknown))
         }
 
         return rows
     }
-
-
 
 }
 
@@ -253,11 +257,13 @@ extension DisplayableKey {
 
         rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionAlgorithm, value: type ?? ""))
         if let bitSize = bitSize {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionKeySize, value: UserText.ppEncryptionBits.format(arguments: bitSize)))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionKeySize,
+                                                                        value: UserText.ppEncryptionBits.format(arguments: bitSize)))
         }
 
         if let effectiveSize = effectiveSize {
-            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionEffectiveSize, value: UserText.ppEncryptionBits.format(arguments: effectiveSize)))
+            rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionEffectiveSize,
+                                                                        value: UserText.ppEncryptionBits.format(arguments: effectiveSize)))
         }
 
         let usage = [
@@ -267,7 +273,7 @@ extension DisplayableKey {
             canSign ? UserText.ppEncryptionUsageSign : "",
             canUnwrap ? UserText.ppEncryptionUsageUnwrap : "",
             canVerify ? UserText.ppEncryptionUsageVerify : "",
-            canWrap ? UserText.ppEncryptionUsageWrap : "",
+            canWrap ? UserText.ppEncryptionUsageWrap : ""
             ].filter({ $0.count > 0 })
         if usage.count > 0 {
             rows.append(PrivacyProtectionEncryptionDetailController.Row(name: UserText.ppEncryptionUsage, value: usage.joined(separator: ", ")))
@@ -290,4 +296,3 @@ extension DisplayableKey {
     }
 
 }
-

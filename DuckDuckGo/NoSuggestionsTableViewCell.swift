@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 class NoSuggestionsTableViewCell: UITableViewCell {
-    
+
     static let reuseIdentifier = "NoSuggestionsTableViewCell"
-    
+
     @IBOutlet weak var label: UILabel!
 }

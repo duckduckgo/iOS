@@ -17,18 +17,17 @@
 //  limitations under the License.
 //
 
-
 import Core
 import WebKit
 
 class TabManager {
-    
+
     private(set) var model: TabsModel
     private var disconnectMeStore = DisconnectMeStore()
     private var tabControllerCache = [TabViewController]()
-    
+
     private weak var delegate: TabDelegate?
-    
+
     init(model: TabsModel, delegate: TabDelegate) {
         self.model = model
         self.delegate = delegate
@@ -38,12 +37,12 @@ class TabManager {
             tabControllerCache.append(controller)
         }
     }
-    
+
     private func buildController(forTab tab: Tab) -> TabViewController {
         let url = tab.link?.url
         return buildController(forTab: tab, url: url)
     }
-    
+
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
         let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
@@ -55,12 +54,12 @@ class TabManager {
         }
         return controller
     }
-    
+
     var current: TabViewController? {
-        
+
         guard let index = model.currentIndex else { return nil }
         let tab = model.tabs[index]
-        
+
         if let controller = cachedController(forTab: tab) {
             return controller
         } else {
@@ -70,29 +69,29 @@ class TabManager {
             return controller
         }
     }
-    
+
     var isEmpty: Bool {
         return tabControllerCache.isEmpty
     }
-    
+
     var count: Int {
         return model.count
     }
-    
+
     func clearSelection() {
         current?.dismiss()
         model.clearSelection()
         save()
     }
-    
+
     func select(tabAt index: Int) -> TabViewController {
         current?.dismiss()
         model.select(tabAt: index)
-        
+
         save()
         return current!
     }
-    
+
     func add(url: URL?) -> TabViewController {
         current?.dismiss()
         let link = url == nil ? nil : Link(title: nil, url: url!)
@@ -103,38 +102,38 @@ class TabManager {
         save()
         return controller
     }
-    
+
     func remove(at index: Int) {
         let tab = model.get(tabAt: index)
         model.remove(tab: tab)
-        if let controller = cachedController(forTab: tab){
+        if let controller = cachedController(forTab: tab) {
             removeFromCache(controller)
         }
         save()
     }
-    
+
     func remove(tabController: TabViewController) {
         model.remove(tab: tabController.tabModel)
         removeFromCache(tabController)
         save()
     }
-    
+
     private func removeFromCache(_ controller: TabViewController) {
         if let index = tabControllerCache.index(of: controller) {
             tabControllerCache.remove(at: index)
         }
         controller.destroy()
     }
-    
+
     private func cachedController(forTab tab: Tab) -> TabViewController? {
-        let controller = tabControllerCache.filter( { $0.tabModel === tab } ).first
+        let controller = tabControllerCache.filter({ $0.tabModel === tab }).first
         if let link = controller?.link {
             tab.link = link
             save()
         }
         return controller
     }
-    
+
     func removeAll() {
         for controller in tabControllerCache {
             removeFromCache(controller)
@@ -142,7 +141,7 @@ class TabManager {
         model.clearAll()
         save()
     }
-    
+
     func invalidateCache(forController controller: TabViewController) {
         if current === controller {
             current?.reload()
@@ -150,7 +149,7 @@ class TabManager {
             removeFromCache(controller)
         }
     }
-    
+
     func save() {
         model.save()
     }

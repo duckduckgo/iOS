@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 protocol ContentBlockerSettingsChangeDelegate: class {
-    
+
     func contentBlockerSettingsDidChange()
 
 }

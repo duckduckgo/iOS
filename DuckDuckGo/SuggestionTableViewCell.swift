@@ -17,18 +17,17 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 class SuggestionTableViewCell: UITableViewCell {
-    
+
     static let reuseIdentifier = "SuggestionTableViewCell"
-    
+
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var typeImage: UIImageView!
     @IBOutlet weak var plusButton: UIButton!
-    
+
     func updateFor(query: String, suggestion: Suggestion) {
         let text = suggestion.suggestion
         if URL.isWebUrl(text: text) {
@@ -40,16 +39,16 @@ class SuggestionTableViewCell: UITableViewCell {
         }
         styleText(query: query, text: suggestion.suggestion)
     }
-    
+
     private func styleText(query: String, text: String) {
 
         let attributes = [
             NSAttributedStringKey.font: UIFont.semiBoldAppFont(ofSize: 16),
             NSAttributedStringKey.foregroundColor: UIColor.white
         ]
-        
+
         let text = NSMutableAttributedString(string: text)
-        text.addAttributes(attributes, range: NSMakeRange(0, text.length))
+        text.addAttributes(attributes, range: NSRange(location: 0, length: text.length))
         label.attributedText = text
     }
 }

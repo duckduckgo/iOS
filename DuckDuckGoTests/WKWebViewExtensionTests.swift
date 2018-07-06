@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 import WebKit
 
 class WKWebViewExtensionTests: XCTestCase {
-    
+
     func testWhenWebViewCreatedWithNonPersistenceThenDataStoreIsNonPersistent() {
         let configuration = WKWebViewConfiguration.nonPersistent()
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
@@ -34,5 +33,5 @@ class WKWebViewExtensionTests: XCTestCase {
         let webView = WKWebView(frame: CGRect(), configuration: configuration)
         XCTAssertTrue(webView.configuration.websiteDataStore.isPersistent)
     }
-    
+
 }

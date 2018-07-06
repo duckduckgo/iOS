@@ -38,13 +38,13 @@ class PrivacyProtectionFooterController: UIViewController {
         super.viewWillAppear(animated)
         update()
     }
-    
+
     @IBAction func toggleProtection() {
         let contentBlockingOn = privacyProtectionSwitch.isOn
         self.contentBlocker.enabled = contentBlockingOn
         update()
     }
-  
+
     private func update() {
         guard isViewLoaded else { return }
         leaderboard.update()
@@ -71,9 +71,9 @@ class TrackerNetworkLeaderboardView: UIView {
     var requiredHeight: CGFloat {
         return gatheringView.isHidden ? scoresView.frame.size.height : gatheringView.frame.size.height
     }
-    
+
     var leaderboard = NetworkLeaderboard.shared
-    
+
     var imageHeight: CGFloat!
 
     func didLoad() {
@@ -87,13 +87,13 @@ class TrackerNetworkLeaderboardView: UIView {
         let shouldShow = leaderboard.shouldShow()
         gatheringView.isHidden = shouldShow
         scoresView.isHidden = !shouldShow
-        
+
         if shouldShow {
             let sitesVisited = leaderboard.sitesVisited()
             firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
             secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
             thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
-        }        
+        }
     }
 
 }
@@ -126,4 +126,3 @@ fileprivate extension PPTrackerNetwork {
     }
 
 }
-

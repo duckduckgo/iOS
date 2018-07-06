@@ -21,7 +21,7 @@ import XCTest
 import Core
 
 class UIColorExtensionTests: XCTestCase {
-    
+
     func testCombineRgbColor() {
         let ratio: CGFloat = 0.5
         let first = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 0.6)
@@ -31,4 +31,3 @@ class UIColorExtensionTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 }
-

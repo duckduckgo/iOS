@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class Link: NSObject, NSCoding {
-        
+
     private struct NSCodingKeys {
         static let title = "title"
         static let url = "url"
@@ -29,37 +28,37 @@ public class Link: NSObject, NSCoding {
 
     public let title: String?
     public let url: URL
-    
+
     public required init(title: String?, url: URL) {
         self.title = title
         self.url = url
     }
-    
+
     public convenience required init?(coder decoder: NSCoder) {
         guard let url = decoder.decodeObject(forKey: NSCodingKeys.url) as? URL else { return nil }
         let title = decoder.decodeObject(forKey: NSCodingKeys.title) as? String
         self.init(title: title, url: url)
     }
-    
+
     public func encode(with coder: NSCoder) {
         coder.encode(title, forKey: NSCodingKeys.title)
         coder.encode(url, forKey: NSCodingKeys.url)
     }
-    
+
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Link else { return false }
         return title == other.title && url == other.url
     }
-    
+
     /**
      Provided links share the same url, uses other to plug any missing data.
      */
     public func merge(with other: Link) -> Link {
-        
+
         if url != other.url {
             return self
         }
-    
+
         let mergeTitle = (title == nil || title!.isEmpty) ? other.title : title
         return Link(title: mergeTitle, url: url)
     }

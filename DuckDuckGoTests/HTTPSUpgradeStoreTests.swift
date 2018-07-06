@@ -32,7 +32,6 @@ class HTTPSUpgradeStoreTests: XCTestCase {
         XCTAssertNil(mockPersistence.wildcardDomains)
     }
 
-
     func testWhenJSONIsInvalidNoDomainsLoaded() {
         let data = JsonTestDataLoader().invalid()
         let mockPersistence = MockHTTPSUpgradePersistence()
@@ -58,7 +57,7 @@ class HTTPSUpgradeStoreTests: XCTestCase {
 
 }
 
-fileprivate class MockHTTPSUpgradePersistence: HTTPSUpgradePersistence {
+private class MockHTTPSUpgradePersistence: HTTPSUpgradePersistence {
 
     var domains: [String]?
     var wildcardDomains: [String]?

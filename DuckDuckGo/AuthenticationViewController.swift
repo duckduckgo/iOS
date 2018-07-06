@@ -17,33 +17,33 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 class AuthenticationViewController: UIViewController {
-    
+
     @IBOutlet weak var unlockInstructions: UIView!
-    
+
     private let authenticator = Authenticator()
-    
+
     private var completion: (() -> Void)?
-    
+
     static func loadFromStoryboard() -> AuthenticationViewController {
         let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
-        let controller = storyboard.instantiateInitialViewController() as! AuthenticationViewController
+        guard let controller = storyboard.instantiateInitialViewController() as? AuthenticationViewController else {
+            fatalError("Failed to instantiate correct Authentication view controller")
+        }
         return controller
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUnlockInstructions()
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-    
-    
+
     public func beginAuthentication(completion: (() -> Void)?) {
         self.completion = completion
         if authenticator.canAuthenticate() {
@@ -52,42 +52,41 @@ class AuthenticationViewController: UIViewController {
             onCouldNotAuthenticate()
         }
     }
-    
+
     private func authenticate() {
         hideUnlockInstructions()
-        authenticator.authenticate() { (success, evaluateError) in
-            if (success) {
+        authenticator.authenticate { (success, _) in
+            if success {
                 self.onAuthenticationSucceeded()
             } else {
                 self.onAuthenticationFailed()
             }
         }
     }
-    
+
     @IBAction func onTap(_ sender: Any) {
         authenticate()
     }
-    
+
     private func onCouldNotAuthenticate() {
         completion?()
         dismiss(animated: true, completion: nil)
     }
-    
+
     private func onAuthenticationSucceeded() {
         completion?()
         dismiss(animated: true, completion: nil)
     }
-    
+
     private func onAuthenticationFailed() {
         showUnlockInstructions()
     }
-    
+
     private func hideUnlockInstructions() {
         unlockInstructions.isHidden = true
     }
-    
+
     private func showUnlockInstructions() {
         unlockInstructions.isHidden = false
     }
 }
-

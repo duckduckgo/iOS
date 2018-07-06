@@ -9,8 +9,8 @@
 import UIKit
 
 protocol OnboardingPage {
-    
+
     var skipButtonHidden: Bool { get }
-    
+
     var doneButtonText: String { get }
 }

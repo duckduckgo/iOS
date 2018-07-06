@@ -17,17 +17,16 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
-    
+
     private let pages: [UIViewController]
 
     var count: Int {
         return pages.count
     }
-    
+
     override init() {
         let first = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page1")
         let second = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page2")
@@ -36,29 +35,29 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
         self.pages = [first, second]
         super.init()
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let current = pages.index(of: viewController), let previous = previousIndex(current) {
             return pages[previous]
         }
         return nil
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let current = pages.index(of: viewController), let next = nextIndex(current) {
             return pages[next]
         }
         return nil
     }
-    
+
     func controller(forIndex index: Int) -> UIViewController {
         return pages[index]
     }
-    
+
     func index(of controller: UIViewController) -> Int? {
         return pages.index(of: controller)
     }
-    
+
     func previousIndex(_ index: Int) -> Int? {
         return pages.index(index, offsetBy: -1, limitedBy: 0)
     }
@@ -66,11 +65,11 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
     func nextIndex(_ index: Int) -> Int? {
         return pages.index(index, offsetBy: +1, limitedBy: pages.count-1)
     }
-    
+
     var lastIndex: Int {
         return pages.count - 1
     }
-    
+
     func isLastPage(controller: UIViewController) -> Bool {
         guard let index = index(of: controller), index == lastIndex else {
             return false

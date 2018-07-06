@@ -25,11 +25,11 @@ class CookieStorageTests: XCTestCase {
 
     var testee: CookieStorage!
     let testGroupName = "test"
-    
+
     var userDefaults: UserDefaults {
         return UserDefaults(suiteName: testGroupName)!
     }
-    
+
     override func setUp() {
         userDefaults.removePersistentDomain(forName: testGroupName)
         testee = CookieStorage(userDefaults: userDefaults)
@@ -61,22 +61,22 @@ class CookieStorageTests: XCTestCase {
         testee.setCookie(cookie("name2", "value2"))
         XCTAssertEqual(testee.cookies.count, 2)
     }
-    
+
     func testWhenCookieIsSetThenCookiesContainsIt() {
         testee.setCookie(cookie("name", "value"))
-        
+
         XCTAssertEqual(testee.cookies.count, 1)
         XCTAssertEqual(testee.cookies[0].name, "name")
         XCTAssertEqual(testee.cookies[0].value, "value")
 
     }
-    
+
     func testWhenNewThenCookiesIsEmpty() {
         XCTAssertTrue(testee.cookies.isEmpty)
     }
-    
+
     private func cookie(_ name: String, _ value: String) -> HTTPCookie {
         return HTTPCookie(properties: [.name: name, .value: value, .path: "/", .domain: "example.com"])!
     }
-    
+
 }

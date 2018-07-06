@@ -27,7 +27,7 @@ public protocol TermsOfServiceStore {
 
 public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
 
-    struct Constansts {
+    struct Constants {
         static let fileName = "tosdr.json"
     }
 
@@ -37,8 +37,13 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
         let parser = TermsOfServiceListParser()
         let bundle = Bundle(for: EmbeddedTermsOfServiceStore.self)
         let fileLoader = FileLoader()
-        let data = try! fileLoader.load(fileName: Constansts.fileName, fromBundle: bundle)
-        terms = try! parser.convert(fromJsonData: data)
+        guard let data = try? fileLoader.load(fileName: Constants.fileName, fromBundle: bundle) else {
+            fatalError("Unable to load \(Constants.fileName) from bundle \(bundle)")
+        }
+        guard let terms = try? parser.convert(fromJsonData: data) else {
+            fatalError("Unableto convert data to terms json")
+        }
+        self.terms = terms
     }
 
 }

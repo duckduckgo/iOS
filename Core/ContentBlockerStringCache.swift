@@ -28,16 +28,12 @@ public class ContentBlockerStringCache {
     }
 
     private var cacheDir: URL {
-        get {
-            let groupName = ContentBlockerStoreConstants.groupName
-            return fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
-        }
+        let groupName = ContentBlockerStoreConstants.groupName
+        return fileManager.containerURL(forSecurityApplicationGroupIdentifier: groupName)!.appendingPathComponent("string-cache")
     }
 
     private var fileManager: FileManager {
-        get {
-            return FileManager.default
-        }
+        return FileManager.default
     }
 
     public init(userDefaults: UserDefaults = UserDefaults.standard) {

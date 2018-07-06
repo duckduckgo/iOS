@@ -21,37 +21,37 @@ import XCTest
 @testable import Core
 
 class DisconnectMeStoreTests: XCTestCase {
-    
+
     var trackerData: Data!
     var cache: ContentBlockerStringCache!
     var testee: DisconnectMeStore!
-    
+
     let defaultJsValue = "{\n\n}"
-    
+
     override func setUp() {
         trackerData = JsonTestDataLoader().fromJsonFile("MockFiles/disconnect.json")
         cache = ContentBlockerStringCache()
         testee = DisconnectMeStore()
         clearAll()
     }
-    
+
     override func tearDown() {
         clearAll()
     }
-    
+
     func clearAll() {
-        try! testee.persist(data: "".data(using: .utf8)!)
+        try? testee.persist(data: "".data(using: .utf8)!)
         try? FileManager.default.removeItem(at: testee.persistenceLocation)
     }
 
     func testWhenItemsAreInAllowedListTheyAppearInAllowedJson() {
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         XCTAssertFalse(testee.allowedTrackersJson.contains("99anothersocialurl.com"))
         XCTAssertTrue(testee.allowedTrackersJson.contains("acontenturl.com"))
     }
 
     func testWhenItemsAreInBannedListTheyAppearInBannedJson() {
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         XCTAssertTrue(testee.bannedTrackersJson.contains("99anothersocialurl.com"))
         XCTAssertFalse(testee.bannedTrackersJson.contains("acontenturl.com"))
     }
@@ -60,58 +60,57 @@ class DisconnectMeStoreTests: XCTestCase {
         clearAll()
         XCTAssertFalse(testee.hasData)
     }
-    
+
     func testWhenTrackersPersistedThenHasDataIsTrue() {
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         XCTAssertTrue(testee.hasData)
     }
-    
+
     func testWhenNewDisconnectDataIsPersistedJsBannedCacheIsInvalidated() {
         cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonBanned, value: "someText")
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         XCTAssertNil(cache.get(named: DisconnectMeStore.CacheKeys.disconnectJsonBanned))
     }
-    
+
     func testWhenNewDisconnectDataIsPersistedJsAllowedCacheIsInvalidated() {
         cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonAllowed, value: "someText")
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         XCTAssertNil(cache.get(named: DisconnectMeStore.CacheKeys.disconnectJsonAllowed))
     }
-    
+
     func testWhenBannedJsHasCacheValueThenCachedValueIsReturned() {
         let cacheValue = "{ someText }"
         cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonBanned, value: cacheValue)
         XCTAssertEqual(cacheValue, testee.bannedTrackersJson)
     }
-    
+
     func testWhenAllowedJsHasCacheValueThenCachedValueIsReturned() {
         let cacheValue = "{ someText }"
         cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonAllowed, value: cacheValue)
         XCTAssertEqual(cacheValue, testee.allowedTrackersJson)
     }
-    
+
     func testWhenBannedJsDoesNotHaveACachedValueThenComputedValueIsReturned() {
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         let result = testee.bannedTrackersJson
         XCTAssertNotNil(result)
         XCTAssertNotEqual(defaultJsValue, result)
     }
-    
+
     func testWhenAllowedJsDoesNotHaveACachedValueThenComputedValueIsReturned() {
-        try! testee.persist(data: trackerData)
+        try? testee.persist(data: trackerData)
         let result = testee.allowedTrackersJson
         XCTAssertNotNil(result)
         XCTAssertNotEqual(defaultJsValue, result)
     }
-    
+
     func testWhenBannedJsDoesNotHaveACachedValueAndThereIsNoDataForComputationThenDefaultValueIsReturned() {
         let result = testee.bannedTrackersJson
         XCTAssertEqual(defaultJsValue, result)
     }
-    
+
     func testWhenAllowedJsDoesNotHaveACachedValueAndThereIsNoDataForComputationThenDefaultValueIsReturned() {
         let result = testee.allowedTrackersJson
         XCTAssertEqual( defaultJsValue, result)
     }
 }
-

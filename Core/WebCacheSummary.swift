@@ -17,13 +17,12 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public struct WebCacheSummary {
-    
+
     public let count: Int
-    
+
     public init(count: Int) {
         self.count = count
     }

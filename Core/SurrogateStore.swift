@@ -22,21 +22,21 @@ import Foundation
 class SurrogateStore {
 
     private let groupIdentifier: String
-    
+
     public private(set) var jsFunctions: [String: String]?
-    
+
     init(groupIdentifier: String = ContentBlockerStoreConstants.groupName) {
         self.groupIdentifier = groupIdentifier
-        jsFunctions = NSDictionary(contentsOf: persistenceLocation()) as? Dictionary<String, String>
+        jsFunctions = NSDictionary(contentsOf: persistenceLocation()) as? [String: String]
     }
-    
+
     func parseAndPersist(data: Data) {
         guard let surrogateFile = String(data: data, encoding: .utf8) else { return }
         jsFunctions = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
         guard let plist = jsFunctions as NSDictionary? else { return }
         plist.write(to: persistenceLocation(), atomically: true)
     }
-    
+
     private func persistenceLocation() -> URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupIdentifier)
         return path!.appendingPathComponent("surrogate.js")
@@ -45,40 +45,40 @@ class SurrogateStore {
 }
 
 class SurrogateParser {
-    
+
     static func parse(lines: [String]) -> [String: String] {
         var jsDict = [String: String]()
-        
+
         var resourceName: String?
         var jsFunction: String?
-        
+
         for line in lines {
-            
+
             guard !line.hasPrefix("#") else { continue }
-            
+
             // We can only cope with scripts anyway, see contentblocker.js -> loadSurrogate(url)
             if line.hasSuffix("application/javascript") {
                 resourceName = line.components(separatedBy: " ")[0]
                 jsFunction = ""
                 continue
             }
-            
+
             guard jsFunction != nil else { continue }
-            
+
             jsFunction = "\(jsFunction!)\(line)\n"
-            
+
             if line.trimWhitespace() == "" {
                 jsDict[resourceName!] = jsFunction?.trimWhitespace()
                 jsFunction = nil
                 resourceName = nil
             }
         }
-        
+
         if let resourceName = resourceName {
             jsDict[resourceName] = jsFunction?.trimWhitespace()
         }
 
         return jsDict
     }
-    
+
 }

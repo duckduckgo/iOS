@@ -17,28 +17,27 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import SafariServices
 
 public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfigurationStore {
-    
+
     private struct Keys {
         static let enabled = "com.duckduckgo.contentblocker.enabled"
         static let whitelistedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
-    
+
     private let suiteName: String
-    
+
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName =  suiteName
     }
-    
+
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: suiteName)
     }
-    
+
     public var enabled: Bool {
         get {
             guard let userDefaults = userDefaults else { return true }
@@ -49,7 +48,7 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
             onStoreChanged()
         }
     }
-    
+
     public private(set) var domainWhitelist: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.whitelistedDomains) else { return Set<String>() }
@@ -62,17 +61,17 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
             onStoreChanged()
         }
     }
-    
+
     public func whitelisted(domain: String) -> Bool {
         return domainWhitelist.contains(domain)
     }
-    
+
     public func addToWhitelist(domain: String) {
         var whitelist = domainWhitelist
         whitelist.insert(domain)
         domainWhitelist = whitelist
     }
-    
+
     public func removeFromWhitelist(domain: String) {
         var whitelist = domainWhitelist
         whitelist.remove(domain)
@@ -83,8 +82,8 @@ public class ContentBlockerConfigurationUserDefaults: ContentBlockerConfiguratio
         guard let domain = domain else { return enabled }
         return enabled && !whitelisted(domain: domain)
     }
-    
+
     private func onStoreChanged() {
-        NotificationCenter.default.post(name: ContentBlockerConfigurationChangedNotification.name , object: nil)
+        NotificationCenter.default.post(name: ContentBlockerConfigurationChangedNotification.name, object: nil)
     }
 }

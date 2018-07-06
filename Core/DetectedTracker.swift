@@ -35,13 +35,11 @@ public struct DetectedTracker {
     }
 
     public var domain: String? {
-        get { return URL(string: url)?.host }
+        return URL(string: url)?.host
     }
 
     public var isIpTracker: Bool {
-        get {
-            return URL.isValidIpHost(domain ?? "")
-        }
+        return URL.isValidIpHost(domain ?? "")
     }
 
 }
@@ -49,12 +47,10 @@ public struct DetectedTracker {
 extension DetectedTracker: Hashable {
 
     public var hashValue: Int {
-        get {
-            return "\(url) \(blocked) \(String(describing: networkName)) \(String(describing: category))".hashValue
-        }
+        return "\(url) \(blocked) \(String(describing: networkName)) \(String(describing: category))".hashValue
     }
 
-    public static func ==(lhs: DetectedTracker, rhs: DetectedTracker) -> Bool {
+    public static func == (lhs: DetectedTracker, rhs: DetectedTracker) -> Bool {
         return lhs.url == rhs.url
             && lhs.blocked == rhs.blocked
             && lhs.networkName == rhs.networkName

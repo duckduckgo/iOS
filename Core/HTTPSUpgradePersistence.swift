@@ -20,7 +20,6 @@
 import Foundation
 import CoreData
 
-
 public protocol HTTPSUpgradePersistence {
 
     func persist(domains: [String], wildcardDomains: [String])
@@ -39,34 +38,36 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
     public func persist(domains: [String], wildcardDomains: [String]) {
         container.managedObjectContext.performAndWait {
             deleteAll()
-            
+
             for simpleDomain in domains {
                 let entityName = String(describing: HTTPSUpgradeSimpleDomain.self)
                 let context = container.managedObjectContext
-                let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! HTTPSUpgradeSimpleDomain
-                storedDomain.domain = simpleDomain.lowercased()
+                if let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSUpgradeSimpleDomain {
+                    storedDomain.domain = simpleDomain.lowercased()
+                }
             }
-            
+
             let context = container.managedObjectContext
-            
+
             for wildcardDomain in wildcardDomains {
                 let domain = String(wildcardDomain.suffix(from: String.Index.init(encodedOffset: 1)))
                 let entityName = String(describing: HTTPSUpgradeWildcardDomain.self)
-                
-                let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! HTTPSUpgradeWildcardDomain
-                storedDomain.domain = domain.lowercased()
+
+                if let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSUpgradeWildcardDomain {
+                    storedDomain.domain = domain.lowercased()
+                }
             }
-            
+
             _ = container.save()
         }
     }
 
     public func hasWildcardDomain(_ domain: String) -> Bool {
         let domains = buildDomainList(domain.lowercased())
-        
+
         var result = false
         container.managedObjectContext.performAndWait {
-            let request:NSFetchRequest<HTTPSUpgradeWildcardDomain> = HTTPSUpgradeWildcardDomain.fetchRequest()
+            let request: NSFetchRequest<HTTPSUpgradeWildcardDomain> = HTTPSUpgradeWildcardDomain.fetchRequest()
             request.predicate = NSPredicate(format: "domain in %@", domains)
             guard let count = try? container.managedObjectContext.count(for: request) else { return }
             result = count > 0
@@ -75,10 +76,10 @@ public class CoreDataHTTPSUpgradePersistence: HTTPSUpgradePersistence {
     }
 
     public func hasSimpleDomain(_ domain: String) -> Bool {
-        
+
         var result = false
         container.managedObjectContext.performAndWait {
-            let request:NSFetchRequest<HTTPSUpgradeSimpleDomain> = HTTPSUpgradeSimpleDomain.fetchRequest()
+            let request: NSFetchRequest<HTTPSUpgradeSimpleDomain> = HTTPSUpgradeSimpleDomain.fetchRequest()
             request.predicate = NSPredicate(format: "domain = %@", domain.lowercased())
             guard let count = try? container.managedObjectContext.count(for: request) else { return }
             result = count > 0

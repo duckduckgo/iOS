@@ -20,53 +20,55 @@
 import Foundation
 
 public enum FeatureName {
-    
+
     case homeRowCTADefault, homeRowCTAAlternative1
-    
+
 }
 
 public struct Variant {
-    
+
     public static let defaultVariants: [Variant] = [
         Variant(name: "me", percent: 50, features: [ .homeRowCTADefault ]),
         Variant(name: "mf", percent: 50, features: [ .homeRowCTAAlternative1 ])
     ]
-    
+
     public let name: String
     public let percent: Int
     public let features: [FeatureName]
-    
+
 }
 
 public protocol VariantRNG {
-    
+
     func nextInt(upperBound: Int) -> Int
-    
+
 }
 
 public protocol VariantManager {
-    
+
     var currentVariant: Variant? { get }
     func assignVariantIfNeeded()
-    
+
 }
 
 public class DefaultVariantManager: VariantManager {
-    
+
     public var currentVariant: Variant? {
         return variants.first(where: { $0.name == storage.variant })
     }
-    
+
     private let variants: [Variant]
     private let storage: StatisticsStore
     private let rng: VariantRNG
-    
-    public init(variants: [Variant] = Variant.defaultVariants, storage: StatisticsStore = StatisticsUserDefaults(), rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+
+    public init(variants: [Variant] = Variant.defaultVariants,
+                storage: StatisticsStore = StatisticsUserDefaults(),
+                rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
         self.variants = variants
         self.storage = storage
         self.rng = rng
     }
-    
+
     public func assignVariantIfNeeded() {
         guard !storage.hasInstallStatistics else {
             Logger.log(text: "no new variant needed for existing user")
@@ -82,7 +84,7 @@ public class DefaultVariantManager: VariantManager {
         storage.variant = variant?.name
         Logger.log(text: "newly assigned variant: \(currentVariant as Any)")
     }
-    
+
     private func selectVariant() -> Variant? {
         let randomPercent = rng.nextInt(upperBound: 100)
 
@@ -93,18 +95,18 @@ public class DefaultVariantManager: VariantManager {
                 return variant
             }
         }
-        
+
         return nil
     }
-    
+
 }
 
 public class Arc4RandomUniformVariantRNG: VariantRNG {
-    
+
     public init() { }
-    
+
     public func nextInt(upperBound: Int) -> Int {
         return Int(arc4random_uniform(UInt32(upperBound)))
     }
-    
+
 }

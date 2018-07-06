@@ -17,19 +17,18 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 @testable import DuckDuckGo
 @testable import Core
 
 class MockBundle: InfoBundle {
-    
+
     private var mockEntries = [String: Any]()
-    
+
     func object(forInfoDictionaryKey key: String) -> Any? {
         return mockEntries[key]
     }
-    
+
     func add(name: String, value: Any) {
         mockEntries[name] = value
     }

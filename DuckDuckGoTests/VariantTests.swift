@@ -21,7 +21,7 @@ import XCTest
 @testable import Core
 
 class VariantTests: XCTestCase {
-    
+
     func testDefaultVariantsPercentageTotalIs100() {
         XCTAssertEqual(100, Variant.defaultVariants.reduce(0, { $0 + $1.percent }))
     }

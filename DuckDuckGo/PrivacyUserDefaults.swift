@@ -17,22 +17,20 @@
 //  limitations under the License.
 //
 
-
 import Foundation
-
 
 public class PrivacyUserDefaults: PrivacyStore {
 
     private struct Keys {
         static let authentication = "com.duckduckgo.privacy.authentication"
     }
-    
+
     private var userDefaults: UserDefaults {
         return UserDefaults.standard
     }
-    
+
     public init() {}
-    
+
     public var authenticationEnabled: Bool {
         get {
             return userDefaults.bool(forKey: Keys.authentication, defaultValue: false)

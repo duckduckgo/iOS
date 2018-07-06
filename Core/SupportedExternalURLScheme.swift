@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public struct SupportedExternalURLScheme {
@@ -31,7 +30,7 @@ public struct SupportedExternalURLScheme {
         "itmss",
         "itms-apps",
         "itms-appss",
-        "itunes",
+        "itunes"
     ]
 
     public static func isSupported(url: URL) -> Bool {

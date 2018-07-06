@@ -17,9 +17,7 @@
 //  limitations under the License.
 //
 
-
 import Foundation
-
 
 public struct AtbParser {
     func convert(fromJsonData data: Data) throws -> Atb {

@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
@@ -26,7 +25,7 @@ class AboutViewController: UIViewController {
     @IBOutlet weak var descriptionText: UILabel!
 
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
-        dismiss(animated: true) { 
+        dismiss(animated: true) {
             UIApplication.shared.open(AppDeepLinks.aboutLink, options: [:])
         }
     }

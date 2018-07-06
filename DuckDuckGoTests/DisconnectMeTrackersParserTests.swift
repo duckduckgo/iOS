@@ -17,42 +17,43 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
 class DisconnectMeTrackersParserTests: XCTestCase {
-    
+
     private var data = JsonTestDataLoader()
     private var testee = DisconnectMeTrackersParser()
-    
+
     func testWhenDataEmptyThenInvalidJsonErrorThrown() {
         XCTAssertThrowsError(try testee.convert(fromJsonData: data.empty()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
-    
+
     func testWhenJsonInvalidThenInvalidJsonErrorThrown() {
         XCTAssertThrowsError(try testee.convert(fromJsonData: data.invalid()), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
         }
     }
-    
+
     func testWhenJsonIncorrectForTypeThenTypeMismatchErrorThrown() {
         let mismatchedJson = data.fromJsonFile("MockFiles/disconnect_mismatched.json")
         XCTAssertThrowsError(try testee.convert(fromJsonData: mismatchedJson), "") { (error) in
             XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
         }
     }
-    
+
     func testWhenJsonValidThenNoErrorThrown() {
         let validJson = data.fromJsonFile("MockFiles/disconnect.json")
-        XCTAssertNoThrow(try! testee.convert(fromJsonData: validJson))
+        XCTAssertNoThrow(try testee.convert(fromJsonData: validJson))
     }
-    
+
     func testWhenJsonValidThenResultContainsAllTrackers() {
         let validJson = data.fromJsonFile("MockFiles/disconnect.json")
-        let result = try! testee.convert(fromJsonData: validJson)
+        guard let result = try? testee.convert(fromJsonData: validJson) else {
+            fatalError("Failed to convert from json data")
+        }
         XCTAssertEqual(result.count, 12)
         XCTAssertEqual(result["99anadurl.com"]?.networkName, "anadurl.com")
         XCTAssertEqual(result["analyticsurl.com"]?.networkName, "analytics.com")

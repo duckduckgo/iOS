@@ -1,1 +1,1 @@
-In this release we added a new feedback form so that you can quickly report broken sites and tell us how you feel about the app. We have additionally updated our tutorial screens and fixed some bugs.
+In this release we have changed the colour of our onboarding screen to be more accessible.

@@ -31,7 +31,7 @@ class Migration {
     private let bookmarks: BookmarksManager
     private let container: DDGPersistenceContainer
     private let userDefaults: UserDefaults
-    
+
     init(container: DDGPersistenceContainer = DDGPersistenceContainer(name: "Stories")!,
          userDefaults: UserDefaults = UserDefaults.standard,
          bookmarks: BookmarksManager = BookmarksManager()) {
@@ -39,8 +39,9 @@ class Migration {
         self.userDefaults = userDefaults
         self.bookmarks = bookmarks
     }
-    
-    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background), completion: @escaping (_ occured: Bool, _ stories: Int, _ bookmarks: Int) -> ()) {
+
+    func start(queue: DispatchQueue = DispatchQueue.global(qos: .background),
+               completion: @escaping (_ occured: Bool, _ stories: Int, _ bookmarks: Int) -> Void) {
 
         if userDefaults.bool(forKey: Constants.migrationOccurredKey) {
             completion(false, 0, 0)
@@ -55,52 +56,54 @@ class Migration {
                 storiesMigrated = self.migrateStories(into: self.bookmarks)
                 self.userDefaults.set(true, forKey: Constants.migrationOccurredKey)
             }
-            
+
             completion(true, storiesMigrated, bookmarksMigrated)
         }
-        
+
     }
-    
+
     private func migrateBookmarks(into bookmarks: BookmarksManager) -> Int {
-        
+
         guard let oldBookmarks = userDefaults.array(forKey: Constants.oldBookmarksKey) else {
             return 0
         }
-        
+
         var bookmarkCount = 0
         for bookmarkDict in oldBookmarks {
-            
+
             guard let bookmark = bookmarkDict as? [ String: String? ] else { continue }
             guard let title = bookmark["title"] else { continue }
             guard let urlString = bookmark["url"] else { continue }
             guard let url = URL(string: urlString!) else { continue }
-            
+
             bookmarks.save(bookmark: Link(title: title, url: url))
             bookmarkCount += 1
         }
-        
+
         userDefaults.removeObject(forKey: Constants.oldBookmarksKey)
         return bookmarkCount
     }
-    
+
     private func migrateStories(into bookmarks: BookmarksManager) -> Int {
 
         var storyCount = 0
         for story in savedStories() {
-            
+
             guard let urlString = story.urlString else { continue }
             guard let url = URL(string: urlString) else { continue }
-            
+
             bookmarks.save(bookmark: Link(title: story.title, url: url))
             storyCount += 1
         }
-        
+
         clear()
-        return storyCount;
+        return storyCount
     }
 
     func createStory(in feed: DDGStoryFeed) -> DDGStory {
-        let story = NSEntityDescription.insertNewObject(forEntityName: "Story", into: container.managedObjectContext) as! DDGStory
+        guard let story = NSEntityDescription.insertNewObject(forEntityName: "Story", into: container.managedObjectContext) as? DDGStory else {
+            fatalError("Failed to insert object as DDGStory")
+        }
 
         story.feed = feed
         feed.addToStories(story)
@@ -109,12 +112,15 @@ class Migration {
     }
 
     func createFeed() -> DDGStoryFeed {
-        return NSEntityDescription.insertNewObject(forEntityName: "Feed", into: container.managedObjectContext) as! DDGStoryFeed
+        guard let feed = NSEntityDescription.insertNewObject(forEntityName: "Feed", into: container.managedObjectContext) as? DDGStoryFeed else {
+            fatalError("Failed to insert object as DDGStoryFeed")
+        }
+        return feed
     }
 
     func savedStories() -> [DDGStory] {
         do {
-            let request:NSFetchRequest<DDGStory> = DDGStory.fetchRequest()
+            let request: NSFetchRequest<DDGStory> = DDGStory.fetchRequest()
             request.predicate = NSPredicate(format: "saved > 0")
 
             return try container.managedObjectContext.fetch(request)

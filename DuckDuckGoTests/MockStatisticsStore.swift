@@ -17,20 +17,19 @@
 //  limitations under the License.
 //
 
-
 @testable import Core
 
 class MockStatisticsStore: StatisticsStore {
 
     var atb: String?
     var retentionAtb: String?
-    
+
     var hasInstallStatistics: Bool {
         return atb != nil && retentionAtb != nil
     }
-    
+
     var variant: String?
-    
+
     var atbWithVariant: String?
-    
+
 }

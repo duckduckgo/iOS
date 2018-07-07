@@ -20,27 +20,27 @@
 import UIKit
 
 class NotificationView: UIView {
-    
+
     typealias DismissHandler = ((_ tapped: Bool) -> Void)
-    
+
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
-    
+
     var dismissHandler: DismissHandler?
 
     var tapGesture: UITapGestureRecognizer?
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         sharedInit()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
     }
-    
+
     func sharedInit() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(NotificationView.tap))
         addGestureRecognizer(tapGesture)
@@ -50,26 +50,26 @@ class NotificationView: UIView {
     @objc func tap() {
         dismissHandler?(true)
     }
-    
+
     @IBAction func dismiss() {
         dismissHandler?(false)
     }
-    
+
     func setMessage(text: String) {
         messageLabel.text = text
         update()
     }
-    
+
     func setTitle(text: String) {
         titleLabel.text = text
         update()
     }
-    
+
     func setIcon(image: UIImage) {
         icon.image = image
         update()
     }
- 
+
     func update() {
         guard let superview = superview else { return }
         let height = titleLabel.frame.height + messageLabel.frame.height + 24
@@ -77,26 +77,28 @@ class NotificationView: UIView {
         frame.size.width = superview.frame.width
         frame.size.height = height
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         update()
     }
-    
+
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         update()
     }
-    
+
     deinit {
         dismissHandler = nil
     }
-    
+
     static func loadFromNib(dismissHandler: @escaping DismissHandler) -> NotificationView {
         let index = UIDevice.current.userInterfaceIdiom == .phone ? 0 : 1
-        let notificationView = Bundle.main.loadNibNamed("NotificationView", owner: self, options: nil)![index] as! NotificationView
+        guard let notificationView = Bundle.main.loadNibNamed("NotificationView", owner: self, options: nil)![index] as? NotificationView else {
+            fatalError("Failed to load view as NotificationView")
+        }
         notificationView.dismissHandler = dismissHandler
         return notificationView
     }
-    
+
 }

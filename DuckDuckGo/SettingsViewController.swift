@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import MessageUI
 import Core
@@ -25,7 +24,7 @@ import Device
 
 class SettingsViewController: UITableViewController {
 
-    @IBOutlet var margins: [NSLayoutConstraint]!    
+    @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
@@ -33,11 +32,11 @@ class SettingsViewController: UITableViewController {
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
-    
+
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMargins()
@@ -45,22 +44,22 @@ class SettingsViewController: UITableViewController {
         configureSecurityToggles()
         configureVersionText()
     }
-    
+
     private func configureMargins() {
         guard #available(iOS 11, *) else { return }
         for margin in margins {
             margin.constant = 0
         }
     }
-    
+
     private func configureDisableAutocompleteToggle() {
         autocompleteToggle.isOn = appSettings.autocomplete
     }
-    
+
     private func configureSecurityToggles() {
         authenticationToggle.isOn = privacyStore.authenticationEnabled
     }
-    
+
     private func configureVersionText() {
         versionText.text = versionProvider.localized
     }
@@ -68,27 +67,27 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = UIColor.silver
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = UIColor.silver
         }
     }
-    
+
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
-    
+
     @IBAction func onDonePressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     @IBAction func onAutocompleteToggled(_ sender: UISwitch) {
         appSettings.autocomplete = sender.isOn
     }
@@ -105,5 +104,3 @@ extension MFMailComposeViewController {
         return MFMailComposeViewController()
     }
 }
-
-

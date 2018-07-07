@@ -17,11 +17,9 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public enum JsonError: Error {
     case invalidJson
     case typeMismatch
 }
-

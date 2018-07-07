@@ -34,7 +34,8 @@ public class DDGPersistenceContainer {
         guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { return nil }
         self.managedObjectModel = managedObjectModel
 
-        guard let persistenceStoreCoordinator = DDGPersistenceContainer.createPersistenceStoreCoordinator(name: name, model: managedObjectModel) else { return nil }
+        guard let persistenceStoreCoordinator =
+            DDGPersistenceContainer.createPersistenceStoreCoordinator(name: name, model: managedObjectModel) else { return nil }
         self.persistenceStoreCoordinator = persistenceStoreCoordinator
 
         managedObjectContext = NSManagedObjectContext(concurrencyType: concurrencyType)
@@ -79,4 +80,3 @@ public class DDGPersistenceContainer {
     }
 
 }
-

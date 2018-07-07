@@ -20,19 +20,19 @@
 import Core
 
 protocol HomeRowCTAStorage: class {
-    
-    var dismissed:Bool { get set }
-    
+
+    var dismissed: Bool { get set }
+
 }
 
 class HomeRowCTA {
-    
+
     enum CTAType: String {
-        
+
         case experiment1, experiment2
-        
+
     }
-    
+
     private let storage: HomeRowCTAStorage
     private let variantManager: VariantManager
 
@@ -40,7 +40,7 @@ class HomeRowCTA {
         self.storage = storage
         self.variantManager = variantManager
     }
-    
+
     func ctaToShow() -> CTAType? {
         guard !storage.dismissed else { return nil }
         guard let variant = variantManager.currentVariant else { return .experiment1 }
@@ -53,41 +53,41 @@ class HomeRowCTA {
 
         return nil
     }
-    
+
     func dismissed() {
         storage.dismissed = true
     }
-    
+
     func shown() {
         if ctaToShow() == .experiment1 {
             storage.dismissed = true
         }
     }
-    
+
 }
 
 class UserDefaultsHomeRowCTAStorage: HomeRowCTAStorage {
-    
+
     struct Keys {
         static let dismissed = "com.duckduckgo.homerow.onboarding.dismissed"
     }
-    
+
     var dismissed: Bool {
-        
+
         set {
             userDefaults.set(newValue, forKey: Keys.dismissed)
         }
-        
+
         get {
             return userDefaults.bool(forKey: Keys.dismissed)
         }
-        
+
     }
-    
+
     private let userDefaults: UserDefaults
-    
+
     public init(userDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults
     }
-    
+
 }

@@ -17,37 +17,36 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 @IBDesignable
 public class RoundedRectangleView: UIView {
-    
+
     @IBInspectable var borderColor: UIColor = UIColor.white {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
     }
-    
+
     @IBInspectable var borderWidth: CGFloat = 2.0 {
         didSet {
             layer.borderWidth = borderWidth
         }
     }
-    
+
     @IBInspectable var cornerRadius: CGFloat = 0.0 {
         didSet {
             layer.cornerRadius = cornerRadius
         }
     }
-    
+
     @IBInspectable var dropShadow: Bool = false
-    
+
     public override func layoutSubviews() {
         super.layoutSubviews()
         configureDropShadow()
     }
-    
+
     private func configureDropShadow() {
         if dropShadow {
             displayDropShadow()

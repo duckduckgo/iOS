@@ -17,17 +17,16 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
 class SupportedExternalUrlSchemeTests: XCTestCase {
-    
+
     func testThatEmailIsSupported() {
         let url = URL(string: "mailto://someurl")!
         XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
     }
-    
+
     func testThatSmsIsSupported() {
         let url = URL(string: "sms://someurl")!
         XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
@@ -37,17 +36,17 @@ class SupportedExternalUrlSchemeTests: XCTestCase {
         let url = URL(string: "maps://someurl")!
         XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
     }
-    
+
     func testThatCallsAreSupported() {
         let url = URL(string: "tel://someurl")!
         XCTAssertTrue(SupportedExternalURLScheme.isSupported(url: url))
     }
-    
+
     func testThatUrlsWithNoSchemeAreNotSupported() {
         let url = URL(string: "telzzz")!
         XCTAssertFalse(SupportedExternalURLScheme.isSupported(url: url))
     }
-    
+
     func testThatUnknownSchemesAreNotSupported() {
         let url = URL(string: "other://")!
         XCTAssertFalse(SupportedExternalURLScheme.isSupported(url: url))

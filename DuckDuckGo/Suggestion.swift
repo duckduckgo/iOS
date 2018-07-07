@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 struct Suggestion {
-    
+
     let type: String
     let suggestion: String
 }

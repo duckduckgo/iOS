@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
@@ -25,7 +24,7 @@ import XCTest
 class TLDTests: XCTestCase {
 
     let tld = TLD()
-    
+
     func testWhenJsonAccessedThenReturnsValidJson() {
         let json = try? JSONSerialization.jsonObject(with: tld.json.data(using: .utf8)!, options: [])
         let tlds = json as? [String: Int]
@@ -48,13 +47,13 @@ class TLDTests: XCTestCase {
     func testWhenHostIsTopLevelDotComThenDomainIsSame() {
         XCTAssertEqual("example.com", tld.domain("example.com"))
     }
-    
+
     func testWhenHostIsNilDomainIsNil() {
         XCTAssertNil(tld.domain(nil))
     }
-    
+
     func testWhenTLDInstanciatedThenLoadsTLDData() {
         XCTAssertFalse(tld.tlds.isEmpty)
     }
-    
+
 }

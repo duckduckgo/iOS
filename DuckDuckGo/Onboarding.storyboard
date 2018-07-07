@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jGy-gB-XA1">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -101,8 +101,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rx3-MF-RL0">
                                 <rect key="frame" x="0.0" y="152" width="768" height="720"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="Wsv-ap-wrF" userLabel="Title">
-                                        <rect key="frame" x="0.0" y="448" width="768" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Protect Your Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="Wsv-ap-wrF" userLabel="Title">
+                                        <rect key="frame" x="0.0" y="402" width="768" height="22"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -110,8 +110,8 @@
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEP-wM-MN0" userLabel="Text">
-                                        <rect key="frame" x="272.5" y="505" width="224" height="82.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEP-wM-MN0" userLabel="Text">
+                                        <rect key="frame" x="272" y="444" width="224" height="66"/>
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">Tap the Privacy Grade
@@ -140,8 +140,8 @@ trying to track you.</string>
                                             </attributedString>
                                         </variation>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage2" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Yy-O0U">
-                                        <rect key="frame" x="259.5" y="20" width="250" height="398"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" ambiguous="YES" image="OnboardingPage2" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-Yy-O0U">
+                                        <rect key="frame" x="227" y="20" width="315" height="362"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="398" id="YHg-VE-O9H"/>
                                         </constraints>
@@ -201,8 +201,8 @@ trying to track you.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wV-pf-QCI">
                                 <rect key="frame" x="0.0" y="152" width="768" height="720"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="6Un-DZ-5LV" userLabel="Title">
-                                        <rect key="frame" x="0.0" y="448" width="768" height="27"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Leave No Trace" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.89999997615814209" translatesAutoresizingMaskIntoConstraints="NO" id="6Un-DZ-5LV" userLabel="Title">
+                                        <rect key="frame" x="0.0" y="380" width="768" height="22"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="22"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -210,8 +210,8 @@ trying to track you.</string>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="27"/>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi8-od-YMh" userLabel="Text">
-                                        <rect key="frame" x="242.5" y="505" width="284" height="110"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi8-od-YMh" userLabel="Text">
+                                        <rect key="frame" x="242" y="422" width="284" height="88"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Tap the Fire Button to erase  your tabs and browsing history.   Your data is toast!">
                                                 <attributes>
@@ -234,8 +234,8 @@ trying to track you.</string>
                                             </attributedString>
                                         </variation>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="Rv4-zj-1nx">
-                                        <rect key="frame" x="259.5" y="20" width="250" height="398"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" ambiguous="YES" image="OnboardingPage1" translatesAutoresizingMaskIntoConstraints="NO" id="Rv4-zj-1nx">
+                                        <rect key="frame" x="227" y="20" width="315" height="340"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="398" id="bRG-tT-wCa"/>
                                         </constraints>
@@ -262,7 +262,7 @@ trying to track you.</string>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.31372549020000001" green="0.74901960779999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4wV-pf-QCI" firstAttribute="top" secondItem="GA8-tp-5uq" secondAttribute="bottom" priority="900" id="GGk-wI-HLm"/>
                             <constraint firstItem="4wV-pf-QCI" firstAttribute="centerX" secondItem="JSg-Dt-Ef7" secondAttribute="centerX" id="Itp-pA-gM0"/>
@@ -282,7 +282,7 @@ trying to track you.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="OnboardingPage1" width="250" height="398"/>
-        <image name="OnboardingPage2" width="250" height="398"/>
+        <image name="OnboardingPage1" width="315" height="387"/>
+        <image name="OnboardingPage2" width="315" height="372"/>
     </resources>
 </document>

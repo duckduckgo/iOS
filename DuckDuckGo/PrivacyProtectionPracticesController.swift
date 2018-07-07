@@ -26,7 +26,7 @@ class PrivacyProtectionPracticesController: UIViewController {
         .unknown: #imageLiteral(resourceName: "PP Hero Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Hero Privacy Bad On"),
         .mixed: #imageLiteral(resourceName: "PP Hero Privacy Good Off"),
-        .good: #imageLiteral(resourceName: "PP Hero Privacy Good On"),
+        .good: #imageLiteral(resourceName: "PP Hero Privacy Good On")
     ]
 
     struct Row {
@@ -84,8 +84,8 @@ class PrivacyProtectionPracticesController: UIViewController {
     private func updateReasons() {
         let goodReasons = self.siteRating.termsOfService?.goodReasons ?? []
         let badReasons = self.siteRating.termsOfService?.badReasons ?? []
-        let goodRows = goodReasons.map( { Row(text: $0.capitalizingFirstLetter(), good: true) })
-        let badRows = badReasons.map( { Row(text: $0.capitalizingFirstLetter(), good: false) })
+        let goodRows = goodReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: true) })
+        let badRows = badReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: false) })
         rows = goodRows + badRows
     }
 
@@ -108,10 +108,15 @@ extension PrivacyProtectionPracticesController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard rows.count > 0 else {
-            return tableView.dequeueReusableCell(withIdentifier: "NoPractices") as! PrivacyProtectionNoPracticesCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "NoPractices") as? PrivacyProtectionNoPracticesCell else {
+                fatalError("Failed to dequeue cell PrivacyProtectionNoPracticesCell")
+            }
+            return cell
         }
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! PrivacyProtectionPracticesCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? PrivacyProtectionPracticesCell else {
+            fatalError("Failed to dequeue cell as PrivacyProtectionPracticesCell")
+        }
         cell.update(row: rows[indexPath.row])
         return cell
     }

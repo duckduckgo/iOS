@@ -17,30 +17,29 @@
 //  limitations under the License.
 //
 
-
 import Core
 
 public class Tab: NSObject, NSCoding {
-    
+
     private struct NSCodingKeys {
         static let link = "link"
     }
-    
+
     var link: Link?
-    
+
     init(link: Link?) {
         self.link = link
     }
-    
+
     public convenience required init?(coder decoder: NSCoder) {
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
         self.init(link: link)
     }
-    
+
     public func encode(with coder: NSCoder) {
         coder.encode(link, forKey: NSCodingKeys.link)
     }
-    
+
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Tab else { return false }
         return link == other.link

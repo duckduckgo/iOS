@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 
 extension UISearchBar {
-    
+
     public var textColor: UIColor? {
         get {
             return textField()?.textColor
@@ -30,14 +29,14 @@ extension UISearchBar {
             updateTextColor(newColor: newColor)
         }
     }
-    
+
     private func updateTextColor(newColor: UIColor?) {
         guard let textColor = newColor, let textField = textField() else {
             return
         }
         textField.textColor = textColor
     }
-    
+
     private func textField() -> UITextField? {
         for subview: UIView in subviews {
             for subSubview: UIView in subview.subviews {

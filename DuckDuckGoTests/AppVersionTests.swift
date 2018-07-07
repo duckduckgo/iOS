@@ -17,42 +17,41 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
 class AppVersionTests: XCTestCase {
-    
+
     struct Constants {
         static let name = "DuckDuckGo"
         static let version = "2.0.4"
         static let build = "14"
         static let identifier = "com.duckduckgo.mobile.ios"
     }
-    
+
     private var mockBundle: MockBundle!
     private var testee: AppVersion!
-    
+
     override func setUp() {
         mockBundle = MockBundle()
         testee = AppVersion(bundle: mockBundle)
     }
-    
+
     func testName() {
         mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
         XCTAssertEqual(Constants.name, testee.name)
     }
-    
+
     func testVersionNumber() {
         mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
         XCTAssertEqual(Constants.version, testee.versionNumber)
     }
-    
+
     func testIdentifier() {
         mockBundle.add(name: AppVersion.Keys.identifier, value: Constants.identifier)
         XCTAssertEqual(Constants.identifier, testee.identifier)
     }
-    
+
     func testBuildNumber() {
         mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.build)
         XCTAssertEqual(Constants.build, testee.buildNumber)

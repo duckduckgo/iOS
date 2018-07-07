@@ -22,28 +22,28 @@ import OHHTTPStubs
 @testable import Core
 
 class StatisticsLoaderTests: XCTestCase {
-    
+
     let appUrls = AppUrls()
     var mockStatisticsStore: StatisticsStore!
     var testee: StatisticsLoader!
-    
+
     override func setUp() {
         mockStatisticsStore = MockStatisticsStore()
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore)
     }
-    
+
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
-    
+
     func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {
-        
+
         mockStatisticsStore.variant = "x1"
-        
+
         loadSuccessfulAtbStub()
         loadSuccessfulExiStub()
-        
+
         let expect = expectation(description: "Successfult atb and exti updates store")
         testee.load { () in
             XCTAssertTrue(self.mockStatisticsStore.hasInstallStatistics)
@@ -51,15 +51,15 @@ class StatisticsLoaderTests: XCTestCase {
             XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "v77-5")
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testWhenLoadHasUnsuccessfulAtbThenStoreNotUpdated() {
-        
+
         loadUnsuccessfulAtbStub()
         loadSuccessfulExiStub()
-        
+
         let expect = expectation(description: "Unsuccessfult atb does not update store")
         testee.load { () in
             XCTAssertFalse(self.mockStatisticsStore.hasInstallStatistics)
@@ -67,15 +67,15 @@ class StatisticsLoaderTests: XCTestCase {
             XCTAssertNil(self.mockStatisticsStore.retentionAtb)
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testWhenLoadHasUnsuccessfulExtiThenStoreNotUpdated() {
-        
+
         loadSuccessfulAtbStub()
         loadUnsuccessfulExiStub()
-        
+
         let expect = expectation(description: "Unsuccessfult exti does not update store")
         testee.load { () in
             XCTAssertFalse(self.mockStatisticsStore.hasInstallStatistics)
@@ -83,12 +83,12 @@ class StatisticsLoaderTests: XCTestCase {
             XCTAssertNil(self.mockStatisticsStore.retentionAtb)
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testWhenRefreshHasSuccessfulAtbRequestThenRetentionAtbUpdated() {
-       
+
         mockStatisticsStore.atb = "atb"
         mockStatisticsStore.retentionAtb = "retentionatb"
         loadSuccessfulAtbStub()
@@ -99,46 +99,46 @@ class StatisticsLoaderTests: XCTestCase {
             XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "v77-5")
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testWhenRefreshHasUnsuccessfulAtbRequestThenRetentionAtbNotUpdated() {
         mockStatisticsStore.atb = "atb"
         mockStatisticsStore.retentionAtb = "retentionAtb"
         loadUnsuccessfulAtbStub()
-        
+
         let expect = expectation(description: "Unsuccessfult atb does not update store")
         testee.refreshRetentionAtb { () in
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
             XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "retentionAtb")
             expect.fulfill()
         }
-        
+
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func loadSuccessfulAtbStub() {
         stub(condition: isHost(appUrls.atb.host!)) { _ in
             let path = OHPathForFile("MockFiles/atb.json", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
-    
+
     func loadUnsuccessfulAtbStub() {
         stub(condition: isHost(appUrls.atb.host!)) { _ in
             let path = OHPathForFile("MockFiles/invalid.json", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }
     }
-    
+
     func loadSuccessfulExiStub() {
         stub(condition: isPath(appUrls.exti(forAtb: "").path)) { _ -> OHHTTPStubsResponse in
             let path = OHPathForFile("MockFiles/empty", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
-    
+
     func loadUnsuccessfulExiStub() {
         stub(condition: isPath(appUrls.exti(forAtb: "").path)) { _ -> OHHTTPStubsResponse in
             let path = OHPathForFile("MockFiles/empty", type(of: self))!

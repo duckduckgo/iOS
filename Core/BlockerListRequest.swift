@@ -20,47 +20,47 @@
 import Foundation
 
 class BlockerListRequest {
-
+    
     enum List: String {
-
+        
         case disconnectMe = "disconnectme"
         case easylist = "easylist"
         case easylistPrivacy = "easyprivacy"
         case trackersWhitelist
         case httpsUpgrade = "https"
         case surrogates
-
+        
     }
-
+    
     var requestCount = 0
     
     let etagStorage: BlockerListETagStorage
-
+    
     init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
         self.etagStorage = etagStorage
     }
-
+    
     func request(_ list: List, completion:@escaping (Data?) -> Void) {
         requestCount += 1
         APIRequest.request(url: url(for: list)) { (response, error) in
-
+            
             guard error == nil else {
                 completion(nil)
                 return
             }
-
+            
             guard let response = response else {
                 completion(nil)
                 return
             }
-
+            
             guard let data = response.data else {
                 completion(nil)
                 return
             }
-
+            
             let etag = self.etagStorage.etag(for: list)
-
+            
             if etag == nil || etag != response.etag {
                 self.etagStorage.set(etag: response.etag, for: list)
                 completion(data)
@@ -69,45 +69,43 @@ class BlockerListRequest {
             }
         }
     }
-
+    
     private func url(for list: List) -> URL {
         let appUrls = AppUrls()
-
-        switch(list) {
-            case .disconnectMe: return appUrls.disconnectMeBlockList
-            case .easylist: return appUrls.easylistBlockList
-            case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
-            case .httpsUpgrade: return appUrls.httpsUpgradeList
-            case .trackersWhitelist: return appUrls.trackersWhitelist
-            case .surrogates: return appUrls.surrogates
+        
+        switch list {
+        case .disconnectMe: return appUrls.disconnectMeBlockList
+        case .easylist: return appUrls.easylistBlockList
+        case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
+        case .httpsUpgrade: return appUrls.httpsUpgradeList
+        case .trackersWhitelist: return appUrls.trackersWhitelist
+        case .surrogates: return appUrls.surrogates
         }
-
+        
     }
     
 }
 
 protocol BlockerListETagStorage {
-
+    
     func set(etag: String?, for list: BlockerListRequest.List)
-
+    
     func etag(for list: BlockerListRequest.List) -> String?
-
+    
 }
 
 class UserDefaultsETagStorage: BlockerListETagStorage {
-
+    
     lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
-
+    
     func etag(for list: BlockerListRequest.List) -> String? {
         let etag = defaults?.string(forKey: list.rawValue)
         Logger.log(items: "stored etag for ", list.rawValue, etag as Any)
         return etag
     }
-
+    
     func set(etag: String?, for list: BlockerListRequest.List) {
         defaults?.set(etag, forKey: list.rawValue)
     }
     
 }
-
-

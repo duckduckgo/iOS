@@ -17,32 +17,30 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 
 class AppUserDefaultsTests: XCTestCase {
 
     let testGroupName = "test"
-    
+
     override func setUp() {
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
-    
+
     func testAutocompleteSet() {
-        
+
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.autocomplete = false
         XCTAssertTrue(!appUserDefaults.autocomplete)
-        
-    }
-    
-    func testAutocompleteDefault() {
-        
-        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertTrue(appUserDefaults.autocomplete)
-        
+
     }
 
-    
+    func testAutocompleteDefault() {
+
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertTrue(appUserDefaults.autocomplete)
+
+    }
+
 }

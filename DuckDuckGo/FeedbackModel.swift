@@ -20,13 +20,13 @@
 import Foundation
 
 struct FeedbackModel {
-    
+
     var url: String?
     var message: String?
     var isBrokenSite: Bool = false
-    
+
     private let feedbackSender: FeedbackSender
-    
+
     init(feedbackSender: FeedbackSender = FeedbackSubmitter()) {
         self.feedbackSender = feedbackSender
     }
@@ -35,16 +35,16 @@ struct FeedbackModel {
         guard let message = message, !message.trimWhitespace().isEmpty else {
             return false
         }
-        
+
         if isBrokenSite && (url == nil || url!.trimWhitespace().isEmpty) {
             return false
         }
-        
+
         return true
     }
-    
+
     public func submit() {
-        
+
         guard canSubmit() else { return }
 
         if isBrokenSite {

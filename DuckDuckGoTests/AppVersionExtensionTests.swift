@@ -17,38 +17,37 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
 class AppVersionExtensionTests: XCTestCase {
-    
+
     struct Constants {
         static let name = "DuckDuckGo"
         static let version = "2.0.4"
         static let build = "14"
     }
-    
+
     private var mockBundle: MockBundle!
     private var testee: AppVersion!
-    
+
     override func setUp() {
         mockBundle = MockBundle()
         testee = AppVersion(bundle: mockBundle)
+    }
+
+    func testVersionAndBuildContainsCorrectInformation() {
+        mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
+        mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
+        mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.build)
+        XCTAssertEqual("2.0.4.14", testee.versionAndBuildNumber)
     }
     
     func testLocalisedTextContainsNameVersionAndBuild() {
         mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
         mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
         mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.build)
-        XCTAssertEqual("DuckDuckGo 2.0.4 (14)", testee.localized)
-    }
-    
-    func testLocalisedTextContainsNameAndVersionButNotBuildWhenBuildAndVersionSame() {
-        mockBundle.add(name: AppVersion.Keys.name, value: Constants.name)
-        mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
-        mockBundle.add(name: AppVersion.Keys.buildNumber, value: Constants.version)
-        XCTAssertEqual("DuckDuckGo 2.0.4", testee.localized)
+        XCTAssertEqual("DuckDuckGo 2.0.4.14", testee.localized)
     }
 }

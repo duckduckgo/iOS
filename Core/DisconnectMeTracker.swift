@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 public class DisconnectMeTracker: NSObject {
@@ -33,7 +32,7 @@ public class DisconnectMeTracker: NSObject {
         static let allowed: [Category] = [.disconnect, .content]
         static let all: [Category] = banned + allowed
     }
-    
+
     public let url: String
     public let networkName: String?
     public let parentUrl: URL?
@@ -50,15 +49,15 @@ public class DisconnectMeTracker: NSObject {
         guard let other = other as? DisconnectMeTracker else { return false }
         return url == other.url && networkName == other.networkName && category == other.category
     }
-    
+
     public override var hashValue: Int {
         return "\(url) \(String(describing: networkName)) \(String(describing: category))".hashValue
     }
-    
+
 }
 
 extension Dictionary where Key: ExpressibleByStringLiteral, Value: DisconnectMeTracker {
-    
+
     func filter(byCategory categoryFilter: [DisconnectMeTracker.Category]) -> [Key: Value] {
         let filtered = filter { element -> Bool in
             guard let category = element.value.category else { return false }

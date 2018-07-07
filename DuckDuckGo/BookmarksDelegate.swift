@@ -17,11 +17,10 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import Core
 
 protocol BookmarksDelegate: class {
-    
+
     func bookmarksDidSelect(link: Link)
 }

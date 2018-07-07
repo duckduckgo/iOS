@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 
@@ -45,9 +44,9 @@ class TermsOfServiceTests: XCTestCase {
 
     func testWhenInitWithNoClassificationAndScoreAppropriatePrivacyPracticesAreReturned() {
         let scores: [Int: TermsOfService.PrivacyPractices] = [
-            -100 : .good,
-               0 : .mixed,
-             100 : .poor,
+            -100: .good,
+               0: .mixed,
+             100: .poor
             ]
 
         for params in scores {
@@ -59,11 +58,11 @@ class TermsOfServiceTests: XCTestCase {
 
     func testWhenInitWithClassificationAndBadReasonsAppropriatePrivacyPracticsReturned() {
         let classificationScores: [TermsOfService.Classification: TermsOfService.PrivacyPractices] = [
-            .a : .good,
-            .b : .mixed,
-            .c : .poor,
-            .d : .poor,
-            .e : .poor,
+            .a: .good,
+            .b: .mixed,
+            .c: .poor,
+            .d: .poor,
+            .e: .poor
             ]
 
         for params in classificationScores {
@@ -75,11 +74,11 @@ class TermsOfServiceTests: XCTestCase {
 
     func testWhenInitWithClassificationAppropriatePrivacyPracticsReturned() {
         let classificationScores: [TermsOfService.Classification: TermsOfService.PrivacyPractices] = [
-            .a : .good,
-            .b : .mixed,
-            .c : .poor,
-            .d : .poor,
-            .e : .poor,
+            .a: .good,
+            .b: .mixed,
+            .c: .poor,
+            .d: .poor,
+            .e: .poor
         ]
 
         for params in classificationScores {
@@ -107,11 +106,11 @@ class TermsOfServiceTests: XCTestCase {
     func testWhenInitWithClassificationAppropriateScoreReturned() {
 
         let classificationScores: [TermsOfService.Classification: Int] = [
-            .a : -1,
-            .b : 0,
-            .c : 0,
-            .d : 1,
-            .e : 2
+            .a: -1,
+            .b: 0,
+            .c: 0,
+            .d: 1,
+            .e: 2
         ]
 
         for params in classificationScores {
@@ -120,7 +119,7 @@ class TermsOfServiceTests: XCTestCase {
         }
 
     }
-    
+
     func testWhenInitWithoutClassificationthenClassificationIsNil() {
         let testee = TermsOfService(classification: nil, score: 10, goodReasons: [], badReasons: [])
         XCTAssertEqual(1, testee.derivedScore)

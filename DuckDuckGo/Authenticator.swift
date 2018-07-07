@@ -17,22 +17,21 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 import LocalAuthentication
 import Core
 
 public class Authenticator {
-    
+
     private let policy = LAPolicy.deviceOwnerAuthentication
-    
+
     public func canAuthenticate() -> Bool {
         let context = LAContext()
         var error: NSError? = nil
         let canAuthenticate = context.canEvaluatePolicy(policy, error: &error)
         return canAuthenticate
     }
-    
+
     public func authenticate(reply: @escaping (Bool, Error?) -> Void) {
         let context = LAContext()
         let reason = UserText.appUnlock

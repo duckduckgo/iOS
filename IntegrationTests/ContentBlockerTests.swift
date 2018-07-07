@@ -20,7 +20,7 @@
 import XCTest
 
 class ContentBlockerTests: XCTestCase {
-    
+
     struct TrackerPageUrl {
         static let noTrackers = "http://localhost:8000/notrackers.html"
         static let iFrames = "http://localhost:8000/iframetrackers.html"
@@ -29,18 +29,18 @@ class ContentBlockerTests: XCTestCase {
         static let imageSrc = "http://localhost:8000/image_src.html"
         static let xhr = "http://localhost:8000/xhr.html"
     }
-    
+
     struct PageElementIndex {
         static let uniqueTrackerCount = 2
     }
-    
+
     struct Timeout {
         static let postFirstLaunch: UInt32 = 10
         static let pageLoad: UInt32 = 5
     }
-    
+
     var app: XCUIApplication!
-    
+
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
@@ -57,15 +57,15 @@ class ContentBlockerTests: XCTestCase {
     func testThatIFramesAreBlocked() {
         checkContentBlocking(onTestPage: TrackerPageUrl.iFrames)
     }
-    
+
     func testThatResourcesAreBlocked() {
         checkContentBlocking(onTestPage: TrackerPageUrl.resources)
     }
-    
+
     func testThatRequestsAreBlocked() {
         checkContentBlocking(onTestPage: TrackerPageUrl.requests)
     }
-    
+
     func testThatResourcesLoadedViaImageSrcAreBlocked() {
         checkContentBlocking(onTestPage: TrackerPageUrl.imageSrc)
     }
@@ -75,17 +75,17 @@ class ContentBlockerTests: XCTestCase {
     }
 
     func checkContentBlocking(onTestPage url: String, file: StaticString = #file, line: UInt = #line) {
-        
+
         newTab()
-        
+
         enterSearch(url)
-        
+
         waitForPageLoad()
 
         let expected = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount).label
 
         openContentBlocker()
-        
+
         let actual = app.tables.staticTexts["trackerCount"].label.components(separatedBy: .whitespaces)[0]
 
         XCTAssertEqual(expected, actual, file: file, line: line)
@@ -94,16 +94,16 @@ class ContentBlockerTests: XCTestCase {
     private func showTabs() {
         app.toolbars.buttons["Tabs"].tap()
     }
-    
+
     private func addTab() {
         app.toolbars.buttons["Add"].tap()
     }
-    
+
     private func newTab() {
         showTabs()
         addTab()
     }
-    
+
     private func skipOnboarding() {
         let continueButton = XCUIApplication().buttons["Continue"]
         guard continueButton.exists else { return }
@@ -111,30 +111,29 @@ class ContentBlockerTests: XCTestCase {
         continueButton.tap()
         sleep(Timeout.postFirstLaunch)
     }
-    
+
     private func clearTabsAndData() {
         app.toolbars.buttons["Fire"].tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
     }
-    
+
     private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
-      
+
         let searchOrTypeUrlTextField = app.searchFields["Search or type URL"]
         searchOrTypeUrlTextField.tap()
         searchOrTypeUrlTextField.typeText(text)
-        
+
         if submit {
             searchOrTypeUrlTextField.typeText("\n")
         }
     }
-    
+
     private func waitForPageLoad() {
         sleep(Timeout.pageLoad)
     }
-    
+
     private func openContentBlocker() {
         app.otherElements["siteRating"].tap()
     }
 }
-

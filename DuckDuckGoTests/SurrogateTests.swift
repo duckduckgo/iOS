@@ -27,7 +27,7 @@ class SurrogateTests: XCTestCase {
     }
 
     var data: Data!
-    
+
     override func setUp() {
         guard let data = try? FileLoader().load(fileName: "MockFiles/surrogates1.txt", fromBundle: bundle) else {
             XCTFail("Failed to load MockFiles/surrogate1s.txt")
@@ -35,26 +35,26 @@ class SurrogateTests: XCTestCase {
         }
         self.data = data
     }
-    
+
     func testWhenSurrogatesFileStoredThenCanBeLoadedLater() {
         let persister = SurrogateStore()
         persister.parseAndPersist(data: data)
-        
+
         let loader = SurrogateStore()
         XCTAssertNotNil(loader.jsFunctions)
         XCTAssertEqual(2, loader.jsFunctions?.count)
     }
-    
+
     func testWhenSurrogatesFileProperlyFormattedThenParsedInToFunctionDictionary() {
-        
+
         guard let surrogateFile = String(data: data, encoding: .utf8) else {
             XCTFail("Failed to convert mock surrogate data in to a String")
             return
         }
-        
+
         let dict = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
         XCTAssertEqual(2, dict.count)
-        
+
         XCTAssertTrue(dict["example.com/script1.js"]?.hasPrefix("(function() {") ?? false)
         XCTAssertTrue(dict["example.com/script1.js"]?.contains("console.log(\"Sample function 1\")") ?? false)
         XCTAssertTrue(dict["example.com/script1.js"]?.hasSuffix("})();") ?? false)
@@ -64,7 +64,7 @@ class SurrogateTests: XCTestCase {
         XCTAssertTrue(dict["example.com/script2.js"]?.hasSuffix("}) ();") ?? false)
 
     }
- 
+
     func testWhenFileHasTrailingWhitespaceThenParsingSucceeds() {
         guard let data = try? FileLoader().load(fileName: "MockFiles/surrogates2.txt", fromBundle: bundle) else {
             XCTFail("Failed to load MockFiles/surrogates2.txt")
@@ -79,6 +79,5 @@ class SurrogateTests: XCTestCase {
         let dict = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
         XCTAssertEqual(1, dict.count)
     }
-    
-}
 
+}

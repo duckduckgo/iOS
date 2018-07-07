@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 @testable import Core
 @testable import DuckDuckGo
@@ -25,16 +24,16 @@ import XCTest
 class UserDefaultsHomeRowReminderStorageTests: XCTestCase {
 
     let defaultsName = "UserDefaultsHomeRowReminderStorageTests"
-    
+
     override func setUp() {
         UserDefaults(suiteName: defaultsName)?.removePersistentDomain(forName: defaultsName)
     }
-    
+
     func testWhenFirstDateSetThenItIsStored() {
         createStorage().firstAccessDate = Date()
         XCTAssertNotNil(createStorage().firstAccessDate)
     }
-    
+
     func testWhenNewThenValuesAreDefault() {
         XCTAssertNil(createStorage().firstAccessDate)
         XCTAssertFalse(createStorage().shown)
@@ -44,5 +43,5 @@ class UserDefaultsHomeRowReminderStorageTests: XCTestCase {
         let userDefaults = UserDefaults(suiteName: defaultsName)!
         return UserDefaultsHomeRowReminderStorage(userDefaults: userDefaults)
     }
-    
+
 }

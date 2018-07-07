@@ -17,12 +17,11 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 class UseDuckDuckGoInSafariViewController: UIViewController {
-  
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.blur(style: .dark)
@@ -32,4 +31,3 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
-

@@ -17,21 +17,23 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 class OnboardingTutorialPageViewController: UIViewController {
-    
+
     @IBOutlet weak var image: UIImageView!
 
     private(set) var preferredBackgroundColor: UIColor?
 
     static func loadFromStoryboard(name: String) -> OnboardingTutorialPageViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: name) as! OnboardingTutorialPageViewController
+        guard let controller = storyboard.instantiateViewController(withIdentifier: name) as? OnboardingTutorialPageViewController else {
+            fatalError("Failed to instantiate view controller \(name) as OnboardingTutorialPageViewController")
+        }
+        return controller
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         preferredBackgroundColor = view.backgroundColor

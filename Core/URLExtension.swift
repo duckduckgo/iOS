@@ -17,25 +17,23 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
-
 extension URL {
-    
+
     enum URLProtocol: String {
         case http
         case https
-        
+
         var scheme: String {
             return "\(rawValue)://"
         }
     }
-    
+
     enum Host: String {
         case localhost
     }
-    
+
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
         guard let encodedQuery = components.percentEncodedQuery else { return nil }
@@ -43,7 +41,7 @@ extension URL {
         guard let query = components.queryItems else { return nil }
         return query.filter({ (item) in item.name == name }).first?.value
     }
-    
+
     public func addParam(name: String, value: String?) -> URL {
         let clearedUrl = removeParam(name: name)
         guard var components = URLComponents(url: clearedUrl, resolvingAgainstBaseURL: false) else { return self }
@@ -53,7 +51,7 @@ extension URL {
         components.percentEncodedQuery = encodePluses(text: components.percentEncodedQuery!)
         return components.url ?? self
     }
-    
+
     public func addParams(_ params: [URLQueryItem]) -> URL {
         var url = self
         for param in params {
@@ -61,17 +59,15 @@ extension URL {
         }
         return url
     }
-    
+
     public func removeParam(name: String) -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
         guard let encodedQuery = components.percentEncodedQuery else { return self }
         components.percentEncodedQuery = switchWebSpacesToSystemEncoding(text: encodedQuery)
         guard var query = components.queryItems else { return self }
-        for (index, param) in query.enumerated() {
-            if param.name == name {
-                query.remove(at: index)
-                break
-            }
+        
+        for (index, param) in query.enumerated() where param.name == name {
+            query.remove(at: index)
         }
         components.queryItems = query
         return components.url ?? self
@@ -86,13 +82,13 @@ extension URL {
     private func encodePluses(text: String) -> String {
         return text.replacingOccurrences(of: "+", with: "%2B")
     }
-    
+
     // iOS does not recognise plus symbols in an encoded web string as spaces. This method converts
     // them to %20 which iOS does support and can thus subsequently decode correctly
     private func switchWebSpacesToSystemEncoding(text: String) -> String {
         return text.replacingOccurrences(of: "+", with: "%20")
     }
-    
+
     // MARK: static
 
     public static func webUrl(fromText text: String) -> URL? {
@@ -102,7 +98,7 @@ extension URL {
         let urlText = appendScheme(path: text)
         return URL(string: urlText)
     }
-    
+
     public static func isWebUrl(text: String) -> Bool {
         guard let url = URL(string: text) else { return false }
         guard let scheme = url.scheme else { return isWebUrl(text: appendScheme(path: text)) }
@@ -116,28 +112,28 @@ extension URL {
     public static func decode(query: String) -> String? {
         return query.removingPercentEncoding
     }
-    
+
     public static func appendScheme(path: String) -> String {
         if path.hasPrefix(URLProtocol.http.scheme) || path.hasPrefix(URLProtocol.https.scheme) {
             return path
         }
         return "\(URLProtocol.http.scheme)\(path)"
     }
-    
+
     private static func isValidHost(_ host: String) -> Bool {
         return isValidHostname(host) || isValidIpHost(host)
     }
-    
+
     public static func isValidHostname(_ host: String) -> Bool {
         if host == Host.localhost.rawValue {
             return true
         }
-        
+
         // from https://stackoverflow.com/a/25717506/73479
         let hostNameRegex = "^(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,63})$"
         return host.matches(pattern: hostNameRegex)
     }
-    
+
     public static func isValidIpHost(_ host: String) -> Bool {
         // from https://stackoverflow.com/a/30023010/73479
         let ipRegex = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
@@ -145,4 +141,3 @@ extension URL {
     }
 
 }
-

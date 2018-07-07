@@ -29,9 +29,7 @@ public class BlockerListsLoader {
     private var surrogateStore = SurrogateStore()
 
     public var hasData: Bool {
-        get {
-            return disconnectStore.hasData && easylistStore.hasData
-        }
+        return disconnectStore.hasData && easylistStore.hasData
     }
 
     private var newDataItems = 0
@@ -41,7 +39,7 @@ public class BlockerListsLoader {
     public func start(completion: BlockerListsLoaderCompletion?) {
 
         DispatchQueue.global(qos: .background).async {
-            
+
             let semaphore = DispatchSemaphore(value: 0)
             let numberOfRequests = self.startRequests(with: semaphore)
 

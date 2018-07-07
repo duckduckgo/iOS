@@ -19,22 +19,24 @@
 
 import UIKit
 
-
 class CompositeTransition: NSObject, UIViewControllerTransitioningDelegate {
-    
+
     let presentingController: UIViewControllerAnimatedTransitioning?
     let dismissingController: UIViewControllerAnimatedTransitioning?
-    
+
     init(presenting: UIViewControllerAnimatedTransitioning?, dismissing: UIViewControllerAnimatedTransitioning?) {
         presentingController = presenting
         dismissingController = dismissing
         super.init()
     }
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
         return presentingController
     }
-    
+
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dismissingController
     }

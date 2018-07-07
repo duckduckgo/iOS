@@ -17,31 +17,30 @@
 //  limitations under the License.
 //
 
-
 @IBDesignable
 class TextFieldWithInsets: UITextField {
-    
+
     @IBInspectable var leftInset: CGFloat = 0
     @IBInspectable var rightInset: CGFloat = 0
     @IBInspectable var topInset: CGFloat = 0
     @IBInspectable var bottomInset: CGFloat = 0
-    
+
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return boundsWithInsets(forBounds: bounds)
     }
-    
+
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return boundsWithInsets(forBounds: bounds)
     }
-    
+
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
         return boundsWithInsets(forBounds: bounds)
     }
-    
+
     override func borderRect(forBounds bounds: CGRect) -> CGRect {
         return boundsWithInsets(forBounds: bounds)
     }
-    
+
     private func boundsWithInsets(forBounds bounds: CGRect) -> CGRect {
         let x = bounds.origin.x + leftInset
         let y = bounds.origin.y + topInset

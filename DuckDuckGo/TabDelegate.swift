@@ -17,26 +17,25 @@
 //  limitations under the License.
 //
 
-
 import WebKit
 import Core
 
 protocol TabDelegate: class {
 
     func tabDidRequestNewTab(_ tab: TabViewController)
-    
+
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL)
 
     func tabLoadingStateDidChange(tab: TabViewController)
-    
+
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?)
-    
+
     func tabDidRequestReportBrokenSite(tab: TabViewController)
-    
+
     func tabDidRequestSettings(tab: TabViewController)
-    
+
     func tabContentProcessDidTerminate(tab: TabViewController)
-    
+
     func showBars()
-    
+
 }

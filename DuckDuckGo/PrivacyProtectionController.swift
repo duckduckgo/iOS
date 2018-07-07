@@ -80,7 +80,8 @@ class PrivacyProtectionController: UIViewController {
     }
 
     private func showInitialScreen() {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen") as? PrivacyProtectionOverviewController else { return }
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen")
+            as? PrivacyProtectionOverviewController else { return }
         embeddedController.pushViewController(controller, animated: true)
         updateViewControllers()
     }
@@ -182,7 +183,7 @@ extension PrivacyProtectionController: OmniBarDelegate {
     func onBookmarksPressed() {
         // shouldn't get called
     }
-    
+
     func onSettingsPressed() {
         // shouldn't get called
     }
@@ -191,7 +192,10 @@ extension PrivacyProtectionController: OmniBarDelegate {
 
 extension PrivacyProtectionController: UIViewControllerTransitioningDelegate {
 
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
         return SlideInFromBelowOmniBarTransitioning()
     }
 
@@ -201,13 +205,13 @@ extension PrivacyProtectionController: UIViewControllerTransitioningDelegate {
 
 }
 
-fileprivate struct AnimationConstants {
+private struct AnimationConstants {
     static let inDuration = 0.3
     static let outDuration = 0.2
     static let tyOffset = CGFloat(20.0)
 }
 
-fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
+private class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
@@ -220,8 +224,10 @@ fileprivate class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerA
         containerView.insertSubview(toController.view, at: 0)
 
         UIView.animate(withDuration: AnimationConstants.outDuration, animations: {
-            fromController.contentContainer.transform.ty = -fromController.contentContainer.frame.size.height - fromController.omniBarContainer.frame.height - AnimationConstants.tyOffset
-        }, completion: { (value: Bool) in
+            fromController.contentContainer.transform.ty = -fromController.contentContainer.frame.size.height -
+                fromController.omniBarContainer.frame.height -
+                AnimationConstants.tyOffset
+        }, completion: { (_: Bool) in
             transitionContext.completeTransition(true)
         })
     }
@@ -241,7 +247,7 @@ extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate {
 
 }
 
-fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
+private class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
@@ -254,11 +260,13 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
         let toColor = toController.view.backgroundColor
         toController.view.backgroundColor = UIColor.clear
 
-        toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height - toController.omniBarContainer.frame.height - AnimationConstants.tyOffset
+        toController.contentContainer.transform.ty = -toController.contentContainer.frame.size.height
+            - toController.omniBarContainer.frame.height
+            - AnimationConstants.tyOffset
 
         UIView.animate(withDuration: AnimationConstants.inDuration, animations: {
             toController.contentContainer.transform.ty = 0
-        }, completion: { (value: Bool) in
+        }, completion: { (_: Bool) in
             toController.view.backgroundColor = toColor
             transitionContext.completeTransition(true)
         })
@@ -269,4 +277,3 @@ fileprivate class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControll
     }
 
 }
-

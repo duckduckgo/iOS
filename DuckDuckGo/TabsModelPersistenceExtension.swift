@@ -17,27 +17,25 @@
 //  limitations under the License.
 //
 
-
 import Foundation
 
 extension TabsModel {
-    
+
     private struct Constants {
         static let key = "com.duckduckgo.opentabs"
     }
-    
+
     public static func get() -> TabsModel? {
         guard let data = UserDefaults.standard.object(forKey: Constants.key) as? Data else { return nil }
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? TabsModel
     }
-    
+
     public static func clear() {
          UserDefaults.standard.removeObject(forKey: Constants.key)
     }
-    
+
     func save() {
         let data = NSKeyedArchiver.archivedData(withRootObject: self)
         UserDefaults.standard.set(data, forKey: Constants.key)
     }
 }
-

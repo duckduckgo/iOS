@@ -17,40 +17,39 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 import Kingfisher
 
 class BookmarkCell: UITableViewCell {
-    
+
     static let reuseIdentifier = "BookmarkCell"
-    
+
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var title: UILabel!
-    
+
     private(set) var bookmark: Link?
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         showsReorderControl = true
     }
-    
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         linkImage.isHidden = editing
         super.setEditing(editing, animated: animated)
     }
-    
+
     func update(withBookmark bookmark: Link) {
         self.bookmark = bookmark
         title.text = bookmark.title
         configureFavicon(forDomain: bookmark.url.host)
     }
-    
+
     private func configureFavicon(forDomain domain: String?) {
         let placeholder = #imageLiteral(resourceName: "GlobeSmall")
         linkImage.image = placeholder
-        
+
         if let domain = domain {
             let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
             linkImage.kf.setImage(with: faviconUrl, placeholder: placeholder)

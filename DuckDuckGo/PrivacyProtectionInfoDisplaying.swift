@@ -24,4 +24,3 @@ protocol PrivacyProtectionInfoDisplaying {
     func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore)
 
 }
-

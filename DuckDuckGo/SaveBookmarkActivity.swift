@@ -17,51 +17,40 @@
 //  limitations under the License.
 //
 
-
 import UIKit
 import Core
 
 class SaveBookmarkActivity: UIActivity {
-    
+
     private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     private var bookmark: Link?
-    
+
     override var activityTitle: String? {
         return UserText.actionSaveBookmark
     }
-    
+
     override var activityType: UIActivityType? {
         return .saveBookmarkInDuckDuckGo
     }
-    
+
     override var activityImage: UIImage {
         return #imageLiteral(resourceName: "LogoShare")
     }
-    
+
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
-        for item in activityItems {
-            if item is Link {
-                return true
-            }
-        }
-        return false
+        return activityItems.contains(where: { $0 is Link })
     }
-    
+
     override func prepare(withActivityItems activityItems: [Any]) {
-        for item in activityItems {
-            if let link = item as? Link {
-                bookmark = link
-                return
-            }
-        }
+        bookmark = activityItems.first(where: { $0 is Link }) as? Link
     }
-    
+
     override var activityViewController: UIViewController? {
         guard let bookmark = bookmark else {
             activityDidFinish(false)
             return nil
         }
-        
+
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveBookmark,
             bookmark: bookmark,
@@ -70,12 +59,12 @@ class SaveBookmarkActivity: UIActivity {
         )
         return alert
     }
-    
+
     private func onDone(updatedBookmark: Link) {
         bookmarksManager.save(bookmark: updatedBookmark)
         activityDidFinish(true)
     }
-    
+
     private func onCancel() {
         activityDidFinish(true)
     }

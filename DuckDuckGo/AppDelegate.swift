@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
 
+        Pixel.shared().fire(pixel: .appLaunch)
         startMigration(application: application)
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()

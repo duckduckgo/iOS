@@ -40,6 +40,9 @@ public struct AppUrls {
         static let exti = "\(home)/exti/"
         static let feedback = "\(home)/feedback.js?type=app-feedback"
         static let faviconService = "\(home)/ip3/%@.ico"
+        
+        // TODO Change to improve.duckduckgo.com
+        static let pixel = "https://duckduckgo.com/t/%@"
     }
 
     private struct Param {
@@ -171,6 +174,10 @@ public struct AppUrls {
             return atbWithVariant == url.getParam(name: Param.atb)
         }
         return true
+    }
+    
+    public func pixelUrl(forPixelNamed pixelName: String) -> URL {
+        return applyStatsParams(for: URL(string: Url.pixel.format(arguments: pixelName))!)
     }
 
 }

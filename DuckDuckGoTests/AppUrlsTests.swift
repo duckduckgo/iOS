@@ -29,6 +29,18 @@ class AppUrlsTests: XCTestCase {
         mockStatisticsStore = MockStatisticsStore()
     }
 
+    func testWhenPixelUrlRequestThenCorrectURLIsReturned() {
+        mockStatisticsStore.atbWithVariant = "x"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let pixelUrl = testee.pixelUrl(forPixelNamed: "ml")
+        
+        XCTAssertEqual("duckduckgo.com", pixelUrl.host)
+        XCTAssertEqual("/t/ml", pixelUrl.path)
+        XCTAssertEqual("x", pixelUrl.getParam(name: "atb"))
+        XCTAssertEqual("ddg_ios", pixelUrl.getParam(name: "t"))
+
+    }
+    
     func testWhenFaviconUrlForDomainRequestedThenCorrectDomainIsCreated() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         let faviconURL = testee.faviconUrl(forDomain: "example.com")

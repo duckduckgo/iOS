@@ -307,6 +307,7 @@ class MainViewController: UIViewController {
 
     private func forgetAllAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
+            Pixel.shared().fire(pixel: .fireButtonPressed)
             self?.forgetAll {}
         }
     }

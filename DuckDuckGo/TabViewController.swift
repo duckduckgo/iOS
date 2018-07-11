@@ -140,6 +140,7 @@ class TabViewController: WebViewController {
     }
 
     func showPrivacyProtection() {
+        Pixel.shared().fire(pixel: .privacyDashboardOpened)
         if UIUserInterfaceIdiom.pad == UIDevice.current.userInterfaceIdiom {
             performSegue(withIdentifier: "PrivacyProtectionTablet", sender: self)
         } else {

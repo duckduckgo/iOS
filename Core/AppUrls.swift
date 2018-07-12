@@ -177,7 +177,9 @@ public struct AppUrls {
     }
     
     public func pixelUrl(forPixelNamed pixelName: String) -> URL {
-        return applyStatsParams(for: URL(string: Url.pixel.format(arguments: pixelName))!)
+        var url = URL(string: Url.pixel.format(arguments: pixelName))!
+        url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+        return url
     }
 
 }

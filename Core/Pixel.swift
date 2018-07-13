@@ -23,7 +23,7 @@ import Alamofire
 public enum PixelDefinition: String {
     
     case appLaunch = "ml"
-    case fireButtonPressed = "mb"
+    case forgetAllExecuted = "mf"
     case privacyDashboardOpened = "mp"
     
 }

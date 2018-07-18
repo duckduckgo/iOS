@@ -236,7 +236,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func forgetAll(completion: @escaping () -> Void) {
-        Pixel.shared().fire(pixel: .forgetAllExecuted)
+        Pixel.fire(pixel: .forgetAllExecuted)
         ServerTrustCache.shared.clear()
         WebCacheManager.clear()
         FireAnimation.animate {

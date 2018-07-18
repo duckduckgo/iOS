@@ -20,7 +20,7 @@
 import Foundation
 import Alamofire
 
-public enum PixelDefinition: String {
+public enum PixelName: String {
     
     case appLaunch = "ml"
     case forgetAllExecuted = "mf"
@@ -28,23 +28,14 @@ public enum PixelDefinition: String {
     
 }
 
-public protocol PixelFiring {
-    
-    func fire(pixel: PixelDefinition)
-    
-}
+public class Pixel {
 
-public class Pixel: PixelFiring {
-
-    private static let pixel = Pixel()
+    private static let appUrls = AppUrls()
     
-    private let appUrls = AppUrls()
-    
-    public static func shared() -> Pixel {
-        return pixel
+    private init() {
     }
     
-    public func fire(pixel: PixelDefinition) {
+    public static func fire(pixel: PixelName) {
         Alamofire.request(appUrls.pixelUrl(forPixelNamed: pixel.rawValue)).response { data in
             Logger.log(items: "Fire pixel \(pixel.rawValue) \(data)")
         }

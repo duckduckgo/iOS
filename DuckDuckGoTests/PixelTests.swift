@@ -27,7 +27,7 @@ class PixelTests: XCTestCase {
             return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        Pixel.shared().fire(pixel: .appLaunch)
+        Pixel.fire(pixel: .appLaunch)
                 
         wait(for: [expectation], timeout: 1.0)
     }

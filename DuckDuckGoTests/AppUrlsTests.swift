@@ -34,7 +34,7 @@ class AppUrlsTests: XCTestCase {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
         let pixelUrl = testee.pixelUrl(forPixelNamed: "ml")
         
-        XCTAssertEqual("duckduckgo.com", pixelUrl.host)
+        XCTAssertEqual("improving.duckduckgo.com", pixelUrl.host)
         XCTAssertEqual("/t/ml", pixelUrl.path)
         XCTAssertEqual("x", pixelUrl.getParam(name: "atb"))
 

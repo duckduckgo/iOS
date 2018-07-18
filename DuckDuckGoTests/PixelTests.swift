@@ -12,7 +12,7 @@ import Core
 
 class PixelTests: XCTestCase {
     
-    let host = "duckduckgo.com"
+    let host = "improving.duckduckgo.com"
     
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()

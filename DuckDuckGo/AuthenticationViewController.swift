@@ -21,6 +21,10 @@ import UIKit
 
 class AuthenticationViewController: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     @IBOutlet weak var unlockInstructions: UIView!
 
     private let authenticator = Authenticator()

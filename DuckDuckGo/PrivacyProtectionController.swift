@@ -30,6 +30,10 @@ protocol PrivacyProtectionDelegate: class {
 
 class PrivacyProtectionController: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
     @IBOutlet weak var headerConstraint: NSLayoutConstraint!

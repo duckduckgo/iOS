@@ -22,6 +22,10 @@ import Core
 
 class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     @IBOutlet weak var swipeGestureRecogniser: UISwipeGestureRecognizer!
     @IBOutlet weak var button: UIButton!
 

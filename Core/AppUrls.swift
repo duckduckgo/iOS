@@ -41,7 +41,7 @@ public struct AppUrls {
         static let feedback = "\(home)/feedback.js?type=app-feedback"
         static let faviconService = "\(home)/ip3/%@.ico"
         
-        static let pixel = "https://improving.duckduckgo.com/t/%@"
+        static let pixel = "https://improving.duckduckgo.com/t/%@?p=ios&f=%@"
     }
 
     private struct Param {
@@ -175,8 +175,9 @@ public struct AppUrls {
         return true
     }
     
-    public func pixelUrl(forPixelNamed pixelName: String) -> URL {
-        var url = URL(string: Url.pixel.format(arguments: pixelName))!
+    public func pixelUrl(forPixelNamed pixelName: String, deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom) -> URL {
+        let formFactor = deviceType == .pad ? "tablet" : "phone"
+        var url = URL(string: Url.pixel.format(arguments: pixelName, formFactor))!
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         return url
     }

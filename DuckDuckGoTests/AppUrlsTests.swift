@@ -29,6 +29,27 @@ class AppUrlsTests: XCTestCase {
         mockStatisticsStore = MockStatisticsStore()
     }
 
+    func testWhenPixelUrlRequestedOnUnspecifiedDeviceIdiomThenFormFactorIsPhone() {
+        mockStatisticsStore.atbWithVariant = "x"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let pixelUrl = testee.pixelUrl(forPixelNamed: "ml", deviceType: .unspecified)
+        XCTAssertEqual("phone", pixelUrl.getParam(name: "f"))
+    }
+
+    func testWhenPixelUrlRequestedOniPhoneThenFormFactorIsPhone() {
+        mockStatisticsStore.atbWithVariant = "x"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let pixelUrl = testee.pixelUrl(forPixelNamed: "ml", deviceType: .phone)
+        XCTAssertEqual("phone", pixelUrl.getParam(name: "f"))
+    }
+
+    func testWhenPixelUrlRequestedOniPadThenFormFactorIsTablet() {
+        mockStatisticsStore.atbWithVariant = "x"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let pixelUrl = testee.pixelUrl(forPixelNamed: "ml", deviceType: .pad)
+        XCTAssertEqual("tablet", pixelUrl.getParam(name: "f"))
+    }
+    
     func testWhenPixelUrlRequestThenCorrectURLIsReturned() {
         mockStatisticsStore.atbWithVariant = "x"
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
@@ -37,7 +58,7 @@ class AppUrlsTests: XCTestCase {
         XCTAssertEqual("improving.duckduckgo.com", pixelUrl.host)
         XCTAssertEqual("/t/ml", pixelUrl.path)
         XCTAssertEqual("x", pixelUrl.getParam(name: "atb"))
-
+        XCTAssertEqual("ios", pixelUrl.getParam(name: "p"))
     }
     
     func testWhenFaviconUrlForDomainRequestedThenCorrectDomainIsCreated() {

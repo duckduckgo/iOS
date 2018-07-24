@@ -28,8 +28,7 @@ public enum FeatureName {
 public struct Variant {
 
     public static let defaultVariants: [Variant] = [
-        Variant(name: "me", percent: 50, features: [ .homeRowCTADefault ]),
-        Variant(name: "mf", percent: 50, features: [ .homeRowCTAAlternative1 ])
+        // None
     ]
 
     public let name: String

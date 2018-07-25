@@ -41,7 +41,7 @@ public struct AppUrls {
         static let feedback = "\(home)/feedback.js?type=app-feedback"
         static let faviconService = "\(home)/ip3/%@.ico"
         
-        static let pixel = "https://improving.duckduckgo.com/t/%@?p=ios&f=%@"
+        static let pixel = "https://improving.duckduckgo.com/t/%@_ios_%@"
     }
 
     private struct Param {

@@ -22,7 +22,7 @@ class PixelTests: XCTestCase {
     func testWhenAppLaunchPixelIsFiredThenCorrectURLRequestIsMade() {
         let expectation = XCTestExpectation()
         
-        stub(condition: isHost(host) && isPath("/t/ml")) { _ -> OHHTTPStubsResponse in
+        stub(condition: isHost(host) && pathStartsWith("/t/ml_ios_")) { _ -> OHHTTPStubsResponse in
             expectation.fulfill()
             return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }

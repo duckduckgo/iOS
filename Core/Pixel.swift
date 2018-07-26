@@ -32,11 +32,19 @@ public class Pixel {
 
     private static let appUrls = AppUrls()
     
+    private struct Constants {
+        
+        static let tablet = "tablet"
+        static let phone = "phone"
+        
+    }
+    
     private init() {
     }
     
-    public static func fire(pixel: PixelName) {
-        Alamofire.request(appUrls.pixelUrl(forPixelNamed: pixel.rawValue)).response { data in
+    public static func fire(pixel: PixelName, deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom) {
+        let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
+        Alamofire.request(appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)).response { data in
             Logger.log(items: "Fire pixel \(pixel.rawValue) \(data)")
         }
     }

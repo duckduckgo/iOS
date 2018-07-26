@@ -175,8 +175,7 @@ public struct AppUrls {
         return true
     }
     
-    public func pixelUrl(forPixelNamed pixelName: String, deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom) -> URL {
-        let formFactor = deviceType == .pad ? "tablet" : "phone"
+    public func pixelUrl(forPixelNamed pixelName: String, formFactor: String) -> URL {
         var url = URL(string: Url.pixel.format(arguments: pixelName, formFactor))!
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         return url

@@ -30,3 +30,5 @@ Contact us at https://duckduckgo.com/feedback if you have feedback, questions or
 
 ## License
 DuckDuckGo Search & Stories is distributed under the Apache 2.0 [license](https://github.com/duckduckgo/ios/blob/master/LICENSE).
+
+

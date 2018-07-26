@@ -98,6 +98,13 @@
                                             <action selector="dismiss" destination="A5s-B8-hd1" eventType="touchUpInside" id="1v6-Uy-jdj"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PlayButton" translatesAutoresizingMaskIntoConstraints="NO" id="d03-4C-y95">
+                                        <rect key="frame" x="98" y="197" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -136,6 +143,7 @@
                     <connections>
                         <outlet property="button" destination="DBH-J5-aEO" id="dTU-jl-S8L"/>
                         <outlet property="containerView" destination="WkQ-rU-dTC" id="Z5H-iy-ZLo"/>
+                        <outlet property="playButton" destination="d03-4C-y95" id="nF7-IY-lf6"/>
                         <outlet property="videoContainerView" destination="xKc-IP-PMy" id="RhP-PT-fjw"/>
                     </connections>
                 </viewController>
@@ -148,123 +156,10 @@
             </objects>
             <point key="canvasLocation" x="1675" y="-7"/>
         </scene>
-        <!--Home RowCTA Experiment1 View Controller-->
-        <scene sceneID="lUL-cr-mV1">
-            <objects>
-                <viewController storyboardIdentifier="experiment1" id="bWm-4u-DLw" customClass="HomeRowCTAExperiment1ViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Fsc-Sj-jN7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mt7-lu-2eF">
-                                <rect key="frame" x="10" y="266" width="300" height="56"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xB-1f-dQC">
-                                        <rect key="frame" x="284" y="8" width="8" height="8"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="8" id="De6-wP-T0S"/>
-                                            <constraint firstAttribute="width" constant="8" id="rkC-U1-Pbf"/>
-                                        </constraints>
-                                        <state key="normal" image="Remove"/>
-                                    </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Iib-9T-nCy">
-                                        <rect key="frame" x="21" y="7.5" width="258.5" height="41"/>
-                                        <subviews>
-                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeRowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="gsd-Vd-oBc">
-                                                <rect key="frame" x="0.0" y="0.0" width="41" height="41"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="41" id="TvX-xc-sCz"/>
-                                                    <constraint firstAttribute="width" constant="41" id="wME-nI-njc"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2X-gp-2tU">
-                                                <rect key="frame" x="49" y="0.0" width="209.5" height="41"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
-                                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wqo-tS-tf0" userLabel="No Thanks Tap View">
-                                        <rect key="frame" x="276" y="0.0" width="24" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="HxG-PK-m5V"/>
-                                            <constraint firstAttribute="width" constant="24" id="vp3-4d-yB0"/>
-                                        </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="485-zw-eZe" appends="YES" id="akf-RR-wCI"/>
-                                        </connections>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXE-nZ-iPk" userLabel="Show Me Tap View">
-                                        <rect key="frame" x="21" y="7.5" width="258.5" height="41"/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="b8Y-bP-zR5" appends="YES" id="ZrF-Kv-J4d"/>
-                                        </connections>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" red="0.1843137255" green="0.1843137255" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="sXE-nZ-iPk" firstAttribute="centerX" secondItem="Iib-9T-nCy" secondAttribute="centerX" id="AW5-qA-BnW"/>
-                                    <constraint firstAttribute="height" constant="56" id="NNj-h9-UFP"/>
-                                    <constraint firstItem="Wqo-tS-tf0" firstAttribute="top" secondItem="mt7-lu-2eF" secondAttribute="top" id="Pdv-zV-b1c"/>
-                                    <constraint firstItem="Iib-9T-nCy" firstAttribute="centerY" secondItem="mt7-lu-2eF" secondAttribute="centerY" id="WUv-Rf-alb"/>
-                                    <constraint firstAttribute="width" constant="400" id="YLF-Oz-DfO"/>
-                                    <constraint firstItem="Iib-9T-nCy" firstAttribute="centerX" secondItem="mt7-lu-2eF" secondAttribute="centerX" id="fC0-GR-7cg"/>
-                                    <constraint firstItem="sXE-nZ-iPk" firstAttribute="centerY" secondItem="Iib-9T-nCy" secondAttribute="centerY" id="fK0-eb-PIT"/>
-                                    <constraint firstAttribute="trailing" secondItem="4xB-1f-dQC" secondAttribute="trailing" constant="8" id="mkZ-9l-jSz"/>
-                                    <constraint firstItem="4xB-1f-dQC" firstAttribute="top" secondItem="mt7-lu-2eF" secondAttribute="top" constant="8" id="of7-ng-3G4"/>
-                                    <constraint firstItem="sXE-nZ-iPk" firstAttribute="width" secondItem="Iib-9T-nCy" secondAttribute="width" id="qEu-k4-9tv"/>
-                                    <constraint firstAttribute="trailing" secondItem="Wqo-tS-tf0" secondAttribute="trailing" id="ufV-yo-Ku0"/>
-                                    <constraint firstItem="sXE-nZ-iPk" firstAttribute="height" secondItem="Iib-9T-nCy" secondAttribute="height" id="wcY-X1-YBa"/>
-                                </constraints>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="YLF-Oz-DfO"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="mt7-lu-2eF" firstAttribute="centerY" secondItem="edX-Ml-Hvx" secondAttribute="centerY" id="5ci-rT-WaD"/>
-                            <constraint firstItem="mt7-lu-2eF" firstAttribute="width" secondItem="Fsc-Sj-jN7" secondAttribute="width" constant="-20" id="H83-Q0-bkI"/>
-                            <constraint firstItem="mt7-lu-2eF" firstAttribute="centerX" secondItem="edX-Ml-Hvx" secondAttribute="centerX" id="m3b-Ot-tJB"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="edX-Ml-Hvx"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="H83-Q0-bkI"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="H83-Q0-bkI"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="320" height="80"/>
-                    <connections>
-                        <outlet property="infoView" destination="mt7-lu-2eF" id="dbz-RK-MFH"/>
-                        <segue destination="A5s-B8-hd1" kind="presentation" identifier="showMe" modalPresentationStyle="overFullScreen" id="191-oH-QAJ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hXD-kP-Izj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="485-zw-eZe" userLabel="No Thanks">
-                    <connections>
-                        <action selector="noThanks" destination="bWm-4u-DLw" id="sud-Yp-a07"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="b8Y-bP-zR5" userLabel="Show Me">
-                    <connections>
-                        <action selector="showMe" destination="bWm-4u-DLw" id="RFP-Cn-VtA"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="-962" y="-341"/>
-        </scene>
-        <!--Home RowCTA Experiment2 View Controller-->
+        <!--Add To Home RowCTA View Controller-->
         <scene sceneID="KFn-Wr-GXw">
             <objects>
-                <viewController storyboardIdentifier="experiment2" id="C4P-N4-t83" customClass="HomeRowCTAExperiment2ViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeRowCTA" id="C4P-N4-t83" customClass="AddToHomeRowCTAViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9hh-Sd-Ezv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -390,16 +285,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wHl-6E-S7E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-962" y="419"/>
+            <point key="canvasLocation" x="210" y="-7"/>
         </scene>
     </scenes>
     <resources>
         <image name="HomeRowAppIcon" width="117" height="74"/>
-        <image name="HomeRowIcon" width="43" height="43"/>
+        <image name="PlayButton" width="100" height="100"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Smile" width="18" height="18"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="v6i-Nh-xCn"/>
-    </inferredMetricsTieBreakers>
 </document>

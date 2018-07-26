@@ -50,9 +50,8 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let feature = HomeRowCTA()
-        if let type = feature.ctaToShow() {
-            applyHomeRowCTA(type: type)
+        if HomeRowCTA().shouldShow() {
+            showHomeRowCTA()
         }
 
     }
@@ -112,22 +111,13 @@ class HomeViewController: UIViewController {
         homeRowCTAController = nil
     }
 
-    private func applyHomeRowCTA(type: HomeRowCTA.CTAType) {
+    private func showHomeRowCTA() {
         guard homeRowCTAController == nil else { return }
 
-        let childViewController = loadCTAViewController(forType: type)
+        let childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
         addChildViewController(childViewController)
-
-        switch type {
-
-        case .experiment1:
-                updateUIForExperiment1(childViewController)
-
-        case .experiment2:
-                updateUIForExperiment2(childViewController)
-
-        }
-
+        view.addSubview(childViewController.view)
+        childViewController.view.frame = view.bounds
         childViewController.didMove(toParentViewController: self)
         self.homeRowCTAController = childViewController
     }
@@ -142,22 +132,5 @@ class HomeViewController: UIViewController {
         removeFromParentViewController()
         view.removeFromSuperview()
     }
-
-    private func loadCTAViewController(forType type: HomeRowCTA.CTAType) -> UIViewController {
-        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: type.rawValue)
-    }
-
-    private func updateUIForExperiment1(_ childViewController: UIViewController) {
-        ctaContainer.addSubview(childViewController.view)
-        childViewController.view.frame = ctaContainer.bounds
-
-        ctaContainerHeight.constant = childViewController.preferredContentSize.height
-    }
-
-    private func updateUIForExperiment2(_ childViewController: UIViewController) {
-        view.addSubview(childViewController.view)
-        childViewController.view.frame = view.bounds
-    }
-
+    
 }

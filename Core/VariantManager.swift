@@ -21,18 +21,21 @@ import Foundation
 
 public enum FeatureName {
 
-    case homeRowCTADefault, homeRowCTAAlternative1
+    // No experimental features right now
 
 }
 
 public struct Variant {
 
     public static let defaultVariants: [Variant] = [
-        // None
+        
+        // SERP variants - do not remove
+        Variant(name: "sc", weight: 1, features: []),
+        Variant(name: "sd", weight: 1, features: [])
     ]
 
     public let name: String
-    public let percent: Int
+    public let weight: Int
     public let features: [FeatureName]
 
 }
@@ -85,11 +88,12 @@ public class DefaultVariantManager: VariantManager {
     }
 
     private func selectVariant() -> Variant? {
-        let randomPercent = rng.nextInt(upperBound: 100)
+        let totalWeight = variants.reduce(0, { $0 + $1.weight })
+        let randomPercent = rng.nextInt(upperBound: totalWeight)
 
         var runningTotal = 0
         for variant in variants {
-            runningTotal += variant.percent
+            runningTotal += variant.weight
             if randomPercent < runningTotal {
                 return variant
             }

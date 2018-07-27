@@ -9,16 +9,35 @@
 import XCTest
 import OHHTTPStubs
 import Core
+import Alamofire
 
 class PixelTests: XCTestCase {
     
     let host = "improving.duckduckgo.com"
+    let testAgent = "Test Agent"
+    let userAgentName = "User-Agent"
     
     override func tearDown() {
         OHHTTPStubs.removeAllStubs()
         super.tearDown()
     }
 
+    func testWhenPixelFiredThenAPIHeadersAreAdded() {
+        let expectation = XCTestExpectation()
+        
+        stub(condition: hasHeaderNamed(userAgentName, value: testAgent)) { _ -> OHHTTPStubsResponse in
+            expectation.fulfill()
+            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+        
+        var headers = Alamofire.SessionManager.defaultHTTPHeaders
+        headers[userAgentName] = testAgent
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withHeaders: headers)
+        
+        wait(for: [expectation], timeout: 1.0)
+
+    }
+    
     func testWhenAppLaunchPixelIsFiredFromPhoneThenCorrectURLRequestIsMade() {
         let expectation = XCTestExpectation()
         
@@ -27,7 +46,7 @@ class PixelTests: XCTestCase {
             return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        Pixel.fire(pixel: .appLaunch, deviceType: .phone)
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone)
                 
         wait(for: [expectation], timeout: 1.0)
     }
@@ -40,7 +59,7 @@ class PixelTests: XCTestCase {
             return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        Pixel.fire(pixel: .appLaunch, deviceType: .pad)
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .pad)
         
         wait(for: [expectation], timeout: 1.0)
     }
@@ -53,7 +72,7 @@ class PixelTests: XCTestCase {
             return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }
         
-        Pixel.fire(pixel: .appLaunch, deviceType: .unspecified)
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .unspecified)
         
         wait(for: [expectation], timeout: 1.0)
     }

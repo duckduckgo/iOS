@@ -252,7 +252,10 @@ open class WebViewController: UIViewController {
     }
     
     public func tearDown() {
-        addObservers() // prevents a crash if the observers were not there for some reason (e.g. WKWebView process crashed)
+        if #available(iOS 11, *) {
+            // prevents a crash if the observers were not there for some reason (e.g. WKWebView process crashed)
+            addObservers()
+        }
         removeObservers()
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)

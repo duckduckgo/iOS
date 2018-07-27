@@ -24,8 +24,6 @@ import XCTest
 class HomeRowReminderTests: XCTestCase {
 
     var storage: MockHomeRowReminderStorage!
-    var enabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ .homeRowCTADefault ]))
-    var disabledVariantManager = MockVariantManager(currentVariant: Variant(name: "anything", percent: 100, features: [ ]))
 
     override func setUp() {
         storage = MockHomeRowReminderStorage()

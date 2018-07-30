@@ -123,7 +123,7 @@
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
                         <segue destination="454-th-ep1" kind="presentation" identifier="Onboarding" modalTransitionStyle="flipHorizontal" id="uIC-hz-aFs"/>
                         <segue destination="Lcg-P1-w26" kind="presentation" identifier="instructions" modalPresentationStyle="overCurrentContext" id="vjb-jn-qZe"/>
-                        <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" id="URp-Fv-PV5"/>
+                        <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" modalPresentationStyle="overCurrentContext" id="URp-Fv-PV5"/>
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
                     </connections>
                 </viewController>

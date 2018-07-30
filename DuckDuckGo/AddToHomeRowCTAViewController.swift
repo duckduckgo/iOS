@@ -19,7 +19,7 @@
 
 import UIKit
 
-class HomeRowCTAExperiment2ViewController: UIViewController {
+class AddToHomeRowCTAViewController: UIViewController {
 
     struct Constants {
 
@@ -90,6 +90,14 @@ class HomeRowCTAExperiment2ViewController: UIViewController {
         UIView.animate(withDuration: Constants.appearanceAnimationDuration) {
             self.configureForFirstAppearance()
         }
+    }
+    
+    static func loadFromStoryboard() -> AddToHomeRowCTAViewController {
+        let storyboard = UIStoryboard(name: "HomeRow", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeRowCTA") as? AddToHomeRowCTAViewController else {
+            fatalError("Failed to load view controller for HomeRowCTA")
+        }
+        return controller
     }
 
 }

@@ -23,9 +23,9 @@ import XCTest
 class VariantManagerTests: XCTestCase {
 
     let testVariants = [
-        Variant(name: "mb", percent: 50, features: []),
-        Variant(name: "mc", percent: 25, features: []),
-        Variant(name: "md", percent: 25, features: [])
+        Variant(name: "mb", weight: 50, features: []),
+        Variant(name: "mc", weight: 25, features: []),
+        Variant(name: "md", weight: 25, features: [])
     ]
 
     func testWhenExistingUserThenAssignIfNeededDoesNothing() {
@@ -42,7 +42,7 @@ class VariantManagerTests: XCTestCase {
 
     func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
 
-        let variant = Variant(name: "anything", percent: 100, features: [])
+        let variant = Variant(name: "anything", weight: 100, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
         subject.assignVariantIfNeeded()
         XCTAssertEqual(variant.name, subject.currentVariant?.name)

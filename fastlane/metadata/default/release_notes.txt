@@ -1,1 +1,1 @@
-In this release we have changed the colour of our onboarding screen to be more accessible.
+This release fixes a bug where full screen video would hide the status bar after rotation.

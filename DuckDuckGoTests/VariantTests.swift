@@ -22,8 +22,11 @@ import XCTest
 
 class VariantTests: XCTestCase {
 
-    func testDefaultVariantsPercentageTotalIs100() {
-        XCTAssertEqual(100, Variant.defaultVariants.reduce(0, { $0 + $1.percent }))
+    func testSerpVariants() {
+        let variants = Variant.defaultVariants.compactMap({ [ "sc", "sd" ].contains($0.name) ? $0 : nil })
+        XCTAssertEqual(2, variants.count)
+        XCTAssertEqual(1, variants[0].weight)
+        XCTAssertEqual(1, variants[1].weight)
     }
 
 }

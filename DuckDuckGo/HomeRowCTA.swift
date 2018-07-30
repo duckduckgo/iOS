@@ -27,41 +27,18 @@ protocol HomeRowCTAStorage: class {
 
 class HomeRowCTA {
 
-    enum CTAType: String {
-
-        case experiment1, experiment2
-
-    }
-
     private let storage: HomeRowCTAStorage
-    private let variantManager: VariantManager
 
-    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(), variantManager: VariantManager = DefaultVariantManager()) {
+    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage()) {
         self.storage = storage
-        self.variantManager = variantManager
     }
 
-    func ctaToShow() -> CTAType? {
-        guard !storage.dismissed else { return nil }
-        guard let variant = variantManager.currentVariant else { return .experiment1 }
-
-        if variant.features.contains(.homeRowCTADefault) {
-            return .experiment1
-        } else if variant.features.contains(.homeRowCTAAlternative1) {
-            return .experiment2
-        }
-
-        return nil
+    func shouldShow() -> Bool {
+        return !storage.dismissed
     }
 
     func dismissed() {
         storage.dismissed = true
-    }
-
-    func shown() {
-        if ctaToShow() == .experiment1 {
-            storage.dismissed = true
-        }
     }
 
 }

@@ -25,6 +25,7 @@ class HomeRowInstructionsViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var videoContainerView: UIView!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var playButton: UIImageView!
 
     weak var layer: AVPlayerLayer?
     weak var player: AVPlayer?
@@ -40,7 +41,7 @@ class HomeRowInstructionsViewController: UIViewController {
     @IBAction func playVideo() {
         guard let player = player else { return }
         player.seek(to: CMTime(seconds: 0.0, preferredTimescale: player.currentTime().timescale))
-        player.play()
+        startVideo()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +51,7 @@ class HomeRowInstructionsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        HomeRowCTA().shown()
+        HomeRowCTA().dismissed()
         HomeRowReminder().setShown()
     }
 
@@ -73,10 +74,24 @@ class HomeRowInstructionsViewController: UIViewController {
         layer = AVPlayerLayer(player: player)
         videoContainerView.layer.addSublayer(layer!)
         layer?.frame = videoContainerView.bounds
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerDidFinishPlaying(note:)),
+                                               name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player!.currentItem)
+        
     }
 
     private func startVideo() {
+        playButton.isHidden = true
         player?.play()
     }
 
+    @objc func playerDidFinishPlaying(note: NSNotification) {
+        playButton.isHidden = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
 }

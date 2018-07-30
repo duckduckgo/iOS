@@ -23,6 +23,10 @@ import Core
 
 class MainViewController: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
@@ -236,6 +240,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func forgetAll(completion: @escaping () -> Void) {
+        Pixel.fire(pixel: .forgetAllExecuted)
         ServerTrustCache.shared.clear()
         WebCacheManager.clear()
         FireAnimation.animate {

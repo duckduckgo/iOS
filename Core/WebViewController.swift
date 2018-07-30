@@ -56,6 +56,8 @@ open class WebViewController: UIViewController {
     private lazy var httpsUpgrade = HTTPSUpgrade()
     private lazy var tld = TLD()
 
+    private var tearDownCount = 0
+    
     public var name: String? {
         return webView.title
     }
@@ -93,17 +95,21 @@ open class WebViewController: UIViewController {
         shouldReloadOnError = true
     }
 
+    fileprivate func addObservers() {
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
+    }
+    
     open func attachWebView(configuration: WKWebViewConfiguration) {
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
 
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
+        addObservers()
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -239,12 +245,20 @@ open class WebViewController: UIViewController {
         webView.goForward()
     }
 
-    public func tearDown() {
+    fileprivate func removeObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
+    }
+    
+    public func tearDown() {
+        guard tearDownCount == 0 else {
+            fatalError("tearDown has already happened")
+        }
+        tearDownCount += 1
+        removeObservers()
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)
     }

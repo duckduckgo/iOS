@@ -56,6 +56,8 @@ open class WebViewController: UIViewController {
     private lazy var httpsUpgrade = HTTPSUpgrade()
     private lazy var tld = TLD()
 
+    private var tearDownCount = 0
+    
     public var name: String? {
         return webView.title
     }
@@ -252,10 +254,10 @@ open class WebViewController: UIViewController {
     }
     
     public func tearDown() {
-        if #available(iOS 11, *) {
-            // prevents a crash if the observers were not there for some reason (e.g. WKWebView process crashed)
-            addObservers()
+        guard tearDownCount == 0 else {
+            fatalError("tearDown has already happened")
         }
+        tearDownCount += 1
         removeObservers()
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)

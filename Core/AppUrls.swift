@@ -25,7 +25,7 @@ public struct AppUrls {
 
         // You can change this to use a subdomain for testing (e.g. "test.")
         static let subdomain = ""
-        static let domain = "duckduckgo.com"
+        static let domain = ProcessInfo.processInfo.environment["BASE_DOMAIN_AND_PORT", default: "duckduckgo.com"]
         static let base = "\(subdomain)\(domain)"
         static let home = "https://\(base)"
         static let favicon = "\(home)/favicon.ico"

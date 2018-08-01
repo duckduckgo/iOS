@@ -86,7 +86,7 @@ class AtbIntegrationTests: XCTestCase {
         atbRequests.removeAll()
 
         search(forText: "pears")
-        assertSearch(text: "lemons", atb: Constants.initialAtb)
+        assertSearch(text: "pears", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb)
         searchRequests.removeAll()
         atbRequests.removeAll()

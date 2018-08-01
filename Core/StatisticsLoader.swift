@@ -76,31 +76,24 @@ public class StatisticsLoader {
     }
 
     public func refreshRetentionAtb(completion: @escaping Completion = {}) {
-        print("***", #function, "IN")
         
         guard statisticsStore.hasInstallStatistics else {
             requestInstallStatistics()
-            print("***", #function, "requesting install stats, OUT")
             return
         }
 
         APIRequest.request(url: appUrls.atb) { response, error in
-            print("***", #function, "API: IN")
             if let error = error {
-                print("***", #function, "API: error calling ATB", error)
                 Logger.log(text: "Atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
 
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
-                print("***", #function, "API: ATB updated", atb.version)
                 self.statisticsStore.retentionAtb = atb.version
             }
 
-            print("***", #function, "API: OUT")
             completion()
         }
-        print("***", #function, "API call made, OUT")
     }
 }

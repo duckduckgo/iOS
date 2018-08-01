@@ -103,7 +103,7 @@ open class WebViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
     }
     
-    open func attachWebView(configuration: WKWebViewConfiguration) {
+    open func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?) {
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
@@ -118,7 +118,7 @@ open class WebViewController: UIViewController {
 
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.consumeCookies()
-            if let url = self.url {
+            if let url = url {
                 self.load(url: url)
             }
         }
@@ -152,7 +152,6 @@ open class WebViewController: UIViewController {
     }
 
     private func load(urlRequest: URLRequest) {
-        print("***", #function, urlRequest.url)
         loadViewIfNeeded()
         webView.stopLoading()
         webView.load(urlRequest)
@@ -387,7 +386,6 @@ extension WebViewController: WKNavigationDelegate {
         }
 
         if appUrls.isDuckDuckGoSearch(url: url) {
-            print("***", #function, "refreshing statistics", url)
             StatisticsLoader.shared.refreshRetentionAtb()
         }
 

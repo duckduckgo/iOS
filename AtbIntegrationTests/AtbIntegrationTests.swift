@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-
 import XCTest
 import Swifter
 
@@ -39,8 +38,7 @@ class AtbIntegrationTests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         
-        // This is a convenience for running in XCode and is not dependable. Simulator should be reset properly first.
-        Springboard.deleteMyApp()
+        atbToSet = Constants.initialAtb
         
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
@@ -48,36 +46,48 @@ class AtbIntegrationTests: XCTestCase {
         ]
         
         addRequestHandlers()
+        
+        do {
+            try server.start()
+        } catch {
+            fatalError("Could not start server")
+        }
+        
+        Springboard.deleteMyApp()
+        app.launch()
+        skipOnboarding()
+
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-    }
-    
-    fileprivate func skipOnboarding() {
-        let continueButton = app.buttons["Continue"]
-        continueButton.tap()
-        continueButton.tap()
-    }
-    
-    func test() throws {
-        try server.start()
+        server.stop()
         
-        app.launch()
-        skipOnboarding()
+        searchRequests.removeAll()
+        extiRequests.removeAll()
+        atbRequests.removeAll()
+
+    }
+    
+    func testWhenAppIsInstalledThenInitialAtbIsRetrieved() throws {
         
         assertGetAtbCalled()
         assertExtiCalledOnce()
-        atbRequests.removeAll()
 
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
+        
         search(forText: "oranges")
         assertSearch(text: "oranges", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        searchRequests.removeAll()
-        atbRequests.removeAll()
         
-        updateATBForRetention()
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
+        atbToSet = Constants.retentionAtb
+
         search(forText: "lemons")
         assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
@@ -86,15 +96,16 @@ class AtbIntegrationTests: XCTestCase {
 
         search(forText: "pears")
         assertSearch(text: "pears", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb)
-        searchRequests.removeAll()
-        atbRequests.removeAll()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb, expectedRequestCount: 1)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         
         search(forText: "http://localhost:8080?q=beagles")
         assertSearch(text: "beagles", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb)
-        searchRequests.removeAll()
-        atbRequests.removeAll()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
 
         assertExtiCalledOnce()
     }
@@ -107,7 +118,11 @@ class AtbIntegrationTests: XCTestCase {
     
     func assertSearch(text: String, atb: String) {
         XCTAssertEqual(1, searchRequests.count)
-        guard let request = searchRequests.first else { fatalError() }
+
+        guard let request = searchRequests.last else {
+            XCTFail("No search request")
+            return
+        }
         XCTAssertEqual(text, request.queryParam("q"))
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(atb) ?? false)
     }
@@ -118,10 +133,12 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
     }
     
-    func assertAtb(expectedAtb: String, expectedSetAtb: String) {
-        XCTAssertEqual(1, atbRequests.count)
-        guard let request = atbRequests.first else {
-            fatalError()
+    // by default expects 2 atb requests, the initial get atb and the one being asserted
+    func assertAtb(expectedAtb: String, expectedSetAtb: String, expectedRequestCount: Int = 2) {
+        XCTAssertEqual(expectedRequestCount, atbRequests.count)
+        guard let request = atbRequests.last else {
+            XCTFail("No atb request")
+            return
         }
         
         XCTAssertEqual(2, request.queryParams.count)
@@ -129,10 +146,6 @@ class AtbIntegrationTests: XCTestCase {
                       "first.atb does not start with \(expectedSetAtb)")
         XCTAssertEqual(expectedSetAtb, request.queryParam("set_atb"))
         
-    }
-    
-    private func updateATBForRetention() {
-        atbToSet = Constants.retentionAtb
     }
     
     private func search(forText text: String) {
@@ -163,6 +176,12 @@ class AtbIntegrationTests: XCTestCase {
         
     }
     
+    private func skipOnboarding() {
+        let continueButton = app.buttons["Continue"]
+        continueButton.tap()
+        continueButton.tap()
+    }
+    
 }
 
 fileprivate extension HttpRequest {
@@ -173,7 +192,8 @@ fileprivate extension HttpRequest {
     
 }
 
-fileprivate class Springboard {
+// from: https://stackoverflow.com/a/36168101/73479
+class Springboard {
     
     static let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
     
@@ -204,4 +224,3 @@ fileprivate class Springboard {
         }
     }
 }
-

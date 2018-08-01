@@ -64,6 +64,15 @@ class DevModeProtocol: URLProtocol {
         return mutableRequest
     }
     
+    override func startLoading() {
+        //do nothing
+    }
+    
+    override func stopLoading() {
+        //do nothing
+    }
+
+    
 }
 
 class MockStatisticsStore: StatisticsStore {

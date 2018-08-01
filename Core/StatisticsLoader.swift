@@ -78,7 +78,9 @@ public class StatisticsLoader {
     public func refreshRetentionAtb(completion: @escaping Completion = {}) {
         
         guard statisticsStore.hasInstallStatistics else {
-            requestInstallStatistics()
+            requestInstallStatistics {
+                completion()
+            }
             return
         }
 

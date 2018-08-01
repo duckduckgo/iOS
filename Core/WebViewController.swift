@@ -152,6 +152,7 @@ open class WebViewController: UIViewController {
     }
 
     private func load(urlRequest: URLRequest) {
+        print("***", #function, urlRequest.url)
         loadViewIfNeeded()
         webView.stopLoading()
         webView.load(urlRequest)
@@ -386,6 +387,7 @@ extension WebViewController: WKNavigationDelegate {
         }
 
         if appUrls.isDuckDuckGoSearch(url: url) {
+            print("***", #function, "refreshing statistics", url)
             StatisticsLoader.shared.refreshRetentionAtb()
         }
 

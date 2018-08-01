@@ -27,6 +27,7 @@ class AtbIntegrationTests: XCTestCase {
         super.setUp()
         continueAfterFailure = false
         
+        // This is a convenience for running in XCode and is not dependable. Simulator should be reset properly first.
         Springboard.deleteMyApp()
         
         app.launchEnvironment = [
@@ -65,59 +66,63 @@ class AtbIntegrationTests: XCTestCase {
         try server.start()
         
         app.launch()
-        
         skipOnboarding()
         
+        assertGetAtbCalled()
+        assertExtiCalledOnce()
+        atbRequests.removeAll()
+
         search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        searchRequests.removeAll()
+        atbRequests.removeAll()
         
         updateATBForRetention()
-        
         search(forText: "lemons")
-        
-        search(forText: "pears")
+        assertSearch(text: "lemons", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        searchRequests.removeAll()
+        atbRequests.removeAll()
 
-        // for debug purposes
-        for request in extiRequests + atbRequests + searchRequests {
-            print(request.path)
+        search(forText: "pears")
+        assertSearch(text: "lemons", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb)
+        searchRequests.removeAll()
+        atbRequests.removeAll()
+        
+        assertExtiCalledOnce()
+    }
+    
+    func assertGetAtbCalled() {
+        XCTAssertEqual(1, atbRequests.count)
+        guard let request = atbRequests.first else { fatalError() }
+        XCTAssertEqual(0, request.queryParams.count)
+    }
+    
+    func assertSearch(text: String, atb: String) {
+        XCTAssertEqual(1, searchRequests.count)
+        guard let request = searchRequests.first else { fatalError() }
+        XCTAssertEqual(text, request.queryParam("q"))
+        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(atb) ?? false)
+    }
+    
+    func assertExtiCalledOnce() {
+        XCTAssertEqual(1, extiRequests.count)
+        let atbParam = extiRequests.first?.queryParams[0].1
+        XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
+    }
+    
+    func assertAtb(expectedAtb: String, expectedSetAtb: String) {
+        XCTAssertEqual(1, atbRequests.count)
+        guard let request = atbRequests.first else {
+            fatalError()
         }
         
-        assertExti(requests: extiRequests)
-        assertAtb(requests: atbRequests)
-        assertSearch(requests: searchRequests)
-    }
-    
-    func assertExti(requests: [HttpRequest], file: StaticString = #file, line: UInt = #line) {
-        XCTAssertEqual(1, requests.count, file: file, line: line)
-        
-        let atbParam = requests.first?.queryParams[0].1
-        XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false, file: file, line: line)
-    }
-    
-    func assertAtb(request: HttpRequest, expectedAtb: String, expectedSetAtb: String, file: StaticString = #file, line: UInt = #line) {
-        
-        XCTAssertEqual(2, request.queryParams.count, file: file, line: line)
+        XCTAssertEqual(2, request.queryParams.count)
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
-                      "first.atb does not start with \(expectedSetAtb)", file: file, line: line)
-        XCTAssertEqual(expectedSetAtb, request.queryParam("set_atb"), file: file, line: line)
-        
-    }
-    
-    func assertAtb(requests: [HttpRequest], file: StaticString = #file, line: UInt = #line) {
-        XCTAssertEqual(5, requests.count, file: file, line: line)
-        XCTAssertEqual(0, requests.first?.queryParams.count, file: file, line: line)
-        assertAtb(request: requests[1], expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, file: file, line: line)
-        assertAtb(request: requests.last!, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb, file: file, line: line)
-    }
-    
-    func assertSearch(requests: [HttpRequest], file: StaticString = #file, line: UInt = #line) {
-        XCTAssertEqual(3, requests.count, file: file, line: line)
-        
-        var index = 0
-        for request in requests {
-            XCTAssertTrue(request.queryParam("atb")?.hasPrefix(Constants.initialAtb) ?? false,
-                          "request[\(index)].atb does not start with \(Constants.initialAtb)", file: file, line: line)
-            index += 1
-        }
+                      "first.atb does not start with \(expectedSetAtb)")
+        XCTAssertEqual(expectedSetAtb, request.queryParam("set_atb"))
         
     }
     
@@ -163,7 +168,7 @@ fileprivate extension HttpRequest {
     
 }
 
-class Springboard {
+fileprivate class Springboard {
     
     static let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
     

@@ -357,9 +357,17 @@ extension WebViewController: WKNavigationDelegate {
                         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         let decision = decidePolicyFor(navigationAction: navigationAction)
+        
+        if let url = navigationAction.request.url,
+            decision == .allow,
+            appUrls.isDuckDuckGoSearch(url: url) {
+            StatisticsLoader.shared.refreshRetentionAtb()
+        }
+        
         if decision == .allow && navigationAction.isTargettingMainFrame() {
             showProgressIndicator()
         }
+        
         decisionHandler(decision)
     }
 
@@ -383,10 +391,6 @@ extension WebViewController: WKNavigationDelegate {
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
                 return .allow
-        }
-
-        if appUrls.isDuckDuckGoSearch(url: url) {
-            StatisticsLoader.shared.refreshRetentionAtb()
         }
 
         if shouldReissueSearch(for: url) {

@@ -49,19 +49,6 @@ class AtbIntegrationTests: XCTestCase {
         continueButton.tap()
     }
     
-    /**
- 
-     /exti/?atb=v001-1sd
-     /atb.js
-     /atb.js?atb=v001-1sd&set_atb=v001-1
-     /atb.js?atb=v001-1sd&set_atb=v001-1
-     /atb.js?atb=v001-1sd&set_atb=v001-1
-     /atb.js?atb=v001-1sd&set_atb=v002-7
-     /?q=oranges&t=ddg_ios&atb=v001-1sd
-     /?q=lemons&t=ddg_ios&atb=v001-1sd
-     /?q=pears&t=ddg_ios&atb=v001-1sd
-     
-    */
     func test() throws {
         try server.start()
         
@@ -91,6 +78,12 @@ class AtbIntegrationTests: XCTestCase {
         searchRequests.removeAll()
         atbRequests.removeAll()
         
+        search(forText: "http://localhost:8080?q=beagles")
+        assertSearch(text: "beagles", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb)
+        searchRequests.removeAll()
+        atbRequests.removeAll()
+
         assertExtiCalledOnce()
     }
     

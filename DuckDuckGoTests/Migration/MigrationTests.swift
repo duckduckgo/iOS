@@ -148,6 +148,11 @@ class MigrationTests: XCTestCase {
         testOnlyFavouriteStoryMigratedToBookmarks()
         XCTAssertEqual(0, migration.allStories().count)
     }
+    
+    // TODO remove this
+    func testFail() {
+        XCTFail("Deliberate fail to see output in Travis")
+    }
 
     func testSeveralFavouriteStoriesMigratedToBookmarks() {
 

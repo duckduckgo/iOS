@@ -24,7 +24,7 @@ public struct AppUrls {
     private struct Url {
         
         static var devMode: String {
-            return isDebugBuild ? "dev=1" : ""
+            return isDebugBuild ? "test=1" : ""
         }
         
         static let domain = "duckduckgo.com"

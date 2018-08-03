@@ -25,6 +25,9 @@ class AtbIntegrationTests: XCTestCase {
     struct Constants {
         static let initialAtb = "v100-1"
         static let retentionAtb = "v102-7"
+        static let devmode = "test"
+        static let atbParam = "atb"
+        static let setAtbParam = "set_atb"
     }
     
     let app = XCUIApplication()
@@ -115,7 +118,7 @@ class AtbIntegrationTests: XCTestCase {
         guard let request = atbRequests.first else { fatalError() }
         
         XCTAssertEqual(1, request.queryParams.count)
-        XCTAssertEqual("1", request.queryParam("dev"))
+        XCTAssertEqual("1", request.queryParam(Constants.devmode))
     }
     
     func assertSearch(text: String, atb: String) {
@@ -126,12 +129,12 @@ class AtbIntegrationTests: XCTestCase {
             return
         }
         XCTAssertEqual(text, request.queryParam("q"))
-        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(atb) ?? false)
+        XCTAssertTrue(request.queryParam(Constants.atbParam)?.hasPrefix(atb) ?? false)
     }
     
     func assertExtiCalledOnce() {
         XCTAssertEqual(1, extiRequests.count)
-        let atbParam = extiRequests.first?.queryParam("atb")
+        let atbParam = extiRequests.first?.queryParam(Constants.atbParam)
         XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
     }
     
@@ -146,8 +149,8 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertEqual(3, request.queryParams.count)
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
                       "first.atb does not start with \(expectedSetAtb)")
-        XCTAssertEqual(expectedSetAtb, request.queryParam("set_atb"))
-        XCTAssertEqual("1", request.queryParam("dev"))
+        XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
+        XCTAssertEqual("1", request.queryParam(Constants.devmode))
 
     }
     

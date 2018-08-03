@@ -89,6 +89,10 @@ extension URL {
         return text.replacingOccurrences(of: "+", with: "%20")
     }
 
+    public func isCustomURLScheme() -> Bool {
+        return scheme != nil && !absoluteString.hasPrefix(URLProtocol.http.scheme) && !absoluteString.hasPrefix(URLProtocol.https.scheme)
+    }
+    
     // MARK: static
 
     public static func webUrl(fromText text: String) -> URL? {

@@ -44,7 +44,7 @@ public class Pixel {
     
     public static func fire(pixel: PixelName,
                             forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
-                            withHeaders headers:HTTPHeaders = APIHeaders().defaultHeaders) {
+                            withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders) {
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         Alamofire.request(appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor),
                           headers: headers).response { data in

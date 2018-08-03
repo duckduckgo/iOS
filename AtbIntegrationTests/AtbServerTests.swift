@@ -54,6 +54,25 @@ class AtbServerTests: XCTestCase {
         XCTAssertNotNil(store.atb)
     }
     
+    func testSetAtb() {
+        
+        store.atb = "v117-2"
+        store.hasInstallStatistics = true
+      
+        let waitForCompletion = expectation(description: "wait for completion")
+        loader.load {
+            
+        }
+        loader.refreshRetentionAtb {
+            waitForCompletion.fulfill()
+        }
+        
+        wait(for: [waitForCompletion], timeout: 5.0)
+
+        XCTAssertNotNil(store.retentionAtb)
+        XCTAssertNotEqual(store.atb, store.retentionAtb)
+    }
+    
 }
 
 class MockStatisticsStore: StatisticsStore {

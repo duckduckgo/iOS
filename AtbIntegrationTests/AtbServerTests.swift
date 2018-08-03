@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import Alamofire
 @testable import Core
 
 class AtbServerTests: XCTestCase {
@@ -25,20 +26,23 @@ class AtbServerTests: XCTestCase {
     var loader: StatisticsLoader!
     var store: MockStatisticsStore!
     
+    static var defaultSessionConfig = URLSessionConfiguration.default
+    var original: Method!
+    var new: Method!
+    
     override func setUp() {
         super.setUp()
-        URLProtocol.registerClass(DevModeProtocol.self)
         
         store = MockStatisticsStore()
         loader = StatisticsLoader(statisticsStore: store)
+        
     }
     
     override func tearDown() {
         super.tearDown()
-        URLProtocol.unregisterClass(DevModeProtocol.self)
     }
     
-    func disabled_testExtiCall() {
+    func testExtiCall() {
         
         let waitForCompletion = expectation(description: "wait for completion")
         loader.refreshRetentionAtb {
@@ -49,29 +53,6 @@ class AtbServerTests: XCTestCase {
         
         XCTAssertNotNil(store.atb)
     }
-    
-}
-
-class DevModeProtocol: URLProtocol {
-    
-    override class func canInit(with request: URLRequest) -> Bool {
-        return true
-    }
-    
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
-        var mutableRequest = request
-        mutableRequest.url = mutableRequest.url?.addParam(name: "dev", value: "1")
-        return mutableRequest
-    }
-    
-    override func startLoading() {
-        //do nothing
-    }
-    
-    override func stopLoading() {
-        //do nothing
-    }
-
     
 }
 

@@ -22,6 +22,11 @@ import Foundation
 public struct AppUrls {
 
     private struct Url {
+        
+        static var devMode: String {
+            return isDebugBuild ? "dev=1" : ""
+        }
+        
         static let domain = "duckduckgo.com"
         
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://\(domain)"]
@@ -33,8 +38,8 @@ public struct AppUrls {
         static let httpsUpgradeList = "\(base)/contentblocking.js?l=https2"
         static let trackersWhitelist = "\(base)/contentblocking/trackers-whitelist.txt"
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
-        static let atb = "\(base)/atb.js"
-        static let exti = "\(base)/exti/"
+        static let atb = "\(base)/atb.js?\(devMode)"
+        static let exti = "\(base)/exti/?\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
         static let faviconService = "\(base)/ip3/%@.ico"
         

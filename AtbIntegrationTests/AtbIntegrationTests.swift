@@ -113,7 +113,9 @@ class AtbIntegrationTests: XCTestCase {
     func assertGetAtbCalled() {
         XCTAssertEqual(1, atbRequests.count)
         guard let request = atbRequests.first else { fatalError() }
-        XCTAssertEqual(0, request.queryParams.count)
+        
+        XCTAssertEqual(1, request.queryParams.count)
+        XCTAssertEqual("1", request.queryParam("dev"))
     }
     
     func assertSearch(text: String, atb: String) {
@@ -129,7 +131,7 @@ class AtbIntegrationTests: XCTestCase {
     
     func assertExtiCalledOnce() {
         XCTAssertEqual(1, extiRequests.count)
-        let atbParam = extiRequests.first?.queryParams[0].1
+        let atbParam = extiRequests.first?.queryParam("atb")
         XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
     }
     
@@ -141,11 +143,12 @@ class AtbIntegrationTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(2, request.queryParams.count)
+        XCTAssertEqual(3, request.queryParams.count)
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
                       "first.atb does not start with \(expectedSetAtb)")
         XCTAssertEqual(expectedSetAtb, request.queryParam("set_atb"))
-        
+        XCTAssertEqual("1", request.queryParam("dev"))
+
     }
     
     private func search(forText text: String) {

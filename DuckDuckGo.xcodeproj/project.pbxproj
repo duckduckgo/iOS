@@ -52,7 +52,6 @@
 		85124C13201F5B4900288070 /* SurrogateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85124C12201F5B4900288070 /* SurrogateTests.swift */; };
 		8512BCB620612E500085E862 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCB520612E500085E862 /* UITests.swift */; };
 		8512BCBE20615EB40085E862 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBD20615EB30085E862 /* SnapshotHelper.swift */; };
-		8512BCC02061B6110085E862 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBF2061B6110085E862 /* global.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
@@ -158,6 +157,7 @@
 		85F21DBE21121147002631A6 /* AtbServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DBD21121147002631A6 /* AtbServerTests.swift */; };
 		85F21DBF2112155E002631A6 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1C81A731F33873800241DE6 /* Alamofire.framework */; };
 		85F21DC021123B03002631A6 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
+		85F21DC621145DD5002631A6 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBF2061B6110085E862 /* global.swift */; };
 		85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */; };
 		85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */; };
 		85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6191A20D293AC003904D1 /* HomeRowCTA.swift */; };
@@ -1550,6 +1550,7 @@
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				8512BCBF2061B6110085E862 /* global.swift */,
 				F11E23051ED33D8B00523BC9 /* API */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
@@ -1910,7 +1911,6 @@
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
 				F1134EC01F40DD9300B73467 /* AppVersionExtension.swift */,
-				8512BCBF2061B6110085E862 /* global.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2631,7 +2631,6 @@
 				F1134EC11F40DD9300B73467 /* AppVersionExtension.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
-				8512BCC02061B6110085E862 /* global.swift in Sources */,
 				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
 				83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
@@ -2849,6 +2848,7 @@
 				85047B861F6887D2002A95D8 /* BlockerListsLoader.swift in Sources */,
 				F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */,
 				850250B320D803F4002199C7 /* AtbAndVariantCleanup.swift in Sources */,
+				85F21DC621145DD5002631A6 /* global.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,

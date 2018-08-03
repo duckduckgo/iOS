@@ -20,7 +20,7 @@
 import Foundation
 
 #if DEBUG
-let isDebugBuild = true
+public let isDebugBuild = true
 #else
-let isDebugBuild = false
+public let isDebugBuild = false
 #endif

@@ -7,4 +7,4 @@ cache:
   directories:
   - Carthage
 script:
-  - ./run_tests.sh
+  - ./run_atb_tests.sh

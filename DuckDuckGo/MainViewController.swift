@@ -241,7 +241,6 @@ class MainViewController: UIViewController {
 
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         Pixel.fire(pixel: .forgetAllExecuted)
-        SupportedExternalURLScheme.reset()
         ServerTrustCache.shared.clear()
         WebCacheManager.clear()
         FireAnimation.animate {

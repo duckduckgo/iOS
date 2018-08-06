@@ -337,21 +337,21 @@ class TabViewController: WebViewController {
            return true
         }
         
+        if SupportedExternalURLScheme.isSupported(url: url) {
+            return false
+        }
+        
         loadedURL = url
         if url.isCustomURLScheme() {
-            let alert = UIAlertController(title: "DuckDuckGo can't load this page.", message: "We don't support this URL.\n\n\(url.absoluteString)\n\nDo you want to open it externally?", preferredStyle: .alert)
+            let message = UserText.forCustomURLScheme(url: url)
+            let alert = UIAlertController(title: UserText.webPageFailedLoad, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
                 
-                SupportedExternalURLScheme.addScheme(url.scheme!)
                 self.goBack()
                 self.load(url: url)
                 
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { _ in
-                
-                
-                
-            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel))
             show(alert, sender: self)
         }
         

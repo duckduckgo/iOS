@@ -20,5 +20,7 @@
 import Foundation
 
 public struct UserText {
-    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo cannot load this page because...")
+    
+    public static let unsupportedUrl = NSLocalizedString("web.page.unsupported.url", comment: "We don't support this kind of URL.")
+    
 }

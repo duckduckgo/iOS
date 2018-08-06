@@ -33,19 +33,14 @@ public struct SupportedExternalURLScheme {
         "itunes"
     ]
     
-    static var supportedSchemes = defaultSchemes
-
-    public static func addScheme(_ scheme: String) {
-        supportedSchemes.append(scheme)
-    }
-    
     public static func isSupported(url: URL) -> Bool {
         guard let scheme = url.scheme else { return false }
-        return supportedSchemes.contains(scheme)
+        return defaultSchemes.contains(scheme)
     }
     
-    public static func reset() {
-        supportedSchemes = defaultSchemes
+    public static func isProhibited(url: URL) -> Bool {
+        guard let scheme = url.scheme else { return true }
+        return scheme.hasPrefix("about:")
     }
-
+    
 }

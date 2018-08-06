@@ -23,6 +23,8 @@ import Core
 
 public struct UserText {
     
+    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo cannot load this page because...")
+
     public static let appUnlock = NSLocalizedString("app.authentication.unlock", comment: "Unlock DuckDuckGo")
     public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo Home")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or type URL")
@@ -128,4 +130,10 @@ public struct UserText {
     public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment:  "General feedback comment placeholder")
     public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment:  "Broken site feedback comment placeholder")
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
+    
+    public static func forCustomURLScheme(url: URL) -> String {
+        let message = NSLocalizedString("prompt.custom.url.scheme", comment: "Would you like to open this URL... ")
+        return message.format(arguments: url.absoluteString)
+    }
+    
 }

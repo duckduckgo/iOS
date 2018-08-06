@@ -17,12 +17,16 @@
   limitations under the License.
 */
 
+/* Core */
+"web.page.load.failed" = "DuckDuckGo cannot load this page.";
+"web.page.unsupported.url" = "DuckDuckGo does not support this kind of URL.";
+
+/* App */
 "app.authentication.unlock" = "Unlock DuckDuckGo";
 "home.link.title" = "DuckDuckGo Home";
 "search.hint.duckduckgo" = "Search or type URL";
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
-"web.page.load.failed" = "DuckDuckGo cannot load this page.";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
@@ -115,3 +119,5 @@
 "feedback.comment.general.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible.";
 "feedback.comment.brokenSite.placeholder" = "Which website content or functionality is breaking? Please be as specific as possible.";
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
+
+"prompt.custom.url.scheme" = "Do you want to open this URL externally?";

@@ -415,19 +415,12 @@ extension WebViewController: WKNavigationDelegate {
         guard let error = lastError else { return }
         hideProgressIndicator()
         
-        if let error = error as? NSError {
-            showError(message: "\(error.code)")
+        switch (error as NSError).code {
             
-            switch error.code {
-                
-            case -1002:
-                showError(message: "We don't support this kind of URL.")
-                
-            default:
-                showError(message: error.localizedDescription)
-            }
+        case -1002:
+            showError(message: UserText.unsupportedUrl)
             
-        } else {
+        default:
             showError(message: error.localizedDescription)
         }
         

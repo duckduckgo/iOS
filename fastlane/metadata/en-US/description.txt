@@ -3,7 +3,7 @@ Privacy, simplified.
 At DuckDuckGo, we believe the Internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds. 
 
 Our app provides the privacy essentials you need to seamlessly take control of your personal information as you search and browse the web, no matter where the Internet takes you:
-  • Escape Advertising Tracker Networks — Our Privacy Protection will block all the hidden trackers we can find, exposing the major advertising networks tracking you over time, so that you can track who's trying to track you.
+  • Escape Advertising Tracker Networks — Our Privacy Protection will block all the hidden third-party trackers we can find, exposing the major advertising networks tracking you over time, so that you can track who's trying to track you.
   • Increase Encryption Protection — We force sites to use an encrypted connection where available, protecting your data from prying eyes, like ISPs.
   • Search Privately — You share your most personal information with your search engine, like your financial, medical, and political questions. What you search for is your own business, which is why DuckDuckGo search doesn't track you. Ever.
   • Decode Privacy Policies — We’ve partnered with Terms of Service Didn't Read to include their scores and labels of website terms of service and privacy policies, where available. 

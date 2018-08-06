@@ -31,6 +31,7 @@ open class WebViewController: UIViewController {
     }
 
     private struct Constants {
+        static let unsupportedUrlErrorCode = -1002
         static let frameLoadInterruptedErrorCode = 102
         static let minimumProgress: Float = 0.1
     }
@@ -414,13 +415,9 @@ extension WebViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        
-        switch (error as NSError).code {
-            
-        case -1002:
-            showError(message: UserText.unsupportedUrl)
-            
-        default:
+
+        let code = (error as NSError).code
+        if  ![Constants.unsupportedUrlErrorCode, 101].contains(code) {
             showError(message: error.localizedDescription)
         }
         

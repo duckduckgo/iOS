@@ -347,13 +347,17 @@ class TabViewController: WebViewController {
         
         loadedURL = url
         if url.isCustomURLScheme() {
-            let message = UserText.forCustomURLScheme(url: url)
-            let alert = UIAlertController(title: UserText.webPageFailedLoad, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            
+            let title = UserText.customUrlSchemeTitle
+            let message = UserText.forCustomUrlSchemePrompt(url: url)
+            let open = UserText.customUrlSchemeOpen
+            let dontOpen = UserText.customUrlSchemeDontOpen
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+            alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
                 self.openExternally(url: url)
-                self.goBack()
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel))
             show(alert, sender: self)
         }
         

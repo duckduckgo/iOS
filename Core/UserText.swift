@@ -20,7 +20,5 @@
 import Foundation
 
 public struct UserText {
-    
-    public static let unsupportedUrl = NSLocalizedString("web.page.unsupported.url", comment: "We don't support this kind of URL.")
-    
+        
 }

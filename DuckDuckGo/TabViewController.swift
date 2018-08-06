@@ -326,10 +326,14 @@ class TabViewController: WebViewController {
 
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if shouldOpenExternally(url: url) {
-            UIApplication.shared.open(url, options: [:])
+            openExternally(url: url)
             return false
         }
         return true
+    }
+    
+    private func openExternally(url: URL) {
+        UIApplication.shared.open(url, options: [:])
     }
 
     private func shouldOpenExternally(url: URL) -> Bool {
@@ -346,10 +350,8 @@ class TabViewController: WebViewController {
             let message = UserText.forCustomURLScheme(url: url)
             let alert = UIAlertController(title: UserText.webPageFailedLoad, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
-                
+                self.openExternally(url: url)
                 self.goBack()
-                self.load(url: url)
-                
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel))
             show(alert, sender: self)

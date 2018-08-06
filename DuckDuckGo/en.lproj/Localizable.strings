@@ -115,7 +115,7 @@
 "feedback.comment.brokenSite.placeholder" = "Which website content or functionality is breaking? Please be as specific as possible.";
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
-"prompt.custom.url.scheme.title" = "Leave DuckDuckGo?";
-"prompt.custom.url.scheme.prompt" = "Do you want to try and open the app for this address?\n\n%@";
-"prompt.custom.url.scheme.open" = "Go";
-"prompt.custom.url.scheme.dontopen" = "Stay";
+"prompt.custom.url.scheme.title" = "Open in Another App?";
+"prompt.custom.url.scheme.prompt" = "Would you like to leave DuckDuckGo to view this content?";
+"prompt.custom.url.scheme.open" = "Yes";
+"prompt.custom.url.scheme.dontopen" = "No";

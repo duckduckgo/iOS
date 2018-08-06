@@ -27,9 +27,7 @@ public struct AppUrls {
             return isDebugBuild ? "?test=1" : ""
         }
         
-        static let domain = "duckduckgo.com"
-        
-        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://\(domain)"]
+        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
         static let favicon = "\(base)/favicon.ico"
         static let autocomplete = "\(base)/ac/"
         static let disconnectMeBlockList = "\(base)/contentblocking.js?l=disconnect"
@@ -43,7 +41,7 @@ public struct AppUrls {
         static let feedback = "\(base)/feedback.js?type=app-feedback"
         static let faviconService = "\(base)/ip3/%@.ico"
         
-        static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.\(domain)"]
+        static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
     }
 

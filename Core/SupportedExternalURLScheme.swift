@@ -40,7 +40,7 @@ public struct SupportedExternalURLScheme {
     
     public static func isProhibited(url: URL) -> Bool {
         guard let scheme = url.scheme else { return true }
-        return scheme.hasPrefix("about:")
+        return scheme == "about"
     }
     
 }

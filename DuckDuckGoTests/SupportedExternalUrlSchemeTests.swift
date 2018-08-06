@@ -51,4 +51,9 @@ class SupportedExternalUrlSchemeTests: XCTestCase {
         let url = URL(string: "other://")!
         XCTAssertFalse(SupportedExternalURLScheme.isSupported(url: url))
     }
+    
+    func testThatAboutSchemesAreProhibited() {
+        let url = URL(string: "about:blank")!
+        XCTAssertTrue(SupportedExternalURLScheme.isProhibited(url: url))
+    }
 }

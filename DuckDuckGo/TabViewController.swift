@@ -341,7 +341,7 @@ class TabViewController: WebViewController {
            return true
         }
         
-        if SupportedExternalURLScheme.isSupported(url: url) {
+        if SupportedExternalURLScheme.isProhibited(url: url) {
             return false
         }
         

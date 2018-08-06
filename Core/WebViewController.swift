@@ -414,7 +414,23 @@ extension WebViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        showError(message: error.localizedDescription)
+        
+        if let error = error as? NSError {
+            showError(message: "\(error.code)")
+            
+            switch error.code {
+                
+            case -1002:
+                showError(message: "We don't support this kind of URL.")
+                
+            default:
+                showError(message: error.localizedDescription)
+            }
+            
+        } else {
+            showError(message: error.localizedDescription)
+        }
+        
         webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }

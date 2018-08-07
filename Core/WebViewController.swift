@@ -32,6 +32,7 @@ open class WebViewController: UIViewController {
 
     private struct Constants {
         static let unsupportedUrlErrorCode = -1002
+        static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
         static let minimumProgress: Float = 0.1
     }
@@ -417,7 +418,7 @@ extension WebViewController: WKNavigationDelegate {
         hideProgressIndicator()
 
         let code = (error as NSError).code
-        if  ![Constants.unsupportedUrlErrorCode, 101].contains(code) {
+        if  ![Constants.unsupportedUrlErrorCode, Constants.urlCouldNotBeLoaded].contains(code) {
             showError(message: error.localizedDescription)
         }
         

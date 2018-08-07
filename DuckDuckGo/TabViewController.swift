@@ -333,7 +333,9 @@ class TabViewController: WebViewController {
     }
     
     private func openExternally(url: URL) {
-        UIApplication.shared.open(url, options: [:])
+        UIApplication.shared.open(url, options: [:]) { completion in
+            self.view.showBottomToast(UserText.failedToOpenExternally)
+        }
     }
 
     private func shouldOpenExternally(url: URL) -> Bool {

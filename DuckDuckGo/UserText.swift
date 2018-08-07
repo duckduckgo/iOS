@@ -139,4 +139,6 @@ public struct UserText {
     public static let customUrlSchemeOpen = NSLocalizedString("prompt.custom.url.scheme.open", comment: "Open custom url button")
     public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", comment: "Don't open custom url button")
 
+    public static let failedToOpenExternally = NSLocalizedString("open.externally.failed", comment: "Don't open custom url button")
+
 }

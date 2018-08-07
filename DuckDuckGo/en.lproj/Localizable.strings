@@ -119,3 +119,5 @@
 "prompt.custom.url.scheme.prompt" = "Would you like to leave DuckDuckGo to view this content?";
 "prompt.custom.url.scheme.open" = "Yes";
 "prompt.custom.url.scheme.dontopen" = "No";
+
+"open.externally.failed" = "Sorry, no app can handle that link.";

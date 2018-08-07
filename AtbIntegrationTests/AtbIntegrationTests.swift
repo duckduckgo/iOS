@@ -73,7 +73,9 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     func testWhenAppIsInstalledThenInitialAtbIsRetrieved() throws {
-        
+
+        // XCTFail("test to show failure")
+
         assertGetAtbCalled()
         assertExtiCalledOnce()
 

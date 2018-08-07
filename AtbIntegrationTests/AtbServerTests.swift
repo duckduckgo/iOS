@@ -43,7 +43,9 @@ class AtbServerTests: XCTestCase {
     }
     
     func testExtiCall() {
-        
+        XCTFail("test to show failure")
+
+
         let waitForCompletion = expectation(description: "wait for completion")
         loader.refreshRetentionAtb {
             waitForCompletion.fulfill()

@@ -22,26 +22,27 @@ import Foundation
 public struct AppUrls {
 
     private struct Url {
-
-        // You can change this to use a subdomain for testing (e.g. "test.")
-        static let subdomain = ""
-        static let domain = "duckduckgo.com"
-        static let base = "\(subdomain)\(domain)"
-        static let home = "https://\(base)"
-        static let favicon = "\(home)/favicon.ico"
-        static let autocomplete = "\(home)/ac/"
-        static let disconnectMeBlockList = "\(home)/contentblocking.js?l=disconnect"
-        static let easylistBlockList = "\(home)/contentblocking.js?l=easylist"
-        static let easylistPrivacyBlockList = "\(home)/contentblocking.js?l=easyprivacy"
-        static let httpsUpgradeList = "\(home)/contentblocking.js?l=https2"
-        static let trackersWhitelist = "\(home)/contentblocking/trackers-whitelist.txt"
-        static let surrogates = "\(home)/contentblocking.js?l=surrogates"
-        static let atb = "\(home)/atb.js"
-        static let exti = "\(home)/exti/"
-        static let feedback = "\(home)/feedback.js?type=app-feedback"
-        static let faviconService = "\(home)/ip3/%@.ico"
         
-        static let pixel = "https://improving.\(domain)/t/%@_ios_%@"
+        static var devMode: String {
+            return isDebugBuild ? "?test=1" : ""
+        }
+        
+        static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
+        static let favicon = "\(base)/favicon.ico"
+        static let autocomplete = "\(base)/ac/"
+        static let disconnectMeBlockList = "\(base)/contentblocking.js?l=disconnect"
+        static let easylistBlockList = "\(base)/contentblocking.js?l=easylist"
+        static let easylistPrivacyBlockList = "\(base)/contentblocking.js?l=easyprivacy"
+        static let httpsUpgradeList = "\(base)/contentblocking.js?l=https2"
+        static let trackersWhitelist = "\(base)/contentblocking/trackers-whitelist.txt"
+        static let surrogates = "\(base)/contentblocking.js?l=surrogates"
+        static let atb = "\(base)/atb.js\(devMode)"
+        static let exti = "\(base)/exti/\(devMode)"
+        static let feedback = "\(base)/feedback.js?type=app-feedback"
+        static let faviconService = "\(base)/ip3/%@.ico"
+        
+        static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
+        static let pixel = "\(pixelBase)/t/%@_ios_%@"
     }
 
     private struct Param {
@@ -67,10 +68,6 @@ public struct AppUrls {
 
     public var favicon: URL {
         return URL(string: Url.favicon)!
-    }
-
-    public var home: URL {
-        return URL(string: Url.home)!
     }
 
     public var disconnectMeBlockList: URL {
@@ -112,7 +109,8 @@ public struct AppUrls {
 
     public func isDuckDuckGo(url: URL) -> Bool {
         guard let host = url.host else { return false }
-        return host == Url.domain || host.hasSuffix(".\(Url.domain)")
+        guard let searchHost = base.host else { return false }
+        return host == searchHost || host.hasSuffix(".\(searchHost)")
     }
 
     public func searchQuery(fromUrl url: URL) -> String? {
@@ -144,7 +142,7 @@ public struct AppUrls {
      and cohort (atb) https://duck.co/help/privacy/atb
      */
     public func searchUrl(text: String) -> URL {
-        let searchUrl = home.addParam(name: Param.search, value: text)
+        let searchUrl = base.addParam(name: Param.search, value: text)
         return applyStatsParams(for: searchUrl)
     }
 

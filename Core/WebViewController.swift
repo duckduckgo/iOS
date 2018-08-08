@@ -103,7 +103,7 @@ open class WebViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
     }
     
-    open func attachWebView(configuration: WKWebViewConfiguration) {
+    open func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?) {
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
@@ -118,7 +118,7 @@ open class WebViewController: UIViewController {
 
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.consumeCookies()
-            if let url = self.url {
+            if let url = url {
                 self.load(url: url)
             }
         }
@@ -357,9 +357,17 @@ extension WebViewController: WKNavigationDelegate {
                         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         let decision = decidePolicyFor(navigationAction: navigationAction)
+        
+        if let url = navigationAction.request.url,
+            decision == .allow,
+            appUrls.isDuckDuckGoSearch(url: url) {
+            StatisticsLoader.shared.refreshRetentionAtb()
+        }
+        
         if decision == .allow && navigationAction.isTargettingMainFrame() {
             showProgressIndicator()
         }
+        
         decisionHandler(decision)
     }
 
@@ -383,10 +391,6 @@ extension WebViewController: WKNavigationDelegate {
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
                 return .allow
-        }
-
-        if appUrls.isDuckDuckGoSearch(url: url) {
-            StatisticsLoader.shared.refreshRetentionAtb()
         }
 
         if shouldReissueSearch(for: url) {

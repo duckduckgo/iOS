@@ -41,7 +41,7 @@ public class StatisticsLoader {
         requestInstallStatistics(completion: completion)
     }
 
-    private func  requestInstallStatistics(completion: @escaping Completion = {}) {
+    private func requestInstallStatistics(completion: @escaping Completion = {}) {
         APIRequest.request(url: appUrls.atb) { response, error in
 
             if let error = error {
@@ -76,9 +76,11 @@ public class StatisticsLoader {
     }
 
     public func refreshRetentionAtb(completion: @escaping Completion = {}) {
-
+        
         guard statisticsStore.hasInstallStatistics else {
-            requestInstallStatistics()
+            requestInstallStatistics {
+                completion()
+            }
             return
         }
 

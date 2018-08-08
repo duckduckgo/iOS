@@ -47,7 +47,7 @@ class AppUrlsTests: XCTestCase {
 
     func testBaseUrlDoesNotHaveSubDomain() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        XCTAssertEqual(testee.base, URL(string: "duckduckgo.com"))
+        XCTAssertEqual(testee.base, URL(string: "https://duckduckgo.com"))
     }
 
     func testWhenMobileStatsParamsAreAppliedThenTheyReturnAnUpdatedUrl() {

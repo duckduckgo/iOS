@@ -88,26 +88,6 @@
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "85CC936A203C402C00690089"
-               BuildableName = "SpeedTests.xctest"
-               BlueprintName = "SpeedTests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8512BCB220612E500085E862"
-               BuildableName = "UITests.xctest"
-               BlueprintName = "UITests"
-               ReferencedContainer = "container:DuckDuckGo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -302,7 +302,6 @@ class TabViewController: WebViewController {
 
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .longPressMenuShareItem)
             guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
             self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
         }
@@ -310,6 +309,7 @@ class TabViewController: WebViewController {
 
     private func shareAction(forUrl url: URL, atPoint point: Point) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .longPressMenuShareItem)
             guard let webView = self?.webView else { return }
             self?.presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
         }

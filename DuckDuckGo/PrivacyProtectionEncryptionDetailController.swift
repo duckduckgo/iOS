@@ -46,6 +46,8 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
     override func viewDidLoad() {
 
+        Pixel.fire(pixel: .privacyDashboardEncryption)
+        
         initTableView()
         initHttpsStatus()
         initDomain()

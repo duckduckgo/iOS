@@ -55,6 +55,9 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     var sections = [Section]()
 
     override func viewDidLoad() {
+        
+        Pixel.fire(pixel: .privacyDashboardNetworks)
+        
         initTableView()
         update()
     }

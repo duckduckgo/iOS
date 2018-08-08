@@ -48,6 +48,9 @@ class PrivacyProtectionPracticesController: UIViewController {
     var rows = [Row]()
 
     override func viewDidLoad() {
+
+        Pixel.fire(pixel: .privacyDashboardPrivacyPractices)
+        
         initTable()
         update()
     }

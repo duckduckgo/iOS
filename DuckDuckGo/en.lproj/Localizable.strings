@@ -22,7 +22,6 @@
 "search.hint.duckduckgo" = "Search or type URL";
 "web.session.clear" = "Session cleared";
 "web.url.save.done" = "Bookmark saved";
-"web.page.load.failed" = "DuckDuckGo cannot load this page.";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
@@ -115,3 +114,10 @@
 "feedback.comment.general.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible.";
 "feedback.comment.brokenSite.placeholder" = "Which website content or functionality is breaking? Please be as specific as possible.";
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
+
+"prompt.custom.url.scheme.title" = "Open in Another App?";
+"prompt.custom.url.scheme.prompt" = "Would you like to leave DuckDuckGo to view this content?";
+"prompt.custom.url.scheme.open" = "Yes";
+"prompt.custom.url.scheme.dontopen" = "No";
+
+"open.externally.failed" = "Sorry, no app can handle that link.";

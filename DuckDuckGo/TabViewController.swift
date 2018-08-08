@@ -326,14 +326,46 @@ class TabViewController: WebViewController {
 
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if shouldOpenExternally(url: url) {
-            UIApplication.shared.open(url, options: [:])
+            openExternally(url: url)
             return false
         }
         return true
     }
+    
+    private func openExternally(url: URL) {
+        UIApplication.shared.open(url, options: [:]) { opened in
+            if !opened {
+                self.view.showBottomToast(UserText.failedToOpenExternally)
+            }
+        }
+    }
 
     private func shouldOpenExternally(url: URL) -> Bool {
-        return SupportedExternalURLScheme.isSupported(url: url)
+        if SupportedExternalURLScheme.isSupported(url: url) {
+           return true
+        }
+        
+        if SupportedExternalURLScheme.isProhibited(url: url) {
+            return false
+        }
+        
+        loadedURL = url
+        if url.isCustomURLScheme() {
+            
+            let title = UserText.customUrlSchemeTitle
+            let message = UserText.forCustomUrlSchemePrompt(url: url)
+            let open = UserText.customUrlSchemeOpen
+            let dontOpen = UserText.customUrlSchemeDontOpen
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+            alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
+                self.openExternally(url: url)
+            }))
+            show(alert, sender: self)
+        }
+        
+        return false
     }
 
     func dismiss() {

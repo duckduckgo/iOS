@@ -20,5 +20,5 @@
 import Foundation
 
 public struct UserText {
-    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo cannot load this page because...")
+        
 }

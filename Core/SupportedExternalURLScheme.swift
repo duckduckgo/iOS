@@ -21,7 +21,7 @@ import Foundation
 
 public struct SupportedExternalURLScheme {
 
-    static let schemes = [
+    static let supportedSchemes = [
         "tel",
         "mailto",
         "maps",
@@ -33,9 +33,18 @@ public struct SupportedExternalURLScheme {
         "itunes"
     ]
 
+    static let prohibitedSchemes = [
+        "about"
+    ]
+
     public static func isSupported(url: URL) -> Bool {
         guard let scheme = url.scheme else { return false }
-        return schemes.contains(scheme)
+        return supportedSchemes.contains(scheme)
     }
-
+    
+    public static func isProhibited(url: URL) -> Bool {
+        guard let scheme = url.scheme else { return true }
+        return prohibitedSchemes.contains(scheme)
+    }
+    
 }

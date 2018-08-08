@@ -35,7 +35,7 @@ public enum PixelName: String {
     case longPressMenuOpened = "mlp"
     case longPressMenuNewTabItem = "mlp_t"
     case longPressMenuOpenItem = "mlp_o"
-    case longPressMenuReadingListItem = "ml_r"
+    case longPressMenuReadingListItem = "mlp_r"
     case longPressMenuCopyItem = "mlp_c"
     case longPressMenuShareItem = "mlp_s"
 

@@ -35,6 +35,9 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     weak var header: PrivacyProtectionHeaderController!
 
     override func viewDidLoad() {
+        
+        Pixel.fire(pixel: .privacyDashboardScorecard)
+        
         update()
     }
 

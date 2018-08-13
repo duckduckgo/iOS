@@ -42,4 +42,11 @@ extension String {
         return String(format: self, arguments: arguments)
     }
 
+    public func dropPrefix(prefix: String) -> String {
+        if hasPrefix(prefix) {
+            return String(dropFirst(prefix.count))
+        }
+        return self
+    }
+
 }

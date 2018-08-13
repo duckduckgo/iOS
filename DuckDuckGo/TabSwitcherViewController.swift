@@ -135,6 +135,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
             fatalError("Failed to load cell as TabViewCell")
         }
         guard let tab = cell.tab else { return }
+        tab.viewed = true
         delegate.tabSwitcher(self, didSelectTab: tab)
         dismiss()
     }

@@ -38,11 +38,16 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
+    @IBOutlet weak var unread: UIView!
 
     func update(withTab tab: Tab) {
         self.tab = tab
         isHidden = false
-        title.text = tab.link?.title ?? tab.link?.url.host?.dropPrefix(prefix: "www.") ?? ""
+
+        let titleText = (tab.link?.title ?? tab.link?.url.host?.dropPrefix(prefix: "www.") ?? "")
+        title.text = titleText
+        unread.isHidden = tab.viewed
+
         link.text = tab.link?.url.absoluteString ?? ""
         configureFavicon(forDomain: tab.link?.url.host)
     }

@@ -20,6 +20,7 @@
 import UIKit
 import WebKit
 import Core
+import Lottie
 
 class MainViewController: UIViewController {
 
@@ -384,6 +385,34 @@ class MainViewController: UIViewController {
         feature.setShown()
     }
 
+    func animateBackgroundTab() {
+        showBars()
+        refreshTabIcon()
+
+        let anim = LOTAnimationView(name: "new_tab")
+        anim.contentMode = .scaleAspectFill
+
+        let animated = UIBarButtonItem(customView: anim)
+        replaceToolbar(item: tabsButton, with: animated)
+
+        anim.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
+        anim.animationSpeed = 3.0
+        anim.play { _ in
+            self.replaceToolbar(item: animated, with: self.tabsButton)
+        }
+
+    }
+
+    func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
+        guard let items = toolbar.items else { return }
+
+        let newItems = items.compactMap({
+            $0 == target ? replacement : $0
+        })
+
+        toolbar.setItems(newItems, animated: false)
+    }
+
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -535,7 +564,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
         _ = tabManager.add(url: url, inBackground: true)
-        refreshTabIcon()
+        animateBackgroundTab()
     }
 
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {

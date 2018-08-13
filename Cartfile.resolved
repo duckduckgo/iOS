@@ -1,3 +1,4 @@
+github "airbnb/lottie-ios" "tags/2.5.0"
 github "duckduckgo/Alamofire" "4.6.0"
 github "duckduckgo/Device.swift" "1.1.2"
 github "duckduckgo/Kingfisher" "3.13.1"

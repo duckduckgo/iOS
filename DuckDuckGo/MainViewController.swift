@@ -533,6 +533,11 @@ extension MainViewController: TabDelegate {
         omniBar.becomeFirstResponder()
     }
 
+    func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
+        _ = tabManager.add(url: url, inBackground: true)
+        refreshTabIcon()
+    }
+
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }

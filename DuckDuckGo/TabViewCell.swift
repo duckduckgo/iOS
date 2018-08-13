@@ -42,7 +42,7 @@ class TabViewCell: UICollectionViewCell {
     func update(withTab tab: Tab) {
         self.tab = tab
         isHidden = false
-        title.text = tab.link?.title ?? ""
+        title.text = tab.link?.title ?? tab.link?.url.host?.dropWWW() ?? ""
         link.text = tab.link?.url.absoluteString ?? ""
         configureFavicon(forDomain: tab.link?.url.host)
     }
@@ -69,4 +69,13 @@ class TabViewCell: UICollectionViewCell {
             favicon.kf.setImage(with: faviconUrl, placeholder: placeholder)
         }
     }
+}
+
+fileprivate extension String {
+
+    func dropWWW() -> String {
+        let prefix = "www."
+        return hasPrefix(prefix) ? String(dropFirst(prefix.count)) : self
+    }
+
 }

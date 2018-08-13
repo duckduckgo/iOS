@@ -74,6 +74,10 @@ public class TabsModel: NSObject, NSCoding {
         currentIndex = indexOf(tab: tab)
     }
 
+    func insert(tab: Tab, at index: Int) {
+        tabs.insert(tab, at: index)
+    }
+
     func remove(at index: Int) {
 
         tabs.remove(at: index)

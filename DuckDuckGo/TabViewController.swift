@@ -208,6 +208,8 @@ class TabViewController: WebViewController {
     }
 
     func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
+        Pixel.fire(pixel: .longPressMenuOpened)
+        
         let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
         alert.addAction(newTabAction(forUrl: url))
         alert.addAction(openAction(forUrl: url))
@@ -268,6 +270,7 @@ class TabViewController: WebViewController {
     private func newTabAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTabForUrl, style: .default) { [weak self] _ in
             if let weakSelf = self {
+                Pixel.fire(pixel: .longPressMenuNewTabItem)
                 weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
             }
         }
@@ -276,6 +279,7 @@ class TabViewController: WebViewController {
     private func openAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionOpen, style: .default) { [weak self] _ in
             if let webView = self?.webView {
+                Pixel.fire(pixel: .longPressMenuOpenItem)
                 webView.load(URLRequest(url: url))
             }
         }
@@ -283,6 +287,7 @@ class TabViewController: WebViewController {
 
     private func readingAction(forUrl url: URL) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionReadingList, style: .default) { _ in
+            Pixel.fire(pixel: .longPressMenuReadingListItem)
             try? SSReadingList.default()?.addItem(with: url, title: nil, previewText: nil)
         }
     }
@@ -290,6 +295,7 @@ class TabViewController: WebViewController {
     private func copyAction(forUrl url: URL) -> UIAlertAction {
         let copyText = url.absoluteString
         return UIAlertAction(title: UserText.actionCopy, style: .default) { (_) in
+            Pixel.fire(pixel: .longPressMenuCopyItem)
             UIPasteboard.general.string = copyText
         }
     }
@@ -303,6 +309,7 @@ class TabViewController: WebViewController {
 
     private func shareAction(forUrl url: URL, atPoint point: Point) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .longPressMenuShareItem)
             guard let webView = self?.webView else { return }
             self?.presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
         }
@@ -326,14 +333,46 @@ class TabViewController: WebViewController {
 
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if shouldOpenExternally(url: url) {
-            UIApplication.shared.open(url, options: [:])
+            openExternally(url: url)
             return false
         }
         return true
     }
+    
+    private func openExternally(url: URL) {
+        UIApplication.shared.open(url, options: [:]) { opened in
+            if !opened {
+                self.view.showBottomToast(UserText.failedToOpenExternally)
+            }
+        }
+    }
 
     private func shouldOpenExternally(url: URL) -> Bool {
-        return SupportedExternalURLScheme.isSupported(url: url)
+        if SupportedExternalURLScheme.isSupported(url: url) {
+           return true
+        }
+        
+        if SupportedExternalURLScheme.isProhibited(url: url) {
+            return false
+        }
+        
+        loadedURL = url
+        if url.isCustomURLScheme() {
+            
+            let title = UserText.customUrlSchemeTitle
+            let message = UserText.forCustomUrlSchemePrompt(url: url)
+            let open = UserText.customUrlSchemeOpen
+            let dontOpen = UserText.customUrlSchemeDontOpen
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: dontOpen, style: .cancel))
+            alert.addAction(UIAlertAction(title: open, style: .destructive, handler: { _ in
+                self.openExternally(url: url)
+            }))
+            show(alert, sender: self)
+        }
+        
+        return false
     }
 
     func dismiss() {

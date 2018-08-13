@@ -31,6 +31,8 @@ open class WebViewController: UIViewController {
     }
 
     private struct Constants {
+        static let unsupportedUrlErrorCode = -1002
+        static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
         static let minimumProgress: Float = 0.1
     }
@@ -56,6 +58,8 @@ open class WebViewController: UIViewController {
     private lazy var httpsUpgrade = HTTPSUpgrade()
     private lazy var tld = TLD()
 
+    private var tearDownCount = 0
+    
     public var name: String? {
         return webView.title
     }
@@ -93,17 +97,21 @@ open class WebViewController: UIViewController {
         shouldReloadOnError = true
     }
 
-    open func attachWebView(configuration: WKWebViewConfiguration) {
-        webView = WKWebView(frame: view.bounds, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        attachLongPressHandler(webView: webView)
-        webView.allowsBackForwardNavigationGestures = true
-
+    fileprivate func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
+    }
+    
+    open func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?) {
+        webView = WKWebView(frame: view.bounds, configuration: configuration)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        attachLongPressHandler(webView: webView)
+        webView.allowsBackForwardNavigationGestures = true
+
+        addObservers()
 
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -112,7 +120,7 @@ open class WebViewController: UIViewController {
 
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.consumeCookies()
-            if let url = self.url {
+            if let url = url {
                 self.load(url: url)
             }
         }
@@ -239,12 +247,20 @@ open class WebViewController: UIViewController {
         webView.goForward()
     }
 
-    public func tearDown() {
+    fileprivate func removeObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
+    }
+    
+    public func tearDown() {
+        guard tearDownCount == 0 else {
+            fatalError("tearDown has already happened")
+        }
+        tearDownCount += 1
+        removeObservers()
         webView.removeFromSuperview()
         webEventsDelegate?.detached(webView: webView)
     }
@@ -343,9 +359,17 @@ extension WebViewController: WKNavigationDelegate {
                         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
         let decision = decidePolicyFor(navigationAction: navigationAction)
+        
+        if let url = navigationAction.request.url,
+            decision == .allow,
+            appUrls.isDuckDuckGoSearch(url: url) {
+            StatisticsLoader.shared.refreshRetentionAtb()
+        }
+        
         if decision == .allow && navigationAction.isTargettingMainFrame() {
             showProgressIndicator()
         }
+        
         decisionHandler(decision)
     }
 
@@ -369,10 +393,6 @@ extension WebViewController: WKNavigationDelegate {
         guard let delegate = webEventsDelegate,
             let documentUrl = navigationAction.request.mainDocumentURL else {
                 return .allow
-        }
-
-        if appUrls.isDuckDuckGoSearch(url: url) {
-            StatisticsLoader.shared.refreshRetentionAtb()
         }
 
         if shouldReissueSearch(for: url) {
@@ -400,7 +420,12 @@ extension WebViewController: WKNavigationDelegate {
     private func showErrorNow() {
         guard let error = lastError else { return }
         hideProgressIndicator()
-        showError(message: error.localizedDescription)
+
+        let code = (error as NSError).code
+        if  ![Constants.unsupportedUrlErrorCode, Constants.urlCouldNotBeLoaded].contains(code) {
+            showError(message: error.localizedDescription)
+        }
+        
         webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }

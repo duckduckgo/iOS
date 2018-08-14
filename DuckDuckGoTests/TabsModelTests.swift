@@ -41,6 +41,19 @@ class TabsModelTests: XCTestCase {
         return model
     }
 
+    func testWhenTabInsertedThenInsertedAtCorrectLocation() {
+        let link = Link(title: nil, url: URL(string: "https://example.com")!)
+
+        let model = filledModel
+        model.insert(tab: Tab(link: link), at: 1)
+
+        XCTAssertNil(model.tabs[0].link)
+        XCTAssertNotNil(model.tabs[1].link)
+        XCTAssertNil(model.tabs[2].link)
+        XCTAssertNil(model.tabs[3].link)
+
+    }
+
     func testCountIsInitiallyZero() {
         XCTAssertEqual(TabsModel().count, 0)
     }

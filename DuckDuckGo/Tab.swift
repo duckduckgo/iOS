@@ -21,7 +21,7 @@ import Core
 
 public class Tab: NSObject, NSCoding {
 
-    private struct NSCodingKeys {
+    struct NSCodingKeys {
         static let link = "link"
         static let viewed = "viewed"
     }
@@ -36,7 +36,7 @@ public class Tab: NSObject, NSCoding {
 
     public convenience required init?(coder decoder: NSCoder) {
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
-        let viewed = decoder.decodeBool(forKey: NSCodingKeys.viewed)
+        let viewed = decoder.containsValue(forKey: NSCodingKeys.viewed) ? decoder.decodeBool(forKey: NSCodingKeys.viewed) : true
         self.init(link: link, viewed: viewed)
     }
 

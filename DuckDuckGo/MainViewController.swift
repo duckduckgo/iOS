@@ -391,12 +391,16 @@ class MainViewController: UIViewController {
 
         let anim = LOTAnimationView(name: "new_tab")
         anim.contentMode = .scaleAspectFill
-
+        
         let animated = UIBarButtonItem(customView: anim)
         replaceToolbar(item: tabsButton, with: animated)
 
         anim.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
-        anim.animationSpeed = 3.0
+        let label = UILabel(frame: anim.frame)
+        label.text = "X"
+        label.textAlignment = .center
+        anim.addSubview(label)
+    
         anim.play { _ in
             self.replaceToolbar(item: animated, with: self.tabsButton)
         }

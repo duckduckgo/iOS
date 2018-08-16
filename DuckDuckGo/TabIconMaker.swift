@@ -59,7 +59,4 @@ class TabIconMaker {
                  NSAttributedStringKey.paragraphStyle: paragraphStyle ]
     }
 
-    private func isSingleChar(_ text: String) -> Bool {
-        return text.count == 1
-    }
 }

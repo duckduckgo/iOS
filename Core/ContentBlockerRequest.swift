@@ -1,5 +1,5 @@
 //
-//  BlockerListRequest.swift
+//  ContentBlockerRequest.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,17 +19,17 @@
 
 import Foundation
 
-class BlockerListRequest {
+class ContentBlockerRequest {
     
-    enum List: String {
-        
+    enum Configuration: String {
         case disconnectMe = "disconnectme"
         case easylist = "easylist"
         case easylistPrivacy = "easyprivacy"
         case trackersWhitelist
-        case httpsUpgrade = "https"
+        case httpsBloomFilterSpec
+        case httpsBloomFilter
+        case httpsWhitelist
         case surrogates
-        
     }
     
     var requestCount = 0
@@ -40,7 +40,7 @@ class BlockerListRequest {
         self.etagStorage = etagStorage
     }
     
-    func request(_ list: List, completion:@escaping (Data?) -> Void) {
+    func request(_ list: Configuration, completion:@escaping (Data?) -> Void) {
         requestCount += 1
         APIRequest.request(url: url(for: list)) { (response, error) in
             
@@ -58,7 +58,7 @@ class BlockerListRequest {
                 completion(nil)
                 return
             }
-            
+
             let etag = self.etagStorage.etag(for: list)
             
             if etag == nil || etag != response.etag {
@@ -70,27 +70,29 @@ class BlockerListRequest {
         }
     }
     
-    private func url(for list: List) -> URL {
+    private func url(for list: Configuration) -> URL {
         let appUrls = AppUrls()
         
         switch list {
         case .disconnectMe: return appUrls.disconnectMeBlockList
         case .easylist: return appUrls.easylistBlockList
         case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
-        case .httpsUpgrade: return appUrls.httpsUpgradeList
+            
+        case .httpsBloomFilterSpec: return appUrls.httpsBloomFilterSpec
+        case .httpsBloomFilter: return appUrls.httpsBloomFilter
+        case .httpsWhitelist: return appUrls.httpsWhitelist
+
         case .trackersWhitelist: return appUrls.trackersWhitelist
         case .surrogates: return appUrls.surrogates
         }
-        
     }
-    
 }
 
 protocol BlockerListETagStorage {
     
-    func set(etag: String?, for list: BlockerListRequest.List)
+    func set(etag: String?, for list: ContentBlockerRequest.Configuration)
     
-    func etag(for list: BlockerListRequest.List) -> String?
+    func etag(for list: ContentBlockerRequest.Configuration) -> String?
     
 }
 
@@ -98,13 +100,13 @@ class UserDefaultsETagStorage: BlockerListETagStorage {
     
     lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
     
-    func etag(for list: BlockerListRequest.List) -> String? {
+    func etag(for list: ContentBlockerRequest.Configuration) -> String? {
         let etag = defaults?.string(forKey: list.rawValue)
         Logger.log(items: "stored etag for ", list.rawValue, etag as Any)
         return etag
     }
     
-    func set(etag: String?, for list: BlockerListRequest.List) {
+    func set(etag: String?, for list: ContentBlockerRequest.Configuration) {
         defaults?.set(etag, forKey: list.rawValue)
     }
     

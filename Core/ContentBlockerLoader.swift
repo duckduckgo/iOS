@@ -1,5 +1,5 @@
 //
-//  BlockerListsLoader.swift
+//  ContentBlockerLoader.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,13 +19,13 @@
 
 import Foundation
 
-public typealias BlockerListsLoaderCompletion = (Bool) -> Void
+public typealias ContentBlockerLoaderCompletion = (Bool) -> Void
 
-public class BlockerListsLoader {
+public class ContentBlockerLoader {
 
     private var easylistStore = EasylistStore()
     private var disconnectStore = DisconnectMeStore()
-    private var httpsUpgradeStore = HTTPSUpgradeStore()
+    private var httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     private var surrogateStore = SurrogateStore()
 
     public var hasData: Bool {
@@ -36,7 +36,7 @@ public class BlockerListsLoader {
 
     public init() { }
 
-    public func start(completion: BlockerListsLoaderCompletion?) {
+    public func start(completion: ContentBlockerLoaderCompletion?) {
 
         DispatchQueue.global(qos: .background).async {
 
@@ -47,7 +47,7 @@ public class BlockerListsLoader {
                 semaphore.wait()
             }
 
-            Logger.log(items: "BlockerListsLoader", "completed", self.newDataItems)
+            Logger.log(items: "ContentBlockerLoader", "completed", self.newDataItems)
             completion?(self.newDataItems > 0)
         }
         easylistStore.removeLegacyLists()
@@ -55,9 +55,9 @@ public class BlockerListsLoader {
 
     private func startRequests(with semaphore: DispatchSemaphore) -> Int {
 
-        let blockerListRequest = BlockerListRequest()
+        let contentBlockerRequest = ContentBlockerRequest()
 
-        blockerListRequest.request(.disconnectMe) { (data) in
+        contentBlockerRequest.request(.disconnectMe) { (data) in
             if let data = data {
                 self.newDataItems += 1
                 try? self.disconnectStore.persist(data: data)
@@ -65,23 +65,47 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
-        blockerListRequest.request(.trackersWhitelist) { (data) in
+        contentBlockerRequest.request(.trackersWhitelist) { (data) in
             if let data = data {
                 self.newDataItems += 1
                 self.easylistStore.persistEasylistWhitelist(data: data)
             }
             semaphore.signal()
         }
-
-        blockerListRequest.request(.httpsUpgrade) { (data) in
-            if let data = data {
+        
+        contentBlockerRequest.request(.httpsBloomFilterSpec) { data in
+            guard let data = data, let specification = HTTPSUpgradeParser.bloomFilterSpecification(fromJSONData: data) else {
+                semaphore.signal()
+                return
+            }
+                
+            if specification.isEqualTo(storedSpecification: self.httpsUpgradeStore.bloomFilterSpecification()) {
+                Logger.log(text: "Bloom filter already downloaded")
+                semaphore.signal()
+                return
+            }
+                
+            contentBlockerRequest.request(.httpsBloomFilter) { data in
+                guard let data = data else {
+                    semaphore.signal()
+                    return
+                }
+                self.httpsUpgradeStore.persistBloomFilter(specification: specification, data: data)
+                HTTPSUpgrade.shared.reloadData()
                 self.newDataItems += 1
-                self.httpsUpgradeStore.persist(data: data)
+                semaphore.signal()
+            }
+        }
+        
+        contentBlockerRequest.request(.httpsWhitelist) { data in
+            if let data = data, let whitelist = HTTPSUpgradeParser.whitelist(fromJSONData: data) {
+                self.newDataItems += 1
+                self.httpsUpgradeStore.persistWhitelist(domains: whitelist)
             }
             semaphore.signal()
         }
 
-        blockerListRequest.request(.surrogates) { (data) in
+        contentBlockerRequest.request(.surrogates) { (data) in
             if let data = data {
                 self.newDataItems += 1
                 self.surrogateStore.parseAndPersist(data: data)
@@ -89,6 +113,7 @@ public class BlockerListsLoader {
             semaphore.signal()
         }
 
-        return blockerListRequest.requestCount
+        return contentBlockerRequest.requestCount
     }
+
 }

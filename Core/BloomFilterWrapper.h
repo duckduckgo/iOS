@@ -1,8 +1,8 @@
 //
-//  Core.h
-//  Core
+//  BloomFilterWrapper.h
+//  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -16,18 +16,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+#import <Foundation/Foundation.h>
 
-
-#import <UIKit/UIKit.h>
-#import "BloomFilterWrapper.h"
-
-
-//! Project version number for Core.
-FOUNDATION_EXPORT double CoreVersionNumber;
-
-//! Project version string for Core.
-FOUNDATION_EXPORT const unsigned char CoreVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Core/PublicHeader.h>
-
-
+@interface BloomFilterWrapper : NSObject
+- (instancetype)initFromPath:(NSString*)path withTotalItems:(int)count;
+- (instancetype)initWithTotalItems:(int)count errorRate:(double)errorRate;
+- (void)add:(NSString*) entry;
+- (BOOL)contains:(NSString*) entry;
+@end

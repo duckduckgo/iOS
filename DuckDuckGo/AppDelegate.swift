@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
-            BlockerListsLoader().start(completion: nil)
+            ContentBlockerLoader().start(completion: nil)
             displayAuthenticationWindow()
             beginAuthentication()
             initialiseBackgroundFetch(application)
@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Logger.log(items: #function)
 
-        BlockerListsLoader().start { newData in
+        ContentBlockerLoader().start { newData in
             completionHandler(newData ? .newData : .noData)
         }
 

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="HTTPSUpgradeSimpleDomain" representedClassName=".HTTPSUpgradeSimpleDomain" versionHashModifier="added domain index" syncable="YES" codeGenerationType="class">
-        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
-        <fetchIndex name="domainIndex">
-            <fetchIndexElement property="domain" type="Binary" order="ascending"/>
-        </fetchIndex>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="HTTPSBloomFilterSpecification" representedClassName="HTTPSBloomFilterSpecification" syncable="YES" codeGenerationType="class">
+        <attribute name="errorRate" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sha256" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalEntries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="HTTPSUpgradeWildcardDomain" representedClassName="HTTPSUpgradeWildcardDomain" versionHashModifier="added domain index" syncable="YES" codeGenerationType="class">
+    <entity name="HTTPSWhitlistedDomain" representedClassName="HTTPSWhitlistedDomain" syncable="YES" codeGenerationType="class">
         <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
         <fetchIndex name="domainIndex">
             <fetchIndexElement property="domain" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
     <elements>
-        <element name="HTTPSUpgradeSimpleDomain" positionX="-63" positionY="-18" width="128" height="60"/>
-        <element name="HTTPSUpgradeWildcardDomain" positionX="-54" positionY="-9" width="128" height="60"/>
+        <element name="HTTPSWhitlistedDomain" positionX="-207" positionY="57" width="128" height="58"/>
+        <element name="HTTPSBloomFilterSpecification" positionX="-218" positionY="-54" width="128" height="88"/>
     </elements>
 </model>

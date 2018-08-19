@@ -390,9 +390,8 @@ extension WebViewController: WKNavigationDelegate {
             return .cancel
         }
 
-        guard let delegate = webEventsDelegate,
-            let documentUrl = navigationAction.request.mainDocumentURL else {
-                return .allow
+        guard let delegate = webEventsDelegate, let documentUrl = navigationAction.request.mainDocumentURL else {
+            return .allow
         }
 
         if shouldReissueSearch(for: url) {

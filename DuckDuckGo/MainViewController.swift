@@ -57,6 +57,8 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
+    let tabSwitcherButton = TabSwitcherButton()
+
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
     fileprivate var currentTab: TabViewController? {
@@ -68,12 +70,18 @@ class MainViewController: UIViewController {
 
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
+        initTabButton()
         attachOmniBar()
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
     }
-
+    
+    private func initTabButton() {
+        tabSwitcherButton.delegate = self
+        tabsButton.customView = tabSwitcherButton
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.destination.childViewControllers.count > 0,
@@ -260,9 +268,8 @@ class MainViewController: UIViewController {
     }
 
     private func refreshTabIcon() {
-        let count = tabManager.count
-        let sourceImage = tabManager.hasUnread ? #imageLiteral(resourceName: "UnreadTabs") : #imageLiteral(resourceName: "Tabs")
-        tabsButton.image = (count == 0) ? sourceImage : TabIconMaker().apply(count: count, toImage: sourceImage)
+        tabSwitcherButton.tabCount = tabManager.count
+        tabSwitcherButton.hasUnread = tabManager.hasUnread
     }
 
     private func refreshOmniBar() {
@@ -386,47 +393,11 @@ class MainViewController: UIViewController {
         feature.setShown()
     }
 
-    func animateBackgroundTab(count: Int) {
+    func animateBackgroundTab() {
         showBars()
-        refreshTabIcon()
-
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 29, height: 29))
-        
-        let anim = LOTAnimationView(name: "new_tab")
-        anim.contentMode = .scaleAspectFill
-        anim.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
-
-        view.addSubview(anim)
-        anim.center = view.convert(view.center, from: view.superview)
-        anim.center.x += 2
-//        anim.center.y -= 1
-        
-        let start = UILabel(frame: anim.frame)
-        let end = UILabel(frame: anim.frame)
-        
-        start.attributedText = NSAttributedString(string: "\(count)", attributes: TabIconMaker().attributes())
-        end.attributedText = NSAttributedString(string: "\(count + 1)", attributes: TabIconMaker().attributes())
-        end.alpha = 0.0
-        
-        view.addSubview(start)
-        view.addSubview(end)
-
-        let animated = UIBarButtonItem(customView: view)
-        replaceToolbar(item: tabsButton, with: animated)
-
-        anim.play { [weak self] (_) in
-            self?.replaceToolbar(item: animated, with: self!.tabsButton)
-            self?.refreshTabIcon()
+        tabSwitcherButton.animate {
+            self.refreshTabIcon()
         }
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            start.alpha = 0.0
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.3, animations: {
-                end.alpha = 1.0
-            })
-        })
-
     }
 
     func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
@@ -589,9 +560,8 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
-        let count = tabManager.count
         _ = tabManager.add(url: url, inBackground: true)
-        animateBackgroundTab(count: count)
+        animateBackgroundTab()
     }
 
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
@@ -651,4 +621,12 @@ extension MainViewController: BookmarksDelegate {
         omniBar.resignFirstResponder()
         loadUrl(link.url)
     }
+}
+
+extension MainViewController: TabSwitcherButtonDelegate {
+    
+    func showTabSwitcher() {
+        performSegue(withIdentifier: "ShowTabs", sender: self)
+    }
+    
 }

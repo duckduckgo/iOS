@@ -40,7 +40,17 @@ class TabsModelTests: XCTestCase {
         model.add(tab: Tab(link: nil))
         return model
     }
+    
+    func testWhenAtLeastOneTabIsNotViewedThenHasUnreadIsTrue() {
+        let link = Link(title: nil, url: URL(string: "https://example.com")!)
+        let tab = Tab(link: link, viewed: false)
+        
+        let model = filledModel
+        model.insert(tab: tab, at: 1)
 
+        XCTAssertTrue(model.hasUnread)
+    }
+    
     func testWhenTabInsertedThenInsertedAtCorrectLocation() {
         let link = Link(title: nil, url: URL(string: "https://example.com")!)
 
@@ -52,6 +62,10 @@ class TabsModelTests: XCTestCase {
         XCTAssertNil(model.tabs[2].link)
         XCTAssertNil(model.tabs[3].link)
 
+    }
+
+    func testWhenTabsAddedViewedIsTrue() {
+        XCTAssertTrue(filledModel.tabs[0].viewed)
     }
 
     func testCountIsInitiallyZero() {

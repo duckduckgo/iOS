@@ -261,7 +261,8 @@ class MainViewController: UIViewController {
 
     private func refreshTabIcon() {
         let count = tabManager.count
-        tabsButton.image = (count == 0) ? #imageLiteral(resourceName: "Tabs") : TabIconMaker().icon(forTabs: count)
+        let sourceImage = tabManager.hasUnread ? #imageLiteral(resourceName: "UnreadTabs") : #imageLiteral(resourceName: "Tabs")
+        tabsButton.image = (count == 0) ? sourceImage : TabIconMaker().apply(count: count, toImage: sourceImage)
     }
 
     private func refreshOmniBar() {
@@ -385,25 +386,46 @@ class MainViewController: UIViewController {
         feature.setShown()
     }
 
-    func animateBackgroundTab() {
+    func animateBackgroundTab(count: Int) {
         showBars()
         refreshTabIcon()
 
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 29, height: 29))
+        
         let anim = LOTAnimationView(name: "new_tab")
         anim.contentMode = .scaleAspectFill
+        anim.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+
+        view.addSubview(anim)
+        anim.center = view.convert(view.center, from: view.superview)
+        anim.center.x += 2
+//        anim.center.y -= 1
         
-        let animated = UIBarButtonItem(customView: anim)
+        let start = UILabel(frame: anim.frame)
+        let end = UILabel(frame: anim.frame)
+        
+        start.attributedText = NSAttributedString(string: "\(count)", attributes: TabIconMaker().attributes())
+        end.attributedText = NSAttributedString(string: "\(count + 1)", attributes: TabIconMaker().attributes())
+        end.alpha = 0.0
+        
+        view.addSubview(start)
+        view.addSubview(end)
+
+        let animated = UIBarButtonItem(customView: view)
         replaceToolbar(item: tabsButton, with: animated)
 
-        anim.frame = CGRect(x: 0, y: 0, width: 26, height: 26)
-        let label = UILabel(frame: anim.frame)
-        label.text = "X"
-        label.textAlignment = .center
-        anim.addSubview(label)
-    
-        anim.play { _ in
-            self.replaceToolbar(item: animated, with: self.tabsButton)
+        anim.play { [weak self] (_) in
+            self?.replaceToolbar(item: animated, with: self!.tabsButton)
+            self?.refreshTabIcon()
         }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            start.alpha = 0.0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.3, animations: {
+                end.alpha = 1.0
+            })
+        })
 
     }
 
@@ -567,8 +589,9 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
+        let count = tabManager.count
         _ = tabManager.add(url: url, inBackground: true)
-        animateBackgroundTab()
+        animateBackgroundTab(count: count)
     }
 
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {

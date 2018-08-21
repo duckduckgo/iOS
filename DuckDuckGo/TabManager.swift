@@ -70,6 +70,10 @@ class TabManager {
     var isEmpty: Bool {
         return tabControllerCache.isEmpty
     }
+    
+    var hasUnread: Bool {
+        return model.hasUnread
+    }
 
     var count: Int {
         return model.count

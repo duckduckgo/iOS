@@ -26,17 +26,16 @@ class TabIconMaker {
     private struct Constants {
         static let fontSize: CGFloat = 10
         static let fontWeight: CGFloat = 5
-        static let xTextOffset: CGFloat = -2
-        static let yTextOffset: CGFloat = 7.5
+        static let xTextOffset: CGFloat = 0
+        static let yTextOffset: CGFloat = 6
         static let maxTextTabs = 100
     }
 
-    func icon(forTabs count: Int) -> UIImage {
-        let image = #imageLiteral(resourceName: "Tabs")
+    func apply(count: Int, toImage image: UIImage) -> UIImage {
         let text = count < Constants.maxTextTabs ? "\(count)" : "🦆"
 
         UIGraphicsBeginImageContextWithOptions(image.size, false, UIScreen.main.scale)
-        text.draw(in: CGRect(origin: point(forText: text), size: image.size), withAttributes: attributes(forText: text))
+        text.draw(in: CGRect(origin: point(forText: text), size: image.size), withAttributes: attributes())
         image.draw(in: CGRect(origin: .zero, size: image.size), blendMode: CGBlendMode.xor, alpha: 1)
 
         let icon = UIGraphicsGetImageFromCurrentImageContext()!
@@ -48,14 +47,14 @@ class TabIconMaker {
         return CGPoint(x: Constants.xTextOffset, y: Constants.yTextOffset)
     }
 
-    private func attributes(forText text: String) -> [NSAttributedStringKey: Any] {
+    func attributes() -> [NSAttributedStringKey: Any] {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.center
 
         let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
         return [ NSAttributedStringKey.font: font,
-                 NSAttributedStringKey.foregroundColor: UIColor.white,
+                 NSAttributedStringKey.foregroundColor: UIColor.nearlyBlackLight,
                  NSAttributedStringKey.paragraphStyle: paragraphStyle ]
     }
 

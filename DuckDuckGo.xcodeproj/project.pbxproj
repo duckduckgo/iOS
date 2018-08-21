@@ -20,7 +20,6 @@
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
-		8382E9F2207D61F000708757 /* TabIconMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382E9F1207D61F000708757 /* TabIconMaker.swift */; };
 		838306B320C704050045E854 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		838306E320C733010045E854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 838306E120C733010045E854 /* InfoPlist.strings */; };
 		8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390446E20BDCE10006461CD /* ShareViewController.swift */; };
@@ -53,6 +52,7 @@
 		8512BCB620612E500085E862 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCB520612E500085E862 /* UITests.swift */; };
 		8512BCBE20615EB40085E862 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBD20615EB30085E862 /* SnapshotHelper.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
+		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
 		85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */; };
 		85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */; };
@@ -433,7 +433,6 @@
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
-		8382E9F1207D61F000708757 /* TabIconMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIconMaker.swift; sourceTree = "<group>"; };
 		838306E220C733010045E854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		838306E520C734D80045E854 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		838306E620C735140045E854 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -490,6 +489,7 @@
 		8512BCBD20615EB30085E862 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		8512BCBF2061B6110085E862 /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
 		851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButton.swift; sourceTree = "<group>"; };
+		851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButtonTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
 		85200F921FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHeaderController.swift; sourceTree = "<group>"; };
 		85200F941FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionHeader.storyboard; sourceTree = "<group>"; };
@@ -1142,6 +1142,14 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
+		851DFD88212C5ED600D95F20 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
 		85200F9B1FBC59FF001AF290 /* NetworkLeaderboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1478,10 +1486,11 @@
 			isa = PBXGroup;
 			children = (
 				F17669A21E411D63003D3222 /* Application */,
+				83134D7F20E2E013006CE65D /* Feedback */,
+				851DFD88212C5ED600D95F20 /* Main */,
 				85ECA7EF1F2A82F10018EBEB /* Migration */,
 				F1D477C71F2139210031ED49 /* OmniBar */,
 				85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */,
-				83134D7F20E2E013006CE65D /* Feedback */,
 				F13B4BF71F18C9E800814661 /* Tabs */,
 				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
 				F194FAF91F14E605009B4DF8 /* UserInterface */,
@@ -1538,7 +1547,6 @@
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 				8563A0371F8E54F100F04442 /* Tab.storyboard */,
-				8382E9F1207D61F000708757 /* TabIconMaker.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2651,7 +2659,6 @@
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				85ECA7EE1F2A82C20018EBEB /* Migration.swift in Sources */,
-				8382E9F2207D61F000708757 /* TabIconMaker.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
@@ -2778,6 +2785,7 @@
 				83134D8420E2E090006CE65D /* FeedbackModelTests.swift in Sources */,
 				83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */,
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,
+				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				F11E23091ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -30,9 +30,12 @@ class TabSwitcherButton: UIView {
     
     struct Constants {
         
+        static let fontSize: CGFloat = 10
+        static let fontWeight: CGFloat = 5
+        static let maxTextTabs = 100
         static let labelFadeDuration = 0.3
         static let buttonTouchDuration = 0.2
-        static let tintAlpha = CGFloat(0.5)
+        static let tintAlpha: CGFloat = 0.5
         
     }
     
@@ -44,8 +47,17 @@ class TabSwitcherButton: UIView {
     
     var tabCount: Int = 0 {
         didSet {
-            let text = tabCount > 0 ? "\(tabCount)" : ""
-            label.attributedText = NSAttributedString(string: text, attributes: TabIconMaker().attributes())
+            if tabCount == 0 {
+                label.text = nil
+                return
+            }
+            
+            if tabCount >= Constants.maxTextTabs {
+                label.text = "🦆"
+                return
+            }
+            
+            label.attributedText = NSAttributedString(string: "\(tabCount)", attributes: attributes())
         }
     }
     
@@ -99,11 +111,7 @@ class TabSwitcherButton: UIView {
         tint.alpha = 0
     }
     
-    func animate(completion: @escaping () -> Void) {
-        anim.play { _ in
-            completion()
-        }
-        
+    func incrementAnimated() {
         UIView.animate(withDuration: Constants.labelFadeDuration, animations: {
             self.label.alpha = 0.0
         }, completion: { _ in
@@ -112,6 +120,17 @@ class TabSwitcherButton: UIView {
                 self.label.alpha = 1.0
             })
         })
+    }
+    
+    private func attributes() -> [NSAttributedStringKey: Any] {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.center
+        
+        let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
+        return [ NSAttributedStringKey.font: font,
+                 NSAttributedStringKey.foregroundColor: UIColor.nearlyBlackLight,
+                 NSAttributedStringKey.paragraphStyle: paragraphStyle ]
     }
     
 }

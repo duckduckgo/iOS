@@ -395,9 +395,7 @@ class MainViewController: UIViewController {
 
     func animateBackgroundTab() {
         showBars()
-        tabSwitcherButton.animate {
-            self.refreshTabIcon()
-        }
+        tabSwitcherButton.incrementAnimated()
     }
 
     func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {

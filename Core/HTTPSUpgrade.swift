@@ -20,41 +20,55 @@
 import Foundation
 
 public class HTTPSUpgrade {
-
+    
     public static let shared = HTTPSUpgrade()
+    
+    private let dataReloadLock = NSLock()
     private let store: HTTPSUpgradeStore
     private var bloomFilter: BloomFilterWrapper?
-
+    
     init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence()) {
         self.store = store
-        reloadData()
+        DispatchQueue.global(qos: .background).async {
+            self.loadData()
+        }
     }
-
+    
     func upgrade(url: URL) -> URL? {
         
         guard url.scheme == "http" else { return nil }
         guard let host = url.host else { return nil }
-        guard let bloomFilter = bloomFilter else { return nil }
         
         if store.hasWhitelistedDomain(host) {
             Logger.log(text: "Site \(host) is in whitelist, not upgrading")
             return nil
         }
         
+        waitForAnyReloadsToComplete()
+        
+        guard let bloomFilter = bloomFilter else { return nil }
         let startTime = Date().timeIntervalSince1970
         let result = bloomFilter.contains(host)
         let endTime = Date().timeIntervalSince1970
         Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(endTime - startTime)ms")
-
-        guard result else { return nil }
         
+        guard result else { return nil }
         let urlString = url.absoluteString
         return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
     }
     
-    public func reloadData() {
-        DispatchQueue.global(qos: .background).async {
-            self.bloomFilter = self.store.bloomFilter()
+    private func waitForAnyReloadsToComplete() {
+        // wait for lock (by locking and unlocking) before continuing
+       dataReloadLock.lock()
+       dataReloadLock.unlock()
+    }
+    
+    public func loadData() {
+        if !dataReloadLock.try() {
+            Logger.log(text: "Reload already in progress")
+            return
         }
+        self.bloomFilter = self.store.bloomFilter()
+        self.dataReloadLock.unlock()
     }
 }

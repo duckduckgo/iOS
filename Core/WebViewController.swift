@@ -53,9 +53,9 @@ open class WebViewController: UIViewController {
     private var lastUpgradedDomain: String?
     private var lastError: Error?
     private var shouldReloadOnError = false
-
+    private var httpsUpgrade = HTTPSUpgrade.shared
+    
     private lazy var appUrls: AppUrls = AppUrls()
-    private lazy var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var tld = TLD()
 
     private var tearDownCount = 0

@@ -54,9 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-
+        
         Pixel.fire(pixel: .appLaunch)
         startMigration(application: application)
+        
+        // Call shared  instance for eager init
+        _ = HTTPSUpgrade.shared
+    
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {

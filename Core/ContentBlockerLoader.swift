@@ -91,7 +91,7 @@ public class ContentBlockerLoader {
                     return
                 }
                 let persisted = self.httpsUpgradeStore.persistBloomFilter(specification: specification, data: data)
-                HTTPSUpgrade.shared.reloadData()
+                HTTPSUpgrade.shared.loadData()
                 self.newDataItems += persisted ? 1 : 0
                 semaphore.signal()
             }

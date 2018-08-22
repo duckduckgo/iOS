@@ -32,7 +32,7 @@
     self = [super init];
     if (self != nil) {
         NSLog(@"Bloom: Importing data from %@", path);
-        filter = new BloomFilter([path cStringUsingEncoding:NSString.defaultCStringEncoding], count);
+        filter = new BloomFilter([path cStringUsingEncoding: NSString.defaultCStringEncoding], count);
     }
     return self;
 }

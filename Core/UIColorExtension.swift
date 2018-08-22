@@ -68,6 +68,10 @@ extension UIColor {
     public static var cornflowerBlue: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 143.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
     }
+    
+    public static var skyBlue: UIColor {
+        return UIColor(red: 66.0 / 255.0, green: 191.0 / 255.0, blue: 254.0 / 255.0, alpha: 1.0)
+    }
 
     public static var greyishBrownTwo: UIColor {
         return UIColor(red: 77.0 / 255.0, green: 77.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)

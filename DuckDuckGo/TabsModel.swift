@@ -30,6 +30,11 @@ public class TabsModel: NSObject, NSCoding {
     private(set) var currentIndex: Int?
     private(set) var tabs: [Tab]
 
+    var current: Tab? {
+        guard let index = currentIndex else { return nil }
+        return get(tabAt: index)
+    }
+    
     var hasUnread: Bool {
         return tabs.contains(where: { !$0.viewed })
     }

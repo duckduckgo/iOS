@@ -112,6 +112,7 @@ class TabSwitcherButton: UIView {
     }
     
     func incrementAnimated() {
+        anim.play()
         UIView.animate(withDuration: Constants.labelFadeDuration, animations: {
             self.label.alpha = 0.0
         }, completion: { _ in

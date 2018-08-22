@@ -34,16 +34,21 @@ class TabViewCell: UICollectionViewCell {
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
 
+    @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
 
-    func update(withTab tab: Tab) {
+    func update(withTab tab: Tab, isCurrent: Bool) {
         self.tab = tab
         isHidden = false
-
+        
+        background.layer.borderWidth = isCurrent ? 2 : 0
+        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
+        background.alpha = isCurrent ? 1.0 : 0.73
+        
         let titleText = (tab.link?.title ?? tab.link?.url.host?.dropPrefix(prefix: "www.") ?? "")
         title.text = titleText
         unread.isHidden = tab.viewed

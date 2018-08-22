@@ -77,7 +77,7 @@
                                                                 <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
                                                             </connections>
                                                         </button>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="TabUnread" translatesAutoresizingMaskIntoConstraints="NO" id="Gyy-py-IOg">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TabUnread" translatesAutoresizingMaskIntoConstraints="NO" id="Gyy-py-IOg">
                                                             <rect key="frame" x="6" y="6" width="10" height="10"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="10" id="hKi-O1-nkZ"/>
@@ -143,6 +143,7 @@
                                             <constraint firstItem="puo-AS-QV7" firstAttribute="leading" secondItem="Mdh-yg-dRH" secondAttribute="leading" constant="10" id="Gfv-Fx-eYf"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="background" destination="puo-AS-QV7" id="DYO-r7-lm0"/>
                                             <outlet property="favicon" destination="ucs-Dd-y53" id="5MN-9p-Rmy"/>
                                             <outlet property="link" destination="caT-pD-5fn" id="zuL-Sh-gBP"/>
                                             <outlet property="removeButton" destination="G2C-qh-g3T" id="b0U-a4-JPU"/>
@@ -257,7 +258,7 @@
     <resources>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="16" height="16"/>
-        <image name="NewTab" width="22" height="22"/>
+        <image name="NewTab" width="24" height="24"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="22" height="22"/>
         <image name="TabUnread" width="24" height="24"/>

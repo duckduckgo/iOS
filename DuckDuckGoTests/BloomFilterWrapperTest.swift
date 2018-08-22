@@ -28,7 +28,7 @@ class BloomFilterWrapperTest: XCTestCase {
         static let filterElementCount = 1000
         static let additionalTestDataElementCount = 1000
         static let targetErrorRate = 0.001
-        static let acceptableErrorRate = Constants.targetErrorRate * 2
+        static let acceptableErrorRate = Constants.targetErrorRate * 5
     }
     
     func testWhenBloomFilterEmptyThenContainsIsFalse() {

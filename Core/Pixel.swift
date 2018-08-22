@@ -24,8 +24,21 @@ public enum PixelName: String {
     
     case appLaunch = "ml"
     case forgetAllExecuted = "mf"
-    case privacyDashboardOpened = "mp"
     
+    case privacyDashboardOpened = "mp"
+    case privacyDashboardScorecard = "mp_c"
+    case privacyDashboardEncryption = "mp_e"
+    case privacyDashboardNetworks = "mp_n"
+    case privacyDashboardPrivacyPractices = "mp_p"
+    case privacyDashboardGlobalStats = "mp_s"
+    
+    case longPressMenuOpened = "mlp"
+    case longPressMenuNewTabItem = "mlp_t"
+    case longPressMenuOpenItem = "mlp_o"
+    case longPressMenuReadingListItem = "mlp_r"
+    case longPressMenuCopyItem = "mlp_c"
+    case longPressMenuShareItem = "mlp_s"
+
 }
 
 public class Pixel {

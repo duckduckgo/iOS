@@ -45,6 +45,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        Pixel.fire(pixel: .privacyDashboardGlobalStats)
+        
         initHeroIcon()
         initResetButton()
         initDomainLabel()

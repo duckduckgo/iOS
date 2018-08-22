@@ -34,7 +34,7 @@ class TabViewCell: UICollectionViewCell {
         static let selectedBorderWidth: CGFloat = 2.0
         static let unselectedBorderWidth: CGFloat = 0.0
         static let selectedAlpha: CGFloat = 1.0
-        static let unselectedAlpha: CGFloat = 0.73
+        static let unselectedAlpha: CGFloat = 0.92
         
     }
     
@@ -55,7 +55,7 @@ class TabViewCell: UICollectionViewCell {
         isHidden = false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
-        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
+        background.layer.borderColor = UIColor.skyBlue.cgColor
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
         
         let titleText = (tab.link?.title ?? tab.link?.url.host?.dropPrefix(prefix: "www.") ?? "")

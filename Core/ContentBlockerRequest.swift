@@ -40,9 +40,9 @@ class ContentBlockerRequest {
         self.etagStorage = etagStorage
     }
     
-    func request(_ list: Configuration, completion:@escaping (Data?, Bool) -> Void) {
+    func request(_ configuration: Configuration, completion:@escaping (Data?, Bool) -> Void) {
         requestCount += 1
-        APIRequest.request(url: url(for: list)) { (response, error) in
+        APIRequest.request(url: url(for: configuration)) { (response, error) in
             
             guard error == nil else {
                 completion(nil, false)
@@ -59,10 +59,10 @@ class ContentBlockerRequest {
                 return
             }
 
-            let etag = self.etagStorage.etag(for: list)
+            let etag = self.etagStorage.etag(for: configuration)
             
             if etag == nil || etag != response.etag {
-                self.etagStorage.set(etag: response.etag, for: list)
+                self.etagStorage.set(etag: response.etag, for: configuration)
                 completion(data, false)
             } else {
                 completion(data, true)
@@ -77,11 +77,9 @@ class ContentBlockerRequest {
         case .disconnectMe: return appUrls.disconnectMeBlockList
         case .easylist: return appUrls.easylistBlockList
         case .easylistPrivacy: return appUrls.easylistPrivacyBlockList
-            
         case .httpsBloomFilterSpec: return appUrls.httpsBloomFilterSpec
         case .httpsBloomFilter: return appUrls.httpsBloomFilter
         case .httpsWhitelist: return appUrls.httpsWhitelist
-
         case .trackersWhitelist: return appUrls.trackersWhitelist
         case .surrogates: return appUrls.surrogates
         }

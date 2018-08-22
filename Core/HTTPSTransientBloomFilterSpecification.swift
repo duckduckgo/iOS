@@ -1,5 +1,5 @@
 //
-//  HTTPSBloomFilterJsonSpecification.swift
+//  HTTPSTransientBloomFilterSpecification.swift
 //  Core
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.

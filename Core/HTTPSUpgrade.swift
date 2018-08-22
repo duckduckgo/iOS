@@ -1,4 +1,4 @@
-//  
+//
 //  HTTPSUpgrade.swift
 //  DuckDuckGo
 //

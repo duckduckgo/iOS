@@ -27,8 +27,7 @@
 
 @implementation BloomFilterWrapper
 
--(instancetype)initFromPath:(NSString*)path withTotalItems:(int)count
-{ 
+- (instancetype)initFromPath:(NSString*)path withTotalItems:(int)count {
     self = [super init];
     if (self != nil) {
         NSLog(@"Bloom: Importing data from %@", path);
@@ -37,8 +36,7 @@
     return self;
 }
 
-- (instancetype)initWithTotalItems:(int)count errorRate:(double)errorRate
-{
+- (instancetype)initWithTotalItems:(int)count errorRate:(double)errorRate {
     self = [super init];
     if (self != nil) {
         filter = new BloomFilter(count, errorRate);
@@ -46,19 +44,16 @@
     return self;
 }
 
-- (void)add:(NSString*)entry
-{
-    if (filter != nil)
-    {
+- (void)add:(NSString*)entry {
+    if (filter != nil) {
         filter->add([entry UTF8String]);
     }
 }
 
-- (BOOL)contains:(NSString*)entry
-{
+- (BOOL)contains:(NSString*)entry {
     if (filter == nil || entry == nil) {
         return false;
-    }    
+    }
     return filter->contains([entry UTF8String]);
 }
 

@@ -29,9 +29,6 @@ public class HTTPSUpgrade {
     
     init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence()) {
         self.store = store
-        DispatchQueue.global(qos: .background).async {
-            self.loadData()
-        }
     }
     
     func upgrade(url: URL) -> URL? {
@@ -63,12 +60,19 @@ public class HTTPSUpgrade {
        dataReloadLock.unlock()
     }
     
+    public func loadDataAsync() {
+        DispatchQueue.global(qos: .background).async {
+            self.loadData()
+        }
+    }
+    
     public func loadData() {
         if !dataReloadLock.try() {
             Logger.log(text: "Reload already in progress")
             return
         }
-        self.bloomFilter = self.store.bloomFilter()
-        self.dataReloadLock.unlock()
+        bloomFilter = store.bloomFilter()
+        dataReloadLock.unlock()
+    
     }
 }

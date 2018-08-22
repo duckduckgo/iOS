@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
 
+        HTTPSUpgrade.shared.loadDataAsync()
+
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
@@ -54,13 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-        
         Pixel.fire(pixel: .appLaunch)
         startMigration(application: application)
-        
-        // Call shared  instance for eager init
-        _ = HTTPSUpgrade.shared
-    
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {

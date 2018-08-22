@@ -24,26 +24,31 @@ class HTTPSUpgradeTests: XCTestCase {
     
     func testWhenBloomFilterIsNilThenNoUpgradeURLIsReturned() {
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: nil))
+        testee.loadData()
         XCTAssertNil(testee.upgrade(url: URL(string: "http://example.com")!))
     }
     
     func testWhenURLIsHttpsNoUpgradeURLIsReturned() {
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
         XCTAssertNil(testee.upgrade(url: URL(string: "https://example.com")!))
     }
     
     func testWhenURLIsHttpAndCanBeUpgradedUpgradeURLIsReturned() {
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
         XCTAssertEqual("https://example.com", testee.upgrade(url: URL(string: "http://example.com")!)?.absoluteString)
     }
     
     func testWhenURLIsHttpAndCantBeUpgradedNoUpgradeURLIsReturned() {
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
         XCTAssertNil(testee.upgrade(url: URL(string: "http://otherurl.com")!))
     }
     
     func testWhenURLIsInWhiteListThenNoUpgradeUrlIsReturned() {
         let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter(), hasWhitelistedDomain: true))
+        testee.loadData()
         XCTAssertNil(testee.upgrade(url: URL(string: "http://example.com")!))
     }
     

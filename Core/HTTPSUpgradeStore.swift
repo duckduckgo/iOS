@@ -21,9 +21,9 @@ import Foundation
 import CoreData
 
 public protocol HTTPSUpgradeStore {
-
+    
     func bloomFilter() -> BloomFilterWrapper?
-
+    
     func bloomFilterSpecification() -> HTTPSBloomFilterSpecification?
     
     func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data)
@@ -36,14 +36,14 @@ public protocol HTTPSUpgradeStore {
 public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     private let container = DDGPersistenceContainer(name: "HTTPSUpgrade")!
-
+    
     public init() {
     }
     
     private var hasBloomFilter: Bool {
         return (try? bloomFilterPath.checkResourceIsReachable()) ?? false
     }
-
+    
     private var bloomFilterPath: URL {
         let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
         return path!.appendingPathComponent("HttpsBloomFilter.bin")
@@ -72,7 +72,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
             persistBloomFilterSpecification(specification)
         }
     }
-
+    
     func persistBloomFilter(data: Data) -> Bool {
         do {
             try data.write(to: bloomFilterPath, options: .atomic)
@@ -81,22 +81,34 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
             return false
         }
     }
-
+    
+    private func deleteBloomFilter() {
+        try? FileManager.default.removeItem(at: bloomFilterPath)
+    }
+    
     func persistBloomFilterSpecification(_ specification: HTTPSTransientBloomFilterSpecification) {
-	        container.managedObjectContext.performAndWait {
+        
+        container.managedObjectContext.performAndWait {
+            deleteBloomFilterSpecification()
+            
             let entityName = String(describing: HTTPSBloomFilterSpecification.self)
             let context = container.managedObjectContext
-
+            
             if let storedEntity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSBloomFilterSpecification {
                 storedEntity.totalEntries = Int64(specification.totalEntries)
                 storedEntity.errorRate = specification.errorRate
                 storedEntity.sha256 = specification.sha256
             }
-            _ = container.managedObjectContext
             _ = container.save()
         }
     }
-
+    
+    private func deleteBloomFilterSpecification() {
+        container.managedObjectContext.performAndWait {
+            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSBloomFilterSpecification.fetchRequest()))
+        }
+    }
+    
     public func hasWhitelistedDomain(_ domain: String) -> Bool {
         var result = false
         container.managedObjectContext.performAndWait {
@@ -109,8 +121,9 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     }
     
     public func persistWhitelist(domains: [String]) {
-        deleteWhitelist()
         container.managedObjectContext.performAndWait {
+            deleteWhitelist()
+
             for domain in domains {
                 let entityName = String(describing: HTTPSWhitlistedDomain.self)
                 let context = container.managedObjectContext
@@ -118,26 +131,18 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
                     storedDomain.domain = domain.lowercased()
                 }
             }
-            
-            _ = container.managedObjectContext
             _ = container.save()
         }
     }
     
-    func deleteBloomFilter() {
-        try? FileManager.default.removeItem(at: bloomFilterPath)
+    private func deleteWhitelist() {
         container.managedObjectContext.performAndWait {
-            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSBloomFilterSpecification.fetchRequest()))
-        }
-    }
-    
-    func deleteWhitelist() {
-        container.managedObjectContext.performAndWait {
-           container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSWhitlistedDomain.fetchRequest()))
+            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSWhitlistedDomain.fetchRequest()))
         }
     }
     
     func reset() {
+        deleteBloomFilterSpecification()
         deleteBloomFilter()
         deleteWhitelist()
     }

@@ -12,7 +12,7 @@
         </fetchIndex>
     </entity>
     <elements>
-        <element name="HTTPSWhitlistedDomain" positionX="-207" positionY="57" width="128" height="58"/>
-        <element name="HTTPSBloomFilterSpecification" positionX="-218" positionY="-54" width="128" height="88"/>
+        <element name="HTTPSBloomFilterSpecification" positionX="-1269" positionY="-171" width="128" height="88"/>
+        <element name="HTTPSWhitlistedDomain" positionX="-1098" positionY="-157" width="128" height="58"/>
     </elements>
 </model>

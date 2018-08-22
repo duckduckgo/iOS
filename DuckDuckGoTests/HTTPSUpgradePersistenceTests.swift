@@ -33,6 +33,45 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
         testee.reset()
     }
     
+    func testWhenBloomFilterSpecificationIsNotPersistedThenSpecificationIsNil() {
+        XCTAssertNil(testee.bloomFilterSpecification())
+    }
+
+    func testWhenBloomFilterMatchesShaInSpecThenSpecAndDataPersisted() {
+        let data = "Hello World!".data(using: .utf8)!
+        let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+        let speciifcation = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)
+        testee.persistBloomFilter(specification: speciifcation, data: data)
+        XCTAssertTrue(speciifcation.matches(storedSpecification: testee.bloomFilterSpecification()))
+        XCTAssertNotNil(testee.bloomFilter())
+    }
+    
+    func testWhenBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {
+        let data = "Hello World!".data(using: .utf8)!
+        let sha = "wrong sha"
+        let speciifcation = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)
+        testee.persistBloomFilter(specification: speciifcation, data: data)
+        XCTAssertNil(testee.bloomFilterSpecification())
+        XCTAssertNil(testee.bloomFilter())
+    }
+
+    func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() {
+        let speciifcation = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        testee.persistBloomFilterSpecification(speciifcation)
+        XCTAssertTrue(speciifcation.matches(storedSpecification: testee.bloomFilterSpecification()))
+    }
+    
+    func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() {
+        let originalSpeciifcation = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        testee.persistBloomFilterSpecification(originalSpeciifcation)
+
+        let newSpeciifcation = HTTPSTransientBloomFilterSpecification(totalEntries: 101, errorRate: 0.01, sha256: "abc")
+        testee.persistBloomFilterSpecification(newSpeciifcation)
+
+        let storedSpecification = testee.bloomFilterSpecification()
+        XCTAssertTrue(newSpeciifcation.matches(storedSpecification: storedSpecification))
+    }
+
     func testWhenWhitelistDomainsPersistedThenHasDomainIsTrue() {
         testee.persistWhitelist(domains: [ "www.example.com", "apple.com" ])
         XCTAssertTrue(testee.hasWhitelistedDomain("www.example.com"))
@@ -42,5 +81,14 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     func testWhenNoWhitelistDomainsPersistedThenHasDomainIsFalse() {
         XCTAssertFalse(testee.hasWhitelistedDomain("www.example.com"))
         XCTAssertFalse(testee.hasWhitelistedDomain("apple.com"))
+    }
+    
+    func testWhenWhitelistDomainsPersistedThenOldDomainsAreDeleted() {
+        testee.persistWhitelist(domains: [ "www.old.com", "otherold.com" ])
+        testee.persistWhitelist(domains: [ "www.new.com", "othernew.com" ])
+        XCTAssertFalse(testee.hasWhitelistedDomain("www.old.com"))
+        XCTAssertFalse(testee.hasWhitelistedDomain("otherold.com"))
+        XCTAssertTrue(testee.hasWhitelistedDomain("www.new.com"))
+        XCTAssertTrue(testee.hasWhitelistedDomain("othernew.com"))
     }
 }

@@ -1,6 +1,6 @@
 //
-//  HTTPSBloomFilterJsonSpecification.swift
-//  Core
+//  DataChecksumExtension.swift
+//  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
@@ -18,17 +18,18 @@
 //
 
 import Foundation
+import CommonCrypto
 
-public struct HTTPSTransientBloomFilterSpecification {
-    let totalEntries: Int
-    let errorRate: Double
-    let sha256: String
+extension Data {
     
-    func matches(storedSpecification: HTTPSBloomFilterSpecification?) -> Bool {
-        guard let storedSpecification = storedSpecification else { return false }
-        
-        return totalEntries == storedSpecification.totalEntries &&
-            errorRate == storedSpecification.errorRate &&
-            sha256 == storedSpecification.sha256
+    var sha256: String {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        let dataBytes = [UInt8](self)
+        CC_SHA256(dataBytes, CC_LONG(self.count), &hash)
+        let output = NSMutableString(capacity: Int(CC_SHA1_DIGEST_LENGTH))
+        for byte in hash {
+            output.appendFormat("%02x", byte)
+        }
+        return output as String
     }
 }

@@ -15,7 +15,7 @@
 		830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C37651F6C4A1D00E317A7 /* TermsOfServiceParserTests.swift */; };
 		83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83134D7C20E2D725006CE65D /* FeedbackSender.swift */; };
 		83134D8420E2E090006CE65D /* FeedbackModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83134D8020E2E034006CE65D /* FeedbackModelTests.swift */; };
-		8328AAAF212A3AE900293140 /* DataHashExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328AAAE212A3AE900293140 /* DataHashExtension.swift */; };
+		8328AAAF212A3AE900293140 /* DataChecksumExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328AAAE212A3AE900293140 /* DataChecksumExtension.swift */; };
 		8328AAB4212A3D7C00293140 /* BloomFilter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8328AAB2212A3D7C00293140 /* BloomFilter.hpp */; };
 		8328AAB5212A3D7C00293140 /* BloomFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8328AAB3212A3D7C00293140 /* BloomFilter.cpp */; };
 		8328AAB8212A3DF200293140 /* BloomFilterWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +24,8 @@
 		8328AABF212B5D2000293140 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328AABA212ADAD100293140 /* CommonCrypto.framework */; };
 		8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8331AEDD20AA37560024962B /* APIHeaders.swift */; };
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
+		8341D807212D5E8D000514C2 /* DataChecksumExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D804212D5DFB000514C2 /* DataChecksumExtensionTest.swift */; };
+		8341D80A212D616F000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D808212D6159000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift */; };
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
@@ -430,7 +432,7 @@
 		83134D7C20E2D725006CE65D /* FeedbackSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSender.swift; sourceTree = "<group>"; };
 		83134D8020E2E034006CE65D /* FeedbackModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModelTests.swift; sourceTree = "<group>"; };
 		8325A1201F68AFD900FF31B5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		8328AAAE212A3AE900293140 /* DataHashExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHashExtension.swift; sourceTree = "<group>"; };
+		8328AAAE212A3AE900293140 /* DataChecksumExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataChecksumExtension.swift; sourceTree = "<group>"; };
 		8328AAB2212A3D7C00293140 /* BloomFilter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BloomFilter.hpp; path = submodules/bloom_cpp/src/BloomFilter.hpp; sourceTree = SOURCE_ROOT; };
 		8328AAB3212A3D7C00293140 /* BloomFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BloomFilter.cpp; path = submodules/bloom_cpp/src/BloomFilter.cpp; sourceTree = SOURCE_ROOT; };
 		8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloomFilterWrapper.h; sourceTree = "<group>"; };
@@ -439,6 +441,8 @@
 		8328AABD212AF70B00293140 /* HTTPSTransientBloomFilterSpecification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSTransientBloomFilterSpecification.swift; sourceTree = "<group>"; };
 		8331AEDD20AA37560024962B /* APIHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHeaders.swift; sourceTree = "<group>"; };
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
+		8341D804212D5DFB000514C2 /* DataChecksumExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataChecksumExtensionTest.swift; sourceTree = "<group>"; };
+		8341D808212D6159000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSTransientBloomFilterSpecificationTest.swift; sourceTree = "<group>"; };
 		8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
 		8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStoreTests.swift; sourceTree = "<group>"; };
 		836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -891,6 +895,7 @@
 			children = (
 				8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */,
 				85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */,
+				8341D808212D6159000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -1620,7 +1625,7 @@
 				F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */,
 				F1D477CA1F2149C40031ED49 /* Type.swift */,
 				85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */,
-				8328AAAE212A3AE900293140 /* DataHashExtension.swift */,
+				8328AAAE212A3AE900293140 /* DataChecksumExtension.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1834,6 +1839,7 @@
 				F14E491E1E391CE900DC037C /* URLExtensionTests.swift */,
 				F1DA2F7C1EBCF23700313F51 /* SupportedExternalUrlSchemeTests.swift */,
 				83C05D04212C74600068712A /* BloomFilterWrapperTest.swift */,
+				8341D804212D5DFB000514C2 /* DataChecksumExtensionTest.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2755,6 +2761,7 @@
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
+				8341D807212D5E8D000514C2 /* DataChecksumExtensionTest.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
 				F1B88A141F3BB445000263D6 /* SiteGradeTests.swift in Sources */,
 				85ECA7F11F2A83190018EBEB /* MigrationTests.swift in Sources */,
@@ -2777,6 +2784,7 @@
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */,
+				8341D80A212D616F000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				85A1B3B420C6D07100C18F15 /* CookieStorageTests.swift in Sources */,
 				85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */,
@@ -2890,7 +2898,7 @@
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,
 				F1134EC61F40E3B400B73467 /* AppVersion.swift in Sources */,
 				85C271D81FD0311A007216B4 /* HTTPSUpgradeParser.swift in Sources */,
-				8328AAAF212A3AE900293140 /* DataHashExtension.swift in Sources */,
+				8328AAAF212A3AE900293140 /* DataChecksumExtension.swift in Sources */,
 				F143C33C1E4A9A9200CFDE3A /* WebViewController.swift in Sources */,
 				F1134EA61F3E2AF400B73467 /* StatisticsStore.swift in Sources */,
 				F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */,

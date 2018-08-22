@@ -79,7 +79,7 @@ public class ContentBlockerLoader {
                 return
             }
                 
-            if specification.isEqualTo(storedSpecification: self.httpsUpgradeStore.bloomFilterSpecification()) {
+            if specification.matches(storedSpecification: self.httpsUpgradeStore.bloomFilterSpecification()) {
                 Logger.log(text: "Bloom filter already downloaded")
                 semaphore.signal()
                 return

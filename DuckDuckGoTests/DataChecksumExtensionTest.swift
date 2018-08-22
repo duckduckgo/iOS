@@ -1,6 +1,6 @@
 //
-//  HTTPSBloomFilterJsonSpecification.swift
-//  Core
+//  DataHashExtensionTest.swift
+//  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
@@ -19,16 +19,15 @@
 
 import Foundation
 
-public struct HTTPSTransientBloomFilterSpecification {
-    let totalEntries: Int
-    let errorRate: Double
-    let sha256: String
-    
-    func matches(storedSpecification: HTTPSBloomFilterSpecification?) -> Bool {
-        guard let storedSpecification = storedSpecification else { return false }
-        
-        return totalEntries == storedSpecification.totalEntries &&
-            errorRate == storedSpecification.errorRate &&
-            sha256 == storedSpecification.sha256
+import XCTest
+@testable import Core
+
+class DataChecksumExtensionTest: XCTestCase {
+
+    func testWhenSha256IsCalledThenChecksumIsCorrect() {
+        let result = "Hello World!".data(using: .utf8)?.sha256
+        let expectedResult = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+        XCTAssertEqual(expectedResult, result)
     }
+    
 }

@@ -21,6 +21,14 @@ import XCTest
 
 class StringExtensionTests: XCTestCase {
 
+    func testWhenDropPrefixIsCalledWithoutMatchingPrefixThenStringIsUnchanged() {
+        XCTAssertEqual("subdomain.example.com", "subdomain.example.com".dropPrefix(prefix: "www."))
+    }
+
+    func testWhenDropPrefixIsCalledWithMatchingPrefixThenItIsDropped() {
+        XCTAssertEqual("example.com", "www.example.com".dropPrefix(prefix: "www."))
+    }
+    
     func testTrimWhitespaceRemovesLeadingSpaces() {
         let input = "  abcd"
         XCTAssertEqual("abcd", input.trimWhitespace())

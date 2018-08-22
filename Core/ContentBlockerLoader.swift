@@ -90,9 +90,9 @@ public class ContentBlockerLoader {
                     semaphore.signal()
                     return
                 }
-                self.httpsUpgradeStore.persistBloomFilter(specification: specification, data: data)
+                let persisted = self.httpsUpgradeStore.persistBloomFilter(specification: specification, data: data)
                 HTTPSUpgrade.shared.reloadData()
-                self.newDataItems += 1
+                self.newDataItems += persisted ? 1 : 0
                 semaphore.signal()
             }
         }

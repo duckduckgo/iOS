@@ -39,6 +39,7 @@
 		83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83A23D6220DC330000051F39 /* Feedback.storyboard */; };
 		83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B8BDAD20AB0DA90076D6A1 /* APIHeadersTests.swift */; };
 		83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C05D04212C74600068712A /* BloomFilterWrapperTest.swift */; };
+		83C389CC212D818500C11612 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328AABA212ADAD100293140 /* CommonCrypto.framework */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4A73620E1272F003A7A6D /* FeedbackModel.swift */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
@@ -843,6 +844,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83C389CC212D818500C11612 /* CommonCrypto.framework in Frameworks */,
 				85F21DC021123B03002631A6 /* Core.framework in Frameworks */,
 				85F21DBF2112155E002631A6 /* Alamofire.framework in Frameworks */,
 				85F21DB821107F46002631A6 /* Swifter.framework in Frameworks */,
@@ -2538,11 +2540,13 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Swifter.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CommonCrypto.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Swifter.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CommonCrypto.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

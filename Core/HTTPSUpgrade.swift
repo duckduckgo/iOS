@@ -37,6 +37,7 @@ public class HTTPSUpgrade {
         guard let bloomFilter = bloomFilter else { return nil }
         
         if store.hasWhitelistedDomain(host) {
+            Logger.log(text: "Site \(host) is in whitelist, not upgrading")
             return nil
         }
         

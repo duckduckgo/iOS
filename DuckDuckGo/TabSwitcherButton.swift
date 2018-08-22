@@ -74,6 +74,8 @@ class TabSwitcherButton: UIView {
         tint.frame = frame
         label.frame = frame
         
+        anim.layer.masksToBounds = false
+        
         tint.backgroundColor = UIColor.nearlyBlackLight
         tint.alpha = 0.0
         

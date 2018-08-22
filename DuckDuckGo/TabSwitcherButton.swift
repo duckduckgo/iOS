@@ -130,7 +130,7 @@ class TabSwitcherButton: UIView {
         
         let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
         return [ NSAttributedStringKey.font: font,
-                 NSAttributedStringKey.foregroundColor: UIColor.nearlyBlackLight,
+                 NSAttributedStringKey.foregroundColor: UIColor.grayish,
                  NSAttributedStringKey.paragraphStyle: paragraphStyle ]
     }
     

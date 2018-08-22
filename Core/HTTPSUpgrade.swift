@@ -52,7 +52,9 @@ public class HTTPSUpgrade {
         return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
     }
     
-    func reloadData() {
-        bloomFilter = store.bloomFilter()
+    public func reloadData() {
+        DispatchQueue.global(qos: .background).async {
+            self.bloomFilter = self.store.bloomFilter()
+        }
     }
 }

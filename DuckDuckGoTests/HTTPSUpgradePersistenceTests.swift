@@ -40,10 +40,8 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     func testWhenBloomFilterMatchesShaInSpecThenSpecAndDataPersisted() {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
-        let speciifcation = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)
-        testee.persistBloomFilter(specification: speciifcation, data: data)
-        XCTAssertTrue(speciifcation.matches(storedSpecification: testee.bloomFilterSpecification()))
-        XCTAssertNotNil(testee.bloomFilter())
+        let specification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)        
+        XCTAssertTrue(testee.persistBloomFilter(specification: specification, data: data))
     }
     
     func testWhenBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {

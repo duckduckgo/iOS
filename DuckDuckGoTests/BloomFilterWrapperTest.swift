@@ -25,8 +25,8 @@ import XCTest
 class BloomFilterWrapperTest: XCTestCase {
     
     struct Constants {
-        static let filterElementCount = 5000
-        static let additionalTestDataElementCount = 5000
+        static let filterElementCount = 1000
+        static let additionalTestDataElementCount = 1000
         static let targetErrorRate = 0.001
         static let acceptableErrorRate = Constants.targetErrorRate * 2
     }

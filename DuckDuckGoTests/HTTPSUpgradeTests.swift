@@ -72,7 +72,8 @@ private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
         return nil
     }
     
-    func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) {
+    func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) -> Bool {
+        return true
     }
     
     func hasWhitelistedDomain(_ domain: String) -> Bool {

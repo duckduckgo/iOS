@@ -26,7 +26,7 @@ public protocol HTTPSUpgradeStore {
     
     func bloomFilterSpecification() -> HTTPSBloomFilterSpecification?
     
-    func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data)
+    func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) -> Bool
     
     func hasWhitelistedDomain(_ domain: String) -> Bool
     
@@ -65,12 +65,12 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
         return specification
     }
     
-    public func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) {
+    public func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) -> Bool {
         Logger.log(items: "HTTPS Bloom Filter", bloomFilterPath)
-        guard data.sha256 == specification.sha256 else { return }
-        if persistBloomFilter(data: data) {
-            persistBloomFilterSpecification(specification)
-        }
+        guard data.sha256 == specification.sha256 else { return false }
+        guard persistBloomFilter(data: data) else { return false }
+        persistBloomFilterSpecification(specification)
+        return true
     }
     
     func persistBloomFilter(data: Data) -> Bool {

@@ -57,23 +57,23 @@ public class ContentBlockerLoader {
 
         let contentBlockerRequest = ContentBlockerRequest()
 
-        contentBlockerRequest.request(.disconnectMe) { (data) in
-            if let data = data {
+        contentBlockerRequest.request(.disconnectMe) { data, isCached in
+            if let data = data, !isCached {
                 self.newDataItems += 1
                 try? self.disconnectStore.persist(data: data)
             }
             semaphore.signal()
         }
 
-        contentBlockerRequest.request(.trackersWhitelist) { (data) in
-            if let data = data {
+        contentBlockerRequest.request(.trackersWhitelist) { data, isCached in
+            if let data = data, !isCached {
                 self.newDataItems += 1
                 self.easylistStore.persistEasylistWhitelist(data: data)
             }
             semaphore.signal()
         }
         
-        contentBlockerRequest.request(.httpsBloomFilterSpec) { data in
+        contentBlockerRequest.request(.httpsBloomFilterSpec) { data, _ in
             guard let data = data, let specification = HTTPSUpgradeParser.bloomFilterSpecification(fromJSONData: data) else {
                 semaphore.signal()
                 return
@@ -85,7 +85,7 @@ public class ContentBlockerLoader {
                 return
             }
                 
-            contentBlockerRequest.request(.httpsBloomFilter) { data in
+            contentBlockerRequest.request(.httpsBloomFilter) { data, _ in
                 guard let data = data else {
                     semaphore.signal()
                     return
@@ -97,16 +97,16 @@ public class ContentBlockerLoader {
             }
         }
         
-        contentBlockerRequest.request(.httpsWhitelist) { data in
-            if let data = data, let whitelist = HTTPSUpgradeParser.whitelist(fromJSONData: data) {
+        contentBlockerRequest.request(.httpsWhitelist) { data, isCached in
+            if let data = data, !isCached, let whitelist = HTTPSUpgradeParser.whitelist(fromJSONData: data) {
                 self.newDataItems += 1
                 self.httpsUpgradeStore.persistWhitelist(domains: whitelist)
             }
             semaphore.signal()
         }
 
-        contentBlockerRequest.request(.surrogates) { (data) in
-            if let data = data {
+        contentBlockerRequest.request(.surrogates) { data, isCached in
+            if let data = data, !isCached {
                 self.newDataItems += 1
                 self.surrogateStore.parseAndPersist(data: data)
             }

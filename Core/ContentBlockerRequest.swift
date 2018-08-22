@@ -40,22 +40,22 @@ class ContentBlockerRequest {
         self.etagStorage = etagStorage
     }
     
-    func request(_ list: Configuration, completion:@escaping (Data?) -> Void) {
+    func request(_ list: Configuration, completion:@escaping (Data?, Bool) -> Void) {
         requestCount += 1
         APIRequest.request(url: url(for: list)) { (response, error) in
             
             guard error == nil else {
-                completion(nil)
+                completion(nil, false)
                 return
             }
             
             guard let response = response else {
-                completion(nil)
+                completion(nil, false)
                 return
             }
             
             guard let data = response.data else {
-                completion(nil)
+                completion(nil, false)
                 return
             }
 
@@ -63,9 +63,9 @@ class ContentBlockerRequest {
             
             if etag == nil || etag != response.etag {
                 self.etagStorage.set(etag: response.etag, for: list)
-                completion(data)
+                completion(data, false)
             } else {
-                completion(nil)
+                completion(data, true)
             }
         }
     }

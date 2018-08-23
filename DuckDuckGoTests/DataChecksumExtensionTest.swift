@@ -1,8 +1,8 @@
 //
-//  Core.h
-//  Core
+//  DataHashExtensionTest.swift
+//  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,17 +17,17 @@
 //  limitations under the License.
 //
 
+import Foundation
 
-#import <UIKit/UIKit.h>
-#import "BloomFilterWrapper.h"
+import XCTest
+@testable import Core
 
+class DataChecksumExtensionTest: XCTestCase {
 
-//! Project version number for Core.
-FOUNDATION_EXPORT double CoreVersionNumber;
-
-//! Project version string for Core.
-FOUNDATION_EXPORT const unsigned char CoreVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Core/PublicHeader.h>
-
-
+    func testWhenSha256IsCalledThenChecksumIsCorrect() {
+        let result = "Hello World!".data(using: .utf8)?.sha256
+        let expectedResult = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
+        XCTAssertEqual(expectedResult, result)
+    }
+    
+}

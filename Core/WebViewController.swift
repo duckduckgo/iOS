@@ -117,7 +117,7 @@ open class WebViewController: UIViewController {
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
-
+        
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.consumeCookies()
             if let url = url {
@@ -125,6 +125,11 @@ open class WebViewController: UIViewController {
             }
         }
 
+        if let url = url {
+            webEventsDelegate?.webView(webView, didChangeUrl: url)
+            webEventsDelegate?.webpageDidStartLoading(httpsForced: false)
+        }
+        
     }
 
     private func attachLongPressHandler(webView: WKWebView) {
@@ -338,6 +343,7 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
         lastError = error
         let error = error as NSError
 
@@ -364,10 +370,6 @@ extension WebViewController: WKNavigationDelegate {
             decision == .allow,
             appUrls.isDuckDuckGoSearch(url: url) {
             StatisticsLoader.shared.refreshRetentionAtb()
-        }
-        
-        if decision == .allow && navigationAction.isTargettingMainFrame() {
-            showProgressIndicator()
         }
         
         decisionHandler(decision)

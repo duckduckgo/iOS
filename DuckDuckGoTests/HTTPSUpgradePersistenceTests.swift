@@ -61,14 +61,14 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     }
     
     func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() {
-        let originalspecification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
-        testee.persistBloomFilterSpecification(originalspecification)
+        let originalSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        testee.persistBloomFilterSpecification(originalSpecification)
 
-        let newspecification = HTTPSTransientBloomFilterSpecification(totalEntries: 101, errorRate: 0.01, sha256: "abc")
-        testee.persistBloomFilterSpecification(newspecification)
+        let newSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 101, errorRate: 0.01, sha256: "abc")
+        testee.persistBloomFilterSpecification(newSpecification)
 
         let storedSpecification = testee.bloomFilterSpecification()
-        XCTAssertEqual(newspecification, storedSpecification)
+        XCTAssertEqual(newSpecification, storedSpecification)
     }
 
     func testWhenWhitelistDomainsPersistedThenHasDomainIsTrue() {

@@ -57,9 +57,8 @@ class TabViewCell: UICollectionViewCell {
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
         background.layer.borderColor = UIColor.skyBlue.cgColor
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
-        
-        let titleText = (tab.link?.title ?? tab.link?.url.host?.dropPrefix(prefix: "www.") ?? "")
-        title.text = titleText
+
+        title.text = tab.link?.displayTitle
         unread.isHidden = tab.viewed
 
         link.text = tab.link?.url.absoluteString ?? ""

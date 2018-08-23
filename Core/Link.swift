@@ -28,6 +28,11 @@ public class Link: NSObject, NSCoding {
 
     public let title: String?
     public let url: URL
+    
+    public var displayTitle: String? {
+        let host = url.host?.dropPrefix(prefix: "www.") ?? url.absoluteString
+        return (title?.isEmpty ?? true) ? host : title
+    }
 
     public required init(title: String?, url: URL) {
         self.title = title

@@ -61,7 +61,7 @@ class TabSwitcherButtonTests: XCTestCase {
         
         let button = TabSwitcherButton()
         button.tabCount = 100
-        XCTAssertEqual("🦆", button.label.text)
+        XCTAssertEqual("~", button.label.text)
         
     }
 

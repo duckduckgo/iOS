@@ -53,7 +53,7 @@ class TabSwitcherButton: UIView {
             }
             
             if tabCount >= Constants.maxTextTabs {
-                label.text = "🦆"
+                label.text = "~"
                 return
             }
             

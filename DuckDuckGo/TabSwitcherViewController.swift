@@ -114,7 +114,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TabViewCell.reuseIdentifier, for: indexPath) as? TabViewCell else {
             fatalError("Failed to dequeue cell \(TabViewCell.reuseIdentifier) as TablViewCell")
         }
-        cell.update(withTab: tab)
+        cell.update(withTab: tab, isCurrent: indexPath.row == tabsModel.currentIndex)
         cell.delegate = self
         return cell
     }
@@ -135,6 +135,7 @@ extension TabSwitcherViewController: UICollectionViewDelegate {
             fatalError("Failed to load cell as TabViewCell")
         }
         guard let tab = cell.tab else { return }
+        tab.viewed = true
         delegate.tabSwitcher(self, didSelectTab: tab)
         dismiss()
     }

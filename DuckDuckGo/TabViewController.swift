@@ -212,6 +212,7 @@ class TabViewController: WebViewController {
         
         let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
         alert.addAction(newTabAction(forUrl: url))
+        alert.addAction(newBackgroundTabAction(forUrl: url))
         alert.addAction(openAction(forUrl: url))
         alert.addAction(readingAction(forUrl: url))
         alert.addAction(copyAction(forUrl: url))
@@ -272,6 +273,15 @@ class TabViewController: WebViewController {
             if let weakSelf = self {
                 Pixel.fire(pixel: .longPressMenuNewTabItem)
                 weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
+            }
+        }
+    }
+
+    private func newBackgroundTabAction(forUrl url: URL) -> UIAlertAction {
+        return UIAlertAction(title: UserText.actionNewBackgroundTabForUrl, style: .default) { [weak self] _ in
+            if let weakSelf = self {
+                Pixel.fire(pixel: .longPressMenuNewBackgroundTabItem)
+                weakSelf.delegate?.tab(weakSelf, didRequestNewBackgroundTabForUrl: url)
             }
         }
     }

@@ -77,6 +77,13 @@
                                                                 <action selector="deleteTab" destination="Mdh-yg-dRH" eventType="touchUpInside" id="NiJ-Kn-E29"/>
                                                             </connections>
                                                         </button>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TabUnread" translatesAutoresizingMaskIntoConstraints="NO" id="Gyy-py-IOg">
+                                                            <rect key="frame" x="6" y="6" width="10" height="10"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="10" id="hKi-O1-nkZ"/>
+                                                                <constraint firstAttribute="height" constant="10" id="kLl-cv-jch"/>
+                                                            </constraints>
+                                                        </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="ucs-Dd-y53">
                                                             <rect key="frame" x="14" y="26.5" width="17" height="17"/>
                                                             <constraints>
@@ -100,6 +107,7 @@
                                                     <color key="backgroundColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
+                                                        <constraint firstItem="Gyy-py-IOg" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="6" id="38b-Pk-GhR"/>
                                                         <constraint firstItem="caT-pD-5fn" firstAttribute="leading" secondItem="ucs-Dd-y53" secondAttribute="trailing" constant="14" id="61O-AN-wHS"/>
                                                         <constraint firstItem="ucs-Dd-y53" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="14" id="9TI-0l-IbA"/>
                                                         <constraint firstItem="G2C-qh-g3T" firstAttribute="centerY" secondItem="puo-AS-QV7" secondAttribute="centerY" id="DN9-1r-kk9"/>
@@ -107,6 +115,7 @@
                                                         <constraint firstItem="1GE-Nf-lKM" firstAttribute="top" secondItem="puo-AS-QV7" secondAttribute="top" constant="18" id="JfL-bR-9EK"/>
                                                         <constraint firstAttribute="trailing" secondItem="G2C-qh-g3T" secondAttribute="trailing" constant="4" id="ZhN-JG-uru"/>
                                                         <constraint firstItem="1GE-Nf-lKM" firstAttribute="leading" secondItem="ucs-Dd-y53" secondAttribute="trailing" constant="14" id="ggq-Lj-06V"/>
+                                                        <constraint firstItem="Gyy-py-IOg" firstAttribute="leading" secondItem="puo-AS-QV7" secondAttribute="leading" constant="6" id="hoD-zl-JZw"/>
                                                         <constraint firstItem="G2C-qh-g3T" firstAttribute="leading" secondItem="caT-pD-5fn" secondAttribute="trailing" id="p5H-9Y-pIA"/>
                                                         <constraint firstAttribute="bottom" secondItem="caT-pD-5fn" secondAttribute="bottom" constant="15" id="sfT-bm-ts1"/>
                                                         <constraint firstItem="ucs-Dd-y53" firstAttribute="centerY" secondItem="puo-AS-QV7" secondAttribute="centerY" id="xC2-WA-3wb"/>
@@ -134,10 +143,12 @@
                                             <constraint firstItem="puo-AS-QV7" firstAttribute="leading" secondItem="Mdh-yg-dRH" secondAttribute="leading" constant="10" id="Gfv-Fx-eYf"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="background" destination="puo-AS-QV7" id="DYO-r7-lm0"/>
                                             <outlet property="favicon" destination="ucs-Dd-y53" id="5MN-9p-Rmy"/>
                                             <outlet property="link" destination="caT-pD-5fn" id="zuL-Sh-gBP"/>
                                             <outlet property="removeButton" destination="G2C-qh-g3T" id="b0U-a4-JPU"/>
                                             <outlet property="title" destination="1GE-Nf-lKM" id="UpH-Y5-3en"/>
+                                            <outlet property="unread" destination="Gyy-py-IOg" id="9Ow-2Z-BPg"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -146,7 +157,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-EZ-1qW">
-                                            <rect key="frame" x="103.5" y="15.5" width="168.5" height="18"/>
+                                            <rect key="frame" x="104" y="15.5" width="168.5" height="18"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap " textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UDa-k3-lgX">
                                                     <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
@@ -247,8 +258,9 @@
     <resources>
         <image name="Fire" width="19" height="24"/>
         <image name="GlobeSmall" width="16" height="16"/>
-        <image name="NewTab" width="22" height="22"/>
+        <image name="NewTab" width="24" height="24"/>
         <image name="Remove" width="12" height="12"/>
         <image name="Settings" width="22" height="22"/>
+        <image name="TabUnread" width="24" height="24"/>
     </resources>
 </document>

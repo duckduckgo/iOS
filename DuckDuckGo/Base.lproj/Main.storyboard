@@ -74,7 +74,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="p9L-cF-4aL" kind="presentation" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
+                                            <segue destination="p9L-cF-4aL" kind="presentation" identifier="ShowTabs" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -185,6 +185,6 @@
         <image name="BrowseNext" width="22" height="22"/>
         <image name="BrowsePrevious" width="22" height="22"/>
         <image name="Fire" width="19" height="24"/>
-        <image name="Tabs" width="22" height="22"/>
+        <image name="Tabs" width="24" height="24"/>
     </resources>
 </document>

@@ -24,6 +24,10 @@ extension UIColor {
     public static var monitoringInactiveTint: UIColor {
         return midGray
     }
+    
+    public static var nearlyBlackLight: UIColor {
+        return UIColor(red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+    }
 
     public static var grayish: UIColor {
         return UIColor(red: 170.0 / 255.0, green: 170.0 / 255.0, blue: 170.0 / 255.0, alpha: 1.0)
@@ -63,6 +67,10 @@ extension UIColor {
 
     public static var cornflowerBlue: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 143.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var skyBlue: UIColor {
+        return UIColor(red: 56.0 / 255.0, green: 176.0 / 255.0, blue: 253.0 / 255.0, alpha: 1.0)
     }
 
     public static var greyishBrownTwo: UIColor {

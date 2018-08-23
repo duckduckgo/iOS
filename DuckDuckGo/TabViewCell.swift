@@ -29,20 +29,38 @@ protocol TabViewCellDelegate: class {
 
 class TabViewCell: UICollectionViewCell {
 
+    struct Constants {
+        
+        static let selectedBorderWidth: CGFloat = 2.0
+        static let unselectedBorderWidth: CGFloat = 0.0
+        static let selectedAlpha: CGFloat = 1.0
+        static let unselectedAlpha: CGFloat = 0.92
+        
+    }
+    
     static let reuseIdentifier = "TabCell"
 
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
 
+    @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var link: UILabel!
     @IBOutlet weak var removeButton: UIButton!
+    @IBOutlet weak var unread: UIView!
 
-    func update(withTab tab: Tab) {
+    func update(withTab tab: Tab, isCurrent: Bool) {
         self.tab = tab
         isHidden = false
-        title.text = tab.link?.title ?? ""
+        
+        background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
+        background.layer.borderColor = UIColor.skyBlue.cgColor
+        background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
+
+        title.text = tab.link?.displayTitle
+        unread.isHidden = tab.viewed
+
         link.text = tab.link?.url.absoluteString ?? ""
         configureFavicon(forDomain: tab.link?.url.host)
     }

@@ -20,6 +20,7 @@
 import UIKit
 import WebKit
 import Core
+import Lottie
 
 class MainViewController: UIViewController {
 
@@ -56,6 +57,8 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
+    let tabSwitcherButton = TabSwitcherButton()
+
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
     fileprivate var currentTab: TabViewController? {
@@ -67,12 +70,18 @@ class MainViewController: UIViewController {
 
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
+        initTabButton()
         attachOmniBar()
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
     }
-
+    
+    private func initTabButton() {
+        tabSwitcherButton.delegate = self
+        tabsButton.customView = tabSwitcherButton
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.destination.childViewControllers.count > 0,
@@ -259,8 +268,8 @@ class MainViewController: UIViewController {
     }
 
     private func refreshTabIcon() {
-        let count = tabManager.count
-        tabsButton.image = (count == 0) ? #imageLiteral(resourceName: "Tabs") : TabIconMaker().icon(forTabs: count)
+        tabSwitcherButton.tabCount = tabManager.count
+        tabSwitcherButton.hasUnread = tabManager.hasUnread
     }
 
     private func refreshOmniBar() {
@@ -382,6 +391,21 @@ class MainViewController: UIViewController {
         }
 
         feature.setShown()
+    }
+
+    func animateBackgroundTab() {
+        showBars()
+        tabSwitcherButton.incrementAnimated()
+    }
+
+    func replaceToolbar(item target: UIBarButtonItem, with replacement: UIBarButtonItem) {
+        guard let items = toolbar.items else { return }
+
+        let newItems = items.compactMap({
+            $0 == target ? replacement : $0
+        })
+
+        toolbar.setItems(newItems, animated: false)
     }
 
 }
@@ -533,6 +557,11 @@ extension MainViewController: TabDelegate {
         omniBar.becomeFirstResponder()
     }
 
+    func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
+        _ = tabManager.add(url: url, inBackground: true)
+        animateBackgroundTab()
+    }
+
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
         loadUrlInNewTab(url)
     }
@@ -590,4 +619,12 @@ extension MainViewController: BookmarksDelegate {
         omniBar.resignFirstResponder()
         loadUrl(link.url)
     }
+}
+
+extension MainViewController: TabSwitcherButtonDelegate {
+    
+    func showTabSwitcher() {
+        performSegue(withIdentifier: "ShowTabs", sender: self)
+    }
+    
 }

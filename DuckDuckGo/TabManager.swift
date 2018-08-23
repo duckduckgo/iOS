@@ -70,6 +70,10 @@ class TabManager {
     var isEmpty: Bool {
         return tabControllerCache.isEmpty
     }
+    
+    var hasUnread: Bool {
+        return model.hasUnread
+    }
 
     var count: Int {
         return model.count
@@ -89,13 +93,24 @@ class TabManager {
         return current!
     }
 
-    func add(url: URL?) -> TabViewController {
-        current?.dismiss()
+    func add(url: URL?, inBackground: Bool = false) -> TabViewController {
+
+        if !inBackground {
+            current?.dismiss()
+        }
+
         let link = url == nil ? nil : Link(title: nil, url: url!)
         let tab = Tab(link: link)
+        tab.viewed = !inBackground
         let controller = buildController(forTab: tab, url: url)
         tabControllerCache.append(controller)
-        model.add(tab: tab)
+
+        if let index = model.currentIndex, inBackground {
+            model.insert(tab: tab, at: index + 1)
+        } else {
+            model.add(tab: tab)
+        }
+
         save()
         return controller
     }

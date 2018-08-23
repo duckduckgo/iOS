@@ -52,12 +52,8 @@ class TabSwitcherButton: UIView {
                 return
             }
             
-            if tabCount >= Constants.maxTextTabs {
-                label.text = "~"
-                return
-            }
-            
-            label.attributedText = NSAttributedString(string: "\(tabCount)", attributes: attributes())
+            let text = tabCount >= Constants.maxTextTabs ? "~" : "\(tabCount)"
+            label.attributedText = NSAttributedString(string: text, attributes: attributes())
         }
     }
     

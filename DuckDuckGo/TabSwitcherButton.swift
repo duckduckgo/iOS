@@ -82,7 +82,7 @@ class TabSwitcherButton: UIView {
     }
     
     convenience init() {
-        self.init(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        self.init(frame: CGRect(x: 0, y: 0, width: 26, height: 26))
     }
     
     required init(coder aDecoder: NSCoder) {

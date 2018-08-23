@@ -18,11 +18,110 @@
 //
 
 import XCTest
+@testable import DuckDuckGo
 
 class AppRatingPromptTests: XCTestCase {
     
-    func test() {
+    fileprivate var stub: AppRatingPromptStorageStub!
+
+    override func setUp() {
+        super.setUp()
+        stub = AppRatingPromptStorageStub()
+    }
+    
+    func testWhenUserAccessFifthDayAfterSkippingSomeThenShouldPrompt() {
+        
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 1))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 2))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 3))
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: days(later: 10)))
+        
+    }
+
+    func testWhenUserAccessFourthDayAfterSkippingSomeThenShouldNotPrompt() {
+        
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 1))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 2))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: days(later: 5)))
+    }
+
+    func testWhenUserAccessThirdDayAfterSkippingOneThenShouldPrompt() {
+        
+        let stub = AppRatingPromptStorageStub()
+        
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 1))
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: days(later: 3)))
+        
+    }
+
+    func testWhenUserAccessThirdDayThenShouldPrompt() {
+
+        let stub = AppRatingPromptStorageStub()
+        
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 1))
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: days(later: 2)))
         
     }
     
+    func testWhenUserAccessSecondUniqueDayThenShouldNotPrompt() {
+        
+        let stub = AppRatingPromptStorageStub()
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: days(later: 1)))
+
+    }
+
+    func testWhenUserAccessSecondTimeOnFirstDayThenShouldNotPrompt() {
+
+        let stub = AppRatingPromptStorageStub()
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: days(later: 0)))
+        
+    }
+
+    func testWhenUserAccessFirstDayThenShouldNotPrompt() {
+        XCTAssertFalse(AppRatingPrompt(storage: AppRatingPromptStorageStub()).shouldPrompt(date: days(later: 0)))
+    }
+    
+    func days(later: Int) -> Date {
+        var date = Date()
+        
+        if later == 0 {
+            return date
+        }
+        
+        for _ in 1 ... later {
+            date = date.nextDay()
+        }
+        
+        return date
+    }
+    
+}
+
+private class AppRatingPromptStorageStub: AppRatingPromptStorage {
+    
+    var lastAccess: Date?
+    
+    var uniqueAccessDays: Int = 0
+    
+}
+
+fileprivate extension Date {
+    
+    func nextDay() -> Date {
+        let components = DateComponents(day: 1)
+        return Calendar.current.date(byAdding: components, to: self)!
+    }
+
 }

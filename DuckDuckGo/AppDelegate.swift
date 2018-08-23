@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
 
+        HTTPSUpgrade.shared.loadDataAsync()
+
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
@@ -54,14 +56,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
-
         Pixel.fire(pixel: .appLaunch)
         startMigration(application: application)
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
-            BlockerListsLoader().start(completion: nil)
+            ContentBlockerLoader().start(completion: nil)
             displayAuthenticationWindow()
             beginAuthentication()
             initialiseBackgroundFetch(application)
@@ -96,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Logger.log(items: #function)
 
-        BlockerListsLoader().start { newData in
+        ContentBlockerLoader().start { newData in
             completionHandler(newData ? .newData : .noData)
         }
 

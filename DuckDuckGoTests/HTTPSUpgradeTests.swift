@@ -21,37 +21,70 @@ import XCTest
 @testable import Core
 
 class HTTPSUpgradeTests: XCTestCase {
-
+    
+    func testWhenBloomFilterIsNilThenNoUpgradeURLIsReturned() {
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: nil))
+        testee.loadData()
+        XCTAssertNil(testee.upgrade(url: URL(string: "http://example.com")!))
+    }
+    
     func testWhenURLIsHttpsNoUpgradeURLIsReturned() {
-        let testee = HTTPSUpgrade(persistence: MockHTTPSUpgradePersistence(hasDomain: false))
-        XCTAssertNil(testee.upgrade(url: URL(string: "https://www.example.com")!))
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
+        XCTAssertNil(testee.upgrade(url: URL(string: "https://example.com")!))
     }
-
+    
+    func testWhenURLIsHttpAndCanBeUpgradedUpgradeURLIsReturned() {
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
+        XCTAssertEqual("https://example.com", testee.upgrade(url: URL(string: "http://example.com")!)?.absoluteString)
+    }
+    
     func testWhenURLIsHttpAndCantBeUpgradedNoUpgradeURLIsReturned() {
-        let testee = HTTPSUpgrade(persistence: MockHTTPSUpgradePersistence(hasDomain: false))
-        XCTAssertNil(testee.upgrade(url: URL(string: "http://www.example.com")!))
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter()))
+        testee.loadData()
+        XCTAssertNil(testee.upgrade(url: URL(string: "http://otherurl.com")!))
     }
-
-    func testWhenURLIsHttpAndCanBeUpgradedReturnsUpgradedURL() {
-        let testee = HTTPSUpgrade(persistence: MockHTTPSUpgradePersistence(hasDomain: true))
-        XCTAssertEqual(URL(string: "https://www.example.com"), testee.upgrade(url: URL(string: "http://www.example.com")!))
+    
+    func testWhenURLIsInWhiteListThenNoUpgradeUrlIsReturned() {
+        let testee = HTTPSUpgrade(store: MockHTTPSUpgradeStore(bloomFilter: bloomFilter(), hasWhitelistedDomain: true))
+        testee.loadData()
+        XCTAssertNil(testee.upgrade(url: URL(string: "http://example.com")!))
     }
-
+    
+    private func bloomFilter() -> BloomFilterWrapper {
+        let filter = BloomFilterWrapper(totalItems: Int32(1000), errorRate: 0.0001)!
+        filter.add("example.com")
+        return filter
+    }
 }
 
-private class MockHTTPSUpgradePersistence: HTTPSUpgradePersistence {
-
-    private let hasDomain: Bool
-
-    init(hasDomain: Bool) {
-        self.hasDomain = hasDomain
+private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
+    
+    private let httpsBloomFilter: BloomFilterWrapper?
+    private let hasWhitelistedDomain: Bool
+    
+    init(bloomFilter: BloomFilterWrapper?, hasWhitelistedDomain: Bool = false) {
+        self.httpsBloomFilter = bloomFilter
+        self.hasWhitelistedDomain = hasWhitelistedDomain
     }
-
-    func persist(domains: [String], wildcardDomains: [String]) {
+    
+    func bloomFilter() -> BloomFilterWrapper? {
+        return httpsBloomFilter
     }
-
-    func hasDomain(_ domain: String) -> Bool {
-        return hasDomain
+    
+    func bloomFilterSpecification() -> HTTPSBloomFilterSpecification? {
+        return nil
     }
-
+    
+    func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
+        return true
+    }
+    
+    func hasWhitelistedDomain(_ domain: String) -> Bool {
+        return hasWhitelistedDomain
+    }
+    
+    func persistWhitelist(domains: [String]) {
+    }
 }

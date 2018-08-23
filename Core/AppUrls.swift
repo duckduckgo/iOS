@@ -28,18 +28,21 @@ public struct AppUrls {
         }
         
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
-        static let favicon = "\(base)/favicon.ico"
         static let autocomplete = "\(base)/ac/"
         static let disconnectMeBlockList = "\(base)/contentblocking.js?l=disconnect"
         static let easylistBlockList = "\(base)/contentblocking.js?l=easylist"
         static let easylistPrivacyBlockList = "\(base)/contentblocking.js?l=easyprivacy"
-        static let httpsUpgradeList = "\(base)/contentblocking.js?l=https2"
         static let trackersWhitelist = "\(base)/contentblocking/trackers-whitelist.txt"
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
         static let faviconService = "\(base)/ip3/%@.ico"
+ 
+        static let staticBase = "https://staticcdn.duckduckgo.com"
+        static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin"
+        static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json"
+        static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json"
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
@@ -65,9 +68,9 @@ public struct AppUrls {
     public var base: URL {
         return URL(string: Url.base)!
     }
-
-    public var favicon: URL {
-        return URL(string: Url.favicon)!
+    
+    public func autocompleteUrl(forText text: String) -> URL {
+        return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
     }
 
     public var disconnectMeBlockList: URL {
@@ -81,11 +84,7 @@ public struct AppUrls {
     public var easylistPrivacyBlockList: URL {
         return URL(string: Url.easylistPrivacyBlockList)!
     }
-
-    public var httpsUpgradeList: URL {
-        return URL(string: Url.httpsUpgradeList)!
-    }
-
+    
     public var trackersWhitelist: URL {
         return URL(string: Url.trackersWhitelist)!
     }
@@ -96,6 +95,11 @@ public struct AppUrls {
 
     public var feedback: URL {
         return URL(string: Url.feedback)!
+    }
+    
+    public func faviconUrl(forDomain domain: String) -> URL {
+        let urlString = String(format: Url.faviconService, domain)
+        return URL(string: urlString)!
     }
 
     public var atb: URL {
@@ -132,11 +136,6 @@ public struct AppUrls {
         return extiUrl.addParam(name: Param.atb, value: atb)
     }
 
-    public func faviconUrl(forDomain domain: String) -> URL {
-        let urlString = String(format: Url.faviconService, domain)
-        return URL(string: urlString)!
-    }
-
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
@@ -144,6 +143,12 @@ public struct AppUrls {
     public func searchUrl(text: String) -> URL {
         let searchUrl = base.addParam(name: Param.search, value: text)
         return applyStatsParams(for: searchUrl)
+    }
+    
+    public func isDuckDuckGoSearch(url: URL) -> Bool {
+        if !isDuckDuckGo(url: url) { return false }
+        guard url.getParam(name: Param.search) != nil else { return false }
+        return true
     }
 
     public func applyStatsParams(for url: URL) -> URL {
@@ -155,16 +160,6 @@ public struct AppUrls {
         return searchUrl
     }
 
-    public func autocompleteUrl(forText text: String) -> URL {
-        return URL(string: Url.autocomplete)!.addParam(name: Param.search, value: text)
-    }
-
-    public func isDuckDuckGoSearch(url: URL) -> Bool {
-        if !isDuckDuckGo(url: url) { return false }
-        guard url.getParam(name: Param.search) != nil else { return false }
-        return true
-    }
-
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
         guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
         if let atbWithVariant = statisticsStore.atbWithVariant {
@@ -173,10 +168,21 @@ public struct AppUrls {
         return true
     }
     
+    public var httpsBloomFilter: URL {
+        return URL(string: Url.httpsBloomFilter)!
+    }
+
+    public var httpsBloomFilterSpec: URL {
+        return URL(string: Url.httpsBloomFilterSpec)!
+    }
+
+    public var httpsWhitelist: URL {
+        return URL(string: Url.httpsWhitelist)!
+    }
+
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String) -> URL {
         var url = URL(string: Url.pixel.format(arguments: pixelName, formFactor))!
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         return url
     }
-
 }

@@ -1,8 +1,8 @@
 //
-//  Core.h
-//  Core
+//  DataChecksumExtension.swift
+//  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,17 +17,19 @@
 //  limitations under the License.
 //
 
+import Foundation
+import CommonCrypto
 
-#import <UIKit/UIKit.h>
-#import "BloomFilterWrapper.h"
-
-
-//! Project version number for Core.
-FOUNDATION_EXPORT double CoreVersionNumber;
-
-//! Project version string for Core.
-FOUNDATION_EXPORT const unsigned char CoreVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Core/PublicHeader.h>
-
-
+extension Data {
+    
+    var sha256: String {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        let dataBytes = [UInt8](self)
+        CC_SHA256(dataBytes, CC_LONG(self.count), &hash)
+        let output = NSMutableString(capacity: Int(CC_SHA1_DIGEST_LENGTH))
+        for byte in hash {
+            output.appendFormat("%02x", byte)
+        }
+        return output as String
+    }
+}

@@ -53,9 +53,9 @@ open class WebViewController: UIViewController {
     private var lastUpgradedDomain: String?
     private var lastError: Error?
     private var shouldReloadOnError = false
-
+    private var httpsUpgrade = HTTPSUpgrade.shared
+    
     private lazy var appUrls: AppUrls = AppUrls()
-    private lazy var httpsUpgrade = HTTPSUpgrade()
     private lazy var tld = TLD()
 
     private var tearDownCount = 0
@@ -390,9 +390,8 @@ extension WebViewController: WKNavigationDelegate {
             return .cancel
         }
 
-        guard let delegate = webEventsDelegate,
-            let documentUrl = navigationAction.request.mainDocumentURL else {
-                return .allow
+        guard let delegate = webEventsDelegate, let documentUrl = navigationAction.request.mainDocumentURL else {
+            return .allow
         }
 
         if shouldReissueSearch(for: url) {

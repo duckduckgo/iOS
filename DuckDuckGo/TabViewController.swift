@@ -21,6 +21,7 @@ import WebKit
 import SafariServices
 import Core
 import Device
+import StoreKit
 
 class TabViewController: WebViewController {
 
@@ -510,6 +511,13 @@ extension TabViewController: WebEventsDelegate {
         if let domain = siteRating?.domain {
             NetworkLeaderboard.shared.visited(domain: domain)
         }
+
+        if #available(iOS 10.3, *) {
+            if AppRatingPrompt().shouldPrompt() {
+                SKStoreReviewController.requestReview()
+            }
+        }
+        
     }
 
     func webpageDidFinishLoading() {

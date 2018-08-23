@@ -21,7 +21,7 @@ import XCTest
 @testable import Core
 
 class HTTPSTransientBloomFilterSpecificationTest: XCTestCase {
-
+    
     let store = HTTPSUpgradePersistence()
     let testee = HTTPSTransientBloomFilterSpecification(totalEntries: 100,
                                                         errorRate: 0.001,
@@ -33,19 +33,17 @@ class HTTPSTransientBloomFilterSpecificationTest: XCTestCase {
         XCTAssertEqual("abc", testee.sha256)
     }
     
-    func testWhenComparedToNilThenMatchesIsFalse() {
-        XCTAssertFalse(testee.matches(storedSpecification: nil))
+    func testWhenComparedToMatchingSpecificationThenEqualsIsTrue() {
+        let equalSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 100,
+                                                                        errorRate: 0.001,
+                                                                        sha256: "abc")
+        XCTAssertTrue(testee == equalSpecification)
     }
-
-    func testWhenComparedToMatchingStoredSpecificationThenMatchesIsTrue() {
-        store.persistBloomFilterSpecification(testee)
-        XCTAssertTrue(testee.matches(storedSpecification: store.bloomFilterSpecification()))
-    }
-
-    func testWhenComparedToDifferentStoredSpecificationThenMatchesIsFalse() {
-        store.persistBloomFilterSpecification(HTTPSTransientBloomFilterSpecification(totalEntries: 101,
-                                                                                     errorRate: 0.001,
-                                                                                     sha256: "abc"))
-        XCTAssertFalse(testee.matches(storedSpecification: store.bloomFilterSpecification()))
+    
+    func testWhenComparedToDifferentSpecificationThenEqualsIsFalse() {
+        let differentSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 101,
+                                                                            errorRate: 0.001,
+                                                                            sha256: "abc")
+        XCTAssertFalse(testee == differentSpecification)
     }
 }

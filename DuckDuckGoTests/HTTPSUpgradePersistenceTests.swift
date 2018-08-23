@@ -42,7 +42,7 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
         let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
         let specification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)        
         XCTAssertTrue(testee.persistBloomFilter(specification: specification, data: data))
-        XCTAssert(specification.matches(storedSpecification: testee.bloomFilterSpecification()))
+        XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
     
     func testWhenBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {
@@ -57,7 +57,7 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() {
         let specification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
         testee.persistBloomFilterSpecification(specification)
-        XCTAssertTrue(specification.matches(storedSpecification: testee.bloomFilterSpecification()))
+        XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
     
     func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() {
@@ -68,7 +68,7 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
         testee.persistBloomFilterSpecification(newspecification)
 
         let storedSpecification = testee.bloomFilterSpecification()
-        XCTAssertTrue(newspecification.matches(storedSpecification: storedSpecification))
+        XCTAssertEqual(newspecification, storedSpecification)
     }
 
     func testWhenWhitelistDomainsPersistedThenHasDomainIsTrue() {

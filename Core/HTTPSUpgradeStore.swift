@@ -24,7 +24,7 @@ public protocol HTTPSUpgradeStore {
     
     func bloomFilter() -> BloomFilterWrapper?
     
-    func bloomFilterSpecification() -> HTTPSBloomFilterSpecification?
+    func bloomFilterSpecification() -> HTTPSTransientBloomFilterSpecification?
     
     func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) -> Bool
     
@@ -40,7 +40,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     public init() {
     }
     
-    private var hasBloomFilter: Bool {
+    private var hasBloomFilterData: Bool {
         return (try? bloomFilterPath.checkResourceIsReachable()) ?? false
     }
     
@@ -50,17 +50,23 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     }
     
     public func bloomFilter() -> BloomFilterWrapper? {
-        guard hasBloomFilter, let specification = bloomFilterSpecification() else { return nil }
-        let entries = specification.totalEntries
-        return BloomFilterWrapper(fromPath: bloomFilterPath.path, withTotalItems: Int32(entries) )
+        guard hasBloomFilterData else { return nil }
+        var bloomFilter: BloomFilterWrapper? = nil
+        container.managedObjectContext.performAndWait {
+            if let specification = bloomFilterSpecification() {
+                let entries = specification.totalEntries
+                bloomFilter = BloomFilterWrapper(fromPath: bloomFilterPath.path, withTotalItems: Int32(entries))
+            }
+        }
+        return bloomFilter
     }
-    
-    public func bloomFilterSpecification() -> HTTPSBloomFilterSpecification? {
-        var specification: HTTPSBloomFilterSpecification?
+
+    public func bloomFilterSpecification() -> HTTPSTransientBloomFilterSpecification? {
+        var specification: HTTPSTransientBloomFilterSpecification?
         container.managedObjectContext.performAndWait {
             let request: NSFetchRequest<HTTPSBloomFilterSpecification> = HTTPSBloomFilterSpecification.fetchRequest()
             guard let result = try? request.execute() else { return }
-            specification = result.first
+            specification = HTTPSTransientBloomFilterSpecification.copy(storedSpecification: result.first)
         }
         return specification
     }

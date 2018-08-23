@@ -19,16 +19,19 @@
 
 import Foundation
 
-public struct HTTPSTransientBloomFilterSpecification {
+public struct HTTPSTransientBloomFilterSpecification: Equatable {
     let totalEntries: Int
     let errorRate: Double
     let sha256: String
     
-    func matches(storedSpecification: HTTPSBloomFilterSpecification?) -> Bool {
-        guard let storedSpecification = storedSpecification else { return false }
-        
-        return totalEntries == storedSpecification.totalEntries &&
-            errorRate == storedSpecification.errorRate &&
-            sha256 == storedSpecification.sha256
+    static public func == (lhs: HTTPSTransientBloomFilterSpecification, rhs: HTTPSTransientBloomFilterSpecification) -> Bool {
+        return lhs.totalEntries == rhs.totalEntries && lhs.errorRate == rhs.errorRate && lhs.sha256 == rhs.sha256
+    }
+    
+    static func copy(storedSpecification specification: HTTPSBloomFilterSpecification?) -> HTTPSTransientBloomFilterSpecification? {
+        guard let specification = specification else { return nil }
+        return HTTPSTransientBloomFilterSpecification(totalEntries: Int(specification.totalEntries),
+                                                      errorRate: specification.errorRate,
+                                                      sha256: specification.sha256!)
     }
 }

@@ -20,20 +20,30 @@
 import Foundation
 
 public class HTTPSUpgradeParser {
-
-    static func whitelist(fromJSONData data: Data) -> [String]? {
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return nil }
-        guard let jsonObject = json as? [String: Any] else { return nil }
-        guard let domains = jsonObject["data"] as? [String] else { return nil }
-        return domains
+    
+    struct HTTPSWhitelistResponse: Decodable {
+        let data: [String]
     }
     
-    static func bloomFilterSpecification(fromJSONData data: Data) -> HTTPSTransientBloomFilterSpecification? {
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return nil }
-        guard let jsonObject = json as? [String: Any] else { return nil }
-        guard let totalEntries = jsonObject["totalEntries"] as? Int else { return nil }
-        guard let errorRate = jsonObject["errorRate"] as? Double else { return nil }
-        guard let sha256 = jsonObject["sha256"] as? String else { return nil }
-        return HTTPSTransientBloomFilterSpecification(totalEntries: totalEntries, errorRate: errorRate, sha256: sha256)
+    static func convertWhitelist(fromJSONData data: Data) throws -> [String] {
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(HTTPSWhitelistResponse.self, from: data).data
+        } catch DecodingError.dataCorrupted {
+            throw JsonError.invalidJson
+        } catch {
+            throw JsonError.typeMismatch
+        }
+    }
+    
+    static func convertBloomFilterSpecification(fromJSONData data: Data) throws -> HTTPSBloomFilterSpecification {
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(HTTPSBloomFilterSpecification.self, from: data)
+        } catch DecodingError.dataCorrupted {
+            throw JsonError.invalidJson
+        } catch {
+            throw JsonError.typeMismatch
+        }
     }
 }

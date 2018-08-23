@@ -74,7 +74,7 @@ public class ContentBlockerLoader {
         }
         
         contentBlockerRequest.request(.httpsBloomFilterSpec) { data, _ in
-            guard let data = data, let specification = HTTPSUpgradeParser.bloomFilterSpecification(fromJSONData: data) else {
+            guard let data = data, let specification = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data) else {
                 semaphore.signal()
                 return
             }
@@ -98,7 +98,7 @@ public class ContentBlockerLoader {
         }
         
         contentBlockerRequest.request(.httpsWhitelist) { data, isCached in
-            if let data = data, !isCached, let whitelist = HTTPSUpgradeParser.whitelist(fromJSONData: data) {
+            if let data = data, !isCached, let whitelist = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data) {
                 self.newDataItems += 1
                 self.httpsUpgradeStore.persistWhitelist(domains: whitelist)
             }

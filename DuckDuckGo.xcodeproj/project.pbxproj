@@ -20,12 +20,12 @@
 		8328AAB5212A3D7C00293140 /* BloomFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8328AAB3212A3D7C00293140 /* BloomFilter.cpp */; };
 		8328AAB8212A3DF200293140 /* BloomFilterWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8328AAB9212A3DF200293140 /* BloomFilterWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8328AAB7212A3DF200293140 /* BloomFilterWrapper.mm */; };
-		8328AABE212AF70B00293140 /* HTTPSTransientBloomFilterSpecification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328AABD212AF70B00293140 /* HTTPSTransientBloomFilterSpecification.swift */; };
+		8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */; };
 		8328AABF212B5D2000293140 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328AABA212ADAD100293140 /* CommonCrypto.framework */; };
 		8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8331AEDD20AA37560024962B /* APIHeaders.swift */; };
 		833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */; };
 		8341D807212D5E8D000514C2 /* DataChecksumExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D804212D5DFB000514C2 /* DataChecksumExtensionTest.swift */; };
-		8341D80A212D616F000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D808212D6159000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift */; };
+		8341D80A212D616F000514C2 /* HTTPSBloomFilterSpecificationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8341D808212D6159000514C2 /* HTTPSBloomFilterSpecificationTest.swift */; };
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
@@ -439,11 +439,11 @@
 		8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloomFilterWrapper.h; sourceTree = "<group>"; };
 		8328AAB7212A3DF200293140 /* BloomFilterWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BloomFilterWrapper.mm; sourceTree = "<group>"; };
 		8328AABA212ADAD100293140 /* CommonCrypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CommonCrypto.framework; path = Carthage/Build/iOS/CommonCrypto.framework; sourceTree = "<group>"; };
-		8328AABD212AF70B00293140 /* HTTPSTransientBloomFilterSpecification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSTransientBloomFilterSpecification.swift; sourceTree = "<group>"; };
+		8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSBloomFilterSpecification.swift; sourceTree = "<group>"; };
 		8331AEDD20AA37560024962B /* APIHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHeaders.swift; sourceTree = "<group>"; };
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
 		8341D804212D5DFB000514C2 /* DataChecksumExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataChecksumExtensionTest.swift; sourceTree = "<group>"; };
-		8341D808212D6159000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSTransientBloomFilterSpecificationTest.swift; sourceTree = "<group>"; };
+		8341D808212D6159000514C2 /* HTTPSBloomFilterSpecificationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSBloomFilterSpecificationTest.swift; sourceTree = "<group>"; };
 		8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
 		8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStoreTests.swift; sourceTree = "<group>"; };
 		836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -897,7 +897,7 @@
 			children = (
 				8570656A1F6AADDF0044DCB1 /* DetectedTrackerTests.swift */,
 				85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */,
-				8341D808212D6159000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift */,
+				8341D808212D6159000514C2 /* HTTPSBloomFilterSpecificationTest.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -985,7 +985,7 @@
 			children = (
 				857065671F6AADC40044DCB1 /* DisconnectMeTracker.swift */,
 				85C271D01FCF33C8007216B4 /* DetectedTracker.swift */,
-				8328AABD212AF70B00293140 /* HTTPSTransientBloomFilterSpecification.swift */,
+				8328AABD212AF70B00293140 /* HTTPSBloomFilterSpecification.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -2788,7 +2788,7 @@
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceParserTests.swift in Sources */,
-				8341D80A212D616F000514C2 /* HTTPSTransientBloomFilterSpecificationTest.swift in Sources */,
+				8341D80A212D616F000514C2 /* HTTPSBloomFilterSpecificationTest.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				85A1B3B420C6D07100C18F15 /* CookieStorageTests.swift in Sources */,
 				85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */,
@@ -2843,7 +2843,7 @@
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
 				F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */,
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
-				8328AABE212AF70B00293140 /* HTTPSTransientBloomFilterSpecification.swift in Sources */,
+				8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */,
 				857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */,
 				F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */,
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,

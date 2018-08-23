@@ -40,7 +40,7 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     func testWhenBloomFilterMatchesShaInSpecThenSpecAndDataPersisted() {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069"
-        let specification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)        
+        let specification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)        
         XCTAssertTrue(testee.persistBloomFilter(specification: specification, data: data))
         XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
@@ -48,23 +48,23 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     func testWhenBloomFilterDoesNotMatchShaInSpecThenSpecAndDataNotPersisted() {
         let data = "Hello World!".data(using: .utf8)!
         let sha = "wrong sha"
-        let specification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)
+        let specification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: sha)
         XCTAssertFalse(testee.persistBloomFilter(specification: specification, data: data))
         XCTAssertNil(testee.bloomFilterSpecification())
         XCTAssertNil(testee.bloomFilter())
     }
 
     func testWhenBloomFilterSpecificationIsPersistedThenSpecificationIsRetrieved() {
-        let specification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        let specification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
         testee.persistBloomFilterSpecification(specification)
         XCTAssertEqual(specification, testee.bloomFilterSpecification())
     }
     
     func testWhenBloomFilterSpecificationIsPersistedThenOldSpecificationIsReplaced() {
-        let originalSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
+        let originalSpecification = HTTPSBloomFilterSpecification(totalEntries: 100, errorRate: 0.01, sha256: "abc")
         testee.persistBloomFilterSpecification(originalSpecification)
 
-        let newSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 101, errorRate: 0.01, sha256: "abc")
+        let newSpecification = HTTPSBloomFilterSpecification(totalEntries: 101, errorRate: 0.01, sha256: "abc")
         testee.persistBloomFilterSpecification(newSpecification)
 
         let storedSpecification = testee.bloomFilterSpecification()

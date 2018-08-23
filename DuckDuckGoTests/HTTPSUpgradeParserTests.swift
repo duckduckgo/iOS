@@ -22,38 +22,46 @@ import XCTest
 
 class HTTPSUpgradeParserTests: XCTestCase {
     
-    func testWhenBloomFilterSpecificationJSONIsUnexpectedThenNilReturned() {
+    func testWhenWhitelistJSONIsUnexpectedThenTypeMismatchErrorThrown() {
         let data = JsonTestDataLoader().unexpected()
-        XCTAssertNil(HTTPSUpgradeParser.bloomFilterSpecification(fromJSONData: data))
+        XCTAssertThrowsError(try HTTPSUpgradeParser.convertWhitelist(fromJSONData: data)) { error in
+            XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
+        }
     }
     
-    func testWhenBloomFilterSpecificationJSONIsInvalidThenNilReturned() {
+    func testWhenWhitelistJSONIsInvalidThenInvalidJsonErrorThrown() {
         let data = JsonTestDataLoader().invalid()
-        XCTAssertNil(HTTPSUpgradeParser.bloomFilterSpecification(fromJSONData: data))
-    }
-    
-    func testWhenBloomFilterSpecificationIsValidThenSpecificationReturned() {
-        let data = JsonTestDataLoader().fromJsonFile("MockFiles/https_bloom_spec.json")
-        let result = HTTPSUpgradeParser.bloomFilterSpecification(fromJSONData: data)
-        XCTAssertNotNil(result)
-        XCTAssertEqual(10000000, result?.totalEntries)
-        XCTAssertEqual(0.00001, result?.errorRate)
-        XCTAssertEqual("4d3941604", result?.sha256)
-    }
-    
-    func testWhenWhitelistJSONIsUnexpectedThenNilReturned() {
-        let data = JsonTestDataLoader().unexpected()
-        XCTAssertNil(HTTPSUpgradeParser.whitelist(fromJSONData: data))
-    }
-    
-    func testWhenWhitelistJSONIsInvalidThenNilReturned() {
-        let data = JsonTestDataLoader().invalid()
-        XCTAssertNil(HTTPSUpgradeParser.whitelist(fromJSONData: data))
+        XCTAssertThrowsError(try HTTPSUpgradeParser.convertWhitelist(fromJSONData: data)) { error in
+            XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
+        }
     }
     
     func testWhenWhitelistIsValidThenDomainsReturned() {
         let data = JsonTestDataLoader().fromJsonFile("MockFiles/https_whitelist.json")
-        let result = HTTPSUpgradeParser.whitelist(fromJSONData: data)
+        let result = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data)
         XCTAssertEqual(Set<String>(["www.example.com", "example.com", "test.com", "anothertest.com"]), Set<String>(result!))
+    }
+    
+    func testWhenBloomFilterSpecificationJSONIsUnexpectedThenTypeMismatchErrorThrown() {
+        let data = JsonTestDataLoader().unexpected()
+        XCTAssertThrowsError(try HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data), "") { error in
+            XCTAssertEqual(error.localizedDescription, JsonError.typeMismatch.localizedDescription)
+        }
+    }
+    
+    func testWhenBloomFilterSpecificationJSONIsInvalidThenInvalidJsonErrorThrown() {
+        let data = JsonTestDataLoader().invalid()
+        XCTAssertThrowsError(try HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data)) { error in
+            XCTAssertEqual(error.localizedDescription, JsonError.invalidJson.localizedDescription)
+        }
+    }
+    
+    func testWhenBloomFilterSpecificationIsValidThenSpecificationReturned() {
+        let data = JsonTestDataLoader().fromJsonFile("MockFiles/https_bloom_spec.json")
+        let result = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data)
+        XCTAssertNotNil(result)
+        XCTAssertEqual(10000000, result?.totalEntries)
+        XCTAssertEqual(0.00001, result?.errorRate)
+        XCTAssertEqual("4d3941604", result?.sha256)
     }
 }

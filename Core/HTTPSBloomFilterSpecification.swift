@@ -1,5 +1,5 @@
 //
-//  HTTPSTransientBloomFilterSpecification.swift
+//  HTTPSBloomFilterSpecification.swift
 //  Core
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,19 +19,19 @@
 
 import Foundation
 
-public struct HTTPSTransientBloomFilterSpecification: Equatable {
+public struct HTTPSBloomFilterSpecification: Equatable, Decodable {
     let totalEntries: Int
     let errorRate: Double
     let sha256: String
     
-    static public func == (lhs: HTTPSTransientBloomFilterSpecification, rhs: HTTPSTransientBloomFilterSpecification) -> Bool {
+    static public func == (lhs: HTTPSBloomFilterSpecification, rhs: HTTPSBloomFilterSpecification) -> Bool {
         return lhs.totalEntries == rhs.totalEntries && lhs.errorRate == rhs.errorRate && lhs.sha256 == rhs.sha256
     }
     
-    static func copy(storedSpecification specification: HTTPSBloomFilterSpecification?) -> HTTPSTransientBloomFilterSpecification? {
+    static func copy(storedSpecification specification: HTTPSStoredBloomFilterSpecification?) -> HTTPSBloomFilterSpecification? {
         guard let specification = specification else { return nil }
-        return HTTPSTransientBloomFilterSpecification(totalEntries: Int(specification.totalEntries),
-                                                      errorRate: specification.errorRate,
-                                                      sha256: specification.sha256!)
+        return HTTPSBloomFilterSpecification(totalEntries: Int(specification.totalEntries),
+                                             errorRate: specification.errorRate,
+                                             sha256: specification.sha256!)
     }
 }

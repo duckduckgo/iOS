@@ -73,11 +73,11 @@ private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
         return httpsBloomFilter
     }
     
-    func bloomFilterSpecification() -> HTTPSTransientBloomFilterSpecification? {
+    func bloomFilterSpecification() -> HTTPSBloomFilterSpecification? {
         return nil
     }
     
-    func persistBloomFilter(specification: HTTPSTransientBloomFilterSpecification, data: Data) -> Bool {
+    func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
         return true
     }
     

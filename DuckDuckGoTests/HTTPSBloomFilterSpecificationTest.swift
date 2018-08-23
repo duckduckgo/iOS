@@ -1,5 +1,5 @@
 //
-//  HTTPSTransientBloomFilterSpecificationTest.swift
+//  HTTPSBloomFilterSpecificationTest.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,12 +20,12 @@
 import XCTest
 @testable import Core
 
-class HTTPSTransientBloomFilterSpecificationTest: XCTestCase {
+class HTTPSBloomFilterSpecificationTest: XCTestCase {
     
     let store = HTTPSUpgradePersistence()
-    let testee = HTTPSTransientBloomFilterSpecification(totalEntries: 100,
-                                                        errorRate: 0.001,
-                                                        sha256: "abc")
+    let testee = HTTPSBloomFilterSpecification(totalEntries: 100,
+                                               errorRate: 0.001,
+                                               sha256: "abc")
     
     func testInitSetsPropertiesCorrectly() {
         XCTAssertEqual(100, testee.totalEntries)
@@ -34,16 +34,16 @@ class HTTPSTransientBloomFilterSpecificationTest: XCTestCase {
     }
     
     func testWhenComparedToMatchingSpecificationThenEqualsIsTrue() {
-        let equalSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 100,
-                                                                        errorRate: 0.001,
-                                                                        sha256: "abc")
+        let equalSpecification = HTTPSBloomFilterSpecification(totalEntries: 100,
+                                                               errorRate: 0.001,
+                                                               sha256: "abc")
         XCTAssertTrue(testee == equalSpecification)
     }
     
     func testWhenComparedToDifferentSpecificationThenEqualsIsFalse() {
-        let differentSpecification = HTTPSTransientBloomFilterSpecification(totalEntries: 101,
-                                                                            errorRate: 0.001,
-                                                                            sha256: "abc")
+        let differentSpecification = HTTPSBloomFilterSpecification(totalEntries: 101,
+                                                                   errorRate: 0.001,
+                                                                   sha256: "abc")
         XCTAssertFalse(testee == differentSpecification)
     }
 }

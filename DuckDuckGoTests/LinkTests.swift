@@ -28,6 +28,35 @@ class LinkTests: XCTestCase {
         static let anotherTitle = "Another title"
         static let url = URL(string: "https://example.com")!
         static let anotherUrl = URL(string: "https://anothertUrl.com")!
+        static let wwwUrl = URL(string: "https://www.example.com")!
+    }
+
+    func testWhenTitleIsNilAndUrlIsBadThenDisplayTitleUsesUrl() {
+        
+        let link = Link(title: nil, url: URL(string: "/bad/url")!)
+        XCTAssertEqual("/bad/url", link.displayTitle)
+        
+    }
+
+    func testWhenTitleIsNilThenDisplayTitleUsesUrlHostWithWWWPrefixDropped() {
+        
+        let link = Link(title: nil, url: Constants.wwwUrl)
+        XCTAssertEqual("example.com", link.displayTitle)
+        
+    }
+
+    func testWhenTitleIsNilThenDisplayTitleUsesUrlHost() {
+        
+        let link = Link(title: nil, url: Constants.url)
+        XCTAssertEqual("example.com", link.displayTitle)
+        
+    }
+    
+    func testWhenTitleIsSetThenDisplayTitleUsesTitle() {
+        
+        let link = Link(title: "hello", url: Constants.wwwUrl)
+        XCTAssertEqual("hello", link.displayTitle)
+        
     }
 
     func testWhenSameObjectThenEqualsPasses() {

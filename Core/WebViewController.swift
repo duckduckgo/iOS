@@ -53,9 +53,9 @@ open class WebViewController: UIViewController {
     private var lastUpgradedDomain: String?
     private var lastError: Error?
     private var shouldReloadOnError = false
-
+    private var httpsUpgrade = HTTPSUpgrade.shared
+    
     private lazy var appUrls: AppUrls = AppUrls()
-    private lazy var httpsUpgrade = HTTPSUpgrade()
     private lazy var tld = TLD()
 
     private var tearDownCount = 0
@@ -117,7 +117,7 @@ open class WebViewController: UIViewController {
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
-
+        
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.consumeCookies()
             if let url = url {
@@ -125,6 +125,11 @@ open class WebViewController: UIViewController {
             }
         }
 
+        if let url = url {
+            webEventsDelegate?.webView(webView, didChangeUrl: url)
+            webEventsDelegate?.webpageDidStartLoading(httpsForced: false)
+        }
+        
     }
 
     private func attachLongPressHandler(webView: WKWebView) {
@@ -338,6 +343,7 @@ extension WebViewController: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        hideProgressIndicator()
         lastError = error
         let error = error as NSError
 
@@ -366,10 +372,6 @@ extension WebViewController: WKNavigationDelegate {
             StatisticsLoader.shared.refreshRetentionAtb()
         }
         
-        if decision == .allow && navigationAction.isTargettingMainFrame() {
-            showProgressIndicator()
-        }
-        
         decisionHandler(decision)
     }
 
@@ -390,9 +392,8 @@ extension WebViewController: WKNavigationDelegate {
             return .cancel
         }
 
-        guard let delegate = webEventsDelegate,
-            let documentUrl = navigationAction.request.mainDocumentURL else {
-                return .allow
+        guard let delegate = webEventsDelegate, let documentUrl = navigationAction.request.mainDocumentURL else {
+            return .allow
         }
 
         if shouldReissueSearch(for: url) {

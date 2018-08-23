@@ -29,6 +29,20 @@ class TabTests: XCTestCase {
         static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
 
+    func testWhenTabWithViewedDecodedThenItDecodesSuccessfully() {
+
+        let tab = Tab(coder: CoderWithViewedPropertyStub())
+        XCTAssertNotNil(tab?.link)
+        XCTAssertFalse(tab?.viewed ?? true)
+    }
+
+    func testWhenTabEncodedBeforeViewedPropertyAddedIsDecodedThenItDecodesSuccessfully() {
+
+        let tab = Tab(coder: CoderWithoutViewedPropertyStub())
+        XCTAssertNotNil(tab?.link)
+        XCTAssertTrue(tab?.viewed ?? false)
+    }
+
     func testWhenSameObjectThenEqualsPasses() {
         let link = Link(title: Constants.title, url: Constants.url)
         let tab = Tab(link: link)
@@ -46,4 +60,32 @@ class TabTests: XCTestCase {
         let rhs = Tab(link: Link(title: Constants.title, url: Constants.differentUrl))
         XCTAssertNotEqual(lhs, rhs)
     }
+}
+
+private class CoderWithoutViewedPropertyStub: NSCoder {
+
+    override func decodeObject(forKey key: String) -> Any? {
+        return Link(title: "title", url: URL(string: "http://example.com")!)
+    }
+
+    override func containsValue(forKey key: String) -> Bool {
+        return false
+    }
+
+}
+
+private class CoderWithViewedPropertyStub: NSCoder {
+
+    override func decodeObject(forKey key: String) -> Any? {
+        return Link(title: "title", url: URL(string: "http://example.com")!)
+    }
+
+    override func containsValue(forKey key: String) -> Bool {
+        return true
+    }
+
+    override func decodeBool(forKey key: String) -> Bool {
+        return false
+    }
+
 }

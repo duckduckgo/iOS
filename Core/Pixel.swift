@@ -33,6 +33,7 @@ public enum PixelName: String {
     case privacyDashboardGlobalStats = "mp_s"
     
     case longPressMenuOpened = "mlp"
+    case longPressMenuNewBackgroundTabItem = "mlp_b"
     case longPressMenuNewTabItem = "mlp_t"
     case longPressMenuOpenItem = "mlp_o"
     case longPressMenuReadingListItem = "mlp_r"

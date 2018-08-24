@@ -29,14 +29,19 @@ class AppRatingPromptTests: XCTestCase {
         stub = AppRatingPromptStorageStub()
     }
     
-    func testWhenUserAccessFifthDayAfterSkippingSomeThenShouldPrompt() {
+    func testWhenUserAccessSeventhDayAfterSkippingSomeThenShouldPrompt() {
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
+        
         _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
         _ = appRatingPrompt.shouldPrompt(date: days(later: 1))
         _ = appRatingPrompt.shouldPrompt(date: days(later: 2))
         _ = appRatingPrompt.shouldPrompt(date: days(later: 3))
-        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: days(later: 10)))
+        
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 5))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 6))
+        
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: days(later: 7)))
         
     }
 

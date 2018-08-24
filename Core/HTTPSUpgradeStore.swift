@@ -2,7 +2,7 @@
 //  HTTPSUpgradeStore.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,21 +18,138 @@
 //
 
 import Foundation
+import CoreData
 
-public class HTTPSUpgradeStore {
+public protocol HTTPSUpgradeStore {
+    
+    func bloomFilter() -> BloomFilterWrapper?
+    
+    func bloomFilterSpecification() -> HTTPSBloomFilterSpecification?
+    
+    func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool
+    
+    func hasWhitelistedDomain(_ domain: String) -> Bool
+    
+    func persistWhitelist(domains: [String])
+}
 
-    private let persistence: HTTPSUpgradePersistence
-
-    public init(persistence: HTTPSUpgradePersistence = CoreDataHTTPSUpgradePersistence()) {
-        self.persistence = persistence
+public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
+    
+    private let container = DDGPersistenceContainer(name: "HTTPSUpgrade")!
+    
+    public init() {
+    }
+    
+    private var hasBloomFilterData: Bool {
+        return (try? bloomFilterPath.checkResourceIsReachable()) ?? false
+    }
+    
+    private var bloomFilterPath: URL {
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
+        return path!.appendingPathComponent("HttpsBloomFilter.bin")
+    }
+    
+    public func bloomFilter() -> BloomFilterWrapper? {
+        guard hasBloomFilterData else { return nil }
+        var bloomFilter: BloomFilterWrapper? = nil
+        container.managedObjectContext.performAndWait {
+            if let specification = bloomFilterSpecification() {
+                let entries = specification.totalEntries
+                bloomFilter = BloomFilterWrapper(fromPath: bloomFilterPath.path, withTotalItems: Int32(entries))
+            }
+        }
+        return bloomFilter
     }
 
-    func persist(data: Data) {
-        guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-        guard let upgradeRules = jsonObject as?	[String] else {	return }
-        let domains = upgradeRules.filter({ !$0.starts(with: "*.") })
-        let wildcardDomains = upgradeRules.filter({ $0.starts(with: "*." ) })
-        persistence.persist(domains: domains, wildcardDomains: wildcardDomains)
+    public func bloomFilterSpecification() -> HTTPSBloomFilterSpecification? {
+        var specification: HTTPSBloomFilterSpecification?
+        container.managedObjectContext.performAndWait {
+            let request: NSFetchRequest<HTTPSStoredBloomFilterSpecification> = HTTPSStoredBloomFilterSpecification.fetchRequest()
+            guard let result = try? request.execute() else { return }
+            specification = HTTPSBloomFilterSpecification.copy(storedSpecification: result.first)
+        }
+        return specification
     }
+    
+    public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
+        Logger.log(items: "HTTPS Bloom Filter", bloomFilterPath)
+        guard data.sha256 == specification.sha256 else { return false }
+        guard persistBloomFilter(data: data) else { return false }
+        persistBloomFilterSpecification(specification)
+        return true
+    }
+    
+    func persistBloomFilter(data: Data) -> Bool {
+        do {
+            try data.write(to: bloomFilterPath, options: .atomic)
+            return true
+        } catch _ {
+            return false
+        }
+    }
+    
+    private func deleteBloomFilter() {
+        try? FileManager.default.removeItem(at: bloomFilterPath)
+    }
+    
+    func persistBloomFilterSpecification(_ specification: HTTPSBloomFilterSpecification) {
+        
+        container.managedObjectContext.performAndWait {
+            deleteBloomFilterSpecification()
+            
+            let entityName = String(describing: HTTPSStoredBloomFilterSpecification.self)
+            let context = container.managedObjectContext
+            
+            if let storedEntity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSStoredBloomFilterSpecification {
+                storedEntity.totalEntries = Int64(specification.totalEntries)
+                storedEntity.errorRate = specification.errorRate
+                storedEntity.sha256 = specification.sha256
+            }
+            _ = container.save()
+        }
+    }
+    
+    private func deleteBloomFilterSpecification() {
+        container.managedObjectContext.performAndWait {
+            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSStoredBloomFilterSpecification.fetchRequest()))
+        }
+    }
+    
+    public func hasWhitelistedDomain(_ domain: String) -> Bool {
+        var result = false
+        container.managedObjectContext.performAndWait {
+            let request: NSFetchRequest<HTTPSWhitelistedDomain> = HTTPSWhitelistedDomain.fetchRequest()
+            request.predicate = NSPredicate(format: "domain = %@", domain.lowercased())
+            guard let count = try? container.managedObjectContext.count(for: request) else { return }
+            result = count > 0
+        }
+        return result
+    }
+    
+    public func persistWhitelist(domains: [String]) {
+        container.managedObjectContext.performAndWait {
+            deleteWhitelist()
 
+            for domain in domains {
+                let entityName = String(describing: HTTPSWhitelistedDomain.self)
+                let context = container.managedObjectContext
+                if let storedDomain = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as? HTTPSWhitelistedDomain {
+                    storedDomain.domain = domain.lowercased()
+                }
+            }
+            _ = container.save()
+        }
+    }
+    
+    private func deleteWhitelist() {
+        container.managedObjectContext.performAndWait {
+            container.deleteAll(entities: try? container.managedObjectContext.fetch(HTTPSWhitelistedDomain.fetchRequest()))
+        }
+    }
+    
+    func reset() {
+        deleteBloomFilterSpecification()
+        deleteBloomFilter()
+        deleteWhitelist()
+    }
 }

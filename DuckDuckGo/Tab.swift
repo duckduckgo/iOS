@@ -21,23 +21,28 @@ import Core
 
 public class Tab: NSObject, NSCoding {
 
-    private struct NSCodingKeys {
+    struct NSCodingKeys {
         static let link = "link"
+        static let viewed = "viewed"
     }
 
     var link: Link?
+    var viewed: Bool = true
 
-    init(link: Link?) {
+    init(link: Link?, viewed: Bool = true) {
         self.link = link
+        self.viewed = viewed
     }
 
     public convenience required init?(coder decoder: NSCoder) {
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
-        self.init(link: link)
+        let viewed = decoder.containsValue(forKey: NSCodingKeys.viewed) ? decoder.decodeBool(forKey: NSCodingKeys.viewed) : true
+        self.init(link: link, viewed: viewed)
     }
 
     public func encode(with coder: NSCoder) {
         coder.encode(link, forKey: NSCodingKeys.link)
+        coder.encode(viewed, forKey: NSCodingKeys.viewed)
     }
 
     public override func isEqual(_ other: Any?) -> Bool {

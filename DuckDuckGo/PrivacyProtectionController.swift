@@ -58,7 +58,7 @@ class PrivacyProtectionController: UIViewController {
 
         initOmniBar()
 
-        if !BlockerListsLoader().hasData {
+        if !ContentBlockerLoader().hasData {
             showBlockerListError()
         } else if let errorText = errorText {
             showError(withText: errorText)
@@ -140,7 +140,7 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
     }
 
     func tryAgain(controller: PrivacyProtectionErrorController) {
-        BlockerListsLoader().start { [weak self] newData in
+        ContentBlockerLoader().start { [weak self] newData in
             self?.handleBlockerListsLoaderResult(controller, newData)
         }
     }

@@ -1,1 +1,1 @@
-This release allows users to open the custom URLs of their favorite apps.
+In this release we added large-scale HTTPS upgrades to keep you even more secure. We also added open in background tab and improved page loading.

@@ -30,6 +30,10 @@ public class TabsModel: NSObject, NSCoding {
     private(set) var currentIndex: Int?
     private(set) var tabs: [Tab]
 
+    var hasUnread: Bool {
+        return tabs.contains(where: { !$0.viewed })
+    }
+    
     public init(tabs: [Tab] = [Tab](), currentIndex: Int? = nil) {
         self.tabs = tabs
         self.currentIndex = currentIndex
@@ -72,6 +76,10 @@ public class TabsModel: NSObject, NSCoding {
     func add(tab: Tab) {
         tabs.append(tab)
         currentIndex = indexOf(tab: tab)
+    }
+
+    func insert(tab: Tab, at index: Int) {
+        tabs.insert(tab, at: index)
     }
 
     func remove(at index: Int) {

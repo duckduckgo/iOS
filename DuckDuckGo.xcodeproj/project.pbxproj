@@ -65,6 +65,7 @@
 		8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7B212EF4A200D0BD74 /* AppRatingPrompt.swift */; };
 		8528AE7E212EF5FF00D0BD74 /* AppRatingPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */; };
 		8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7F212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld */; };
+		8528AE84212FF9A100D0BD74 /* AppRatingPromptStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE82212FF91A00D0BD74 /* AppRatingPromptStorageTests.swift */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		85325A8D2024BB7C003EB195 /* detection.js in Resources */ = {isa = PBXBuildFile; fileRef = 85325A8C2024BB7C003EB195 /* detection.js */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
@@ -502,6 +503,7 @@
 		8528AE7B212EF4A200D0BD74 /* AppRatingPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPrompt.swift; sourceTree = "<group>"; };
 		8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPromptTests.swift; sourceTree = "<group>"; };
 		8528AE80212F15D600D0BD74 /* AppRatingPrompt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppRatingPrompt.xcdatamodel; sourceTree = "<group>"; };
+		8528AE82212FF91A00D0BD74 /* AppRatingPromptStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPromptStorageTests.swift; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		85325A8C2024BB7C003EB195 /* detection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = detection.js; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
@@ -899,6 +901,7 @@
 			children = (
 				83134D8020E2E034006CE65D /* FeedbackModelTests.swift */,
 				8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */,
+				8528AE82212FF91A00D0BD74 /* AppRatingPromptStorageTests.swift */,
 			);
 			name = Feedback;
 			sourceTree = "<group>";
@@ -2720,6 +2723,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8528AE84212FF9A100D0BD74 /* AppRatingPromptStorageTests.swift in Sources */,
 				853A717820F645FB00FE60BC /* PixelTests.swift in Sources */,
 				85C271CF1FCDB869007216B4 /* MajorTrackerNetworkTests.swift in Sources */,
 				85200F9A1FBBC012001AF290 /* NetworkLeaderboardTests.swift in Sources */,

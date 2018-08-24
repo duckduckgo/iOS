@@ -31,11 +31,13 @@ class TabViewController: WebViewController {
     weak var chromeDelegate: BrowserChromeDelegate?
 
     private lazy var appUrls: AppUrls = AppUrls()
+    private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
+    
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var privacyController: PrivacyProtectionController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
-
+    
     private var httpsForced: Bool = false
 
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
@@ -513,7 +515,7 @@ extension TabViewController: WebEventsDelegate {
         }
 
         if #available(iOS 10.3, *) {
-            if AppRatingPrompt().shouldPrompt() {
+            if appRatingPrompt.shouldPrompt() {
                 SKStoreReviewController.requestReview()
             }
         }

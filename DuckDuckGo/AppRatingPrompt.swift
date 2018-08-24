@@ -8,6 +8,7 @@
 
 import Foundation
 import Core
+import CoreData
 
 protocol AppRatingPromptStorage {
     
@@ -53,7 +54,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().lastAccess = newValue
-            _ = persistence?.save()
+            _ = persistence.save()
         }
     }
     
@@ -64,14 +65,22 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().uniqueAccessDays = Int64(newValue)
-            _ = persistence?.save()
+            _ = persistence.save()
         }
     }
     
-    let persistence = DDGPersistenceContainer(name: "AppRatingPrompt")
+    let persistence: DDGPersistenceContainer = DDGPersistenceContainer(name: "AppRatingPrompt", concurrencyType: .mainQueueConcurrencyType)!
+    
+    public init() { }
     
     func entity() -> AppRatingPromptEntity {
-        return AppRatingPromptEntity()
+        let fetchRequest: NSFetchRequest<AppRatingPromptEntity> = AppRatingPromptEntity.fetchRequest()
+        
+        guard let results = try? persistence.managedObjectContext.fetch(fetchRequest) else {
+            fatalError("Error fetching AppRatingPromptEntity")
+        }
+        
+        return results.first ?? AppRatingPromptEntity(context: persistence.managedObjectContext)
     }
     
 }

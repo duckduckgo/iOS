@@ -105,7 +105,7 @@ open class WebViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
     }
     
-    open func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?) {
+    open func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?, consumeCookies: Bool) {
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
@@ -118,20 +118,29 @@ open class WebViewController: UIViewController {
         webViewContainer.addSubview(webView)
         webEventsDelegate?.attached(webView: webView)
         
+        if consumeCookies {
+            consumeCookiesThenLoadUrl(url)
+        } else if let url = url {
+            load(url: url)
+        }
+
+    }
+
+    private func consumeCookiesThenLoadUrl(_ url: URL?) {
         webView.configuration.websiteDataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { _ in
             WebCacheManager.consumeCookies()
             if let url = url {
                 self.load(url: url)
             }
         }
-
+        
         if let url = url {
+            progressBar.progress = Constants.minimumProgress
             webEventsDelegate?.webView(webView, didChangeUrl: url)
             webEventsDelegate?.webpageDidStartLoading(httpsForced: false)
         }
-        
     }
-
+    
     private func attachLongPressHandler(webView: WKWebView) {
         let handler = WebLongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
         handler.delegate = self

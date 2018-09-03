@@ -39,14 +39,14 @@ class AppRatingPrompt {
         self.storage = storage
     }
     
-    func shouldPrompt(date: Date = Date()) -> Bool {
-        
+    func registerUsage(onDate date: Date = Date()) {
         if !sameDay(date1: storage.lastAccess, date2: date) {
             storage.uniqueAccessDays += 1
-        }
-
+        }        
         storage.lastAccess = date
-        
+    }
+    
+    func shouldPrompt(onDate date: Date = Date()) -> Bool {
         return [3, 7].contains(storage.uniqueAccessDays) && !sameDay(date1: date, date2: storage.lastShown)
     }
     

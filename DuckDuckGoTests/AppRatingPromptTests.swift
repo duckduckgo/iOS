@@ -34,13 +34,13 @@ class AppRatingPromptTests: XCTestCase {
         let stub = AppRatingPromptStorageStub()
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
-        _ = appRatingPrompt.shouldPrompt(date: Date())
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 1))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 2))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 0))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 2))
     
         appRatingPrompt.shown(onDate: Date().inDays(fromNow: 2))
         
-        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 2)))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 2)))
         
     }
     
@@ -48,25 +48,28 @@ class AppRatingPromptTests: XCTestCase {
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
         
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 1))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 2))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 3))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 0))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 2))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 3))
         
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 5))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 6))
-        
-        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 7)))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 5))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 6))
+
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 7))
+
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 7)))
         
     }
 
     func testWhenUserAccessFourthDayAfterSkippingSomeThenShouldNotPrompt() {
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 1))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 2))
-        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 3)))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 0))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 2))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 6))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 6)))
     }
 
     func testWhenUserAccessThirdDayAfterSkippingOneThenShouldPrompt() {
@@ -74,9 +77,10 @@ class AppRatingPromptTests: XCTestCase {
         let stub = AppRatingPromptStorageStub()
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 1))
-        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 3)))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 0))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 3))
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 3)))
         
     }
 
@@ -85,9 +89,10 @@ class AppRatingPromptTests: XCTestCase {
         let stub = AppRatingPromptStorageStub()
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0))
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 1))
-        XCTAssertTrue(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 2)))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 0))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 1))
+        appRatingPrompt.registerUsage(onDate: Date().inDays(fromNow: 2))
+        XCTAssertTrue(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 2)))
         
     }
     
@@ -95,8 +100,8 @@ class AppRatingPromptTests: XCTestCase {
         
         let stub = AppRatingPromptStorageStub()
         let appRatingPrompt = AppRatingPrompt(storage: stub)
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0))
-        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 1)))
+        _ = appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 0))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 1)))
 
     }
 
@@ -104,13 +109,13 @@ class AppRatingPromptTests: XCTestCase {
 
         let stub = AppRatingPromptStorageStub()
         let appRatingPrompt = AppRatingPrompt(storage: stub)
-        _ = appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0))
-        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: Date().inDays(fromNow: 0)))
+        _ = appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 0))
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(onDate: Date().inDays(fromNow: 0)))
         
     }
 
     func testWhenUserAccessFirstDayThenShouldNotPrompt() {
-        XCTAssertFalse(AppRatingPrompt(storage: AppRatingPromptStorageStub()).shouldPrompt(date: Date().inDays(fromNow: 0)))
+        XCTAssertFalse(AppRatingPrompt(storage: AppRatingPromptStorageStub()).shouldPrompt(onDate: Date().inDays(fromNow: 0)))
     }
     
 }

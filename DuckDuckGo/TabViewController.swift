@@ -525,6 +525,7 @@ extension TabViewController: WebEventsDelegate {
         }
 
         if #available(iOS 10.3, *) {
+            appRatingPrompt.registerUsage()
             if appRatingPrompt.shouldPrompt() {
                 SKStoreReviewController.requestReview()
                 appRatingPrompt.shown()

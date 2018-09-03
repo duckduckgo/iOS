@@ -19,6 +19,12 @@
 
 import Core
 
+protocol TabObserver: class {
+ 
+    func didChange(tab: Tab)
+    
+}
+
 public class Tab: NSObject, NSCoding {
 
     struct NSCodingKeys {
@@ -26,8 +32,18 @@ public class Tab: NSObject, NSCoding {
         static let viewed = "viewed"
     }
 
-    var link: Link?
-    var viewed: Bool = true
+    var observers = [TabObserver]()
+    
+    var link: Link? {
+        didSet {
+            notifyObservers()
+        }
+    }
+    var viewed: Bool = true {
+        didSet {
+            notifyObservers()
+        }
+    }
 
     init(link: Link?, viewed: Bool = true) {
         self.link = link
@@ -49,4 +65,25 @@ public class Tab: NSObject, NSCoding {
         guard let other = other as? Tab else { return false }
         return link == other.link
     }
+    
+    func addObserver(_ observer: TabObserver) {
+        guard indexOf(observer) == nil else { return }
+        observers.append(observer)
+    }
+    
+    func removeObserver(_ observer: TabObserver) {
+        guard let index = indexOf(observer) else { return }
+        observers.remove(at: index)
+    }
+    
+    private func indexOf(_ observer: TabObserver) -> Int? {
+        return observers.index(where: { $0 === observer })
+    }
+    
+    private func notifyObservers() {
+        for observer in observers {
+            observer.didChange(tab: self)
+        }
+    }
+    
 }

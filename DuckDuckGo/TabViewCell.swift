@@ -42,6 +42,7 @@ class TabViewCell: UICollectionViewCell {
 
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
+    var isCurrent = false
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
@@ -51,8 +52,12 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var unread: UIView!
 
     func update(withTab tab: Tab, isCurrent: Bool) {
+        removeTabObserver()
+        
+        tab.addObserver(self)
         self.tab = tab
         isHidden = false
+        self.isCurrent = isCurrent
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
         background.layer.borderColor = UIColor.skyBlue.cgColor
@@ -65,6 +70,10 @@ class TabViewCell: UICollectionViewCell {
         configureFavicon(forDomain: tab.link?.url.host)
     }
 
+    private func removeTabObserver() {
+        tab?.removeObserver(self)
+    }
+    
     @IBAction func deleteTab() {
 
         guard let tab = tab else { return }
@@ -87,4 +96,12 @@ class TabViewCell: UICollectionViewCell {
             favicon.kf.setImage(with: faviconUrl, placeholder: placeholder)
         }
     }
+}
+
+extension TabViewCell: TabObserver {
+    
+    func didChange(tab: Tab) {
+        update(withTab: tab, isCurrent: isCurrent)
+    }
+    
 }

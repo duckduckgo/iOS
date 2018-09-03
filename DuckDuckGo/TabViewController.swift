@@ -21,6 +21,7 @@ import WebKit
 import SafariServices
 import Core
 import Device
+import StoreKit
 
 class TabViewController: WebViewController {
 
@@ -30,11 +31,13 @@ class TabViewController: WebViewController {
     weak var chromeDelegate: BrowserChromeDelegate?
 
     private lazy var appUrls: AppUrls = AppUrls()
+    private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
+    
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var privacyController: PrivacyProtectionController?
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
-
+    
     private var httpsForced: Bool = false
 
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
@@ -520,6 +523,15 @@ extension TabViewController: WebEventsDelegate {
         if let domain = siteRating?.domain {
             NetworkLeaderboard.shared.visited(domain: domain)
         }
+
+        if #available(iOS 10.3, *) {
+            appRatingPrompt.registerUsage()
+            if appRatingPrompt.shouldPrompt() {
+                SKStoreReviewController.requestReview()
+                appRatingPrompt.shown()
+            }
+        }
+        
     }
 
     func webpageDidFinishLoading() {

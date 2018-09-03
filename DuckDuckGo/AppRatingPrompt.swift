@@ -27,6 +27,8 @@ protocol AppRatingPromptStorage {
     
     var uniqueAccessDays: Int { get set }
     
+    var lastShown: Date? { get set }
+    
 }
 
 class AppRatingPrompt {
@@ -45,7 +47,11 @@ class AppRatingPrompt {
 
         storage.lastAccess = date
         
-        return [3, 7].contains(storage.uniqueAccessDays)
+        return [3, 7].contains(storage.uniqueAccessDays) && !sameDay(date1: date, date2: storage.lastShown)
+    }
+    
+    func shown(onDate date: Date = Date()) {
+        storage.lastShown = date
     }
  
     private func sameDay(date1: Date?, date2: Date?) -> Bool {
@@ -76,6 +82,17 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().uniqueAccessDays = Int64(newValue)
+            _ = persistence.save()
+        }
+    }
+    
+    var lastShown: Date? {
+        get {
+            return entity().lastShown
+        }
+        
+        set {
+            entity().lastShown = newValue
             _ = persistence.save()
         }
     }

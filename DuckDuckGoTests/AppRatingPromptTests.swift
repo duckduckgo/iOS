@@ -29,6 +29,21 @@ class AppRatingPromptTests: XCTestCase {
         stub = AppRatingPromptStorageStub()
     }
     
+    func testWhenUserAlreadyShownThenDoesntShowAgainOnSameDay() {
+        
+        let stub = AppRatingPromptStorageStub()
+        
+        let appRatingPrompt = AppRatingPrompt(storage: stub)
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 0))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 1))
+        _ = appRatingPrompt.shouldPrompt(date: days(later: 2))
+    
+        appRatingPrompt.shown(onDate: days(later: 2))
+        
+        XCTAssertFalse(appRatingPrompt.shouldPrompt(date: days(later: 2)))
+        
+    }
+    
     func testWhenUserAccessSeventhDayAfterSkippingSomeThenShouldPrompt() {
         
         let appRatingPrompt = AppRatingPrompt(storage: stub)
@@ -119,6 +134,8 @@ private class AppRatingPromptStorageStub: AppRatingPromptStorage {
     var lastAccess: Date?
     
     var uniqueAccessDays: Int = 0
+    
+    var lastShown: Date?
     
 }
 

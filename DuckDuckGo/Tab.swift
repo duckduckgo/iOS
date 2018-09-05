@@ -27,12 +27,16 @@ protocol TabObserver: class {
 
 public class Tab: NSObject, NSCoding {
 
+    struct WeaklyHeldTabObserver {
+        weak var observer: TabObserver?
+    }
+    
     struct NSCodingKeys {
         static let link = "link"
         static let viewed = "viewed"
     }
 
-    var observers = [TabObserver]()
+    var observersHolder = [WeaklyHeldTabObserver]()
     
     var link: Link? {
         didSet {
@@ -68,22 +72,27 @@ public class Tab: NSObject, NSCoding {
     
     func addObserver(_ observer: TabObserver) {
         guard indexOf(observer) == nil else { return }
-        observers.append(observer)
+        observersHolder.append(WeaklyHeldTabObserver(observer: observer))
     }
     
     func removeObserver(_ observer: TabObserver) {
         guard let index = indexOf(observer) else { return }
-        observers.remove(at: index)
+        observersHolder.remove(at: index)
     }
     
     private func indexOf(_ observer: TabObserver) -> Int? {
-        return observers.index(where: { $0 === observer })
+        return liveHolders().index(where: { $0.observer === observer })
     }
     
     private func notifyObservers() {
-        for observer in observers {
-            observer.didChange(tab: self)
+        for holder in liveHolders() {
+            holder.observer?.didChange(tab: self)
         }
+    }
+    
+    private func liveHolders() -> [WeaklyHeldTabObserver] {
+        observersHolder = observersHolder.filter({ $0.observer != nil })
+        return observersHolder
     }
     
 }

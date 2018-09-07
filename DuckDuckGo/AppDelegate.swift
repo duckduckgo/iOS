@@ -90,6 +90,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
+        } else if AppDeepLinks.isBookmarks(url: url) {
+            mainViewController?.onBookmarksPressed()
+        } else if AppDeepLinks.isFire(url: url) {
+            mainViewController?.onQuickFirePressed()
         }
         return true
     }

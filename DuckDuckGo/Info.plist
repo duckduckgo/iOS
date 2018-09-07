@@ -25,6 +25,8 @@
 			<array>
 				<string>ddgNewSearch</string>
 				<string>ddgQuickLink</string>
+				<string>ddgBookmarks</string>
+				<string>ddgFire</string>
 			</array>
 		</dict>
 	</array>

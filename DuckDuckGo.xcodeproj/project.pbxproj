@@ -36,6 +36,16 @@
 		837093E52142AA9800A58838 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC491EAFC708006128D9 /* proximanova-light.otf */; };
 		837093E62142AA9800A58838 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */; };
 		837093E72142AA9800A58838 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */; };
+		837094302142C4C200A58838 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1AA54601E48D90700223211 /* NotificationCenter.framework */; };
+		837094332142C4C200A58838 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837094322142C4C200A58838 /* TodayViewController.swift */; };
+		837094362142C4C200A58838 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837094342142C4C200A58838 /* MainInterface.storyboard */; };
+		8370943A2142C4C200A58838 /* QuickActionsTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8370943E2142C50B00A58838 /* proximanova-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */; };
+		8370943F2142C50B00A58838 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC491EAFC708006128D9 /* proximanova-light.otf */; };
+		837094402142C50B00A58838 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */; };
+		837094412142C50B00A58838 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */; };
+		837094422142C60100A58838 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
+		837094432142C80600A58838 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		838306B320C704050045E854 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		838306E320C733010045E854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 838306E120C733010045E854 /* InfoPlist.strings */; };
 		8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390446E20BDCE10006461CD /* ShareViewController.swift */; };
@@ -364,6 +374,13 @@
 			remoteGlobalIDString = F1AA545D1E48D90700223211;
 			remoteInfo = TodayExtension;
 		};
+		837094382142C4C200A58838 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8370942E2142C4C200A58838;
+			remoteInfo = QuickActionsTodayExtension;
+		};
 		8390447420BDCE10006461CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -423,6 +440,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				837093DD21414C9D00A58838 /* TodayExtension.appex in Embed App Extensions */,
+				8370943A2142C4C200A58838 /* QuickActionsTodayExtension.appex in Embed App Extensions */,
 				8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -479,6 +497,10 @@
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
 		837093E02141663800A58838 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
+		8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickActionsTodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		837094322142C4C200A58838 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		837094352142C4C200A58838 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		837094372142C4C200A58838 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838306E220C733010045E854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		838306E520C734D80045E854 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		838306E620C735140045E854 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -832,6 +854,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8370942C2142C4C200A58838 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				837094432142C80600A58838 /* Core.framework in Frameworks */,
+				837094302142C4C200A58838 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8390446920BDCE10006461CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1010,6 +1041,16 @@
 			path = IntegrationTests;
 			sourceTree = "<group>";
 		};
+		837094312142C4C200A58838 /* QuickActionsTodayExtension */ = {
+			isa = PBXGroup;
+			children = (
+				837094322142C4C200A58838 /* TodayViewController.swift */,
+				837094342142C4C200A58838 /* MainInterface.storyboard */,
+				837094372142C4C200A58838 /* Info.plist */,
+			);
+			path = QuickActionsTodayExtension;
+			sourceTree = "<group>";
+		};
 		837774491F8E1ECE00E17A29 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -1133,6 +1174,7 @@
 				F143C2E51E4A4CD400CFDE3A /* Core */,
 				F1EEAC461EAFC708006128D9 /* Fonts */,
 				F1AA54621E48D90700223211 /* TodayExtension */,
+				837094312142C4C200A58838 /* QuickActionsTodayExtension */,
 				8390446D20BDCE10006461CD /* ShareExtension */,
 				8328AAB0212A3D4F00293140 /* Third-Party */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
@@ -1162,6 +1204,7 @@
 				8512BCB320612E500085E862 /* UITests.xctest */,
 				8390446C20BDCE10006461CD /* ShareExtension.appex */,
 				85F21DAD210F5E32002631A6 /* AtbIntegrationTests.xctest */,
+				8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2154,6 +2197,23 @@
 			productReference = 836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		8370942E2142C4C200A58838 /* QuickActionsTodayExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8370943D2142C4C200A58838 /* Build configuration list for PBXNativeTarget "QuickActionsTodayExtension" */;
+			buildPhases = (
+				8370942B2142C4C200A58838 /* Sources */,
+				8370942C2142C4C200A58838 /* Frameworks */,
+				8370942D2142C4C200A58838 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuickActionsTodayExtension;
+			productName = QuickActionsTodayExtension;
+			productReference = 8370942F2142C4C200A58838 /* QuickActionsTodayExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8390446B20BDCE10006461CD /* ShareExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8390447720BDCE10006461CD /* Build configuration list for PBXNativeTarget "ShareExtension" */;
@@ -2209,6 +2269,7 @@
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
 				837093DF21414C9D00A58838 /* PBXTargetDependency */,
+				837094392142C4C200A58838 /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
 			productName = DuckDuckGo;
@@ -2342,6 +2403,11 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 84E341911E2F7EFB00BDBA6F;
 					};
+					8370942E2142C4C200A58838 = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = HKE973VLUW;
+						ProvisioningStyle = Automatic;
+					};
 					8390446B20BDCE10006461CD = {
 						CreatedOnToolsVersion = 9.3.1;
 						DevelopmentTeam = HKE973VLUW;
@@ -2445,6 +2511,7 @@
 				F143C2E31E4A4CD400CFDE3A /* Core */,
 				8390446B20BDCE10006461CD /* ShareExtension */,
 				F1AA545D1E48D90700223211 /* TodayExtension */,
+				8370942E2142C4C200A58838 /* QuickActionsTodayExtension */,
 				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
 				836B6B661F67F11E0061ECFB /* IntegrationTests */,
 				85CC936A203C402C00690089 /* SpeedTests */,
@@ -2460,6 +2527,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8370942D2142C4C200A58838 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				837094422142C60100A58838 /* Assets.xcassets in Resources */,
+				8370943E2142C50B00A58838 /* proximanova-bold.otf in Resources */,
+				8370943F2142C50B00A58838 /* proximanova-light.otf in Resources */,
+				837094402142C50B00A58838 /* proximanova-regular.otf in Resources */,
+				837094412142C50B00A58838 /* proximanova-semibold.otf in Resources */,
+				837094362142C4C200A58838 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2707,6 +2787,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8370942B2142C4C200A58838 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				837094332142C4C200A58838 /* TodayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3037,6 +3125,11 @@
 			target = F1AA545D1E48D90700223211 /* TodayExtension */;
 			targetProxy = 837093DE21414C9D00A58838 /* PBXContainerItemProxy */;
 		};
+		837094392142C4C200A58838 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8370942E2142C4C200A58838 /* QuickActionsTodayExtension */;
+			targetProxy = 837094382142C4C200A58838 /* PBXContainerItemProxy */;
+		};
 		8390447520BDCE10006461CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8390446B20BDCE10006461CD /* ShareExtension */;
@@ -3075,6 +3168,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		837094342142C4C200A58838 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				837094352142C4C200A58838 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		838306E120C733010045E854 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -3190,6 +3291,52 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = DuckDuckGo;
+			};
+			name = Release;
+		};
+		8370943B2142C4C200A58838 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HKE973VLUW;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.QuickActionsTodayExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8370943C2142C4C200A58838 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HKE973VLUW;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.mobile.ios.QuickActionsTodayExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -3719,6 +3866,15 @@
 			buildConfigurations = (
 				836B6B6E1F67F11E0061ECFB /* Debug */,
 				836B6B6F1F67F11E0061ECFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8370943D2142C4C200A58838 /* Build configuration list for PBXNativeTarget "QuickActionsTodayExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8370943B2142C4C200A58838 /* Debug */,
+				8370943C2142C4C200A58838 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

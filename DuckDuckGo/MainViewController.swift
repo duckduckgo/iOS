@@ -164,6 +164,11 @@ class MainViewController: UIViewController {
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: toolbar)
     }
+    
+    func onQuickFirePressed() {
+        forgetAll {}
+        dismiss(animated: true)
+    }
 
     @IBAction func onBackPressed() {
         currentTab?.goBack()

@@ -25,18 +25,31 @@ public struct AppDeepLinks {
 
     public static let quickLink = "ddgQuickLink://"
 
+    public static let bookmarks = "ddgBookmarks://"
+    
+    public static let fire = "ddgFire://"
+
     public static let aboutLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/about")!
 
     public static func isNewSearch(url: URL) -> Bool {
-        if let scheme = url.scheme {
-            return AppDeepLinks.newSearch.contains(scheme)
-        }
-        return false
+        return isUrl(url, deepLink: AppDeepLinks.newSearch)
     }
 
     public static func isQuickLink(url: URL) -> Bool {
+        return isUrl(url, deepLink: AppDeepLinks.quickLink)
+    }
+    
+    public static func isBookmarks(url: URL) -> Bool {
+        return isUrl(url, deepLink: AppDeepLinks.bookmarks)
+    }
+    
+    public static func isFire(url: URL) -> Bool {
+        return isUrl(url, deepLink: AppDeepLinks.fire)
+    }
+    
+    private static func isUrl(_ url: URL, deepLink: String) -> Bool {
         if let scheme = url.scheme {
-            return AppDeepLinks.quickLink.lowercased().contains(scheme.lowercased())
+            return deepLink.lowercased().contains(scheme.lowercased())
         }
         return false
     }

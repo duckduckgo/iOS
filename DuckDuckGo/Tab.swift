@@ -36,7 +36,7 @@ public class Tab: NSObject, NSCoding {
         static let viewed = "viewed"
     }
 
-    var observersHolder = [WeaklyHeldTabObserver]()
+    private var observersHolder = [WeaklyHeldTabObserver]()
     
     var link: Link? {
         didSet {
@@ -81,18 +81,17 @@ public class Tab: NSObject, NSCoding {
     }
     
     private func indexOf(_ observer: TabObserver) -> Int? {
-        return liveHolders().index(where: { $0.observer === observer })
+        pruneHolders()
+        return observersHolder.index(where: { $0.observer === observer })
     }
     
     private func notifyObservers() {
-        for holder in liveHolders() {
-            holder.observer?.didChange(tab: self)
-        }
+        pruneHolders()
+        observersHolder.forEach { $0.observer?.didChange(tab: self) }
     }
-    
-    private func liveHolders() -> [WeaklyHeldTabObserver] {
-        observersHolder = observersHolder.filter({ $0.observer != nil })
-        return observersHolder
+
+    private func pruneHolders() {
+        observersHolder = observersHolder.filter { $0.observer != nil }
     }
     
 }

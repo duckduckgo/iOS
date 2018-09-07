@@ -41,16 +41,6 @@ class TabTests: XCTestCase {
         XCTAssertTrue(tab?.viewed ?? false)
     }
     
-    func testWhenTabObserverIsOutOfScopeThenItIsNotRetained() {
-        var observer: MockTabObserver? = MockTabObserver()
-        let tab = Tab(coder: CoderWithViewedPropertyStub())
-        tab?.addObserver(observer!)
-        
-        observer = nil
-        
-        XCTAssertNil(tab?.observersHolder[0].observer)
-    }
-    
     func testWhenTabLinkChangesThenObserversAreNotified() {
         let observer = MockTabObserver()
         

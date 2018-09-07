@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARu-6w-cJg">
-                                <rect key="frame" x="211.5" y="16" width="1" height="168"/>
+                                <rect key="frame" x="211.5" y="0.0" width="1" height="200"/>
                                 <color key="backgroundColor" red="0.54509803921568623" green="0.70980392156862748" blue="0.69803921568627447" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="QQQ-9Q-efQ"/>
@@ -106,11 +106,11 @@
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ANW-q1-ec2" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" id="49m-OZ-eyO"/>
-                            <constraint firstItem="ARu-6w-cJg" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="top" constant="16" id="8Zx-R7-AmO"/>
+                            <constraint firstItem="ARu-6w-cJg" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="top" id="8Zx-R7-AmO"/>
                             <constraint firstItem="ANW-q1-ec2" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" id="Dpr-8r-VFf"/>
                             <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="ANW-q1-ec2" secondAttribute="trailing" id="TJM-nA-9ns"/>
                             <constraint firstItem="ssy-KU-ocm" firstAttribute="bottom" secondItem="ANW-q1-ec2" secondAttribute="bottom" id="dXq-Ac-gEw"/>
-                            <constraint firstAttribute="bottom" secondItem="ARu-6w-cJg" secondAttribute="bottom" constant="16" id="kjy-YX-mj7"/>
+                            <constraint firstAttribute="bottom" secondItem="ARu-6w-cJg" secondAttribute="bottom" id="kjy-YX-mj7"/>
                             <constraint firstItem="ARu-6w-cJg" firstAttribute="trailing" secondItem="kxe-gE-np7" secondAttribute="trailing" constant="-1" id="qJS-YD-EpJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>

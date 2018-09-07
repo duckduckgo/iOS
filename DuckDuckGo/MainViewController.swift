@@ -192,6 +192,7 @@ class MainViewController: UIViewController {
     func launchNewSearch() {
         loadViewIfNeeded()
         attachHomeScreen()
+        omniBar.becomeFirstResponder()
     }
 
     fileprivate func loadQuery(_ query: String) {

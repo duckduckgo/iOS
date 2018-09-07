@@ -85,7 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
         clearNavigationStack()
-        if AppDeepLinks.isQuickLink(url: url) {
+        if AppDeepLinks.isNewSearch(url: url) {
+            mainViewController?.launchNewSearch()
+        } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
         }

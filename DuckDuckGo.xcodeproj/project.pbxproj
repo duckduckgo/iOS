@@ -29,6 +29,13 @@
 		8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */; };
 		8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */; };
 		836B6B6A1F67F11E0061ECFB /* ContentBlockerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */; };
+		837093DD21414C9D00A58838 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F1AA545E1E48D90700223211 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		837093E12141663800A58838 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837093E02141663800A58838 /* BookmarkCell.swift */; };
+		837093E2214198EF00A58838 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17BA43A1F1CD99800460FFA /* Kingfisher.framework */; };
+		837093E42142AA9800A58838 /* proximanova-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */; };
+		837093E52142AA9800A58838 /* proximanova-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC491EAFC708006128D9 /* proximanova-light.otf */; };
+		837093E62142AA9800A58838 /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */; };
+		837093E72142AA9800A58838 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1EEAC4B1EAFC708006128D9 /* proximanova-semibold.otf */; };
 		838306B320C704050045E854 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		838306E320C733010045E854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 838306E120C733010045E854 /* InfoPlist.strings */; };
 		8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390446E20BDCE10006461CD /* ShareViewController.swift */; };
@@ -350,6 +357,13 @@
 			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
 			remoteInfo = DuckDuckGo;
 		};
+		837093DE21414C9D00A58838 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1AA545D1E48D90700223211;
+			remoteInfo = TodayExtension;
+		};
 		8390447420BDCE10006461CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -408,6 +422,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				837093DD21414C9D00A58838 /* TodayExtension.appex in Embed App Extensions */,
 				8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -463,6 +478,7 @@
 		836B6B691F67F11E0061ECFB /* ContentBlockerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerTests.swift; sourceTree = "<group>"; };
 		836B6B6B1F67F11E0061ECFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		836B6B711F67F1590061ECFB /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
+		837093E02141663800A58838 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		838306E220C733010045E854 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		838306E520C734D80045E854 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		838306E620C735140045E854 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -889,6 +905,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				837093E2214198EF00A58838 /* Kingfisher.framework in Frameworks */,
 				F143C30B1E4A967000CFDE3A /* Core.framework in Frameworks */,
 				F1AA54611E48D90700223211 /* NotificationCenter.framework in Frameworks */,
 			);
@@ -1920,6 +1937,7 @@
 			children = (
 				F143C2C41E4A08C400CFDE3A /* TodayExtension.entitlements */,
 				F1AA54631E48D90700223211 /* TodayViewController.swift */,
+				837093E02141663800A58838 /* BookmarkCell.swift */,
 				F1AA54651E48D90700223211 /* MainInterface.storyboard */,
 				F1AA54681E48D90700223211 /* Info.plist */,
 			);
@@ -2190,6 +2208,7 @@
 			dependencies = (
 				F143C2EA1E4A4CD400CFDE3A /* PBXTargetDependency */,
 				8390447520BDCE10006461CD /* PBXTargetDependency */,
+				837093DF21414C9D00A58838 /* PBXTargetDependency */,
 			);
 			name = DuckDuckGo;
 			productName = DuckDuckGo;
@@ -2293,6 +2312,7 @@
 			buildConfigurationList = F1AA546E1E48D90700223211 /* Build configuration list for PBXNativeTarget "TodayExtension" */;
 			buildPhases = (
 				F1AA545A1E48D90700223211 /* Sources */,
+				837093E32142AA3F00A58838 /* SwiftLint */,
 				F1AA545B1E48D90700223211 /* Frameworks */,
 				F1AA545C1E48D90700223211 /* Resources */,
 			);
@@ -2563,6 +2583,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				837093E42142AA9800A58838 /* proximanova-bold.otf in Resources */,
+				837093E52142AA9800A58838 /* proximanova-light.otf in Resources */,
+				837093E62142AA9800A58838 /* proximanova-regular.otf in Resources */,
+				837093E72142AA9800A58838 /* proximanova-semibold.otf in Resources */,
 				F143C2B41E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				F1AA54671E48D90700223211 /* MainInterface.storyboard in Resources */,
 			);
@@ -2571,6 +2595,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		837093E32142AA3F00A58838 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint lint\nelse\necho \"error: SwiftLint not installed. Install using `brew install swiftlint`\"\nexit 1\nfi";
+		};
 		8558AA7D20EE3CB200A346E9 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2982,6 +3020,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1AA54641E48D90700223211 /* TodayViewController.swift in Sources */,
+				837093E12141663800A58838 /* BookmarkCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2992,6 +3031,11 @@
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
 			targetProxy = 836B6B6C1F67F11E0061ECFB /* PBXContainerItemProxy */;
+		};
+		837093DF21414C9D00A58838 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1AA545D1E48D90700223211 /* TodayExtension */;
+			targetProxy = 837093DE21414C9D00A58838 /* PBXContainerItemProxy */;
 		};
 		8390447520BDCE10006461CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3630,6 +3674,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HKE973VLUW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -3648,6 +3696,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = HKE973VLUW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

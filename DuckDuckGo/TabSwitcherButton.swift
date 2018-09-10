@@ -66,23 +66,29 @@ class TabSwitcherButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        anim.frame = frame
+        anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         tint.frame = frame
         label.frame = frame
         
         anim.layer.masksToBounds = false
+        anim.isUserInteractionEnabled = false
         
         tint.backgroundColor = UIColor.nearlyBlackLight
         tint.alpha = 0.0
+        tint.isUserInteractionEnabled = false
+        
+        label.isUserInteractionEnabled = false
         
         addSubview(anim)
         addSubview(label)
         addSubview(tint)
         
+        anim.center = center
+        
     }
     
     convenience init() {
-        self.init(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        self.init(frame: CGRect(x: 0, y: 0, width: 34, height: 44))
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -90,19 +96,21 @@ class TabSwitcherButton: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        UIView.animate(withDuration: Constants.buttonTouchDuration) {
-            self.tint.alpha = Constants.tintAlpha
-        }
+        tint(alpha: Constants.tintAlpha)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        UIView.animate(withDuration: Constants.buttonTouchDuration) {
-            self.tint.alpha = 0
-        }
-        
+        tint(alpha: 0)
+
         guard let touch = touches.first else { return }
         guard point(inside: touch.location(in: self), with: event) else { return }
         delegate?.showTabSwitcher()
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let inside = point(inside: touch.location(in: self), with: event)
+        tint(alpha: inside ? Constants.tintAlpha : 0)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -130,6 +138,12 @@ class TabSwitcherButton: UIView {
         return [ NSAttributedStringKey.font: font,
                  NSAttributedStringKey.foregroundColor: UIColor.grayish,
                  NSAttributedStringKey.paragraphStyle: paragraphStyle ]
+    }
+    
+    private func tint(alpha: CGFloat) {
+        UIView.animate(withDuration: Constants.buttonTouchDuration) {
+            self.tint.alpha = alpha
+        }
     }
     
 }

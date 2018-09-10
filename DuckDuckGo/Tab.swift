@@ -19,15 +19,35 @@
 
 import Core
 
+protocol TabObserver: class {
+ 
+    func didChange(tab: Tab)
+    
+}
+
 public class Tab: NSObject, NSCoding {
 
+    struct WeaklyHeldTabObserver {
+        weak var observer: TabObserver?
+    }
+    
     struct NSCodingKeys {
         static let link = "link"
         static let viewed = "viewed"
     }
 
-    var link: Link?
-    var viewed: Bool = true
+    private var observersHolder = [WeaklyHeldTabObserver]()
+    
+    var link: Link? {
+        didSet {
+            notifyObservers()
+        }
+    }
+    var viewed: Bool = true {
+        didSet {
+            notifyObservers()
+        }
+    }
 
     init(link: Link?, viewed: Bool = true) {
         self.link = link
@@ -49,4 +69,29 @@ public class Tab: NSObject, NSCoding {
         guard let other = other as? Tab else { return false }
         return link == other.link
     }
+    
+    func addObserver(_ observer: TabObserver) {
+        guard indexOf(observer) == nil else { return }
+        observersHolder.append(WeaklyHeldTabObserver(observer: observer))
+    }
+    
+    func removeObserver(_ observer: TabObserver) {
+        guard let index = indexOf(observer) else { return }
+        observersHolder.remove(at: index)
+    }
+    
+    private func indexOf(_ observer: TabObserver) -> Int? {
+        pruneHolders()
+        return observersHolder.index(where: { $0.observer === observer })
+    }
+    
+    private func notifyObservers() {
+        pruneHolders()
+        observersHolder.forEach { $0.observer?.didChange(tab: self) }
+    }
+
+    private func pruneHolders() {
+        observersHolder = observersHolder.filter { $0.observer != nil }
+    }
+    
 }

@@ -29,6 +29,40 @@ class TabTests: XCTestCase {
         static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
 
+    func testWhenTabObserverIsOutOfScopeThenUpdatesAreSuccessful() {
+        var observer: MockTabObserver? = MockTabObserver()
+        let tab = Tab(coder: CoderWithViewedPropertyStub())
+        tab?.addObserver(observer!)
+        
+        observer = nil
+        
+        tab?.viewed = true
+
+        XCTAssertTrue(tab?.viewed ?? false)
+    }
+    
+    func testWhenTabLinkChangesThenObserversAreNotified() {
+        let observer = MockTabObserver()
+        
+        let tab = Tab(coder: CoderWithViewedPropertyStub())
+        tab?.addObserver(observer)
+        
+        tab?.link = Link(title: nil, url: Constants.url)
+
+        XCTAssertNotNil(observer.didChangeTab)
+    }
+
+    func testWhenTabViewedChangesThenObserversAreNotified() {
+        let observer = MockTabObserver()
+        
+        let tab = Tab(coder: CoderWithViewedPropertyStub())
+        tab?.addObserver(observer)
+        
+        tab?.viewed = true
+        
+        XCTAssertNotNil(observer.didChangeTab)
+    }
+
     func testWhenTabWithViewedDecodedThenItDecodesSuccessfully() {
 
         let tab = Tab(coder: CoderWithViewedPropertyStub())
@@ -88,4 +122,14 @@ private class CoderWithViewedPropertyStub: NSCoder {
         return false
     }
 
+}
+
+private class MockTabObserver: NSObject, TabObserver {
+    
+    var didChangeTab: Tab?
+    
+    func didChange(tab: Tab) {
+        didChangeTab = tab
+    }
+    
 }

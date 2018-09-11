@@ -25,6 +25,8 @@ protocol TabViewCellDelegate: class {
 
     func deleteTab(tab: Tab)
 
+    func isCurrent(tab: Tab) -> Bool
+    
 }
 
 class TabViewCell: UICollectionViewCell {
@@ -42,6 +44,7 @@ class TabViewCell: UICollectionViewCell {
 
     weak var delegate: TabViewCellDelegate?
     weak var tab: Tab?
+    var isCurrent = false
 
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var favicon: UIImageView!
@@ -50,9 +53,13 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var removeButton: UIButton!
     @IBOutlet weak var unread: UIView!
 
-    func update(withTab tab: Tab, isCurrent: Bool) {
+    func update(withTab tab: Tab) {
+        removeTabObserver()
+        tab.addObserver(self)
         self.tab = tab
+        
         isHidden = false
+        isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
         background.layer.borderColor = UIColor.skyBlue.cgColor
@@ -65,15 +72,19 @@ class TabViewCell: UICollectionViewCell {
         configureFavicon(forDomain: tab.link?.url.host)
     }
 
+    private func removeTabObserver() {
+        tab?.removeObserver(self)
+    }
+    
     @IBAction func deleteTab() {
 
         guard let tab = tab else { return }
+        self.delegate?.deleteTab(tab: tab)
 
         UIView.animate(withDuration: 0.3, animations: {
             self.transform.tx = -self.superview!.frame.width * 1.5
         }, completion: { _ in
-            self.isHidden = true
-            self.delegate?.deleteTab(tab: tab)
+            self.transform.tx = 0
         })
 
     }
@@ -87,4 +98,12 @@ class TabViewCell: UICollectionViewCell {
             favicon.kf.setImage(with: faviconUrl, placeholder: placeholder)
         }
     }
+}
+
+extension TabViewCell: TabObserver {
+    
+    func didChange(tab: Tab) {
+        update(withTab: tab)
+    }
+    
 }

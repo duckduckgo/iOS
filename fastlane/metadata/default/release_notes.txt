@@ -1,1 +1,1 @@
-In this release we added large-scale HTTPS upgrades to keep you even more secure. We also added open in background tab and improved page loading.
+In this release we've fixed a bug that made it difficult to open the tab switcher and also improved what is displayed in the tab switcher.

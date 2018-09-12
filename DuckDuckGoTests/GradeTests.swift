@@ -60,7 +60,6 @@ class GradeTests: XCTestCase {
         
         var index = 0
         for testCase in testCases {
-            print("test \(index) \(testCase.url)")
             guard assertTestCase(testCase, atIndex: index) else { return }
             index += 1
         }
@@ -88,12 +87,12 @@ class GradeTests: XCTestCase {
         let gradeData = grade.scores
         
         if testCase.expected.site != gradeData.site {
-            XCTFail("expected site result does not equal calculated site result for test case \(index), was \(gradeData.site) expected \(testCase.expected.site)")
+            XCTFail("expected site \(testCase.expected.site) was \(gradeData.site) for \(testCase.url)")
             return false
         }
         
         if testCase.expected.enhanced != gradeData.enhanced {
-            XCTFail("expected enhanced result does not equal calculated enhanced result for test case \(index)")
+            XCTFail("expected enhanced \(testCase.expected.enhanced) was \(gradeData.enhanced) for \(testCase.url)")
             return false
         }
 
@@ -127,55 +126,11 @@ class Grade {
         
     }
     
-    struct RangeMap<R> {
-        
-        let zero: R
-        let max: R
-        let steps: [(Double, R)]
-        
-        func result(for value: Double?) -> R {
-            guard let value = value, value > 0 else {
-                print("-> zero", zero)
-                return zero
-            }
-
-            guard let step = steps.first(where: { value < $0.0 }) else {
-                print(value, "-> max", max)
-                return max
-            }
-
-            print(value, "-> step", step.1)
-            return step.1
-        }
-        
-    }
-    
     struct Constants {
         
         static let unknownPrivacyScore = 2
         static let maxPrivacyScore = 10
-        
-        static let trackerRangeMap = RangeMap<Int>(zero: 0, max: 10, steps: [
-            (0.1, 1),
-            (1, 2),
-            (5, 3),
-            (10, 4),
-            (15, 5),
-            (20, 6),
-            (30, 7),
-            (45, 8),
-            (66, 9)
-            ])
-        
-        static let scoreRangeMap = RangeMap<String>(zero: "A", max: "D-", steps: [
-            (2, "A"),
-            (4, "B+"),
-            (10, "B"),
-            (14, "C+"),
-            (20, "C"),
-            (30, "D")
-            ])
-    
+      
     }
     
     var https = false
@@ -260,12 +215,34 @@ class Grade {
         return trackers.reduce(0, { $0 + score(from: $1.value) })
     }
     
+    // swiftlint:disable cyclomatic_complexity
     private func score(from prevalence: Double?) -> Int {
-        return Constants.trackerRangeMap.result(for: prevalence)
+        guard let prevalence = prevalence, prevalence > 0 else { return 0 }
+        switch prevalence {
+        case 0 ..< 0.1: return 1
+        case 0.1 ..< 1: return 2
+        case 1 ..< 5: return 3
+        case 5 ..< 10: return 4
+        case 10 ..< 15: return 5
+        case 15 ..< 20: return 6
+        case 20 ..< 30: return 7
+        case 30 ..< 45: return 8
+        case 45 ..< 66: return 9
+        default: return 10
+        }
     }
-    
+    // swiftlint:enable cyclomatic_complexity
+
     private func grade(from score: Int) -> String {
-        return Constants.scoreRangeMap.result(for: Double(score))
+        switch score {
+        case Int.min ..< 2: return "A"
+        case 2 ..< 4: return "B+"
+        case 4 ..< 10: return "B"
+        case 10 ..< 14: return "C+"
+        case 14 ..< 20: return "C"
+        case 20 ..< 30: return "D"
+        default: return "D-"
+        }
     }
     
 }

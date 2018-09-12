@@ -115,6 +115,7 @@
 		859872241F5743D800041CB8 /* FireAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 859872231F5743D800041CB8 /* FireAnimation.xib */; };
 		859C5FB82147E6CE00E2A43D /* grade-cases.json in Resources */ = {isa = PBXBuildFile; fileRef = 859C5FB72147E6CE00E2A43D /* grade-cases.json */; };
 		859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C5FB92147E6E200E2A43D /* GradeTests.swift */; };
+		859C5FBD214972E400E2A43D /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C5FBB214971BA00E2A43D /* Grade.swift */; };
 		85A1B3B220C6CD9900C18F15 /* CookieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */; };
 		85A1B3B420C6D07100C18F15 /* CookieStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */; };
 		85A313972028E78A00327D00 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 85A313962028E78A00327D00 /* release_notes.txt */; };
@@ -570,6 +571,7 @@
 		859872231F5743D800041CB8 /* FireAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FireAnimation.xib; sourceTree = "<group>"; };
 		859C5FB72147E6CE00E2A43D /* grade-cases.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "grade-cases.json"; path = "submodules/privacy-grade/test/data/grade-cases.json"; sourceTree = SOURCE_ROOT; };
 		859C5FB92147E6E200E2A43D /* GradeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeTests.swift; sourceTree = "<group>"; };
+		859C5FBB214971BA00E2A43D /* Grade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Grade.swift; path = ../DuckDuckGo/Grade.swift; sourceTree = "<group>"; };
 		85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorage.swift; sourceTree = "<group>"; };
 		85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorageTests.swift; sourceTree = "<group>"; };
 		85A313962028E78A00327D00 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = release_notes.txt; path = fastlane/metadata/default/release_notes.txt; sourceTree = "<group>"; };
@@ -1727,10 +1729,11 @@
 		F16393F81ECCAF0F00DDD653 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				859C5FBB214971BA00E2A43D /* Grade.swift */,
+				F1B88A0B1F3B6C0E000263D6 /* MajorTrackerNetwork.swift */,
+				F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */,
 				F14513561F46388F00710C46 /* SiteRating.swift */,
 				F14484691F39E3B500F6AD2D /* SiteRatingScoreExtension.swift */,
-				F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */,
-				F1B88A0B1F3B6C0E000263D6 /* MajorTrackerNetwork.swift */,
 				830C375B1F6C06BF00E317A7 /* TermsOfService.swift */,
 			);
 			name = Domain;
@@ -2962,6 +2965,7 @@
 				F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */,
 				F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */,
 				F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */,
+				859C5FBD214972E400E2A43D /* Grade.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 			);

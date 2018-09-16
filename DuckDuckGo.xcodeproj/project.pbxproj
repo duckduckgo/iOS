@@ -182,6 +182,9 @@
 		85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */; };
 		85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */; };
 		85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6191A20D293AC003904D1 /* HomeRowCTA.swift */; };
+		85FAAE61214EFD21006AD5DA /* prevalence.json in Resources */ = {isa = PBXBuildFile; fileRef = 85FAAE60214EFD20006AD5DA /* prevalence.json */; };
+		85FAAE63214EFD37006AD5DA /* PrevalenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */; };
+		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
 		F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076A1E800DC30059FEC7 /* BookmarksManager.swift */; };
@@ -640,6 +643,9 @@
 		85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequest.swift; sourceTree = "<group>"; };
 		85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackerTests.swift; sourceTree = "<group>"; };
 		85F6191A20D293AC003904D1 /* HomeRowCTA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRowCTA.swift; sourceTree = "<group>"; };
+		85FAAE60214EFD20006AD5DA /* prevalence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = prevalence.json; sourceTree = "<group>"; };
+		85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevalenceStore.swift; sourceTree = "<group>"; };
+		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		F103076A1E800DC30059FEC7 /* BookmarksManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
@@ -1395,6 +1401,14 @@
 			path = AtbIntegrationTests;
 			sourceTree = "<group>";
 		};
+		85FAAE64214EFE40006AD5DA /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
 		F11044FE1ECFD6AF00C5E3D3 /* Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1722,6 +1736,7 @@
 			children = (
 				F11E231D1ED3B5C500523BC9 /* Domain */,
 				F11044FE1ECFD6AF00C5E3D3 /* Parser */,
+				85FAAE64214EFE40006AD5DA /* Store */,
 			);
 			name = SiteMonitoring;
 			sourceTree = "<group>";
@@ -1774,6 +1789,8 @@
 		F16956331ECC9C4A009C35C9 /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				85FAAE60214EFD20006AD5DA /* prevalence.json */,
+				85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */,
 				830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */,
 				83D306A31F6D500B00ED7CE2 /* tosdr.json */,
 			);
@@ -2549,6 +2566,7 @@
 				85047B8A1F69692C002A95D8 /* contentblocker.js in Resources */,
 				85B5470D1FE852CE0008E1E5 /* bloom-filter-packed-es2015.js in Resources */,
 				85047B881F6966ED002A95D8 /* disconnectme.js in Resources */,
+				85FAAE61214EFD21006AD5DA /* prevalence.json in Resources */,
 				83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */,
 				85F1C3C61F7A4C7500161346 /* easylist-cached.js in Resources */,
 				85F1C3C81F7A4C7500161346 /* messaging.js in Resources */,
@@ -2837,6 +2855,7 @@
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* OmniBarStateTests.swift in Sources */,
+				85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */,
 				F16BB6601F56494C00B47A42 /* FeaturesViewControllerTests.swift in Sources */,
 				85F1E9B71FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,
@@ -2919,6 +2938,7 @@
 				F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */,
 				F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */,
 				F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */,
+				85FAAE63214EFD37006AD5DA /* PrevalenceStore.swift in Sources */,
 				85A1B3B220C6CD9900C18F15 /* CookieStorage.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,

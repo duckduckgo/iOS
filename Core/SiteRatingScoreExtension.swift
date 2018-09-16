@@ -24,70 +24,43 @@ import Foundation
 
 public extension SiteRating {
 
-    func siteScore() -> ( before: Int, after: Int ) {
-
-        // No special pages
-
-        var beforeScore = 1
-        var afterScore = 1
-
-        beforeScore += isMajorTrackerScore
-        afterScore += isMajorTrackerScore
-
-        if let tos = termsOfService {
-            beforeScore += tos.derivedScore
-            afterScore += tos.derivedScore
-        }
-
-        beforeScore += hasTrackerInMajorNetworkScore
-
-        if !https || !hasOnlySecureContent {
-            beforeScore += 1
-            afterScore += 1
-        }
-
-        beforeScore += ipTrackerScore
-
-        beforeScore += Int(floor(Double(totalTrackersDetected) / 10))
-
-        if afterScore == 0 && termsOfService?.classification != .a {
-            afterScore = 1
-        }
-
-        if beforeScore == 0 && termsOfService?.classification != .a {
-            beforeScore = 1
-        }
-
-        let cache = SiteRatingCache.shared
-        if !cache.add(url: url, score: beforeScore) {
-            beforeScore = cache.get(url: url)!
-        }
-
-        return ( beforeScore, afterScore )
-    }
-
-    func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
-        let score = siteScore()
-        return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
-    }
+//    func siteScore() -> ( before: Int, after: Int ) {
+//
+//        var afterScore = 0
+//        var beforeScore = 0
+//
+//        let cache = SiteRatingCache.shared
+//        if !cache.add(url: url, score: beforeScore) {
+//            beforeScore = cache.get(url: url)!
+//        }
+//
+//        return ( beforeScore, afterScore )
+//    }
+//
+//    func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
+//        let score = siteScore()
+//        return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
+//    }
 
     private var httpsScore: Int {
         return https ? -1 : 0
     }
 
-    private var hasTrackerInMajorNetworkScore: Int {
-        return trackersDetected.keys.first(where: { $0.inMajorNetwork(disconnectMeTrackers, majorTrackerNetworkStore) }) != nil ? 1 : 0
-    }
+//    private var hasTrackerInMajorNetworkScore: Int {
+//        return trackersDetected.keys.first(where: { $0.inMajorNetwork(disconnectMeTrackers, majorTrackerNetworkStore) }) != nil ? 1 : 0
+//    }
 
-    private var isMajorTrackerScore: Int {
-        guard let domain = domain else { return 0 }
-        if let network = majorTrackerNetworkStore.network(forName: domain) { return network.score }
-        if let network = majorTrackerNetworkStore.network(forDomain: domain) { return network.score }
-        return 0
-    }
+//    private var isMajorTrackerScore: Int {
+//        guard let domain = domain else { return 0 }
+//        if let network = majorTrackerNetworkStore.network(forName: domain) { return network.score }
+//        if let network = majorTrackerNetworkStore.network(forDomain: domain) { return network.score }
+//        return 0
+//    }
 
     var isMajorTrackerNetwork: Bool {
-        return isMajorTrackerScore > 0
+        // Get the entity for the currect domain
+        // Check entity prevalence
+        return false
     }
 
     private var ipTrackerScore: Int {
@@ -103,22 +76,23 @@ public extension SiteRating {
     }
 
     public var scoreDict: [String: Any] {
-        let grade = siteGrade()
-        return [
-            "score": [
-                "domain": domain ?? "unknown",
-                "hasHttps": https,
-                "isAMajorTrackingNetwork": isMajorTrackerScore,
-                "containsMajorTrackingNetwork": containsMajorTracker,
-                "totalBlocked": totalTrackersBlocked,
-                "hasObscureTracker": containsIpTracker,
-                "tosdr": termsOfServiceScore
-            ],
-            "grade": [
-                "before": grade.before.rawValue.uppercased(),
-                "after": grade.after.rawValue.uppercased()
-            ]
-        ]
+//        let grade = siteGrade()
+//        return [
+//            "score": [
+//                "domain": domain ?? "unknown",
+//                "hasHttps": https,
+//                "isAMajorTrackingNetwork": 0,
+//                "containsMajorTrackingNetwork": containsMajorTracker,
+//                "totalBlocked": totalTrackersBlocked,
+//                "hasObscureTracker": containsIpTracker,
+//                "tosdr": termsOfServiceScore
+//            ],
+//            "grade": [
+//                "before": grade.before.rawValue.uppercased(),
+//                "after": grade.after.rawValue.uppercased()
+//            ]
+//        ]
+        return [:]
     }
 
     public var scoreDescription: String {
@@ -134,9 +108,9 @@ public extension SiteRating {
             return ( tracker.networkName, tracker.category?.rawValue )
         }
 
-        if let majorNetwork = majorTrackerNetworkStore.network(forDomain: lowercasedDomain) {
-            return ( majorNetwork.name, nil )
-        }
+//        if let majorNetwork = majorTrackerNetworkStore.network(forDomain: lowercasedDomain) {
+//            return ( majorNetwork.name, nil )
+//        }
 
         return ( nil, nil )
     }

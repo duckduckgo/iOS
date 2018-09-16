@@ -21,6 +21,12 @@ import Foundation
 
 public class SiteRating {
 
+    struct Constants {
+
+        static let majorNetworkPrevalence = 7.0
+
+    }
+
     public enum EncryptionType {
         case unencrypted, mixed, encrypted, forced
     }
@@ -40,15 +46,15 @@ public class SiteRating {
 
     private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: DisconnectMeTracker]
-    let majorTrackerNetworkStore: MajorTrackerNetworkStore
+    let prevalenceStore: PrevalenceStore
 
-    private let grade = Grade()
+    let grade = Grade()
 
     public init(url: URL,
                 httpsForced: Bool = false,
                 disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
                 termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(),
-                majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(),
+                prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore(),
                 protectionId: String = UUID.init().uuidString) {
 
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
@@ -58,9 +64,13 @@ public class SiteRating {
         self.httpsForced = httpsForced
         self.disconnectMeTrackers = disconnectMeTrackers
         self.termsOfServiceStore = termsOfServiceStore
-        self.majorTrackerNetworkStore = majorTrackerNetworkStore
+        self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
+
         self.grade.https = url.isHttps()
+
+        // TODO extract from TOSDR
+        self.grade.privacyScore = nil
     }
 
     public var https: Bool {
@@ -116,9 +126,14 @@ public class SiteRating {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
 
+        let entity = tracker.networkName ?? tracker.domain ?? tracker.url
+
         if tracker.blocked {
             let blockCount = trackersBlocked[tracker] ?? 0
             trackersBlocked[tracker] = blockCount + 1
+            grade.addEntityBlocked(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
+        } else {
+            grade.addEntityNotBlocked(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
         }
     }
 
@@ -164,7 +179,7 @@ public class SiteRating {
     }
 
     private func majorNetworkFilter(trackerDetected: (DetectedTracker, Int)) -> Bool {
-        return majorTrackerNetworkStore.network(forName: trackerDetected.0.networkName ?? "" ) != nil
+        return prevalenceStore.prevalences[trackerDetected.0.networkName ?? ""] ?? 0.0 > Constants.majorNetworkPrevalence
     }
 
 }

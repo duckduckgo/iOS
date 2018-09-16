@@ -42,6 +42,8 @@ public class SiteRating {
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let majorTrackerNetworkStore: MajorTrackerNetworkStore
 
+    private let grade = Grade()
+
     public init(url: URL,
                 httpsForced: Bool = false,
                 disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
@@ -58,6 +60,7 @@ public class SiteRating {
         self.termsOfServiceStore = termsOfServiceStore
         self.majorTrackerNetworkStore = majorTrackerNetworkStore
         self.hasOnlySecureContent = url.isHttps()
+        self.grade.https = url.isHttps()
     }
 
     public var https: Bool {
@@ -91,7 +94,7 @@ public class SiteRating {
     }
 
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "") != nil })
+        return trackersDetected.contains(where: majorNetworkFilter)
     }
 
     public var containsIpTracker: Bool {
@@ -136,11 +139,11 @@ public class SiteRating {
     }
 
     public var majorNetworkTrackersDetected: [DetectedTracker: Int] {
-        return trackersDetected.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+        return trackersDetected.filter(majorNetworkFilter)
     }
 
     public var majorNetworkTrackersBlocked: [DetectedTracker: Int] {
-        return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+        return trackersBlocked.filter(majorNetworkFilter)
     }
 
     public func associatedDomain(for domain: String) -> String? {
@@ -150,14 +153,18 @@ public class SiteRating {
 
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         let trackers = trackers
+            .filter(majorNetworkFilter)
             .keys
-            .filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil })
             .compactMap({ $0.networkName })
         return Set(trackers).count
     }
 
     private func uniqueTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         return Set(trackers.keys.compactMap({ $0.networkName ?? $0.domain })).count
+    }
+
+    private func majorNetworkFilter(trackerDetected: (DetectedTracker, Int)) -> Bool {
+        return majorTrackerNetworkStore.network(forName: trackerDetected.0.networkName ?? "" ) != nil
     }
 
 }

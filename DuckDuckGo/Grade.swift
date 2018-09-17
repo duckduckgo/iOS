@@ -19,22 +19,34 @@
 
 import Foundation
 
-class Grade {
-    
-    struct Score: Decodable, Equatable {
+public class Grade {
+
+    public enum Grading: String, Decodable {
         
-        let grade: String
-        let httpsScore: Int
-        let privacyScore: Int
-        let score: Int
-        let trackerScore: Int
+        case a = "A"
+        case bPlus = "B+"
+        case b = "B"
+        case cPlus = "C+"
+        case c = "C"
+        case d = "D"
+        case dMinus = "D-"
         
     }
     
-    struct Scores {
+    public struct Score: Decodable, Equatable {
         
-        let site: Score
-        let enhanced: Score
+        public let grade: Grading
+        public let httpsScore: Int
+        public let privacyScore: Int
+        public let score: Int
+        public let trackerScore: Int
+        
+    }
+    
+    public struct Scores {
+        
+        public let site: Score
+        public let enhanced: Score
         
     }
     
@@ -45,17 +57,17 @@ class Grade {
         
     }
     
-    var https = false
-    var httpsAutoUpgrade = false
-    var parentEntity: String?
-    var privacyScore: Int?
-    
-    var scores: Scores {
+    public var scores: Scores {
         if calculatedScores == nil {
             calculatedScores = calculate()
         }
         return calculatedScores!
     }
+    
+    var https = false
+    var httpsAutoUpgrade = false
+    var parentEntity: String?
+    var privacyScore: Int?
     
     private var calculatedScores: Scores?
     private var trackersBlocked = [String: Double?]()
@@ -145,15 +157,15 @@ class Grade {
     }
     // swiftlint:enable cyclomatic_complexity
     
-    private func grade(from score: Int) -> String {
+    private func grade(from score: Int) -> Grading {
         switch score {
-        case Int.min ..< 2: return "A"
-        case 2 ..< 4: return "B+"
-        case 4 ..< 10: return "B"
-        case 10 ..< 14: return "C+"
-        case 14 ..< 20: return "C"
-        case 20 ..< 30: return "D"
-        default: return "D-"
+        case Int.min ..< 2: return .a
+        case 2 ..< 4: return .bPlus
+        case 4 ..< 10: return .b
+        case 10 ..< 14: return .cPlus
+        case 14 ..< 20: return .c
+        case 20 ..< 30: return .d
+        default: return .dMinus
         }
     }
     

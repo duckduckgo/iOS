@@ -50,7 +50,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     fileprivate let disconnectMeTrackers = ["googletracker.com": DisconnectMeTracker(url: Url.googleNetwork.absoluteString, networkName: "Google")]
 
     override func setUp() {
-        SiteRatingCache.shared.reset()
+        GradeCache.shared.reset()
     }
 
     func testWhenNetworkNameAndCategoryExistsForUppercasedDomainTheyAreReturned() {
@@ -74,19 +74,14 @@ class SiteRatingScoreExtensionTests: XCTestCase {
     }
 
     func testWhenWorseScoreIsCachedForBeforeScoreItIsUsed() {
-        _ = SiteRatingCache.shared.add(url: Url.https, score: 66)
+        let scores = Grade.Scores(site: Grade.Score(grade: .d, httpsScore: 0, privacyScore: 0, score: 66, trackerScore: 0),
+                                  enhanced: Grade.Score(grade: .a, httpsScore: 0, privacyScore: 0, score: 0, trackerScore: 0))
+        
+        _ = GradeCache.shared.add(url: Url.https, scores: scores)
 
         let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
-        let score = testee.siteScore()
-        XCTAssertEqual(66, score.before)
-    }
-
-    func testBeforeScoreIsCached() {
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore().add(domain: Url.https.host!,
-                                                                                                   classification: .e,
-                                                                                                   score: 0))
-        XCTAssertNotNil(testee.siteScore())
-        XCTAssertNotNil(SiteRatingCache.shared.get(url: Url.https))
+        let site = testee.scores.site
+        XCTAssertEqual(66, site.score)
     }
 
 }

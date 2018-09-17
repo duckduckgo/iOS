@@ -22,18 +22,24 @@ import Core
 
 class PrivacyProtectionHeaderController: UIViewController {
 
-    private static let gradesOn: [SiteGrade: UIImage] = [
+    private static let gradesOn: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A On"),
+        .bPlus: #imageLiteral(resourceName: "PP Grade B On"),
         .b: #imageLiteral(resourceName: "PP Grade B On"),
+        .cPlus: #imageLiteral(resourceName: "PP Grade C On"),
         .c: #imageLiteral(resourceName: "PP Grade C On"),
-        .d: #imageLiteral(resourceName: "PP Grade D On")
+        .d: #imageLiteral(resourceName: "PP Grade D On"),
+        .dMinus: #imageLiteral(resourceName: "PP Grade D On")
         ]
 
-    private static let gradesOff: [SiteGrade: UIImage] = [
+    private static let gradesOff: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A Off"),
+        .bPlus: #imageLiteral(resourceName: "PP Grade B Off"),
         .b: #imageLiteral(resourceName: "PP Grade B Off"),
+        .cPlus: #imageLiteral(resourceName: "PP Grade C Off"),
         .c: #imageLiteral(resourceName: "PP Grade C Off"),
-        .d: #imageLiteral(resourceName: "PP Grade D Off")
+        .d: #imageLiteral(resourceName: "PP Grade D Off"),
+        .dMinus: #imageLiteral(resourceName: "PP Grade D Off")
         ]
 
     @IBOutlet weak var gradeImage: UIImageView!
@@ -52,9 +58,9 @@ class PrivacyProtectionHeaderController: UIViewController {
     private func update() {
         guard isViewLoaded else { return }
 
-        let grades = siteRating.siteGrade()
+        let grades = siteRating.scores
         let protecting = contentBlocker.protecting(domain: siteRating.domain)
-        let grade =  protecting ? grades.after : grades.before
+        let grade =  protecting ? grades.enhanced.grade : grades.site.grade
         gradeImage.image = protecting ? PrivacyProtectionHeaderController.gradesOn[grade] : PrivacyProtectionHeaderController.gradesOff[grade]
 
         siteTitleLabel.text = siteRating.domain

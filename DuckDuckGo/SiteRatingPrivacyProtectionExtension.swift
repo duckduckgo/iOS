@@ -97,18 +97,19 @@ extension SiteRating {
         return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(domain)
     }
     
-    static let gradeImages: [SiteGrade: UIImage] = [
+    static let gradeImages: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Inline A"),
+        .bPlus: #imageLiteral(resourceName: "PP Inline B"),
         .b: #imageLiteral(resourceName: "PP Inline B"),
+        .cPlus: #imageLiteral(resourceName: "PP Inline C"),
         .c: #imageLiteral(resourceName: "PP Inline C"),
-        .d: #imageLiteral(resourceName: "PP Inline D")
+        .d: #imageLiteral(resourceName: "PP Inline D"),
+        .dMinus: #imageLiteral(resourceName: "PP Inline D")
     ]
     
     func siteGradeImages() -> (from: UIImage, to: UIImage) {
-        let grades = siteGrade()
-        
-        let fromGrade = grades.before
-        let toGrade = grades.after
+        let fromGrade = scores.site.grade
+        let toGrade = scores.enhanced.grade
         
         return (SiteRating.gradeImages[fromGrade]!, SiteRating.gradeImages[toGrade]!)
     }

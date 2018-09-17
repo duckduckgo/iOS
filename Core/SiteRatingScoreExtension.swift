@@ -117,37 +117,39 @@ public extension SiteRating {
 
 }
 
-public class SiteRatingCache {
+public class GradeCache {
 
-    public static let shared = SiteRatingCache()
+    public static let shared = GradeCache()
 
-    private var cachedScores = [String: Int]()
+    private var cachedScores = [String: Grade.Scores]()
 
+    private init() { }
+    
     /**
      Adds a score to the cache. Only replaces a preexisting score if
      the new score is higher
      - returns: true if the cache was updated, otherwise false
      */
-    func add(url: URL, score: Int) -> Bool {
-        return compareAndSet(url: url, score: score)
+    func add(url: URL, scores: Grade.Scores) -> Bool {
+        return compareAndSet(url: url, scores: scores)
     }
 
-    private func compareAndSet(url: URL, score current: Int) -> Bool {
+    private func compareAndSet(url: URL, scores current: Grade.Scores) -> Bool {
         let key = cacheKey(forUrl: url)
-        if let previous = cachedScores[key], previous > current {
+        if let previous = cachedScores[key], previous.site.score > current.site.score {
             return false
         }
         cachedScores[key] = current
         return true
     }
 
-    func get(url: URL) -> Int? {
+    func get(url: URL) -> Grade.Scores? {
         let key = cacheKey(forUrl: url)
         return cachedScores[key]
     }
 
     func reset() {
-        cachedScores =  [String: Int]()
+        cachedScores =  [String: Grade.Scores]()
     }
 
     private func cacheKey(forUrl url: URL) -> String {

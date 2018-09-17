@@ -34,6 +34,13 @@ public class SiteRating {
     public var domain: String? {
         return url.host
     }
+    
+    public var scores: Grade.Scores {
+        if let scores = cache.get(url: url), scores.site.score > grade.scores.site.score {
+            return scores
+        }
+        return grade.scores
+    }
 
     public let url: URL
     public let protectionId: String
@@ -44,12 +51,13 @@ public class SiteRating {
     public private (set) var trackersDetected = [DetectedTracker: Int]()
     public private (set) var trackersBlocked = [DetectedTracker: Int]()
 
-    private let termsOfServiceStore: TermsOfServiceStore
     let disconnectMeTrackers: [String: DisconnectMeTracker]
-    let prevalenceStore: PrevalenceStore
-
-    let grade = Grade()
-
+    
+    private let termsOfServiceStore: TermsOfServiceStore
+    private let prevalenceStore: PrevalenceStore
+    private let grade = Grade()
+    private let cache = GradeCache.shared
+    
     public init(url: URL,
                 httpsForced: Bool = false,
                 disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
@@ -68,9 +76,13 @@ public class SiteRating {
         self.hasOnlySecureContent = url.isHttps()
 
         self.grade.https = url.isHttps()
+        
+        // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
+        //  then we assume auto upgrade is available in terms of the score.
+        self.grade.httpsAutoUpgrade = url.isHttps()
 
         // TODO extract from TOSDR
-        self.grade.privacyScore = nil
+        self.grade.privacyScore = termsOfServiceScore
     }
 
     public var https: Bool {

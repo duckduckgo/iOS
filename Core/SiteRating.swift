@@ -46,15 +46,15 @@ public class SiteRating {
     public private (set) var trackersDetected = [DetectedTracker: Int]()
     public private (set) var trackersBlocked = [DetectedTracker: Int]()
 
-    let disconnectMeTrackers: [String: DisconnectMeTracker]
     let prevalenceStore: PrevalenceStore
     
     private let grade = Grade()
     private let cache = GradeCache.shared
+    private let parentEntity: String?
     
     public init(url: URL,
                 httpsForced: Bool = false,
-                disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
+                entityMapping: EntityMapping = EntityMapping(),
                 privacyPractices: PrivacyPractices = PrivacyPractices(),
                 prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore(),
                 protectionId: String = UUID.init().uuidString) {
@@ -64,12 +64,12 @@ public class SiteRating {
         self.protectionId = protectionId
         self.url = url
         self.httpsForced = httpsForced
-        self.disconnectMeTrackers = disconnectMeTrackers
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
+        self.parentEntity = entityMapping.findEntity(forURL: url)
         
-        let privacyPracticesScore = privacyPractices.score(for: url)
-        privacyPracticesSummary = privacyPracticesScore.summary
+        let privacyPracticesScore = privacyPractices.score(forEntity: parentEntity)
+        self.privacyPracticesSummary = privacyPracticesScore.summary
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.
@@ -156,22 +156,7 @@ public class SiteRating {
     }
 
     public var isMajorTrackerNetwork: Bool {
-        guard let domain = domain else { return false }
-        guard let entity = disconnectMeTrackers.values.first(where: {
-            guard let url = URL(string: $0.url) else { return false }
-            guard let host = url.host else { return false }
-            return host == domain || host.hasSuffix(".\(domain)")
-        }) else { return false }
-        return prevalenceStore.isMajorNetwork(named: entity.networkName)
-    }
-    
-    public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
-        let lowercasedDomain = domain.lowercased()
-        if let tracker = disconnectMeTrackers.first(where: { lowercasedDomain == $0.key || lowercasedDomain.hasSuffix(".\($0.key)") })?.value {
-            return ( tracker.networkName, tracker.category?.rawValue )
-        }
-        
-        return ( nil, nil )
+        return prevalenceStore.isMajorNetwork(named: parentEntity)
     }
     
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {

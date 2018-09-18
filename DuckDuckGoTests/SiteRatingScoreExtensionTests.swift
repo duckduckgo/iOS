@@ -61,37 +61,14 @@ class SiteRatingScoreExtensionTests: XCTestCase {
                                                                            category: .social ) ]
         
         let testee = SiteRating(url: Url.http,
-                                disconnectMeTrackers: disconnectMeTrackers,
+                                entityMapping: EntityMapping(),
+                                // disconnectMeTrackers: disconnectMeTrackers,
                                 privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS),
                                 prevalenceStore: mockPrevalenceStore)
         
         XCTAssertTrue(testee.isMajorTrackerNetwork)
     }
     
-    func testWhenNetworkNameAndCategoryExistsForUppercasedDomainTheyAreReturned() {
-        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
-                                                                           networkName: "TrickyAds",
-                                                                           category: .social ) ]
-        let testee = SiteRating(url: Url.googleNetwork,
-                                disconnectMeTrackers: disconnectMeTrackers,
-                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
-        let nameAndCategory = testee.networkNameAndCategory(forDomain: "SOMETRACKER.com")
-        XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
-        XCTAssertEqual("Social", nameAndCategory.category)
-    }
-
-    func testWhenNetworkNameAndCategoryExistsForDomainTheyAreReturned() {
-        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
-                                                                           networkName: "TrickyAds",
-                                                                           category: .social ) ]
-        let testee = SiteRating(url: Url.googleNetwork,
-                                disconnectMeTrackers: disconnectMeTrackers,
-                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
-        let nameAndCategory = testee.networkNameAndCategory(forDomain: "sometracker.com")
-        XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
-        XCTAssertEqual("Social", nameAndCategory.category)
-    }
-
     func testWhenWorseScoreIsCachedForBeforeScoreItIsUsed() {
         let scores = Grade.Scores(site: Grade.Score(grade: .d, httpsScore: 0, privacyScore: 0, score: 66, trackerScore: 0),
                                   enhanced: Grade.Score(grade: .a, httpsScore: 0, privacyScore: 0, score: 0, trackerScore: 0))

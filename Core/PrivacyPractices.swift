@@ -32,8 +32,10 @@ public class PrivacyPractices {
         self.termsOfServiceStore = termsOfServiceStore
     }
     
-    func score(for: URL) -> (score: Int, summary: Summary) {
-        return (0, .unknown)
+    func score(forEntity entity: String?) -> (score: Int, summary: Summary) {
+        guard let entity = entity else { return (0, .unknown) }
+        guard let terms = termsOfServiceStore.terms[entity] else { return (0, .unknown) }
+        return (terms.score, terms.summary)
     }
     
 }

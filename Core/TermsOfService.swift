@@ -95,7 +95,7 @@ public struct TermsOfService: Decodable {
         return normalizeScore()
     }
 
-    public func privacyPractices() -> PrivacyPractices.Summary {
+    public var summary: PrivacyPractices.Summary {
         guard !hasUnknownPractices else { return .unknown }
 
         var practices: PrivacyPractices.Summary?

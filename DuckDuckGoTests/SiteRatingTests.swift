@@ -42,18 +42,9 @@ class SiteRatingTests: XCTestCase {
                                                       blocked: true)
     }
 
-    func testWhenAssociatedUrlHasTosThenTosReturned() {
-        let tracker = DisconnectMeTracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
-        // TODO
-        // XCTAssertNotNil(testee.termsOfService)
-    }
-
-    func testWhenAssociatedDomainExistsParentUrlDomainIsReturned() {
-        let tracker = DisconnectMeTracker(url: "googlemail.com", networkName: "Google", parentUrl: URL(string: "http://google.com"))
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: tracker])
-        // TODO
-        // XCTAssertEqual("google.com", testee.associatedDomain(for: "googlemail.com"))
+    func testWhenAssociatedUrlHasPrivacyPracticesSummaryThenSummaryReturned() {
+        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
+        XCTAssertEqual(.poor, testee.privacyPracticesSummary)
     }
 
     func testWhenUrlContainHostThenInitSucceeds() {
@@ -110,19 +101,17 @@ class SiteRatingTests: XCTestCase {
 
     func testWhenUrlHasTosThenTosReturned() {
         let testee = SiteRating(url: Url.google)
-        // TODO
-        // XCTAssertNotNil(testee.termsOfService)
+        XCTAssertEqual(.poor, testee.privacyPracticesSummary)
     }
 
-    func testWhenUrlDoeNotHaveTosThenTosIsNil() {
+    func testWhenUrlDoeNotHaveTosThenPrivacyPracticesSummaryIsUnknown() {
         let testee = SiteRating(url: Url.http)
-        // TODO
-        // XCTAssertNil(testee.termsOfService)
+        XCTAssertEqual(.unknown, testee.privacyPracticesSummary)
     }
 
     func testUniqueMajorTrackersDetected() {
         let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: false)
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: DisconnectMeTracker(url: "", networkName: "")])
+        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
         testee.trackerDetected(tracker)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksDetected)
         XCTAssertEqual(0, testee.uniqueMajorTrackerNetworksBlocked)
@@ -130,7 +119,7 @@ class SiteRatingTests: XCTestCase {
 
     func testUniqueMajorTrackersBlocked() {
         let tracker = DetectedTracker(url: "googlemail.com", networkName: "Google", category: nil, blocked: true)
-        let testee = SiteRating(url: Url.googlemail, disconnectMeTrackers: [tracker.url: DisconnectMeTracker(url: "", networkName: "")])
+        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
         testee.trackerDetected(tracker)
         XCTAssertEqual(1, testee.uniqueMajorTrackerNetworksBlocked)
     }
@@ -162,4 +151,18 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(.unencrypted, testee.encryptionType)
     }
 
+}
+
+private class MockEntityMapping: EntityMapping {
+    
+    private var entity: String?
+    
+    init(entity: String?) {
+        self.entity = entity
+    }
+    
+    override func findEntity(forURL url: URL) -> String? {
+        return entity
+    }
+    
 }

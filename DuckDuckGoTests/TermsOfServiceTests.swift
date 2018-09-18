@@ -24,22 +24,22 @@ class TermsOfServiceTests: XCTestCase {
 
     func testWhenInitWithNoClassTerribleScoreAndGoodAndBadReasonsThenPracticesAreMixed() {
         let testee = TermsOfService(classification: nil, score: 100, goodReasons: [ "goodReason" ], badReasons: [ "badReason" ])
-        XCTAssertEqual(testee.privacyPractices(), .mixed)
+        XCTAssertEqual(testee.summary, .mixed)
     }
 
     func testWhenInitWithNoClassExcellentScoreAndGoodAndBadReasonsThenPracticesAreMixed() {
         let testee = TermsOfService(classification: nil, score: -100, goodReasons: [ "goodReason" ], badReasons: [ "badReason" ])
-        XCTAssertEqual(testee.privacyPractices(), .mixed)
+        XCTAssertEqual(testee.summary, .mixed)
     }
 
     func testWhenInitWithAClassificationButNoTermsPracticesAreUnknown() {
         let testee = TermsOfService(classification: .a, score: 10, goodReasons: [], badReasons: [])
-        XCTAssertEqual(testee.privacyPractices(), .unknown)
+        XCTAssertEqual(testee.summary, .unknown)
     }
 
     func testWhenInitWithNoClassificationPrivacyPracticesAreUnknown() {
         let testee = TermsOfService(classification: nil, score: 10, goodReasons: [], badReasons: [])
-        XCTAssertEqual(testee.privacyPractices(), .unknown)
+        XCTAssertEqual(testee.summary, .unknown)
     }
 
     func testWhenInitWithNoClassificationAndScoreAppropriatePrivacyPracticesAreReturned() {
@@ -51,7 +51,7 @@ class TermsOfServiceTests: XCTestCase {
 
         for params in scores {
             let testee = TermsOfService(classification: nil, score: params.key, goodReasons: [ "something" ], badReasons: [])
-            XCTAssertEqual(params.value, testee.privacyPractices())
+            XCTAssertEqual(params.value, testee.summary)
         }
 
     }
@@ -67,7 +67,7 @@ class TermsOfServiceTests: XCTestCase {
 
         for params in classificationScores {
             let testee = TermsOfService(classification: params.key, score: 10, goodReasons: [], badReasons: [ "something" ])
-            XCTAssertEqual(params.value, testee.privacyPractices())
+            XCTAssertEqual(params.value, testee.summary)
         }
 
     }
@@ -83,7 +83,7 @@ class TermsOfServiceTests: XCTestCase {
 
         for params in classificationScores {
             let testee = TermsOfService(classification: params.key, score: 10, goodReasons: [ "something" ], badReasons: [])
-            XCTAssertEqual(params.value, testee.privacyPractices())
+            XCTAssertEqual(params.value, testee.summary)
         }
 
     }

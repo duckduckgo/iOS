@@ -21,12 +21,6 @@ import Foundation
 
 public class SiteRating {
 
-    struct Constants {
-
-        static let majorNetworkPrevalence = 7.0
-
-    }
-
     public enum EncryptionType {
         case unencrypted, mixed, encrypted, forced
     }
@@ -138,7 +132,7 @@ public class SiteRating {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
 
-        let entity = tracker.networkName ?? tracker.domain ?? tracker.url
+        let entity = tracker.networkNameForDisplay
 
         if tracker.blocked {
             let blockCount = trackersBlocked[tracker] ?? 0
@@ -191,7 +185,7 @@ public class SiteRating {
     }
 
     private func majorNetworkFilter(trackerDetected: (DetectedTracker, Int)) -> Bool {
-        return prevalenceStore.prevalences[trackerDetected.0.networkName ?? ""] ?? 0.0 > Constants.majorNetworkPrevalence
+        return prevalenceStore.isMajorNetwork(named: trackerDetected.0.networkName)
     }
 
 }

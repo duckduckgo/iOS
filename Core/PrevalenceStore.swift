@@ -23,12 +23,15 @@ public protocol PrevalenceStore {
 
     var prevalences: [String: Double] { get }
 
+    func isMajorNetwork(named: String?) -> Bool
+    
 }
 
 public class EmbeddedPrevalenceStore: PrevalenceStore {
 
     struct Constants {
         static let fileName = "prevalence.json"
+        static let majorNetworkPrevalence = 7.0
     }
 
     public private(set) var prevalences: [String: Double]
@@ -43,6 +46,10 @@ public class EmbeddedPrevalenceStore: PrevalenceStore {
             fatalError("Unable to json decode \(Constants.fileName)")
         }
         self.prevalences = prevalences
+    }
+    
+    public func isMajorNetwork(named: String?) -> Bool {
+        return prevalences[named ?? ""] ?? 0.0 > Constants.majorNetworkPrevalence
     }
 
 }

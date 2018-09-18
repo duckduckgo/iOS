@@ -41,6 +41,10 @@ public struct DetectedTracker {
     public var isIpTracker: Bool {
         return URL.isValidIpHost(domain ?? "")
     }
+    
+    public var networkNameForDisplay: String {
+        return networkName ?? domain ?? url
+    }
 
 }
 

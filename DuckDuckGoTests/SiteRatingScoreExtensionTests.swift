@@ -106,18 +106,8 @@ private struct MockPrevalenceStore: PrevalenceStore {
 
     var prevalences: [String: Double]
 
-}
-
-private class MockMajorTrackerNetworkStore: InMemoryMajorNetworkStore {
-
-    override init(networks: [MajorTrackerNetwork] = []) {
-        super.init(networks: networks)
+    func isMajorNetwork(named: String?) -> Bool {
+        return false
     }
-
-    func adding(network: MajorTrackerNetwork) -> MajorTrackerNetworkStore {
-        var networks = self.networks
-        networks.append(network)
-        return MockMajorTrackerNetworkStore(networks: networks)
-    }
-
+    
 }

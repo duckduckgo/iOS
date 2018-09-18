@@ -158,10 +158,12 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 class SiteRatingTrackerNetworkSectionBuilder {
 
+    let prevalenceStore: PrevalenceStore
     let trackers: [DetectedTracker: Int]
 
-    init(trackers: [DetectedTracker: Int]) {
+    init(trackers: [DetectedTracker: Int], prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()) {
         self.trackers = trackers
+        self.prevalenceStore = prevalenceStore
     }
 
     func build() -> [PrivacyProtectionTrackerNetworksController.Section] {
@@ -175,10 +177,12 @@ class SiteRatingTrackerNetworkSectionBuilder {
         let trackers = trackers.compactMap({ $0.key }).filter({ $0.domain != nil }).sorted(by: { $0.domain! < $1.domain! })
 
         // group by tracker types, sorted appropriately
-        let majorTrackers = trackers.filter({ $0.isMajor(majorTrackerNetworksStore) })
-            .sorted(by: { $0.percentage(majorTrackerNetworksStore) > $1.percentage(majorTrackerNetworksStore) })
+        let majorTrackers = trackers.filter({ prevalenceStore.isMajorNetwork(named: $0.networkName) })
+            .sorted(by: { $0.prevalence(prevalenceStore) > $1.prevalence(prevalenceStore) })
+        
         let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil &&
-            !$0.isMajor(majorTrackerNetworksStore) }).sorted(by: { $0.networkName! < $1.networkName! })
+            !prevalenceStore.isMajorNetwork(named: $0.networkName) }).sorted(by: { $0.networkName! < $1.networkName! })
+        
         let unknownTrackers = trackers.filter({ $0.networkName == nil })
 
         for tracker in majorTrackers + nonMajorKnownTrackers + unknownTrackers {
@@ -229,4 +233,12 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
         }
     }
 
+}
+
+private extension DetectedTracker {
+    
+    func prevalence(_ prevalenceStore: PrevalenceStore) -> Double {
+        return prevalenceStore.prevalences[networkName ?? ""] ?? 0.0
+    }
+    
 }

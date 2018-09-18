@@ -43,7 +43,7 @@ class TermsOfServiceTests: XCTestCase {
     }
 
     func testWhenInitWithNoClassificationAndScoreAppropriatePrivacyPracticesAreReturned() {
-        let scores: [Int: TermsOfService.PrivacyPractices] = [
+        let scores: [Int: PrivacyPractices.Summary] = [
             -100: .good,
                0: .mixed,
              100: .poor
@@ -57,7 +57,7 @@ class TermsOfServiceTests: XCTestCase {
     }
 
     func testWhenInitWithClassificationAndBadReasonsAppropriatePrivacyPracticsReturned() {
-        let classificationScores: [TermsOfService.Classification: TermsOfService.PrivacyPractices] = [
+        let classificationScores: [TermsOfService.Classification: PrivacyPractices.Summary] = [
             .a: .good,
             .b: .mixed,
             .c: .poor,
@@ -73,7 +73,7 @@ class TermsOfServiceTests: XCTestCase {
     }
 
     func testWhenInitWithClassificationAppropriatePrivacyPracticsReturned() {
-        let classificationScores: [TermsOfService.Classification: TermsOfService.PrivacyPractices] = [
+        let classificationScores: [TermsOfService.Classification: PrivacyPractices.Summary] = [
             .a: .good,
             .b: .mixed,
             .c: .poor,

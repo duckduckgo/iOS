@@ -22,7 +22,7 @@ import Core
 
 class PrivacyProtectionPracticesController: UIViewController {
 
-    let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
+    let privacyPracticesImages: [PrivacyPractices.Summary: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Hero Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Hero Privacy Bad On"),
         .mixed: #imageLiteral(resourceName: "PP Hero Privacy Good Off"),
@@ -77,7 +77,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     }
 
     private func updateImageIcon() {
-        iconImage.image = privacyPracticesImages[siteRating.privacyPractices()]
+        iconImage.image = privacyPracticesImages[siteRating.privacyPracticesSummary()]
     }
 
     private func updateDomainLabel() {

@@ -50,7 +50,7 @@ public struct TermsOfService: Decodable {
 
     struct Lookups {
 
-        static let classificationAsPractices: [Classification: PrivacyPractices] = [
+        static let classificationAsPractices: [Classification: PrivacyPractices.Summary] = [
             .a: .good,
             .b: .mixed,
             .c: .poor,
@@ -66,7 +66,7 @@ public struct TermsOfService: Decodable {
             .e: 2
             ]
 
-        static let derivedScoreAsPractices: [Int: PrivacyPractices] = [
+        static let derivedScoreAsPractices: [Int: PrivacyPractices.Summary] = [
             -1: .good,
             0: .mixed,
             1: .poor
@@ -95,10 +95,10 @@ public struct TermsOfService: Decodable {
         return normalizeScore()
     }
 
-    public func privacyPractices() -> PrivacyPractices {
+    public func privacyPractices() -> PrivacyPractices.Summary {
         guard !hasUnknownPractices else { return .unknown }
 
-        var practices: PrivacyPractices?
+        var practices: PrivacyPractices.Summary?
         if let classification = classification {
             practices = Lookups.classificationAsPractices[classification]
         } else if !goodReasons.isEmpty && !badReasons.isEmpty {
@@ -133,12 +133,6 @@ public struct TermsOfService: Decodable {
             }
             self = classification
         }
-    }
-
-    public enum PrivacyPractices {
-
-        case poor, mixed, good, unknown
-
     }
 
 }

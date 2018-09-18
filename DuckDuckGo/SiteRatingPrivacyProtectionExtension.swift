@@ -22,7 +22,7 @@ import Core
 
 extension SiteRating {
     
-    static let practicesText: [TermsOfService.PrivacyPractices: String] = [
+    static let practicesText: [PrivacyPractices.Summary: String] = [
         .unknown: UserText.privacyProtectionTOSUnknown,
         .good: UserText.privacyProtectionTOSGood,
         .mixed: UserText.privacyProtectionTOSMixed,
@@ -52,14 +52,14 @@ extension SiteRating {
     }
     
     func privacyPracticesText() -> String? {
-        return SiteRating.practicesText[privacyPractices()]
+        return SiteRating.practicesText[privacyPracticesSummary()]
     }
     
-    func privacyPractices() -> TermsOfService.PrivacyPractices {
+    func privacyPracticesSummary() -> PrivacyPractices.Summary {
         return .unknown
-        // TODO
-//        guard let termsOfService = termsOfService else { return .unknown }
-//        return termsOfService.privacyPractices()
+//        // TODO
+////        guard let termsOfService = termsOfService else { return .unknown }
+////        return termsOfService.privacyPractices()
     }
     
     func majorNetworksText(contentBlocker: ContentBlockerConfigurationStore) -> String {

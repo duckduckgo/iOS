@@ -74,6 +74,7 @@
 		85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */; };
 		85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */; };
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
+		85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D222151221C00A0CE28 /* PrivacyPractices.swift */; };
 		8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7B212EF4A200D0BD74 /* AppRatingPrompt.swift */; };
 		8528AE7E212EF5FF00D0BD74 /* AppRatingPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */; };
 		8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7F212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld */; };
@@ -529,6 +530,7 @@
 		85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetworkLeaderboard.xcdatamodel; sourceTree = "<group>"; };
 		85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionNetworkLeaderboardController.swift; sourceTree = "<group>"; };
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
+		85267D222151221C00A0CE28 /* PrivacyPractices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPractices.swift; sourceTree = "<group>"; };
 		8528AE7B212EF4A200D0BD74 /* AppRatingPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPrompt.swift; sourceTree = "<group>"; };
 		8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPromptTests.swift; sourceTree = "<group>"; };
 		8528AE80212F15D600D0BD74 /* AppRatingPrompt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppRatingPrompt.xcdatamodel; sourceTree = "<group>"; };
@@ -1740,6 +1742,7 @@
 			isa = PBXGroup;
 			children = (
 				859C5FBB214971BA00E2A43D /* Grade.swift */,
+				85267D222151221C00A0CE28 /* PrivacyPractices.swift */,
 				F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */,
 				F14513561F46388F00710C46 /* SiteRating.swift */,
 				F14484691F39E3B500F6AD2D /* SiteRatingScoreExtension.swift */,
@@ -2910,6 +2913,7 @@
 				85C11E3E20904B8400BFFEB4 /* VariantManager.swift in Sources */,
 				F16956401ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift in Sources */,
 				F1075C921E9EF827006BE8A8 /* UserDefaultsExtension.swift in Sources */,
+				85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */,
 				F1D796F21E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift in Sources */,
 				F18326871E60542100240060 /* JavascriptLoader.swift in Sources */,
 				8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */,

@@ -62,7 +62,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         
         let testee = SiteRating(url: Url.http,
                                 disconnectMeTrackers: disconnectMeTrackers,
-                                termsOfServiceStore: classATOS,
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS),
                                 prevalenceStore: mockPrevalenceStore)
         
         XCTAssertTrue(testee.isMajorTrackerNetwork)
@@ -72,7 +72,9 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
                                                                            networkName: "TrickyAds",
                                                                            category: .social ) ]
-        let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS)
+        let testee = SiteRating(url: Url.googleNetwork,
+                                disconnectMeTrackers: disconnectMeTrackers,
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
         let nameAndCategory = testee.networkNameAndCategory(forDomain: "SOMETRACKER.com")
         XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
         XCTAssertEqual("Social", nameAndCategory.category)
@@ -82,7 +84,9 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
                                                                            networkName: "TrickyAds",
                                                                            category: .social ) ]
-        let testee = SiteRating(url: Url.googleNetwork, disconnectMeTrackers: disconnectMeTrackers, termsOfServiceStore: classATOS)
+        let testee = SiteRating(url: Url.googleNetwork,
+                                disconnectMeTrackers: disconnectMeTrackers,
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
         let nameAndCategory = testee.networkNameAndCategory(forDomain: "sometracker.com")
         XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
         XCTAssertEqual("Social", nameAndCategory.category)
@@ -94,7 +98,7 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         
         _ = GradeCache.shared.add(url: Url.https, scores: scores)
 
-        let testee = SiteRating(url: Url.https, termsOfServiceStore: MockTermsOfServiceStore())
+        let testee = SiteRating(url: Url.https, privacyPractices: PrivacyPractices(termsOfServiceStore: MockTermsOfServiceStore()))
         let site = testee.scores.site
         XCTAssertEqual(66, site.score)
     }

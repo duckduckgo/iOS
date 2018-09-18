@@ -28,7 +28,7 @@ public class PrivacyPractices {
     
     private let termsOfServiceStore: TermsOfServiceStore
     
-    init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()) {
+    public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()) {
         self.termsOfServiceStore = termsOfServiceStore
     }
     

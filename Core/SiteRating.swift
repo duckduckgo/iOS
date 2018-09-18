@@ -39,6 +39,7 @@ public class SiteRating {
     public let url: URL
     public let protectionId: String
     public let httpsForced: Bool
+    public let privacyPracticesSummary: PrivacyPractices.Summary
 
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
@@ -47,15 +48,14 @@ public class SiteRating {
 
     let disconnectMeTrackers: [String: DisconnectMeTracker]
     let prevalenceStore: PrevalenceStore
-
-    private let termsOfServiceStore: TermsOfServiceStore
+    
     private let grade = Grade()
     private let cache = GradeCache.shared
     
     public init(url: URL,
                 httpsForced: Bool = false,
                 disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
-                termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(),
+                privacyPractices: PrivacyPractices = PrivacyPractices(),
                 prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore(),
                 protectionId: String = UUID.init().uuidString) {
 
@@ -65,17 +65,17 @@ public class SiteRating {
         self.url = url
         self.httpsForced = httpsForced
         self.disconnectMeTrackers = disconnectMeTrackers
-        self.termsOfServiceStore = termsOfServiceStore
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
-        self.grade.https = url.isHttps()
+        
+        let privacyPracticesScore = privacyPractices.score(for: url)
+        privacyPracticesSummary = privacyPracticesScore.summary
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.
         self.grade.httpsAutoUpgrade = url.isHttps()
-
-        // TODO extract from TOSDR
-        self.grade.privacyScore = 0
+        self.grade.https = url.isHttps()
+        self.grade.privacyScore = privacyPracticesScore.score
     }
 
     public var https: Bool {

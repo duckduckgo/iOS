@@ -46,9 +46,9 @@ public class SiteRating {
     public private (set) var trackersBlocked = [DetectedTracker: Int]()
 
     let disconnectMeTrackers: [String: DisconnectMeTracker]
-    
+    let prevalenceStore: PrevalenceStore
+
     private let termsOfServiceStore: TermsOfServiceStore
-    private let prevalenceStore: PrevalenceStore
     private let grade = Grade()
     private let cache = GradeCache.shared
     
@@ -68,15 +68,14 @@ public class SiteRating {
         self.termsOfServiceStore = termsOfServiceStore
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
-
         self.grade.https = url.isHttps()
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
-        //  then we assume auto upgrade is available in terms of the score.
+        //  then we assume auto upgrade is available for the purpose of grade scoring.
         self.grade.httpsAutoUpgrade = url.isHttps()
 
         // TODO extract from TOSDR
-        self.grade.privacyScore = termsOfServiceScore
+        self.grade.privacyScore = 0
     }
 
     public var https: Bool {
@@ -115,17 +114,6 @@ public class SiteRating {
 
     public var containsIpTracker: Bool {
         return trackersDetected.contains(where: { $0.key.isIpTracker })
-    }
-
-    public var termsOfService: TermsOfService? {
-        guard let domain = self.domain else { return nil }
-        if let tos = termsOfServiceStore.terms.first( where: { domain.hasSuffix($0.0) })?.value {
-            return tos
-        }
-
-        // if not TOS found for this site use the parent's (e.g. google.co.uk should use google.com)
-        let storeDomain = associatedDomain(for: domain) ?? domain
-        return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) })?.value
     }
 
     public func trackerDetected(_ tracker: DetectedTracker) {
@@ -167,11 +155,25 @@ public class SiteRating {
         return trackersBlocked.filter(majorNetworkFilter)
     }
 
-    public func associatedDomain(for domain: String) -> String? {
-        let tracker = disconnectMeTrackers.first( where: { domain.hasSuffix($0.value.url) })?.value
-        return tracker?.parentUrl?.host
+    public var isMajorTrackerNetwork: Bool {
+        guard let domain = domain else { return false }
+        guard let entity = disconnectMeTrackers.values.first(where: {
+            guard let url = URL(string: $0.url) else { return false }
+            guard let host = url.host else { return false }
+            return host == domain || host.hasSuffix(".\(domain)")
+        }) else { return false }
+        return prevalenceStore.isMajorNetwork(named: entity.networkName)
     }
-
+    
+    public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
+        let lowercasedDomain = domain.lowercased()
+        if let tracker = disconnectMeTrackers.first(where: { lowercasedDomain == $0.key || lowercasedDomain.hasSuffix(".\($0.key)") })?.value {
+            return ( tracker.networkName, tracker.category?.rawValue )
+        }
+        
+        return ( nil, nil )
+    }
+    
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         let trackers = trackers
             .filter(majorNetworkFilter)

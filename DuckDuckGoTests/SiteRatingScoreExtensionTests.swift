@@ -53,6 +53,21 @@ class SiteRatingScoreExtensionTests: XCTestCase {
         GradeCache.shared.reset()
     }
 
+    func testWhenUrlBelongsToMajorNetworkThenIsMajorNetworkReturnsTrue() {
+        let mockPrevalenceStore = MockPrevalenceStore(prevalences: ["TrickyAds": 100.0], major: true)
+        
+        let disconnectMeTrackers = [Url.http.host!: DisconnectMeTracker(url: Url.http.absoluteString,
+                                                                           networkName: "TrickyAds",
+                                                                           category: .social ) ]
+        
+        let testee = SiteRating(url: Url.http,
+                                disconnectMeTrackers: disconnectMeTrackers,
+                                termsOfServiceStore: classATOS,
+                                prevalenceStore: mockPrevalenceStore)
+        
+        XCTAssertTrue(testee.isMajorTrackerNetwork)
+    }
+    
     func testWhenNetworkNameAndCategoryExistsForUppercasedDomainTheyAreReturned() {
         let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
                                                                            networkName: "TrickyAds",
@@ -105,9 +120,10 @@ private class MockTermsOfServiceStore: TermsOfServiceStore {
 private struct MockPrevalenceStore: PrevalenceStore {
 
     var prevalences: [String: Double]
+    var major: Bool
 
     func isMajorNetwork(named: String?) -> Bool {
-        return false
+        return major
     }
     
 }

@@ -24,58 +24,8 @@ import Foundation
 
 public extension SiteRating {
 
-//    func siteScore() -> ( before: Int, after: Int ) {
-//
-//        var afterScore = 0
-//        var beforeScore = 0
-//
-//        let cache = SiteRatingCache.shared
-//        if !cache.add(url: url, score: beforeScore) {
-//            beforeScore = cache.get(url: url)!
-//        }
-//
-//        return ( beforeScore, afterScore )
-//    }
-//
-//    func siteGrade() -> ( before: SiteGrade, after: SiteGrade ) {
-//        let score = siteScore()
-//        return ( SiteGrade.grade(fromScore: score.before), SiteGrade.grade(fromScore: score.after ))
-//    }
-
-    private var httpsScore: Int {
-        return https ? -1 : 0
-    }
-
-//    private var hasTrackerInMajorNetworkScore: Int {
-//        return trackersDetected.keys.first(where: { $0.inMajorNetwork(disconnectMeTrackers, majorTrackerNetworkStore) }) != nil ? 1 : 0
-//    }
-
-//    private var isMajorTrackerScore: Int {
-//        guard let domain = domain else { return 0 }
-//        if let network = majorTrackerNetworkStore.network(forName: domain) { return network.score }
-//        if let network = majorTrackerNetworkStore.network(forDomain: domain) { return network.score }
-//        return 0
-//    }
-
-    var isMajorTrackerNetwork: Bool {
-        // Get the entity for the currect domain
-        // Check entity prevalence
-        return false
-    }
-
-    private var ipTrackerScore: Int {
-        return containsIpTracker ? 1 : 0
-    }
-
-    public var termsOfServiceScore: Int {
-        guard let termsOfService = termsOfService else {
-            return 0
-        }
-
-        return termsOfService.derivedScore
-    }
-
     public var scoreDict: [String: Any] {
+        // TODO scoreDict
 //        let grade = siteGrade()
 //        return [
 //            "score": [
@@ -93,26 +43,6 @@ public extension SiteRating {
 //            ]
 //        ]
         return [:]
-    }
-
-    public var scoreDescription: String {
-        guard let json = try? JSONSerialization.data(withJSONObject: scoreDict, options: .prettyPrinted) else {
-            return "{}"
-        }
-        return String(data: json, encoding: .utf8)!
-    }
-
-    public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
-        let lowercasedDomain = domain.lowercased()
-        if let tracker = disconnectMeTrackers.first(where: { lowercasedDomain == $0.key || lowercasedDomain.hasSuffix(".\($0.key)") })?.value {
-            return ( tracker.networkName, tracker.category?.rawValue )
-        }
-
-//        if let majorNetwork = majorTrackerNetworkStore.network(forDomain: lowercasedDomain) {
-//            return ( majorNetwork.name, nil )
-//        }
-
-        return ( nil, nil )
     }
 
 }

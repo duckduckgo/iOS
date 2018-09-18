@@ -159,11 +159,9 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 class SiteRatingTrackerNetworkSectionBuilder {
 
     let trackers: [DetectedTracker: Int]
-    let majorTrackerNetworksStore: MajorTrackerNetworkStore
 
-    init(trackers: [DetectedTracker: Int], majorTrackerNetworksStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore()) {
+    init(trackers: [DetectedTracker: Int]) {
         self.trackers = trackers
-        self.majorTrackerNetworksStore = majorTrackerNetworksStore
     }
 
     func build() -> [PrivacyProtectionTrackerNetworksController.Section] {
@@ -229,27 +227,6 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
         } else {
             iconImage.image = nil
         }
-    }
-
-}
-
-fileprivate extension DetectedTracker {
-
-    var networkNameForDisplay: String {
-        guard !isIpTracker else { return UserText.ppTrackerNetworkUnknown }
-        guard let networkName = networkName else { return domain! }
-        return networkName
-    }
-
-    func isMajor(_ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Bool {
-        guard let networkName = networkName else { return false }
-        return majorTrackerNetworkStore.network(forName: networkName) != nil
-    }
-
-    func percentage(_ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Int {
-        guard let networkName = networkName else { return 0 }
-        guard let majorNetwork = majorTrackerNetworkStore.network(forName: networkName) else { return 0 }
-        return majorNetwork.percentageOfPages
     }
 
 }

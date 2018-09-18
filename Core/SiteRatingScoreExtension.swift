@@ -161,12 +161,3 @@ public class GradeCache {
     }
 }
 
-fileprivate extension DetectedTracker {
-
-    func inMajorNetwork(_ disconnectMeTrackers: [String: DisconnectMeTracker], _ majorTrackerNetworkStore: MajorTrackerNetworkStore) -> Bool {
-        guard let domain = domain else { return false }
-        guard let networkName = disconnectMeTrackers.first(where: { domain.hasSuffix($0.key) })?.value.networkName else { return false }
-        return majorTrackerNetworkStore.network(forName: networkName) != nil
-    }
-
-}

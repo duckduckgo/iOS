@@ -55,17 +55,10 @@ class SiteRatingScoreExtensionTests: XCTestCase {
 
     func testWhenUrlBelongsToMajorNetworkThenIsMajorNetworkReturnsTrue() {
         let mockPrevalenceStore = MockPrevalenceStore(prevalences: ["TrickyAds": 100.0], major: true)
-        
-        let disconnectMeTrackers = [Url.http.host!: DisconnectMeTracker(url: Url.http.absoluteString,
-                                                                           networkName: "TrickyAds",
-                                                                           category: .social ) ]
-        
         let testee = SiteRating(url: Url.http,
                                 entityMapping: EntityMapping(),
-                                // disconnectMeTrackers: disconnectMeTrackers,
                                 privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS),
                                 prevalenceStore: mockPrevalenceStore)
-        
         XCTAssertTrue(testee.isMajorTrackerNetwork)
     }
     

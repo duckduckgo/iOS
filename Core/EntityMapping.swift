@@ -19,26 +19,65 @@
 
 import Foundation
 
-public protocol EntityMappingStorage {
-    
-}
-
 public class EntityMapping {
     
-    private let entityMappingStorage: EntityMappingStorage
+    private struct Entity: Decodable {
+        
+        let properties: [String]
+        let resources: [String]
+        
+    }
     
-    public init(entityMappingStorage: EntityMappingStorage = DownloadedEntityMappingStorage()) {
-        self.entityMappingStorage = entityMappingStorage
+    private let entities: [String: String]
+    
+    public init(store: EntityMappingStore = DownloadedEntityMappingStore()) {
+        
+        if let data = store.load(), let entities = try? EntityMapping.process(data) {
+            self.entities = entities
+        } else {
+            self.entities = [:]
+        }
+        
     }
     
     func findEntity(forURL url: URL) -> String? {
+        guard let host = url.host else { return nil }
+        var parts = host.split(separator: ".")
+        
+        while !parts.isEmpty {
+            if let entity = entities[parts.joined(separator: ".")] { return entity }
+            parts = Array(parts.dropFirst())
+        }
+        
         return nil
     }
     
-}
-
-public class DownloadedEntityMappingStorage: EntityMappingStorage {
+    private static func process(_ data: Data) throws -> [String: String] {
+        if let decoded = decode(data) {
+            var entities = [String: String]()
+            
+            decoded.forEach {
+                let entityName = $0.key
+                $0.value.properties.forEach {
+                    entities[$0] = entityName
+                }
+                $0.value.resources.forEach {
+                    entities[$0] = entityName
+                }
+            }
+            
+            return entities
+        }
+        return [:]
+    }
     
-    public init() { }
+    private static func decode(_ data: Data) -> [String: Entity]? {
+        do {
+            return try JSONDecoder().decode([String: Entity].self, from: data)
+        } catch {
+            Logger.log(items: error)
+        }
+        return nil
+    }
     
 }

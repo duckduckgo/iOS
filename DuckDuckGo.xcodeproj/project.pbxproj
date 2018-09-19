@@ -76,6 +76,9 @@
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
 		85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D222151221C00A0CE28 /* PrivacyPractices.swift */; };
 		85267D2521513FC700A0CE28 /* EntityMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2421513FC700A0CE28 /* EntityMapping.swift */; };
+		85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */; };
+		85267D29215273F500A0CE28 /* EntityMappingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D28215273F500A0CE28 /* EntityMappingStore.swift */; };
+		85267D2B215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85267D2A215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift */; };
 		8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7B212EF4A200D0BD74 /* AppRatingPrompt.swift */; };
 		8528AE7E212EF5FF00D0BD74 /* AppRatingPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */; };
 		8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8528AE7F212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld */; };
@@ -533,6 +536,9 @@
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
 		85267D222151221C00A0CE28 /* PrivacyPractices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPractices.swift; sourceTree = "<group>"; };
 		85267D2421513FC700A0CE28 /* EntityMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMapping.swift; sourceTree = "<group>"; };
+		85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMappingTests.swift; sourceTree = "<group>"; };
+		85267D28215273F500A0CE28 /* EntityMappingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMappingStore.swift; sourceTree = "<group>"; };
+		85267D2A215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedEntityMappingStoreTests.swift; sourceTree = "<group>"; };
 		8528AE7B212EF4A200D0BD74 /* AppRatingPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPrompt.swift; sourceTree = "<group>"; };
 		8528AE7D212EF5FF00D0BD74 /* AppRatingPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingPromptTests.swift; sourceTree = "<group>"; };
 		8528AE80212F15D600D0BD74 /* AppRatingPrompt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppRatingPrompt.xcdatamodel; sourceTree = "<group>"; };
@@ -1404,6 +1410,7 @@
 		85FAAE64214EFE40006AD5DA /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				85267D2A215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift */,
 				85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */,
 			);
 			name = Store;
@@ -1526,6 +1533,7 @@
 		F11E231D1ED3B5C500523BC9 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */,
 				859C5FB72147E6CE00E2A43D /* grade-cases.json */,
 				859C5FB92147E6E200E2A43D /* GradeTests.swift */,
 				F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */,
@@ -1793,6 +1801,7 @@
 				85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */,
 				830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */,
 				83D306A31F6D500B00ED7CE2 /* tosdr.json */,
+				85267D28215273F500A0CE28 /* EntityMappingStore.swift */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -2818,6 +2827,7 @@
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
+				85267D2721526E2F00A0CE28 /* EntityMappingTests.swift in Sources */,
 				F165B8FD1EBBF055004496FC /* OnboaridingViewControllerTests.swift in Sources */,
 				85C271E61FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift in Sources */,
 				833B46FF1F6CB7D4001ECFEC /* TermsOfServiceTests.swift in Sources */,
@@ -2849,6 +2859,7 @@
 				8528AE7E212EF5FF00D0BD74 /* AppRatingPromptTests.swift in Sources */,
 				F14513591F4664E900710C46 /* SiteRatingTests.swift in Sources */,
 				857EEB7120934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift in Sources */,
+				85267D2B215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift in Sources */,
 				85124C13201F5B4900288070 /* SurrogateTests.swift in Sources */,
 				F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */,
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
@@ -2934,6 +2945,7 @@
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
 				F143C3271E4A9A0E00CFDE3A /* Logger.swift in Sources */,
 				F143C32E1E4A9A4800CFDE3A /* RoundedRectangleView.swift in Sources */,
+				85267D29215273F500A0CE28 /* EntityMappingStore.swift in Sources */,
 				855D914F206563A000C4B448 /* TLD.swift in Sources */,
 				85267D2521513FC700A0CE28 /* EntityMapping.swift in Sources */,
 				F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */,

@@ -42,8 +42,12 @@ class SiteRatingTests: XCTestCase {
                                                       blocked: true)
     }
 
-    func testWhenAssociatedUrlHasPrivacyPracticesSummaryThenSummaryReturned() {
-        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
+    func testWhenUrlHasTosThenTosReturned() {
+        let term = TermsOfService(classification: .e, score: -100, goodReasons: [], badReasons: [ "bad reason" ])
+        let tosdrStore = MockTermsOfServiceStore(terms: ["google.com": term ])
+        let entityMapping = MockEntityMapping(entity: "Google")
+        let privacyPractices = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMaping: entityMapping)
+        let testee = SiteRating(url: Url.googlemail, entityMapping: entityMapping, privacyPractices: privacyPractices)
         XCTAssertEqual(.poor, testee.privacyPracticesSummary)
     }
 
@@ -97,11 +101,6 @@ class SiteRatingTests: XCTestCase {
         XCTAssertEqual(testee.uniqueTrackersDetected, 1)
         XCTAssertEqual(testee.totalTrackersBlocked, 0)
         XCTAssertEqual(testee.uniqueTrackersBlocked, 0)
-    }
-
-    func testWhenUrlHasTosThenTosReturned() {
-        let testee = SiteRating(url: Url.google)
-        XCTAssertEqual(.poor, testee.privacyPracticesSummary)
     }
 
     func testWhenUrlDoeNotHaveTosThenPrivacyPracticesSummaryIsUnknown() {
@@ -164,5 +163,11 @@ private class MockEntityMapping: EntityMapping {
     override func findEntity(forURL url: URL) -> String? {
         return entity
     }
+    
+}
+
+private struct MockTermsOfServiceStore: TermsOfServiceStore {
+    
+    var terms:[String : TermsOfService]
     
 }

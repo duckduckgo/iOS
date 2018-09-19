@@ -21,21 +21,53 @@ import Foundation
 
 /// The main interface for privacy practices.  Currently uses TOSDR as its data source.
 public class PrivacyPractices {
-
+    
     public enum Summary {
         case poor, mixed, good, unknown
     }
     
-    private let termsOfServiceStore: TermsOfServiceStore
-    
-    public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()) {
-        self.termsOfServiceStore = termsOfServiceStore
+    public struct EntityScore {
+        
+        let score: Int
+        let summary: Summary
+        
     }
     
-    func score(forEntity entity: String?) -> (score: Int, summary: Summary) {
-        guard let entity = entity else { return (0, .unknown) }
-        guard let terms = termsOfServiceStore.terms[entity] else { return (0, .unknown) }
-        return (terms.score, terms.summary)
+    struct Constants {
+        static let unknown = EntityScore(score: 0, summary: .unknown)
+    }
+
+    private let tld: TLD
+    private let terms: [String: TermsOfService]
+    
+    public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), entityMaping: EntityMapping = EntityMapping()) {
+        
+        let tld = TLD()
+        var terms = [String: TermsOfService]()
+        
+        termsOfServiceStore.terms.forEach {
+            guard let url = URL(string: "http://\($0.key)") else { return }
+            if let entity = entityMaping.findEntity(forURL: url) {
+                terms[entity] = $0.value
+            }
+            
+            if let domain = tld.domain(url.host) {
+                terms[domain] = $0.value
+            }
+        }
+        
+        self.tld = tld
+        self.terms = terms
+    }
+    
+    func score(forEntity entity: String?) -> EntityScore {
+        guard let entity = entity else { return Constants.unknown }
+        if let term = terms[entity] {
+            return EntityScore(score: term.score, summary: term.summary)
+        }
+        guard let domain = tld.domain(entity) else { return Constants.unknown }
+        guard let term = terms[domain] else { return Constants.unknown }
+        return EntityScore(score: term.score, summary: term.summary)
     }
     
 }

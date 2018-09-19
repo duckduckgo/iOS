@@ -23,8 +23,8 @@ public class EntityMapping {
     
     private struct Entity: Decodable {
         
-        let properties: [String]
-        let resources: [String]
+        let properties: [String]?
+        let resources: [String]?
         
     }
     
@@ -58,10 +58,10 @@ public class EntityMapping {
             
             decoded.forEach {
                 let entityName = $0.key
-                $0.value.properties.forEach {
+                $0.value.properties?.forEach {
                     entities[$0] = entityName
                 }
-                $0.value.resources.forEach {
+                $0.value.resources?.forEach {
                     entities[$0] = entityName
                 }
             }

@@ -40,7 +40,8 @@ public class SiteRating {
     public let protectionId: String
     public let httpsForced: Bool
     public let privacyPracticesSummary: PrivacyPractices.Summary
-
+    public let isMajorTrackerNetwork: Bool
+    
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
     public private (set) var trackersDetected = [DetectedTracker: Int]()
@@ -50,7 +51,6 @@ public class SiteRating {
     
     private let grade = Grade()
     private let cache = GradeCache.shared
-    private let parentEntity: String?
     
     public init(url: URL,
                 httpsForced: Bool = false,
@@ -61,19 +61,22 @@ public class SiteRating {
 
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
 
+        let parentEntity = entityMapping.findEntity(forURL: url)
+        
         self.protectionId = protectionId
         self.url = url
         self.httpsForced = httpsForced
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
-        self.parentEntity = entityMapping.findEntity(forURL: url)
-        
+        self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: parentEntity)
+
         let privacyPracticesScore = privacyPractices.score(forEntity: parentEntity)
         self.privacyPracticesSummary = privacyPracticesScore.summary
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.
         self.grade.httpsAutoUpgrade = url.isHttps()
+        
         self.grade.https = url.isHttps()
         self.grade.privacyScore = privacyPracticesScore.score
     }
@@ -155,10 +158,6 @@ public class SiteRating {
         return trackersBlocked.filter(majorNetworkFilter)
     }
 
-    public var isMajorTrackerNetwork: Bool {
-        return prevalenceStore.isMajorNetwork(named: parentEntity)
-    }
-    
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         let trackers = trackers
             .filter(majorNetworkFilter)

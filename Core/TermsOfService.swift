@@ -51,7 +51,7 @@ public struct TermsOfService: Decodable {
         case classification = "class"
     }
     
-    // see https://github.com/duckduckgo/duckduckgo-privacy-extension/blob/e425338a7b11dc112f1ee4b3de48102e2eceee5c/shared/js/background/privacy-practices.es6.js#L65
+    // see https://github.com/duckduckgo/duckduckgo-privacy-extension/blob/e42533/shared/js/background/privacy-practices.es6.js#L65
     var summary: PrivacyPractices.Summary {
         
         if let classification = classification {
@@ -73,7 +73,7 @@ public struct TermsOfService: Decodable {
         return .unknown
     }
     
-    // see https://github.com/duckduckgo/duckduckgo-privacy-extension/blob/e425338a7b11dc112f1ee4b3de48102e2eceee5c/shared/js/background/privacy-practices.es6.js#L20
+    // see https://github.com/duckduckgo/duckduckgo-privacy-extension/blob/e42533/shared/js/background/privacy-practices.es6.js#L20
     var derivedScore: Int {
         
         var derived = 5

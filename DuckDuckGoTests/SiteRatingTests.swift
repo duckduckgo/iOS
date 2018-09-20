@@ -48,7 +48,7 @@ class SiteRatingTests: XCTestCase {
         let entityMapping = MockEntityMapping(entity: "Google")
         let privacyPractices = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMaping: entityMapping)
         let testee = SiteRating(url: Url.googlemail, entityMapping: entityMapping, privacyPractices: privacyPractices)
-        XCTAssertEqual(.poor, testee.privacyPracticesSummary)
+        XCTAssertEqual(.poor, testee.privacyPractice.summary)
     }
 
     func testWhenUrlContainHostThenInitSucceeds() {
@@ -105,7 +105,7 @@ class SiteRatingTests: XCTestCase {
 
     func testWhenUrlDoeNotHaveTosThenPrivacyPracticesSummaryIsUnknown() {
         let testee = SiteRating(url: Url.http)
-        XCTAssertEqual(.unknown, testee.privacyPracticesSummary)
+        XCTAssertEqual(.unknown, testee.privacyPractice.summary)
     }
 
     func testUniqueMajorTrackersDetected() {
@@ -168,6 +168,6 @@ private class MockEntityMapping: EntityMapping {
 
 private struct MockTermsOfServiceStore: TermsOfServiceStore {
     
-    var terms:[String: TermsOfService]
+    var terms: [String: TermsOfService]
     
 }

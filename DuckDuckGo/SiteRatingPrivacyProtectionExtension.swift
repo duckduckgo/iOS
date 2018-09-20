@@ -56,10 +56,7 @@ extension SiteRating {
     }
     
     func privacyPracticesSummary() -> PrivacyPractices.Summary {
-        return .unknown
-//        // TODO
-////        guard let termsOfService = termsOfService else { return .unknown }
-////        return termsOfService.privacyPractices()
+        return privacyPractice.summary
     }
     
     func majorNetworksText(contentBlocker: ContentBlockerConfigurationStore) -> String {

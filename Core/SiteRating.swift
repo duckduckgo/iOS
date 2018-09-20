@@ -39,7 +39,7 @@ public class SiteRating {
     public let url: URL
     public let protectionId: String
     public let httpsForced: Bool
-    public let privacyPracticesSummary: PrivacyPractices.Summary
+    public let privacyPractice: PrivacyPractices.Practice
     public let isMajorTrackerNetwork: Bool
     
     public var hasOnlySecureContent: Bool
@@ -69,16 +69,14 @@ public class SiteRating {
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
         self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: parentEntity)
-
-        let privacyPracticesScore = privacyPractices.findPractice(forEntity: parentEntity)
-        self.privacyPracticesSummary = privacyPracticesScore.summary
+        self.privacyPractice = privacyPractices.findPractice(forEntity: parentEntity)
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.
         self.grade.httpsAutoUpgrade = url.isHttps()
         
         self.grade.https = url.isHttps()
-        self.grade.privacyScore = privacyPracticesScore.score
+        self.grade.privacyScore = privacyPractice.score
     }
 
     public var https: Bool {

@@ -28,13 +28,15 @@ public class PrivacyPractices {
     
     public struct Practice {
         
-        let score: Int
-        let summary: Summary
+        public let score: Int
+        public let summary: Summary
+        public let goodReasons: [String]
+        public let badReasons: [String]
         
     }
     
     struct Constants {
-        static let unknown = Practice(score: 0, summary: .unknown)
+        static let unknown = Practice(score: 0, summary: .unknown, goodReasons: [], badReasons: [])
     }
 
     private let tld: TLD
@@ -47,8 +49,13 @@ public class PrivacyPractices {
         
         termsOfServiceStore.terms.forEach {
             guard let url = URL(string: "http://\($0.key)") else { return }
+            
+            let practice = Practice(score: $0.value.derivedScore,
+                                    summary: $0.value.summary,
+                                    goodReasons: $0.value.reasons.good ?? [],
+                                    badReasons: $0.value.reasons.bad ?? [])
+            
             if let entity = entityMaping.findEntity(forURL: url) {
-                let practice = Practice(score: $0.value.derivedScore, summary: $0.value.summary)
                 let existingPractice = practices[entity]
                 if existingPractice == nil || existingPractice!.score < practice.score {
                     practices[entity] = practice
@@ -56,7 +63,7 @@ public class PrivacyPractices {
             }
             
             if let domain = tld.domain(url.host) {
-                practices[domain] = Practice(score: $0.value.derivedScore, summary: $0.value.summary)
+                practices[domain] = practice
             }
         }
         

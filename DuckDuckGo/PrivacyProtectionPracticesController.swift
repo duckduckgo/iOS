@@ -84,13 +84,12 @@ class PrivacyProtectionPracticesController: UIViewController {
         domainLabel.text = siteRating.domain
     }
 
-    private func updateReasons() {
-        // TODO get from privacy practices
-//        let goodReasons = self.siteRating.termsOfService?.goodReasons ?? []
-//        let badReasons = self.siteRating.termsOfService?.badReasons ?? []
-//        let goodRows = goodReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: true) })
-//        let badRows = badReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: false) })
-//        rows = goodRows + badRows
+    private func updateReasons() {            
+        let goodReasons = siteRating.privacyPractice.goodReasons
+        let badReasons = siteRating.privacyPractice.badReasons
+        let goodRows = goodReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: true) })
+        let badRows = badReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: false) })
+        rows = goodRows + badRows
     }
 
     private func initTable() {

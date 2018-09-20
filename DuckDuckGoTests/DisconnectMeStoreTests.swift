@@ -102,32 +102,18 @@ class DisconnectMeStoreTests: XCTestCase {
         XCTAssertEqual( defaultJsValue, result)
     }
 
-    // TODO
     func testWhenNetworkNameAndCategoryExistsForUppercasedDomainTheyAreReturned() {
-//        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
-//                                                                           networkName: "TrickyAds",
-//                                                                           category: .social ) ]
-//        let testee = SiteRating(url: Url.googleNetwork,
-//                                entityMapping: EntityMapping(),
-//                                // disconnectMeTrackers: disconnectMeTrackers,
-//            privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
-//        let nameAndCategory = testee.networkNameAndCategory(forDomain: "SOMETRACKER.com")
-//        XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
-//        XCTAssertEqual("Social", nameAndCategory.category)
+        try? testee.persist(data: trackerData)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "99asocialurl.com".uppercased())
+        XCTAssertEqual("asocialurl.com", nameAndCategory.networkName)
+        XCTAssertEqual("Social", nameAndCategory.category)
     }
     
-    // TODO
     func testWhenNetworkNameAndCategoryExistsForDomainTheyAreReturned() {
-//        let disconnectMeTrackers = ["sometracker.com": DisconnectMeTracker(url: Url.http.absoluteString,
-//                                                                           networkName: "TrickyAds",
-//                                                                           category: .social ) ]
-//        let testee = SiteRating(url: Url.googleNetwork,
-//                                entityMapping: EntityMapping(),
-//                                // disconnectMeTrackers: disconnectMeTrackers,
-//            privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS))
-//        let nameAndCategory = testee.networkNameAndCategory(forDomain: "sometracker.com")
-//        XCTAssertEqual("TrickyAds", nameAndCategory.networkName)
-//        XCTAssertEqual("Social", nameAndCategory.category)
+        try? testee.persist(data: trackerData)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "99asocialurl.com")
+        XCTAssertEqual("asocialurl.com", nameAndCategory.networkName)
+        XCTAssertEqual("Social", nameAndCategory.category)
     }
     
 }

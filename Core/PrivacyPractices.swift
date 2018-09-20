@@ -40,47 +40,62 @@ public class PrivacyPractices {
     }
 
     private let tld: TLD
-    private let practices: [String: Practice]
+    private let entityScores: [String: Int]
+    private let siteScores: [String: Int]
+    private let termsOfServiceStore: TermsOfServiceStore
+    private let entityMapping: EntityMapping
     
-    public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), entityMaping: EntityMapping = EntityMapping()) {
-        
+    public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), entityMapping: EntityMapping = EntityMapping()) {
         let tld = TLD()
-        var practices = [String: Practice]()
+        var entityScores = [String: Int]()
+        var siteScores = [String: Int]()
         
         termsOfServiceStore.terms.forEach {
             guard let url = URL(string: "http://\($0.key)") else { return }
-            
-            let practice = Practice(score: $0.value.derivedScore,
-                                    summary: $0.value.summary,
-                                    goodReasons: $0.value.reasons.good ?? [],
-                                    badReasons: $0.value.reasons.bad ?? [])
-            
-            if let entity = entityMaping.findEntity(forURL: url) {
-                let existingPractice = practices[entity]
-                if existingPractice == nil || existingPractice!.score < practice.score {
-                    practices[entity] = practice
+            let derivedScore = $0.value.derivedScore
+
+            if let entity = entityMapping.findEntity(forURL: url) {
+                if entityScores[entity] == nil || entityScores[entity]! < derivedScore {
+                    entityScores[entity] = derivedScore
                 }
             }
             
-            if let domain = tld.domain(url.host) {
-                practices[domain] = practice
+            if let site = tld.domain(url.host) {
+                siteScores[site] = derivedScore
             }
         }
         
         self.tld = tld
-        self.practices = practices
+        self.entityScores = entityScores
+        self.siteScores = siteScores
+        self.termsOfServiceStore = termsOfServiceStore
+        self.entityMapping = entityMapping
     }
     
-    func findPractice(forEntity entity: String?) -> Practice {
-        if let entity = entity, let entityPractice = practices[entity] {
-            return entityPractice
+    func score(for url: URL) -> Int {
+        if let parent = entityMapping.findEntity(forURL: url), let score = entityScores[parent] {
+            return score
         }
         
-        if let domain = tld.domain(entity), let domainPractice = practices[domain] {
-            return domainPractice
+        if let domain = tld.domain(url.host), let score = siteScores[domain] {
+            return score
         }
         
-        return Constants.unknown
+        if let host = url.host, let score = siteScores[host] {
+            return score
+        }
+        
+        return 0
+    }
+    
+    func practice(for url: URL) -> Practice {
+        guard let domain = tld.domain(url.host) else { return Constants.unknown }
+        guard let term = termsOfServiceStore.terms[domain] else { return Constants.unknown}
+        let entityScore = entityScores[entityMapping.findEntity(forURL: url) ?? ""]
+        return Practice(score: entityScore ?? term.derivedScore,
+                        summary: term.summary,
+                        goodReasons: term.reasons.good ?? [],
+                        badReasons: term.reasons.bad ?? [])
     }
     
 }

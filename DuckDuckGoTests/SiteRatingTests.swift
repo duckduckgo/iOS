@@ -44,9 +44,9 @@ class SiteRatingTests: XCTestCase {
 
     func testWhenUrlHasTosThenTosReturned() {
         let term = TermsOfService(classification: .d, score: -100, reasons: TermsOfService.Reasons(good: [], bad: [ "bad reason" ]))
-        let tosdrStore = MockTermsOfServiceStore(terms: ["google.com": term ])
+        let tosdrStore = MockTermsOfServiceStore(terms: [Url.googlemail.host!: term ])
         let entityMapping = MockEntityMapping(entity: "Google")
-        let privacyPractices = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMaping: entityMapping)
+        let privacyPractices = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
         let testee = SiteRating(url: Url.googlemail, entityMapping: entityMapping, privacyPractices: privacyPractices)
         XCTAssertEqual(.poor, testee.privacyPractice.summary)
     }

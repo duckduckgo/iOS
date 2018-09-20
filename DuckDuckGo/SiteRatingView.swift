@@ -26,9 +26,9 @@ public class SiteRatingView: UIView {
 
     static let gradeImages: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Indicator Grade A"),
-        .bPlus: #imageLiteral(resourceName: "PP Indicator Grade B"),
+        .bPlus: #imageLiteral(resourceName: "PP Indicator Grade B Plus"),
         .b: #imageLiteral(resourceName: "PP Indicator Grade B"),
-        .cPlus: #imageLiteral(resourceName: "PP Indicator Grade C"),
+        .cPlus: #imageLiteral(resourceName: "PP Indicator Grade C Plus"),
         .c: #imageLiteral(resourceName: "PP Indicator Grade C"),
         .d: #imageLiteral(resourceName: "PP Indicator Grade D"),
         .dMinus: #imageLiteral(resourceName: "PP Indicator Grade D")

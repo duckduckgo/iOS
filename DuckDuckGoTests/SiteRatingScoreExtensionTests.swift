@@ -85,7 +85,8 @@ private class MockTermsOfServiceStore: TermsOfServiceStore {
              goodReasons: [String] = [],
              badReasons: [String] = []) -> MockTermsOfServiceStore {
         
-        terms[domain] = TermsOfService(classification: classification, score: score, goodReasons: goodReasons, badReasons: badReasons)
+        let reasons = TermsOfService.Reasons(good: goodReasons, bad: badReasons)        
+        terms[domain] = TermsOfService(classification: classification, score: score, reasons: reasons)
         return self
     }
 

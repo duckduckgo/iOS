@@ -21,107 +21,67 @@ import XCTest
 @testable import Core
 
 class TermsOfServiceTests: XCTestCase {
-
-    func testWhenInitWithNoClassTerribleScoreAndGoodAndBadReasonsThenPracticesAreMixed() {
-        let testee = TermsOfService(classification: nil, score: 100, goodReasons: [ "goodReason" ], badReasons: [ "badReason" ])
-        XCTAssertEqual(testee.summary, .mixed)
-    }
-
-    func testWhenInitWithNoClassExcellentScoreAndGoodAndBadReasonsThenPracticesAreMixed() {
-        let testee = TermsOfService(classification: nil, score: -100, goodReasons: [ "goodReason" ], badReasons: [ "badReason" ])
-        XCTAssertEqual(testee.summary, .mixed)
-    }
-
-    func testWhenInitWithAClassificationButNoTermsPracticesAreUnknown() {
-        let testee = TermsOfService(classification: .a, score: 10, goodReasons: [], badReasons: [])
-        XCTAssertEqual(testee.summary, .unknown)
-    }
-
-    func testWhenInitWithNoClassificationPrivacyPracticesAreUnknown() {
-        let testee = TermsOfService(classification: nil, score: 10, goodReasons: [], badReasons: [])
-        XCTAssertEqual(testee.summary, .unknown)
-    }
-
-    func testWhenInitWithNoClassificationAndScoreAppropriatePrivacyPracticesAreReturned() {
-        let scores: [Int: PrivacyPractices.Summary] = [
-            -100: .good,
-               0: .mixed,
-             100: .poor
-            ]
-
-        for params in scores {
-            let testee = TermsOfService(classification: nil, score: params.key, goodReasons: [ "something" ], badReasons: [])
-            XCTAssertEqual(params.value, testee.summary)
-        }
-
-    }
-
-    func testWhenInitWithClassificationAndBadReasonsAppropriatePrivacyPracticsReturned() {
-        let classificationScores: [TermsOfService.Classification: PrivacyPractices.Summary] = [
-            .a: .good,
-            .b: .mixed,
-            .c: .poor,
-            .d: .poor,
-            .e: .poor
-            ]
-
-        for params in classificationScores {
-            let testee = TermsOfService(classification: params.key, score: 10, goodReasons: [], badReasons: [ "something" ])
-            XCTAssertEqual(params.value, testee.summary)
-        }
-
-    }
-
-    func testWhenInitWithClassificationAppropriatePrivacyPracticsReturned() {
-        let classificationScores: [TermsOfService.Classification: PrivacyPractices.Summary] = [
-            .a: .good,
-            .b: .mixed,
-            .c: .poor,
-            .d: .poor,
-            .e: .poor
+    
+    func testDerivedScores() {
+        let testCases: [(expected: Int, term: TermsOfService)] = [
+            (0, TermsOfService(classification: .a, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (1, TermsOfService(classification: .b, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (5, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (7, TermsOfService(classification: .c, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (7, TermsOfService(classification: nil, score: 101, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (10, TermsOfService(classification: .d, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (10, TermsOfService(classification: nil, score: 151, reasons: TermsOfService.Reasons(good: nil, bad: nil)))
         ]
 
-        for params in classificationScores {
-            let testee = TermsOfService(classification: params.key, score: 10, goodReasons: [ "something" ], badReasons: [])
-            XCTAssertEqual(params.value, testee.summary)
+        var index = 0
+        for test in testCases {
+            if test.expected != test.term.derivedScore {
+                XCTFail("test \(index) failed, expected \(test.expected) was \(test.term.derivedScore) for \(test.term)")
+            }
+            index += 1
         }
-
     }
+   
+    func testSummaries() {
+        let testCases: [(expected: PrivacyPractices.Summary, term: TermsOfService)] = [
+            // score and reasons are ignored
+            (.good, TermsOfService(classification: .a, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.mixed, TermsOfService(classification: .b, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.poor, TermsOfService(classification: .c, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.poor, TermsOfService(classification: .d, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
 
-    func testWhenNoClassAndScoreIsZeroDerivedScoreIsZero() {
-        let testee = TermsOfService(classification: nil, score: 0, goodReasons: [], badReasons: [])
-        XCTAssertEqual(0, testee.derivedScore)
-    }
+            (.good, TermsOfService(classification: .a, score: 1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.mixed, TermsOfService(classification: .b, score: -1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.poor, TermsOfService(classification: .c, score: 0, reasons: TermsOfService.Reasons(good: ["reason"], bad: nil))),
+            (.poor, TermsOfService(classification: .d, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: ["reason"]))),
 
-    func testWhenNoClassAndScoreIsPositiveDerivedScoreIsPlusOne() {
-        let testee = TermsOfService(classification: nil, score: 1, goodReasons: [], badReasons: [])
-        XCTAssertEqual(1, testee.derivedScore)
-    }
+            // class and score are ignored
+            (.mixed, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: ["reason"], bad: ["reason"]))),
+            
+            // class and reasons are ignored
+            (.good, TermsOfService(classification: nil, score: -1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.good, TermsOfService(classification: nil, score: -10, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.good, TermsOfService(classification: nil, score: -100, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.good, TermsOfService(classification: nil, score: -1000, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
 
-    func testWhenNoClassAndScoreIsNegativeDerivedScoreIsMinusOne() {
-        let testee = TermsOfService(classification: nil, score: -1, goodReasons: [], badReasons: [])
-        XCTAssertEqual(-1, testee.derivedScore)
-    }
+            // class is ignored, must be at least one reason of either kind
+            (.mixed, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: ["reason"], bad: nil))),
+            (.mixed, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: ["reason"]))),
 
-    func testWhenInitWithClassificationAppropriateScoreReturned() {
-
-        let classificationScores: [TermsOfService.Classification: Int] = [
-            .a: -1,
-            .b: 0,
-            .c: 0,
-            .d: 1,
-            .e: 2
+            // class and reasons are ignored
+            (.poor, TermsOfService(classification: nil, score: 1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.poor, TermsOfService(classification: nil, score: 10, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.poor, TermsOfService(classification: nil, score: 100, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.poor, TermsOfService(classification: nil, score: 1000, reasons: TermsOfService.Reasons(good: nil, bad: nil)))
         ]
 
-        for params in classificationScores {
-            let testee = TermsOfService(classification: params.key, score: 10, goodReasons: [], badReasons: [])
-            XCTAssertEqual(params.value, testee.derivedScore)
+        var index = 0
+        for test in testCases {
+            if test.expected != test.term.summary {
+                XCTFail("test \(index) failed, expected \(test.expected) was \(test.term.summary) for \(test.term)")
+            }
+            index += 1
         }
-
     }
-
-    func testWhenInitWithoutClassificationthenClassificationIsNil() {
-        let testee = TermsOfService(classification: nil, score: 10, goodReasons: [], badReasons: [])
-        XCTAssertEqual(1, testee.derivedScore)
-    }
+    
 }

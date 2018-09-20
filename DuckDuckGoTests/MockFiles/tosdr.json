@@ -26,7 +26,7 @@
                      "you can request access and deletion of personal data"
                      ]
         },
-        "class": false
+        "class": null
     },
     "anotherexample.com": {
         "score": 50,

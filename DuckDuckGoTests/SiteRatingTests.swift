@@ -43,7 +43,7 @@ class SiteRatingTests: XCTestCase {
     }
 
     func testWhenUrlHasTosThenTosReturned() {
-        let term = TermsOfService(classification: .e, score: -100, goodReasons: [], badReasons: [ "bad reason" ])
+        let term = TermsOfService(classification: .d, score: -100, reasons: TermsOfService.Reasons(good: [], bad: [ "bad reason" ]))
         let tosdrStore = MockTermsOfServiceStore(terms: ["google.com": term ])
         let entityMapping = MockEntityMapping(entity: "Google")
         let privacyPractices = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMaping: entityMapping)
@@ -168,6 +168,6 @@ private class MockEntityMapping: EntityMapping {
 
 private struct MockTermsOfServiceStore: TermsOfServiceStore {
     
-    var terms:[String : TermsOfService]
+    var terms:[String: TermsOfService]
     
 }

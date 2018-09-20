@@ -40,10 +40,13 @@ public class EmbeddedTermsOfServiceStore: TermsOfServiceStore {
         guard let data = try? fileLoader.load(fileName: Constants.fileName, fromBundle: bundle) else {
             fatalError("Unable to load \(Constants.fileName) from bundle \(bundle)")
         }
-        guard let terms = try? parser.convert(fromJsonData: data) else {
-            fatalError("Unableto convert data to terms json")
+        do {
+            let terms = try parser.convert(fromJsonData: data)
+            self.terms = terms
+        } catch {
+            Logger.log(items: error)
+            fatalError("Unable to decode tosdr json")
         }
-        self.terms = terms
     }
 
 }

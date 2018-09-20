@@ -70,7 +70,7 @@ public class SiteRating {
         self.hasOnlySecureContent = url.isHttps()
         self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: parentEntity)
 
-        let privacyPracticesScore = privacyPractices.score(forEntity: parentEntity)
+        let privacyPracticesScore = privacyPractices.findPractice(forEntity: parentEntity)
         self.privacyPracticesSummary = privacyPracticesScore.summary
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https

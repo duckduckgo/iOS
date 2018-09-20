@@ -26,7 +26,7 @@ public class PrivacyPractices {
         case poor, mixed, good, unknown
     }
     
-    public struct EntityScore {
+    public struct Practice {
         
         let score: Int
         let summary: Summary
@@ -34,40 +34,46 @@ public class PrivacyPractices {
     }
     
     struct Constants {
-        static let unknown = EntityScore(score: 0, summary: .unknown)
+        static let unknown = Practice(score: 0, summary: .unknown)
     }
 
     private let tld: TLD
-    private let terms: [String: TermsOfService]
+    private let practices: [String: Practice]
     
     public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), entityMaping: EntityMapping = EntityMapping()) {
         
         let tld = TLD()
-        var terms = [String: TermsOfService]()
+        var practices = [String: Practice]()
         
         termsOfServiceStore.terms.forEach {
             guard let url = URL(string: "http://\($0.key)") else { return }
             if let entity = entityMaping.findEntity(forURL: url) {
-                terms[entity] = $0.value
+                let practice = Practice(score: $0.value.derivedScore, summary: $0.value.summary)
+                let existingPractice = practices[entity]
+                if existingPractice == nil || existingPractice!.score < practice.score {
+                    practices[entity] = practice
+                }
             }
             
             if let domain = tld.domain(url.host) {
-                terms[domain] = $0.value
+                practices[domain] = Practice(score: $0.value.derivedScore, summary: $0.value.summary)
             }
         }
         
         self.tld = tld
-        self.terms = terms
+        self.practices = practices
     }
     
-    func score(forEntity entity: String?) -> EntityScore {
-        guard let entity = entity else { return Constants.unknown }
-        if let term = terms[entity] {
-            return EntityScore(score: term.score, summary: term.summary)
+    func findPractice(forEntity entity: String?) -> Practice {
+        if let entity = entity, let entityPractice = practices[entity] {
+            return entityPractice
         }
-        guard let domain = tld.domain(entity) else { return Constants.unknown }
-        guard let term = terms[domain] else { return Constants.unknown }
-        return EntityScore(score: term.score, summary: term.summary)
+        
+        if let domain = tld.domain(entity), let domainPractice = practices[domain] {
+            return domainPractice
+        }
+        
+        return Constants.unknown
     }
     
 }

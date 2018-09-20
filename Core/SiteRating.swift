@@ -60,13 +60,15 @@ public class SiteRating {
                 protectionId: String = UUID.init().uuidString) {
 
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
+        
+        let entity = entityMapping.findEntity(forURL: url)
 
         self.protectionId = protectionId
         self.url = url
         self.httpsForced = httpsForced
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
-        self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: entityMapping.findEntity(forURL: url))
+        self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: entity)
         self.privacyPractice = privacyPractices.practice(for: url)
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
@@ -74,6 +76,10 @@ public class SiteRating {
         self.grade.httpsAutoUpgrade = url.isHttps()
         self.grade.https = url.isHttps()
         self.grade.privacyScore = privacyPractice.score
+        
+        if let entity = entity {
+            self.grade.setParentEntity(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
+        }
     }
 
     public var https: Bool {

@@ -64,10 +64,26 @@ public class Grade {
         return calculatedScores!
     }
     
-    var https = false
-    var httpsAutoUpgrade = false
-    var parentEntity: String?
-    var privacyScore: Int?
+    var https = false {
+        didSet {
+            calculatedScores = nil
+        }
+    }
+    var httpsAutoUpgrade = false {
+        didSet {
+            calculatedScores = nil
+        }
+    }
+    var parentEntity: String? {
+        didSet {
+            calculatedScores = nil
+        }
+    }
+    var privacyScore: Int? {
+        didSet {
+            calculatedScores = nil
+        }
+    }
     
     private var calculatedScores: Scores?
     private var trackersBlocked = [String: Double?]()

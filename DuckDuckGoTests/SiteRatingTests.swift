@@ -42,6 +42,13 @@ class SiteRatingTests: XCTestCase {
                                                       blocked: true)
     }
 
+    func testWhenEntityHasHighPrevalenceThenGradeSetCorrectly() {
+        
+        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
+        XCTAssertEqual(10, testee.scores.site.score)
+        
+    }
+    
     func testWhenUrlHasTosThenTosReturned() {
         let term = TermsOfService(classification: .d, score: -100, reasons: TermsOfService.Reasons(good: [], bad: [ "bad reason" ]))
         let tosdrStore = MockTermsOfServiceStore(terms: [Url.googlemail.host!: term ])

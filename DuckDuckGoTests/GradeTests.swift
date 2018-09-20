@@ -57,7 +57,55 @@ struct GradeTestCase: Decodable {
 
 class GradeTests: XCTestCase {
     
-    func test() throws {
+    func testWhenPropertyChangesThenScoreIsRecalculated() throws {
+        
+        let grade = Grade()
+        grade.https = true
+        
+        XCTAssertEqual(.b, grade.scores.site.grade)
+        XCTAssertEqual(3, grade.scores.site.httpsScore)
+        XCTAssertEqual(2, grade.scores.site.privacyScore)
+        XCTAssertEqual(5, grade.scores.site.score)
+        XCTAssertEqual(0, grade.scores.site.trackerScore)
+        
+        grade.httpsAutoUpgrade = true
+
+        XCTAssertEqual(.bPlus, grade.scores.site.grade)
+        XCTAssertEqual(0, grade.scores.site.httpsScore)
+        XCTAssertEqual(2, grade.scores.site.privacyScore)
+        XCTAssertEqual(2, grade.scores.site.score)
+        XCTAssertEqual(0, grade.scores.site.trackerScore)
+
+        grade.setParentEntity(named: "Google", withPrevalence: 83.0)
+
+        XCTAssertEqual(.cPlus, grade.scores.site.grade)
+        XCTAssertEqual(0, grade.scores.site.httpsScore)
+        XCTAssertEqual(2, grade.scores.site.privacyScore)
+        XCTAssertEqual(12, grade.scores.site.score)
+        XCTAssertEqual(10, grade.scores.site.trackerScore)
+
+        grade.privacyScore = 100
+
+        XCTAssertEqual(.d, grade.scores.site.grade)
+        XCTAssertEqual(0, grade.scores.site.httpsScore)
+        XCTAssertEqual(10, grade.scores.site.privacyScore)
+        XCTAssertEqual(20, grade.scores.site.score)
+        XCTAssertEqual(10, grade.scores.site.trackerScore)
+
+    }
+
+    func testDefaultValues() throws {
+        
+        let grade = Grade()
+        XCTAssertEqual(.cPlus, grade.scores.site.grade)
+        XCTAssertEqual(10, grade.scores.site.httpsScore)
+        XCTAssertEqual(2, grade.scores.site.privacyScore)
+        XCTAssertEqual(12, grade.scores.site.score)
+        XCTAssertEqual(0, grade.scores.site.trackerScore)
+        
+    }
+    
+    func testPredefinedTestCases() throws {
         let testCases = try loadTestCases()
         
         var index = 0

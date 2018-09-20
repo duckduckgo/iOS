@@ -98,9 +98,9 @@ extension SiteRating {
     
     static let gradeImages: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Inline A"),
-        .bPlus: #imageLiteral(resourceName: "PP Inline B"),
+        .bPlus: #imageLiteral(resourceName: "PP Inline B Plus"),
         .b: #imageLiteral(resourceName: "PP Inline B"),
-        .cPlus: #imageLiteral(resourceName: "PP Inline C"),
+        .cPlus: #imageLiteral(resourceName: "PP Inline C Plus"),
         .c: #imageLiteral(resourceName: "PP Inline C"),
         .d: #imageLiteral(resourceName: "PP Inline D"),
         .dMinus: #imageLiteral(resourceName: "PP Inline D")

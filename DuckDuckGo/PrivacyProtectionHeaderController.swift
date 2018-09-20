@@ -24,9 +24,9 @@ class PrivacyProtectionHeaderController: UIViewController {
 
     private static let gradesOn: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A On"),
-        .bPlus: #imageLiteral(resourceName: "PP Grade B On"),
+        .bPlus: #imageLiteral(resourceName: "PP Grade B Plus On"),
         .b: #imageLiteral(resourceName: "PP Grade B On"),
-        .cPlus: #imageLiteral(resourceName: "PP Grade C On"),
+        .cPlus: #imageLiteral(resourceName: "PP Grade C Plus On"),
         .c: #imageLiteral(resourceName: "PP Grade C On"),
         .d: #imageLiteral(resourceName: "PP Grade D On"),
         .dMinus: #imageLiteral(resourceName: "PP Grade D On")
@@ -34,9 +34,9 @@ class PrivacyProtectionHeaderController: UIViewController {
 
     private static let gradesOff: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A Off"),
-        .bPlus: #imageLiteral(resourceName: "PP Grade B Off"),
+        .bPlus: #imageLiteral(resourceName: "PP Grade B Plus Off"),
         .b: #imageLiteral(resourceName: "PP Grade B Off"),
-        .cPlus: #imageLiteral(resourceName: "PP Grade C Off"),
+        .cPlus: #imageLiteral(resourceName: "PP Grade C Plus Off"),
         .c: #imageLiteral(resourceName: "PP Grade C Off"),
         .d: #imageLiteral(resourceName: "PP Grade D Off"),
         .dMinus: #imageLiteral(resourceName: "PP Grade D Off")

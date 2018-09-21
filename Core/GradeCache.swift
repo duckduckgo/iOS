@@ -1,5 +1,5 @@
 //
-//  SiteRatingScoreExtension.swift
+//  GradeCache.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -19,40 +19,12 @@
 
 import Foundation
 
-// Based on
-// https://github.com/duckduckgo/chrome-zeroclickinfo/blob/ceb4fc6b2e36451207ef9c887b4e1e6ccff30352/js/site.js#L89
-
-public extension SiteRating {
-
-    public var scoreDict: [String: Any] {
-        // TODO scoreDict
-//        let grade = siteGrade()
-//        return [
-//            "score": [
-//                "domain": domain ?? "unknown",
-//                "hasHttps": https,
-//                "isAMajorTrackingNetwork": 0,
-//                "containsMajorTrackingNetwork": containsMajorTracker,
-//                "totalBlocked": totalTrackersBlocked,
-//                "hasObscureTracker": containsIpTracker,
-//                "tosdr": termsOfServiceScore
-//            ],
-//            "grade": [
-//                "before": grade.before.rawValue.uppercased(),
-//                "after": grade.after.rawValue.uppercased()
-//            ]
-//        ]
-        return [:]
-    }
-
-}
-
 public class GradeCache {
-
+    
     public static let shared = GradeCache()
-
+    
     private var cachedScores = [String: Grade.Scores]()
-
+    
     private init() { }
     
     /**
@@ -63,7 +35,7 @@ public class GradeCache {
     func add(url: URL, scores: Grade.Scores) -> Bool {
         return compareAndSet(url: url, scores: scores)
     }
-
+    
     private func compareAndSet(url: URL, scores current: Grade.Scores) -> Bool {
         let key = cacheKey(forUrl: url)
         if let previous = cachedScores[key], previous.site.score > current.site.score {
@@ -72,16 +44,16 @@ public class GradeCache {
         cachedScores[key] = current
         return true
     }
-
+    
     func get(url: URL) -> Grade.Scores? {
         let key = cacheKey(forUrl: url)
         return cachedScores[key]
     }
-
+    
     func reset() {
         cachedScores =  [String: Grade.Scores]()
     }
-
+    
     private func cacheKey(forUrl url: URL) -> String {
         guard let domain = url.host else {
             return url.absoluteString
@@ -89,5 +61,5 @@ public class GradeCache {
         let scheme = url.scheme ?? URL.URLProtocol.http.rawValue
         return "\(scheme)_\(domain)"
     }
+    
 }
-

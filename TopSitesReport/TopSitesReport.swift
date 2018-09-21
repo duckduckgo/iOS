@@ -23,14 +23,22 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
+struct ReportEntry: Encodable {
+    
+    let url: String
+    let scores: Grade.Scores?
+    let failed: Bool?
+    
+}
+
 class TopSitesReport: XCTestCase {
 
-    private var results = [Any]()
+    private var results = [ReportEntry]()
     private var mainController: MainViewController!
 
     struct Filename {
-        static let sites = "top500_sites.json"
-        static let report = "top500_grades_\(TopSitesReport.dateString()).json"
+        static let sites = "top_sites.json"
+        static let report = "top_sites_report_\(TopSitesReport.dateString()).json"
     }
 
     struct Timeout {
@@ -45,22 +53,16 @@ class TopSitesReport: XCTestCase {
     }
 
     override func tearDown() {
-        saveResults()
+        try? saveResults()
         TabsModel.clear()
     }
 
-    func testTopSites() {
+    func testTopSites() throws {
         guard let data = try? FileLoader().load(fileName: Filename.sites, fromBundle: Bundle(for: TopSitesReport.self)) else {
             fatalError("Failed to load file \(Filename.sites)")
         }
         
-        guard let sites = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) else {
-            fatalError("failed to create json object with data")
-        }
-        
-        guard let sites = sites as? [String] else {
-            fatalError("sites is not a [String]")
-        }
+        let sites = try JSONDecoder().decode([String].self, from: data)
         
         for site in sites {
             evaluateSite(site)
@@ -69,16 +71,14 @@ class TopSitesReport: XCTestCase {
 
     func evaluateSite(_ site: String) {
 
-        mainController.loadUrl(URL(string: site)!)
+        mainController.loadUrl(URL(string: "http://\(site)")!)
         waitForPageLoad()
 
         if let siteRating = mainController.siteRating, siteRating.finishedLoading {
-            print("SiteRating: \(siteRating.scoreDescription)")
-            var result = siteRating.scoreDict
-            result["url"] = site
-            results.append(result)
+            results.append(ReportEntry(url: site, scores: siteRating.scores, failed: nil))
         } else {
             print("\(site) failed to load")
+            results.append(ReportEntry(url: site, scores: nil, failed: true))
         }
 
     }
@@ -102,17 +102,13 @@ class TopSitesReport: XCTestCase {
         XCTAssertNotNil(mainController.view)
     }
 
-    func saveResults() {
+    func saveResults() throws {
         let fileName = Filename.report
         let fileUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!.appendingPathComponent(fileName)
-        guard let jsonResults = try? JSONSerialization.data(withJSONObject: results, options: .prettyPrinted) else {
-            fatalError("Failed to create json data from result")
-        }
-        var stringResults = String(data: jsonResults, encoding: .utf8)!
-        stringResults = stringResults.replacingOccurrences(of: "\\/", with: "/")
-        guard try? stringResults.write(to: fileUrl, atomically: true, encoding: .utf8) else {
-            fatalError("Failed to write string results to \(fileUrl)")
-        }
+        
+        let json = try JSONEncoder().encode(results)
+        try json.write(to: fileUrl, options: .atomic)
+        
         print("Saving results to \(fileUrl)")
     }
 

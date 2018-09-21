@@ -42,6 +42,12 @@ class SiteRatingTests: XCTestCase {
                                                       blocked: true)
     }
 
+    fileprivate let classATOS = MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: -100)
+
+    override func setUp() {
+        GradeCache.shared.reset()
+    }
+    
     func testWhenEntityHasHighPrevalenceThenGradeSetCorrectly() {
         
         let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
@@ -156,6 +162,26 @@ class SiteRatingTests: XCTestCase {
         let testee = SiteRating(url: Url.http)
         XCTAssertEqual(.unencrypted, testee.encryptionType)
     }
+    
+    func testWhenUrlBelongsToMajorNetworkThenIsMajorNetworkReturnsTrue() {
+        let mockPrevalenceStore = MockPrevalenceStore(prevalences: ["TrickyAds": 100.0], major: true)
+        let testee = SiteRating(url: Url.http,
+                                entityMapping: EntityMapping(),
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS),
+                                prevalenceStore: mockPrevalenceStore)
+        XCTAssertTrue(testee.isMajorTrackerNetwork)
+    }
+    
+    func testWhenWorseScoreIsCachedForBeforeScoreItIsUsed() {
+        let scores = Grade.Scores(site: Grade.Score(grade: .d, httpsScore: 0, privacyScore: 0, score: 66, trackerScore: 0),
+                                  enhanced: Grade.Score(grade: .a, httpsScore: 0, privacyScore: 0, score: 0, trackerScore: 0))
+        
+        _ = GradeCache.shared.add(url: Url.https, scores: scores)
+        
+        let testee = SiteRating(url: Url.https, privacyPractices: PrivacyPractices(termsOfServiceStore: MockTermsOfServiceStore()))
+        let site = testee.scores.site
+        XCTAssertEqual(66, site.score)
+    }
 
 }
 
@@ -173,8 +199,37 @@ private class MockEntityMapping: EntityMapping {
     
 }
 
-private struct MockTermsOfServiceStore: TermsOfServiceStore {
+private class MockTermsOfServiceStore: TermsOfServiceStore {
     
-    var terms: [String: TermsOfService]
+    var terms = [String: TermsOfService]()
+    
+    init(terms: [String: TermsOfService]) {
+        self.terms = terms
+    }
+    
+    init() {
+    }
+    
+    func add(domain: String,
+             classification: TermsOfService.Classification?,
+             score: Int,
+             goodReasons: [String] = [],
+             badReasons: [String] = []) -> MockTermsOfServiceStore {
+        
+        let reasons = TermsOfService.Reasons(good: goodReasons, bad: badReasons)
+        terms[domain] = TermsOfService(classification: classification, score: score, reasons: reasons)
+        return self
+    }
+    
+}
+
+private struct MockPrevalenceStore: PrevalenceStore {
+    
+    var prevalences: [String: Double]
+    var major: Bool
+    
+    func isMajorNetwork(named: String?) -> Bool {
+        return major
+    }
     
 }

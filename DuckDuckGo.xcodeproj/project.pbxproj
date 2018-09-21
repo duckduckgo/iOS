@@ -42,7 +42,7 @@
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
 		83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4A73620E1272F003A7A6D /* FeedbackModel.swift */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
-		83DBCA841F7BBB7E00DFD170 /* top500_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 83DBCA821F7BBB7E00DFD170 /* top500_sites.json */; };
+		83DBCA841F7BBB7E00DFD170 /* top_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 83DBCA821F7BBB7E00DFD170 /* top_sites.json */; };
 		83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */; };
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
@@ -159,6 +159,7 @@
 		85C271E61FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */; };
 		85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */; };
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
+		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
 		85CC936E203C402C00690089 /* SpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC936D203C402C00690089 /* SpeedTests.swift */; };
 		85CC9376203C42A500690089 /* speed_test_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 85CC9375203C42A500690089 /* speed_test_sites.json */; };
 		85CEC0771F2FD5CD0092C0C3 /* Stories.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85CEC0731F2FD5CD0092C0C3 /* Stories.xcdatamodeld */; };
@@ -245,7 +246,6 @@
 		F143C33C1E4A9A9200CFDE3A /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3391E4A9A9200CFDE3A /* WebViewController.swift */; };
 		F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */; };
 		F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
-		F144846A1F39E3B500F6AD2D /* SiteRatingScoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14484691F39E3B500F6AD2D /* SiteRatingScoreExtension.swift */; };
 		F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F14513521F45FAAE00710C46 /* SiteRatingView.xib */; };
 		F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14513541F45FBFD00710C46 /* SiteRatingView.swift */; };
 		F14513571F46388F00710C46 /* SiteRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14513561F46388F00710C46 /* SiteRating.swift */; };
@@ -305,7 +305,6 @@
 		F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1AE54E91F04263600D9A700 /* Authentication.storyboard */; };
 		F1B745221E549D550072547E /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
 		F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */; };
-		F1B88A111F3BA859000263D6 /* SiteRatingScoreExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B88A0D1F3B9D51000263D6 /* SiteRatingScoreExtensionTests.swift */; };
 		F1B88A141F3BB445000263D6 /* SiteGradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */; };
 		F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */; };
 		F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */; };
@@ -495,7 +494,7 @@
 		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSitesReport.swift; sourceTree = "<group>"; };
 		83DBCA7C1F7BBB5000DFD170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83DBCA821F7BBB7E00DFD170 /* top500_sites.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = top500_sites.json; sourceTree = "<group>"; };
+		83DBCA821F7BBB7E00DFD170 /* top_sites.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = top_sites.json; sourceTree = "<group>"; };
 		83ED3B8C1FA8E61D00B47556 /* ManualTestsScript.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ManualTestsScript.md; sourceTree = "<group>"; };
 		83ED3B8D1FA8E63700B47556 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsLoaderTests.swift; sourceTree = "<group>"; };
@@ -623,6 +622,7 @@
 		85C271E51FD065D8007216B4 /* HTTPSUpgradePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSUpgradePersistenceTests.swift; sourceTree = "<group>"; };
 		85C37D851FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionOverviewController.swift; sourceTree = "<group>"; };
 		85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedTermsOfServiceStoreTests.swift; sourceTree = "<group>"; };
+		85C7438F2154E981005CF998 /* GradeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCache.swift; sourceTree = "<group>"; };
 		85CC936B203C402C00690089 /* SpeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85CC936D203C402C00690089 /* SpeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTests.swift; sourceTree = "<group>"; };
 		85CC936F203C402C00690089 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -712,7 +712,6 @@
 		F143C3391E4A9A9200CFDE3A /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewExtension.swift; sourceTree = "<group>"; };
 		F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarExtension.swift; sourceTree = "<group>"; };
-		F14484691F39E3B500F6AD2D /* SiteRatingScoreExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteRatingScoreExtension.swift; sourceTree = "<group>"; };
 		F14513521F45FAAE00710C46 /* SiteRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SiteRatingView.xib; sourceTree = "<group>"; };
 		F14513541F45FBFD00710C46 /* SiteRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteRatingView.swift; sourceTree = "<group>"; };
 		F14513561F46388F00710C46 /* SiteRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteRating.swift; sourceTree = "<group>"; };
@@ -777,7 +776,6 @@
 		F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		F1AE54E91F04263600D9A700 /* Authentication.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Authentication.storyboard; sourceTree = "<group>"; };
 		F1B745211E549D550072547E /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		F1B88A0D1F3B9D51000263D6 /* SiteRatingScoreExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteRatingScoreExtensionTests.swift; sourceTree = "<group>"; };
 		F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteGrade.swift; sourceTree = "<group>"; };
 		F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteGradeTests.swift; sourceTree = "<group>"; };
 		F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -1097,7 +1095,7 @@
 			isa = PBXGroup;
 			children = (
 				83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */,
-				83DBCA821F7BBB7E00DFD170 /* top500_sites.json */,
+				83DBCA821F7BBB7E00DFD170 /* top_sites.json */,
 				83DBCA7C1F7BBB5000DFD170 /* Info.plist */,
 			);
 			path = TopSitesReport;
@@ -1542,7 +1540,6 @@
 				859C5FB72147E6CE00E2A43D /* grade-cases.json */,
 				859C5FB92147E6E200E2A43D /* GradeTests.swift */,
 				F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */,
-				F1B88A0D1F3B9D51000263D6 /* SiteRatingScoreExtensionTests.swift */,
 				F14513581F4664E900710C46 /* SiteRatingTests.swift */,
 				833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */,
 				85267D2C215286C500A0CE28 /* PrivacyPracticesTests.swift */,
@@ -1762,8 +1759,8 @@
 				85267D222151221C00A0CE28 /* PrivacyPractices.swift */,
 				F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */,
 				F14513561F46388F00710C46 /* SiteRating.swift */,
-				F14484691F39E3B500F6AD2D /* SiteRatingScoreExtension.swift */,
 				830C375B1F6C06BF00E317A7 /* TermsOfService.swift */,
+				85C7438F2154E981005CF998 /* GradeCache.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -2485,7 +2482,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83DBCA841F7BBB7E00DFD170 /* top500_sites.json in Resources */,
+				83DBCA841F7BBB7E00DFD170 /* top_sites.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2858,7 +2855,6 @@
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
 				F1B88A141F3BB445000263D6 /* SiteGradeTests.swift in Sources */,
 				85ECA7F11F2A83190018EBEB /* MigrationTests.swift in Sources */,
-				F1B88A111F3BA859000263D6 /* SiteRatingScoreExtensionTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
 				85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */,
 				F189AED71F18F6DE001EBAE1 /* TabTests.swift in Sources */,
@@ -2978,7 +2974,7 @@
 				857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */,
 				F14513571F46388F00710C46 /* SiteRating.swift in Sources */,
 				F159BDA71F0C073D00B4A01D /* WebCacheSummary.swift in Sources */,
-				F144846A1F39E3B500F6AD2D /* SiteRatingScoreExtension.swift in Sources */,
+				85C743902154E981005CF998 /* GradeCache.swift in Sources */,
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */,
 				F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */,

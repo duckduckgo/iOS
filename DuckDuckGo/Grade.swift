@@ -21,7 +21,7 @@ import Foundation
 
 public class Grade {
 
-    public enum Grading: String, Decodable {
+    public enum Grading: String, Codable {
         
         case a = "A"
         case bPlus = "B+"
@@ -33,7 +33,7 @@ public class Grade {
         
     }
     
-    public struct Score: Decodable, Equatable {
+    public struct Score: Codable, Equatable {
         
         public let grade: Grading
         public let httpsScore: Int
@@ -43,7 +43,7 @@ public class Grade {
         
     }
     
-    public struct Scores {
+    public struct Scores: Codable {
         
         public let site: Score
         public let enhanced: Score

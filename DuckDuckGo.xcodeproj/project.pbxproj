@@ -1539,10 +1539,10 @@
 				85267D2621526E2F00A0CE28 /* EntityMappingTests.swift */,
 				859C5FB72147E6CE00E2A43D /* grade-cases.json */,
 				859C5FB92147E6E200E2A43D /* GradeTests.swift */,
+				85267D2C215286C500A0CE28 /* PrivacyPracticesTests.swift */,
 				F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */,
 				F14513581F4664E900710C46 /* SiteRatingTests.swift */,
 				833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */,
-				85267D2C215286C500A0CE28 /* PrivacyPracticesTests.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";

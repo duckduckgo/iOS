@@ -22,6 +22,12 @@ import XCTest
 
 class EmbeddedPrevalenceStoreTests: XCTestCase {
 
+    func testWhenEntityIsMajorNetworkThenMajorNetworkReturnsTrue() {
+        let store = EmbeddedPrevalenceStore()
+        XCTAssertTrue(store.isMajorNetwork(named: "Google"))
+        XCTAssertFalse(store.isMajorNetwork(named: "Fisku"))
+    }
+    
     func testWhenStoreIsInstanciatedThenItLoadsPrevalenceJson() {
         let store = EmbeddedPrevalenceStore()
         XCTAssertEqual(83.513, store.prevalences["Google"])

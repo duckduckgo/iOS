@@ -44,12 +44,15 @@ public class DisconnectMeStore {
     }
     
     var hasData: Bool {
-        return (try? DisconnectMeStore.persistenceLocation.checkResourceIsReachable()) ?? false
+        return !trackers.isEmpty
     }
 
     public var trackers: [String: DisconnectMeTracker] = [:]
 
     var bannedTrackersJson: String {
+        if let cached = stringCache.get(named: CacheKeys.disconnectJsonBanned) {
+            return cached
+        }
         if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.banned)) {
             stringCache.put(name: CacheKeys.disconnectJsonBanned, value: json)
             return json
@@ -58,7 +61,11 @@ public class DisconnectMeStore {
     }
 
     var allowedTrackersJson: String {
+        if let cached = stringCache.get(named: CacheKeys.disconnectJsonAllowed) {
+            return cached
+        }
         if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.allowed)) {
+            stringCache.put(name: CacheKeys.disconnectJsonAllowed, value: json)
             return json
         }
         return "{}"

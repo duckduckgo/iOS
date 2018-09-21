@@ -38,7 +38,7 @@ class TopSitesReport: XCTestCase {
 
     struct Filename {
         static let sites = "top_sites.json"
-        static let report = "top_sites_report_\(TopSitesReport.dateString()).json"
+        static let report = "top_sites_report.json"
     }
 
     struct Timeout {
@@ -112,9 +112,4 @@ class TopSitesReport: XCTestCase {
         print("Saving results to \(fileUrl)")
     }
 
-    static func dateString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd_HHmm"
-        return formatter.string(from: Date())
-    }
 }

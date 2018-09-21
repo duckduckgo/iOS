@@ -178,10 +178,10 @@ class SiteRatingTrackerNetworkSectionBuilder {
 
         // group by tracker types, sorted appropriately
         let majorTrackers = trackers.filter({ prevalenceStore.isMajorNetwork(named: $0.networkName) })
-            .sorted(by: { $0.prevalence(prevalenceStore) > $1.prevalence(prevalenceStore) })
+            .sorted(by: compareTrackersByPrevalence)
         
-        let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil &&
-            !prevalenceStore.isMajorNetwork(named: $0.networkName) }).sorted(by: { $0.networkName! < $1.networkName! })
+        let nonMajorKnownTrackers = trackers.filter({ $0.networkName != nil && !prevalenceStore.isMajorNetwork(named: $0.networkName) })
+            .sorted(by: { $0.networkName! < $1.networkName! })
         
         let unknownTrackers = trackers.filter({ $0.networkName == nil })
 
@@ -203,6 +203,12 @@ class SiteRatingTrackerNetworkSectionBuilder {
         }
 
         return sections
+    }
+    
+    func compareTrackersByPrevalence(tracker1: DetectedTracker, tracker2: DetectedTracker) -> Bool {
+        let prevalence1 = prevalenceStore.prevalences[tracker1.networkName ?? ""] ?? 0.0
+        let prevalence2 = prevalenceStore.prevalences[tracker2.networkName ?? ""] ?? 0.0
+        return prevalence1 > prevalence2
     }
 
 }
@@ -233,12 +239,4 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
         }
     }
 
-}
-
-private extension DetectedTracker {
-    
-    func prevalence(_ prevalenceStore: PrevalenceStore) -> Double {
-        return prevalenceStore.prevalences[networkName ?? ""] ?? 0.0
-    }
-    
 }

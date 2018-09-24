@@ -23,11 +23,11 @@
             <objects>
                 <viewController id="sXL-hA-WaJ" customClass="PrivacyProtectionHeaderController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="54I-z7-VwQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="221"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3uq-Xe-QnG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="221"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tQB-uB-beX">
                                         <rect key="frame" x="103.5" y="20" width="168" height="148"/>
@@ -62,8 +62,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eDu-XL-siB"/>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="203"/>
-                    <size key="freeformSize" width="375" height="221"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="230"/>
+                    <size key="freeformSize" width="375" height="230"/>
                     <connections>
                         <outlet property="gradeImage" destination="dBn-cZ-MJt" id="Z7T-Zf-d3Z"/>
                         <outlet property="privacyGradeLabel" destination="Crm-QC-kK1" id="5yT-x9-zPM"/>

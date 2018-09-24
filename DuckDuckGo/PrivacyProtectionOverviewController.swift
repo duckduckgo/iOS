@@ -150,7 +150,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         case .mixed:
             encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
             
-        default: // .unencrypted
+        case .unencrypted:
             encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
             
         }
@@ -218,7 +218,6 @@ class ProtectionUpgradedView: UIView {
     
     func update(with siteRating: SiteRating) {
         let siteGradeImages = siteRating.siteGradeImages()
-        isHidden = siteGradeImages.from == siteGradeImages.to
         fromImage.image = siteGradeImages.from
         toImage.image = siteGradeImages.to
     }

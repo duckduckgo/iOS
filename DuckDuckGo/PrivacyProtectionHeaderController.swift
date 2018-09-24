@@ -42,10 +42,12 @@ class PrivacyProtectionHeaderController: UIViewController {
         .dMinus: #imageLiteral(resourceName: "PP Grade D Off")
         ]
 
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var gradeImage: UIImageView!
     @IBOutlet weak var siteTitleLabel: UILabel!
-    @IBOutlet weak var protectionPausedLabel: UILabel!
-    @IBOutlet weak var protectionDisabledLabel: UILabel!
+    @IBOutlet weak var privacyGradeLabel: UIView!
+    @IBOutlet weak var protectionPausedLabel: UIView!
+    @IBOutlet weak var protectionDisabledLabel: UIView!
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
 
     private weak var siteRating: SiteRating!
@@ -65,18 +67,27 @@ class PrivacyProtectionHeaderController: UIViewController {
 
         siteTitleLabel.text = siteRating.domain
 
-        protectionPausedLabel.isHidden = true
-        protectionDisabledLabel.isHidden = true
-        protectionUpgraded.isHidden = true
+        privacyGradeLabel.removeFromSuperview()
+        protectionPausedLabel.removeFromSuperview()
+        protectionDisabledLabel.removeFromSuperview()
+        protectionUpgraded.removeFromSuperview()
+        
+        stackView.removeArrangedSubview(privacyGradeLabel)
+        stackView.removeArrangedSubview(protectionPausedLabel)
+        stackView.removeArrangedSubview(protectionDisabledLabel)
+        stackView.removeArrangedSubview(protectionUpgraded)
 
         if !contentBlocker.enabled {
-            protectionDisabledLabel.isHidden = false
+            stackView.addArrangedSubview(protectionDisabledLabel)
         } else if contentBlocker.domainWhitelist.contains(siteRating.domain ?? "") {
-            protectionPausedLabel.isHidden = false
-        } else {
-            protectionUpgraded.isHidden = false
+            stackView.addArrangedSubview(protectionPausedLabel)
+        } else if siteRating.scores.enhanced != siteRating.scores.site {
             protectionUpgraded.update(with: siteRating)
+            stackView.addArrangedSubview(protectionUpgraded)
+        } else {
+            stackView.addArrangedSubview(privacyGradeLabel)
         }
+        
     }
 
 }

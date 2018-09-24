@@ -36,7 +36,7 @@ public class PrivacyPractices {
     }
     
     struct Constants {
-        static let unknown = Practice(score: 0, summary: .unknown, goodReasons: [], badReasons: [])
+        static let unknown = Practice(score: 2, summary: .unknown, goodReasons: [], badReasons: [])
     }
 
     private let tld: TLD
@@ -70,22 +70,6 @@ public class PrivacyPractices {
         self.siteScores = siteScores
         self.termsOfServiceStore = termsOfServiceStore
         self.entityMapping = entityMapping
-    }
-    
-    func score(for url: URL) -> Int {
-        if let parent = entityMapping.findEntity(forURL: url), let score = entityScores[parent] {
-            return score
-        }
-        
-        if let domain = tld.domain(url.host), let score = siteScores[domain] {
-            return score
-        }
-        
-        if let host = url.host, let score = siteScores[host] {
-            return score
-        }
-        
-        return 0
     }
     
     func practice(for url: URL) -> Practice {

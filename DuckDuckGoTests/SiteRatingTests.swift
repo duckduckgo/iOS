@@ -48,10 +48,18 @@ class SiteRatingTests: XCTestCase {
         GradeCache.shared.reset()
     }
     
-    func testWhenEntityHasHighPrevalenceThenGradeSetCorrectly() {
-        
-        let testee = SiteRating(url: Url.googlemail, entityMapping: MockEntityMapping(entity: "Google"))
-        XCTAssertEqual(10, testee.scores.site.score)
+    func testWhenEntityHasHighPrevalenceThenScoreSetCorrectly() {
+        let entityMapping = MockEntityMapping(entity: "Google")
+
+        let highPrevalenceStore = MockPrevalenceStore(prevalences: ["Google": 100.0], major: false)
+        let testeeHighPrevalence = SiteRating(url: Url.googlemail, entityMapping: entityMapping, prevalenceStore: highPrevalenceStore)
+        let highPrevalenceScore = testeeHighPrevalence.scores.site.score
+
+        let lowPrevalenceStore = MockPrevalenceStore(prevalences: ["Google": 0.1], major: false)
+        let testeeLowPrevalence = SiteRating(url: Url.googlemail, entityMapping: entityMapping, prevalenceStore: lowPrevalenceStore)
+        let lowPevalenceScore = testeeLowPrevalence.scores.site.score
+
+        XCTAssertTrue(highPrevalenceScore > lowPevalenceScore)
         
     }
     

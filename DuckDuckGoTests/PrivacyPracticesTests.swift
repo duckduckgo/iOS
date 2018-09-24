@@ -21,7 +21,15 @@ import XCTest
 @testable import Core
 
 class PrivacyPracticesTests: XCTestCase {
-       
+    
+    func testUnknownPrivacyPractices() {
+        let tosdrStore = MockTermsOfServiceStore(terms: [:])
+        let testee = PrivacyPractices(termsOfServiceStore: tosdrStore)
+        let practice = testee.practice(for: URL(string: "http://example.com")!)
+        XCTAssertEqual(2, practice.score)
+        XCTAssertEqual(.unknown, practice.summary)
+    }
+    
     func testScoreForParentEntityUsesWorstForNetwork() {
         
         let tosdrStore = MockTermsOfServiceStore(terms: [

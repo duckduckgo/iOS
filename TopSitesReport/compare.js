@@ -24,7 +24,7 @@ function main() {
     let json = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
     let csvLines = readSortedCSVFile(csvFile);
 
-    console.log("url,result,expected site grade, actual site grade, expected enhanced grade, actual enhanced grade");
+    console.log("url, result, site https score, privacy score, site tracker score, site grade score, expected site grade, actual site grade, expected enhanced grade, actual enhanced grade");
 
     for (var i = 0; i < json.length; i++) {
         let report = json[i];
@@ -46,7 +46,7 @@ function main() {
 
         let flag = (siteGrade != report.scores.site.grade) ? "👎" : "👍";
 
-        console.log(`${report.url},${flag},${siteGrade},${report.scores.site.grade},${enhancedGrade},${report.scores.enhanced.grade}`);
+        console.log(`${report.url},${flag},${report.scores.site.httpsScore},${report.scores.site.privacyScore},${report.scores.site.trackerScore},${report.scores.site.score},${siteGrade},${report.scores.site.grade},${enhancedGrade},${report.scores.enhanced.grade}`);
     }
 
 }

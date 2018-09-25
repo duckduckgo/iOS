@@ -50,7 +50,6 @@ public class Pixel {
     public struct Parameters {
         static let url = "url"
         static let errorCode = "error_code"
-        static let statusCode = "status_code"
     }
     
     private struct Constants {

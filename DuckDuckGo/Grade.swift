@@ -86,8 +86,8 @@ public class Grade {
     }
     
     private var calculatedScores: Scores?
-    private var trackersBlocked = [String: Double?]()
-    private var trackersNotBlocked = [String: Double?]()
+    private var entitiesBlocked = [String: Double?]()
+    private var entitiesNotBlocked = [String: Double?]()
     
     func setParentEntity(named entity: String?, withPrevalence prevalence: Double?) {
         guard let entity = entity else { return }
@@ -96,12 +96,12 @@ public class Grade {
     
     func addEntityBlocked(named entity: String, withPrevalence prevalence: Double?) {
         calculatedScores = nil
-        trackersBlocked[entity] = prevalence
+        entitiesBlocked[entity] = prevalence
     }
     
     func addEntityNotBlocked(named entity: String, withPrevalence prevalence: Double?) {
         calculatedScores = nil
-        trackersNotBlocked[entity] = prevalence
+        entitiesNotBlocked[entity] = prevalence
     }
     
     private func calculate() -> Scores {
@@ -125,8 +125,8 @@ public class Grade {
         let privacyScore = min(self.privacyScore ?? Constants.unknownPrivacyScore, Constants.maxPrivacyScore)
         
         // TRACKERS
-        let enhancedTrackerScore = trackerScore(from: trackersNotBlocked)
-        let siteTrackerScore = trackerScore(from: trackersBlocked) + enhancedTrackerScore
+        let enhancedTrackerScore = trackerScore(from: entitiesNotBlocked)
+        let siteTrackerScore = trackerScore(from: entitiesBlocked) + enhancedTrackerScore
         
         // TOTALS
         let siteTotalScore = siteHttpsScore + siteTrackerScore + privacyScore
@@ -151,8 +151,8 @@ public class Grade {
         return Scores(site: site, enhanced: enhanced)
     }
     
-    private func trackerScore(from trackers: [String: Double?]) -> Int {
-        return trackers.reduce(0, { $0 + score(from: $1.value) })
+    private func trackerScore(from entities: [String: Double?]) -> Int {
+        return entities.reduce(0, { $0 + score(from: $1.value) })
     }
     
     // swiftlint:disable cyclomatic_complexity

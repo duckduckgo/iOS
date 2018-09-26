@@ -34,24 +34,33 @@ public class HTTPSUpgrade {
     func upgrade(url: URL) -> URL? {
         
         guard url.scheme == "http" else { return nil }
-        guard let host = url.host else { return nil }
         
+        if !isInUpgradeList(url: url) {
+            return nil
+        }
+        
+        let urlString = url.absoluteString
+        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
+    }
+    
+     func isInUpgradeList(url: URL) -> Bool {
+        
+        guard let host = url.host else { return false }
+
         if store.hasWhitelistedDomain(host) {
             Logger.log(text: "Site \(host) is in whitelist, not upgrading")
-            return nil
+            return false
         }
         
         waitForAnyReloadsToComplete()
         
-        guard let bloomFilter = bloomFilter else { return nil }
+        guard let bloomFilter = bloomFilter else { return false }
         let startTime = Date().timeIntervalSince1970
         let result = bloomFilter.contains(host)
         let endTime = Date().timeIntervalSince1970
         Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(endTime - startTime)ms")
         
-        guard result else { return nil }
-        let urlString = url.absoluteString
-        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
+        return result
     }
     
     private func waitForAnyReloadsToComplete() {

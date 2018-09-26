@@ -33,6 +33,16 @@ extension URL {
     enum Host: String {
         case localhost
     }
+    
+    public var simpleUrl: String {
+        var string = ""
+        if let scheme = scheme {
+            string = "\(scheme)://"
+        }
+        string += host ?? ""
+        string += path
+        return string
+    }
 
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
@@ -52,10 +62,10 @@ extension URL {
         return components.url ?? self
     }
 
-    public func addParams(_ params: [URLQueryItem]) -> URL {
+    public func addParams(_ params: [String: String?]) -> URL {
         var url = self
         for param in params {
-            url = url.addParam(name: param.name, value: param.value)
+            url = url.addParam(name: param.key, value: param.value)
         }
         return url
     }

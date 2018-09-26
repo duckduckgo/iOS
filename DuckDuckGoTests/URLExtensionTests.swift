@@ -26,8 +26,13 @@ class URLExtensionTests: XCTestCase {
         XCTAssertEqual(url, URL(string: url)!.simpleUrl)
     }
     
-    func testWhenUriCotnainsSubdomainThenSimpleUrlIsEqual() {
+    func testWhenUriContainsSubdomainThenSimpleUrlIsEqual() {
         let url = "http://subdomain.example.com"
+        XCTAssertEqual(url, URL(string: url)!.simpleUrl)
+    }
+    
+    func testWhenUriMissingSchemeThenSimpleUrlIsEqual() {
+        let url = "example.com"
         XCTAssertEqual(url, URL(string: url)!.simpleUrl)
     }
     
@@ -36,7 +41,7 @@ class URLExtensionTests: XCTestCase {
         XCTAssertEqual(url, URL(string: url)!.simpleUrl)
     }
     
-    func whenUriContainsUsernameThenSimpleUrlOmitsThis() {
+    func testWhenUriContainsUsernameThenSimpleUrlOmitsThis() {
         let url = "http://user@example.com"
         XCTAssertEqual("http://example.com", URL(string: url)!.simpleUrl)
     }

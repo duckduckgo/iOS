@@ -348,6 +348,12 @@ extension WebViewController: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
         webEventsDelegate?.webpageDidFailToLoad()
+        
+        let error = error as NSError
+        if let url = webView.url, isHttpsUpgradeSite(url: url) {
+            reportHttpsUpgradeSiteError(url: url, error: "\(error.domain)_\(error.code)")
+        }
+        
         checkForReloadOnError()
     }
 
@@ -355,20 +361,24 @@ extension WebViewController: WKNavigationDelegate {
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
-
+        
+        if let url = loadedURL, isHttpsUpgradeSite(url: url) {
+            reportHttpsUpgradeSiteError(url: url, error: "\(error.domain)_\(error.code)")
+        }
+        
         // prevent loops where a site keeps redirecting to itself (e.g. bbc)
         if let url = loadedURL,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {
             failingUrls.insert(domain)
         }
-
+        
         // wait before showing errors in case they recover automatically
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showErrorNow()
         }
     }
-
+    
     public func webView(_ webView: WKWebView,
                         decidePolicyFor navigationAction: WKNavigationAction,
                         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -439,7 +449,18 @@ extension WebViewController: WKNavigationDelegate {
         webEventsDelegate?.webpageDidFailToLoad()
         checkForReloadOnError()
     }
-
+    
+    private func isHttpsUpgradeSite(url: URL) -> Bool {
+        return url.isHttps() && HTTPSUpgrade.shared.isInUpgradeList(url: url)
+    }
+    
+    private func reportHttpsUpgradeSiteError(url: URL, error: String) {
+        let params = [
+            Pixel.Parameters.errorCode: error,
+            Pixel.Parameters.url: url.simpleUrl
+        ]
+        Pixel.fire(pixel: .httpsUpgradeSiteError, withAdditionalParameters: params)
+    }
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {

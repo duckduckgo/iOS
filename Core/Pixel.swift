@@ -40,17 +40,21 @@ public enum PixelName: String {
     case longPressMenuCopyItem = "mlp_c"
     case longPressMenuShareItem = "mlp_s"
 
+    case httpsUpgradeSiteError = "ehd"
 }
 
 public class Pixel {
 
     private static let appUrls = AppUrls()
     
+    public struct Parameters {
+        static let url = "url"
+        static let errorCode = "error_code"
+    }
+    
     private struct Constants {
-        
         static let tablet = "tablet"
         static let phone = "phone"
-        
     }
     
     private init() {
@@ -58,12 +62,18 @@ public class Pixel {
     
     public static func fire(pixel: PixelName,
                             forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
+                            withAdditionalParameters params: [String: String?] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders) {
+        
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-        Alamofire.request(appUrls.pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor),
-                          headers: headers).response { data in
+        let url = appUrls
+            .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
+            .addParams(params)
+        
+        Alamofire.request(url, headers: headers).response { data in
             Logger.log(items: "Fire pixel \(pixel.rawValue) \(data)")
         }
+    
     }
     
 }

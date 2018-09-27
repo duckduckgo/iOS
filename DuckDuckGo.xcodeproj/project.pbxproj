@@ -304,8 +304,6 @@
 		F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */; };
 		F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1AE54E91F04263600D9A700 /* Authentication.storyboard */; };
 		F1B745221E549D550072547E /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B745211E549D550072547E /* UIColorExtension.swift */; };
-		F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */; };
-		F1B88A141F3BB445000263D6 /* SiteGradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */; };
 		F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */; };
 		F1BE54521E69DDE000FCF649 /* OnboardingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */; };
 		F1BE54541E69DDE000FCF649 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */; };
@@ -776,8 +774,6 @@
 		F1AE54E71F0425FC00D9A700 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		F1AE54E91F04263600D9A700 /* Authentication.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Authentication.storyboard; sourceTree = "<group>"; };
 		F1B745211E549D550072547E /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteGrade.swift; sourceTree = "<group>"; };
-		F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteGradeTests.swift; sourceTree = "<group>"; };
 		F1BE544A1E69DDE000FCF649 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataSource.swift; sourceTree = "<group>"; };
 		F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -1540,7 +1536,6 @@
 				859C5FB72147E6CE00E2A43D /* grade-cases.json */,
 				859C5FB92147E6E200E2A43D /* GradeTests.swift */,
 				85267D2C215286C500A0CE28 /* PrivacyPracticesTests.swift */,
-				F1B88A121F3BB157000263D6 /* SiteGradeTests.swift */,
 				F14513581F4664E900710C46 /* SiteRatingTests.swift */,
 				833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */,
 			);
@@ -1757,7 +1752,6 @@
 				85267D2421513FC700A0CE28 /* EntityMapping.swift */,
 				859C5FBB214971BA00E2A43D /* Grade.swift */,
 				85267D222151221C00A0CE28 /* PrivacyPractices.swift */,
-				F1B88A0F1F3BA176000263D6 /* SiteGrade.swift */,
 				F14513561F46388F00710C46 /* SiteRating.swift */,
 				830C375B1F6C06BF00E317A7 /* TermsOfService.swift */,
 				85C7438F2154E981005CF998 /* GradeCache.swift */,
@@ -2853,7 +2847,6 @@
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* DataChecksumExtensionTest.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
-				F1B88A141F3BB445000263D6 /* SiteGradeTests.swift in Sources */,
 				85ECA7F11F2A83190018EBEB /* MigrationTests.swift in Sources */,
 				F143C2CC1E4A4B9100CFDE3A /* AppVersionTests.swift in Sources */,
 				85F1E9B31FB7C59C00A75AC1 /* DisplayableCertificateExtensionTests.swift in Sources */,
@@ -2963,7 +2956,6 @@
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradeStore.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,
-				F1B88A101F3BA176000263D6 /* SiteGrade.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
 				8331AEDE20AA37560024962B /* APIHeaders.swift in Sources */,
 				F1DA2F701EBCEA8B00313F51 /* SupportedExternalURLScheme.swift in Sources */,

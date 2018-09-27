@@ -56,10 +56,6 @@
 
 "monitoring.connection.secure" = "Secure connection";
 "monitoring.connection.unsecured" = "Unsecured connection";
-"monitoring.sitegrade.a" = "A";
-"monitoring.sitegrade.b" = "B";
-"monitoring.sitegrade.c" = "C";
-"monitoring.sitegrade.d" = "D";
 
 "privacy.protection.tos.unknown" = "Unknown Privacy Practices";
 "privacy.protection.tos.good" = "Good Privacy Practices";

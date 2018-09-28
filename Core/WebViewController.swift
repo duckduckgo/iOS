@@ -357,7 +357,6 @@ extension WebViewController: WKNavigationDelegate {
         let error = error as NSError
         if let url = webView.url, isHttpsUpgradeSite(url: url) {
             reportHttpsUpgradeSiteError(url: url, error: "\(error.domain)_\(error.code)")
-            statisticsStore.httpsUpgradesFailures += 1
         }
         
         checkForReloadOnError()
@@ -466,6 +465,7 @@ extension WebViewController: WKNavigationDelegate {
             Pixel.Parameters.url: url.simpleUrl
         ]
         Pixel.fire(pixel: .httpsUpgradeSiteError, withAdditionalParameters: params)
+        statisticsStore.httpsUpgradesFailures += 1
     }
 }
 

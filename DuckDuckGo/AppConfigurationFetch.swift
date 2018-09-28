@@ -1,5 +1,5 @@
 //
-//  AppBackgroundFetch.swift
+//  AppConfigurationFetch.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -37,14 +37,14 @@ class AppConfigurationFetch {
                 newData = newData || newHttpsData
                 semaphore.signal()
             }
-            semaphore.wait()
 
             ContentBlockerLoader().start { newContentBlockingData in
                 newData = newData || newContentBlockingData
                 semaphore.signal()
             }
-            semaphore.wait()
             
+            semaphore.wait()
+            semaphore.wait()
             completion?(newData)
         }
     }
@@ -57,8 +57,8 @@ class AppConfigurationFetch {
         }
         
         let params = [
-            Pixel.Parameters.totalCount: "\(statisticsStore.httpsUpgradesTotal)",
-            Pixel.Parameters.failureCount: "\(statisticsStore.httpsUpgradesFailures)"
+            Pixel.EhsParameters.totalCount: "\(statisticsStore.httpsUpgradesTotal)",
+            Pixel.EhsParameters.failureCount: "\(statisticsStore.httpsUpgradesFailures)"
         ]
         
         Pixel.fire(pixel: .httpsUpgradeSiteSummary, withAdditionalParameters: params) { error in

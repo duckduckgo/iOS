@@ -48,9 +48,12 @@ public class Pixel {
 
     private static let appUrls = AppUrls()
     
-    public struct Parameters {
+    public struct EhdParameters {
         public static let url = "url"
         public static let errorCode = "error_code"
+    }
+    
+    public struct EhsParameters {
         public static let totalCount = "total"
         public static let failureCount = "failures"
     }

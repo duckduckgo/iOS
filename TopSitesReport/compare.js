@@ -41,8 +41,8 @@ function main() {
         }
 
         let record = row.split(",");
-        let siteGrade = record[12];
-        let enhancedGrade = record[13];
+        let siteGrade = record[8];
+        let enhancedGrade = record[9];
 
         let flag = (siteGrade != report.scores.site.grade) ? "👎" : "👍";
 

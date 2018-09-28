@@ -37,6 +37,7 @@
 		839F46B620DD9D31003B8A66 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839F46B520DD9D31003B8A66 /* FeedbackViewController.swift */; };
 		83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83A23D6220DC330000051F39 /* Feedback.storyboard */; };
 		83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B8BDAD20AB0DA90076D6A1 /* APIHeadersTests.swift */; };
+		83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */; };
 		83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C05D04212C74600068712A /* BloomFilterWrapperTest.swift */; };
 		83C389CC212D818500C11612 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328AABA212ADAD100293140 /* CommonCrypto.framework */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
@@ -478,6 +479,7 @@
 		839F46B520DD9D31003B8A66 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		83A23D6220DC330000051F39 /* Feedback.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		83B8BDAD20AB0DA90076D6A1 /* APIHeadersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHeadersTests.swift; sourceTree = "<group>"; };
+		83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationFetch.swift; sourceTree = "<group>"; };
 		83C05D04212C74600068712A /* BloomFilterWrapperTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilterWrapperTest.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
 		83D4A73620E1272F003A7A6D /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
@@ -1973,6 +1975,7 @@
 				85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */,
 				85BA58591F3506AE00C6E8CA /* AppSettings.swift */,
 				F1134EC01F40DD9300B73467 /* AppVersionExtension.swift */,
+				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2708,6 +2711,7 @@
 				83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
+				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,

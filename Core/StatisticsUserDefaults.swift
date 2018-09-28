@@ -27,6 +27,8 @@ public class StatisticsUserDefaults: StatisticsStore {
         static let atb = "com.duckduckgo.statistics.atb.key"
         static let retentionAtb = "com.duckduckgo.statistics.retentionatb.key"
         static let variant = "com.duckduckgo.statistics.variant.key"
+        static let httpsUpgradesTotal = "com.duckduckgo.statistics.httpsupgradestotal.key"
+        static let httpsUpgradesFailures = "com.duckduckgo.statistics.httpsupgradesfailures.key"
     }
 
     private var userDefaults: UserDefaults? {
@@ -73,5 +75,22 @@ public class StatisticsUserDefaults: StatisticsStore {
         guard let atb = atb else { return nil }
         return "\(atb)\(variant ?? "")"
     }
-
+    
+    public var httpsUpgradesTotal: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.httpsUpgradesTotal) ?? 0
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.httpsUpgradesTotal)
+        }
+    }
+    
+    public var httpsUpgradesFailures: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.httpsUpgradesFailures) ?? 0
+        }
+        set {
+            userDefaults?.set(newValue, forKey: Keys.httpsUpgradesFailures)
+        }
+    }
 }

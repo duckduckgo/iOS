@@ -54,6 +54,7 @@ open class WebViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var httpsUpgrade = HTTPSUpgrade.shared
+    private let statisticsStore: StatisticsStore = StatisticsUserDefaults()
     
     private lazy var appUrls: AppUrls = AppUrls()
     private lazy var tld = TLD()
@@ -338,6 +339,10 @@ extension WebViewController: WKNavigationDelegate {
 
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         webEventsDelegate?.webpageDidStartLoading(httpsForced: httpsForced)
+        
+        if let url = webView.url, isHttpsUpgradeSite(url: url) {
+            statisticsStore.httpsUpgradesTotal += 1
+        }
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -352,6 +357,7 @@ extension WebViewController: WKNavigationDelegate {
         let error = error as NSError
         if let url = webView.url, isHttpsUpgradeSite(url: url) {
             reportHttpsUpgradeSiteError(url: url, error: "\(error.domain)_\(error.code)")
+            statisticsStore.httpsUpgradesFailures += 1
         }
         
         checkForReloadOnError()

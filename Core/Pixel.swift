@@ -41,6 +41,7 @@ public enum PixelName: String {
     case longPressMenuShareItem = "mlp_s"
 
     case httpsUpgradeSiteError = "ehd"
+    case httpsUpgradeSiteSummary = "ehs"
 }
 
 public class Pixel {
@@ -48,8 +49,10 @@ public class Pixel {
     private static let appUrls = AppUrls()
     
     public struct Parameters {
-        static let url = "url"
-        static let errorCode = "error_code"
+        public static let url = "url"
+        public static let errorCode = "error_code"
+        public static let totalCount = "total"
+        public static let failureCount = "failures"
     }
     
     private struct Constants {
@@ -63,17 +66,17 @@ public class Pixel {
     public static func fire(pixel: PixelName,
                             forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String?] = [:],
-                            withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders) {
+                            withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                            onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls
             .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
             .addParams(params)
         
-        Alamofire.request(url, headers: headers).response { data in
-            Logger.log(items: "Fire pixel \(pixel.rawValue) \(data)")
+        Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
+            Logger.log(items: "Pixel fired \(pixel.rawValue) \(response)")
+            onComplete(response.error)
         }
-    
     }
-    
 }

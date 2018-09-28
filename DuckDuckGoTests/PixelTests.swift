@@ -93,4 +93,34 @@ class PixelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
 
+    func testWhenPixelFiresSuccessfullyThenCompletesWithNoError() {
+        let expectation = XCTestExpectation()
+        
+        stub(condition: isHost(host)) { _ -> OHHTTPStubsResponse in
+            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+        
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testWhenPixelFiresUnsuccessfullyThenCompletesWithError() {
+        let expectation = XCTestExpectation()
+        
+        stub(condition: isHost(host)) { _ -> OHHTTPStubsResponse in
+            return OHHTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
+        }
+        
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone) { error in
+            XCTAssertNotNil(error)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+
 }

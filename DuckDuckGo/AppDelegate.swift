@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var authWindow: UIWindow?
     var window: UIWindow?
 
-    private lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
+    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
 
     // MARK: lifecycle
 
@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
-            ContentBlockerLoader().start(completion: nil)
+            AppConfigurationFetch().start(completion: nil)
             displayAuthenticationWindow()
             beginAuthentication()
             initialiseBackgroundFetch(application)
@@ -97,10 +97,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Logger.log(items: #function)
 
-        ContentBlockerLoader().start { newData in
+        AppConfigurationFetch().start { newData in
             completionHandler(newData ? .newData : .noData)
         }
-
     }
 
     // MARK: private

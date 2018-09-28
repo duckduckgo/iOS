@@ -40,9 +40,9 @@ public struct AppUrls {
         static let faviconService = "\(base)/ip3/%@.ico"
  
         static let staticBase = "https://staticcdn.duckduckgo.com"
-        static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin"
-        static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json"
-        static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json"
+        static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
+        static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
+        static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"

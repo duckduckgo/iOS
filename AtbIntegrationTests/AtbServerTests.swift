@@ -87,4 +87,7 @@ class MockStatisticsStore: StatisticsStore {
     
     var atbWithVariant: String?
     
+    var httpsUpgradesTotal = 0
+    
+    var httpsUpgradesFailures = 0
 }

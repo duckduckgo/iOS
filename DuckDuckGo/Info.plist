@@ -49,6 +49,8 @@
 	<string>Allows you to save images to your device</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allows you to upload photographs and videos</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Allows you to unlock using Face ID</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>proximanova-light.otf</string>

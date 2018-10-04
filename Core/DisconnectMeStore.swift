@@ -26,23 +26,13 @@ public class DisconnectMeStore {
         static let disconnectJsonAllowed = "disconnect-json-allowed"
     }
 
+    public static var persistenceLocation: URL {
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
+        return path!.appendingPathComponent("disconnectme.json")
+    }
+
     private lazy var stringCache = ContentBlockerStringCache()
 
-    public init() {
-        stringCache = ContentBlockerStringCache()
-        loadTrackers()
-    }
-
-    private func loadTrackers() {
-        do {
-            let data = try Data(contentsOf: DisconnectMeStore.persistenceLocation)
-            self.trackers = try DisconnectMeTrackersParser().convert(fromJsonData: data)
-        } catch {
-            Logger.log(items: "error parsing json for disconnect", error)
-            self.trackers = [:]
-        }
-    }
-    
     var hasData: Bool {
         return !trackers.isEmpty
     }
@@ -78,6 +68,21 @@ public class DisconnectMeStore {
         invalidateCache()
     }
 
+    public init() {
+        stringCache = ContentBlockerStringCache()
+        loadTrackers()
+    }
+    
+    private func loadTrackers() {
+        do {
+            let data = try Data(contentsOf: DisconnectMeStore.persistenceLocation)
+            self.trackers = try DisconnectMeTrackersParser().convert(fromJsonData: data)
+        } catch {
+            Logger.log(items: "error parsing json for disconnect", error)
+            self.trackers = [:]
+        }
+    }
+    
     private func invalidateCache() {
         stringCache.remove(named: CacheKeys.disconnectJsonAllowed)
         stringCache.remove(named: CacheKeys.disconnectJsonBanned)
@@ -90,11 +95,6 @@ public class DisconnectMeStore {
             return jsonString
         }
         return ""
-    }
-
-    public static var persistenceLocation: URL {
-        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
-        return path!.appendingPathComponent("disconnectme.json")
     }
     
     public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {

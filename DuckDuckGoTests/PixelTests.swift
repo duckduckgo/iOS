@@ -38,6 +38,22 @@ class PixelTests: XCTestCase {
 
     }
     
+    func testWhenPixelIsFiredWithAdditionalParametersThenParametersAdded() {
+        let expectation = XCTestExpectation()
+        let params = ["param1": "value1", "param2": "value2"]
+        
+        stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { request -> OHHTTPStubsResponse in
+            XCTAssertEqual("value1", request.url?.getParam(name: "param1"))
+            XCTAssertEqual("value2", request.url?.getParam(name: "param2"))
+            expectation.fulfill()
+            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+        
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone, withAdditionalParameters: params)
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
     func testWhenAppLaunchPixelIsFiredFromPhoneThenCorrectURLRequestIsMade() {
         let expectation = XCTestExpectation()
         
@@ -73,6 +89,36 @@ class PixelTests: XCTestCase {
         }
         
         Pixel.fire(pixel: .appLaunch, forDeviceType: .unspecified)
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+
+    func testWhenPixelFiresSuccessfullyThenCompletesWithNoError() {
+        let expectation = XCTestExpectation()
+        
+        stub(condition: isHost(host)) { _ -> OHHTTPStubsResponse in
+            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        }
+        
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone) { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testWhenPixelFiresUnsuccessfullyThenCompletesWithError() {
+        let expectation = XCTestExpectation()
+        
+        stub(condition: isHost(host)) { _ -> OHHTTPStubsResponse in
+            return OHHTTPStubsResponse(data: Data(), statusCode: 404, headers: nil)
+        }
+        
+        Pixel.fire(pixel: .appLaunch, forDeviceType: .phone) { error in
+            XCTAssertNotNil(error)
+            expectation.fulfill()
+        }
         
         wait(for: [expectation], timeout: 1.0)
     }

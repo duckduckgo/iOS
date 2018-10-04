@@ -20,11 +20,41 @@
 import XCTest
 
 class URLExtensionTests: XCTestCase {
-
+    
+    func testWhenUriContainsDomainThenSimpleUrlIsEqual() {
+        let url = "http://example.com"
+        XCTAssertEqual(url, URL(string: url)!.simpleUrl)
+    }
+    
+    func testWhenUriContainsSubdomainThenSimpleUrlIsEqual() {
+        let url = "http://subdomain.example.com"
+        XCTAssertEqual(url, URL(string: url)!.simpleUrl)
+    }
+    
+    func testWhenUriMissingSchemeThenSimpleUrlIsEqual() {
+        let url = "example.com"
+        XCTAssertEqual(url, URL(string: url)!.simpleUrl)
+    }
+    
+    func testWhenUriContainsPathThenSimpleUrlIsEqual() {
+        let url = "http://example.com/about"
+        XCTAssertEqual(url, URL(string: url)!.simpleUrl)
+    }
+    
+    func testWhenUriContainsUsernameThenSimpleUrlOmitsThis() {
+        let url = "http://user@example.com"
+        XCTAssertEqual("http://example.com", URL(string: url)!.simpleUrl)
+    }
+    
+    func testWhenUriContainsParametersThenSimpleUrlOmitsThese() {
+        let url = "http://example.com?search=54"
+        XCTAssertEqual("http://example.com", URL(string: url)!.simpleUrl)
+    }
+    
     func testWhenURLHasLongTLDItStillIsConsideredValid() {
         XCTAssertTrue(URL.isWebUrl(text: "https://blah.accountants"))
     }
-
+    
     func testWhenUserIsPresentThenIsWebUrlIsFalse() {
         XCTAssertFalse(URL.isWebUrl(text: "http://example.com@sample.com"))
     }

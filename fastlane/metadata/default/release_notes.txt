@@ -1,1 +1,1 @@
-In this release we've fixed a bug that made it difficult to open the tab switcher and also improved what is displayed in the tab switcher.
+In this release we've added optimizations to our HTTPS upgrading solution.

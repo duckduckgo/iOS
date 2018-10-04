@@ -25,9 +25,9 @@ class EmbeddedTermsOfServiceStoreTests: XCTestCase {
     func test() {
         let term = EmbeddedTermsOfServiceStore().terms["google.com"]
         XCTAssertEqual(term?.score, 270)
-        XCTAssertEqual(term?.reasons.good?.count, 0)
-        XCTAssertEqual(term?.reasons.bad?.count, 4)
-        XCTAssertEqual(term?.reasons.bad?[0], "device fingerprinting")
+        XCTAssertEqual(term?.goodReasons.count, 0)
+        XCTAssertEqual(term?.badReasons.count, 4)
+        XCTAssertEqual(term?.badReasons[0], "device fingerprinting")
         XCTAssertEqual(term?.classification, .c)
     }
     

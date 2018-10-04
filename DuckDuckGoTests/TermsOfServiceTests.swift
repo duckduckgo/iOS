@@ -24,13 +24,13 @@ class TermsOfServiceTests: XCTestCase {
     
     func testDerivedScores() {
         let testCases: [(expected: Int, term: TermsOfService)] = [
-            (0, TermsOfService(classification: .a, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (1, TermsOfService(classification: .b, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (5, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (7, TermsOfService(classification: .c, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (7, TermsOfService(classification: nil, score: 101, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (10, TermsOfService(classification: .d, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (10, TermsOfService(classification: nil, score: 151, reasons: TermsOfService.Reasons(good: nil, bad: nil)))
+            (0, TermsOfService(classification: .a, score: 0, goodReasons: [], badReasons: [])),
+            (1, TermsOfService(classification: .b, score: 0, goodReasons: [], badReasons: [])),
+            (5, TermsOfService(classification: nil, score: 0, goodReasons: [], badReasons: [])),
+            (7, TermsOfService(classification: .c, score: 0, goodReasons: [], badReasons: [])),
+            (7, TermsOfService(classification: nil, score: 101, goodReasons: [], badReasons: [])),
+            (10, TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: [])),
+            (10, TermsOfService(classification: nil, score: 151, goodReasons: [], badReasons: []))
         ]
 
         var index = 0
@@ -45,34 +45,34 @@ class TermsOfServiceTests: XCTestCase {
     func testSummaries() {
         let testCases: [(expected: PrivacyPractices.Summary, term: TermsOfService)] = [
             // score and reasons are ignored
-            (.good, TermsOfService(classification: .a, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.mixed, TermsOfService(classification: .b, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.poor, TermsOfService(classification: .c, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.poor, TermsOfService(classification: .d, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.good, TermsOfService(classification: .a, score: 0, goodReasons: [], badReasons: [])),
+            (.mixed, TermsOfService(classification: .b, score: 0, goodReasons: [], badReasons: [])),
+            (.poor, TermsOfService(classification: .c, score: 0, goodReasons: [], badReasons: [])),
+            (.poor, TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: [])),
 
-            (.good, TermsOfService(classification: .a, score: 1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.mixed, TermsOfService(classification: .b, score: -1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.poor, TermsOfService(classification: .c, score: 0, reasons: TermsOfService.Reasons(good: ["reason"], bad: nil))),
-            (.poor, TermsOfService(classification: .d, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: ["reason"]))),
+            (.good, TermsOfService(classification: .a, score: 1, goodReasons: [], badReasons: [])),
+            (.mixed, TermsOfService(classification: .b, score: -1, goodReasons: [], badReasons: [])),
+            (.poor, TermsOfService(classification: .c, score: 0, goodReasons: ["reason"], badReasons: [])),
+            (.poor, TermsOfService(classification: .d, score: 0, goodReasons: [], badReasons: ["reason"])),
 
             // class and score are ignored
-            (.mixed, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: ["reason"], bad: ["reason"]))),
+            (.mixed, TermsOfService(classification: nil, score: 0, goodReasons: ["reason"], badReasons: ["reason"])),
             
             // class and reasons are ignored
-            (.good, TermsOfService(classification: nil, score: -1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.good, TermsOfService(classification: nil, score: -10, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.good, TermsOfService(classification: nil, score: -100, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.good, TermsOfService(classification: nil, score: -1000, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
+            (.good, TermsOfService(classification: nil, score: -1, goodReasons: [], badReasons: [])),
+            (.good, TermsOfService(classification: nil, score: -10, goodReasons: [], badReasons: [])),
+            (.good, TermsOfService(classification: nil, score: -100, goodReasons: [], badReasons: [])),
+            (.good, TermsOfService(classification: nil, score: -1000, goodReasons: [], badReasons: [])),
 
             // class is ignored, must be at least one reason of either kind
-            (.mixed, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: ["reason"], bad: nil))),
-            (.mixed, TermsOfService(classification: nil, score: 0, reasons: TermsOfService.Reasons(good: nil, bad: ["reason"]))),
+            (.mixed, TermsOfService(classification: nil, score: 0, goodReasons: ["reason"], badReasons: [])),
+            (.mixed, TermsOfService(classification: nil, score: 0, goodReasons: [], badReasons: ["reason"])),
 
             // class and reasons are ignored
-            (.poor, TermsOfService(classification: nil, score: 1, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.poor, TermsOfService(classification: nil, score: 10, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.poor, TermsOfService(classification: nil, score: 100, reasons: TermsOfService.Reasons(good: nil, bad: nil))),
-            (.poor, TermsOfService(classification: nil, score: 1000, reasons: TermsOfService.Reasons(good: nil, bad: nil)))
+            (.poor, TermsOfService(classification: nil, score: 1, goodReasons: [], badReasons: [])),
+            (.poor, TermsOfService(classification: nil, score: 10, goodReasons: [], badReasons: [])),
+            (.poor, TermsOfService(classification: nil, score: 100, goodReasons: [], badReasons: [])),
+            (.poor, TermsOfService(classification: nil, score: 1000, goodReasons: [], badReasons: []))
         ]
 
         var index = 0

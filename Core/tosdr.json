@@ -9,7 +9,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "youtube.com": {
         "score": 50,
@@ -51,7 +51,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "xing.com": {
         "score": 0,
@@ -65,7 +65,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "xfire.com": {
         "score": 0,
@@ -77,7 +77,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "worldofwarcraft.com": {
         "score": 0,
@@ -89,7 +89,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "wordpress.com": {
         "score": 50,
@@ -108,7 +108,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "wordfeud.com": {
         "score": 0,
@@ -120,7 +120,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "wikipedia.org": {
         "score": 0,
@@ -137,7 +137,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "whatsapp.com": {
         "score": 0,
@@ -151,7 +151,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "videobb.com": {
         "score": 0,
@@ -163,7 +163,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "vbulletin.com": {
         "score": 0,
@@ -175,7 +175,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "twitter.com": {
         "score": 0,
@@ -196,7 +196,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "twitpic.com": {
         "score": 85,
@@ -214,7 +214,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "tumblr.com": {
         "score": 0,
@@ -233,7 +233,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "steampowered.com": {
         "score": -65,
@@ -261,7 +261,7 @@
                      "you can request access and deletion of personal data"
                      ]
         },
-        "class": null
+        "class": false
     },
     "store.steampowered.com": {
         "score": -65,
@@ -289,7 +289,7 @@
                      "you can request access and deletion of personal data"
                      ]
         },
-        "class": null
+        "class": false
     },
     "spotify.com": {
         "score": 10,
@@ -318,7 +318,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "soundcloud.com": {
         "score": 20,
@@ -357,7 +357,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "skype.com": {
         "score": 0,
@@ -372,7 +372,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "seenthis.net": {
         "score": 0,
@@ -404,7 +404,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "rapidshare.com": {
         "score": -50,
@@ -424,7 +424,7 @@
                      "no third-party access without a warrant"
                      ]
         },
-        "class": null
+        "class": false
     },
     "quora.com": {
         "score": 50,
@@ -440,7 +440,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "phpbb.com": {
         "score": 0,
@@ -452,7 +452,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "packagetrackr.com": {
         "score": 0,
@@ -466,7 +466,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "owncube.com": {
         "score": -25,
@@ -484,7 +484,7 @@
                      "personal data is not sold"
                      ]
         },
-        "class": null
+        "class": false
     },
     "olx.com": {
         "score": 0,
@@ -496,7 +496,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "netflix.com": {
         "score": -20,
@@ -523,7 +523,7 @@
                      "you can request access and deletion of personal data"
                      ]
         },
-        "class": null
+        "class": false
     },
     "nabble.com": {
         "score": 0,
@@ -537,7 +537,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "mint.com": {
         "score": 20,
@@ -554,7 +554,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "microsoft.com": {
         "score": 60,
@@ -576,7 +576,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "lastpass.com": {
         "score": -50,
@@ -667,7 +667,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "jagex.com": {
         "score": 0,
@@ -681,7 +681,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "instagram.com": {
         "score": 0,
@@ -698,7 +698,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "informe.com": {
         "score": 0,
@@ -712,7 +712,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "imgur.com": {
         "score": 50,
@@ -728,7 +728,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "ifttt.com": {
         "score": 0,
@@ -742,7 +742,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "identi.ca": {
         "score": 0,
@@ -756,7 +756,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "hypster.com": {
         "score": 0,
@@ -768,7 +768,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "habbo.com": {
         "score": 0,
@@ -780,7 +780,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "gravatar.com": {
         "score": 0,
@@ -794,7 +794,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "grammarly.com": {
         "score": 20,
@@ -813,7 +813,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "google.com": {
         "score": 270,
@@ -7219,7 +7219,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "foxnews.com": {
         "score": 50,
@@ -7235,7 +7235,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "flickr.com": {
         "score": 0,
@@ -7251,7 +7251,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "flattr.com": {
         "score": 0,
@@ -7265,7 +7265,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "facebook.com": {
         "score": 100,
@@ -7289,7 +7289,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "evernote.com": {
         "score": 0,
@@ -7301,7 +7301,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "envato.com": {
         "score": 0,
@@ -7313,7 +7313,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "ebuddy.com": {
         "score": 0,
@@ -7325,7 +7325,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "duckduckgo.com": {
         "score": -100,
@@ -7449,7 +7449,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "disqus.com": {
         "score": 0,
@@ -7465,7 +7465,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "dictionary.com": {
         "score": 50,
@@ -7481,7 +7481,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "delicious.com": {
         "score": 20,
@@ -7537,7 +7537,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "couchsurfing.org": {
         "score": 20,
@@ -7560,7 +7560,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "cnn.com": {
         "score": 50,
@@ -7576,7 +7576,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "cnet.com": {
         "score": 50,
@@ -7592,7 +7592,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "cloudant.com": {
         "score": 20,
@@ -7635,7 +7635,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "bitly.com": {
         "score": 0,
@@ -7647,7 +7647,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "bearshare.com": {
         "score": 0,
@@ -7659,7 +7659,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "bbc.com": {
         "score": 50,
@@ -7675,7 +7675,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "icloud.com": {
         "score": 0,
@@ -7687,7 +7687,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "apple.com": {
         "score": 0,
@@ -7701,7 +7701,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "app.net": {
         "score": 0,
@@ -7723,7 +7723,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "amazon.com": {
         "score": 110,
@@ -7744,7 +7744,7 @@
                     ],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "allrecipes.com": {
         "score": 0,
@@ -7758,7 +7758,7 @@
             "bad": [],
             "good": []
         },
-        "class": null
+        "class": false
     },
     "500px.com": {
         "score": 0,

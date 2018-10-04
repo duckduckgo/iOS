@@ -56,10 +56,10 @@ class TermsOfServiceListParserTests: XCTestCase {
         XCTAssertEqual(result.count, 2)
         XCTAssertEqual(result["example.com"]?.derivedScore, 5)
         XCTAssertEqual(result["anotherexample.com"]?.derivedScore, 1)
-        XCTAssertEqual(result["example.com"]?.reasons.good?.count, 1)
-        XCTAssertEqual(result["example.com"]?.reasons.good?[0], "you can request access and deletion of personal data")
-        XCTAssertEqual(result["example.com"]?.reasons.bad?.count, 3)
-        XCTAssertEqual(result["example.com"]?.reasons.bad?[0], "targeted third-party advertising")
+        XCTAssertEqual(result["example.com"]?.goodReasons.count, 1)
+        XCTAssertEqual(result["example.com"]?.goodReasons[0], "you can request access and deletion of personal data")
+        XCTAssertEqual(result["example.com"]?.badReasons.count, 3)
+        XCTAssertEqual(result["example.com"]?.badReasons[0], "targeted third-party advertising")
     }
 
 }

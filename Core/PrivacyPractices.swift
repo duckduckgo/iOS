@@ -78,8 +78,8 @@ public class PrivacyPractices {
         let entityScore = entityScores[entityMapping.findEntity(forURL: url) ?? ""]
         return Practice(score: entityScore ?? term.derivedScore,
                         summary: term.summary,
-                        goodReasons: term.reasons.good ?? [],
-                        badReasons: term.reasons.bad ?? [])
+                        goodReasons: term.goodReasons,
+                        badReasons: term.badReasons)
     }
     
 }

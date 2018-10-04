@@ -51,16 +51,15 @@ public class PrivacyPractices {
         var siteScores = [String: Int]()
         
         termsOfServiceStore.terms.forEach {
-            guard let url = URL(string: "http://\($0.key)") else { return }
             let derivedScore = $0.value.derivedScore
 
-            if let entity = entityMapping.findEntity(forURL: url) {
+            if let entity = entityMapping.findEntity(forHost: $0.key) {
                 if entityScores[entity] == nil || entityScores[entity]! < derivedScore {
                     entityScores[entity] = derivedScore
                 }
             }
             
-            if let site = tld.domain(url.host) {
+            if let site = tld.domain($0.key) {
                 siteScores[site] = derivedScore
             }
         }
@@ -72,10 +71,10 @@ public class PrivacyPractices {
         self.entityMapping = entityMapping
     }
     
-    func practice(for url: URL) -> Practice {
-        guard let domain = tld.domain(url.host) else { return Constants.unknown }
+    func findPractice(forHost host: String) -> Practice {
+        guard let domain = tld.domain(host) else { return Constants.unknown }
         guard let term = termsOfServiceStore.terms[domain] else { return Constants.unknown}
-        let entityScore = entityScores[entityMapping.findEntity(forURL: url) ?? ""]
+        let entityScore = entityScores[entityMapping.findEntity(forHost: domain) ?? ""]
         return Practice(score: entityScore ?? term.derivedScore,
                         summary: term.summary,
                         goodReasons: term.goodReasons,

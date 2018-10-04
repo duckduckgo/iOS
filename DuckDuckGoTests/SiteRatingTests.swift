@@ -174,7 +174,7 @@ class SiteRatingTests: XCTestCase {
     func testWhenUrlBelongsToMajorNetworkThenIsMajorNetworkReturnsTrue() {
         let mockPrevalenceStore = MockPrevalenceStore(prevalences: ["TrickyAds": 100.0], major: true)
         let testee = SiteRating(url: Url.http,
-                                entityMapping: EntityMapping(),
+                                entityMapping: MockEntityMapping(entity: "TrickyAds"),
                                 privacyPractices: PrivacyPractices(termsOfServiceStore: classATOS),
                                 prevalenceStore: mockPrevalenceStore)
         XCTAssertTrue(testee.isMajorTrackerNetwork)
@@ -200,8 +200,8 @@ private class MockEntityMapping: EntityMapping {
     init(entity: String?) {
         self.entity = entity
     }
-    
-    override func findEntity(forURL url: URL) -> String? {
+
+    override func findEntity(forHost host: String) -> String? {
         return entity
     }
     

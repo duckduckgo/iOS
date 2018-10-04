@@ -25,7 +25,7 @@ class PrivacyPracticesTests: XCTestCase {
     func testUnknownPrivacyPractices() {
         let tosdrStore = MockTermsOfServiceStore(terms: [:])
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore)
-        let practice = testee.practice(for: URL(string: "http://example.com")!)
+        let practice = testee.findPractice(forHost: "example.com")
         XCTAssertEqual(2, practice.score)
         XCTAssertEqual(.unknown, practice.summary)
     }
@@ -42,7 +42,7 @@ class PrivacyPracticesTests: XCTestCase {
         let entityMappingStore = MockEntityMappingStore()
         let entityMapping = EntityMapping(store: entityMappingStore)
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
-        XCTAssertEqual(10, testee.practice(for: URL(string: "http://sibling1.com")!).score)
+        XCTAssertEqual(10, testee.findPractice(forHost: "sibling1.com").score)
         
     }
     
@@ -55,7 +55,7 @@ class PrivacyPracticesTests: XCTestCase {
         let entityMappingStore = MockEntityMappingStore()
         let entityMapping = EntityMapping(store: entityMappingStore)
         let testee = PrivacyPractices(termsOfServiceStore: tosdrStore, entityMapping: entityMapping)
-        XCTAssertEqual(10, testee.practice(for: URL(string: "http://orphan.com")!).score)
+        XCTAssertEqual(10, testee.findPractice(forHost: "orphan.com").score)
 
     }
     
@@ -63,16 +63,16 @@ class PrivacyPracticesTests: XCTestCase {
         let entityMappingStore = MockEntityMappingStore()
         let entityMapping = EntityMapping(store: entityMappingStore)
         let testee = PrivacyPractices(entityMapping: entityMapping)
-        let score = testee.practice(for: URL(string: "http://google.com")!)
-        XCTAssertEqual(.poor, score.summary)
+        let practice = testee.findPractice(forHost: "google.com")
+        XCTAssertEqual(.poor, practice.summary)
     }
 
     func testWhenSubDomainUsedForLookupThenTermsAreReturned() {
         let entityMappingStore = MockEntityMappingStore()
         let entityMapping = EntityMapping(store: entityMappingStore)
         let testee = PrivacyPractices(entityMapping: entityMapping)
-        let score = testee.practice(for: URL(string: "http://maps.google.com")!)
-        XCTAssertEqual(.poor, score.summary)
+        let practice = testee.findPractice(forHost: "maps.google.com")
+        XCTAssertEqual(.poor, practice.summary)
     }
 
 }

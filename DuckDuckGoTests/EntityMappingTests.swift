@@ -67,28 +67,28 @@ class EntityMappingTests: XCTestCase {
 
     func testWhenDomainHasSubdomainThenParentEntityIsFound() {
         let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.validJson.data(using: .utf8)))
-        XCTAssertEqual("365Media", testee.findEntity(forURL: URL(string: "http://sub.domain.365dm.com")!))
-        XCTAssertEqual("4mads", testee.findEntity(forURL: URL(string: "https://www.4mads.com")!))
+        XCTAssertEqual("365Media", testee.findEntity(forHost: "sub.domain.365dm.com"))
+        XCTAssertEqual("4mads", testee.findEntity(forHost: "www.4mads.com"))
     }
     
     func testWhenJsonContainsUnexpectedPropertiesThenCorrectEntitiesAreExtracted() {
         let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.jsonWithUnexpectedItem.data(using: .utf8)))
-        XCTAssertEqual("365Media", testee.findEntity(forURL: URL(string: "http://aggregateintelligence.com/")!))
+        XCTAssertEqual("365Media", testee.findEntity(forHost: "aggregateintelligence.com"))
     }
 
     func testWhenJsonIsInvalidThenNoEntitiesFound() {
         let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.invalidJson.data(using: .utf8)))
-        XCTAssertNil(testee.findEntity(forURL: URL(string: "http://aggregateintelligence.com/")!))
+        XCTAssertNil(testee.findEntity(forHost: "aggregateintelligence.com"))
     }
     
     func testWhenJsonIsValidThenCorrectEntitiesAreExtracted() {
         
         let testee = EntityMapping(store: MockEntityMappingStore(data: SampleData.validJson.data(using: .utf8)))
-        XCTAssertEqual("365Media", testee.findEntity(forURL: URL(string: "http://aggregateintelligence.com/")!))
-        XCTAssertEqual("365Media", testee.findEntity(forURL: URL(string: "http://365media.com/")!))
-        XCTAssertEqual("365Media", testee.findEntity(forURL: URL(string: "http://365dm.com/")!))
-        XCTAssertEqual("4mads", testee.findEntity(forURL: URL(string: "http://4mads.com/")!))
-        XCTAssertEqual("4mads", testee.findEntity(forURL: URL(string: "http://4madsaye.com/")!))
+        XCTAssertEqual("365Media", testee.findEntity(forHost: "aggregateintelligence.com"))
+        XCTAssertEqual("365Media", testee.findEntity(forHost: "365media.com"))
+        XCTAssertEqual("365Media", testee.findEntity(forHost: "365dm.com"))
+        XCTAssertEqual("4mads", testee.findEntity(forHost: "4mads.com"))
+        XCTAssertEqual("4mads", testee.findEntity(forHost: "4madsaye.com"))
 
     }
     

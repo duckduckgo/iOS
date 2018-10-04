@@ -40,8 +40,7 @@ public class EntityMapping {
         
     }
     
-    func findEntity(forURL url: URL) -> String? {
-        guard let host = url.host else { return nil }
+    func findEntity(forHost host: String) -> String? {
         var parts = host.split(separator: ".")
         
         while !parts.isEmpty {

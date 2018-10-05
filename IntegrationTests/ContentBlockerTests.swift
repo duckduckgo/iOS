@@ -73,11 +73,11 @@ class ContentBlockerTests: XCTestCase {
     func testThatResourcesLoadedViaXhrAreBlocked() {
         checkContentBlocking(onTestPage: TrackerPageUrl.xhr)
     }
-
+    
     func checkContentBlocking(onTestPage url: String, file: StaticString = #file, line: UInt = #line) {
-
+        
         newTab()
-
+        
         enterSearch(url)
 
         waitForPageLoad()
@@ -92,7 +92,7 @@ class ContentBlockerTests: XCTestCase {
     }
 
     private func showTabs() {
-        app.toolbars.buttons["Tabs"].tap()
+        app.toolbars.otherElements["Tabs"].tap()
     }
 
     private func addTab() {

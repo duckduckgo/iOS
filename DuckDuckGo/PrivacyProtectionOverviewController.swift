@@ -22,7 +22,7 @@ import Core
 
 class PrivacyProtectionOverviewController: UITableViewController {
     
-    let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
+    let privacyPracticesImages: [PrivacyPractices.Summary: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Icon Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Icon Privacy Bad On"),
         .mixed: #imageLiteral(resourceName: "PP Icon Privacy Good Off"),
@@ -150,7 +150,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         case .mixed:
             encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Off")
             
-        default: // .unencrypted
+        case .unencrypted:
             encryptionCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Connection Bad")
             
         }
@@ -170,7 +170,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     private func updatePrivacyPractices() {
         privacyPracticesCell.summaryLabel.text = siteRating.privacyPracticesText()
-        privacyPracticesCell.summaryImage.image = privacyPracticesImages[siteRating.privacyPractices()]
+        privacyPracticesCell.summaryImage.image = privacyPracticesImages[siteRating.privacyPracticesSummary()]
     }
     
     private func protecting() -> Bool {
@@ -218,7 +218,6 @@ class ProtectionUpgradedView: UIView {
     
     func update(with siteRating: SiteRating) {
         let siteGradeImages = siteRating.siteGradeImages()
-        isHidden = siteGradeImages.from == siteGradeImages.to
         fromImage.image = siteGradeImages.from
         toImage.image = siteGradeImages.to
     }

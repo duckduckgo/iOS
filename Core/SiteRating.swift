@@ -28,36 +28,59 @@ public class SiteRating {
     public var domain: String? {
         return url.host
     }
+    
+    public var scores: Grade.Scores {
+        if let scores = cache.get(url: url), scores.site.score > grade.scores.site.score {
+            return scores
+        }
+        return grade.scores
+    }
 
     public let url: URL
     public let protectionId: String
     public let httpsForced: Bool
-
+    public let privacyPractice: PrivacyPractices.Practice
+    public let isMajorTrackerNetwork: Bool
+    
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
     public private (set) var trackersDetected = [DetectedTracker: Int]()
     public private (set) var trackersBlocked = [DetectedTracker: Int]()
 
-    private let termsOfServiceStore: TermsOfServiceStore
-    let disconnectMeTrackers: [String: DisconnectMeTracker]
-    let majorTrackerNetworkStore: MajorTrackerNetworkStore
-
+    let prevalenceStore: PrevalenceStore
+    
+    private let grade = Grade()
+    private let cache = GradeCache.shared
+    
     public init(url: URL,
                 httpsForced: Bool = false,
-                disconnectMeTrackers: [String: DisconnectMeTracker] = DisconnectMeStore().trackers,
-                termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(),
-                majorTrackerNetworkStore: MajorTrackerNetworkStore = EmbeddedMajorTrackerNetworkStore(),
+                entityMapping: EntityMapping = EntityMapping(),
+                privacyPractices: PrivacyPractices = PrivacyPractices(),
+                prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore(),
                 protectionId: String = UUID.init().uuidString) {
 
         Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
 
+        if let host = url.host, let entity = entityMapping.findEntity(forHost: host) {
+            self.grade.setParentEntity(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
+            self.isMajorTrackerNetwork = prevalenceStore.isMajorNetwork(named: entity)
+        } else {
+            self.isMajorTrackerNetwork = false
+        }
+
         self.protectionId = protectionId
         self.url = url
         self.httpsForced = httpsForced
-        self.disconnectMeTrackers = disconnectMeTrackers
-        self.termsOfServiceStore = termsOfServiceStore
-        self.majorTrackerNetworkStore = majorTrackerNetworkStore
+        self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
+        self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
+        
+        // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
+        //  then we assume auto upgrade is available for the purpose of grade scoring.
+        self.grade.httpsAutoUpgrade = url.isHttps()
+        self.grade.https = url.isHttps()
+        self.grade.privacyScore = privacyPractice.score
+        
     }
 
     public var https: Bool {
@@ -91,31 +114,25 @@ public class SiteRating {
     }
 
     public var containsMajorTracker: Bool {
-        return trackersDetected.contains(where: { majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "") != nil })
+        return trackersDetected.contains(where: majorNetworkFilter)
     }
 
     public var containsIpTracker: Bool {
         return trackersDetected.contains(where: { $0.key.isIpTracker })
     }
 
-    public var termsOfService: TermsOfService? {
-        guard let domain = self.domain else { return nil }
-        if let tos = termsOfServiceStore.terms.first( where: { domain.hasSuffix($0.0) })?.value {
-            return tos
-        }
-
-        // if not TOS found for this site use the parent's (e.g. google.co.uk should use google.com)
-        let storeDomain = associatedDomain(for: domain) ?? domain
-        return termsOfServiceStore.terms.first( where: { storeDomain.hasSuffix($0.0) })?.value
-    }
-
     public func trackerDetected(_ tracker: DetectedTracker) {
         let detectedCount = trackersDetected[tracker] ?? 0
         trackersDetected[tracker] = detectedCount + 1
 
+        let entity = tracker.networkNameForDisplay
+
         if tracker.blocked {
             let blockCount = trackersBlocked[tracker] ?? 0
             trackersBlocked[tracker] = blockCount + 1
+            grade.addEntityBlocked(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
+        } else {
+            grade.addEntityNotBlocked(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
         }
     }
 
@@ -136,28 +153,27 @@ public class SiteRating {
     }
 
     public var majorNetworkTrackersDetected: [DetectedTracker: Int] {
-        return trackersDetected.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
+        return trackersDetected.filter(majorNetworkFilter)
     }
 
     public var majorNetworkTrackersBlocked: [DetectedTracker: Int] {
-        return trackersBlocked.filter({ majorTrackerNetworkStore.network(forName: $0.key.networkName ?? "" ) != nil })
-    }
-
-    public func associatedDomain(for domain: String) -> String? {
-        let tracker = disconnectMeTrackers.first( where: { domain.hasSuffix($0.value.url) })?.value
-        return tracker?.parentUrl?.host
+        return trackersBlocked.filter(majorNetworkFilter)
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         let trackers = trackers
+            .filter(majorNetworkFilter)
             .keys
-            .filter({ majorTrackerNetworkStore.network(forName: $0.networkName ?? "" ) != nil })
             .compactMap({ $0.networkName })
         return Set(trackers).count
     }
 
     private func uniqueTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {
         return Set(trackers.keys.compactMap({ $0.networkName ?? $0.domain })).count
+    }
+
+    private func majorNetworkFilter(trackerDetected: (DetectedTracker, Int)) -> Bool {
+        return prevalenceStore.isMajorNetwork(named: trackerDetected.0.networkName)
     }
 
 }

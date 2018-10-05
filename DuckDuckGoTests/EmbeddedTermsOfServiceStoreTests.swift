@@ -1,5 +1,5 @@
 //
-//  SiteGrade.swift
+//  EmbeddedTermsOfServiceStoreTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,21 +17,18 @@
 //  limitations under the License.
 //
 
-import Foundation
+import XCTest
+@testable import Core
 
-public enum SiteGrade: String {
-
-    case a
-    case b
-    case c
-    case d
-
-    static func grade(fromScore score: Int) -> SiteGrade {
-        switch score {
-        case Int.min ... 0: return .a
-        case 1: return .b
-        case 2: return .c
-        default: return .d
-        }
+class EmbeddedTermsOfServiceStoreTests: XCTestCase {
+    
+    func test() {
+        let term = EmbeddedTermsOfServiceStore().terms["google.com"]
+        XCTAssertEqual(term?.score, 270)
+        XCTAssertEqual(term?.goodReasons.count, 0)
+        XCTAssertEqual(term?.badReasons.count, 4)
+        XCTAssertEqual(term?.badReasons[0], "device fingerprinting")
+        XCTAssertEqual(term?.classification, .c)
     }
+    
 }

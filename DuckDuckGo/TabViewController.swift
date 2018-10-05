@@ -32,6 +32,7 @@ class TabViewController: WebViewController {
 
     private lazy var appUrls: AppUrls = AppUrls()
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
+    private lazy var disconnectMeStore = DisconnectMeStore()
     
     private(set) var contentBlocker: ContentBlockerConfigurationStore!
     private weak var privacyController: PrivacyProtectionController?
@@ -467,7 +468,7 @@ extension TabViewController: WKScriptMessageHandler {
         var networkName: String?
         var category: String?
         if let domain = url?.host {
-            let networkNameAndCategory = siteRating.networkNameAndCategory(forDomain: domain)
+            let networkNameAndCategory = disconnectMeStore.networkNameAndCategory(forDomain: domain)
             networkName = networkNameAndCategory.networkName
             category = networkNameAndCategory.category
         }

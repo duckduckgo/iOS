@@ -22,7 +22,7 @@ import Core
 
 extension SiteRating {
     
-    static let practicesText: [TermsOfService.PrivacyPractices: String] = [
+    static let practicesText: [PrivacyPractices.Summary: String] = [
         .unknown: UserText.privacyProtectionTOSUnknown,
         .good: UserText.privacyProtectionTOSGood,
         .mixed: UserText.privacyProtectionTOSMixed,
@@ -52,12 +52,11 @@ extension SiteRating {
     }
     
     func privacyPracticesText() -> String? {
-        return SiteRating.practicesText[privacyPractices()]
+        return SiteRating.practicesText[privacyPracticesSummary()]
     }
     
-    func privacyPractices() -> TermsOfService.PrivacyPractices {
-        guard let termsOfService = termsOfService else { return .unknown }
-        return termsOfService.privacyPractices()
+    func privacyPracticesSummary() -> PrivacyPractices.Summary {
+        return privacyPractice.summary
     }
     
     func majorNetworksText(contentBlocker: ContentBlockerConfigurationStore) -> String {
@@ -97,18 +96,19 @@ extension SiteRating {
         return contentBlocker.enabled && !contentBlocker.domainWhitelist.contains(domain)
     }
     
-    static let gradeImages: [SiteGrade: UIImage] = [
+    static let gradeImages: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Inline A"),
+        .bPlus: #imageLiteral(resourceName: "PP Inline B Plus"),
         .b: #imageLiteral(resourceName: "PP Inline B"),
+        .cPlus: #imageLiteral(resourceName: "PP Inline C Plus"),
         .c: #imageLiteral(resourceName: "PP Inline C"),
-        .d: #imageLiteral(resourceName: "PP Inline D")
+        .d: #imageLiteral(resourceName: "PP Inline D"),
+        .dMinus: #imageLiteral(resourceName: "PP Inline D")
     ]
     
     func siteGradeImages() -> (from: UIImage, to: UIImage) {
-        let grades = siteGrade()
-        
-        let fromGrade = grades.before
-        let toGrade = grades.after
+        let fromGrade = scores.site.grade
+        let toGrade = scores.enhanced.grade
         
         return (SiteRating.gradeImages[fromGrade]!, SiteRating.gradeImages[toGrade]!)
     }

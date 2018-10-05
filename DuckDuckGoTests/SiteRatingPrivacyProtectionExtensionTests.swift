@@ -28,14 +28,15 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
     struct Constants {
 
         static let pageURL = URL(string: "https://example.com")!
+        static let majorTracker = DisconnectMeTracker(url: Constants.pageURL.absoluteString, networkName: "major")
 
     }
 
     func testMultipleMajorNetworksBlockedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL,
-                                disconnectMeTrackers: [: ],
-                                termsOfServiceStore: MockTermsOfServiceStore(),
-                                majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+                                entityMapping: EntityMapping(),
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: MockTermsOfServiceStore()),
+                                prevalenceStore: MockPrevalenceStore(prevalences: [:], major: false))
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major1", category: nil, blocked: true))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "major2", category: nil, blocked: true))
         XCTAssertTrue(rating.majorNetworksBlockedText().contains("Trackers Blocked"))
@@ -43,9 +44,9 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
     func testMultipleMajorNetworksDetectedReturnsPluralText() {
         let rating = SiteRating(url: Constants.pageURL,
-                                disconnectMeTrackers: [: ],
-                                termsOfServiceStore: MockTermsOfServiceStore(),
-                                majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+                                entityMapping: EntityMapping(),
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: MockTermsOfServiceStore()),
+                                prevalenceStore: MockPrevalenceStore(prevalences: [:], major: false))
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major1", category: nil, blocked: false))
         rating.trackerDetected(DetectedTracker(url: "otherurl", networkName: "major2", category: nil, blocked: false))
         XCTAssertTrue(rating.majorNetworksDetectedText().contains("Trackers Found"))
@@ -66,17 +67,21 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
     }
 
     func testSingleMajorNetworkBlockedReturnsSinglularText() {
-        let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ],
-                                termsOfServiceStore: MockTermsOfServiceStore(),
-                                majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+        let rating = SiteRating(url: Constants.pageURL,
+                                entityMapping: EntityMapping(),
+                                // disconnectMeTrackers: [ Constants.pageURL.host!: Constants.majorTracker],
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: MockTermsOfServiceStore()),
+                                prevalenceStore: MockPrevalenceStore(prevalences: [ "major": 100.0 ], major: true))
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major", category: nil, blocked: true))
         XCTAssertTrue(rating.majorNetworksBlockedText().contains("Tracker Blocked"))
     }
 
     func testSingleMajorNetworkDetectedReturnsSinglularText() {
-        let rating = SiteRating(url: Constants.pageURL, disconnectMeTrackers: [: ],
-                                termsOfServiceStore: MockTermsOfServiceStore(),
-                                majorTrackerNetworkStore: MockMajorTrackerNetworkStore())
+        let rating = SiteRating(url: Constants.pageURL,
+                                entityMapping: EntityMapping(),
+                                // disconnectMeTrackers: [ Constants.pageURL.host!: Constants.majorTracker],
+                                privacyPractices: PrivacyPractices(termsOfServiceStore: MockTermsOfServiceStore()),
+                                prevalenceStore: MockPrevalenceStore(prevalences: [ "major": 100.0 ], major: true))
         rating.trackerDetected(DetectedTracker(url: "someurl", networkName: "major", category: nil, blocked: false))
         XCTAssertTrue(rating.majorNetworksDetectedText().contains("Tracker Found"))
     }
@@ -95,14 +100,15 @@ class SiteRatingPrivacyProtectionExtensionTests: XCTestCase {
 
 }
 
-private class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
-    func network(forName name: String) -> MajorTrackerNetwork? {
-        return MajorTrackerNetwork(name: name, domain: name, percentageOfPages: 50)
-    }
+private struct MockPrevalenceStore: PrevalenceStore {
 
-    func network(forDomain domain: String) -> MajorTrackerNetwork? {
-        return nil
+    var prevalences: [String: Double]
+    var major: Bool
+
+    func isMajorNetwork(named: String?) -> Bool {
+        return major
     }
+    
 }
 
 private class MockTermsOfServiceStore: TermsOfServiceStore {

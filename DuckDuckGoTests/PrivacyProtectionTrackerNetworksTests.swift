@@ -25,6 +25,8 @@ import XCTest
 @testable import Core
 
 class PrivacyProtectionTrackerNetworksTests: XCTestCase {
+    
+    let prevalenceStore: PrevalenceStore = MockPrevalenceStore(prevalences: [ "Major 1": 25.0, "Major 2": 50.0 ])
 
     func testWhenNetworkNotKnownSectionHasNoRows() {
         let trackers = [DetectedTracker(url: "http://tracker1.com", networkName: nil, category: nil, blocked: false): 1]
@@ -76,7 +78,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "http://tracker2.com", networkName: "Major 2", category: "Category 3", blocked: true): 1
         ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
 
         XCTAssertEqual(3, sections.count)
         XCTAssertEqual("Major 2", sections[0].name)
@@ -93,7 +95,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "http://tracker2.com", networkName: "Major 1", category: "Category 3", blocked: true): 1
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("Major 1", sections[0].name)
@@ -111,7 +113,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "http://tracker2.com", networkName: "Minor", category: "Category 3", blocked: true): 1
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("Minor", sections[0].name)
@@ -129,7 +131,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "http://tracker2.com", networkName: nil, category: "Category 3", blocked: true): 1
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
 
         XCTAssertEqual(3, sections.count)
         XCTAssertEqual("tracker1.com", sections[0].name)
@@ -144,7 +146,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "//tracker.com", networkName: nil, category: "Category 1", blocked: true): 1
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("tracker.com", sections[0].name)
@@ -156,26 +158,18 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "/tracker3.js", networkName: nil, category: "Category 1", blocked: true): 1
             ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, majorTrackerNetworksStore: MockMajorTrackerNetworkStore()).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: prevalenceStore).build()
 
         XCTAssertEqual(0, sections.count)
     }
 
 }
 
-private class MockMajorTrackerNetworkStore: MajorTrackerNetworkStore {
-
-    let networks = [
-        MajorTrackerNetwork(name: "Major 1", domain: "major1.com", percentageOfPages: 25),
-        MajorTrackerNetwork(name: "Major 2", domain: "major2.com", percentageOfPages: 50)
-    ]
-
-    func network(forName name: String) -> MajorTrackerNetwork? {
-        return networks.first(where: { $0.name == name })
+private struct MockPrevalenceStore: PrevalenceStore {
+    
+    var prevalences: [String: Double]
+    
+    func isMajorNetwork(named: String?) -> Bool {
+        return true
     }
-
-    func network(forDomain domain: String) -> MajorTrackerNetwork? {
-        return networks.first(where: { $0.domain == domain })
-    }
-
 }

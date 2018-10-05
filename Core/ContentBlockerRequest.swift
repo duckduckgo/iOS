@@ -30,6 +30,7 @@ class ContentBlockerRequest {
         case httpsBloomFilter
         case httpsWhitelist
         case surrogates
+        case entitylist = "entitylist2"
     }
     
     var requestCount = 0
@@ -82,6 +83,7 @@ class ContentBlockerRequest {
         case .httpsWhitelist: return appUrls.httpsWhitelist
         case .trackersWhitelist: return appUrls.trackersWhitelist
         case .surrogates: return appUrls.surrogates
+        case .entitylist: return appUrls.entitylist
         }
     }
 }

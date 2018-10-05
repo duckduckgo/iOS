@@ -41,7 +41,7 @@ class DisconnectMeStoreTests: XCTestCase {
 
     func clearAll() {
         try? testee.persist(data: "".data(using: .utf8)!)
-        try? FileManager.default.removeItem(at: testee.persistenceLocation)
+        try? FileManager.default.removeItem(at: DisconnectMeStore.persistenceLocation)
     }
 
     func testWhenItemsAreInAllowedListTheyAppearInAllowedJson() {
@@ -78,18 +78,6 @@ class DisconnectMeStoreTests: XCTestCase {
         XCTAssertNil(cache.get(named: DisconnectMeStore.CacheKeys.disconnectJsonAllowed))
     }
 
-    func testWhenBannedJsHasCacheValueThenCachedValueIsReturned() {
-        let cacheValue = "{ someText }"
-        cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonBanned, value: cacheValue)
-        XCTAssertEqual(cacheValue, testee.bannedTrackersJson)
-    }
-
-    func testWhenAllowedJsHasCacheValueThenCachedValueIsReturned() {
-        let cacheValue = "{ someText }"
-        cache.put(name: DisconnectMeStore.CacheKeys.disconnectJsonAllowed, value: cacheValue)
-        XCTAssertEqual(cacheValue, testee.allowedTrackersJson)
-    }
-
     func testWhenBannedJsDoesNotHaveACachedValueThenComputedValueIsReturned() {
         try? testee.persist(data: trackerData)
         let result = testee.bannedTrackersJson
@@ -113,4 +101,19 @@ class DisconnectMeStoreTests: XCTestCase {
         let result = testee.allowedTrackersJson
         XCTAssertEqual( defaultJsValue, result)
     }
+
+    func testWhenNetworkNameAndCategoryExistsForUppercasedDomainTheyAreReturned() {
+        try? testee.persist(data: trackerData)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "99asocialurl.com".uppercased())
+        XCTAssertEqual("asocialurl.com", nameAndCategory.networkName)
+        XCTAssertEqual("Social", nameAndCategory.category)
+    }
+    
+    func testWhenNetworkNameAndCategoryExistsForDomainTheyAreReturned() {
+        try? testee.persist(data: trackerData)
+        let nameAndCategory = testee.networkNameAndCategory(forDomain: "99asocialurl.com")
+        XCTAssertEqual("asocialurl.com", nameAndCategory.networkName)
+        XCTAssertEqual("Social", nameAndCategory.category)
+    }
+    
 }

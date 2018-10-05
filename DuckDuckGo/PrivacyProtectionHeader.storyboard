@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sXL-hA-WaJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sXL-hA-WaJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,118 +23,158 @@
             <objects>
                 <viewController id="sXL-hA-WaJ" customClass="PrivacyProtectionHeaderController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="54I-z7-VwQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3uq-Xe-QnG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="203"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Grade Null" translatesAutoresizingMaskIntoConstraints="NO" id="dBn-cZ-MJt">
-                                        <rect key="frame" x="119" y="20" width="137" height="111"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfX-2n-ECb">
-                                        <rect key="frame" x="103.5" y="139" width="168" height="20"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY PROTECTION DISABLED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMQ-8E-39A">
-                                        <rect key="frame" x="94" y="172" width="187.5" height="12"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                        <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY PROTECTION PAUSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouP-gA-C6m" userLabel="PRIVACY PROTECTION PAUSED">
-                                        <rect key="frame" x="99.5" y="172" width="176.5" height="12"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                        <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpB-oW-OBQ" customClass="ProtectionUpgradedView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="97.5" y="172" width="180" height="12"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tQB-uB-beX">
+                                        <rect key="frame" x="103.5" y="20" width="168" height="148"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENHANCED FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBS-tt-KGX">
-                                                <rect key="frame" x="0.0" y="0.0" width="102.5" height="12"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                                <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Grade Null" translatesAutoresizingMaskIntoConstraints="NO" id="dBn-cZ-MJt">
+                                                <rect key="frame" x="0.0" y="0.0" width="168" height="120"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfX-2n-ECb">
+                                                <rect key="frame" x="0.0" y="128" width="168" height="20"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline D" translatesAutoresizingMaskIntoConstraints="NO" id="3ZI-su-kBH">
-                                                <rect key="frame" x="107.5" y="-3" width="16" height="16"/>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDS-0j-9tL" userLabel="TO">
-                                                <rect key="frame" x="128.5" y="0.0" width="16" height="12"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
-                                                <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline B" translatesAutoresizingMaskIntoConstraints="NO" id="9nI-61-doM">
-                                                <rect key="frame" x="149.5" y="-3" width="16" height="16"/>
-                                            </imageView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="180" id="14x-4D-UI5"/>
-                                            <constraint firstItem="9nI-61-doM" firstAttribute="centerY" secondItem="EDS-0j-9tL" secondAttribute="centerY" constant="-1" id="CMI-9b-T85"/>
-                                            <constraint firstAttribute="height" constant="12" id="IB7-Zd-FIQ"/>
-                                            <constraint firstItem="rBS-tt-KGX" firstAttribute="top" secondItem="FpB-oW-OBQ" secondAttribute="top" id="KeP-Os-dAp"/>
-                                            <constraint firstItem="rBS-tt-KGX" firstAttribute="leading" secondItem="FpB-oW-OBQ" secondAttribute="leading" id="Ofz-MJ-iOM"/>
-                                            <constraint firstItem="3ZI-su-kBH" firstAttribute="centerY" secondItem="EDS-0j-9tL" secondAttribute="centerY" constant="-1" id="Vg8-i1-kig"/>
-                                            <constraint firstItem="EDS-0j-9tL" firstAttribute="top" secondItem="rBS-tt-KGX" secondAttribute="top" id="fVR-W9-cLJ"/>
-                                            <constraint firstItem="3ZI-su-kBH" firstAttribute="leading" secondItem="rBS-tt-KGX" secondAttribute="trailing" constant="5" id="kDb-LN-7U5"/>
-                                            <constraint firstItem="9nI-61-doM" firstAttribute="leading" secondItem="EDS-0j-9tL" secondAttribute="trailing" constant="5" id="vBG-cR-CfP"/>
-                                            <constraint firstItem="EDS-0j-9tL" firstAttribute="leading" secondItem="3ZI-su-kBH" secondAttribute="trailing" constant="5" id="zAo-tp-n5f"/>
-                                        </constraints>
-                                        <viewLayoutGuide key="safeArea" id="Wt5-mq-Nwg"/>
-                                        <connections>
-                                            <outlet property="fromImage" destination="3ZI-su-kBH" id="LWt-dv-Zj4"/>
-                                            <outlet property="toImage" destination="9nI-61-doM" id="CcK-rF-UD1"/>
-                                        </connections>
-                                    </view>
+                                    </stackView>
                                 </subviews>
                                 <accessibility key="accessibilityConfiguration" identifier="header">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
                                 <constraints>
-                                    <constraint firstItem="QfX-2n-ECb" firstAttribute="top" secondItem="dBn-cZ-MJt" secondAttribute="bottom" constant="8" id="7cy-Hl-Lzp"/>
-                                    <constraint firstItem="dBn-cZ-MJt" firstAttribute="top" secondItem="3uq-Xe-QnG" secondAttribute="top" constant="20" id="BpN-lr-eqw"/>
-                                    <constraint firstItem="dBn-cZ-MJt" firstAttribute="centerX" secondItem="3uq-Xe-QnG" secondAttribute="centerX" id="C40-fV-PgJ"/>
-                                    <constraint firstItem="FpB-oW-OBQ" firstAttribute="top" secondItem="QfX-2n-ECb" secondAttribute="bottom" constant="13" id="GVN-GZ-puo"/>
-                                    <constraint firstItem="ouP-gA-C6m" firstAttribute="top" secondItem="QfX-2n-ECb" secondAttribute="bottom" constant="13" id="bHG-WK-HzU"/>
-                                    <constraint firstItem="ouP-gA-C6m" firstAttribute="centerX" secondItem="3uq-Xe-QnG" secondAttribute="centerX" id="s9t-py-xue"/>
-                                    <constraint firstItem="oMQ-8E-39A" firstAttribute="top" secondItem="QfX-2n-ECb" secondAttribute="bottom" constant="13" id="ugu-BV-50a"/>
+                                    <constraint firstItem="tQB-uB-beX" firstAttribute="top" secondItem="3uq-Xe-QnG" secondAttribute="top" constant="20" id="jsx-KM-3eR"/>
+                                    <constraint firstItem="tQB-uB-beX" firstAttribute="centerX" secondItem="3uq-Xe-QnG" secondAttribute="centerX" id="x82-oB-HZ3"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="QfX-2n-ECb" firstAttribute="centerX" secondItem="eDu-XL-siB" secondAttribute="centerX" id="0Jc-SJ-Mcp"/>
-                            <constraint firstItem="FpB-oW-OBQ" firstAttribute="centerX" secondItem="eDu-XL-siB" secondAttribute="centerX" id="CJc-tY-3Y0"/>
                             <constraint firstItem="3uq-Xe-QnG" firstAttribute="width" secondItem="54I-z7-VwQ" secondAttribute="width" id="DIm-IW-sI0"/>
                             <constraint firstItem="3uq-Xe-QnG" firstAttribute="centerY" secondItem="eDu-XL-siB" secondAttribute="centerY" id="EHZ-Vg-GR8"/>
                             <constraint firstItem="3uq-Xe-QnG" firstAttribute="height" secondItem="54I-z7-VwQ" secondAttribute="height" id="Js0-OW-94F"/>
                             <constraint firstItem="3uq-Xe-QnG" firstAttribute="centerX" secondItem="eDu-XL-siB" secondAttribute="centerX" id="fgx-8r-fqE"/>
-                            <constraint firstItem="oMQ-8E-39A" firstAttribute="centerX" secondItem="eDu-XL-siB" secondAttribute="centerX" id="mOc-Zp-BJm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eDu-XL-siB"/>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="203"/>
-                    <size key="freeformSize" width="375" height="203"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="375" height="230"/>
+                    <size key="freeformSize" width="375" height="230"/>
                     <connections>
                         <outlet property="gradeImage" destination="dBn-cZ-MJt" id="Z7T-Zf-d3Z"/>
-                        <outlet property="protectionDisabledLabel" destination="oMQ-8E-39A" id="phD-3S-5IL"/>
-                        <outlet property="protectionPausedLabel" destination="ouP-gA-C6m" id="8Nd-KX-hXg"/>
-                        <outlet property="protectionUpgraded" destination="FpB-oW-OBQ" id="3yD-ri-mwi"/>
+                        <outlet property="privacyGradeLabel" destination="Crm-QC-kK1" id="5yT-x9-zPM"/>
+                        <outlet property="protectionDisabledLabel" destination="5P7-G9-cPW" id="Bvt-gA-lB6"/>
+                        <outlet property="protectionPausedLabel" destination="FIb-U7-6ri" id="OSX-AR-JMb"/>
+                        <outlet property="protectionUpgraded" destination="7Tq-7h-2gl" id="Iw5-On-CMy"/>
                         <outlet property="siteTitleLabel" destination="QfX-2n-ECb" id="AfE-dA-5MY"/>
+                        <outlet property="stackView" destination="tQB-uB-beX" id="Z2Y-MY-GIg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zc9-vm-Nx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="FIb-U7-6ri">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY PROTECTION PAUSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176.5" translatesAutoresizingMaskIntoConstraints="NO" id="6rE-Jv-hAU" userLabel="PRIVACY PROTECTION PAUSED">
+                            <rect key="frame" x="32" y="64" width="176.5" height="12"/>
+                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="6rE-Jv-hAU" firstAttribute="centerX" secondItem="pm5-tB-ODh" secondAttribute="centerX" id="6c6-cY-Zr4"/>
+                        <constraint firstItem="6rE-Jv-hAU" firstAttribute="centerY" secondItem="pm5-tB-ODh" secondAttribute="centerY" constant="6" id="7g2-wz-miv"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="pm5-tB-ODh"/>
+                </view>
+                <view contentMode="scaleToFill" id="Crm-QC-kK1">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY GRADE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176.5" translatesAutoresizingMaskIntoConstraints="NO" id="ouP-gA-C6m">
+                            <rect key="frame" x="73.5" y="64" width="93" height="12"/>
+                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ouP-gA-C6m" firstAttribute="centerX" secondItem="Mms-tV-4wB" secondAttribute="centerX" id="0M4-50-QaE"/>
+                        <constraint firstItem="ouP-gA-C6m" firstAttribute="centerY" secondItem="Mms-tV-4wB" secondAttribute="centerY" constant="6" id="oig-t8-lVc"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="Mms-tV-4wB"/>
+                </view>
+                <view autoresizesSubviews="NO" contentMode="scaleToFill" id="5P7-G9-cPW">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRIVACY PROTECTION DISABLED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="187.5" translatesAutoresizingMaskIntoConstraints="NO" id="oMQ-8E-39A">
+                            <rect key="frame" x="26.5" y="64" width="187.5" height="12"/>
+                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                            <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="oMQ-8E-39A" firstAttribute="centerX" secondItem="Enf-C9-vbM" secondAttribute="centerX" id="OPb-FA-jcF"/>
+                        <constraint firstItem="oMQ-8E-39A" firstAttribute="centerY" secondItem="Enf-C9-vbM" secondAttribute="centerY" constant="6" id="cso-OD-yPu"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="Enf-C9-vbM"/>
+                </view>
+                <view contentMode="scaleToFill" id="7Tq-7h-2gl" customClass="ProtectionUpgradedView" customModule="DuckDuckGo" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="200" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Vo6-q8-d8T">
+                            <rect key="frame" x="13" y="58" width="175.5" height="24"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENHANCED FROM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBS-tt-KGX">
+                                    <rect key="frame" x="0.0" y="6" width="102.5" height="12"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                    <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline D" translatesAutoresizingMaskIntoConstraints="NO" id="3ZI-su-kBH">
+                                    <rect key="frame" x="105.5" y="0.0" width="24" height="24"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDS-0j-9tL" userLabel="TO">
+                                    <rect key="frame" x="132.5" y="6" width="16" height="12"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                    <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Inline B" translatesAutoresizingMaskIntoConstraints="NO" id="9nI-61-doM">
+                                    <rect key="frame" x="151.5" y="0.0" width="24" height="24"/>
+                                </imageView>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="EF8-0n-Jcq"/>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Vo6-q8-d8T" firstAttribute="centerY" secondItem="ZWn-sG-ShU" secondAttribute="centerY" constant="6" id="nU8-Oj-0E0"/>
+                        <constraint firstItem="Vo6-q8-d8T" firstAttribute="centerX" secondItem="ZWn-sG-ShU" secondAttribute="centerX" id="nVG-eL-oGa"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="ZWn-sG-ShU"/>
+                    <connections>
+                        <outlet property="fromImage" destination="3ZI-su-kBH" id="5Rb-KG-Gg2"/>
+                        <outlet property="toImage" destination="9nI-61-doM" id="77v-wr-qaB"/>
+                    </connections>
+                </view>
             </objects>
             <point key="canvasLocation" x="2142" y="107"/>
         </scene>
     </scenes>
     <resources>
-        <image name="PP Grade Null" width="137" height="111"/>
-        <image name="PP Inline B" width="16" height="16"/>
-        <image name="PP Inline D" width="16" height="16"/>
+        <image name="PP Grade Null" width="160" height="120"/>
+        <image name="PP Inline B" width="24" height="24"/>
+        <image name="PP Inline D" width="24" height="24"/>
     </resources>
 </document>

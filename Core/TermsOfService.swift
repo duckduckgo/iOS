@@ -20,6 +20,12 @@
 import Foundation
 
 public struct TermsOfService: Decodable {
+    static let classificationSummaries: [TermsOfService.Classification: PrivacyPractices.Summary] = [
+        .a: .good,
+        .b: .mixed,
+        .c: .poor,
+        .d: .poor
+    ]
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -48,77 +54,58 @@ public struct TermsOfService: Decodable {
         }
     }
 
-    struct Lookups {
-
-        static let classificationAsPractices: [Classification: PrivacyPractices] = [
-            .a: .good,
-            .b: .mixed,
-            .c: .poor,
-            .d: .poor,
-            .e: .poor
-            ]
-
-        static let classificationScores: [Classification: Int] = [
-            .a: -1,
-            .b: 0,
-            .c: 0,
-            .d: 1,
-            .e: 2
-            ]
-
-        static let derivedScoreAsPractices: [Int: PrivacyPractices] = [
-            -1: .good,
-            0: .mixed,
-            1: .poor
-            ]
-
-    }
-
     public let classification: Classification?
     public let score: Int
     public let goodReasons: [String]
     public let badReasons: [String]
 
-    public var hasReasons: Bool {
-        return !goodReasons.isEmpty || !badReasons.isEmpty
+    public var hasGoodReasons: Bool {
+        return !goodReasons.isEmpty
     }
 
-    public var hasUnknownPractices: Bool {
-        return !hasReasons
+    public var hasBadReasons: Bool {
+        return !badReasons.isEmpty
     }
 
-    public var derivedScore: Int {
+    // see https://github.com/duckduckgo/duckduckgo-privacy-extension/blob/e42533/shared/js/background/privacy-practices.es6.js#L65
+    var summary: PrivacyPractices.Summary {
+        
         if let classification = classification {
-            return Lookups.classificationScores[classification]!
+            return TermsOfService.classificationSummaries[classification]!
         }
-
-        return normalizeScore()
-    }
-
-    public func privacyPractices() -> PrivacyPractices {
-        guard !hasUnknownPractices else { return .unknown }
-
-        var practices: PrivacyPractices?
-        if let classification = classification {
-            practices = Lookups.classificationAsPractices[classification]
-        } else if !goodReasons.isEmpty && !badReasons.isEmpty {
+        
+        if hasGoodReasons && hasBadReasons {
             return .mixed
-        } else {
-            practices = Lookups.derivedScoreAsPractices[normalizeScore()]!
         }
-
-        if let practices = practices {
-            return practices
+        
+        if score < 0 {
+            return .good
+        } else if score == 0 && (hasGoodReasons || hasBadReasons) {
+            return .mixed
+        } else if score > 0 {
+            return .poor
         }
-
+        
         return .unknown
     }
-
-    private func normalizeScore() -> Int {
-        // extensions JS uses Math.sign(score)
-        if score < 0 { return -1 }
-        if score > 0 { return 1 }
-        return 0
+    
+    // see https://github.com/duckduckgo/duckduckgo-privacy-extension/blob/e42533/shared/js/background/privacy-practices.es6.js#L20
+    var derivedScore: Int {
+        
+        var derived = 5
+        
+        // asign a score value to the classes/scores provided in the JSON file
+        if classification == .a {
+            derived = 0
+        } else if classification == .b {
+            derived = 1
+        } else if classification == .d || score > 150 {
+            derived = 10
+        } else if classification == .c || score > 100 {
+            derived = 7
+        }
+        
+        return derived
     }
 
     public enum Classification: String, Decodable {
@@ -133,12 +120,6 @@ public struct TermsOfService: Decodable {
             }
             self = classification
         }
-    }
-
-    public enum PrivacyPractices {
-
-        case poor, mixed, good, unknown
-
     }
 
 }

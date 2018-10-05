@@ -34,6 +34,7 @@ public struct AppUrls {
         static let easylistPrivacyBlockList = "\(base)/contentblocking.js?l=easyprivacy"
         static let trackersWhitelist = "\(base)/contentblocking/trackers-whitelist.txt"
         static let surrogates = "\(base)/contentblocking.js?l=surrogates"
+        static let entitylist = "\(base)/contentblocking.js?l=entitylist2"
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
         static let feedback = "\(base)/feedback.js?type=app-feedback"
@@ -91,6 +92,10 @@ public struct AppUrls {
 
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
+    }
+
+    public var entitylist: URL {
+        return URL(string: Url.entitylist)!
     }
 
     public var feedback: URL {

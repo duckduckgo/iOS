@@ -1,1 +1,1 @@
-In this release we've added optimizations to our HTTPS upgrading solution.
+In this release we've updated our privacy grade algorithm and fixed a bug that prevented users from using FaceID to unlock the app.

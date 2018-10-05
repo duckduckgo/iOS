@@ -26,25 +26,18 @@ public class DisconnectMeStore {
         static let disconnectJsonAllowed = "disconnect-json-allowed"
     }
 
+    public static var persistenceLocation: URL {
+        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
+        return path!.appendingPathComponent("disconnectme.json")
+    }
+
     private lazy var stringCache = ContentBlockerStringCache()
 
-    public init() {
-        stringCache = ContentBlockerStringCache()
-    }
-
     var hasData: Bool {
-        return (try? persistenceLocation.checkResourceIsReachable()) ?? false
+        return !trackers.isEmpty
     }
 
-    public var trackers: [String: DisconnectMeTracker] {
-        do {
-            let data = try Data(contentsOf: persistenceLocation)
-            return try parse(data: data)
-        } catch {
-            Logger.log(items: "error parsing json for disconnect", error)
-            return [String: DisconnectMeTracker]()
-        }
-    }
+    public var trackers: [String: DisconnectMeTracker] = [:]
 
     var bannedTrackersJson: String {
         if let cached = stringCache.get(named: CacheKeys.disconnectJsonBanned) {
@@ -62,25 +55,37 @@ public class DisconnectMeStore {
             return cached
         }
         if let json = try? convertToInjectableJson(trackers.filter(byCategory: DisconnectMeTracker.Category.allowed)) {
+            stringCache.put(name: CacheKeys.disconnectJsonAllowed, value: json)
             return json
         }
         return "{}"
     }
 
     func persist(data: Data) throws {
-        Logger.log(items: "DisconnectMeStore", persistenceLocation)
-        try data.write(to: persistenceLocation, options: .atomic)
+        Logger.log(items: "DisconnectMeStore", DisconnectMeStore.persistenceLocation)
+        try data.write(to: DisconnectMeStore.persistenceLocation, options: .atomic)
+        loadTrackers()
         invalidateCache()
     }
 
+    public init() {
+        stringCache = ContentBlockerStringCache()
+        loadTrackers()
+    }
+    
+    private func loadTrackers() {
+        do {
+            let data = try Data(contentsOf: DisconnectMeStore.persistenceLocation)
+            self.trackers = try DisconnectMeTrackersParser().convert(fromJsonData: data)
+        } catch {
+            Logger.log(items: "error parsing json for disconnect", error)
+            self.trackers = [:]
+        }
+    }
+    
     private func invalidateCache() {
         stringCache.remove(named: CacheKeys.disconnectJsonAllowed)
         stringCache.remove(named: CacheKeys.disconnectJsonBanned)
-    }
-
-    private func parse(data: Data) throws -> [String: DisconnectMeTracker] {
-        let parser = DisconnectMeTrackersParser()
-        return try parser.convert(fromJsonData: data)
     }
 
     private func convertToInjectableJson(_ trackers: [String: DisconnectMeTracker]) throws -> String {
@@ -91,9 +96,13 @@ public class DisconnectMeStore {
         }
         return ""
     }
-
-    public var persistenceLocation: URL {
-        let path = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: ContentBlockerStoreConstants.groupName)
-        return path!.appendingPathComponent("disconnectme.json")
+    
+    public func networkNameAndCategory(forDomain domain: String) -> ( networkName: String?, category: String? ) {
+        let lowercasedDomain = domain.lowercased()
+        if let tracker = trackers.first(where: { lowercasedDomain == $0.key || lowercasedDomain.hasSuffix(".\($0.key)") })?.value {
+            return ( tracker.networkName, tracker.category?.rawValue )
+        }
+        return ( nil, nil )
     }
+
 }

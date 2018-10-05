@@ -120,11 +120,6 @@ public struct UserText {
 
     public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", comment:  "Unknown error occurred")
     
-    public static func forSiteGrade(_ grade: SiteGrade) -> String {
-        let key = "monitoring.sitegrade.\(grade.rawValue)"
-        return NSLocalizedString(key, comment: "Grade \(grade.rawValue)")
-    }
-    
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     

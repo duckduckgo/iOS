@@ -22,7 +22,7 @@ import Core
 
 class PrivacyProtectionPracticesController: UIViewController {
 
-    let privacyPracticesImages: [TermsOfService.PrivacyPractices: UIImage] = [
+    let privacyPracticesImages: [PrivacyPractices.Summary: UIImage] = [
         .unknown: #imageLiteral(resourceName: "PP Hero Privacy Bad Off"),
         .poor: #imageLiteral(resourceName: "PP Hero Privacy Bad On"),
         .mixed: #imageLiteral(resourceName: "PP Hero Privacy Good Off"),
@@ -77,16 +77,16 @@ class PrivacyProtectionPracticesController: UIViewController {
     }
 
     private func updateImageIcon() {
-        iconImage.image = privacyPracticesImages[siteRating.privacyPractices()]
+        iconImage.image = privacyPracticesImages[siteRating.privacyPracticesSummary()]
     }
 
     private func updateDomainLabel() {
         domainLabel.text = siteRating.domain
     }
 
-    private func updateReasons() {
-        let goodReasons = self.siteRating.termsOfService?.goodReasons ?? []
-        let badReasons = self.siteRating.termsOfService?.badReasons ?? []
+    private func updateReasons() {            
+        let goodReasons = siteRating.privacyPractice.goodReasons
+        let badReasons = siteRating.privacyPractice.badReasons
         let goodRows = goodReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: true) })
         let badRows = badReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: false) })
         rows = goodRows + badRows

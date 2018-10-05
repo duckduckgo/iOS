@@ -22,24 +22,32 @@ import Core
 
 class PrivacyProtectionHeaderController: UIViewController {
 
-    private static let gradesOn: [SiteGrade: UIImage] = [
+    private static let gradesOn: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A On"),
+        .bPlus: #imageLiteral(resourceName: "PP Grade B Plus On"),
         .b: #imageLiteral(resourceName: "PP Grade B On"),
+        .cPlus: #imageLiteral(resourceName: "PP Grade C Plus On"),
         .c: #imageLiteral(resourceName: "PP Grade C On"),
-        .d: #imageLiteral(resourceName: "PP Grade D On")
+        .d: #imageLiteral(resourceName: "PP Grade D On"),
+        .dMinus: #imageLiteral(resourceName: "PP Grade D On")
         ]
 
-    private static let gradesOff: [SiteGrade: UIImage] = [
+    private static let gradesOff: [Grade.Grading: UIImage] = [
         .a: #imageLiteral(resourceName: "PP Grade A Off"),
+        .bPlus: #imageLiteral(resourceName: "PP Grade B Plus Off"),
         .b: #imageLiteral(resourceName: "PP Grade B Off"),
+        .cPlus: #imageLiteral(resourceName: "PP Grade C Plus Off"),
         .c: #imageLiteral(resourceName: "PP Grade C Off"),
-        .d: #imageLiteral(resourceName: "PP Grade D Off")
+        .d: #imageLiteral(resourceName: "PP Grade D Off"),
+        .dMinus: #imageLiteral(resourceName: "PP Grade D Off")
         ]
 
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var gradeImage: UIImageView!
     @IBOutlet weak var siteTitleLabel: UILabel!
-    @IBOutlet weak var protectionPausedLabel: UILabel!
-    @IBOutlet weak var protectionDisabledLabel: UILabel!
+    @IBOutlet weak var privacyGradeLabel: UIView!
+    @IBOutlet weak var protectionPausedLabel: UIView!
+    @IBOutlet weak var protectionDisabledLabel: UIView!
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
 
     private weak var siteRating: SiteRating!
@@ -52,25 +60,34 @@ class PrivacyProtectionHeaderController: UIViewController {
     private func update() {
         guard isViewLoaded else { return }
 
-        let grades = siteRating.siteGrade()
+        let grades = siteRating.scores
         let protecting = contentBlocker.protecting(domain: siteRating.domain)
-        let grade =  protecting ? grades.after : grades.before
+        let grade =  protecting ? grades.enhanced.grade : grades.site.grade
         gradeImage.image = protecting ? PrivacyProtectionHeaderController.gradesOn[grade] : PrivacyProtectionHeaderController.gradesOff[grade]
 
         siteTitleLabel.text = siteRating.domain
 
-        protectionPausedLabel.isHidden = true
-        protectionDisabledLabel.isHidden = true
-        protectionUpgraded.isHidden = true
+        privacyGradeLabel.removeFromSuperview()
+        protectionPausedLabel.removeFromSuperview()
+        protectionDisabledLabel.removeFromSuperview()
+        protectionUpgraded.removeFromSuperview()
+        
+        stackView.removeArrangedSubview(privacyGradeLabel)
+        stackView.removeArrangedSubview(protectionPausedLabel)
+        stackView.removeArrangedSubview(protectionDisabledLabel)
+        stackView.removeArrangedSubview(protectionUpgraded)
 
         if !contentBlocker.enabled {
-            protectionDisabledLabel.isHidden = false
+            stackView.addArrangedSubview(protectionDisabledLabel)
         } else if contentBlocker.domainWhitelist.contains(siteRating.domain ?? "") {
-            protectionPausedLabel.isHidden = false
-        } else {
-            protectionUpgraded.isHidden = false
+            stackView.addArrangedSubview(protectionPausedLabel)
+        } else if siteRating.scores.enhanced != siteRating.scores.site {
             protectionUpgraded.update(with: siteRating)
+            stackView.addArrangedSubview(protectionUpgraded)
+        } else {
+            stackView.addArrangedSubview(privacyGradeLabel)
         }
+        
     }
 
 }

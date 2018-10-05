@@ -27,6 +27,7 @@ public class ContentBlockerLoader {
     private var disconnectStore = DisconnectMeStore()
     private var httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     private var surrogateStore = SurrogateStore()
+    private var entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
 
     public var hasData: Bool {
         return disconnectStore.hasData && easylistStore.hasData
@@ -52,11 +53,29 @@ public class ContentBlockerLoader {
         }
         easylistStore.removeLegacyLists()
     }
-
+    
     private func startRequests(with semaphore: DispatchSemaphore) -> Int {
-
         let contentBlockerRequest = ContentBlockerRequest()
-
+        requestEntityList(contentBlockerRequest, semaphore)
+        requestDisconnectMe(contentBlockerRequest, semaphore)
+        requestTrackerWhitelist(contentBlockerRequest, semaphore)
+        requestHttpsUpgrade(contentBlockerRequest, semaphore)
+        requestHttpsWhitelist(contentBlockerRequest, semaphore)
+        requestSurrogates(contentBlockerRequest, semaphore)
+        return contentBlockerRequest.requestCount
+    }
+    
+    fileprivate func requestEntityList(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
+        contentBlockerRequest.request(.entitylist) { data, isCached in
+            if let data = data, !isCached {
+                self.newDataItems += 1
+                self.entityMappingStore.persist(data: data)
+            }
+            semaphore.signal()
+        }
+    }
+    
+    fileprivate func requestDisconnectMe(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.disconnectMe) { data, isCached in
             if let data = data, !isCached {
                 self.newDataItems += 1
@@ -64,7 +83,9 @@ public class ContentBlockerLoader {
             }
             semaphore.signal()
         }
-
+    }
+    
+    fileprivate func requestTrackerWhitelist(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.trackersWhitelist) { data, isCached in
             if let data = data, !isCached {
                 self.newDataItems += 1
@@ -72,19 +93,21 @@ public class ContentBlockerLoader {
             }
             semaphore.signal()
         }
-        
+    }
+    
+    fileprivate func requestHttpsUpgrade(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.httpsBloomFilterSpec) { data, _ in
             guard let data = data, let specification = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data) else {
                 semaphore.signal()
                 return
             }
-                
+            
             if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification(), storedSpecification == specification {
                 Logger.log(text: "Bloom filter already downloaded")
                 semaphore.signal()
                 return
             }
-                
+            
             contentBlockerRequest.request(.httpsBloomFilter) { data, _ in
                 guard let data = data else {
                     semaphore.signal()
@@ -96,7 +119,9 @@ public class ContentBlockerLoader {
                 semaphore.signal()
             }
         }
-        
+    }
+    
+    fileprivate func requestHttpsWhitelist(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.httpsWhitelist) { data, isCached in
             if let data = data, !isCached, let whitelist = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data) {
                 self.newDataItems += 1
@@ -104,7 +129,9 @@ public class ContentBlockerLoader {
             }
             semaphore.signal()
         }
-
+    }
+    
+    fileprivate func requestSurrogates(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.surrogates) { data, isCached in
             if let data = data, !isCached {
                 self.newDataItems += 1
@@ -112,8 +139,5 @@ public class ContentBlockerLoader {
             }
             semaphore.signal()
         }
-
-        return contentBlockerRequest.requestCount
     }
-
 }

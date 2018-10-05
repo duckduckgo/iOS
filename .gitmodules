@@ -4,3 +4,6 @@
 [submodule "submodules/bloom_cpp"]
 	path = submodules/bloom_cpp
 	url = https://github.com/duckduckgo/bloom_cpp
+[submodule "submodules/privacy-grade"]
+	path = submodules/privacy-grade
+	url = https://github.com/duckduckgo/privacy-grade

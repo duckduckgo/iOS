@@ -54,19 +54,19 @@ class MigrationTests: XCTestCase {
 
     func testWhenMigrationHasOccuredCompletionReturnsFalse() {
 
-        let expectation = XCTestExpectation(description: "testWhenMigrationHasOccuredCompletionReturnsFalse")
+        let initialMigration = XCTestExpectation(description: "testWhenMigrationHasOccuredCompletionReturnsFalse")
         migration.start { occurred, _, _ in
             XCTAssertTrue(occurred)
-            expectation.fulfill()
+            initialMigration.fulfill()
         }
-        wait(for: [expectation], timeout: 1)
+        wait(for: [initialMigration], timeout: 1)
 
+        let subsequentMigration = XCTestExpectation(description: "testWhenMigrationHasOccuredCompletionReturnsFalse")
         migration.start { occurred, _, _ in
             XCTAssertFalse(occurred)
-            expectation.fulfill()
+            subsequentMigration.fulfill()
         }
-        wait(for: [expectation], timeout: 1)
-
+        wait(for: [subsequentMigration], timeout: 1)
     }
 
     func testMigrateBothTypes() {

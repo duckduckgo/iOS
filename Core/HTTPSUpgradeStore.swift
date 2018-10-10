@@ -51,7 +51,7 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
     
     public func bloomFilter() -> BloomFilterWrapper? {
         guard hasBloomFilterData else { return nil }
-        var bloomFilter: BloomFilterWrapper? = nil
+        var bloomFilter: BloomFilterWrapper?
         container.managedObjectContext.performAndWait {
             if let specification = bloomFilterSpecification() {
                 let entries = specification.totalEntries

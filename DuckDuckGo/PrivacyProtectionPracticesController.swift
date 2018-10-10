@@ -133,7 +133,7 @@ extension PrivacyProtectionPracticesController: UITableViewDelegate {
             return 250
         }
 
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 
 }

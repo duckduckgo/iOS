@@ -129,15 +129,15 @@ class TabSwitcherButton: UIView {
         })
     }
     
-    private func attributes() -> [NSAttributedStringKey: Any] {
+    private func attributes() -> [NSAttributedString.Key: Any] {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.center
         
         let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
-        return [ NSAttributedStringKey.font: font,
-                 NSAttributedStringKey.foregroundColor: UIColor.grayish,
-                 NSAttributedStringKey.paragraphStyle: paragraphStyle ]
+        return [ NSAttributedString.Key.font: font,
+                 NSAttributedString.Key.foregroundColor: UIColor.grayish,
+                 NSAttributedString.Key.paragraphStyle: paragraphStyle ]
     }
     
     private func tint(alpha: CGFloat) {

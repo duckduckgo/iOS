@@ -44,7 +44,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func addAplicationActiveObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationBecameActive), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onApplicationBecameActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     private func configureTableView() {

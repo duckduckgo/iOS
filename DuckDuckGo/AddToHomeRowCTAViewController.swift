@@ -72,8 +72,8 @@ class AddToHomeRowCTAViewController: UIViewController {
     }
 
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     private func animateOnFirstAppearance() {
@@ -106,7 +106,7 @@ fileprivate extension NSNotification {
 
     func keyboardAnimationDuration() -> Double {
         let defaultDuration = 0.3
-        let duration = userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double ?? defaultDuration
+        let duration = userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? defaultDuration
         // the animation duration in userInfo could be 0, so ensure we always have some animation
         return min(duration, defaultDuration)
     }

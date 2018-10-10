@@ -27,8 +27,8 @@ class HomeRowInstructionsViewController: UIViewController {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var playButton: UIImageView!
 
-    weak var layer: AVPlayerLayer?
-    weak var player: AVPlayer?
+    var layer: AVPlayerLayer?
+    var player: AVPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()

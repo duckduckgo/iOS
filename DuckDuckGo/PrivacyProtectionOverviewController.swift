@@ -35,7 +35,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     @IBOutlet weak var trackersCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
     
-    fileprivate weak var popRecognizer: InteractivePopRecognizer!
+    fileprivate var popRecognizer: InteractivePopRecognizer!
     
     private weak var siteRating: SiteRating!
     private weak var contentBlocker: ContentBlockerConfigurationStore!

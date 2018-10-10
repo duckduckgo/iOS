@@ -1,6 +1,6 @@
 before_install:
   - brew update
-  - brew upgrade swiftlint
+  - brew upgrade swiftlint || true
 language: objective-c
 osx_image: xcode10
 cache:

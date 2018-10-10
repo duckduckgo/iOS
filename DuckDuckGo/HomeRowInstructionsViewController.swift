@@ -69,7 +69,7 @@ class HomeRowInstructionsViewController: UIViewController {
     private func addVideo() {
         let movieURL = Bundle.main.url(forResource: "home-row-instructions", withExtension: "mp4")!
         player = AVPlayer(url: movieURL)
-        _ = try? AVAudioSession.sharedInstance().setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: .mixWithOthers)
+        _ = try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
 
         layer = AVPlayerLayer(player: player)
         videoContainerView.layer.addSublayer(layer!)
@@ -93,10 +93,4 @@ class HomeRowInstructionsViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
-	return input.rawValue
 }

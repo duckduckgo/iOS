@@ -50,8 +50,8 @@ public class DisconnectMeTracker: NSObject {
         return url == other.url && networkName == other.networkName && category == other.category
     }
 
-    public override var hashValue: Int {
-        return "\(url) \(String(describing: networkName)) \(String(describing: category))".hashValue
+    public override var hash: Int {
+        return "\(url) \(String(describing: networkName)) \(String(describing: category))".hash
     }
 
 }

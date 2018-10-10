@@ -48,35 +48,35 @@ class DisconnectMeTrackerTests: XCTestCase {
         let lhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork, category: .social)
         let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork, category: .social)
         XCTAssertEqual(lhs, rhs)
-        XCTAssertEqual(lhs.hashValue, rhs.hashValue)
+        XCTAssertEqual(lhs.hash, rhs.hash)
     }
 
     func testWhenTrackersWithSameUrlAndNetworkAndDifferentCategoryThenNotEqualAndHashNotSame() {
         let lhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork, category: .analytics)
         let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork)
         XCTAssertNotEqual(lhs, rhs)
-        XCTAssertNotEqual(lhs.hashValue, rhs.hashValue)
+        XCTAssertNotEqual(lhs.hash, rhs.hash)
     }
 
     func testWhenTrackersWithDifferentUrlAnSameNetworkThenNotEqualAndHashNotSame() {
         let lhs = DisconnectMeTracker(url: Constants.yahooAnswersUrl, networkName: Constants.googleNetwork)
         let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork)
         XCTAssertNotEqual(lhs, rhs)
-        XCTAssertNotEqual(lhs.hashValue, rhs.hashValue)
+        XCTAssertNotEqual(lhs.hash, rhs.hash)
     }
 
     func testWhenTrackersWithSameUrlAndDifferentNetworkThenNotEqualAndHashNotSame() {
         let lhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork)
         let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.yahooNetwork)
         XCTAssertNotEqual(lhs, rhs)
-        XCTAssertNotEqual(lhs.hashValue, rhs.hashValue)
+        XCTAssertNotEqual(lhs.hash, rhs.hash)
     }
 
     func testWhenTrackersWithSameUrlAndNetworkThenEqualAndHashSame() {
         let lhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork)
         let rhs = DisconnectMeTracker(url: Constants.gtmUrl, networkName: Constants.googleNetwork)
         XCTAssertEqual(lhs, rhs)
-        XCTAssertEqual(lhs.hashValue, rhs.hashValue)
+        XCTAssertEqual(lhs.hash, rhs.hash)
     }
 
 }

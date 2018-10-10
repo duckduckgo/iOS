@@ -19,25 +19,6 @@ import XCTest
 var deviceLanguage = ""
 var locale = ""
 
-func setupSnapshot(_ app: XCUIApplication) {
-    Snapshot.setupSnapshot(app)
-}
-
-func snapshot(_ name: String, waitForLoadingIndicator: Bool) {
-    if waitForLoadingIndicator {
-        Snapshot.snapshot(name)
-    } else {
-        Snapshot.snapshot(name, timeWaitingForIdle: 0)
-    }
-}
-
-/// - Parameters:
-///   - name: The name of the snapshot
-///   - timeout: Amount of seconds to wait until the network loading indicator disappears. Pass `0` if you don't want to wait.
-func snapshot(_ name: String, timeWaitingForIdle timeout: TimeInterval = 20) {
-    Snapshot.snapshot(name, timeWaitingForIdle: timeout)
-}
-
 enum SnapshotError: Error, CustomDebugStringConvertible {
     case cannotDetectUser
     case cannotFindHomeDirectory

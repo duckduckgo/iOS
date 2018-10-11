@@ -57,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
         Pixel.fire(pixel: .appLaunch)
-        startMigration(application: application)
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
@@ -134,18 +133,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = TutorialSettings()
         if !settings.hasSeenOnboarding {
             main.showOnboarding()
-        }
-    }
-
-    private func startMigration(application: UIApplication) {
-        // This should happen so fast that it's complete by the time the user finishes onboarding.  
-        Migration().start { occurred, storiesMigrated, bookmarksMigrated in
-            Logger.log(items: "Migration completed", occurred, storiesMigrated, bookmarksMigrated)
-            if occurred {
-                DispatchQueue.main.async {
-                    application.shortcutItems = []
-                }
-            }
         }
     }
 

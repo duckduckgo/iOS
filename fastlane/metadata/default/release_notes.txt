@@ -1,1 +1,1 @@
-In this release we've updated our privacy grade algorithm and fixed a bug that prevented users from using FaceID to unlock the app.
+In this release we updated our tooling to support XCode 10, Swift 4.2 and iOS 12. This is an internal / beta only validation release.

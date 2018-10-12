@@ -245,7 +245,7 @@ private class SlideUpBehindOmniBarTransitioning: NSObject, UIViewControllerAnima
 extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate {
 
     func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-        view.bringSubview(toFront: contentContainer)
+        view.bringSubviewToFront(contentContainer)
         headerConstraint.constant = -omniBarContainer.frame.size.height
     }
 

@@ -45,7 +45,7 @@ extension WKWebView {
         }
 
         while !complete {
-            RunLoop.current.run(mode: .defaultRunLoopMode, before: .distantFuture)
+            RunLoop.current.run(mode: RunLoop.Mode.default, before: .distantFuture)
         }
         return url
     }

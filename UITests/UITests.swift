@@ -43,7 +43,7 @@ class UITests: XCTestCase {
     func test() {
 
         let app = XCUIApplication()
-        setupSnapshot(app)
+        Snapshot.setupSnapshot(app)
 
         app.completeOnboarding("01_")
         app.showAbout("02_")
@@ -74,17 +74,16 @@ fileprivate extension XCUIApplication {
     func completeOnboarding(_ snapshotPrefix: String) {
 
         let continueButton = buttons["Continue"]
-
-        snapshot("\(snapshotPrefix)OnboardingPage1")
+        Snapshot.snapshot("\(snapshotPrefix)OnboardingPage1")
         continueButton.tap()
-        snapshot("\(snapshotPrefix)OnboardingPage1")
+        Snapshot.snapshot("\(snapshotPrefix)OnboardingPage1")
         continueButton.tap()
     }
 
     func showAbout(_ snapshotPrefix: String) {
-        buttons["settings"].tap()
+        buttons["Settings"].tap()
         tables.cells["about"].tap()
-        snapshot("\(snapshotPrefix)About")
+        Snapshot.snapshot("\(snapshotPrefix)About")
 
         scrollViews.otherElements.buttons["aboutPage"].tap()
     }
@@ -93,28 +92,28 @@ fileprivate extension XCUIApplication {
         let searchEntry = searchFields["searchEntry"]
         searchEntry.tap()
         searchEntry.typeText(term)
-        buttons["Go"].tap()
+        keyboards.buttons["Go"].tap()
     }
 
     func examinePrivacyDashboard(_ snapshotPrefix: String) {
 
         otherElements["siteRating"].tap()
-        snapshot("\(snapshotPrefix)01SiteRating")
+        Snapshot.snapshot("\(snapshotPrefix)01SiteRating")
 
         tables.otherElements["header"].tap()
-        snapshot("\(snapshotPrefix)02ScoreCard")
+        Snapshot.snapshot("\(snapshotPrefix)02ScoreCard")
 
         tables.buttons["backButton"].tap()
         tables.cells["encryption"].tap()
-        snapshot("\(snapshotPrefix)03Encryption")
+        Snapshot.snapshot("\(snapshotPrefix)03Encryption")
 
         tables.buttons["backButton"].tap()
         tables.cells["trackerCount"].tap()
-        snapshot("\(snapshotPrefix)04Trackers")
+        Snapshot.snapshot("\(snapshotPrefix)04Trackers")
 
         tables.buttons["backButton"].tap()
         tables.cells["privacyPractices"].tap()
-        snapshot("\(snapshotPrefix)05PrivacyPractices")
+        Snapshot.snapshot("\(snapshotPrefix)05PrivacyPractices")
 
         otherElements["siteRating"].tap()
     }
@@ -123,7 +122,7 @@ fileprivate extension XCUIApplication {
         otherElements["siteRating"].tap()
 
         tables.switches["privacyProtectionToggle"].tap()
-        snapshot("\(snapshotPrefix)PrivacyToggled")
+        Snapshot.snapshot("\(snapshotPrefix)PrivacyToggled")
 
         otherElements["siteRating"].tap()
     }
@@ -131,7 +130,7 @@ fileprivate extension XCUIApplication {
     func examineNetworkOffenders(_ snapshotPrefix: String) {
         otherElements["siteRating"].tap()
         tables.otherElements["networkOffenders"].tap()
-        snapshot("\(snapshotPrefix)NetworkOffenders")
+        Snapshot.snapshot("\(snapshotPrefix)NetworkOffenders")
         otherElements["siteRating"].tap()
     }
 

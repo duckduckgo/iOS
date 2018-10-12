@@ -28,7 +28,7 @@ extension NibLoading where Self: UIView {
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? Self else {
             fatalError("Error instantiating view")
         }
-        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        view.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
         return view
     }
 }

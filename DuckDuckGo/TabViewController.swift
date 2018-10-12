@@ -392,8 +392,8 @@ class TabViewController: WebViewController {
     func dismiss() {
         chromeDelegate = nil
         webView.scrollView.delegate = nil
-        willMove(toParentViewController: nil)
-        removeFromParentViewController()
+        willMove(toParent: nil)
+        removeFromParent()
         view.removeFromSuperview()
     }
 

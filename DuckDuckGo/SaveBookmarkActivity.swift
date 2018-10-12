@@ -29,7 +29,7 @@ class SaveBookmarkActivity: UIActivity {
         return UserText.actionSaveBookmark
     }
 
-    override var activityType: UIActivityType? {
+    override var activityType: UIActivity.ActivityType? {
         return .saveBookmarkInDuckDuckGo
     }
 
@@ -70,6 +70,6 @@ class SaveBookmarkActivity: UIActivity {
     }
 }
 
-extension UIActivityType {
-    public static let saveBookmarkInDuckDuckGo = UIActivityType("com.duckduckgo.save.bookmark")
+extension UIActivity.ActivityType {
+    public static let saveBookmarkInDuckDuckGo = UIActivity.ActivityType("com.duckduckgo.save.bookmark")
 }

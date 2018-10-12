@@ -43,8 +43,8 @@ class SuggestionTableViewCell: UITableViewCell {
     private func styleText(query: String, text: String) {
 
         let attributes = [
-            NSAttributedStringKey.font: UIFont.semiBoldAppFont(ofSize: 16),
-            NSAttributedStringKey.foregroundColor: UIColor.white
+            NSAttributedString.Key.font: UIFont.semiBoldAppFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor: UIColor.white
         ]
 
         let text = NSMutableAttributedString(string: text)

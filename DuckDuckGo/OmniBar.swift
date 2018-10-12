@@ -53,7 +53,7 @@ class OmniBar: UIView {
 
     private func configureTextField() {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
-                                                             attributes: [NSAttributedStringKey.foregroundColor: UIColor.grayish])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.grayish])
         textField.delegate = self
     }
 

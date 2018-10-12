@@ -36,6 +36,7 @@ class ContentBlockerTests: XCTestCase {
 
     struct Timeout {
         static let postFirstLaunch: UInt32 = 10
+        static let fireAnimation: UInt32 = 1
         static let pageLoad: UInt32 = 5
     }
 
@@ -115,6 +116,7 @@ class ContentBlockerTests: XCTestCase {
     private func clearTabsAndData() {
         app.toolbars.buttons["Fire"].tap()
         app.sheets.buttons["Clear Tabs and Data"].tap()
+        sleep(Timeout.fireAnimation)
     }
 
     private func enterSearch(_ text: String, submit: Bool = true) {

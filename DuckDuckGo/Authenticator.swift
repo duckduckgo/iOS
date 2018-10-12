@@ -27,7 +27,7 @@ public class Authenticator {
 
     public func canAuthenticate() -> Bool {
         let context = LAContext()
-        var error: NSError? = nil
+        var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(policy, error: &error)
         return canAuthenticate
     }

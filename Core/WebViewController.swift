@@ -91,7 +91,7 @@ open class WebViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(onApplicationWillResignActive),
-                                               name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+                                               name: UIApplication.willResignActiveNotification, object: nil)
     }
 
     @objc func onApplicationWillResignActive() {

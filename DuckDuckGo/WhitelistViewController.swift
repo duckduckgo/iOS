@@ -42,7 +42,7 @@ class WhitelistViewController: UITableViewController {
         return whitelistManager.count > 0
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
 
         if let domain = whitelistManager.domain(at: indexPath.row) {

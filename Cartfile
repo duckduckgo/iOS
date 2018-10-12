@@ -1,13 +1,13 @@
 # We are using a more recent commit for exception handling. Upgrade
 # to next release after 3.1.4, when available
 
-github "duckduckgo/Kingfisher" ~> 3.10.3
+github "duckduckgo/Kingfisher" ~> 4.10.0
 
 github "duckduckgo/Device.swift" ~> 1.1.2
 
-github "duckduckgo/Toast-Swift" ~> 2.0.0
+github "duckduckgo/Toast-Swift" ~> 4.0.0
 
-github "duckduckgo/Alamofire" ~>  4.4.0
+github "duckduckgo/Alamofire" ~>  4.7.3
 
 github "duckduckgo/OHHTTPStubs" ~> 6.0.0
 
@@ -15,7 +15,7 @@ github "duckduckgo/CommonCrypto" ~> 1.1.0
 
 github "duckduckgo/SimulatorStatusMagic" "tags/1.9.5"
 
-github "duckduckgo/swifter" == 1.4.0
+github "duckduckgo/swifter" == 1.4.3
 
 github "duckduckgo/lottie-ios" "tags/2.5.0"
 

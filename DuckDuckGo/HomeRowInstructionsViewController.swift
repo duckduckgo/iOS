@@ -27,8 +27,8 @@ class HomeRowInstructionsViewController: UIViewController {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var playButton: UIImageView!
 
-    weak var layer: AVPlayerLayer?
-    weak var player: AVPlayer?
+    var layer: AVPlayerLayer?
+    var player: AVPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ class HomeRowInstructionsViewController: UIViewController {
     private func addVideo() {
         let movieURL = Bundle.main.url(forResource: "home-row-instructions", withExtension: "mp4")!
         player = AVPlayer(url: movieURL)
-        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
+        _ = try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .mixWithOthers)
 
         layer = AVPlayerLayer(player: player)
         videoContainerView.layer.addSublayer(layer!)
@@ -93,5 +93,4 @@ class HomeRowInstructionsViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
 }

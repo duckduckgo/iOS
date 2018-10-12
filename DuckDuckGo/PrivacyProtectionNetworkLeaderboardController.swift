@@ -120,8 +120,8 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let dateNSRange = NSRange(dateRange, in: message)
 
         let attributedString = NSMutableAttributedString(string: message)
-        attributedString.addAttribute(NSAttributedStringKey.kern, value: -0.18, range: dateNSRange)
-        attributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.ppRed, range: percentNSRange)
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: -0.18, range: dateNSRange)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.ppRed, range: percentNSRange)
         attributedString.addAttribute(.paragraphStyle, value: paragraphStyle(), range: .init(location: 0, length: message.count))
 
         messageLabel.attributedText = attributedString

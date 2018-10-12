@@ -49,7 +49,7 @@ class SpeedTests: XCTestCase {
 
     func loadBlockingLists() {
         let blocker = DispatchSemaphore(value: 0)
-        BlockerListsLoader().start { _ in
+        ContentBlockerLoader().start { _ in
             blocker.signal()
         }
         blocker.wait()
@@ -60,11 +60,11 @@ class SpeedTests: XCTestCase {
         guard let data = try? FileLoader().load(fileName: Filename.sites, fromBundle: bundle) else {
             fatalError("Failed to load file \(Filename.sites) from \(bundle)")
         }
-        guard let sites = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) else {
+        guard let jsonSites = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) else {
             fatalError("Failed create jsonObject with data")
         }
         
-        guard let sites = sites as? [[String: String]] else {
+        guard let sites = jsonSites as? [[String: String]] else {
             fatalError("sites is not [[String: String]]")
         }
 
@@ -122,11 +122,15 @@ class SpeedTests: XCTestCase {
         guard let jsonResults = try? JSONSerialization.data(withJSONObject: results, options: [ .prettyPrinted, .sortedKeys ]) else {
             fatalError("Failed to create json data from results")
         }
+        
         var stringResults = String(data: jsonResults, encoding: .utf8)!
         stringResults = stringResults.replacingOccurrences(of: "\\/", with: "/")
-        guard try? stringResults.write(to: fileUrl, atomically: true, encoding: .utf8) {
+        do {
+            try stringResults.write(to: fileUrl, atomically: true, encoding: .utf8)
+        } catch {
             fatalError("Failed to write results to \(fileUrl)")
         }
+        
         print("Saving results to \(fileUrl)")
         print("You can access this file directly if runnning in the simulator.")
         print("If you run on a device you must enable file sharing for the app target and then use iTunes to extract the file.")

@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
-                                               name: .UIKeyboardWillChangeFrame, object: nil)
+                                               name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -86,9 +86,9 @@ class HomeViewController: UIViewController {
     }
 
     @objc func onKeyboardChangeFrame(notification: NSNotification) {
-        guard let beginFrame = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? CGRect else { return }
-        guard let endFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-        guard let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? Double else { return }
+        guard let beginFrame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect else { return }
+        guard let endFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
 
         let diff = beginFrame.origin.y - endFrame.origin.y
 
@@ -107,7 +107,7 @@ class HomeViewController: UIViewController {
 
     private func hideHomeRowCTA() {
         homeRowCTAController?.view.removeFromSuperview()
-        homeRowCTAController?.removeFromParentViewController()
+        homeRowCTAController?.removeFromParent()
         homeRowCTAController = nil
     }
 
@@ -115,10 +115,10 @@ class HomeViewController: UIViewController {
         guard homeRowCTAController == nil else { return }
 
         let childViewController = AddToHomeRowCTAViewController.loadFromStoryboard()
-        addChildViewController(childViewController)
+        addChild(childViewController)
         view.addSubview(childViewController.view)
         childViewController.view.frame = view.bounds
-        childViewController.didMove(toParentViewController: self)
+        childViewController.didMove(toParent: self)
         self.homeRowCTAController = childViewController
     }
 
@@ -129,7 +129,7 @@ class HomeViewController: UIViewController {
     func dismiss() {
         delegate = nil
         chromeDelegate = nil
-        removeFromParentViewController()
+        removeFromParent()
         view.removeFromSuperview()
     }
     

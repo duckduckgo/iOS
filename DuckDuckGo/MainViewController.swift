@@ -84,8 +84,8 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if segue.destination.childViewControllers.count > 0,
-            let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
+        if segue.destination.children.count > 0,
+            let controller = segue.destination.children[0] as? BookmarksViewController {
             controller.delegate = self
             return
         }
@@ -153,7 +153,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func removeHomeScreen() {
-        homeController?.willMove(toParentViewController: nil)
+        homeController?.willMove(toParent: nil)
         homeController?.dismiss()
         homeController = nil
     }
@@ -232,10 +232,10 @@ class MainViewController: UIViewController {
     }
 
     private func addToView(controller: UIViewController) {
-        addChildViewController(controller)
+        addChild(controller)
         containerView.addSubview(controller.view)
         controller.view.frame = containerView.bounds
-        controller.didMove(toParentViewController: self)
+        controller.didMove(toParent: self)
 
     }
 
@@ -298,9 +298,9 @@ class MainViewController: UIViewController {
         if autocompleteController == nil && appSettings.autocomplete {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
-            addChildViewController(controller)
+            addChild(controller)
             containerView.addSubview(controller.view)
-            controller.didMove(toParentViewController: self)
+            controller.didMove(toParent: self)
             autocompleteController = controller
         }
         guard let autocompleteController = autocompleteController else { return }
@@ -310,9 +310,9 @@ class MainViewController: UIViewController {
     fileprivate func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
         autocompleteController = nil
-        controller.willMove(toParentViewController: nil)
+        controller.willMove(toParent: nil)
         controller.view.removeFromSuperview()
-        controller.removeFromParentViewController()
+        controller.removeFromParent()
     }
 
     fileprivate func launchBrowsingMenu() {

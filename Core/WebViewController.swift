@@ -462,7 +462,7 @@ extension WebViewController: WKNavigationDelegate {
     private func reportHttpsUpgradeSiteError(url: URL, error: String) {
         let params = [
             Pixel.EhdParameters.errorCode: error,
-            Pixel.EhdParameters.url: url.simpleUrl
+            Pixel.EhdParameters.url: "https://\(url.host ?? "")"
         ]
         Pixel.fire(pixel: .httpsUpgradeSiteError, withAdditionalParameters: params)
         statisticsStore.httpsUpgradesFailures += 1

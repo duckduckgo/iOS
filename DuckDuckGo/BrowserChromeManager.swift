@@ -50,7 +50,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         guard isInBottomBounceArea == false else { return }
 
         if scrollView.contentOffset.y - draggingStartPosY > Constants.threshold {
-            updateBars(true)
+            updateBars(shouldHide: true)
         }
     }
 
@@ -66,11 +66,11 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         let startedFromVeryBottom = abs(draggingStartPosY - scrollView.contentOffsetYAtBottom) < 1
         
         if isInBottomBounceArea && startedFromVeryBottom {
-            updateBars(false)
+            updateBars(shouldHide: false)
         } else if velocity.y < 0 {
-            updateBars(false)
+            updateBars(shouldHide: false)
         } else if velocity.y > 0 {
-            updateBars(true)
+            updateBars(shouldHide: true)
         }
     }
 
@@ -80,7 +80,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
         if hidden {
-            updateBars(false)
+            updateBars(shouldHide: false)
             return false
         }
 
@@ -92,14 +92,14 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         return scrollView.bounds.height < scrollView.contentSize.height
     }
 
-    private func updateBars(_ shouldHide: Bool) {
+    private func updateBars(shouldHide: Bool) {
         guard shouldHide != hidden else { return }
         hidden = shouldHide
         delegate?.setBarsHidden(shouldHide, animated: true)
     }
 
     func reset() {
-        updateBars(false)
+        updateBars(shouldHide: false)
         draggingStartPosY = 0
     }
 }

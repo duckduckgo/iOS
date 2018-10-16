@@ -30,25 +30,10 @@ protocol BrowserChromeDelegate: class {
 
 }
 
-private extension UIScrollView {
-    
-    /// Calculate Y-axis content offset corresponding to very bottom of the scroll area
-    var contentOffsetYAtBottom: CGFloat {
-        let yOffset = contentSize.height - bounds.height - contentInset.top + contentInset.bottom
-        if #available(iOS 11.0, *) {
-            return yOffset - safeAreaInsets.top + safeAreaInsets.bottom
-        } else {
-            return yOffset
-        }
-    }
-}
-
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     struct Constants {
-
-        static let threshold: CGFloat = 60
-
+        static let threshold: CGFloat = 30
     }
 
     weak var delegate: BrowserChromeDelegate?
@@ -117,5 +102,17 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         updateBars(false)
         draggingStartPosY = 0
     }
+}
 
+fileprivate extension UIScrollView {
+    
+    /// Calculate Y-axis content offset corresponding to very bottom of the scroll area
+    var contentOffsetYAtBottom: CGFloat {
+        let yOffset = contentSize.height - bounds.height - contentInset.top + contentInset.bottom
+        if #available(iOS 11.0, *) {
+            return yOffset - safeAreaInsets.top + safeAreaInsets.bottom
+        } else {
+            return yOffset
+        }
+    }
 }

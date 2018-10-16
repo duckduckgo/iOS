@@ -47,7 +47,6 @@ class OmniBar: UIView {
         super.layoutSubviews()
         configureTextField()
         configureEditingMenu()
-        configureSiteRating()
         refreshState(state)
     }
 
@@ -60,10 +59,6 @@ class OmniBar: UIView {
     private func configureEditingMenu() {
         let title = UserText.actionPasteAndGo
         UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(pasteAndGo))]
-    }
-
-    private func configureSiteRating() {
-        siteRatingView.refresh()
     }
 
     @objc func pasteAndGo(sender: UIMenuItem) {

@@ -51,7 +51,6 @@ public class SiteRatingView: UIView {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        refresh()
     }
 
     private func addContentBlockerConfigurationObserver() {

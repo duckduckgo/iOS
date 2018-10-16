@@ -48,7 +48,11 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
 
-    public var loadedURL: URL?
+    public var loadedURL: URL? {
+        didSet {
+            webEventsDelegate?.webView(webView, didChangeUrl: loadedURL)
+        }
+    }
 
     private var lastUpgradedDomain: String?
     private var lastError: Error?
@@ -66,7 +70,8 @@ open class WebViewController: UIViewController {
     }
 
     public var url: URL? {
-        return isError ? loadedURL : webView?.url
+        // return isError ? loadedURL : webView?.url
+        return loadedURL
     }
 
     public var canGoBack: Bool {
@@ -204,8 +209,8 @@ open class WebViewController: UIViewController {
     }
 
     private func urlDidChange() {
-        DispatchQueue.main.async {
-            self.webEventsDelegate?.webView(self.webView, didChangeUrl: self.webView.url)
+        if self.loadedURL?.host == self.webView.url?.host {
+            self.loadedURL = self.webView.url
         }
     }
 
@@ -331,18 +336,26 @@ extension WebViewController: WKNavigationDelegate {
         ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
     }
 
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        lastError = nil
-        shouldReloadOnError = false
-        hideErrorMessage()
-        showProgressIndicator()
-
+    public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        loadedURL = webView.url
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         webEventsDelegate?.webpageDidStartLoading(httpsForced: httpsForced)
         
         if let url = webView.url, isHttpsUpgradeSite(url: url) {
             statisticsStore.httpsUpgradesTotal += 1
         }
+    }
+    
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        decisionHandler(.allow)
+        loadedURL = webView.url
+    }
+    
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        lastError = nil
+        shouldReloadOnError = false
+        hideErrorMessage()
+        showProgressIndicator()
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -387,7 +400,7 @@ extension WebViewController: WKNavigationDelegate {
     public func webView(_ webView: WKWebView,
                         decidePolicyFor navigationAction: WKNavigationAction,
                         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,

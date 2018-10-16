@@ -67,6 +67,14 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         
         if isInBottomBounceArea && startedFromVeryBottom {
             updateBars(shouldHide: false)
+            // Fix for iPhone X issue: reaching bottom of the web page and then revealing
+            // bars by executing "bottom bounce" gesture, caused web view to re layout and
+            // cover bottom of the web page.
+            DispatchQueue.main.async { [weak scrollView] in
+                guard let scrollView = scrollView else { return }
+                scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffsetYAtBottom),
+                                            animated: true)
+            }
         } else if velocity.y < 0 {
             updateBars(shouldHide: false)
         } else if velocity.y > 0 {

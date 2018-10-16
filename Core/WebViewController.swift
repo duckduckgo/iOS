@@ -50,7 +50,6 @@ open class WebViewController: UIViewController {
 
     public var loadedURL: URL? {
         didSet {
-            Logger.log(text: "loadedURL set to \(loadedURL)")
             webEventsDelegate?.webView(webView, didChangeUrl: loadedURL)
         }
     }

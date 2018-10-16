@@ -30,6 +30,19 @@ protocol BrowserChromeDelegate: class {
 
 }
 
+private extension UIScrollView {
+    
+    /// Calculate Y-axis content offset corresponding to very bottom of the scroll area
+    var contentOffsetYAtBottom: CGFloat {
+        let yOffset = contentSize.height - bounds.height - contentInset.top + contentInset.bottom
+        if #available(iOS 11.0, *) {
+            return yOffset - safeAreaInsets.top + safeAreaInsets.bottom
+        } else {
+            return yOffset
+        }
+    }
+}
+
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     struct Constants {
@@ -40,40 +53,44 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     weak var delegate: BrowserChromeDelegate?
 
-    var dragging = false
     var hidden = false
-    var lastOffset: CGPoint?
-    var cumulative: CGFloat = 0
-
+    var dragging = false
+    var draggingStartPosY: CGFloat = 0
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard dragging else { return }
+        guard canHideBars(for: scrollView) else { return }
+        
+        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
+        guard isInBottomBounceArea == false else { return }
 
-        if let lastOffset = lastOffset {
-
-            let ydiff = lastOffset.y - scrollView.contentOffset.y
-
-            if ydiff == 0 || (cumulative < 0 && ydiff > 0) || (cumulative > 0 && ydiff < 0) {
-                cumulative = 0
-            }
-
-            cumulative += ydiff
-
-            if abs(cumulative) > Constants.threshold {
-                updateBars(ydiff < 0)
-            }
-
+        if scrollView.contentOffset.y - draggingStartPosY > Constants.threshold {
+            updateBars(true)
         }
-
-        lastOffset = scrollView.contentOffset
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         dragging = true
+        draggingStartPosY = scrollView.contentOffset.y
+    }
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard canHideBars(for: scrollView) else { return }
+        
+        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
+        let startedFromVeryBottom = abs(draggingStartPosY - scrollView.contentOffsetYAtBottom) < 1
+        
+        if isInBottomBounceArea && startedFromVeryBottom {
+            updateBars(false)
+        } else if velocity.y < 0 {
+            updateBars(false)
+        } else if velocity.y > 0 {
+            updateBars(true)
+        }
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         dragging = false
-        cumulative = 0
     }
 
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
@@ -84,6 +101,11 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
         return true
     }
+    
+    /// Bars should not be hidden in case ScrollView content is smaller than viewport.
+    private func canHideBars(for scrollView: UIScrollView) -> Bool {
+        return scrollView.bounds.height < scrollView.contentSize.height
+    }
 
     private func updateBars(_ shouldHide: Bool) {
         guard shouldHide != hidden else { return }
@@ -93,8 +115,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     func reset() {
         updateBars(false)
-        cumulative = 0
-        lastOffset = nil
+        draggingStartPosY = 0
     }
 
 }

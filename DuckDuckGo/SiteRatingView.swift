@@ -49,10 +49,6 @@ public class SiteRatingView: UIView {
         addContentBlockerConfigurationObserver()
     }
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onContentBlockerConfigurationChanged),

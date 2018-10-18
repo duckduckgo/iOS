@@ -1,1 +1,1 @@
-In this release we updated our tooling to support XCode 10, Swift 4.2 and iOS 12. This is an internal / beta only validation release.
+In this release we updated to support the latest development tools, improved scrolling, and hardened the app against address bar spoofing.

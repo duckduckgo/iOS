@@ -370,7 +370,6 @@ class TabViewController: WebViewController {
             return false
         }
         
-        loadedURL = url
         if url.isCustomURLScheme() {
             
             let title = UserText.customUrlSchemeTitle

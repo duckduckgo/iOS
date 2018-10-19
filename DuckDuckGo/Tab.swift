@@ -107,8 +107,4 @@ public class Tab: NSObject, NSCoding {
         observersHolder = observersHolder.filter { $0.observer != nil }
     }
 
-    public static func urlForDesktop(mobileUrl: URL) -> URL? {
-        return nil
-    }
-    
 }

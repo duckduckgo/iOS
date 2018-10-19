@@ -34,6 +34,13 @@ extension URL {
         case localhost
     }
 
+    public func toDesktopUrl() -> URL {
+        guard host?.hasPrefix("m.") ?? false else { return self }
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
+        components.host = host?.dropPrefix(prefix: "m.")
+        return (try? components.asURL()) ?? self
+    }
+
     public func getParam(name: String) -> String? {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
         guard let encodedQuery = components.percentEncodedQuery else { return nil }

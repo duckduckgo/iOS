@@ -204,8 +204,8 @@ class TabViewController: WebViewController {
         return UIAlertAction(title: title, style: .default) { [weak self] (_) in
             self?.tabModel.toggleDesktopMode()
             let isDesktop = self?.tabModel.isDesktop ?? false
-            if isDesktop, let url = Tab.urlForDesktop(mobileUrl: url) {
-                self?.load(url: url)
+            if isDesktop {
+                self?.load(url: url.toDesktopUrl())
             } else {
                 self?.reload()
             }

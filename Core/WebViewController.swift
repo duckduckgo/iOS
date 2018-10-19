@@ -175,13 +175,7 @@ open class WebViewController: UIViewController {
     public func load(url: URL) {
         loadedURL = url
         lastError = nil
-        
-        if isDesktopMode {
-            // TODO update the user agent
-        } else {
-            webView.customUserAgent = nil
-        }
-        
+        updateUserAgent()
         load(urlRequest: URLRequest(url: url))
     }
 
@@ -261,7 +255,16 @@ open class WebViewController: UIViewController {
     }
 
     public func reload() {
+        updateUserAgent()
         webView.reload()
+    }
+
+    private func updateUserAgent() {
+        if isDesktopMode {
+            // TODO update the user agent
+        } else {
+            webView.customUserAgent = nil
+        }
     }
 
     open func goBack() {

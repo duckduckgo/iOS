@@ -178,6 +178,8 @@ class TabViewController: WebViewController {
     }
 
     func launchBrowsingMenu() {
+        Pixel.fire(pixel: .browsingMenuOpened)
+
         guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
@@ -185,7 +187,7 @@ class TabViewController: WebViewController {
 
         if let link = link, !isError {
             alert.addAction(saveBookmarkAction(forLink: link))
-            alert.addAction(toggleMobileSiteAction(forUrl: link.url))
+            alert.addAction(toggleDesktopSiteAction(forUrl: link.url))
             alert.addAction(shareAction(forLink: link))
 
             if let domain = siteRating?.domain {
@@ -199,9 +201,10 @@ class TabViewController: WebViewController {
         present(controller: alert, fromView: button)
     }
     
-    func toggleMobileSiteAction(forUrl url: URL) -> UIAlertAction {
+    func toggleDesktopSiteAction(forUrl url: URL) -> UIAlertAction {
         let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
         return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+            Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
             self?.tabModel.toggleDesktopMode()
             let isDesktop = self?.tabModel.isDesktop ?? false
             if isDesktop {
@@ -220,6 +223,7 @@ class TabViewController: WebViewController {
         let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
 
         return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+            Pixel.fire(pixel: .browsingMenuWhitelist)
             operation(domain)
             self?.reload()
         }
@@ -242,6 +246,7 @@ class TabViewController: WebViewController {
 
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuRefresh)
             guard let strongSelf = self else { return }
             if strongSelf.isError {
                 if let url = URL(string: strongSelf.chromeDelegate?.omniBar.textField.text ?? "") {
@@ -258,10 +263,12 @@ class TabViewController: WebViewController {
         let bookmarksManager = BookmarksManager()
         if let index = bookmarksManager.indexOf(url: link.url) {
             return UIAlertAction(title: UserText.actionRemoveBookmark, style: .default) { _ in
+                Pixel.fire(pixel: .browsingMenuRemoveBookmark)
                 bookmarksManager.delete(itemAtIndex: index)
             }
         } else {
             return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
+                Pixel.fire(pixel: .browsingMenuAddToBookmarks)
                 self?.launchSaveBookmarkAlert(bookmark: link)
             }
         }
@@ -281,6 +288,7 @@ class TabViewController: WebViewController {
 
     private func newTabAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuNewTab)
             if let weakSelf = self {
                 weakSelf.delegate?.tabDidRequestNewTab(weakSelf)
             }
@@ -331,6 +339,7 @@ class TabViewController: WebViewController {
 
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuShare)
             guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
             self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
         }
@@ -346,6 +355,7 @@ class TabViewController: WebViewController {
 
     private func reportBrokenSiteAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionReportBrokenSite, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuReportBrokenSite)
             if let weakSelf = self {
                 weakSelf.delegate?.tabDidRequestReportBrokenSite(tab: weakSelf)
             }
@@ -354,6 +364,7 @@ class TabViewController: WebViewController {
 
     private func settingsAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionSettings, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuSettings)
             if let weakSelf = self {
                 weakSelf.delegate?.tabDidRequestSettings(tab: weakSelf)
             }

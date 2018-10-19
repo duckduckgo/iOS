@@ -40,6 +40,10 @@ class TabViewController: WebViewController {
     private(set) var tabModel: Tab
     
     private var httpsForced: Bool = false
+    
+    override var isDesktopMode: Bool {
+        return tabModel.isDesktop
+    }
 
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -179,15 +183,13 @@ class TabViewController: WebViewController {
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())
 
-        if let link = link {
+        if let link = link, !isError {
+            alert.addAction(saveBookmarkAction(forLink: link))
+            alert.addAction(toggleMobileSiteAction(forUrl: link.url))
+            alert.addAction(shareAction(forLink: link))
 
             if let domain = siteRating?.domain {
                 alert.addAction(whitelistAction(forDomain: domain))
-            }
-
-            if !isError {
-                alert.addAction(saveBookmarkAction(forLink: link))
-                alert.addAction(shareAction(forLink: link))
             }
         }
 
@@ -196,7 +198,20 @@ class TabViewController: WebViewController {
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
     }
-
+    
+    func toggleMobileSiteAction(forUrl url: URL) -> UIAlertAction {
+        let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
+        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+            self?.tabModel.toggleDesktopMode()
+            let isDesktop = self?.tabModel.isDesktop ?? false
+            if isDesktop, let url = Tab.urlForDesktop(mobileUrl: url) {
+                self?.load(url: url)
+            } else {
+                self?.reload()
+            }
+        }
+    }
+    
     func whitelistAction(forDomain domain: String) -> UIAlertAction {
 
         let whitelistManager = WhitelistManager()

@@ -29,6 +29,8 @@ class TabTests: XCTestCase {
         static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
 
+    // TODO tests for mobile mode
+    
     func testWhenTabObserverIsOutOfScopeThenUpdatesAreSuccessful() {
         var observer: MockTabObserver? = MockTabObserver()
         let tab = Tab(coder: CoderWithViewedPropertyStub())

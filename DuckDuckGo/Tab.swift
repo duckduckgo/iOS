@@ -34,9 +34,16 @@ public class Tab: NSObject, NSCoding {
     struct NSCodingKeys {
         static let link = "link"
         static let viewed = "viewed"
+        static let desktop = "desktop"
     }
 
     private var observersHolder = [WeaklyHeldTabObserver]()
+    
+    var isDesktop: Bool = false {
+        didSet {
+            notifyObservers()
+        }
+    }
     
     var link: Link? {
         didSet {
@@ -49,15 +56,17 @@ public class Tab: NSObject, NSCoding {
         }
     }
 
-    init(link: Link?, viewed: Bool = true) {
+    init(link: Link?, viewed: Bool = true, desktop: Bool = false) {
         self.link = link
         self.viewed = viewed
+        self.isDesktop = desktop
     }
 
     public convenience required init?(coder decoder: NSCoder) {
         let link = decoder.decodeObject(forKey: NSCodingKeys.link) as? Link
         let viewed = decoder.containsValue(forKey: NSCodingKeys.viewed) ? decoder.decodeBool(forKey: NSCodingKeys.viewed) : true
-        self.init(link: link, viewed: viewed)
+        let desktop = decoder.containsValue(forKey: NSCodingKeys.desktop) ? decoder.decodeBool(forKey: NSCodingKeys.desktop) : false
+        self.init(link: link, viewed: viewed, desktop: desktop)
     }
 
     public func encode(with coder: NSCoder) {
@@ -68,6 +77,10 @@ public class Tab: NSObject, NSCoding {
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Tab else { return false }
         return link == other.link
+    }
+    
+    func toggleDesktopMode() {
+        isDesktop = !isDesktop
     }
     
     func addObserver(_ observer: TabObserver) {
@@ -92,6 +105,10 @@ public class Tab: NSObject, NSCoding {
 
     private func pruneHolders() {
         observersHolder = observersHolder.filter { $0.observer != nil }
+    }
+
+    public static func urlForDesktop(mobileUrl: URL) -> URL? {
+        return nil
     }
     
 }

@@ -12,7 +12,7 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding {
 
-    @IBAction func onNewTabTapped(_ sender: Any) {
+    @IBAction func onSearchTapped(_ sender: Any) {
         let url = URL(string: AppDeepLinks.newSearch)!
         extensionContext?.open(url, completionHandler: nil)
     }

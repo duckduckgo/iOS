@@ -33,8 +33,12 @@
             type = event.target.nodeName
         }
 
+        duckduckgoMessaging.log("checking " + event.url + " (" + type + ")");
         duckduckgoContentBlocking.shouldBlock(event.url, type, function(url, block) {
-            if (!block) { return }
+            if (!block) { 
+                duckduckgoMessaging.log("don't block " + url);
+                return 
+            }
 
             duckduckgoMessaging.log("blocking beforeload")
             if (duckduckgoContentBlocking.loadSurrogate(event.url)) {                

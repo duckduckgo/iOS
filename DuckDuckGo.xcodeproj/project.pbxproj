@@ -490,6 +490,7 @@
 		833B46FD1F6CB7A0001ECFEC /* TermsOfServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceTests.swift; sourceTree = "<group>"; };
 		8341D804212D5DFB000514C2 /* DataChecksumExtensionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataChecksumExtensionTest.swift; sourceTree = "<group>"; };
 		8341D808212D6159000514C2 /* HTTPSBloomFilterSpecificationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSBloomFilterSpecificationTest.swift; sourceTree = "<group>"; };
+		83491182217F357300610F35 /* QuickActionsTodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickActionsTodayExtension.entitlements; sourceTree = "<group>"; };
 		8364F70F1F95FA7600562989 /* DisconnectMeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStore.swift; sourceTree = "<group>"; };
 		8364F7111F961DDB00562989 /* DisconnectMeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeStoreTests.swift; sourceTree = "<group>"; };
 		836B6B671F67F11E0061ECFB /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1044,6 +1045,7 @@
 		837094312142C4C200A58838 /* QuickActionsTodayExtension */ = {
 			isa = PBXGroup;
 			children = (
+				83491182217F357300610F35 /* QuickActionsTodayExtension.entitlements */,
 				837094322142C4C200A58838 /* TodayViewController.swift */,
 				837094342142C4C200A58838 /* MainInterface.storyboard */,
 				837094372142C4C200A58838 /* Info.plist */,
@@ -2408,6 +2410,11 @@
 						DevelopmentTeam = HKE973VLUW;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					8390446B20BDCE10006461CD = {
 						CreatedOnToolsVersion = 9.3.1;
@@ -3302,6 +3309,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = QuickActionsTodayExtension/QuickActionsTodayExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -3325,6 +3333,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = QuickActionsTodayExtension/QuickActionsTodayExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;

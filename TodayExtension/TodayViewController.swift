@@ -138,12 +138,14 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     
     private func launchSearch() {
         let url = URL(string: AppDeepLinks.newSearch)!
+        Pixel.fire(pixel: .bookmarksExtensionSearch)
         extensionContext?.open(url, completionHandler: nil)
     }
     
     private func launchBookmark(at index: Int) {
         let selection = bookmarks[index].url
         if let url = URL(string: "\(AppDeepLinks.quickLink)\(selection)") {
+            Pixel.fire(pixel: .bookmarksExtensionBookmark)
             extensionContext?.open(url, completionHandler: nil)
         }
     }

@@ -46,8 +46,8 @@ extension WKWebViewConfiguration {
         return configuration
     }
 
-    public func loadScripts(with id: String, contentBlocking: Bool) {
-        Loader(id, userContentController, contentBlocking).load()
+    public func loadScripts(contentBlocking: Bool) {
+        Loader(userContentController, contentBlocking).load()
     }
 
 }
@@ -64,12 +64,10 @@ private class Loader {
     let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
 
-    let id: String
     let userContentController: WKUserContentController
     let contentBlocking: Bool
 
-    init(_ id: String, _ userContentController: WKUserContentController, _ contentBlocking: Bool) {
-        self.id = id
+    init(_ userContentController: WKUserContentController, _ contentBlocking: Bool) {
         self.userContentController = userContentController
         self.contentBlocking = contentBlocking
     }
@@ -91,7 +89,7 @@ private class Loader {
         let configuration = ContentBlockerConfigurationUserDefaults()
         let whitelist = configuration.domainWhitelist.toJsonLookupString()
         loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelist, and: configuration.enabled, with: id)
+        loadBlockerData(with: whitelist, and: configuration.enabled)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
         load(scripts: [ .detection ], forMainFrameOnly: false)
     }
@@ -107,13 +105,12 @@ private class Loader {
         javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
     }
 
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool, with id: String) {
+    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
 
         let surrogates = loadSurrogateJson()
         let disconnectMeStore = DisconnectMeStore()
 
         javascriptLoader.load(script: .blockerData, withReplacements: [
-            "${protectionId}": id,
             "${blocking_enabled}": "\(blockingEnabled)",
             "${disconnectmeBanned}": disconnectMeStore.bannedTrackersJson,
             "${disconnectmeAllowed}": disconnectMeStore.allowedTrackersJson,

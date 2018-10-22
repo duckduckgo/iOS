@@ -37,7 +37,6 @@ public class SiteRating {
     }
 
     public let url: URL
-    public let protectionId: String
     public let httpsForced: Bool
     public let privacyPractice: PrivacyPractices.Practice
     public let isMajorTrackerNetwork: Bool
@@ -56,10 +55,9 @@ public class SiteRating {
                 httpsForced: Bool = false,
                 entityMapping: EntityMapping = EntityMapping(),
                 privacyPractices: PrivacyPractices = PrivacyPractices(),
-                prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore(),
-                protectionId: String = UUID.init().uuidString) {
+                prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()) {
 
-        Logger.log(text: "new SiteRating(url: \(url), protectionId: \(protectionId))")
+        Logger.log(text: "new SiteRating(url: \(url), httpsForced: \(httpsForced))")
 
         if let host = url.host, let entity = entityMapping.findEntity(forHost: host) {
             self.grade.setParentEntity(named: entity, withPrevalence: prevalenceStore.prevalences[entity])
@@ -68,7 +66,6 @@ public class SiteRating {
             self.isMajorTrackerNetwork = false
         }
 
-        self.protectionId = protectionId
         self.url = url
         self.httpsForced = httpsForced
         self.prevalenceStore = prevalenceStore
@@ -82,7 +79,7 @@ public class SiteRating {
         self.grade.privacyScore = privacyPractice.score
         
     }
-
+    
     public var https: Bool {
         return url.isHttps()
     }
@@ -158,6 +155,10 @@ public class SiteRating {
 
     public var majorNetworkTrackersBlocked: [DetectedTracker: Int] {
         return trackersBlocked.filter(majorNetworkFilter)
+    }
+    
+    public func isFor(_ url: URL?) -> Bool {
+        return domain == url?.host
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {

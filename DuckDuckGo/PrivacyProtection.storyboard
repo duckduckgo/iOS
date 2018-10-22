@@ -728,7 +728,13 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Leaderboard On" translatesAutoresizingMaskIntoConstraints="NO" id="HGe-jW-qhx">
                                             <rect key="frame" x="177" y="20" width="60" height="55"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-u7-IeX" userLabel="Mixed Encryption Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Offenders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPS-SD-65t">
+                                            <rect key="frame" x="40" y="86" width="334" height="20"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK FREQUENCY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-u7-IeX" userLabel="Mixed Encryption Label">
                                             <rect key="frame" x="20" y="112" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -790,15 +796,18 @@
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-40" id="4ky-h3-4Hu"/>
                                         <constraint firstItem="4ye-uJ-wqw" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="BVe-K7-7L5"/>
                                         <constraint firstItem="2vQ-S5-Xxv" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="CUn-bm-XRn"/>
+                                        <constraint firstItem="IPS-SD-65t" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" constant="-80" id="GGd-LH-Oo9"/>
                                         <constraint firstItem="4ye-uJ-wqw" firstAttribute="width" secondItem="UAf-eb-tA7" secondAttribute="width" id="HsO-hc-aBG"/>
                                         <constraint firstItem="Y3q-u7-IeX" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="OZB-Xz-T7R"/>
                                         <constraint firstItem="HGe-jW-qhx" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="PcO-KV-Iw4"/>
                                         <constraint firstItem="2vQ-S5-Xxv" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="ST8-Fr-SiZ"/>
                                         <constraint firstItem="HGe-jW-qhx" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="bIe-DI-dgG"/>
                                         <constraint firstItem="2vQ-S5-Xxv" firstAttribute="top" secondItem="4ye-uJ-wqw" secondAttribute="bottom" id="gEe-2D-nwE"/>
+                                        <constraint firstItem="IPS-SD-65t" firstAttribute="top" secondItem="HGe-jW-qhx" secondAttribute="bottom" constant="11" id="kRE-k1-1n2"/>
                                         <constraint firstAttribute="bottom" secondItem="2vQ-S5-Xxv" secondAttribute="bottom" id="nkd-F5-2YP"/>
                                         <constraint firstItem="Ict-Tf-vBn" firstAttribute="leading" secondItem="UAf-eb-tA7" secondAttribute="leading" constant="20" id="pDB-lj-mmP"/>
-                                        <constraint firstItem="Y3q-u7-IeX" firstAttribute="top" secondItem="HGe-jW-qhx" secondAttribute="bottom" constant="40.33" id="ptn-4m-rYU"/>
+                                        <constraint firstItem="Y3q-u7-IeX" firstAttribute="top" secondItem="IPS-SD-65t" secondAttribute="bottom" constant="6" id="ptn-4m-rYU"/>
+                                        <constraint firstItem="IPS-SD-65t" firstAttribute="centerX" secondItem="UAf-eb-tA7" secondAttribute="centerX" id="r7g-88-2oT"/>
                                         <constraint firstItem="4ye-uJ-wqw" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" id="wZV-UM-8oh"/>
                                         <constraint firstItem="Ict-Tf-vBn" firstAttribute="top" secondItem="UAf-eb-tA7" secondAttribute="top" constant="20" id="wdt-rA-eO2"/>
                                     </constraints>

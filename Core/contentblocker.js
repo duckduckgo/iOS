@@ -25,6 +25,7 @@ var duckduckgoContentBlocking = function() {
 	// private
 	function handleDetection(url, detectionMethod) {
 		if (isAssociatedFirstPartyDomain(url)) {
+			duckduckgoMessaging.log("first party url: " + url)
 			return null
 		}
 
@@ -37,6 +38,7 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (currentDomainIsWhitelisted()) {
+			duckduckgoMessaging.log("domain whitelisted: " + url)
 			return {
 				method: detectionMethod,
 				block: false,
@@ -44,6 +46,7 @@ var duckduckgoContentBlocking = function() {
 			}
 		}
 
+		duckduckgoMessaging.log("blocking: " + url)
 		return {
 			method: detectionMethod,
 			block: true,
@@ -164,6 +167,7 @@ var duckduckgoContentBlocking = function() {
 	function getParentEntityUrl() {
 		var parentEntity = DisconnectMe.parentTracker(topLevelUrl)
 		if (parentEntity) {
+			duckduckgoMessaging.log("topLevelUrl: " + topLevelUrl.protocol + " parentEntity: " + JSON.stringify(parentEntity))
 			return new URL(topLevelUrl.protocol + parentEntity.parent)
 		}
 		return null
@@ -269,7 +273,6 @@ var duckduckgoContentBlocking = function() {
 		blockFunc(trackerUrl, result.block)
 
         duckduckgoMessaging.trackerDetected({
-        	protectionId: duckduckgoBlockerData.protectionId,
 	        url: trackerUrl,
 	        blocked: result.block,
 	        method: result.method,

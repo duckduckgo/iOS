@@ -297,9 +297,9 @@ open class WebViewController: UIViewController {
         webView.isHidden = false
     }
 
-    open func reloadScripts(with protectionId: String) {
+    open func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(with: protectionId, contentBlocking: !isDuckDuckGoUrl())
+        webView.configuration.loadScripts(contentBlocking: !isDuckDuckGoUrl())
     }
 
     private func isDuckDuckGoUrl() -> Bool {

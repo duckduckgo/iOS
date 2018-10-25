@@ -126,3 +126,5 @@ class BookmarksViewController: UITableViewController {
     }
 
 }
+
+extension BookmarksViewController: Themable {}

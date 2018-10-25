@@ -47,14 +47,18 @@ class TabSwitcherButton: UIView {
     
     var tabCount: Int = 0 {
         didSet {
-            if tabCount == 0 {
-                label.text = nil
-                return
-            }
-            
-            let text = tabCount >= Constants.maxTextTabs ? "~" : "\(tabCount)"
-            label.attributedText = NSAttributedString(string: text, attributes: attributes())
+            refresh()
         }
+    }
+    
+    private func refresh() {
+        if tabCount == 0 {
+            label.text = nil
+            return
+        }
+        
+        let text = tabCount >= Constants.maxTextTabs ? "~" : "\(tabCount)"
+        label.attributedText = NSAttributedString(string: text, attributes: attributes())
     }
     
     var hasUnread: Bool = false {
@@ -73,7 +77,7 @@ class TabSwitcherButton: UIView {
         anim.layer.masksToBounds = false
         anim.isUserInteractionEnabled = false
         
-        tint.backgroundColor = UIColor.nearlyBlackLight
+//        tint.backgroundColor = UIColor.nearlyBlackLight
         tint.alpha = 0.0
         tint.isUserInteractionEnabled = false
         
@@ -85,6 +89,19 @@ class TabSwitcherButton: UIView {
         
         anim.center = center
         
+    }
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            tint.backgroundColor = backgroundColor
+            refresh()
+        }
+    }
+    
+    override var tintColor: UIColor! {
+        didSet {
+            refresh()
+        }
     }
     
     convenience init() {
@@ -136,7 +153,7 @@ class TabSwitcherButton: UIView {
         
         let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
         return [ NSAttributedString.Key.font: font,
-                 NSAttributedString.Key.foregroundColor: UIColor.grayish,
+                 NSAttributedString.Key.foregroundColor: tintColor,
                  NSAttributedString.Key.paragraphStyle: paragraphStyle ]
     }
     
@@ -145,5 +162,4 @@ class TabSwitcherButton: UIView {
             self.tint.alpha = alpha
         }
     }
-    
 }

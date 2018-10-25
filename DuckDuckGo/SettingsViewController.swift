@@ -83,6 +83,10 @@ class SettingsViewController: UITableViewController {
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
+    
+    @IBAction func onLightThemeToggled(_ sender: UISwitch) {
+        // = sender.isOn
+    }
 
     @IBAction func onDonePressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)

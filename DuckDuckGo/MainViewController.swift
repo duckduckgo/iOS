@@ -80,6 +80,30 @@ class MainViewController: UIViewController, Themable {
         addLaunchTabNotificationObserver()
     }
     
+    func decorate(with theme: Theme) {
+        self.currentTheme = theme
+        setNeedsStatusBarAppearanceUpdate()
+        
+        statusBarBackground.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.tintColor = theme.barTintColor
+        
+        omniBar?.backgroundColor = theme.barBackgroundColor
+        omniBar?.editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+        omniBar?.tintColor = theme.barTintColor
+        omniBar?.searchStackContainer?.tintColor = theme.barTintColor
+        omniBar?.editingBackground?.borderColor = theme.searchBarBackgroundColor
+        omniBar?.textField.textColor = theme.searchBarTextColor
+        omniBar?.textField.tintColor = theme.searchBarTextColor
+        
+        toolbar?.barTintColor = theme.barBackgroundColor
+        toolbar?.tintColor = theme.barTintColor
+        
+        tabSwitcherButton.backgroundColor = theme.barBackgroundColor
+        tabSwitcherButton.tintColor = theme.barTintColor
+        tabsButton.tintColor = theme.barTintColor
+    }
+    
     private func initTabButton() {
         tabSwitcherButton.delegate = self
         tabsButton.customView = tabSwitcherButton

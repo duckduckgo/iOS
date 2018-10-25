@@ -134,5 +134,18 @@ class HomeViewController: UIViewController {
         removeFromParent()
         view.removeFromSuperview()
     }
-    
+}
+
+extension HomeViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            image?.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            image?.image = UIImage(named: "LogoLightText")
+        }
+    }
 }

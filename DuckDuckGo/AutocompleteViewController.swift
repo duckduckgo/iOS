@@ -26,6 +26,8 @@ class AutocompleteViewController: UIViewController {
 
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
+    
+    private var currentTheme: Theme = ThemeManager.defaultTheme
 
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()
@@ -134,6 +136,10 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         cell.updateFor(query: query, suggestion: suggestions[indexPath.row])
         cell.plusButton.tag = indexPath.row
+        
+        cell.contentView.backgroundColor = currentTheme.barBackgroundColor
+        cell.tintColor = currentTheme.barTintColor
+        cell.label?.textColor = currentTheme.barTintColor
         return cell
     }
 
@@ -163,5 +169,12 @@ extension AutocompleteViewController: UITableViewDelegate {
 extension AutocompleteViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return tableView == touch.view
+    }
+}
+
+extension AutocompleteViewController: Themable {
+    func decorate(with theme: Theme) {
+        currentTheme = theme
+        tableView.reloadData()
     }
 }

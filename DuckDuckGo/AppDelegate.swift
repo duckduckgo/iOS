@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let search = "com.duckduckgo.mobile.ios.newsearch"
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
+    
+    private var themeManager: ThemeManager!
 
     private var testing = false
     private var appIsLaunching = false
@@ -42,6 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
+        
+        if let controller = window?.rootViewController {
+            themeManager = ThemeManager(rootViewController: controller)
+        }
+        
+        themeManager.cycle()
 
         HTTPSUpgrade.shared.loadDataAsync()
 

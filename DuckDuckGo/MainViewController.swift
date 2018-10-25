@@ -22,11 +22,12 @@ import WebKit
 import Core
 import Lottie
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, Themable {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return currentTheme.statusBarStyle
     }
+    private var currentTheme: Theme = ThemeManager.defaultTheme
 
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
@@ -41,7 +42,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
-
+    
+    @IBOutlet weak var statusBarBackground: UIView!
+    
     weak var notificationView: NotificationView?
 
     var omniBar: OmniBar!

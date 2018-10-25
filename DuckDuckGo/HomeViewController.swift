@@ -26,6 +26,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var ctaContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
+    @IBOutlet weak var image: UIImageView!
+
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var homeRowCTAController: UIViewController?

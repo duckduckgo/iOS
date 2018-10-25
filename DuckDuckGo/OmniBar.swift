@@ -25,9 +25,10 @@ extension OmniBar: NibLoading {}
 class OmniBar: UIView {
 
     @IBOutlet weak var searchContainer: UIView!
+    @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var editingBackground: UIView!
+    @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!

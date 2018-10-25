@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -94,7 +94,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                    <rect key="frame" x="281" y="9" width="30" height="22"/>
+                                    <rect key="frame" x="281" y="8" width="30" height="24"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
                                     </constraints>
@@ -161,6 +161,7 @@
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
                 <outlet property="searchContainerToSettingsConstraint" destination="x26-4u-hqT" id="7Z7-xL-lZP"/>
+                <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
@@ -174,9 +175,9 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="Bookmarks" width="24" height="22"/>
+        <image name="Bookmarks" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
-        <image name="Remove" width="12" height="12"/>
+        <image name="Remove" width="24" height="24"/>
         <image name="Settings" width="22" height="22"/>
     </resources>
 </document>

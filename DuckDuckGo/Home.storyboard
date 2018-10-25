@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,10 +28,9 @@
                                     <constraint firstAttribute="height" id="ELS-YG-Sxt"/>
                                 </constraints>
                             </view>
-                            <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
+                            <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="mpe-gG-Xvo">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <gestureRecognizers/>
-                                <variation key="heightClass=compact" image="LogoLandscape"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="eXK-Fh-980" appends="YES" id="pMH-N8-Zq9"/>
                                 </connections>
@@ -56,6 +55,7 @@
                         <outlet property="ctaContainer" destination="5Rf-oV-2W5" id="KSc-be-02P"/>
                         <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
                         <outlet property="ctaContainerHeight" destination="ELS-YG-Sxt" id="i4n-tW-SQJ"/>
+                        <outlet property="image" destination="mpe-gG-Xvo" id="jc3-Pl-WoF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vtg-6j-Bq6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -69,7 +69,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LogoLandscape" width="316" height="94"/>
-        <image name="LogoWithText" width="201" height="160"/>
+        <image name="LogoLightText" width="199" height="159"/>
     </resources>
 </document>

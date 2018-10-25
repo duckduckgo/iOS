@@ -23,9 +23,8 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDelegate, UITableViewDataSource {
     
-    struct Index {
-        static let search = 0
-        static let startBookmarks = 1
+    enum StaticRows: Int, CaseIterable {
+        case search = 0
     }
     
     private var bookmarks = [Link]()
@@ -97,14 +96,14 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookmarks.isEmpty ? 2 : bookmarks.count + Index.startBookmarks
+        return StaticRows.allCases.count + (bookmarks.isEmpty ? 1 : bookmarks.count)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == Index.search {
+        if indexPath.row == StaticRows.search.rawValue {
             return searchCell(for: indexPath)
         }
-        if bookmarks.count == 0 {
+        if bookmarks.isEmpty {
             return noBookmarksCell(for: indexPath)
         }
         let bookmark = bookmarks[bookmarkIndex(forTableIndex: indexPath)!]
@@ -128,7 +127,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == Index.search {
+        if indexPath.row == StaticRows.search.rawValue {
             launchSearch()
             return
         }
@@ -151,7 +150,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     private func bookmarkIndex(forTableIndex indexPath: IndexPath) -> Int? {
-        let bookmarkIndex = indexPath.row - Index.startBookmarks
+        let bookmarkIndex = indexPath.row - StaticRows.allCases.count
         guard bookmarkIndex >= 0, bookmarkIndex < bookmarks.count else {
             return nil
         }

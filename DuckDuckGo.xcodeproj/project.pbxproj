@@ -190,6 +190,10 @@
 		85FAAE61214EFD21006AD5DA /* prevalence.json in Resources */ = {isa = PBXBuildFile; fileRef = 85FAAE60214EFD20006AD5DA /* prevalence.json */; };
 		85FAAE63214EFD37006AD5DA /* PrevalenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */; };
 		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
+		98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DA6EC92181E41F00E65433 /* ThemeManager.swift */; };
+		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
+		98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D9217B37200011A0D4 /* LightTheme.swift */; };
+		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
 		F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076A1E800DC30059FEC7 /* BookmarksManager.swift */; };
@@ -649,6 +653,10 @@
 		85FAAE60214EFD20006AD5DA /* prevalence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = prevalence.json; sourceTree = "<group>"; };
 		85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevalenceStore.swift; sourceTree = "<group>"; };
 		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
+		98DA6EC92181E41F00E65433 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		98F3A1D9217B37200011A0D4 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
+		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		F103076A1E800DC30059FEC7 /* BookmarksManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
@@ -1152,6 +1160,7 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
+				98F3A1D6217B36EE0011A0D4 /* Themes */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
@@ -1389,6 +1398,17 @@
 				85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */,
 			);
 			name = Store;
+			sourceTree = "<group>";
+		};
+		98F3A1D6217B36EE0011A0D4 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				98F3A1D7217B37010011A0D4 /* Theme.swift */,
+				98DA6EC92181E41F00E65433 /* ThemeManager.swift */,
+				98F3A1D9217B37200011A0D4 /* LightTheme.swift */,
+				98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */,
+			);
+			name = Themes;
 			sourceTree = "<group>";
 		};
 		F11044FE1ECFD6AF00C5E3D3 /* Parser */ = {
@@ -2705,6 +2725,7 @@
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
+				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
@@ -2726,6 +2747,7 @@
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
+				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
@@ -2740,6 +2762,7 @@
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
+				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
 				F114C5611E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift in Sources */,
@@ -2773,6 +2796,7 @@
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */,
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
+				98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */,
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				85200F931FBA3BA4001AF290 /* PrivacyProtectionHeaderController.swift in Sources */,

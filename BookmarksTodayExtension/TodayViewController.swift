@@ -35,11 +35,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     private var preferredHeight: CGFloat {
         return tableView.contentSize.height
     }
-
-    private var defaultHeight: CGFloat {
-        return CGFloat(110.0)
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refresh()
@@ -47,18 +43,13 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     private func configureWidgetSize() {
+        guard let context = extensionContext else { return }
         let mode = bookmarks.count > 2 ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
-        extensionContext?.widgetLargestAvailableDisplayMode = mode
+        context.widgetLargestAvailableDisplayMode = mode
 
-        if extensionContext?.widgetActiveDisplayMode == NCWidgetDisplayMode.compact {
-            updatePreferredContentHeight(height: defaultHeight)
-        } else {
-            updatePreferredContentHeight(height: preferredHeight)
-        }
-    }
-
-    private func updatePreferredContentHeight(height: CGFloat) {
+        let maxSize = context.widgetMaximumSize(for: mode)
         let width = tableView.contentSize.width
+        let height = preferredHeight > maxSize.height ? maxSize.height : preferredHeight
         preferredContentSize = CGSize(width: width, height: height)
     }
 
@@ -71,7 +62,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
         if activeDisplayMode == NCWidgetDisplayMode.expanded {
             preferredContentSize = CGSize(width: maxSize.width, height: preferredHeight)
         } else {
-            preferredContentSize = CGSize(width: maxSize.width, height: defaultHeight)
+            preferredContentSize = CGSize(width: maxSize.width, height: maxSize.height)
         }
     }
 

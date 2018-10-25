@@ -17,7 +17,7 @@
         <!--Today View Controller-->
         <scene sceneID="cwh-vc-ff4">
             <objects>
-                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="TodayExtension" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="BookmarksTodayExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ft6-oW-KC0"/>
                         <viewControllerLayoutGuide type="bottom" id="FKl-LY-JtV"/>
@@ -26,26 +26,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="32" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MWS-Zg-U7j">
-                                <rect key="frame" x="12" y="8" width="296" height="164"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MWS-Zg-U7j">
+                                <rect key="frame" x="12" y="0.0" width="296" height="180"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Search" id="orn-7K-1Ne">
-                                        <rect key="frame" x="0.0" y="28" width="296" height="32"/>
+                                        <rect key="frame" x="0.0" y="28" width="296" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="orn-7K-1Ne" id="3J3-QD-jWz">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="31.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="35.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="5X6-1f-6Xw">
-                                                    <rect key="frame" x="12" y="8" width="16" height="16"/>
+                                                    <rect key="frame" x="12" y="11" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Nua-6G-sgl"/>
                                                         <constraint firstAttribute="width" constant="16" id="ZmL-jn-UMJ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Private Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozS-NB-CBy">
-                                                    <rect key="frame" x="40" y="0.0" width="244" height="31.5"/>
+                                                    <rect key="frame" x="40" y="0.0" width="244" height="37.5"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -63,22 +63,22 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Bookmark" id="bj8-hq-ZTt" customClass="BookmarkCell" customModule="TodayExtension" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="60" width="296" height="32"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Bookmark" id="bj8-hq-ZTt" customClass="BookmarkCell" customModule="BookmarksTodayExtension" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="64" width="296" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bj8-hq-ZTt" id="TMa-E4-eO9">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="31.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="35.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="vgB-1o-UpV">
-                                                    <rect key="frame" x="12" y="8" width="16" height="16"/>
+                                                    <rect key="frame" x="12" y="11" width="16" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="Jbw-yv-I43"/>
                                                         <constraint firstAttribute="width" constant="16" id="VKG-AF-hgX"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwn-xD-5yb">
-                                                    <rect key="frame" x="40" y="0.0" width="244" height="31.5"/>
+                                                    <rect key="frame" x="40" y="0.0" width="244" height="37.5"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -101,14 +101,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NoBookmarks" textLabel="yga-ZB-lD8" style="IBUITableViewCellStyleDefault" id="DER-8H-iW5">
-                                        <rect key="frame" x="0.0" y="92" width="296" height="32"/>
+                                        <rect key="frame" x="0.0" y="100" width="296" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DER-8H-iW5" id="Umv-Da-dOh">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="31.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="35.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="No bookmarks yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yga-ZB-lD8">
-                                                    <rect key="frame" x="15" y="0.0" width="266" height="31.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="266" height="35.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="11"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -128,8 +128,8 @@
                         <constraints>
                             <constraint firstItem="MWS-Zg-U7j" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" constant="12" id="7XK-Ff-10g"/>
                             <constraint firstAttribute="trailing" secondItem="MWS-Zg-U7j" secondAttribute="trailing" constant="12" id="Ky4-dZ-4uG"/>
-                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="MWS-Zg-U7j" secondAttribute="bottom" constant="8" id="dxb-Y2-7u7"/>
-                            <constraint firstItem="MWS-Zg-U7j" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" id="j7N-YX-NuH"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="MWS-Zg-U7j" secondAttribute="bottom" id="dxb-Y2-7u7"/>
+                            <constraint firstItem="MWS-Zg-U7j" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="j7N-YX-NuH"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

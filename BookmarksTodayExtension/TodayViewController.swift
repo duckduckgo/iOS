@@ -33,8 +33,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
 
     private var preferredHeight: CGFloat {
-        let headerHeight = CGFloat(54.0)
-        return tableView.contentSize.height + headerHeight
+        return tableView.contentSize.height
     }
 
     private var defaultHeight: CGFloat {

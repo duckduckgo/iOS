@@ -70,13 +70,13 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
-            view.textLabel?.textColor = UIColor.silver
+            view.textLabel?.textColor = UIColor.coolGrey
         }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
-            view.textLabel?.textColor = UIColor.silver
+            view.textLabel?.textColor = UIColor.coolGrey
         }
     }
 

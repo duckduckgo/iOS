@@ -21,62 +21,99 @@ import Foundation
 
 extension UIColor {
 
-    public static var monitoringInactiveTint: UIColor {
-        return midGray
-    }
+//    public static var monitoringInactiveTint: UIColor {
+//        return midGray
+//    }
     
     public static var nearlyBlackLight: UIColor {
         return UIColor(red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var nearlyBlack: UIColor {
+        return UIColor(red: 34.0 / 255.0, green: 34.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var grayishBrown: UIColor {
+        return UIColor(red: 85.0 / 255.0, green: 85.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
     }
 
     public static var grayish: UIColor {
         return UIColor(red: 170.0 / 255.0, green: 170.0 / 255.0, blue: 170.0 / 255.0, alpha: 1.0)
     }
 
-    public static var silver: UIColor {
+    public static var coolGrey: UIColor {
         return UIColor(red: 176.0 / 255.0, green: 181.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var greyish3: UIColor {
+        return UIColor(red: 168.0 / 255.0, green: 168.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
     }
 
     public static var mercury: UIColor {
-        return UIColor(red: 235.0 / 255.0, green: 235.0 / 255.0, blue: 235.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)
     }
 
-    public static var midGray: UIColor {
-        return UIColor(red: 190.0 / 255.0, green: 190.0 / 255.0, blue: 190.0 / 255.0, alpha: 1.0)
-    }
+//    public static var midGray: UIColor {
+//        return UIColor(red: 190.0 / 255.0, green: 190.0 / 255.0, blue: 190.0 / 255.0, alpha: 1.0)
+//    }
 
-    public static var nastyGreen: UIColor {
-        return UIColor(red: 101.0 / 255.0, green: 187.0 / 255.0, blue: 70.0 / 255.0, alpha: 1.0)
-    }
+//    public static var nastyGreen: UIColor {
+//        return UIColor(red: 101.0 / 255.0, green: 187.0 / 255.0, blue: 70.0 / 255.0, alpha: 1.0)
+//    }
 
-    public static var lightOliveGreen: UIColor {
-        return UIColor(red: 147.0 / 255.0, green: 192.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
-    }
+//    public static var lightOliveGreen: UIColor {
+//        return UIColor(red: 147.0 / 255.0, green: 192.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
+//    }
 
-    public static var squash: UIColor {
-        return UIColor(red: 237.0 / 255.0, green: 158.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
-    }
+//    public static var squash: UIColor {
+//        return UIColor(red: 237.0 / 255.0, green: 158.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
+//    }
 
-    public static var dullRed: UIColor {
-        return UIColor(red: 221.0 / 255.0, green: 88.0 / 255.0, blue: 56.0 / 255.0, alpha: 1.0)
-    }
+//    public static var dullRed: UIColor {
+//        return UIColor(red: 221.0 / 255.0, green: 88.0 / 255.0, blue: 56.0 / 255.0, alpha: 1.0)
+//    }
 
-    public static var softBlue: UIColor {
-        return UIColor(red: 106.0 / 255.0, green: 187.0 / 255.0, blue: 224.0 / 255.0, alpha: 1.0)
-    }
+//    public static var softBlue: UIColor { //unused
+//        return UIColor(red: 106.0 / 255.0, green: 187.0 / 255.0, blue: 224.0 / 255.0, alpha: 1.0)
+//    }
 
     public static var cornflowerBlue: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 143.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
     }
     
-    public static var skyBlue: UIColor {
-        return UIColor(red: 56.0 / 255.0, green: 176.0 / 255.0, blue: 253.0 / 255.0, alpha: 1.0)
-    }
+//    public static var skyBlue: UIColor { //remove use cornflowerBlue
+//        return UIColor(red: 56.0 / 255.0, green: 176.0 / 255.0, blue: 253.0 / 255.0, alpha: 1.0)
+//    }
 
-    public static var greyishBrownTwo: UIColor {
-        return UIColor(red: 77.0 / 255.0, green: 77.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
-    }
+//    public static var greyishBrownTwo: UIColor {
+//        return UIColor(red: 77.0 / 255.0, green: 77.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
+//    }
+}
 
+extension UIColor {
+    
+    public static var nearlyWhiteLight: UIColor {
+        return UIColor(red: 250.0 / 255.0, green: 250.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var nearlyWhite: UIColor {
+        return UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var lightGreyish: UIColor {
+        return UIColor(red: 234.0 / 255.0, green: 234.0 / 255.0, blue: 234.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var darkGreyish: UIColor {
+        return UIColor(red: 73.0 / 255.0, green: 73.0 / 255.0, blue: 73.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var greyish2: UIColor {
+        return UIColor(red: 153.0 / 255.0, green: 153.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
+    }
+}
+
+extension UIColor {
     public func combine(withColor other: UIColor, ratio: CGFloat) -> UIColor {
         let otherRatio = 1 - ratio
         let red = (redComponent * ratio) + (other.redComponent * otherRatio)

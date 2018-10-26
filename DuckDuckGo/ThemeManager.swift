@@ -15,19 +15,18 @@ class ThemeManager {
         case dark
     }
     
-    static var defaultTheme = DarkTheme()
+    public static let shared = ThemeManager()
+    public static let defaultTheme = DarkTheme()
     
-    private var rootController: UIViewController
+    var rootController: UIViewController?
     var currentTheme: Theme {
         didSet {
-            rootController.applyTheme(currentTheme)
+            rootController?.applyTheme(currentTheme)
         }
     }
     
-    init(rootViewController: UIViewController) {
+    init() {
         //TODO: load theme from Settings
-        
-        rootController = rootViewController
         currentTheme = type(of: self).defaultTheme
     }
 }

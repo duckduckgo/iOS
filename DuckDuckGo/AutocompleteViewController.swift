@@ -27,7 +27,7 @@ class AutocompleteViewController: UIViewController {
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
     
-    private var currentTheme: Theme = ThemeManager.defaultTheme
+    private var currentTheme: Theme = ThemeManager.shared.currentTheme
 
     fileprivate var query = ""
     fileprivate var suggestions = [Suggestion]()

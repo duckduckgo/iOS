@@ -27,7 +27,7 @@ class MainViewController: UIViewController, Themable {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return currentTheme.statusBarStyle
     }
-    private var currentTheme: Theme = ThemeManager.defaultTheme
+    private var currentTheme: Theme = ThemeManager.shared.currentTheme
 
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!

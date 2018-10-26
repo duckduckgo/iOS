@@ -28,8 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
     
-    private var themeManager: ThemeManager!
-
     private var testing = false
     private var appIsLaunching = false
     var authWindow: UIWindow?
@@ -45,11 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
         
-        if let controller = window?.rootViewController {
-            themeManager = ThemeManager(rootViewController: controller)
-        }
-        
-        themeManager.cycle()
+        ThemeManager.shared.rootController = window?.rootViewController
+        ThemeManager.shared.cycle()
 
         HTTPSUpgrade.shared.loadDataAsync()
 

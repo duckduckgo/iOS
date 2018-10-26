@@ -23,6 +23,10 @@ protocol Theme {
     var searchBarBackgroundColor: UIColor { get }
 //    var searchBarPlaceholderTextColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
+    
+    var tableCellBackgrundColor: UIColor { get }
+    var tableCellTintColor: UIColor { get }
+    var tableCellSeparatorColor: UIColor { get }
 }
 
 protocol Themable {

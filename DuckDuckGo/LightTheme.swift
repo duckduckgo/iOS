@@ -22,4 +22,8 @@ struct LightTheme: Theme {
     var searchBarBackgroundColor = UIColor.lightGreyish
 //    var searchBarPlaceholderTextColor = UIColor.greyish2
     var searchBarTextColor = UIColor.darkGreyish
+    
+    var tableCellBackgrundColor = UIColor.nearlyWhiteLight
+    var tableCellTintColor = UIColor.darkGreyish
+    var tableCellSeparatorColor = UIColor.lightGreyish
 }

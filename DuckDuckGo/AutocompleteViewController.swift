@@ -49,6 +49,7 @@ class AutocompleteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        applyTheme(currentTheme)
     }
 
     private func configureTableView() {
@@ -137,15 +138,21 @@ extension AutocompleteViewController: UITableViewDataSource {
         cell.updateFor(query: query, suggestion: suggestions[indexPath.row])
         cell.plusButton.tag = indexPath.row
         
-        cell.contentView.backgroundColor = currentTheme.barBackgroundColor
-        cell.tintColor = currentTheme.barTintColor
-        cell.label?.textColor = currentTheme.barTintColor
+        cell.contentView.backgroundColor = currentTheme.tableCellBackgrundColor
+        cell.tintColor = currentTheme.tableCellTintColor
+        cell.label?.textColor = currentTheme.tableCellTintColor
         return cell
     }
 
     private func noSuggestionsCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let type = NoSuggestionsTableViewCell.reuseIdentifier
-        return tableView.dequeueReusableCell(withIdentifier: type, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as? NoSuggestionsTableViewCell else {
+            fatalError("Failed to dequeue \(type) as NoSuggestionTableViewCell")
+        }
+        cell.contentView.backgroundColor = currentTheme.tableCellBackgrundColor
+        cell.tintColor = currentTheme.tableCellTintColor
+        cell.label?.textColor = currentTheme.tableCellTintColor
+        return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -175,6 +182,8 @@ extension AutocompleteViewController: UIGestureRecognizerDelegate {
 extension AutocompleteViewController: Themable {
     func decorate(with theme: Theme) {
         currentTheme = theme
+        
+        tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.reloadData()
     }
 }

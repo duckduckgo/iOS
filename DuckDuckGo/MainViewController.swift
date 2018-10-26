@@ -157,12 +157,30 @@ class MainViewController: UIViewController, Themable {
             attachHomeScreen()
         }
     }
+    
+    private func enableShadow(for view: UIView) {
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+                                                          y: view.bounds.height - 5,
+                                                          width: omniBar.bounds.width,
+                                                          height: 5)).cgPath
+        view.layer.shadowRadius = 1
+    }
+    
+    private func disableShadow(for view: UIView) {
+        view.layer.shadowOpacity = 0.0
+    }
 
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()
         omniBar.omniDelegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
+        
+        enableShadow(for: omniBar)
     }
 
     fileprivate func attachHomeScreen() {
@@ -330,6 +348,7 @@ class MainViewController: UIViewController, Themable {
             containerView.addSubview(controller.view)
             controller.didMove(toParent: self)
             autocompleteController = controller
+            disableShadow(for: omniBar)
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
@@ -337,6 +356,7 @@ class MainViewController: UIViewController, Themable {
 
     fileprivate func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
+        enableShadow(for: omniBar)
         autocompleteController = nil
         controller.willMove(toParent: nil)
         controller.view.removeFromSuperview()

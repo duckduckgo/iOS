@@ -25,27 +25,27 @@
                                         <rect key="frame" x="8" y="0.0" width="304" height="44"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="fPp-b5-bf9">
-                                                <rect key="frame" x="8" y="14" width="16" height="16"/>
+                                                <rect key="frame" x="12" y="14" width="16" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="Wyj-EQ-RSl"/>
                                                     <constraint firstAttribute="width" constant="16" id="wyG-bu-T8R"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search privately or enter URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1k2-q0-Mzn">
-                                                <rect key="frame" x="32" y="8" width="264" height="28"/>
+                                                <rect key="frame" x="40" y="8" width="252" height="28"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" red="0.12549019607843137" green="0.3529411764705882" blue="0.37647058823529411" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" white="0.43217110339506171" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="1k2-q0-Mzn" secondAttribute="trailing" constant="8" id="3Kg-Wm-c5p"/>
-                                            <constraint firstItem="1k2-q0-Mzn" firstAttribute="leading" secondItem="fPp-b5-bf9" secondAttribute="trailing" constant="8" id="QCf-MU-V84"/>
+                                            <constraint firstAttribute="trailing" secondItem="1k2-q0-Mzn" secondAttribute="trailing" constant="12" id="3Kg-Wm-c5p"/>
+                                            <constraint firstItem="1k2-q0-Mzn" firstAttribute="leading" secondItem="fPp-b5-bf9" secondAttribute="trailing" constant="12" id="QCf-MU-V84"/>
                                             <constraint firstAttribute="height" constant="44" id="QOQ-q0-bv8"/>
                                             <constraint firstItem="fPp-b5-bf9" firstAttribute="centerY" secondItem="3eX-Oy-2C2" secondAttribute="centerY" id="ZqR-zQ-Odd"/>
                                             <constraint firstAttribute="bottom" secondItem="1k2-q0-Mzn" secondAttribute="bottom" constant="8" id="ff1-ax-28F"/>
-                                            <constraint firstItem="fPp-b5-bf9" firstAttribute="leading" secondItem="3eX-Oy-2C2" secondAttribute="leading" constant="8" id="gQg-Oj-72M"/>
+                                            <constraint firstItem="fPp-b5-bf9" firstAttribute="leading" secondItem="3eX-Oy-2C2" secondAttribute="leading" constant="12" id="gQg-Oj-72M"/>
                                             <constraint firstItem="1k2-q0-Mzn" firstAttribute="top" secondItem="3eX-Oy-2C2" secondAttribute="top" constant="8" id="q2s-aa-Mqj"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
@@ -66,7 +66,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="lHR-XP-OIi"/>
                                                 </constraints>
-                                                <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <inset key="contentEdgeInsets" minX="-7" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="Bookmarks" image="WidgetBookmarks">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -85,7 +87,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="WOh-ph-wGJ"/>
                                                 </constraints>
-                                                <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <inset key="contentEdgeInsets" minX="-7" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="Clear Data" image="WidgetFire">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>

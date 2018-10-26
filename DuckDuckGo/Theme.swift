@@ -40,8 +40,6 @@ extension UIViewController {
         }
         
         decorateNestedControllers(with: theme)
-        
-        //view.applyTheme(theme)
     }
     
     func decorateNestedControllers(with theme: Theme) {
@@ -51,18 +49,6 @@ extension UIViewController {
         
         if let controller = presentedViewController {
             controller.applyTheme(theme)
-        }
-    }
-}
-
-extension UIView {
-    func applyTheme(_ theme: Theme) {
-        if let themable = self as? Themable {
-            themable.decorate(with: theme)
-        }
-        
-        for view in subviews {
-            view.applyTheme(theme)
         }
     }
 }

@@ -78,6 +78,8 @@ class MainViewController: UIViewController, Themable {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
+        
+        applyTheme(currentTheme)
     }
     
     func decorate(with theme: Theme) {
@@ -99,8 +101,7 @@ class MainViewController: UIViewController, Themable {
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor
         
-        tabSwitcherButton.backgroundColor = theme.barBackgroundColor
-        tabSwitcherButton.tintColor = theme.barTintColor
+        tabSwitcherButton.applyTheme(theme)
         tabsButton.tintColor = theme.barTintColor
     }
     

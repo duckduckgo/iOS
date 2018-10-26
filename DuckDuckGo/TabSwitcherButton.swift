@@ -42,13 +42,31 @@ class TabSwitcherButton: UIView {
     weak var delegate: TabSwitcherButtonDelegate?
     
     let tint = UIView(frame: .zero)
-    let anim = LOTAnimationView(name: "new_tab")
+    var anim = LOTAnimationView(name: "new_tab")
     let label = UILabel()
     
     var tabCount: Int = 0 {
         didSet {
             refresh()
         }
+    }
+    
+    func applyTheme(_ theme: Theme) {
+        backgroundColor = theme.barBackgroundColor
+        tintColor = theme.barTintColor
+        
+        let newAnimationView: LOTAnimationView
+        switch theme.currentImageSet {
+        case .light:
+            newAnimationView = LOTAnimationView(name: "new_tab_dark")
+        case .dark:
+            newAnimationView = LOTAnimationView(name: "new_tab")
+        }
+        
+        anim.removeFromSuperview()
+        anim = newAnimationView
+        addSubview(anim)
+        configureAnimationView()
     }
     
     private func refresh() {
@@ -70,14 +88,9 @@ class TabSwitcherButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         tint.frame = frame
         label.frame = frame
         
-        anim.layer.masksToBounds = false
-        anim.isUserInteractionEnabled = false
-        
-//        tint.backgroundColor = UIColor.nearlyBlackLight
         tint.alpha = 0.0
         tint.isUserInteractionEnabled = false
         
@@ -87,8 +100,15 @@ class TabSwitcherButton: UIView {
         addSubview(label)
         addSubview(tint)
         
-        anim.center = center
+        configureAnimationView()
+    }
+    
+    private func configureAnimationView() {
+        anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        anim.layer.masksToBounds = false
+        anim.isUserInteractionEnabled = false
         
+        anim.center = center
     }
     
     override var backgroundColor: UIColor? {

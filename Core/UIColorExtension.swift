@@ -52,6 +52,10 @@ extension UIColor {
     public static var greyish3: UIColor {
         return UIColor(red: 168.0 / 255.0, green: 168.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
     }
+    
+    public static var lightMercury: UIColor {
+        return UIColor(red: 204.0 / 255.0, green: 204.0 / 255.0, blue: 204.0 / 255.0, alpha: 1.0)
+    }
 
     public static var mercury: UIColor {
         return UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)

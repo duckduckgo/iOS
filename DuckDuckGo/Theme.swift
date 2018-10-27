@@ -18,19 +18,20 @@ protocol Theme {
     var barBackgroundColor: UIColor { get }
     var barTintColor: UIColor { get }
     var barTitleColor: UIColor { get }
-//    var barLightTintColor: UIColor { get }
-//    var barInactiveButtonColor: UIColor { get }
     
     var searchBarBackgroundColor: UIColor { get }
-//    var searchBarPlaceholderTextColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
     
     var tableCellBackgrundColor: UIColor { get }
     var tableCellTintColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
-    
     var tableHeaderTextColor: UIColor { get }
+    
     var toggleSwitchColor: UIColor? { get }
+    
+    var homeRowPrimaryTextColor: UIColor { get }
+    var homeRowSecondaryTextColor: UIColor { get }
+    var homeRowBackgroundColor: UIColor { get }
 }
 
 protocol Themable {
@@ -48,8 +49,6 @@ extension UIViewController {
             var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
             titleAttrs[NSAttributedString.Key.foregroundColor] = theme.barTitleColor
             navigationController?.navigationBar.titleTextAttributes = titleAttrs
-            
-            view.backgroundColor = theme.backgroundColor
             
             themable.decorate(with: theme)
         }

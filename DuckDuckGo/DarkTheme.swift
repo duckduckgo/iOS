@@ -19,16 +19,18 @@ struct DarkTheme: Theme {
     var barBackgroundColor = UIColor.nearlyBlackLight
     var barTintColor = UIColor.grayish
     var barTitleColor = UIColor.white
-//    var barLightTintColor = UIColor.darkGreyish
     
     var searchBarBackgroundColor = UIColor.grayishBrown
-//    var searchBarPlaceholderTextColor = UIColor.greyish3
     var searchBarTextColor = UIColor.white
     
     var tableCellBackgrundColor = UIColor.nearlyBlackLight
     var tableCellTintColor = UIColor.grayish
     var tableCellSeparatorColor = UIColor.charcoalGrey2
-    
     var tableHeaderTextColor = UIColor.lightGreyish
+    
     var toggleSwitchColor: UIColor?
+    
+    var homeRowPrimaryTextColor = UIColor.white
+    var homeRowSecondaryTextColor = UIColor.lightMercury
+    var homeRowBackgroundColor = UIColor.nearlyBlackLight
 }

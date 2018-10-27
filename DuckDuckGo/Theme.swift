@@ -17,6 +17,7 @@ protocol Theme {
     
     var barBackgroundColor: UIColor { get }
     var barTintColor: UIColor { get }
+    var barTitleColor: UIColor { get }
 //    var barLightTintColor: UIColor { get }
 //    var barInactiveButtonColor: UIColor { get }
     
@@ -27,15 +28,29 @@ protocol Theme {
     var tableCellBackgrundColor: UIColor { get }
     var tableCellTintColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
+    
+    var tableHeaderTextColor: UIColor { get }
+    var toggleSwitchColor: UIColor? { get }
 }
 
 protocol Themable {
+    /// Implement to customize view based on Theme
     func decorate(with theme: Theme)
 }
 
 extension UIViewController {
     func applyTheme(_ theme: Theme) {
         if let themable = self as? Themable {
+            navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+            navigationController?.navigationBar.backgroundColor = theme.barBackgroundColor
+            navigationController?.navigationBar.tintColor = theme.barTintColor
+            
+            var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
+            titleAttrs[NSAttributedString.Key.foregroundColor] = theme.barTitleColor
+            navigationController?.navigationBar.titleTextAttributes = titleAttrs
+            
+            view.backgroundColor = theme.backgroundColor
+            
             themable.decorate(with: theme)
         }
         
@@ -54,12 +69,8 @@ extension UIViewController {
 }
 
 extension Themable where Self: UIViewController {
-        
+    
     func decorate(with theme: Theme) {
-        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
-        navigationController?.navigationBar.backgroundColor = theme.barBackgroundColor
         
-        view.tintColor = theme.barTintColor
-        view.backgroundColor = theme.backgroundColor
     }
 }

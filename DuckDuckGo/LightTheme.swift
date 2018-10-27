@@ -17,6 +17,7 @@ struct LightTheme: Theme {
     var backgroundColor = UIColor.nearlyWhite
     var barBackgroundColor = UIColor.nearlyWhiteLight
     var barTintColor = UIColor.darkGreyish
+    var barTitleColor = UIColor.darkGreyish
 //    var barLightTintColor = UIColor.darkGreyish
     
     var searchBarBackgroundColor = UIColor.lightGreyish
@@ -26,4 +27,7 @@ struct LightTheme: Theme {
     var tableCellBackgrundColor = UIColor.nearlyWhiteLight
     var tableCellTintColor = UIColor.darkGreyish
     var tableCellSeparatorColor = UIColor.lightGreyish
+    
+    var tableHeaderTextColor = UIColor.greyish4
+    var toggleSwitchColor: UIColor? = UIColor.cornflowerBlue
 }

@@ -20,10 +20,6 @@
 import Foundation
 
 extension UIColor {
-
-//    public static var monitoringInactiveTint: UIColor {
-//        return midGray
-//    }
     
     public static var nearlyBlackLight: UIColor {
         return UIColor(red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
@@ -37,8 +33,12 @@ extension UIColor {
         return UIColor(red: 85.0 / 255.0, green: 85.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
     }
     
-    public static var grayishBrown2: UIColor {
+    public static var charcoalGrey2: UIColor {
         return UIColor(red: 68.0 / 255.0, green: 68.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var greyishBrown2: UIColor {
+        return UIColor(red: 102.0 / 255.0, green: 102.0 / 255.0, blue: 102.0 / 255.0, alpha: 1.0)
     }
 
     public static var grayish: UIColor {
@@ -57,41 +57,9 @@ extension UIColor {
         return UIColor(red: 229.0 / 255.0, green: 229.0 / 255.0, blue: 229.0 / 255.0, alpha: 1.0)
     }
 
-//    public static var midGray: UIColor {
-//        return UIColor(red: 190.0 / 255.0, green: 190.0 / 255.0, blue: 190.0 / 255.0, alpha: 1.0)
-//    }
-
-//    public static var nastyGreen: UIColor {
-//        return UIColor(red: 101.0 / 255.0, green: 187.0 / 255.0, blue: 70.0 / 255.0, alpha: 1.0)
-//    }
-
-//    public static var lightOliveGreen: UIColor {
-//        return UIColor(red: 147.0 / 255.0, green: 192.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
-//    }
-
-//    public static var squash: UIColor {
-//        return UIColor(red: 237.0 / 255.0, green: 158.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
-//    }
-
-//    public static var dullRed: UIColor {
-//        return UIColor(red: 221.0 / 255.0, green: 88.0 / 255.0, blue: 56.0 / 255.0, alpha: 1.0)
-//    }
-
-//    public static var softBlue: UIColor { //unused
-//        return UIColor(red: 106.0 / 255.0, green: 187.0 / 255.0, blue: 224.0 / 255.0, alpha: 1.0)
-//    }
-
     public static var cornflowerBlue: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 143.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
     }
-    
-//    public static var skyBlue: UIColor { //remove use cornflowerBlue
-//        return UIColor(red: 56.0 / 255.0, green: 176.0 / 255.0, blue: 253.0 / 255.0, alpha: 1.0)
-//    }
-
-//    public static var greyishBrownTwo: UIColor {
-//        return UIColor(red: 77.0 / 255.0, green: 77.0 / 255.0, blue: 77.0 / 255.0, alpha: 1.0)
-//    }
 }
 
 extension UIColor {

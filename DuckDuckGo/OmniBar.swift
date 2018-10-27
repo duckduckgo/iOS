@@ -56,6 +56,16 @@ class OmniBar: UIView {
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.grayish])
         textField.delegate = self
     }
+    
+    public func applyTheme(_ theme: Theme) {
+        backgroundColor = theme.barBackgroundColor
+        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+        tintColor = theme.barTintColor
+        searchStackContainer?.tintColor = theme.barTintColor
+        editingBackground?.borderColor = theme.searchBarBackgroundColor
+        textField.textColor = theme.searchBarTextColor
+        textField.tintColor = theme.searchBarTextColor
+    }
 
     private func configureEditingMenu() {
         let title = UserText.actionPasteAndGo

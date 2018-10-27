@@ -90,13 +90,7 @@ class MainViewController: UIViewController, Themable {
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
         
-        omniBar?.backgroundColor = theme.barBackgroundColor
-        omniBar?.editingBackground?.backgroundColor = theme.searchBarBackgroundColor
-        omniBar?.tintColor = theme.barTintColor
-        omniBar?.searchStackContainer?.tintColor = theme.barTintColor
-        omniBar?.editingBackground?.borderColor = theme.searchBarBackgroundColor
-        omniBar?.textField.textColor = theme.searchBarTextColor
-        omniBar?.textField.tintColor = theme.searchBarTextColor
+        omniBar?.applyTheme(theme)
         
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor

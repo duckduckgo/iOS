@@ -138,6 +138,14 @@
                         <action selector="onSettingsButtonPressed:" destination="-2" eventType="touchUpInside" id="02y-75-CFb"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-j4-fpl">
+                    <rect key="frame" x="0.0" y="53" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="n0V-et-sPt"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -146,10 +154,13 @@
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="leading" secondItem="RdS-eI-aOp" secondAttribute="leading" constant="8" id="FGr-mp-PlT"/>
                 <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="8" id="JTa-RA-Isu"/>
                 <constraint firstItem="1rB-5w-de3" firstAttribute="centerY" secondItem="N6K-Lj-Fn6" secondAttribute="centerY" id="Z2r-9H-b4u"/>
+                <constraint firstItem="hD7-j4-fpl" firstAttribute="width" secondItem="ojX-nM-dyN" secondAttribute="width" id="j1n-Dg-LKz"/>
+                <constraint firstAttribute="bottom" secondItem="hD7-j4-fpl" secondAttribute="top" constant="-1" id="nfs-pA-DD4"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" constant="4" id="oce-E1-4Nw"/>
                 <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="5D5-iT-bUk" secondAttribute="trailing" priority="750" constant="8" id="tY7-iY-5EI"/>
                 <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="1rB-5w-de3" secondAttribute="trailing" constant="12" id="uKO-eG-Cih"/>
                 <constraint firstItem="1rB-5w-de3" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="12" id="x26-4u-hqT"/>
+                <constraint firstItem="hD7-j4-fpl" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" id="xxj-zc-Sw3"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -162,6 +173,8 @@
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
                 <outlet property="searchContainerToSettingsConstraint" destination="x26-4u-hqT" id="7Z7-xL-lZP"/>
                 <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>
+                <outlet property="separatorHeightConstraint" destination="n0V-et-sPt" id="NST-ka-qSe"/>
+                <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>

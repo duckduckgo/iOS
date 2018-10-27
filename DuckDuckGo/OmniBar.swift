@@ -33,8 +33,10 @@ class OmniBar: UIView {
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var separatorView: UIView!
 
     @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeNonEditingState()
@@ -47,6 +49,7 @@ class OmniBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         configureTextField()
+        configureSeparator()
         configureEditingMenu()
         refreshState(state)
     }
@@ -55,6 +58,10 @@ class OmniBar: UIView {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.grayish])
         textField.delegate = self
+    }
+    
+    private func configureSeparator() {
+        separatorHeightConstraint.constant = 1.0 / UIScreen.main.scale
     }
     
     public func applyTheme(_ theme: Theme) {
@@ -76,6 +83,14 @@ class OmniBar: UIView {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()
+    }
+    
+    func showSeparator() {
+        separatorView.isHidden = false
+    }
+    
+    func hideSeparator() {
+        separatorView.isHidden = true
     }
 
     func startBrowsing() {

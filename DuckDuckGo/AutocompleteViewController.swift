@@ -55,6 +55,7 @@ class AutocompleteViewController: UIViewController {
     private func configureTableView() {
         tableView.backgroundColor = UIColor.clear
         tableView.tableFooterView = UIView()
+        tableView.sectionFooterHeight = 1.0 / UIScreen.main.scale
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -122,6 +123,12 @@ class AutocompleteViewController: UIViewController {
 }
 
 extension AutocompleteViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UITableViewHeaderFooterView()
+        footer.contentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        return footer
+    }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if suggestions.isEmpty {

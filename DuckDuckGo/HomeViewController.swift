@@ -47,6 +47,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewWillAppear(_ animated: Bool) {

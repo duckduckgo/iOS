@@ -16,7 +16,8 @@ class ThemeManager {
     }
     
     public static let shared = ThemeManager()
-    public static let defaultTheme = DarkTheme()
+
+    private let appSettings = AppUserDefaults()
     
     var rootController: UIViewController?
     var currentTheme: Theme {
@@ -26,8 +27,26 @@ class ThemeManager {
     }
     
     init() {
-        //TODO: load theme from Settings
-        currentTheme = type(of: self).defaultTheme
+        isLightThemeEnabled = appSettings.lightTheme
+        if isLightThemeEnabled {
+            currentTheme = LightTheme()
+        } else {
+            currentTheme = DarkTheme()
+        }
+        // Uncomment to enable automatic theme cycling for testing
+//        cycle()
+    }
+    
+    public var isLightThemeEnabled: Bool {
+        didSet {
+            appSettings.lightTheme = isLightThemeEnabled
+            
+            if isLightThemeEnabled {
+                currentTheme = LightTheme()
+            } else {
+                currentTheme = DarkTheme()
+            }
+        }
     }
 }
 
@@ -37,8 +56,8 @@ extension ThemeManager {
     static var cycleIteration = 0
     
     /// Run to enable cycling through themes
-    func cycle() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+    func cycle(seconds: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             if type(of: self).cycleIteration % 2 == 1 {
                 self.currentTheme = DarkTheme()
             } else {
@@ -46,7 +65,7 @@ extension ThemeManager {
             }
             type(of: self).cycleIteration += 1
             
-            self.cycle()
+            self.cycle(seconds: seconds)
         }
     }
 }

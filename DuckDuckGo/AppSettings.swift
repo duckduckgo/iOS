@@ -19,4 +19,5 @@
 
 protocol AppSettings {
     var autocomplete: Bool { get set }
+    var lightTheme: Bool { get set }
 }

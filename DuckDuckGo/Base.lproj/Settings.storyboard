@@ -50,6 +50,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xE6-kW-NSs">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="onLightThemeToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="IF8-aG-36i"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
@@ -81,7 +84,7 @@
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PNd-rx-En1">
                                                             <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                             <connections>
-                                                                <action selector="onAutocompleteToggled:" destination="fAo-H3-Yyo" eventType="touchUpInside" id="CFw-Zs-KY2"/>
+                                                                <action selector="onAutocompleteToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="Pjf-mw-qaV"/>
                                                             </connections>
                                                         </switch>
                                                     </subviews>

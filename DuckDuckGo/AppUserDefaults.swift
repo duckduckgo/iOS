@@ -25,6 +25,7 @@ public class AppUserDefaults: AppSettings {
 
     private struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let lightThemeKey = "com.duckduckgo.app.lightThemeEnabledKey"
     }
 
     private var userDefaults: UserDefaults? {
@@ -45,5 +46,17 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
         }
 
+    }
+    
+    var lightTheme: Bool {
+        
+        get {
+            return userDefaults?.bool(forKey: Keys.lightThemeKey, defaultValue: true) ?? true
+        }
+        
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.lightThemeKey)
+        }
+        
     }
 }

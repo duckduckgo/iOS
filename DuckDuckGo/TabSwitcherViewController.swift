@@ -41,6 +41,8 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewWillAppear(_ animated: Bool) {

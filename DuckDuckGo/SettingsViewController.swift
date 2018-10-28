@@ -43,6 +43,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMargins()
+        configureLightThemeToggle()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -58,7 +59,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureLightThemeToggle() {
-//        lightThemeToggle.isOn = appSettings.autocomplete
+        lightThemeToggle.isOn = ThemeManager.shared.isLightThemeEnabled
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -102,7 +103,7 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func onLightThemeToggled(_ sender: UISwitch) {
-        // = sender.isOn
+        ThemeManager.shared.isLightThemeEnabled = sender.isOn
     }
 
     @IBAction func onDonePressed(_ sender: Any) {

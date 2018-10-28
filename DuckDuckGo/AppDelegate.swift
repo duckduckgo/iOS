@@ -44,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         ThemeManager.shared.rootController = window?.rootViewController
-        ThemeManager.shared.cycle()
 
         HTTPSUpgrade.shared.loadDataAsync()
 

@@ -22,12 +22,11 @@ import WebKit
 import Core
 import Lottie
 
-class MainViewController: UIViewController, Themable {
+class MainViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return currentTheme.statusBarStyle
+        return ThemeManager.shared.currentTheme.statusBarStyle
     }
-    private var currentTheme: Theme = ThemeManager.shared.currentTheme
 
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
@@ -79,24 +78,7 @@ class MainViewController: UIViewController, Themable {
         loadInitialView()
         addLaunchTabNotificationObserver()
         
-        applyTheme(currentTheme)
-    }
-    
-    func decorate(with theme: Theme) {
-        self.currentTheme = theme
-        setNeedsStatusBarAppearanceUpdate()
-        
-        statusBarBackground.backgroundColor = theme.barBackgroundColor
-        customNavigationBar?.backgroundColor = theme.barBackgroundColor
-        customNavigationBar?.tintColor = theme.barTintColor
-        
-        omniBar?.applyTheme(theme)
-        
-        toolbar?.barTintColor = theme.barBackgroundColor
-        toolbar?.tintColor = theme.barTintColor
-        
-        tabSwitcherButton.applyTheme(theme)
-        tabsButton.tintColor = theme.barTintColor
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     private func initTabButton() {
@@ -655,4 +637,23 @@ extension MainViewController: TabSwitcherButtonDelegate {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
     
+}
+
+extension MainViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        setNeedsStatusBarAppearanceUpdate()
+        
+        statusBarBackground.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.tintColor = theme.barTintColor
+        
+        omniBar?.applyTheme(theme)
+        
+        toolbar?.barTintColor = theme.barBackgroundColor
+        toolbar?.tintColor = theme.barTintColor
+        
+        tabSwitcherButton.applyTheme(theme)
+        tabsButton.tintColor = theme.barTintColor
+    }
 }

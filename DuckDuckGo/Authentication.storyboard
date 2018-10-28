@@ -71,6 +71,7 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="logo" destination="eFh-7e-TRG" id="5hE-ew-Fp8"/>
                         <outlet property="unlockInstructions" destination="cJr-Jr-nbF" id="IJb-Pc-YRf"/>
                     </connections>
                 </viewController>

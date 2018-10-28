@@ -33,4 +33,7 @@ struct DarkTheme: Theme {
     var homeRowPrimaryTextColor = UIColor.white
     var homeRowSecondaryTextColor = UIColor.lightMercury
     var homeRowBackgroundColor = UIColor.nearlyBlackLight
+    
+    var aboutScreenTextColor = UIColor.white
+    var aboutScreenButtonColor = UIColor.cornflowerBlue
 }

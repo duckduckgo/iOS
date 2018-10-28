@@ -22,11 +22,44 @@ import Core
 
 class AboutViewController: UIViewController {
 
-    @IBOutlet weak var descriptionText: UILabel!
+    @IBOutlet weak var headerText: UILabel!
+    // These are duplicated, as UILabel that is set up with sizing classes
+    // does not apply changes to attributed string
+    @IBOutlet weak var descriptionTextLight: UILabel!
+    @IBOutlet weak var descriptionTextDark: UILabel!
+    @IBOutlet weak var logoImage: UIImageView!
+    @IBOutlet weak var moreButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
 
     @IBAction func onPrivacyLinkTapped(_ sender: UIButton) {
         dismiss(animated: true) {
             UIApplication.shared.open(AppDeepLinks.aboutLink, options: [:])
         }
+    }
+}
+
+extension AboutViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            logoImage?.image = UIImage(named: "LogoDarkText")
+            descriptionTextLight.isHidden = true
+            descriptionTextDark.isHidden = false
+        case .dark:
+            logoImage?.image = UIImage(named: "LogoLightText")
+            descriptionTextLight.isHidden = false
+            descriptionTextDark.isHidden = true
+        }
+        
+        headerText.textColor = theme.aboutScreenTextColor
+        moreButton.setTitleColor(theme.aboutScreenButtonColor, for: .normal)
     }
 }

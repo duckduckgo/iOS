@@ -32,6 +32,9 @@ protocol Theme {
     var homeRowPrimaryTextColor: UIColor { get }
     var homeRowSecondaryTextColor: UIColor { get }
     var homeRowBackgroundColor: UIColor { get }
+    
+    var aboutScreenTextColor: UIColor { get }
+    var aboutScreenButtonColor: UIColor { get }
 }
 
 protocol Themable {

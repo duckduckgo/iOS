@@ -25,9 +25,12 @@ import Device
 class SettingsViewController: UITableViewController {
 
     @IBOutlet var margins: [NSLayoutConstraint]!
+    @IBOutlet weak var lightThemeToggle: UISwitch!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
+    
+    @IBOutlet var labels: [UILabel]!
 
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
@@ -43,6 +46,8 @@ class SettingsViewController: UITableViewController {
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     private func configureMargins() {
@@ -50,6 +55,10 @@ class SettingsViewController: UITableViewController {
         for margin in margins {
             margin.constant = 0
         }
+    }
+    
+    private func configureLightThemeToggle() {
+//        lightThemeToggle.isOn = appSettings.autocomplete
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -67,16 +76,24 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgrundColor
+    }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
-            view.textLabel?.textColor = UIColor.coolGrey
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
         }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
-            view.textLabel?.textColor = UIColor.coolGrey
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
         }
     }
 
@@ -94,6 +111,27 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onAutocompleteToggled(_ sender: UISwitch) {
         appSettings.autocomplete = sender.isOn
+    }
+}
+
+extension SettingsViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        
+        for label in labels {
+            label.textColor = theme.tableCellTintColor
+        }
+        
+        versionText.textColor = theme.tableCellTintColor
+        
+        lightThemeToggle.onTintColor = theme.toggleSwitchColor
+        autocompleteToggle.onTintColor = theme.toggleSwitchColor
+        authenticationToggle.onTintColor = theme.toggleSwitchColor
+        
+        tableView.backgroundColor = theme.backgroundColor
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        
+        tableView.reloadData()
     }
 }
 

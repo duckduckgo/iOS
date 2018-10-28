@@ -32,4 +32,7 @@ struct LightTheme: Theme {
     var homeRowPrimaryTextColor = UIColor.nearlyBlackLight
     var homeRowSecondaryTextColor = UIColor.greyishBrown2
     var homeRowBackgroundColor = UIColor.nearlyWhiteLight
+    
+    var aboutScreenTextColor = UIColor.charcoalGrey2
+    var aboutScreenButtonColor = UIColor.cornflowerBlue
 }

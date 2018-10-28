@@ -40,27 +40,57 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bym-LR-2L9">
-                                                    <rect key="frame" x="24" y="6.5" width="327" height="31"/>
+                                                    <rect key="frame" x="16" y="6.5" width="343" height="31"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="jyc-pE-eK8">
-                                                            <rect key="frame" x="0.0" y="7.5" width="270" height="16"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="jyc-pE-eK8">
+                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xE6-kW-NSs">
-                                                            <rect key="frame" x="278" y="0.0" width="51" height="31"/>
-                                                            <connections>
-                                                                <action selector="onAutocompleteToggled:" destination="fAo-H3-Yyo" eventType="touchUpInside" id="744-wj-ZcG"/>
-                                                            </connections>
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="bym-LR-2L9" firstAttribute="centerY" secondItem="hhO-4g-akE" secondAttribute="centerY" id="0EK-PA-rZV"/>
-                                                <constraint firstItem="bym-LR-2L9" firstAttribute="leading" secondItem="hhO-4g-akE" secondAttribute="leadingMargin" constant="8" id="leX-6S-yqR"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="bym-LR-2L9" secondAttribute="trailing" constant="8" id="y8a-BQ-8Bc"/>
+                                                <constraint firstItem="bym-LR-2L9" firstAttribute="leading" secondItem="hhO-4g-akE" secondAttribute="leadingMargin" id="leX-6S-yqR"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="bym-LR-2L9" secondAttribute="trailing" id="y8a-BQ-8Bc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="nwi-z5-yyq">
+                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nwi-z5-yyq" id="d7f-Ah-aam">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fdF-mH-2ub">
+                                                    <rect key="frame" x="16" y="6.5" width="343" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-cQ-5WW">
+                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PNd-rx-En1">
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="onAutocompleteToggled:" destination="fAo-H3-Yyo" eventType="touchUpInside" id="CFw-Zs-KY2"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="fdF-mH-2ub" firstAttribute="centerY" secondItem="d7f-Ah-aam" secondAttribute="centerY" id="M4A-KF-CAq"/>
+                                                <constraint firstItem="fdF-mH-2ub" firstAttribute="leading" secondItem="d7f-Ah-aam" secondAttribute="leadingMargin" id="psC-7T-q0c"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="fdF-mH-2ub" secondAttribute="trailing" id="sIy-D1-oJw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,7 +100,7 @@
                             <tableViewSection headerTitle="Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="FHC-1z-Z3v" style="IBUITableViewCellStyleDefault" id="qdD-7s-mmM">
-                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="207" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qdD-7s-mmM" id="RVQ-jf-2kf">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -91,23 +121,23 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mSQ-M3-da5">
-                                        <rect key="frame" x="0.0" y="207" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="251" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mSQ-M3-da5" id="uF1-dD-wAq">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RZd-Wd-Gy0">
-                                                    <rect key="frame" x="24" y="6.5" width="327" height="31"/>
+                                                    <rect key="frame" x="16" y="6.5" width="343" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-yq-FYj">
-                                                            <rect key="frame" x="0.0" y="7.5" width="270" height="16"/>
+                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="24S-Ml-5cq">
-                                                            <rect key="frame" x="278" y="0.0" width="51" height="31"/>
+                                                            <rect key="frame" x="294" y="0.0" width="51" height="31"/>
                                                             <connections>
                                                                 <action selector="onAuthenticationToggled:" destination="fAo-H3-Yyo" eventType="valueChanged" id="Fed-00-aPR"/>
                                                             </connections>
@@ -116,9 +146,9 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="RZd-Wd-Gy0" firstAttribute="leading" secondItem="uF1-dD-wAq" secondAttribute="leadingMargin" constant="8" id="QO8-S9-afk"/>
+                                                <constraint firstItem="RZd-Wd-Gy0" firstAttribute="leading" secondItem="uF1-dD-wAq" secondAttribute="leadingMargin" id="QO8-S9-afk"/>
                                                 <constraint firstItem="RZd-Wd-Gy0" firstAttribute="centerY" secondItem="uF1-dD-wAq" secondAttribute="centerY" id="w04-Yp-zd3"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="RZd-Wd-Gy0" secondAttribute="trailing" constant="8" id="zJZ-MR-uhS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="RZd-Wd-Gy0" secondAttribute="trailing" id="zJZ-MR-uhS"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -128,7 +158,7 @@
                             <tableViewSection headerTitle="Help" id="zMK-jc-4bJ" userLabel="Help">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="flX-Op-Ik6">
-                                        <rect key="frame" x="0.0" y="335" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="379" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flX-Op-Ik6" id="Ime-ez-dSU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -158,7 +188,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="pfh-oL-Cic">
-                                        <rect key="frame" x="0.0" y="379" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="423" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pfh-oL-Cic" id="Ikg-ak-nRy">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -192,7 +222,7 @@
                             <tableViewSection headerTitle="Other" footerTitle="" id="FpT-1C-xtx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="oM7-1o-9oY" style="IBUITableViewCellStyleDefault" id="iy0-gV-9MR">
-                                        <rect key="frame" x="0.0" y="486.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="530.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -219,7 +249,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="m23-t6-9cb" style="IBUITableViewCellStyleDefault" id="aJ8-VX-XrI">
-                                        <rect key="frame" x="0.0" y="530.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="574.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ8-VX-XrI" id="9Mf-ZL-aUg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -240,21 +270,21 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleSubtitle" id="TYF-GX-a3j">
-                                        <rect key="frame" x="0.0" y="574.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="618.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="16" y="8" width="54" height="16"/>
+                                                    <rect key="frame" x="15" y="8" width="54" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="16" y="24" width="98.5" height="12"/>
+                                                    <rect key="frame" x="15" y="24" width="98.5" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -282,7 +312,8 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="authenticationToggle" destination="24S-Ml-5cq" id="5By-WD-2tX"/>
-                        <outlet property="autocompleteToggle" destination="xE6-kW-NSs" id="1Zr-Ca-q8T"/>
+                        <outlet property="autocompleteToggle" destination="PNd-rx-En1" id="KD7-z4-4OW"/>
+                        <outlet property="lightThemeToggle" destination="xE6-kW-NSs" id="8cT-yH-0u4"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
                         <outletCollection property="margins" destination="leX-6S-yqR" collectionClass="NSMutableArray" id="2hh-JC-egM"/>
                         <outletCollection property="margins" destination="y8a-BQ-8Bc" collectionClass="NSMutableArray" id="3g6-Iu-GP1"/>
@@ -291,6 +322,15 @@
                         <outletCollection property="margins" destination="LLP-tP-lWg" collectionClass="NSMutableArray" id="NoF-39-Wzp"/>
                         <outletCollection property="margins" destination="d8F-NH-PbX" collectionClass="NSMutableArray" id="isa-wo-tJ5"/>
                         <outletCollection property="margins" destination="Cm1-Dn-Z6L" collectionClass="NSMutableArray" id="DOr-e7-FBo"/>
+                        <outletCollection property="labels" destination="jyc-pE-eK8" collectionClass="NSMutableArray" id="8Ov-1v-21V"/>
+                        <outletCollection property="labels" destination="FHC-1z-Z3v" collectionClass="NSMutableArray" id="IrB-hk-2iB"/>
+                        <outletCollection property="labels" destination="dBZ-yq-FYj" collectionClass="NSMutableArray" id="2XL-Gk-iVC"/>
+                        <outletCollection property="labels" destination="B5X-ND-d0g" collectionClass="NSMutableArray" id="qdg-oX-h7f"/>
+                        <outletCollection property="labels" destination="HoL-C1-y9r" collectionClass="NSMutableArray" id="ff4-Zb-rG9"/>
+                        <outletCollection property="labels" destination="oM7-1o-9oY" collectionClass="NSMutableArray" id="51p-86-4KL"/>
+                        <outletCollection property="labels" destination="m23-t6-9cb" collectionClass="NSMutableArray" id="7g6-RD-pp5"/>
+                        <outletCollection property="labels" destination="2ky-s9-1aZ" collectionClass="NSMutableArray" id="CaV-P3-c1K"/>
+                        <outletCollection property="labels" destination="U8i-cQ-5WW" collectionClass="NSMutableArray" id="Pep-YK-P4v"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7u-7D-pid" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -383,7 +423,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="47.5" y="275" width="280" height="337"/>
+                                                <rect key="frame" x="47.5" y="275" width="280" height="282"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
@@ -397,9 +437,48 @@ DuckDuckGo Privacy Browser provides all the privacy essentials you need to prote
 
 After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
                                                         <attributes>
-                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" metaFont="system" size="16"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
+                                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                <tabStops>
+                                                                    <textTab alignment="left" location="28">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="56">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="84">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="112">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="140">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="168">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="196">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="224">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="252">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="280">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="308">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="336">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                </tabStops>
+                                                            </paragraphStyle>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -414,7 +493,85 @@ DuckDuckGo Privacy Browser provides all the privacy essentials you need to prote
 After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
                                                             <attributes>
                                                                 <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="24"/>
+                                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </variation>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bej-Po-Rpi">
+                                                <rect key="frame" x="47.5" y="275" width="280" height="282"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="k8W-o0-OZz">
+                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <attributedString key="attributedText">
+                                                    <fragment>
+                                                        <string key="content">At DuckDuckGo, we’re setting the new standard of trust online.
+
+DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
+
+After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                <tabStops>
+                                                                    <textTab alignment="left" location="28">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="56">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="84">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="112">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="140">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="168">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="196">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="224">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="252">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="280">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="308">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                    <textTab alignment="left" location="336">
+                                                                        <options/>
+                                                                    </textTab>
+                                                                </tabStops>
+                                                            </paragraphStyle>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <attributedString key="attributedText">
+                                                        <fragment>
+                                                            <string key="content">At DuckDuckGo, we’re setting the new standard of trust online.
+
+DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
+
+After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -422,7 +579,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="47.5" y="620" width="280" height="28"/>
+                                                <rect key="frame" x="47.5" y="565" width="280" height="28"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">
@@ -447,11 +604,14 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <constraint firstItem="iNd-oh-m3g" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="7FP-Sb-xP2"/>
                                             <constraint firstItem="iNd-oh-m3g" firstAttribute="top" secondItem="wfd-Kx-0gx" secondAttribute="top" constant="32" id="Abh-Ul-MPN"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="BtH-UX-7up"/>
+                                            <constraint firstItem="Bej-Po-Rpi" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="G6e-er-qTX"/>
+                                            <constraint firstItem="Bej-Po-Rpi" firstAttribute="bottom" secondItem="odm-6J-APs" secondAttribute="bottom" id="I5m-gv-UPJ"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="TuI-fs-lpV"/>
                                             <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="WiW-aH-os0"/>
                                             <constraint firstAttribute="height" constant="660" id="aBC-xi-cEy"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="eaN-Or-GFY"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="g71-aw-kOx"/>
+                                            <constraint firstItem="Bej-Po-Rpi" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="top" id="sGu-3v-2k9"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -475,7 +635,11 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="descriptionText" destination="odm-6J-APs" id="fpX-hA-YW2"/>
+                        <outlet property="descriptionTextDark" destination="Bej-Po-Rpi" id="6Ml-Af-i81"/>
+                        <outlet property="descriptionTextLight" destination="odm-6J-APs" id="6bZ-eG-vxj"/>
+                        <outlet property="headerText" destination="gji-Fs-EET" id="8yl-Gj-br5"/>
+                        <outlet property="logoImage" destination="iNd-oh-m3g" id="Td6-dg-EIt"/>
+                        <outlet property="moreButton" destination="7nt-uS-sOh" id="TY1-Qs-Ypf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW2-iC-9BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -492,12 +656,12 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="FGH-RR-RSf">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="FGH-RR-RSf">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="0.0" y="22" width="375" height="28"/>
+                                    <rect key="frame" x="0.0" y="-12.5" width="375" height="33"/>
                                     <string key="text">These whitelisted sites will not be 
 upgraded by Privacy Protection.</string>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
@@ -520,10 +684,10 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
+                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -550,7 +714,7 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No whitelisted sites yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
+                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

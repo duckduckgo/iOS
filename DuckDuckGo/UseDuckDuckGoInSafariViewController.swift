@@ -24,7 +24,13 @@ class UseDuckDuckGoInSafariViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.blur(style: .dark)
+        
+        switch ThemeManager.shared.currentTheme.currentImageSet {
+        case .light:
+            view.blur(style: .light)
+        case .dark:
+            view.blur(style: .dark)
+        }
     }
 
     @IBAction func onDonePressed(_ sender: UIButton) {

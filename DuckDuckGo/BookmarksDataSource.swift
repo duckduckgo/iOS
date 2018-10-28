@@ -45,7 +45,15 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     private func createEmptyCell(_ tableView: UITableView) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier)!
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
+            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
+        }
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.contentView.backgroundColor = theme.tableCellBackgrundColor
+        cell.label.textColor = theme.tableCellTintColor
+        
+        return cell
     }
 
     private func createBookmarkCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
@@ -54,6 +62,10 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
         cell.update(withBookmark: bookmark)
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.contentView.backgroundColor = theme.tableCellBackgrundColor
+        cell.title.textColor = theme.tableCellTintColor
         return cell
     }
 

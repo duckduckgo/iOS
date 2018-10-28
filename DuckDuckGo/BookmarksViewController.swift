@@ -33,6 +33,8 @@ class BookmarksViewController: UITableViewController {
         addAplicationActiveObserver()
         configureTableView()
         refreshEditButton()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -127,4 +129,12 @@ class BookmarksViewController: UITableViewController {
 
 }
 
-extension BookmarksViewController: Themable {}
+extension BookmarksViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.backgroundColor = theme.backgroundColor
+        
+        tableView.reloadData()
+    }
+}

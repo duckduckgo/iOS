@@ -43,7 +43,7 @@
                                                     <rect key="frame" x="16" y="6.5" width="343" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="jyc-pE-eK8">
-                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
+                                                            <rect key="frame" x="0.0" y="6" width="286" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -76,7 +76,7 @@
                                                     <rect key="frame" x="16" y="6.5" width="343" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="U8i-cQ-5WW">
-                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
+                                                            <rect key="frame" x="0.0" y="6" width="286" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -134,7 +134,7 @@
                                                     <rect key="frame" x="16" y="6.5" width="343" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-yq-FYj">
-                                                            <rect key="frame" x="0.0" y="7.5" width="286" height="16"/>
+                                                            <rect key="frame" x="0.0" y="6" width="286" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -168,10 +168,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bYP-6u-2g9">
-                                                    <rect key="frame" x="24" y="14" width="327" height="16"/>
+                                                    <rect key="frame" x="24" y="12.5" width="327" height="19"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="B5X-ND-d0g">
-                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -198,10 +198,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Xp-NU-z4Q">
-                                                    <rect key="frame" x="24" y="14" width="327" height="16"/>
+                                                    <rect key="frame" x="24" y="12.5" width="327" height="19"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="HoL-C1-y9r">
-                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -412,7 +412,7 @@
                                                 <rect key="frame" x="88" y="32" width="199" height="159"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="47.5" y="223" width="280" height="20"/>
+                                                <rect key="frame" x="47.5" y="223" width="280" height="23.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="8Ro-lJ-9ja">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
@@ -426,7 +426,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="47.5" y="275" width="280" height="282"/>
+                                                <rect key="frame" x="47.5" y="278.5" width="280" height="328.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
@@ -442,46 +442,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                         <attributes>
                                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                <tabStops>
-                                                                    <textTab alignment="left" location="28">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="56">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="84">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="112">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="140">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="168">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="196">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="224">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="252">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="280">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="308">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="336">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                </tabStops>
-                                                            </paragraphStyle>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -504,7 +465,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bej-Po-Rpi">
-                                                <rect key="frame" x="47.5" y="275" width="280" height="282"/>
+                                                <rect key="frame" x="47.5" y="278.5" width="280" height="328.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="k8W-o0-OZz">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="380"/>
@@ -520,46 +481,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                         <attributes>
                                                             <color key="NSColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                <tabStops>
-                                                                    <textTab alignment="left" location="28">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="56">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="84">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="112">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="140">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="168">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="196">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="224">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="252">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="280">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="308">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                    <textTab alignment="left" location="336">
-                                                                        <options/>
-                                                                    </textTab>
-                                                                </tabStops>
-                                                            </paragraphStyle>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -582,7 +504,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="47.5" y="565" width="280" height="28"/>
+                                                <rect key="frame" x="47.5" y="615" width="280" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">
@@ -659,12 +581,12 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="FGH-RR-RSf">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="FGH-RR-RSf">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="0.0" y="-12.5" width="375" height="33"/>
+                                    <rect key="frame" x="0.0" y="22" width="375" height="28"/>
                                     <string key="text">These whitelisted sites will not be 
 upgraded by Privacy Protection.</string>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
@@ -687,10 +609,10 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
+                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="19"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -698,13 +620,14 @@ upgraded by Privacy Protection.</string>
                                             </subviews>
                                         </stackView>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="2O5-p6-aW3" secondAttribute="trailing" constant="16" id="AAg-AS-ycp"/>
                                         <constraint firstItem="2O5-p6-aW3" firstAttribute="centerY" secondItem="cYQ-bZ-RLd" secondAttribute="centerY" id="lOx-JH-Onf"/>
                                         <constraint firstItem="2O5-p6-aW3" firstAttribute="leading" secondItem="cYQ-bZ-RLd" secondAttribute="leadingMargin" constant="16" id="osJ-oX-iHQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="domainLabel" destination="EIq-Ev-nfj" id="QhA-qR-NwC"/>
                                 </connections>
@@ -717,7 +640,7 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No whitelisted sites yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
+                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -730,6 +653,9 @@ upgraded by Privacy Protection.</string>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="label" destination="Hu1-5i-vjL" id="Jg7-qH-Ilq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -744,6 +670,9 @@ upgraded by Privacy Protection.</string>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="infoText" destination="zvh-2e-Wmz" id="qi7-fU-1h8"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bjs-Ft-LTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

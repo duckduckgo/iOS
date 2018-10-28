@@ -19,6 +19,8 @@ protocol Theme {
     var barTintColor: UIColor { get }
     var barTitleColor: UIColor { get }
     
+    var tintOnBlurColor: UIColor { get }
+    
     var searchBarBackgroundColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
     

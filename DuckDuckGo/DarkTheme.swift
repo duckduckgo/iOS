@@ -20,6 +20,8 @@ struct DarkTheme: Theme {
     var barTintColor = UIColor.grayish
     var barTitleColor = UIColor.white
     
+    var tintOnBlurColor = UIColor.white
+    
     var searchBarBackgroundColor = UIColor.grayishBrown
     var searchBarTextColor = UIColor.white
     

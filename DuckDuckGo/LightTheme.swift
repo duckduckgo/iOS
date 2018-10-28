@@ -15,9 +15,12 @@ struct LightTheme: Theme {
     var statusBarStyle: UIStatusBarStyle = .default
     
     var backgroundColor = UIColor.nearlyWhite
+    
     var barBackgroundColor = UIColor.nearlyWhiteLight
     var barTintColor = UIColor.darkGreyish
     var barTitleColor = UIColor.darkGreyish
+    
+    var tintOnBlurColor = UIColor.nearlyBlack
     
     var searchBarBackgroundColor = UIColor.lightGreyish
     var searchBarTextColor = UIColor.darkGreyish

@@ -26,6 +26,12 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
+    
+    @IBOutlet weak var settingsButton: UIButton!
+    
+    @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var plusButton: UIBarButtonItem!
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -131,7 +137,11 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         let reuseIdentifier = TabsFooter.reuseIdentifier
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath)
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? TabsFooter else {
+            fatalError("Failed to dequeue footer \(TabsFooter.reuseIdentifier) as TabsFooter")
+        }
+        view.applyTheme(ThemeManager.shared.currentTheme)
+        return view
     }
 
 }
@@ -157,4 +167,17 @@ extension TabSwitcherViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.bounds.size.width, height: 70)
     }
 
+}
+
+extension TabSwitcherViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        titleView.textColor = theme.tintOnBlurColor
+        settingsButton.tintColor = theme.tintOnBlurColor
+        
+        toolbar.barTintColor = theme.barBackgroundColor
+        toolbar.tintColor = theme.barTintColor
+        
+        collectionView.reloadData()
+    }
 }

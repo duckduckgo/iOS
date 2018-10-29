@@ -290,6 +290,6 @@ extension PrivacyProtectionController: Themable {
         setNeedsStatusBarAppearanceUpdate()
         
         statusBarBackground.backgroundColor = theme.barBackgroundColor
-        omniBar?.applyTheme(theme)
+        omniBar?.decorate(with: theme)
     }
 }

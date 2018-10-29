@@ -25,12 +25,12 @@ struct DarkTheme: Theme {
     var searchBarBackgroundColor = UIColor.grayishBrown
     var searchBarTextColor = UIColor.white
     
-    var tableCellBackgrundColor = UIColor.nearlyBlackLight
+    var tableCellBackgroundColor = UIColor.nearlyBlackLight
     var tableCellTintColor = UIColor.grayish
     var tableCellSeparatorColor = UIColor.charcoalGrey2
     var tableHeaderTextColor = UIColor.lightGreyish
     
-    var toggleSwitchColor: UIColor?
+    var toggleSwitchColor = UIColor.cornflowerBlue
     
     var homeRowPrimaryTextColor = UIColor.white
     var homeRowSecondaryTextColor = UIColor.lightMercury

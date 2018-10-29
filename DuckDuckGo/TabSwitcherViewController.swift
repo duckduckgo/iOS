@@ -139,7 +139,9 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         let reuseIdentifier = TabsFooter.reuseIdentifier
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as? TabsFooter else {
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                         withReuseIdentifier: reuseIdentifier,
+                                                                         for: indexPath) as? TabsFooter else {
             fatalError("Failed to dequeue footer \(TabsFooter.reuseIdentifier) as TabsFooter")
         }
         view.applyTheme(ThemeManager.shared.currentTheme)

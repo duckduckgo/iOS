@@ -157,7 +157,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-EZ-1qW">
-                                            <rect key="frame" x="103.33333333333333" y="16" width="168.66666666666669" height="18"/>
+                                            <rect key="frame" x="122.66666666666667" y="16" width="168.66666666666663" height="18"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap " textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UDa-k3-lgX">
                                                     <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
@@ -166,7 +166,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fire" translatesAutoresizingMaskIntoConstraints="NO" id="t4R-VK-c57">
-                                                    <rect key="frame" x="28.000000000000014" y="0.0" width="14" height="18"/>
+                                                    <rect key="frame" x="27.999999999999986" y="0.0" width="14" height="18"/>
                                                     <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="4tg-pv-RPr"/>
@@ -174,7 +174,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" to forget everything" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-NJ-M9S">
-                                                    <rect key="frame" x="44.000000000000007" y="0.0" width="124.66666666666669" height="18"/>
+                                                    <rect key="frame" x="43.999999999999979" y="0.0" width="124.66666666666669" height="18"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>

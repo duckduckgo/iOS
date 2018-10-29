@@ -51,24 +51,6 @@ class TabSwitcherButton: UIView {
         }
     }
     
-    func applyTheme(_ theme: Theme) {
-        backgroundColor = theme.barBackgroundColor
-        tintColor = theme.barTintColor
-        
-        let newAnimationView: LOTAnimationView
-        switch theme.currentImageSet {
-        case .light:
-            newAnimationView = LOTAnimationView(name: "new_tab_dark")
-        case .dark:
-            newAnimationView = LOTAnimationView(name: "new_tab")
-        }
-        
-        anim.removeFromSuperview()
-        anim = newAnimationView
-        addSubview(anim)
-        configureAnimationView()
-    }
-    
     private func refresh() {
         if tabCount == 0 {
             label.text = nil
@@ -181,5 +163,26 @@ class TabSwitcherButton: UIView {
         UIView.animate(withDuration: Constants.buttonTouchDuration) {
             self.tint.alpha = alpha
         }
+    }
+}
+
+extension TabSwitcherButton: Themable {
+    
+    func decorate(with theme: Theme) {
+        backgroundColor = theme.barBackgroundColor
+        tintColor = theme.barTintColor
+        
+        let newAnimationView: LOTAnimationView
+        switch theme.currentImageSet {
+        case .light:
+            newAnimationView = LOTAnimationView(name: "new_tab_dark")
+        case .dark:
+            newAnimationView = LOTAnimationView(name: "new_tab")
+        }
+        
+        anim.removeFromSuperview()
+        anim = newAnimationView
+        addSubview(anim)
+        configureAnimationView()
     }
 }

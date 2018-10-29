@@ -81,7 +81,7 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgrundColor
+        cell.backgroundColor = theme.tableCellBackgroundColor
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
@@ -132,7 +132,19 @@ extension SettingsViewController: Themable {
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         
-        tableView.reloadData()
+        if let navigationController = self.navigationController {
+            UIView.transition(with: navigationController.navigationBar,
+                              duration: 0.2,
+                              options: .transitionCrossDissolve, animations: {
+                                self.decorateNavigationBar(with: theme)
+            }, completion: nil)
+        }
+        
+        UIView.transition(with: view,
+                          duration: 0.2,
+                          options: .transitionCrossDissolve, animations: {
+                            self.tableView.reloadData()
+        }, completion: nil)
     }
 }
 

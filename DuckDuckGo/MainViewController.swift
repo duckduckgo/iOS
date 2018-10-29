@@ -648,12 +648,12 @@ extension MainViewController: Themable {
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
         
-        omniBar?.applyTheme(theme)
+        omniBar?.decorate(with: theme)
         
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor
         
-        tabSwitcherButton.applyTheme(theme)
+        tabSwitcherButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
     }
 }

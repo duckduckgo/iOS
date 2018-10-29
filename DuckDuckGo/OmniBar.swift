@@ -63,16 +63,6 @@ class OmniBar: UIView {
     private func configureSeparator() {
         separatorHeightConstraint.constant = 1.0 / UIScreen.main.scale
     }
-    
-    public func applyTheme(_ theme: Theme) {
-        backgroundColor = theme.barBackgroundColor
-        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
-        tintColor = theme.barTintColor
-        searchStackContainer?.tintColor = theme.barTintColor
-        editingBackground?.borderColor = theme.searchBarBackgroundColor
-        textField.textColor = theme.searchBarTextColor
-        textField.tintColor = theme.searchBarTextColor
-    }
 
     private func configureEditingMenu() {
         let title = UserText.actionPasteAndGo
@@ -224,6 +214,19 @@ extension OmniBar: UITextFieldDelegate {
             omniDelegate?.onDismissed()
         }
         refreshState(state.onEditingStoppedState)
+    }
+}
+
+extension OmniBar: Themable {
+    
+    public func decorate(with theme: Theme) {
+        backgroundColor = theme.barBackgroundColor
+        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+        tintColor = theme.barTintColor
+        searchStackContainer?.tintColor = theme.barTintColor
+        editingBackground?.borderColor = theme.searchBarBackgroundColor
+        textField.textColor = theme.searchBarTextColor
+        textField.tintColor = theme.searchBarTextColor
     }
 }
 

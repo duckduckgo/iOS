@@ -31,14 +31,14 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="UHM-6q-8Cp">
-                                <rect key="frame" x="88" y="268" width="199" height="159"/>
+                                <rect key="frame" x="88" y="233" width="199" height="159"/>
                             </imageView>
                             <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HI1-QT-P6R">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items/>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q3B-AR-Iiy">
-                                <rect key="frame" x="121.5" y="440" width="132" height="16"/>
+                                <rect key="frame" x="121.5" y="405" width="132" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="highlightedColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -57,7 +57,7 @@
                             <constraint firstItem="HI1-QT-P6R" firstAttribute="bottom" secondItem="Uoe-RS-vTk" secondAttribute="bottom" id="Xsi-g0-K9o"/>
                             <constraint firstItem="aMf-gd-I31" firstAttribute="top" secondItem="5uF-ws-lnA" secondAttribute="top" id="dj2-XE-fel"/>
                             <constraint firstItem="HI1-QT-P6R" firstAttribute="top" secondItem="Zgn-aq-jbY" secondAttribute="bottom" id="eQf-9h-9SA"/>
-                            <constraint firstItem="UHM-6q-8Cp" firstAttribute="centerY" secondItem="Zgn-aq-jbY" secondAttribute="centerY" id="h60-LO-WGS"/>
+                            <constraint firstItem="UHM-6q-8Cp" firstAttribute="centerY" secondItem="Zgn-aq-jbY" secondAttribute="centerY" constant="-35" id="h60-LO-WGS"/>
                             <constraint firstItem="Uoe-RS-vTk" firstAttribute="trailing" secondItem="aMf-gd-I31" secondAttribute="trailing" id="km6-01-948"/>
                             <constraint firstItem="HI1-QT-P6R" firstAttribute="leading" secondItem="Uoe-RS-vTk" secondAttribute="leading" id="qz4-wb-2Dq"/>
                             <constraint firstItem="Uoe-RS-vTk" firstAttribute="top" secondItem="Zgn-aq-jbY" secondAttribute="top" constant="-52" id="roR-8N-Tia"/>

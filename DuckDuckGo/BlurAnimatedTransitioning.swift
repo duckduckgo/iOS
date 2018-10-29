@@ -28,13 +28,7 @@ class BlurAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
-        
-        switch ThemeManager.shared.currentTheme.currentImageSet {
-        case .light:
-            containerView.blur(style: .light)
-        case .dark:
-            containerView.blur(style: .dark)
-        }
+        containerView.blur(style: .dark)
 
         let toView = transitionContext.view(forKey: .to)!
         toView.backgroundColor = UIColor.clear

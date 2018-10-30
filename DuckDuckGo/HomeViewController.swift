@@ -21,9 +21,14 @@ import UIKit
 import Core
 
 class HomeViewController: UIViewController {
+    
+    private struct Const {
+        // This should match offset set in Launch Screen storyboard.
+        static let logoVericalCenterOffset: CGFloat = -35
+    }
 
+    @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
-    @IBOutlet weak var ctaContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
     @IBOutlet weak var image: UIImageView!
@@ -48,6 +53,9 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
+        // Set to avoid possible inconsistency between storyboard and code
+        logoVerticalCenter.constant = Const.logoVericalCenterOffset
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
@@ -98,8 +106,10 @@ class HomeViewController: UIViewController {
 
         if diff > 0 {
             ctaContainerBottom.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0)
+            logoVerticalCenter.constant = 0
         } else {
             ctaContainerBottom.constant = 0
+            logoVerticalCenter.constant = Const.logoVericalCenterOffset
         }
 
         view.setNeedsUpdateConstraints()

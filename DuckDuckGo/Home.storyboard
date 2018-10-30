@@ -60,8 +60,8 @@
                     <connections>
                         <outlet property="ctaContainer" destination="5Rf-oV-2W5" id="KSc-be-02P"/>
                         <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
-                        <outlet property="ctaContainerHeight" destination="ELS-YG-Sxt" id="i4n-tW-SQJ"/>
                         <outlet property="image" destination="mpe-gG-Xvo" id="jc3-Pl-WoF"/>
+                        <outlet property="logoVerticalCenter" destination="3Sy-Uo-O2N" id="Sco-Ow-q98"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vtg-6j-Bq6" userLabel="First Responder" sceneMemberID="firstResponder"/>

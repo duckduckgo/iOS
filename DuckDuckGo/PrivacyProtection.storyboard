@@ -1421,7 +1421,7 @@
                                             <fragment content="ToS;DR">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                    <font key="NSFont" size="14" name="ProximaNova-Semibold"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     <integer key="NSUnderline" value="1"/>
                                                 </attributes>
@@ -1430,7 +1430,7 @@
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="14" name="ProximaNova-Regular"/>
-                                                    <font key="NSOriginalFont" metaFont="system" size="14"/>
+                                                    <font key="NSOriginalFont" size="14" name="ProximaNova-Regular"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>

@@ -361,7 +361,7 @@
                                                         <fragment content="Uh-oh, that didn’t work.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="20"/>
+                                                                <font key="NSFont" size="20" name="ProximaNova-Semibold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
@@ -385,7 +385,7 @@
                                                         <fragment content="Check your internet connection and try again.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.55293999999999999" green="0.55293999999999999" blue="0.55293999999999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
@@ -502,7 +502,7 @@
                                                         <fragment content="An encrypted connection prevents eavesdropping of any personal information you send to a website.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -656,11 +656,11 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bzj-HR-hpn">
-                                                    <rect key="frame" x="23.666666666666657" y="133" width="367" height="43"/>
+                                                    <rect key="frame" x="23.666666666666657" y="133" width="367" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="This connection is not encrypted, so be careful what you send.">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -751,12 +751,12 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j6-i6-nia">
-                                                    <rect key="frame" x="20" y="13" width="374" height="49"/>
+                                                    <rect key="frame" x="20" y="17" width="374" height="41"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Trackers networks were found on 91% of web sites you’ve visited since Jan 23, 2017.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                             </attributes>
                                                         </fragment>
@@ -914,12 +914,12 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="Cs1-DU-13K">
-                                                        <rect key="frame" x="20" y="75" width="334" height="42.333333333333343"/>
+                                                        <rect key="frame" x="20" y="75" width="334" height="35.333333333333343"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="These stats are only stored on your device, and are not sent anywhere. Ever.">
                                                                 <attributes>
                                                                     <color key="NSColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
                                                             </fragment>
@@ -1037,13 +1037,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="VYv-1m-cZo">
-                                                    <rect key="frame" x="16" y="0.33333333333334281" width="382" height="84.333333333333329"/>
+                                                    <rect key="frame" x="16" y="7.3333333333333428" width="382" height="70.666666666666671"/>
                                                     <attributedString key="attributedText">
                                                         <fragment>
                                                             <string key="content">Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the internet.</string>
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1256,12 +1256,12 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrS-AS-COd">
-                                                    <rect key="frame" x="24" y="21" width="366" height="43"/>
+                                                    <rect key="frame" x="24" y="24.666666666666657" width="366" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Privacy practices indicate how much the  personal information that you share with a website is protected.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1344,7 +1344,7 @@
                                                     <attributedString key="attributedText">
                                                         <fragment content="This website will notify you before transferring your information in the event of a merger or acquisition">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="16"/>
+                                                                <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1.3100000000000001" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1375,11 +1375,12 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATi-1t-ByQ">
-                                                    <rect key="frame" x="23.666666666666657" y="131" width="367" height="43"/>
+                                                    <rect key="frame" x="23.666666666666657" y="131" width="367" height="36"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="The privacy practices of this website have not been reviewed.">
                                                             <attributes>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.28" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1408,19 +1409,19 @@
                                 <rect key="frame" x="0.0" y="666" width="414" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLZ-Bg-d8p">
-                                        <rect key="frame" x="26" y="26.666666666666629" width="362" height="17"/>
+                                        <rect key="frame" x="26" y="28" width="362" height="14"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Using privacy practices info from ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                             <fragment content="ToS;DR">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     <integer key="NSUnderline" value="1"/>
                                                 </attributes>
@@ -1428,7 +1429,7 @@
                                             <fragment content=".">
                                                 <attributes>
                                                     <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="14"/>
+                                                    <font key="NSFont" size="14" name="ProximaNova-Regular"/>
                                                     <font key="NSOriginalFont" metaFont="system" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>

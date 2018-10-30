@@ -24,7 +24,7 @@ class AboutViewController: UIViewController {
 
     @IBOutlet weak var headerText: UILabel!
     // These are duplicated, as UILabel that is set up with sizing classes
-    // does not apply changes to attributed string
+    // does not apply changes made to attributed string from the code.
     @IBOutlet weak var descriptionTextLight: UILabel!
     @IBOutlet weak var descriptionTextDark: UILabel!
     @IBOutlet weak var logoImage: UIImageView!

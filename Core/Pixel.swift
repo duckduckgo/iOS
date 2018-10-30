@@ -39,6 +39,10 @@ public enum PixelName: String {
     case longPressMenuReadingListItem = "mlp_r"
     case longPressMenuCopyItem = "mlp_c"
     case longPressMenuShareItem = "mlp_s"
+    
+    case settingsOpened = "ms"
+    case settingsThemeToggledLight = "ms_tl"
+    case settingsThemeToggledDark = "ms_td"
 
     case httpsUpgradeSiteError = "ehd"
     case httpsUpgradeSiteSummary = "ehs"

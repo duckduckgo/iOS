@@ -340,6 +340,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func launchSettings() {
+        Pixel.fire(pixel: .settingsOpened)
         performSegue(withIdentifier: "Settings", sender: self)
     }
 

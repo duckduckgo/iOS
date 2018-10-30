@@ -103,6 +103,8 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func onLightThemeToggled(_ sender: UISwitch) {
+        let pixelName = sender.isOn ? PixelName.settingsThemeToggledLight : PixelName.settingsThemeToggledDark
+        Pixel.fire(pixel: pixelName)
         ThemeManager.shared.isLightThemeEnabled = sender.isOn
     }
 

@@ -22,8 +22,13 @@ import Core
 
 class UseDuckDuckGoInSafariViewController: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        modalPresentationCapturesStatusBarAppearance = true
         
         view.blur(style: .dark)
     }

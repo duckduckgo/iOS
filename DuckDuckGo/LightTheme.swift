@@ -20,7 +20,7 @@ struct LightTheme: Theme {
     var barTintColor = UIColor.darkGreyish
     var barTitleColor = UIColor.darkGreyish
     
-    var tintOnBlurColor = UIColor.nearlyBlack
+    var tintOnBlurColor = UIColor.white
     
     var searchBarBackgroundColor = UIColor.lightGreyish
     var searchBarTextColor = UIColor.darkGreyish

@@ -47,6 +47,8 @@ class FeedbackViewController: UIViewController {
         configureViews()
         registerForKeyboardNotifications()
         refreshMode()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     func prepareForSegue(isBrokenSite: Bool, url: String?) {
@@ -191,5 +193,20 @@ extension FeedbackViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         messageTextView.becomeFirstResponder()
         return false
+    }
+}
+
+extension FeedbackViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        let keyboardAppearance: UIKeyboardAppearance
+        switch theme.currentImageSet {
+        case .light:
+            keyboardAppearance = .light
+        case .dark:
+            keyboardAppearance = .dark
+        }
+        urlTextField.keyboardAppearance = keyboardAppearance
+        messageTextView.keyboardAppearance = keyboardAppearance
     }
 }

@@ -31,8 +31,23 @@ class EditBookmarkAlert {
                            cancelCompletion: @escaping CancelCompletion) -> UIAlertController {
 
         let editBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
-        editBox.addTextField { (textField) in textField.text = bookmark.title }
-        editBox.addTextField { (textField) in textField.text = bookmark.url.absoluteString }
+        
+        let keyboardAppearance: UIKeyboardAppearance
+        switch ThemeManager.shared.currentTheme.currentImageSet {
+        case .light:
+            keyboardAppearance = .light
+        case .dark:
+            keyboardAppearance = .dark
+        }
+        
+        editBox.addTextField { (textField) in
+            textField.text = bookmark.title
+            textField.keyboardAppearance = keyboardAppearance
+        }
+        editBox.addTextField { (textField) in
+            textField.text = bookmark.url.absoluteString
+            textField.keyboardAppearance = keyboardAppearance
+        }
         editBox.addAction(saveAction(editBox: editBox, originalBookmark: bookmark, completion: saveCompletion))
         editBox.addAction(cancelAction(completion: cancelCompletion))
         return editBox

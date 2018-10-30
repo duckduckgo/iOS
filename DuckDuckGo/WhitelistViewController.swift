@@ -69,7 +69,16 @@ class WhitelistViewController: UITableViewController {
         let cancel = UserText.actionCancel
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
-        addSiteBox.addTextField { (textField) in textField.placeholder = placeholder }
+        addSiteBox.addTextField { (textField) in
+            textField.placeholder = placeholder
+            
+            switch ThemeManager.shared.currentTheme.currentImageSet {
+            case .light:
+                textField.keyboardAppearance = .light
+            case .dark:
+                textField.keyboardAppearance = .dark
+            }
+        }
         addSiteBox.addAction(UIAlertAction.init(title: add, style: .default, handler: { _ in self.addSite(from: addSiteBox) }))
         addSiteBox.addAction(UIAlertAction.init(title: cancel, style: .cancel, handler: nil))
         present(addSiteBox, animated: true, completion: nil)

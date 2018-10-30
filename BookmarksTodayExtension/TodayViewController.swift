@@ -22,21 +22,20 @@ import Core
 import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDelegate, UITableViewDataSource {
-
+    
+    enum StaticRows: Int, CaseIterable {
+        case search = 0
+    }
+    
     private var bookmarks = [Link]()
     private var bookmarkStore = BookmarkUserDefaults()
 
     @IBOutlet weak var tableView: UITableView!
 
     private var preferredHeight: CGFloat {
-        let headerHeight = CGFloat(54.0)
-        return tableView.contentSize.height + headerHeight
+        return tableView.contentSize.height
     }
-
-    private var defaultHeight: CGFloat {
-        return CGFloat(110.0)
-    }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refresh()
@@ -44,20 +43,13 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     private func configureWidgetSize() {
-        if #available(iOSApplicationExtension 10.0, *) {
-            let mode = bookmarks.count > 2 ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
-            extensionContext?.widgetLargestAvailableDisplayMode = mode
-        }
+        guard let context = extensionContext else { return }
+        let mode = bookmarks.count > 2 ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
+        context.widgetLargestAvailableDisplayMode = mode
 
-        if #available(iOSApplicationExtension 10.0, *), extensionContext?.widgetActiveDisplayMode == NCWidgetDisplayMode.compact {
-            updatePreferredContentHeight(height: defaultHeight)
-        } else {
-            updatePreferredContentHeight(height: preferredHeight)
-        }
-    }
-
-    private func updatePreferredContentHeight(height: CGFloat) {
+        let maxSize = context.widgetMaximumSize(for: mode)
         let width = tableView.contentSize.width
+        let height = preferredHeight > maxSize.height ? maxSize.height : preferredHeight
         preferredContentSize = CGSize(width: width, height: height)
     }
 
@@ -66,12 +58,11 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
         completionHandler(dataChanged ? NCUpdateResult.newData : NCUpdateResult.noData)
     }
 
-    @available(iOSApplicationExtension 10.0, *)
     func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
         if activeDisplayMode == NCWidgetDisplayMode.expanded {
             preferredContentSize = CGSize(width: maxSize.width, height: preferredHeight)
         } else {
-            preferredContentSize = CGSize(width: maxSize.width, height: defaultHeight)
+            preferredContentSize = CGSize(width: maxSize.width, height: maxSize.height)
         }
     }
 
@@ -94,61 +85,65 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
         return bookmarkStore.bookmarks ?? [Link]()
     }
 
-    @IBAction func onLaunchPressed(_ sender: Any) {
-        let url = URL(string: AppDeepLinks.launch)!
-        extensionContext?.open(url, completionHandler: nil)
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bookmarks.count == 0 ? 1 : bookmarks.count
+        return StaticRows.allCases.count + (bookmarks.isEmpty ? 1 : bookmarks.count)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if bookmarks.count == 0 {
-            return emptyCell(for: indexPath)
+        if indexPath.row == StaticRows.search.rawValue {
+            return searchCell(for: indexPath)
         }
-        let link = bookmarks[indexPath.row]
-        return linkCell(for: indexPath, link: link)
+        if bookmarks.isEmpty {
+            return noBookmarksCell(for: indexPath)
+        }
+        let bookmark = bookmarks[bookmarkIndex(forTableIndex: indexPath)!]
+        return bookmarkCell(for: indexPath, bookmark: bookmark)
     }
 
-    func emptyCell(for indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "Empty", for: indexPath)
+    func searchCell(for indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: "Search", for: indexPath)
+    }
+    
+    func noBookmarksCell(for indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: "NoBookmarks", for: indexPath)
     }
 
-    func linkCell(for indexPath: IndexPath, link: Link) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Link", for: indexPath)
-        cell.textLabel?.text = link.title ?? link.url.absoluteString
-        cell.accessoryView = clearAccessory(for: indexPath.row)
+    func bookmarkCell(for indexPath: IndexPath, bookmark: Link) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Bookmark", for: indexPath) as? BookmarkCell else {
+            fatalError("Bookmark table view identifier should be type BookmarkCell")
+        }
+        cell.update(withBookmark: bookmark)
         return cell
     }
 
-    func clearAccessory(for index: Int) -> UIView {
-        let clearAccessory = UIButton()
-        clearAccessory.tag = index
-        clearAccessory.sizeToFit()
-        clearAccessory.setImage(#imageLiteral(resourceName: "Remove"), for: .normal)
-        clearAccessory.tintColor = UIColor.white
-        clearAccessory.addTarget(self, action: #selector(onClearTapped(sender:)), for: .touchUpInside)
-        return clearAccessory
-    }
-
-    @objc func onClearTapped(sender: UIView) {
-        let index = sender.tag
-        if index < bookmarks.count {
-            bookmarks.remove(at: sender.tag)
-            bookmarkStore.bookmarks = bookmarks
-            tableView.reloadData()
-            refreshViews()
-        }
-    }
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        guard indexPath.row < bookmarks.count else { return }
-
-        let selection = bookmarks[indexPath.row].url
+        if indexPath.row == StaticRows.search.rawValue {
+            launchSearch()
+            return
+        }
+        guard let bookmarkIndex = bookmarkIndex(forTableIndex: indexPath) else { return }
+        launchBookmark(at: bookmarkIndex)
+    }
+    
+    private func launchSearch() {
+        let url = URL(string: AppDeepLinks.newSearch)!
+        Pixel.fire(pixel: .bookmarksExtensionSearch)
+        extensionContext?.open(url, completionHandler: nil)
+    }
+    
+    private func launchBookmark(at index: Int) {
+        let selection = bookmarks[index].url
         if let url = URL(string: "\(AppDeepLinks.quickLink)\(selection)") {
+            Pixel.fire(pixel: .bookmarksExtensionBookmark)
             extensionContext?.open(url, completionHandler: nil)
         }
+    }
+    
+    private func bookmarkIndex(forTableIndex indexPath: IndexPath) -> Int? {
+        let bookmarkIndex = indexPath.row - StaticRows.allCases.count
+        guard bookmarkIndex >= 0, bookmarkIndex < bookmarks.count else {
+            return nil
+        }
+        return bookmarkIndex
     }
 }

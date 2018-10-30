@@ -4,6 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
+		<string>group.com.duckduckgo.statistics</string>
 		<string>group.com.duckduckgo.bookmarks</string>
 	</array>
 </dict>

@@ -39,6 +39,12 @@ public enum PixelName: String {
     case longPressMenuReadingListItem = "mlp_r"
     case longPressMenuCopyItem = "mlp_c"
     case longPressMenuShareItem = "mlp_s"
+    
+    case quickActionExtensionSearch = "mqe_s"
+    case quickActionExtensionFire = "mqe_f"
+    case quickActionExtensionBookmarks = "mqe_b"
+    case bookmarksExtensionSearch = "mbe_s"
+    case bookmarksExtensionBookmark = "mbe_b"
 
     case httpsUpgradeSiteError = "ehd"
     case httpsUpgradeSiteSummary = "ehs"

@@ -655,5 +655,7 @@ extension MainViewController: Themable {
         
         tabSwitcherButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
+        
+        tabManager.decorate(with: theme)
     }
 }

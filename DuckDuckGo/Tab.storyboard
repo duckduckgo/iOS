@@ -104,6 +104,8 @@
                     </fixedSimulatedSizeMetrics>
                     <connections>
                         <outlet property="error" destination="Kd4-Oi-JP2" id="zBn-cG-pfQ"/>
+                        <outlet property="errorHeader" destination="6P7-7R-riV" id="IkB-Tc-Eat"/>
+                        <outlet property="errorInfoImage" destination="TUO-E3-s7Q" id="ngN-8S-PwR"/>
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
                         <outlet property="progressBar" destination="cf7-Ja-fUU" id="3z8-Dr-WFy"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>

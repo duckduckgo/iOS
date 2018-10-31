@@ -48,19 +48,19 @@
                                 <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </progressView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd4-Oi-JP2">
-                                <rect key="frame" x="0.0" y="261" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="211" width="375" height="400"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ErrorInfo" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-E3-s7Q">
-                                        <rect key="frame" x="142.66666666666666" y="48" width="90" height="90"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ErrorInfoDark" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-E3-s7Q">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo can’t load this page." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
-                                        <rect key="frame" x="27" y="171" width="321" height="20"/>
+                                        <rect key="frame" x="27" y="313" width="321" height="20"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An unknown error has occured." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
-                                        <rect key="frame" x="38" y="202" width="299" height="16"/>
+                                        <rect key="frame" x="38" y="344" width="299" height="16"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                         <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -68,13 +68,13 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="6P7-7R-riV" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-54" id="LuE-W6-z1U"/>
-                                    <constraint firstItem="TUO-E3-s7Q" firstAttribute="top" secondItem="Kd4-Oi-JP2" secondAttribute="top" priority="250" constant="48" id="PFZ-er-jCK"/>
+                                    <constraint firstItem="TUO-E3-s7Q" firstAttribute="top" secondItem="Kd4-Oi-JP2" secondAttribute="top" priority="250" id="PFZ-er-jCK"/>
                                     <constraint firstItem="6P7-7R-riV" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="Sjn-ZG-gAr"/>
                                     <constraint firstItem="Cjw-mk-QL3" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="UQT-0H-F2p"/>
                                     <constraint firstItem="Cjw-mk-QL3" firstAttribute="top" secondItem="6P7-7R-riV" secondAttribute="bottom" constant="11" id="Vc3-Ps-7wl"/>
                                     <constraint firstItem="TUO-E3-s7Q" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="jYJ-tI-XcU"/>
                                     <constraint firstItem="Cjw-mk-QL3" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-76" id="pOF-JR-JEz"/>
-                                    <constraint firstAttribute="height" priority="250" constant="300" id="r6V-b6-p3P"/>
+                                    <constraint firstAttribute="height" priority="250" constant="400" id="r6V-b6-p3P"/>
                                     <constraint firstItem="6P7-7R-riV" firstAttribute="top" secondItem="TUO-E3-s7Q" secondAttribute="bottom" constant="33" id="wm5-Yr-sWj"/>
                                 </constraints>
                             </view>
@@ -144,6 +144,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ErrorInfo" width="90" height="90"/>
+        <image name="ErrorInfoDark" width="375" height="280"/>
     </resources>
 </document>

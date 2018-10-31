@@ -187,6 +187,12 @@ extension TabManager: Themable {
         controller.error?.backgroundColor = theme.backgroundColor
         controller.errorHeader.textColor = theme.barTintColor
         controller.errorMessage.textColor = theme.barTintColor
-        controller.errorInfoImage.tintColor = theme.barTintColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            controller.errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
+        case .dark:
+            controller.errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
+        }
     }
 }

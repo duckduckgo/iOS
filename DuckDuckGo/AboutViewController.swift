@@ -23,10 +23,7 @@ import Core
 class AboutViewController: UIViewController {
 
     @IBOutlet weak var headerText: UILabel!
-    // These are duplicated, as UILabel that is set up with sizing classes
-    // does not apply changes made to attributed string from the code.
-    @IBOutlet weak var descriptionTextLight: UILabel!
-    @IBOutlet weak var descriptionTextDark: UILabel!
+    @IBOutlet weak var descriptionText: UILabel!
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var moreButton: UIButton!
     
@@ -51,15 +48,35 @@ extension AboutViewController: Themable {
         switch theme.currentImageSet {
         case .light:
             logoImage?.image = UIImage(named: "LogoDarkText")
-            descriptionTextLight.isHidden = true
-            descriptionTextDark.isHidden = false
         case .dark:
             logoImage?.image = UIImage(named: "LogoLightText")
-            descriptionTextLight.isHidden = false
-            descriptionTextDark.isHidden = true
         }
+        
+        decorateDescription(with: theme)
         
         headerText.textColor = theme.aboutScreenTextColor
         moreButton.setTitleColor(theme.aboutScreenButtonColor, for: .normal)
+    }
+    
+    private func decorateDescription(with theme: Theme) {
+        if let attributedText = descriptionText.attributedText,
+            var font = attributedText.attribute(NSAttributedString.Key.font, at: 0, effectiveRange: nil) as? UIFont {
+            
+            let attributes: [NSAttributedString.Key: Any]
+            if traitCollection.horizontalSizeClass == .regular,
+                traitCollection.verticalSizeClass == .regular {
+                font = font.withSize(24.0)
+                attributes = [.foregroundColor: theme.aboutScreenTextColor,
+                              .font: font]
+            } else {
+                attributes = [.foregroundColor: theme.aboutScreenTextColor,
+                              .font: font]
+            }
+
+            let decoratedText = NSMutableAttributedString(attributedString: attributedText)
+            decoratedText.addAttributes(attributes, range: NSRange(location: 0, length: decoratedText.length))
+            
+            descriptionText.attributedText = decoratedText
+        }
     }
 }

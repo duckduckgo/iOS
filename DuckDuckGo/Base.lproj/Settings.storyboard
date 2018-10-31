@@ -447,61 +447,6 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                     </fragment>
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <attributedString key="attributedText">
-                                                        <fragment>
-                                                            <string key="content">At DuckDuckGo, we’re setting the new standard of trust online.
-
-DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
-
-After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
-                                                            <attributes>
-                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                </variation>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bej-Po-Rpi">
-                                                <rect key="frame" x="47.5" y="278.5" width="280" height="328.5"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="280" id="k8W-o0-OZz">
-                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                                    </constraint>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment>
-                                                        <string key="content">At DuckDuckGo, we’re setting the new standard of trust online.
-
-DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
-
-After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
-                                                        <attributes>
-                                                            <color key="NSColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2583333333333333" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                                <variation key="heightClass=regular-widthClass=regular">
-                                                    <attributedString key="attributedText">
-                                                        <fragment>
-                                                            <string key="content">At DuckDuckGo, we’re setting the new standard of trust online.
-
-DuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search. 
-
-After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
                                                 <rect key="frame" x="47.5" y="615" width="280" height="31"/>
@@ -529,14 +474,11 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                             <constraint firstItem="iNd-oh-m3g" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="7FP-Sb-xP2"/>
                                             <constraint firstItem="iNd-oh-m3g" firstAttribute="top" secondItem="wfd-Kx-0gx" secondAttribute="top" constant="32" id="Abh-Ul-MPN"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="BtH-UX-7up"/>
-                                            <constraint firstItem="Bej-Po-Rpi" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="G6e-er-qTX"/>
-                                            <constraint firstItem="Bej-Po-Rpi" firstAttribute="bottom" secondItem="odm-6J-APs" secondAttribute="bottom" id="I5m-gv-UPJ"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="TuI-fs-lpV"/>
                                             <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="WiW-aH-os0"/>
                                             <constraint firstAttribute="height" constant="660" id="aBC-xi-cEy"/>
                                             <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="eaN-Or-GFY"/>
                                             <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="g71-aw-kOx"/>
-                                            <constraint firstItem="Bej-Po-Rpi" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="top" id="sGu-3v-2k9"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -560,8 +502,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="descriptionTextDark" destination="Bej-Po-Rpi" id="6Ml-Af-i81"/>
-                        <outlet property="descriptionTextLight" destination="odm-6J-APs" id="6bZ-eG-vxj"/>
+                        <outlet property="descriptionText" destination="odm-6J-APs" id="EQR-yz-dzH"/>
                         <outlet property="headerText" destination="gji-Fs-EET" id="8yl-Gj-br5"/>
                         <outlet property="logoImage" destination="iNd-oh-m3g" id="Td6-dg-EIt"/>
                         <outlet property="moreButton" destination="7nt-uS-sOh" id="TY1-Qs-Ypf"/>
@@ -581,12 +522,12 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="separatorColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="FGH-RR-RSf">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="FGH-RR-RSf">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="0.0" y="22" width="375" height="28"/>
+                                    <rect key="frame" x="0.0" y="-12.5" width="375" height="33"/>
                                     <string key="text">These whitelisted sites will not be 
 upgraded by Privacy Protection.</string>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
@@ -609,10 +550,10 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
+                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -640,7 +581,7 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No whitelisted sites yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
+                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

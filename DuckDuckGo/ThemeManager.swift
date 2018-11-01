@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 import UIKit
+import Core
 
 class ThemeManager {
     
@@ -36,7 +37,18 @@ class ThemeManager {
         }
     }
     
-    init() {
+    init(variantManager: VariantManager = DefaultVariantManager()) {
+        variantManager.assignVariantIfNeeded()
+        
+        // Set default theme in case user participates in experiment
+        if let variant = variantManager.currentVariant {
+            if variant.features.contains(.lightThemeByDefault) {
+                appSettings.setInitialLightThemeValueIfNeeded(value: true)
+            } else if variant.features.contains(.darkThemeByDefault) {
+                appSettings.setInitialLightThemeValueIfNeeded(value: false)
+            }
+        }
+        
         isLightThemeEnabled = appSettings.lightTheme
         if isLightThemeEnabled {
             currentTheme = LightTheme()
@@ -44,7 +56,7 @@ class ThemeManager {
             currentTheme = DarkTheme()
         }
         // Uncomment to enable automatic theme cycling for testing
-//        cycle()
+//        cycle(seconds: 4.0)
     }
     
     public var isLightThemeEnabled: Bool {
@@ -60,7 +72,7 @@ class ThemeManager {
     }
 }
 
-// MARK: -
+// MARK: - Runtime Testing
 extension ThemeManager {
     
     static var cycleIteration = 0

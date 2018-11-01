@@ -23,6 +23,10 @@ import Core
 import Device
 
 class SettingsViewController: UITableViewController {
+    
+    private struct IndexPaths {
+        static let lightThemeOptionCell = IndexPath(row: 0, section: 0)
+    }
 
     @IBOutlet var margins: [NSLayoutConstraint]!
     @IBOutlet weak var lightThemeToggle: UISwitch!
@@ -35,6 +39,7 @@ class SettingsViewController: UITableViewController {
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate lazy var variantManager: VariantManager = DefaultVariantManager()
 
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -82,6 +87,17 @@ class SettingsViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath == IndexPaths.lightThemeOptionCell {
+            // Show light theme toggle when user participates in experiment
+            guard let currentVariant = variantManager.currentVariant,
+                currentVariant.features.contains(.themeToggle) else {
+                return 0
+            }
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {

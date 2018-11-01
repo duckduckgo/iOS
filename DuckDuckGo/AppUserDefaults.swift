@@ -51,12 +51,20 @@ public class AppUserDefaults: AppSettings {
     var lightTheme: Bool {
         
         get {
-            return userDefaults?.bool(forKey: Keys.lightThemeKey, defaultValue: true) ?? true
+            return userDefaults?.bool(forKey: Keys.lightThemeKey, defaultValue: false) ?? false
         }
         
         set {
             userDefaults?.setValue(newValue, forKey: Keys.lightThemeKey)
         }
         
+    }
+    
+    //MARK: - For experiment, remove when not needed anymore
+    
+    func setInitialLightThemeValueIfNeeded(value: Bool) {
+        guard userDefaults?.object(forKey: Keys.lightThemeKey) == nil else { return }
+        
+        lightTheme = value
     }
 }

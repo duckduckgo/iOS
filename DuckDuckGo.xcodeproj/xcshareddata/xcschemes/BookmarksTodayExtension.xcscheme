@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1000"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1AA545D1E48D90700223211"
-               BuildableName = "TodayExtension.appex"
-               BlueprintName = "TodayExtension"
+               BlueprintIdentifier = "83491186217F491200610F35"
+               BuildableName = "BookmarksTodayExtension.appex"
+               BlueprintName = "BookmarksTodayExtension"
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84E341911E2F7EFB00BDBA6F"
-            BuildableName = "DuckDuckGo.app"
-            BlueprintName = "DuckDuckGo"
+            BlueprintIdentifier = "83491186217F491200610F35"
+            BuildableName = "BookmarksTodayExtension.appex"
+            BlueprintName = "BookmarksTodayExtension"
             ReferencedContainer = "container:DuckDuckGo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

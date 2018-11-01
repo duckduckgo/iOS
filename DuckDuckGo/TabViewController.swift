@@ -129,10 +129,9 @@ class TabViewController: WebViewController {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
 
-        if let siteRating = siteRating {
-            self.siteRating = SiteRating(url: url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
-            updateSiteRating()
-        }
+        loadedURL = url
+        self.siteRating = SiteRating(url: url, httpsForced: httpsForced)
+        updateSiteRating()
     }
 
     private func resetNavigationBar() {
@@ -482,10 +481,9 @@ extension TabViewController: WKScriptMessageHandler {
         guard let dict = message.body as? [String: Any] else { return }
         guard let blocked = dict[TrackerDetectedKey.blocked] as? Bool else { return }
         guard let urlString = dict[TrackerDetectedKey.url] as? String else { return }
-        guard let protectionId = dict[TrackerDetectedKey.protectionId] as? String else { return }
-
-        guard protectionId == siteRating.protectionId else {
-            Logger.log(text: "protectionId check failed \(protectionId) != \(self.siteRating?.protectionId ?? "<none>")")
+        
+        guard siteRating.isFor(self.url) else {
+            Logger.log(text: "mismatching domain \(self.url as Any) vs \(siteRating.domain as Any)")
             return
         }
 
@@ -515,6 +513,7 @@ extension TabViewController: WebEventsDelegate {
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
+        reloadScripts()
     }
 
     func detached(webView: WKWebView) {
@@ -534,12 +533,9 @@ extension TabViewController: WebEventsDelegate {
 
         // if host and scheme are the same, use same protection id and don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
-            self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced, protectionId: siteRating.protectionId)
+            self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced)
         } else {
             resetSiteRating()
-            if let protectionId = siteRating?.protectionId {
-                reloadScripts(with: protectionId)
-            }
         }
 
         tabModel.link = link

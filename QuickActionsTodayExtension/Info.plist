@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>DuckDuckGo</string>
+	<string>Quick Actions</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,26 +22,10 @@
 	<string>0</string>
 	<key>NSExtension</key>
 	<dict>
-		<key>NSExtensionAttributes</key>
-		<dict>
-			<key>NSExtensionActivationRule</key>
-			<string>
-            SUBQUERY (
-            extensionItems,
-            $extensionItem,
-                SUBQUERY (
-                    $extensionItem.attachments,
-                    $attachment,
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url" ||
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text"
-                    ).@count &lt;= 2
-            ).@count == 1
-            </string>
-		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.share-services</string>
+		<string>com.apple.widget-extension</string>
 	</dict>
 </dict>
 </plist>

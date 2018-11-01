@@ -19,7 +19,6 @@
 
 var duckduckgoBlockerData = {
 
-	protectionId: "${protectionId}",
     blockingEnabled: ${blocking_enabled},
 	disconnectmeBanned: ${disconnectmeBanned},
     disconnectmeAllowed: ${disconnectmeAllowed},

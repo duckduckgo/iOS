@@ -1,1 +1,1 @@
-In this release we updated to support the latest development tools, improved scrolling, and hardened the app against address bar spoofing.
+In this release, we added quick actions and bookmarks Today View widgets to let you get things done faster.

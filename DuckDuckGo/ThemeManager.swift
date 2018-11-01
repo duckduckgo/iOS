@@ -28,28 +28,30 @@ class ThemeManager {
     
     public static let shared = ThemeManager()
 
-    private let appSettings = AppUserDefaults()
+    private var appSettings: AppSettings
     
     var rootController: UIViewController?
-    var currentTheme: Theme {
+    private(set) var currentTheme: Theme {
         didSet {
             rootController?.applyTheme(currentTheme)
         }
     }
     
-    init(variantManager: VariantManager = DefaultVariantManager()) {
+    init(variantManager: VariantManager = DefaultVariantManager(),
+         settings: AppSettings = AppUserDefaults()) {
         variantManager.assignVariantIfNeeded()
         
         // Set default theme in case user participates in experiment
         if let variant = variantManager.currentVariant {
             if variant.features.contains(.lightThemeByDefault) {
-                appSettings.setInitialLightThemeValueIfNeeded(value: true)
+                settings.setInitialLightThemeValueIfNeeded(value: true)
             } else if variant.features.contains(.darkThemeByDefault) {
-                appSettings.setInitialLightThemeValueIfNeeded(value: false)
+                settings.setInitialLightThemeValueIfNeeded(value: false)
             }
         }
         
-        isLightThemeEnabled = appSettings.lightTheme
+        appSettings = settings
+        isLightThemeEnabled = settings.lightTheme
         if isLightThemeEnabled {
             currentTheme = LightTheme()
         } else {

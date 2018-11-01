@@ -42,5 +42,42 @@ class AppUserDefaultsTests: XCTestCase {
         XCTAssertTrue(appUserDefaults.autocomplete)
 
     }
+    
+    func testLightThemeSet() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.lightTheme = true
+        XCTAssertTrue(appUserDefaults.lightTheme)
+        
+    }
+    
+    func testLightThemeDefault() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertFalse(appUserDefaults.lightTheme)
+        
+    }
 
+    func testLightThemeInitialValueSetupWhenEmpty() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        
+        appUserDefaults.setInitialLightThemeValueIfNeeded(value: false)
+        XCTAssertFalse(appUserDefaults.lightTheme)
+        
+        UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
+        
+        appUserDefaults.setInitialLightThemeValueIfNeeded(value: true)
+        XCTAssert(appUserDefaults.lightTheme)
+    }
+    
+    func testLightThemeInitialValueSetupWhenAlreadySet() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.lightTheme = true
+        
+        appUserDefaults.setInitialLightThemeValueIfNeeded(value: false)
+        XCTAssert(appUserDefaults.lightTheme)
+        
+    }
 }

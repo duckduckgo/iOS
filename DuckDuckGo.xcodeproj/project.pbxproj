@@ -192,6 +192,8 @@
 		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
 		98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DA6EC92181E41F00E65433 /* ThemeManager.swift */; };
+		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
+		98EA2C3E218BA2490023E1DC /* ThemeManagerVariantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3D218BA2490023E1DC /* ThemeManagerVariantTests.swift */; };
 		98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EF177C21837E35006750C1 /* new_tab_dark.json */; };
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
 		98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D9217B37200011A0D4 /* LightTheme.swift */; };
@@ -657,6 +659,8 @@
 		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
 		98DA6EC92181E41F00E65433 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
+		98EA2C3D218BA2490023E1DC /* ThemeManagerVariantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerVariantTests.swift; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
 		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		98F3A1D9217B37200011A0D4 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
@@ -1164,7 +1168,6 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				98F3A1D6217B36EE0011A0D4 /* Themes */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
@@ -1181,6 +1184,7 @@
 				F1E249411EF2075C008C947A /* SiteMonitoring */,
 				F13B4BF41F18C74500814661 /* Tabs */,
 				F1386BA21E6846320062FC3C /* TabSwitcher */,
+				98F3A1D6217B36EE0011A0D4 /* Themes */,
 				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
@@ -1404,6 +1408,15 @@
 			name = Store;
 			sourceTree = "<group>";
 		};
+		98EA2C3A218B9A880023E1DC /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */,
+				98EA2C3D218BA2490023E1DC /* ThemeManagerVariantTests.swift */,
+			);
+			name = Themes;
+			sourceTree = "<group>";
+		};
 		98F3A1D6217B36EE0011A0D4 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1570,6 +1583,7 @@
 				F1D477C71F2139210031ED49 /* OmniBar */,
 				85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */,
 				F13B4BF71F18C9E800814661 /* Tabs */,
+				98EA2C3A218B9A880023E1DC /* Themes */,
 				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
 				F194FAF91F14E605009B4DF8 /* UserInterface */,
 			);
@@ -2831,6 +2845,7 @@
 				F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */,
 				856D57C720656A28000170B5 /* TLDTests.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
+				98EA2C3E218BA2490023E1DC /* ThemeManagerVariantTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
@@ -2887,6 +2902,7 @@
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
 				F17D72391E8B35C6003E8B0E /* AppUrlsTests.swift in Sources */,
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
+				98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */,
 				83134D8420E2E090006CE65D /* FeedbackModelTests.swift in Sources */,
 				83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */,
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,

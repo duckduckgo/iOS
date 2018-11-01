@@ -21,14 +21,15 @@ import XCTest
 
 class URLExtensionTests: XCTestCase {
 
-    func testWhenMobileUrlThenDesktopUrlIsReturned() {
+    func testWhenMobileUrlAndToDesktopUrlIsCalledThenDesktopUrlIsReturned() {
         XCTAssertEqual("https://example.com", URL(string: "https://m.example.com")?.toDesktopUrl().absoluteString)
         XCTAssertEqual("http://example.com/path/to/something?x=1",
                        URL(string: "http://m.example.com/path/to/something?x=1")?.toDesktopUrl().absoluteString)
     }
 
-    func testWhenDesktopUrlThenDesktopUrlIsSame() {
+    func testWhenDesktopUrlAndToDesktopUrlIsCalledThenDesktopUrlIsSame() {
         XCTAssertEqual("https://example.com", URL(string: "https://example.com")?.toDesktopUrl().absoluteString)
+        XCTAssertEqual("https://www.example.com", URL(string: "https://www.example.com")?.toDesktopUrl().absoluteString)
     }
 
     func testWhenURLHasLongTLDItStillIsConsideredValid() {

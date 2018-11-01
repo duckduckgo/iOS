@@ -79,7 +79,6 @@ open class WebViewController: UIViewController {
     }
     
     public var url: URL? {
-        // return isError ? loadedURL : webView?.url
         return loadedURL
     }
 

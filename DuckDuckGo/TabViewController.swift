@@ -186,14 +186,14 @@ class TabViewController: WebViewController {
 
         if let link = link, !isError {
             alert.addAction(saveBookmarkAction(forLink: link))
-            alert.addAction(toggleDesktopSiteAction(forUrl: link.url))
             alert.addAction(shareAction(forLink: link))
-
-            if let domain = siteRating?.domain {
-                alert.addAction(whitelistAction(forDomain: domain))
-            }
+            alert.addAction(toggleDesktopSiteAction(forUrl: link.url))
         }
 
+        if let domain = siteRating?.domain {
+            alert.addAction(whitelistAction(forDomain: domain))
+        }
+        
         alert.addAction(reportBrokenSiteAction())
         alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))

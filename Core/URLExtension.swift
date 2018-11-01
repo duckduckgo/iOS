@@ -35,9 +35,9 @@ extension URL {
     }
 
     public func toDesktopUrl() -> URL {
-        guard host?.hasPrefix("m.") ?? false else { return self }
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
-        components.host = host?.dropPrefix(prefix: "m.")
+        components.host = components.host?.dropPrefix(prefix: "m.")
+        components.host = components.host?.dropPrefix(prefix: "mobile.")
         return (try? components.asURL()) ?? self
     }
 

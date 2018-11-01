@@ -25,6 +25,12 @@ import StoreKit
 
 class TabViewController: WebViewController {
 
+    struct Constants {
+        // swiftlint:disable line_length
+        static let desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
+        // swiftlint:enable line_length
+    }
+    
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     weak var delegate: TabDelegate?
@@ -41,10 +47,6 @@ class TabViewController: WebViewController {
     
     private var httpsForced: Bool = false
     
-    override var isDesktopMode: Bool {
-        return tabModel.isDesktop
-    }
-
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
@@ -206,6 +208,7 @@ class TabViewController: WebViewController {
             Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
             self?.tabModel.toggleDesktopMode()
             let isDesktop = self?.tabModel.isDesktop ?? false
+            self?.updateUserAgent()
             if isDesktop {
                 self?.load(url: url.toDesktopUrl())
             } else {
@@ -514,6 +517,11 @@ extension TabViewController: WebEventsDelegate {
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
         reloadScripts()
+        updateUserAgent()
+    }
+    
+    private func updateUserAgent() {
+        self.userAgent = tabModel.isDesktop ? Constants.desktopUserAgent : nil
     }
 
     func detached(webView: WKWebView) {

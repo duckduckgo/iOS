@@ -35,10 +35,6 @@ open class WebViewController: UIViewController {
         static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
         static let minimumProgress: Float = 0.1
-
-        // swiftlint:disable line_length
-        static let desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
-        // swiftlint:enable line_length
     }
 
     var failingUrls = Set<String>()
@@ -52,10 +48,7 @@ open class WebViewController: UIViewController {
 
     open private(set) var webView: WKWebView!
     
-    /// Override to change the desktop mode
-    open var isDesktopMode: Bool {
-        return false
-    }
+    public var userAgent: String?
     
     public var loadedURL: URL? {
         didSet {
@@ -263,11 +256,7 @@ open class WebViewController: UIViewController {
     }
 
     private func updateUserAgent() {
-        if isDesktopMode {
-            webView.customUserAgent = Constants.desktopUserAgent
-        } else {
-            webView.customUserAgent = nil
-        }
+        webView.customUserAgent = userAgent
     }
 
     open func goBack() {

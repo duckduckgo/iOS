@@ -23,6 +23,7 @@ class URLExtensionTests: XCTestCase {
 
     func testWhenMobileUrlAndToDesktopUrlIsCalledThenDesktopUrlIsReturned() {
         XCTAssertEqual("https://example.com", URL(string: "https://m.example.com")?.toDesktopUrl().absoluteString)
+        XCTAssertEqual("https://example.com", URL(string: "https://mobile.example.com")?.toDesktopUrl().absoluteString)
         XCTAssertEqual("http://example.com/path/to/something?x=1",
                        URL(string: "http://m.example.com/path/to/something?x=1")?.toDesktopUrl().absoluteString)
     }

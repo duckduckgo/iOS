@@ -39,8 +39,8 @@ class ThemeManagerTests: XCTestCase {
         
         let manager = ThemeManager()
         manager.rootController = mockRootController
-        manager.isLightThemeEnabled = true
-        manager.isLightThemeEnabled = false
+        manager.enableLightTheme(true)
+        manager.enableLightTheme(false)
         
         waitForExpectations(timeout: 0.5, handler: nil)
     }

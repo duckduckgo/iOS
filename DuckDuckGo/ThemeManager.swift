@@ -51,8 +51,7 @@ class ThemeManager {
         }
         
         appSettings = settings
-        isLightThemeEnabled = settings.lightTheme
-        if isLightThemeEnabled {
+        if settings.lightTheme {
             currentTheme = LightTheme()
         } else {
             currentTheme = DarkTheme()
@@ -61,15 +60,13 @@ class ThemeManager {
 //        cycle(seconds: 4.0)
     }
     
-    public var isLightThemeEnabled: Bool {
-        didSet {
-            appSettings.lightTheme = isLightThemeEnabled
-            
-            if isLightThemeEnabled {
-                currentTheme = LightTheme()
-            } else {
-                currentTheme = DarkTheme()
-            }
+    public func enableLightTheme(_ lightThemeEnabled: Bool) {
+        appSettings.lightTheme = lightThemeEnabled
+        
+        if lightThemeEnabled {
+            currentTheme = LightTheme()
+        } else {
+            currentTheme = DarkTheme()
         }
     }
 }

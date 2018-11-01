@@ -64,7 +64,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureLightThemeToggle() {
-        lightThemeToggle.isOn = ThemeManager.shared.isLightThemeEnabled
+        lightThemeToggle.isOn = appSettings.lightTheme
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -121,7 +121,7 @@ class SettingsViewController: UITableViewController {
     @IBAction func onLightThemeToggled(_ sender: UISwitch) {
         let pixelName = sender.isOn ? PixelName.settingsThemeToggledLight : PixelName.settingsThemeToggledDark
         Pixel.fire(pixel: pixelName)
-        ThemeManager.shared.isLightThemeEnabled = sender.isOn
+        ThemeManager.shared.enableLightTheme(sender.isOn)
     }
 
     @IBAction func onDonePressed(_ sender: Any) {

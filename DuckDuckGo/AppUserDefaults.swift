@@ -60,7 +60,7 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    //MARK: - For experiment, remove when not needed anymore
+    // MARK: - For experiment, remove when not needed anymore
     
     func setInitialLightThemeValueIfNeeded(value: Bool) {
         guard userDefaults?.object(forKey: Keys.lightThemeKey) == nil else { return }

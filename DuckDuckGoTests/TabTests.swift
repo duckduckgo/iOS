@@ -29,25 +29,55 @@ class TabTests: XCTestCase {
         static let differentUrl = URL(string: "https://aDifferentUrl.com")!
     }
 
+    func testWhenDesktopPropertyChangesThenObserversNotified() {
+        let observer = MockTabObserver()
+
+        let tab = Tab(link: link())
+        tab.addObserver(observer)
+        tab.isDesktop = true
+
+        XCTAssertNotNil(observer.didChangeTab)
+
+    }
+
+    func testWhenDesktopModeToggledThenPropertyIsUpdated() {
+        let tab = Tab(link: link())
+        XCTAssertFalse(tab.isDesktop)
+        tab.toggleDesktopMode()
+        XCTAssertTrue(tab.isDesktop)
+        tab.toggleDesktopMode()
+        XCTAssertFalse(tab.isDesktop)
+    }
+
+    func testWhenEncodedWithDesktopPropertyThenDecodesSuccessfully() {
+        let tab = Tab(coder: CoderStub(properties: ["link": link(), "viewed": false, "desktop": true]))
+        XCTAssertNotNil(tab?.link)
+        XCTAssertFalse(tab?.viewed ?? true)
+        XCTAssertTrue(tab?.isDesktop ?? false)
+    }
+
+    func testWhenEncodedWithoutDesktopPropertyThenDecodesSuccessfully() {
+        let tab = Tab(coder: CoderStub(properties: ["link": link(), "viewed": false]))
+        XCTAssertNotNil(tab?.link)
+        XCTAssertFalse(tab?.viewed ?? true)
+        XCTAssertFalse(tab?.isDesktop ?? true)
+    }
+    
     func testWhenTabObserverIsOutOfScopeThenUpdatesAreSuccessful() {
         var observer: MockTabObserver? = MockTabObserver()
-        let tab = Tab(coder: CoderWithViewedPropertyStub())
-        tab?.addObserver(observer!)
-        
+        let tab = Tab(link: link())
+        tab.addObserver(observer!)
         observer = nil
-        
-        tab?.viewed = true
-
-        XCTAssertTrue(tab?.viewed ?? false)
+        tab.viewed = true
+        XCTAssertTrue(tab.viewed)
     }
     
     func testWhenTabLinkChangesThenObserversAreNotified() {
         let observer = MockTabObserver()
         
-        let tab = Tab(coder: CoderWithViewedPropertyStub())
-        tab?.addObserver(observer)
-        
-        tab?.link = Link(title: nil, url: Constants.url)
+        let tab = Tab(link: link())
+        tab.addObserver(observer)
+        tab.link = Link(title: nil, url: Constants.url)
 
         XCTAssertNotNil(observer.didChangeTab)
     }
@@ -55,24 +85,23 @@ class TabTests: XCTestCase {
     func testWhenTabViewedChangesThenObserversAreNotified() {
         let observer = MockTabObserver()
         
-        let tab = Tab(coder: CoderWithViewedPropertyStub())
-        tab?.addObserver(observer)
-        
-        tab?.viewed = true
+        let tab = Tab(link: link())
+        tab.addObserver(observer)
+        tab.viewed = true
         
         XCTAssertNotNil(observer.didChangeTab)
     }
 
     func testWhenTabWithViewedDecodedThenItDecodesSuccessfully() {
 
-        let tab = Tab(coder: CoderWithViewedPropertyStub())
+        let tab = Tab(coder: CoderStub(properties: ["link": link(), "viewed": false]))
         XCTAssertNotNil(tab?.link)
         XCTAssertFalse(tab?.viewed ?? true)
     }
 
     func testWhenTabEncodedBeforeViewedPropertyAddedIsDecodedThenItDecodesSuccessfully() {
 
-        let tab = Tab(coder: CoderWithoutViewedPropertyStub())
+        let tab = Tab(coder: CoderStub(properties: ["link": link()]))
         XCTAssertNotNil(tab?.link)
         XCTAssertTrue(tab?.viewed ?? false)
     }
@@ -94,32 +123,31 @@ class TabTests: XCTestCase {
         let rhs = Tab(link: Link(title: Constants.title, url: Constants.differentUrl))
         XCTAssertNotEqual(lhs, rhs)
     }
-}
 
-private class CoderWithoutViewedPropertyStub: NSCoder {
-
-    override func decodeObject(forKey key: String) -> Any? {
+    private func link() -> Link {
         return Link(title: "title", url: URL(string: "http://example.com")!)
-    }
-
-    override func containsValue(forKey key: String) -> Bool {
-        return false
     }
 
 }
 
-private class CoderWithViewedPropertyStub: NSCoder {
+private class CoderStub: NSCoder {
 
-    override func decodeObject(forKey key: String) -> Any? {
-        return Link(title: "title", url: URL(string: "http://example.com")!)
+    private let properties: [String: Any]
+
+    init(properties: [String: Any]) {
+        self.properties = properties
     }
 
     override func containsValue(forKey key: String) -> Bool {
-        return true
+        return properties.keys.contains(key)
+    }
+
+    override func decodeObject(forKey key: String) -> Any? {
+        return properties[key]
     }
 
     override func decodeBool(forKey key: String) -> Bool {
-        return false
+        return (properties[key] as? Bool)!
     }
 
 }

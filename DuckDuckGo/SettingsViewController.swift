@@ -38,8 +38,8 @@ class SettingsViewController: UITableViewController {
 
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
-    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
-    fileprivate lazy var variantManager: VariantManager = DefaultVariantManager()
+    fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
+    fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
 
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!

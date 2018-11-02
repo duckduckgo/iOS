@@ -18,9 +18,21 @@
 //
 
 import XCTest
+@testable import Core
 @testable import DuckDuckGo
 
 class SettingsViewControllerTests: XCTestCase {
+    
+    var mockDependencyProvider: MockDependencyProvider!
+    
+    override func setUp() {
+        mockDependencyProvider = MockDependencyProvider()
+        AppDependencyProvider.shared = mockDependencyProvider
+    }
+    
+    override func tearDown() {
+        AppDependencyProvider.shared = AppDependencyProvider()
+    }
 
     func testLightThemeToggleInitialState() {
         let appSettigns = AppUserDefaults()
@@ -68,6 +80,10 @@ class SettingsViewControllerTests: XCTestCase {
     }
 
     func testHidingLightThemeCell() {
+        mockDependencyProvider.variantManager = MockVariantManager(currentVariant: Variant(name: "v",
+                                                                                           weight: 100,
+                                                                                           features: []))
+        
         guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController else {
                 assertionFailure("Could not load Setting View Controller")
@@ -79,6 +95,17 @@ class SettingsViewControllerTests: XCTestCase {
     }
     
     func testShowingLightThemeCellWhenRunningExperiment() {
-        //TODO: Requires changing variant manager on Settings VC
+        mockDependencyProvider.variantManager = MockVariantManager(currentVariant: Variant(name: "v",
+                                                                                           weight: 100,
+                                                                                           features: [.themeToggle]))
+        
+        guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+            let settingsController = navController.topViewController as? SettingsViewController else {
+                assertionFailure("Could not load Setting View Controller")
+                return
+        }
+        
+        let height = settingsController.tableView(settingsController.tableView, heightForRowAt: IndexPath(row: 0, section: 0))
+        XCTAssertGreaterThan(height, 0)
     }
 }

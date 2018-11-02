@@ -21,7 +21,7 @@ import UIKit
 import Core
 import WebKit
 
-class TabsFooter: UICollectionReusableView {
+class TabsFooter: UICollectionReusableView, Themable {
 
     static let reuseIdentifier = "Footer"
     
@@ -29,7 +29,7 @@ class TabsFooter: UICollectionReusableView {
     @IBOutlet weak var fireImage: UIImageView!
     @IBOutlet weak var lastLabel: UILabel!
 
-    func applyTheme(_ theme: Theme) {
+    func decorate(with theme: Theme) {
         firstLabel.textColor = theme.tintOnBlurColor
         lastLabel.textColor = theme.tintOnBlurColor
         fireImage.tintColor = theme.tintOnBlurColor

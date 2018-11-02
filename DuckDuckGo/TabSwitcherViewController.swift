@@ -144,7 +144,7 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
                                                                          for: indexPath) as? TabsFooter else {
             fatalError("Failed to dequeue footer \(TabsFooter.reuseIdentifier) as TabsFooter")
         }
-        view.applyTheme(ThemeManager.shared.currentTheme)
+        view.decorate(with: ThemeManager.shared.currentTheme)
         return view
     }
 

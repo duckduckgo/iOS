@@ -133,10 +133,6 @@ class MainViewController: UIViewController {
             attachHomeScreen()
         }
     }
-    
-    private func disableShadow(for view: UIView) {
-        view.layer.shadowOpacity = 0.0
-    }
 
     private func attachOmniBar() {
         omniBar = OmniBar.loadFromXib()

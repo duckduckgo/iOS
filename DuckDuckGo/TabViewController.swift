@@ -521,7 +521,7 @@ extension TabViewController: WebEventsDelegate {
     }
     
     private func updateUserAgent() {
-        self.userAgent = tabModel.isDesktop ? Constants.desktopUserAgent : nil
+        userAgent = tabModel.isDesktop ? Constants.desktopUserAgent : nil
     }
 
     func detached(webView: WKWebView) {

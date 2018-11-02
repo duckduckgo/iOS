@@ -66,6 +66,11 @@ class TabSwitcherViewController: UIViewController {
         let count = tabsModel.count
         titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
     }
+    
+    @IBAction func onSettingsPressed(_ sender: UIButton) {
+        // Segue performed from storyboard
+        Pixel.fire(pixel: .settingsOpened)
+    }
 
     @IBAction func onAddPressed(_ sender: UIBarButtonItem) {
         delegate.tabSwitcherDidRequestNewTab(tabSwitcher: self)

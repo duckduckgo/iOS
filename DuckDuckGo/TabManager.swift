@@ -156,7 +156,7 @@ class TabManager {
 
     func invalidateCache(forController controller: TabViewController) {
         if current === controller {
-            current?.reload()
+            current?.reload(scripts: false)
         } else {
             removeFromCache(controller)
         }

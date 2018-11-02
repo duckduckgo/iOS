@@ -40,6 +40,8 @@
 "action.title.readingList" = "Add to Reading List";
 "action.title.copy" = "Copy";
 "action.title.share"= "Share...";
+"action.title.request.desktop.site" = "Request Desktop Site";
+"action.title.request.mobile.site" = "Request Mobile Site";
 "action.title.add.to.whitelist" = "Add to Whitelist";
 "action.title.remove.from.whitelist" = "Remove from Whitelist";
 "action.title.remove.bookmark" = "Remove Bookmark";

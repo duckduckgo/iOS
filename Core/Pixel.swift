@@ -40,12 +40,30 @@ public enum PixelName: String {
     case longPressMenuCopyItem = "mlp_c"
     case longPressMenuShareItem = "mlp_s"
     
+    case quickActionExtensionSearch = "mqe_s"
+    case quickActionExtensionFire = "mqe_f"
+    case quickActionExtensionBookmarks = "mqe_b"
+    case bookmarksExtensionSearch = "mbe_s"
+    case bookmarksExtensionBookmark = "mbe_b"
+    
     case settingsOpened = "ms"
     case settingsThemeToggledLight = "ms_tl"
     case settingsThemeToggledDark = "ms_td"
 
     case httpsUpgradeSiteError = "ehd"
     case httpsUpgradeSiteSummary = "ehs"
+
+    case browsingMenuOpened = "mb"
+    case browsingMenuRefresh = "mb_rf"
+    case browsingMenuNewTab = "mb_tb"
+    case browsingMenuAddToBookmarks = "mb_abk"
+    case browsingMenuRemoveBookmark = "mb_rbk"
+    case browsingMenuToggleBrowsingMode = "mb_dm"
+    case browsingMenuShare = "mb_sh"
+    case browsingMenuWhitelist = "mb_wl"
+    case browsingMenuReportBrokenSite = "mb_rb"
+    case browsingMenuSettings = "mb_st"
+
 }
 
 public class Pixel {

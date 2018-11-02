@@ -50,6 +50,8 @@ public struct UserText {
     public static let actionShare = NSLocalizedString("action.title.share", comment: "Share action")
     public static let actionAddToWhitelist = NSLocalizedString("action.title.add.to.whitelist", comment: "Add to Whitelist action")
     public static let actionRemoveFromWhitelist = NSLocalizedString("action.title.remove.from.whitelist", comment: "Remove from Whitelist action")
+    public static let actionRequestDesktopSite = NSLocalizedString("action.title.request.desktop.site", comment: "Request Mobile Site")
+    public static let actionRequestMobileSite = NSLocalizedString("action.title.request.mobile.site", comment: "Request Desktop Site")
     public static let actionSaveBookmark = NSLocalizedString("action.title.save.bookmark", comment: "Save Bookmark action")
     public static let actionRemoveBookmark = NSLocalizedString("action.title.remove.bookmark", comment: "Remove Bookmark action")
     public static let actionReportBrokenSite = NSLocalizedString("action.title.reportBrokenSite", comment: "Report broken site action")

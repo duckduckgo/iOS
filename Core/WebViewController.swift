@@ -49,7 +49,9 @@ open class WebViewController: UIViewController {
     @IBOutlet weak var webViewContainer: UIView!
 
     open private(set) var webView: WKWebView!
-
+    
+    public var userAgent: String?
+    
     public var loadedURL: URL? {
         didSet {
             webEventsDelegate?.webView(webView, didChangeUrl: loadedURL)
@@ -70,9 +72,8 @@ open class WebViewController: UIViewController {
     public var name: String? {
         return webView.title
     }
-
+    
     public var url: URL? {
-        // return isError ? loadedURL : webView?.url
         return loadedURL
     }
 
@@ -172,6 +173,7 @@ open class WebViewController: UIViewController {
     public func load(url: URL) {
         loadedURL = url
         lastError = nil
+        updateUserAgent()
         load(urlRequest: URLRequest(url: url))
     }
 
@@ -251,7 +253,12 @@ open class WebViewController: UIViewController {
     }
 
     public func reload() {
+        updateUserAgent()
         webView.reload()
+    }
+
+    private func updateUserAgent() {
+        webView.customUserAgent = userAgent
     }
 
     open func goBack() {

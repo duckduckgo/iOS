@@ -38,7 +38,7 @@ struct LightTheme: Theme {
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight
     var tableCellTintColor = UIColor.darkGreyish
     var tableCellSeparatorColor = UIColor.lightGreyish
-    var tableHeaderTextColor = UIColor.greyish4
+    var tableHeaderTextColor = UIColor.greyish3
     
     var toggleSwitchColor = UIColor.cornflowerBlue
     
@@ -46,6 +46,6 @@ struct LightTheme: Theme {
     var homeRowSecondaryTextColor = UIColor.greyishBrown2
     var homeRowBackgroundColor = UIColor.nearlyWhiteLight
     
-    var aboutScreenTextColor = UIColor.charcoalGrey2
+    var aboutScreenTextColor = UIColor.charcoalGrey
     var aboutScreenButtonColor = UIColor.cornflowerBlue
 }

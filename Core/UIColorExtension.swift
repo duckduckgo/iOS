@@ -28,29 +28,37 @@ extension UIColor {
     public static var nearlyBlack: UIColor {
         return UIColor(red: 34.0 / 255.0, green: 34.0 / 255.0, blue: 34.0 / 255.0, alpha: 1.0)
     }
-    
-    public static var grayishBrown: UIColor {
-        return UIColor(red: 85.0 / 255.0, green: 85.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
+
+    public static var charcoalGrey: UIColor {
+        return UIColor(red: 68.0 / 255.0, green: 68.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
     }
     
-    public static var charcoalGrey2: UIColor {
-        return UIColor(red: 68.0 / 255.0, green: 68.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
+    public static var greyishBrown: UIColor {
+        return UIColor(red: 85.0 / 255.0, green: 85.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
     }
     
     public static var greyishBrown2: UIColor {
         return UIColor(red: 102.0 / 255.0, green: 102.0 / 255.0, blue: 102.0 / 255.0, alpha: 1.0)
     }
 
-    public static var grayish: UIColor {
+    public static var greyish: UIColor {
         return UIColor(red: 170.0 / 255.0, green: 170.0 / 255.0, blue: 170.0 / 255.0, alpha: 1.0)
     }
-
-    public static var coolGrey: UIColor {
-        return UIColor(red: 176.0 / 255.0, green: 181.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0)
+    
+    public static var greyish2: UIColor {
+        return UIColor(red: 153.0 / 255.0, green: 153.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
     }
     
     public static var greyish3: UIColor {
-        return UIColor(red: 168.0 / 255.0, green: 168.0 / 255.0, blue: 171.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 136.0 / 255.0, green: 136.0 / 255.0, blue: 136.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var lightGreyish: UIColor {
+        return UIColor(red: 234.0 / 255.0, green: 234.0 / 255.0, blue: 234.0 / 255.0, alpha: 1.0)
+    }
+    
+    public static var darkGreyish: UIColor {
+        return UIColor(red: 73.0 / 255.0, green: 73.0 / 255.0, blue: 73.0 / 255.0, alpha: 1.0)
     }
     
     public static var lightMercury: UIColor {
@@ -64,33 +72,15 @@ extension UIColor {
     public static var cornflowerBlue: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 143.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
     }
-}
-
-extension UIColor {
     
     public static var nearlyWhiteLight: UIColor {
         return UIColor(red: 250.0 / 255.0, green: 250.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
     }
     
     public static var nearlyWhite: UIColor {
-        return UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 246.0 / 255.0, green: 246.0 / 255.0, blue: 246.0 / 255.0, alpha: 1.0)
     }
     
-    public static var lightGreyish: UIColor {
-        return UIColor(red: 234.0 / 255.0, green: 234.0 / 255.0, blue: 234.0 / 255.0, alpha: 1.0)
-    }
-    
-    public static var darkGreyish: UIColor {
-        return UIColor(red: 73.0 / 255.0, green: 73.0 / 255.0, blue: 73.0 / 255.0, alpha: 1.0)
-    }
-    
-    public static var greyish2: UIColor {
-        return UIColor(red: 153.0 / 255.0, green: 153.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
-    }
-    
-    public static var greyish4: UIColor {
-        return UIColor(red: 136.0 / 255.0, green: 136.0 / 255.0, blue: 136.0 / 255.0, alpha: 1.0)
-    }
 }
 
 extension UIColor {

@@ -124,6 +124,12 @@ extension AutocompleteViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = UITableViewHeaderFooterView()
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.clear
+        footer.backgroundView = backgroundView
+        footer.backgroundColor = UIColor.clear
+        
         footer.contentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         return footer
     }
@@ -145,6 +151,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         
         let currentTheme = ThemeManager.shared.currentTheme
         
+        cell.backgroundColor = currentTheme.tableCellBackgroundColor
         cell.contentView.backgroundColor = currentTheme.tableCellBackgroundColor
         cell.tintColor = currentTheme.tableCellTintColor
         cell.label?.textColor = currentTheme.tableCellTintColor
@@ -158,6 +165,7 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         
         let currentTheme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = currentTheme.tableCellBackgroundColor
         cell.contentView.backgroundColor = currentTheme.tableCellBackgroundColor
         cell.tintColor = currentTheme.tableCellTintColor
         cell.label?.textColor = currentTheme.tableCellTintColor

@@ -56,8 +56,6 @@ class ThemeManager {
         } else {
             currentTheme = DarkTheme()
         }
-        // Uncomment to enable automatic theme cycling for testing
-//        cycle(seconds: 4.0)
     }
     
     public func enableLightTheme(_ lightThemeEnabled: Bool) {
@@ -67,26 +65,6 @@ class ThemeManager {
             currentTheme = LightTheme()
         } else {
             currentTheme = DarkTheme()
-        }
-    }
-}
-
-// MARK: - Runtime Testing
-extension ThemeManager {
-    
-    static var cycleIteration = 0
-    
-    /// Run to enable cycling through themes
-    func cycle(seconds: Double) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            if type(of: self).cycleIteration % 2 == 1 {
-                self.currentTheme = DarkTheme()
-            } else {
-                self.currentTheme = LightTheme()
-            }
-            type(of: self).cycleIteration += 1
-            
-            self.cycle(seconds: seconds)
         }
     }
 }

@@ -728,13 +728,13 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Leaderboard On" translatesAutoresizingMaskIntoConstraints="NO" id="HGe-jW-qhx">
                                             <rect key="frame" x="177" y="20" width="60" height="55"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.example.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPS-SD-65t">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Offenders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPS-SD-65t">
                                             <rect key="frame" x="40" y="86" width="334" height="20"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK LEADERBOARD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-u7-IeX" userLabel="Mixed Encryption Label">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRACKER NETWORK FREQUENCY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3q-u7-IeX" userLabel="Mixed Encryption Label">
                                             <rect key="frame" x="20" y="112" width="374" height="12"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
                                             <color key="textColor" red="0.57647058819999997" green="0.57647058819999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -976,7 +976,6 @@
                         <viewLayoutGuide key="safeArea" id="s83-RN-jpp"/>
                     </view>
                     <connections>
-                        <outlet property="domainLabel" destination="IPS-SD-65t" id="acs-Qv-veN"/>
                         <outlet property="heroIconImage" destination="HGe-jW-qhx" id="fHi-CA-OCI"/>
                         <outlet property="hoveringResetContainer" destination="nFB-0r-HZW" id="hZ6-ca-wPv"/>
                         <outlet property="hoveringView" destination="zKA-e0-nkA" id="GE0-aa-qKX"/>

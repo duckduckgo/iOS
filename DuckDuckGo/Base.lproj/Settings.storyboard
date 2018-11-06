@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +45,7 @@
                                                     <rect key="frame" x="24" y="6.5" width="327" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autocomplete Suggestions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="jyc-pE-eK8">
-                                                            <rect key="frame" x="0.0" y="7.5" width="270" height="16"/>
+                                                            <rect key="frame" x="0.0" y="6" width="270" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -102,7 +103,7 @@
                                                     <rect key="frame" x="24" y="6.5" width="327" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Application Lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-yq-FYj">
-                                                            <rect key="frame" x="0.0" y="7.5" width="270" height="16"/>
+                                                            <rect key="frame" x="0.0" y="6" width="270" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -136,10 +137,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bYP-6u-2g9">
-                                                    <rect key="frame" x="24" y="14" width="327" height="16"/>
+                                                    <rect key="frame" x="24" y="12.5" width="327" height="19"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use DuckDuckGo in Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="B5X-ND-d0g">
-                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -166,10 +167,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0Xp-NU-z4Q">
-                                                    <rect key="frame" x="24" y="14" width="327" height="16"/>
+                                                    <rect key="frame" x="24" y="12.5" width="327" height="19"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="HoL-C1-y9r">
-                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="19"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -248,14 +249,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="16" y="8" width="54" height="16"/>
+                                                    <rect key="frame" x="16" y="6" width="52.5" height="19"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="16" y="24" width="98.5" height="12"/>
+                                                    <rect key="frame" x="16" y="25" width="107" height="14"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -357,25 +358,25 @@
                         <viewControllerLayoutGuide type="bottom" id="BFC-LK-P05"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wVe-g5-BZG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="676"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yw7-2D-U9S">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="676"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="660"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="676"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoWithText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="87.5" y="32" width="201" height="160"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="iNd-oh-m3g" secondAttribute="height" multiplier="201:160" id="Cw1-Ku-Pnw"/>
+                                                    <constraint firstAttribute="height" constant="160" id="gk3-qY-2ME"/>
+                                                    <constraint firstAttribute="width" constant="201" id="jGU-wd-0CU"/>
+                                                </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="47.5" y="224" width="280" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="280" id="8Ro-lJ-9ja">
-                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                                    </constraint>
-                                                </constraints>
+                                                <rect key="frame" x="102" y="224" width="171.5" height="23.5"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -384,11 +385,9 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="47.5" y="276" width="280" height="282.5"/>
+                                                <rect key="frame" x="47.5" y="279.5" width="280" height="337"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="280" id="qDG-t7-YLM">
-                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                                    </constraint>
+                                                    <constraint firstAttribute="width" constant="280" id="xUP-Uw-uGO"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment>
@@ -399,7 +398,7 @@ DuckDuckGo Privacy Browser provides all the privacy essentials you need to prote
 After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
                                                         <attributes>
                                                             <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
+                                                            <font key="NSFont" metaFont="system" size="16"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
@@ -415,7 +414,7 @@ DuckDuckGo Privacy Browser provides all the privacy essentials you need to prote
 After all, the internet shouldn't feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.</string>
                                                             <attributes>
                                                                 <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="24" name="ProximaNova-Semibold"/>
+                                                                <font key="NSFont" metaFont="system" size="24"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.26" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -423,12 +422,10 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                                 </variation>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="47.5" y="566.5" width="280" height="28"/>
+                                                <rect key="frame" x="72" y="624.5" width="231" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="280" id="p0P-zN-paE">
-                                                        <variation key="heightClass=regular-widthClass=regular" constant="380"/>
-                                                    </constraint>
+                                                    <constraint firstAttribute="height" constant="31" id="U2d-nM-OL3"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                 <state key="normal" title="More at duckduckgo.com/about">
@@ -444,44 +441,44 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="odm-6J-APs" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="1Uv-WP-hY9"/>
-                                            <constraint firstItem="iNd-oh-m3g" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="7FP-Sb-xP2"/>
-                                            <constraint firstItem="iNd-oh-m3g" firstAttribute="top" secondItem="wfd-Kx-0gx" secondAttribute="top" constant="32" id="Abh-Ul-MPN"/>
-                                            <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="BtH-UX-7up"/>
-                                            <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="TuI-fs-lpV"/>
-                                            <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="WiW-aH-os0"/>
-                                            <constraint firstAttribute="height" constant="660" id="aBC-xi-cEy"/>
-                                            <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="eaN-Or-GFY"/>
-                                            <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="g71-aw-kOx"/>
+                                            <constraint firstItem="7nt-uS-sOh" firstAttribute="top" secondItem="odm-6J-APs" secondAttribute="bottom" constant="8" id="71E-7H-Wex"/>
+                                            <constraint firstItem="odm-6J-APs" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="75I-zT-yPQ"/>
+                                            <constraint firstItem="iNd-oh-m3g" firstAttribute="top" secondItem="wfd-Kx-0gx" secondAttribute="top" constant="32" id="9Ek-k1-A5o"/>
+                                            <constraint firstItem="odm-6J-APs" firstAttribute="top" secondItem="gji-Fs-EET" secondAttribute="bottom" constant="32" id="FhH-Bv-hIf"/>
+                                            <constraint firstAttribute="bottom" secondItem="7nt-uS-sOh" secondAttribute="bottom" constant="20.5" id="IHp-4p-9jF"/>
+                                            <constraint firstItem="gji-Fs-EET" firstAttribute="top" secondItem="iNd-oh-m3g" secondAttribute="bottom" constant="32" id="IlT-ig-EAt"/>
+                                            <constraint firstItem="iNd-oh-m3g" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="Kt0-JI-EP0"/>
+                                            <constraint firstItem="7nt-uS-sOh" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="OvW-0f-7rn"/>
+                                            <constraint firstItem="gji-Fs-EET" firstAttribute="centerX" secondItem="wfd-Kx-0gx" secondAttribute="centerX" id="oWa-mr-Pit"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="wfd-Kx-0gx" secondAttribute="trailing" id="VW8-l4-dPE"/>
-                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="leading" secondItem="Yw7-2D-U9S" secondAttribute="leading" id="ZA2-4Z-oie"/>
-                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="top" secondItem="Yw7-2D-U9S" secondAttribute="top" id="cmt-KF-1rA">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="96"/>
-                                    </constraint>
-                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="centerX" secondItem="Yw7-2D-U9S" secondAttribute="centerX" id="qA4-H5-jPI"/>
-                                    <constraint firstAttribute="bottom" secondItem="wfd-Kx-0gx" secondAttribute="bottom" id="xFX-6h-gAs"/>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="leading" secondItem="Yw7-2D-U9S" secondAttribute="leading" id="GqH-EC-CJh"/>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="height" secondItem="Yw7-2D-U9S" secondAttribute="height" priority="1" id="JRN-II-LPH"/>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="top" secondItem="Yw7-2D-U9S" secondAttribute="top" id="NCu-gA-fQk"/>
+                                    <constraint firstAttribute="bottom" secondItem="wfd-Kx-0gx" secondAttribute="bottom" id="TCo-Pi-Vca"/>
+                                    <constraint firstItem="wfd-Kx-0gx" firstAttribute="width" secondItem="Yw7-2D-U9S" secondAttribute="width" id="ZSd-io-T4M"/>
+                                    <constraint firstAttribute="trailing" secondItem="wfd-Kx-0gx" secondAttribute="trailing" id="zZD-eN-3uE"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="top" secondItem="wVe-g5-BZG" secondAttribute="top" id="3Ue-ao-Q20"/>
-                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="leading" secondItem="wVe-g5-BZG" secondAttribute="leading" id="RkM-cs-ztf"/>
-                            <constraint firstAttribute="trailing" secondItem="Yw7-2D-U9S" secondAttribute="trailing" id="gve-ZA-3nx"/>
-                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="bottom" secondItem="BFC-LK-P05" secondAttribute="top" id="hQN-lT-1KI"/>
+                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="top" secondItem="F90-sd-lQ0" secondAttribute="bottom" id="Jao-8E-VZ8"/>
+                            <constraint firstAttribute="trailing" secondItem="Yw7-2D-U9S" secondAttribute="trailing" id="MYE-hW-TCc"/>
+                            <constraint firstItem="Yw7-2D-U9S" firstAttribute="leading" secondItem="wVe-g5-BZG" secondAttribute="leading" id="N5g-fy-qzn"/>
+                            <constraint firstItem="BFC-LK-P05" firstAttribute="top" secondItem="Yw7-2D-U9S" secondAttribute="bottom" id="aaU-Cl-rgq"/>
                         </constraints>
                     </view>
+                    <size key="freeformSize" width="375" height="740"/>
                     <connections>
                         <outlet property="descriptionText" destination="odm-6J-APs" id="fpX-hA-YW2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tW2-iC-9BV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3027" y="-290"/>
+            <point key="canvasLocation" x="3026.4000000000001" y="-290.55472263868069"/>
         </scene>
         <!--Whitelist-->
         <scene sceneID="tsd-dd-bMe">
@@ -498,7 +495,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvh-2e-Wmz" userLabel="Info Label">
-                                    <rect key="frame" x="0.0" y="22" width="375" height="28"/>
+                                    <rect key="frame" x="0.0" y="19.5" width="375" height="33"/>
                                     <string key="text">These whitelisted sites will not be 
 upgraded by Privacy Protection.</string>
                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
@@ -521,10 +518,10 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
+                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="311" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -551,7 +548,7 @@ upgraded by Privacy Protection.</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No whitelisted sites yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="32" y="14" width="311" height="16"/>
+                                            <rect key="frame" x="32" y="12.5" width="311" height="19"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

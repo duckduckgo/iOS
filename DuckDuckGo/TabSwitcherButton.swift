@@ -90,7 +90,7 @@ class TabSwitcherButton: UIView {
         anim.layer.masksToBounds = false
         anim.isUserInteractionEnabled = false
         
-        anim.center = center
+        anim.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
     override var backgroundColor: UIColor? {

@@ -343,10 +343,11 @@ class TabViewController: WebViewController {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuShare)
             guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
-            self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
+            guard let url = self?.appUrls.removeATBAndSource(fromUrl: link.url) else { return }
+            self?.presentShareSheet(withItems: [ url, link ], fromView: menu)
         }
     }
-
+    
     private func shareAction(forUrl url: URL, atPoint point: Point) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .longPressMenuShareItem)

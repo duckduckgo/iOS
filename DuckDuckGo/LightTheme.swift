@@ -21,8 +21,8 @@ import UIKit
 struct LightTheme: Theme {
     
     var currentImageSet: ThemeManager.ImageSet = .light
-    
     var statusBarStyle: UIStatusBarStyle = .default
+    var keyboardAppearance: UIKeyboardAppearance = .light
     
     var backgroundColor = UIColor.nearlyWhite
     

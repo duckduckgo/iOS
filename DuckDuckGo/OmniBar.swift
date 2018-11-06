@@ -231,12 +231,7 @@ extension OmniBar: Themable {
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = theme.searchBarTextColor
         
-        switch theme.currentImageSet {
-        case .light:
-            textField.keyboardAppearance = .light
-        case .dark:
-            textField.keyboardAppearance = .dark
-        }
+        textField.keyboardAppearance = theme.keyboardAppearance
     }
 }
 

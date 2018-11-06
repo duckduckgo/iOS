@@ -21,8 +21,8 @@ import UIKit
 struct DarkTheme: Theme {
     
     var currentImageSet: ThemeManager.ImageSet = .dark
-    
     var statusBarStyle: UIStatusBarStyle = .lightContent
+    var keyboardAppearance: UIKeyboardAppearance = .dark
     
     var backgroundColor = UIColor.nearlyBlack
     

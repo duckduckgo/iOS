@@ -32,14 +32,7 @@ class EditBookmarkAlert {
 
         let editBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
         
-        let keyboardAppearance: UIKeyboardAppearance
-        switch ThemeManager.shared.currentTheme.currentImageSet {
-        case .light:
-            keyboardAppearance = .light
-        case .dark:
-            keyboardAppearance = .dark
-        }
-        
+        let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         editBox.addTextField { (textField) in
             textField.text = bookmark.title
             textField.keyboardAppearance = keyboardAppearance

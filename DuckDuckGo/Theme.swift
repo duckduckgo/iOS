@@ -23,6 +23,7 @@ protocol Theme {
     
     var currentImageSet: ThemeManager.ImageSet { get }
     var statusBarStyle: UIStatusBarStyle { get }
+    var keyboardAppearance: UIKeyboardAppearance { get }
     
     var backgroundColor: UIColor { get }
     

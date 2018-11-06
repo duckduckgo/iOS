@@ -205,14 +205,7 @@ extension FeedbackViewController: UITextFieldDelegate {
 extension FeedbackViewController: Themable {
     
     func decorate(with theme: Theme) {
-        let keyboardAppearance: UIKeyboardAppearance
-        switch theme.currentImageSet {
-        case .light:
-            keyboardAppearance = .light
-        case .dark:
-            keyboardAppearance = .dark
-        }
-        urlTextField.keyboardAppearance = keyboardAppearance
-        messageTextView.keyboardAppearance = keyboardAppearance
+        urlTextField.keyboardAppearance = theme.keyboardAppearance
+        messageTextView.keyboardAppearance = theme.keyboardAppearance
     }
 }

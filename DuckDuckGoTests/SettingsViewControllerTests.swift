@@ -34,7 +34,7 @@ class SettingsViewControllerTests: XCTestCase {
         AppDependencyProvider.shared = AppDependencyProvider()
     }
 
-    func testLightThemeToggleInitialState() {
+    func testWhenOpeningSettingsThenLightThemeToggleIsSetBasedOnAppSettings() {
         let appSettigns = AppUserDefaults()
         appSettigns.lightTheme = false
         
@@ -57,9 +57,9 @@ class SettingsViewControllerTests: XCTestCase {
         }
     }
     
-    func testLightThemeToggling() {
-        let appSettigns = AppUserDefaults()
-        appSettigns.lightTheme = false
+    func testWhenLightThemeIsToggledThenAppSettingsAreUpdated() {
+        let appSettings = AppUserDefaults()
+        appSettings.lightTheme = false
         
         guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController else {
@@ -71,15 +71,15 @@ class SettingsViewControllerTests: XCTestCase {
         settingsController.lightThemeToggle.isOn = true
         settingsController.lightThemeToggle.sendActions(for: .valueChanged)
         
-        XCTAssert(appSettigns.lightTheme)
+        XCTAssert(appSettings.lightTheme)
         
         settingsController.lightThemeToggle.isOn = false
         settingsController.lightThemeToggle.sendActions(for: .valueChanged)
         
-        XCTAssertFalse(appSettigns.lightTheme)
+        XCTAssertFalse(appSettings.lightTheme)
     }
 
-    func testHidingLightThemeCell() {
+    func testWhenNotRunningExperimentThenLightThemeCellIsCollapsed() {
         mockDependencyProvider.variantManager = MockVariantManager(currentVariant: Variant(name: "v",
                                                                                            weight: 100,
                                                                                            features: []))
@@ -94,7 +94,7 @@ class SettingsViewControllerTests: XCTestCase {
         XCTAssertEqual(height, 0)
     }
     
-    func testShowingLightThemeCellWhenRunningExperiment() {
+    func testWhenRunningExperimentThenLightThemeCellIsExpanded() {
         mockDependencyProvider.variantManager = MockVariantManager(currentVariant: Variant(name: "v",
                                                                                            weight: 100,
                                                                                            features: [.themeToggle]))

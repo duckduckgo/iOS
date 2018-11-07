@@ -19,8 +19,8 @@
 
 protocol AppSettings {
     var autocomplete: Bool { get set }
-    var lightTheme: Bool { get set }
+    var currentThemeName: ThemeName { get set }
     
     // Required for Light Theme experiment
-    func setInitialLightThemeValueIfNeeded(value: Bool)
+    func setInitialThemeNameIfNeeded(name: ThemeName)
 }

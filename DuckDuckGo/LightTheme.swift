@@ -19,6 +19,7 @@
 import UIKit
 
 struct LightTheme: Theme {
+    var name = ThemeName.light
     
     var currentImageSet: ThemeManager.ImageSet = .light
     var statusBarStyle: UIStatusBarStyle = .default

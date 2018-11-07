@@ -19,7 +19,13 @@
 
 import UIKit
 
+enum ThemeName: String {
+    case light
+    case dark
+}
+
 protocol Theme {
+    var name: ThemeName { get }
     
     var currentImageSet: ThemeManager.ImageSet { get }
     var statusBarStyle: UIStatusBarStyle { get }

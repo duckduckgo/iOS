@@ -37,6 +37,15 @@ class ThemeManager {
         }
     }
     
+    private static func makeTheme(name: ThemeName) -> Theme {
+        switch name {
+        case .light:
+            return LightTheme()
+        case .dark:
+            return DarkTheme()
+        }
+    }
+    
     init(variantManager: VariantManager = DefaultVariantManager(),
          settings: AppSettings = AppUserDefaults()) {
         variantManager.assignVariantIfNeeded()
@@ -44,27 +53,18 @@ class ThemeManager {
         // Set default theme in case user participates in experiment
         if let variant = variantManager.currentVariant {
             if variant.features.contains(.lightThemeByDefault) {
-                settings.setInitialLightThemeValueIfNeeded(value: true)
+                settings.setInitialThemeNameIfNeeded(name: .light)
             } else if variant.features.contains(.darkThemeByDefault) {
-                settings.setInitialLightThemeValueIfNeeded(value: false)
+                settings.setInitialThemeNameIfNeeded(name: .dark)
             }
         }
         
         appSettings = settings
-        if settings.lightTheme {
-            currentTheme = LightTheme()
-        } else {
-            currentTheme = DarkTheme()
-        }
+        currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)
     }
     
-    public func enableLightTheme(_ lightThemeEnabled: Bool) {
-        appSettings.lightTheme = lightThemeEnabled
-        
-        if lightThemeEnabled {
-            currentTheme = LightTheme()
-        } else {
-            currentTheme = DarkTheme()
-        }
+    public func enableTheme(with name: ThemeName) {
+        appSettings.currentThemeName = name
+        currentTheme = ThemeManager.makeTheme(name: name)
     }
 }

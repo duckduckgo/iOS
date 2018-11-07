@@ -25,13 +25,13 @@ class ThemeManagerVariantTests: XCTestCase {
     
     private class MockAppSettings: AppSettings {
         
-        var onSetInitialLightThemeValueIfNeeded: ((Bool) -> Void)?
+        var onSetInitialLightThemeValueIfNeeded: ((ThemeName) -> Void)?
         
         var autocomplete = false
-        var lightTheme = false
+        var currentThemeName = ThemeName.dark
         
-        func setInitialLightThemeValueIfNeeded(value: Bool) {
-            onSetInitialLightThemeValueIfNeeded?(value)
+        func setInitialThemeNameIfNeeded(name: ThemeName) {
+            onSetInitialLightThemeValueIfNeeded?(name)
         }
     }
     
@@ -39,7 +39,7 @@ class ThemeManagerVariantTests: XCTestCase {
         static let variant = "v"
     }
 
-    func testNoActiveExperiment() {
+    func testWhenExperimentIsDisabledThenDarkThemeIsTheDefault() {
         let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant,
                                                                             weight: 100,
                                                                             features: []))
@@ -56,7 +56,7 @@ class ThemeManagerVariantTests: XCTestCase {
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
-    func testLightThemeExperiment() {
+    func testWhenExperimentIsEnabledWithLightThemeFeatureThenLightThemeIsTheDefault() {
         let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant,
                                                                             weight: 100,
                                                                             features: [.lightThemeByDefault]))
@@ -66,8 +66,8 @@ class ThemeManagerVariantTests: XCTestCase {
         let mockSettings = MockAppSettings()
         mockSettings.onSetInitialLightThemeValueIfNeeded = { [weak mockSettings] value in
             settingsChangedExpectation.fulfill()
-            XCTAssert(value)
-            mockSettings?.lightTheme = value
+            XCTAssert(value == .light)
+            mockSettings?.currentThemeName = value
         }
         
         XCTAssert(ThemeManager(variantManager: mockVariantManager,
@@ -76,19 +76,19 @@ class ThemeManagerVariantTests: XCTestCase {
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
-    func testLightThemeExperimentWithSettingsForcingDarkTheme() {
+    func testWhenLightThemeFeatureIsEnabledButUserSetDarkThemeThenDarkThemeIsActive() {
         let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant,
                                                                             weight: 100,
                                                                             features: [.lightThemeByDefault]))
         
         let mockSettings = MockAppSettings()
-        mockSettings.lightTheme = false
+        mockSettings.currentThemeName = .dark
         
         XCTAssert(ThemeManager(variantManager: mockVariantManager,
                                settings: mockSettings).currentTheme is DarkTheme)
     }
     
-    func testDarkThemeExperiment() {
+    func testWhenExperimentIsEnabledWithDarkThemeFeatureThenDarkThemeIsTheDefault() {
         let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant,
                                                                             weight: 100,
                                                                             features: [.darkThemeByDefault]))
@@ -98,8 +98,8 @@ class ThemeManagerVariantTests: XCTestCase {
         let mockSettings = MockAppSettings()
         mockSettings.onSetInitialLightThemeValueIfNeeded = { [weak mockSettings] value in
             settingsChangedExpectation.fulfill()
-            XCTAssertFalse(value)
-            mockSettings?.lightTheme = value
+            XCTAssert(value == .dark)
+            mockSettings?.currentThemeName = value
         }
         
         XCTAssert(ThemeManager(variantManager: mockVariantManager,
@@ -108,13 +108,13 @@ class ThemeManagerVariantTests: XCTestCase {
         waitForExpectations(timeout: 0.1, handler: nil)
     }
     
-    func testDarkThemeExperimentWithSettingsForcingLightTheme() {
+    func testWhenDarkThemeFeatureIsEnabledButUserSetLightThemeThenLightThemeIsActive() {
         let mockVariantManager = MockVariantManager(currentVariant: Variant(name: Constants.variant,
                                                                             weight: 100,
                                                                             features: [.darkThemeByDefault]))
         
         let mockSettings = MockAppSettings()
-        mockSettings.lightTheme = true
+        mockSettings.currentThemeName = .light
         
         XCTAssert(ThemeManager(variantManager: mockVariantManager,
                                settings: mockSettings).currentTheme is LightTheme)

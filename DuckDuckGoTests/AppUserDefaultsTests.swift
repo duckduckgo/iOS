@@ -28,7 +28,7 @@ class AppUserDefaultsTests: XCTestCase {
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
 
-    func testAutocompleteSet() {
+    func testWhenAutocompleteIsSetThenItIsPersisted() {
 
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.autocomplete = false
@@ -36,48 +36,48 @@ class AppUserDefaultsTests: XCTestCase {
 
     }
 
-    func testAutocompleteDefault() {
+    func testWhenReadingAutocompleteDefaultThenTrueIsReturned() {
 
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         XCTAssertTrue(appUserDefaults.autocomplete)
 
     }
     
-    func testLightThemeSet() {
+    func testWhenCurrentThemeIsSetThenItIsPersisted() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.lightTheme = true
-        XCTAssertTrue(appUserDefaults.lightTheme)
+        appUserDefaults.currentThemeName = .light
+        XCTAssertTrue(appUserDefaults.currentThemeName == .light)
         
     }
     
-    func testLightThemeDefault() {
+    func testWhenReadingCurrentThemeDefaultThenDarkIsReturned() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssertFalse(appUserDefaults.lightTheme)
+        XCTAssert(appUserDefaults.currentThemeName == .dark)
         
     }
 
-    func testLightThemeInitialValueSetupWhenEmpty() {
+    func testWhenThemeSettingIsEmptyThenWeCanSetInitialValue() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         
-        appUserDefaults.setInitialLightThemeValueIfNeeded(value: false)
-        XCTAssertFalse(appUserDefaults.lightTheme)
+        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
+        XCTAssert(appUserDefaults.currentThemeName == .dark)
         
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
         
-        appUserDefaults.setInitialLightThemeValueIfNeeded(value: true)
-        XCTAssert(appUserDefaults.lightTheme)
+        appUserDefaults.setInitialThemeNameIfNeeded(name: .light)
+        XCTAssert(appUserDefaults.currentThemeName == .light)
     }
     
-    func testLightThemeInitialValueSetupWhenAlreadySet() {
+    func testWhenThemeSettingIsNotEmptyThenInitialValueCannotBeSet() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.lightTheme = true
+        appUserDefaults.currentThemeName = .light
         
-        appUserDefaults.setInitialLightThemeValueIfNeeded(value: false)
-        XCTAssert(appUserDefaults.lightTheme)
+        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
+        XCTAssert(appUserDefaults.currentThemeName == .light)
         
     }
 }

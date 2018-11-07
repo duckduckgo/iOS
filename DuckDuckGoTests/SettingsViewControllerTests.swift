@@ -36,7 +36,7 @@ class SettingsViewControllerTests: XCTestCase {
 
     func testWhenOpeningSettingsThenLightThemeToggleIsSetBasedOnAppSettings() {
         let appSettigns = AppUserDefaults()
-        appSettigns.lightTheme = false
+        appSettigns.currentThemeName = .dark
         
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController {
@@ -46,7 +46,7 @@ class SettingsViewControllerTests: XCTestCase {
             assertionFailure("Could not load Setting View Controller")
         }
         
-        appSettigns.lightTheme = true
+        appSettigns.currentThemeName = .light
         
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController {
@@ -59,7 +59,7 @@ class SettingsViewControllerTests: XCTestCase {
     
     func testWhenLightThemeIsToggledThenAppSettingsAreUpdated() {
         let appSettings = AppUserDefaults()
-        appSettings.lightTheme = false
+        appSettings.currentThemeName = .dark
         
         guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController else {
@@ -71,12 +71,12 @@ class SettingsViewControllerTests: XCTestCase {
         settingsController.lightThemeToggle.isOn = true
         settingsController.lightThemeToggle.sendActions(for: .valueChanged)
         
-        XCTAssert(appSettings.lightTheme)
+        XCTAssert(appSettings.currentThemeName == .light)
         
         settingsController.lightThemeToggle.isOn = false
         settingsController.lightThemeToggle.sendActions(for: .valueChanged)
         
-        XCTAssertFalse(appSettings.lightTheme)
+        XCTAssert(appSettings.currentThemeName == .dark)
     }
 
     func testWhenNotRunningExperimentThenLightThemeCellIsCollapsed() {

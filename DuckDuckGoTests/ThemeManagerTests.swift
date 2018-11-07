@@ -30,7 +30,7 @@ class ThemeManagerTests: XCTestCase {
         }
     }
     
-    func testApplyingThemeOnThemeChange() {
+    func testWhenApplyingThemeOnThemeChangeThenControllerShouldBeUpdated() {
         let expectDecoration = expectation(description: "Decorate called")
         expectDecoration.expectedFulfillmentCount = 2
         
@@ -39,8 +39,8 @@ class ThemeManagerTests: XCTestCase {
         
         let manager = ThemeManager()
         manager.rootController = mockRootController
-        manager.enableLightTheme(true)
-        manager.enableLightTheme(false)
+        manager.enableTheme(with: .light)
+        manager.enableTheme(with: .dark)
         
         waitForExpectations(timeout: 0.5, handler: nil)
     }

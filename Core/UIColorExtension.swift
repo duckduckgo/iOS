@@ -78,7 +78,7 @@ extension UIColor {
     }
     
     public static var nearlyWhite: UIColor {
-        return UIColor(red: 246.0 / 255.0, green: 246.0 / 255.0, blue: 246.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
     }
     
 }

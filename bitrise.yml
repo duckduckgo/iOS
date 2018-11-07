@@ -42,3 +42,4 @@ app:
   - opts:
       is_expand: false
     BITRISE_EXPORT_METHOD: ad-hoc
+

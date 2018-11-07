@@ -31,7 +31,7 @@ public class HTTPSUpgrade {
         self.store = store
     }
     
-    func upgrade(url: URL) -> URL? {
+    public func upgrade(url: URL) -> URL? {
         
         guard url.scheme == "http" else { return nil }
         
@@ -43,7 +43,7 @@ public class HTTPSUpgrade {
         return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
     }
     
-     func isInUpgradeList(url: URL) -> Bool {
+    public func isInUpgradeList(url: URL) -> Bool {
         
         guard let host = url.host else { return false }
 

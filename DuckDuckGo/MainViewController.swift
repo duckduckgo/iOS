@@ -632,5 +632,5 @@ extension MainViewController: TabSwitcherButtonDelegate {
     func showTabSwitcher() {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
-    
+
 }

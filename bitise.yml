@@ -8,46 +8,27 @@ trigger_map:
 - pull_request_source_branch: "*"
   workflow: primary
 workflows:
-  deploy:
-    steps:
-    - activate-ssh-key@4.0.3:
-        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@4.0.11: {}
-    - cache-pull@2.0.1: {}
-    - script@1.1.5:
-        title: Do anything with Script step
-    - certificate-and-profile-installer@1.10.1: {}
-    - carthage@3.1.5:
-        inputs:
-        - carthage_command: bootstrap
-    - xcode-test@1.18.16:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - scheme: "$BITRISE_SCHEME"
-    - xcode-archive@2.4.14:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - scheme: "$BITRISE_SCHEME"
-        - export_method: "$BITRISE_EXPORT_METHOD"
-    - deploy-to-bitrise-io@1.3.15: {}
-    - cache-push@2.0.5: {}
   primary:
     steps:
     - activate-ssh-key@4.0.3:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-    - git-clone@4.0.11: {}
+    - git-clone@4.0.12: {}
     - cache-pull@2.0.1: {}
     - script@1.1.5:
         title: Do anything with Script step
     - certificate-and-profile-installer@1.10.1: {}
     - carthage@3.1.5:
         inputs:
+        - carthage_options: "--platform iOS --cache-builds"
         - carthage_command: bootstrap
-    - xcode-test@1.18.16:
+    - xcode-test@1.18.17:
+        deps:
+          brew:
+          - name: swiftlint
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
         - scheme: "$BITRISE_SCHEME"
-    - deploy-to-bitrise-io@1.3.15: {}
+    - deploy-to-bitrise-io@1.3.18: {}
     - cache-push@2.0.5: {}
 app:
   envs:
@@ -59,4 +40,4 @@ app:
     BITRISE_SCHEME: DuckDuckGo
   - opts:
       is_expand: false
-    BITRISE_EXPORT_METHOD: development
+    BITRISE_EXPORT_METHOD: ad-hoc

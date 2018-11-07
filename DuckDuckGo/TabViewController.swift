@@ -17,6 +17,9 @@
 //  limitations under the License.
 //
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+
 import WebKit
 import SafariServices
 import Core

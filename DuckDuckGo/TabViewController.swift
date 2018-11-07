@@ -912,7 +912,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
         
-        if navigationAction.isTargettingMainFrame()
+        if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {
             lastUpgradedDomain = nil
         }
@@ -935,7 +935,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if !failingUrls.contains(url.host ?? ""),
-            navigationAction.isTargettingMainFrame(),
+            navigationAction.isTargetingMainFrame(),
             let upgradeUrl = httpsUpgrade.upgrade(url: url) {
             
             lastUpgradedDomain = upgradeUrl.host
@@ -1049,7 +1049,7 @@ private class WebLongPressGestureRecognizer: UILongPressGestureRecognizer {}
 
 private extension WKNavigationAction {
     
-    func isTargettingMainFrame() -> Bool {
+    func isTargetingMainFrame() -> Bool {
         return targetFrame?.isMainFrame ?? false
     }
 }

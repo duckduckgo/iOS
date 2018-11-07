@@ -18,6 +18,7 @@
 //
 
 import XCTest
+@testable import Core
 @testable import DuckDuckGo
 
 class ThemeManagerTests: XCTestCase {
@@ -30,6 +31,10 @@ class ThemeManagerTests: XCTestCase {
         }
     }
     
+    private class MockRootControllerProvider: RootControllerProvider {
+        var rootController: UIViewController?
+    }
+    
     func testWhenApplyingThemeOnThemeChangeThenControllerShouldBeUpdated() {
         let expectDecoration = expectation(description: "Decorate called")
         expectDecoration.expectedFulfillmentCount = 2
@@ -37,8 +42,12 @@ class ThemeManagerTests: XCTestCase {
         let mockRootController = MockRootController()
         mockRootController.onDecorate = expectDecoration
         
-        let manager = ThemeManager()
-        manager.rootController = mockRootController
+        let mockRootControllerProvider = MockRootControllerProvider()
+        mockRootControllerProvider.rootController = mockRootController
+        
+        let manager = ThemeManager(variantManager: DefaultVariantManager(),
+                                   settings: AppUserDefaults(),
+                                   rootProvider: mockRootControllerProvider)
         manager.enableTheme(with: .light)
         manager.enableTheme(with: .dark)
         

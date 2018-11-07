@@ -19,7 +19,17 @@
 import UIKit
 import Core
 
+protocol RootControllerProvider {
+    var rootController: UIViewController? { get }
+}
+
 class ThemeManager {
+    
+    class UIApplicationRootControllerProvider: RootControllerProvider {
+        var rootController: UIViewController? {
+            return UIApplication.shared.keyWindow?.rootViewController
+        }
+    }
     
     enum ImageSet {
         case light
@@ -30,10 +40,10 @@ class ThemeManager {
 
     private var appSettings: AppSettings
     
-    var rootController: UIViewController?
+    var rootControllerProvider: RootControllerProvider
     private(set) var currentTheme: Theme {
         didSet {
-            rootController?.applyTheme(currentTheme)
+            rootControllerProvider.rootController?.applyTheme(currentTheme)
         }
     }
     
@@ -47,7 +57,8 @@ class ThemeManager {
     }
     
     init(variantManager: VariantManager = DefaultVariantManager(),
-         settings: AppSettings = AppUserDefaults()) {
+         settings: AppSettings = AppUserDefaults(),
+         rootProvider: RootControllerProvider = UIApplicationRootControllerProvider()) {
         variantManager.assignVariantIfNeeded()
         
         // Set default theme in case user participates in experiment
@@ -61,6 +72,7 @@ class ThemeManager {
         
         appSettings = settings
         currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)
+        rootControllerProvider = rootProvider
     }
     
     public func enableTheme(with name: ThemeName) {

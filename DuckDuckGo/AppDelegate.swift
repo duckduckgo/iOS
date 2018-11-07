@@ -42,8 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         }
-        
-        ThemeManager.shared.rootController = window?.rootViewController
 
         HTTPSUpgrade.shared.loadDataAsync()
 

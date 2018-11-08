@@ -89,7 +89,7 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="DZ8-qm-cwD" firstAttribute="width" secondItem="09V-cw-B4O" secondAttribute="width" id="3Pi-8m-5sA"/>
+                                            <constraint firstItem="DZ8-qm-cwD" firstAttribute="width" secondItem="TUO-E3-s7Q" secondAttribute="width" id="3Pi-8m-5sA"/>
                                         </constraints>
                                         <variation key="heightClass=compact" axis="horizontal" distribution="fillEqually">
                                             <mask key="constraints">

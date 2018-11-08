@@ -229,7 +229,7 @@ open class WebViewController: UIViewController {
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
-        reload()
+        reload(scripts: false)
     }
 
     private func shouldReissueSearch(for url: URL) -> Bool {
@@ -252,7 +252,10 @@ open class WebViewController: UIViewController {
         }
     }
 
-    public func reload() {
+    public func reload(scripts: Bool) {
+        if scripts {
+            reloadScripts()
+        }
         updateUserAgent()
         webView.reload()
     }
@@ -306,7 +309,7 @@ open class WebViewController: UIViewController {
         webView.isHidden = false
     }
 
-    open func reloadScripts() {
+    public func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
         webView.configuration.loadScripts(contentBlocking: !isDuckDuckGoUrl())
     }

@@ -24,7 +24,7 @@ protocol PrivacyProtectionDelegate: class {
 
     func omniBarTextTapped()
 
-    func reload()
+    func reload(scripts: Bool)
 
 }
 
@@ -151,7 +151,7 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
         DispatchQueue.main.async {
             if newData {
                 controller.dismiss(animated: true)
-                self.delegate?.reload()
+                self.delegate?.reload(scripts: true)
             } else {
                 controller.resetTryAgain()
             }

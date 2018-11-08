@@ -49,7 +49,6 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         
         initHeroIcon()
         initResetButton()
-        initDomainLabel()
         initDrama()
         update()
 
@@ -131,10 +130,6 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let paragaphStyle = NSMutableParagraphStyle()
         paragaphStyle.lineHeightMultiple = 1.375
         return paragaphStyle
-    }
-
-    private func initDomainLabel() {
-        domainLabel.text = siteRating.domain
     }
 
     private func initResetButton() {

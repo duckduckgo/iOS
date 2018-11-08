@@ -65,18 +65,18 @@ private class Loader {
     let javascriptLoader = JavascriptLoader()
 
     let userContentController: WKUserContentController
-    let contentBlocking: Bool
+    let injectContentBlockingScripts: Bool
 
-    init(_ userContentController: WKUserContentController, _ contentBlocking: Bool) {
+    init(_ userContentController: WKUserContentController, _ injectContentBlockingScripts: Bool) {
         self.userContentController = userContentController
-        self.contentBlocking = contentBlocking
+        self.injectContentBlockingScripts = injectContentBlockingScripts
     }
 
     func load() {
         Logger.log(text: "Loading scripts")
         loadDocumentLevelScripts()
 
-        if contentBlocking {
+        if injectContentBlockingScripts {
             loadContentBlockingScripts()
         }
     }

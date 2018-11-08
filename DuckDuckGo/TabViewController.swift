@@ -122,10 +122,7 @@ class TabViewController: WebViewController {
     }
 
     @objc func onContentBlockerConfigurationChanged() {
-        // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.webView?.reload()
-        }
+        reload(scripts: true)
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -212,7 +209,7 @@ class TabViewController: WebViewController {
             if isDesktop {
                 self?.load(url: url.toDesktopUrl())
             } else {
-                self?.reload()
+                self?.reload(scripts: false)
             }
         }
     }
@@ -224,10 +221,9 @@ class TabViewController: WebViewController {
         let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
         let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
 
-        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+        return UIAlertAction(title: title, style: .default) { _ in
             Pixel.fire(pixel: .browsingMenuWhitelist)
             operation(domain)
-            self?.reload()
         }
 
     }
@@ -255,7 +251,7 @@ class TabViewController: WebViewController {
                     strongSelf.load(url: url)
                 }
             } else {
-                strongSelf.reload()
+                strongSelf.reload(scripts: false)
             }
         }
     }

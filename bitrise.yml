@@ -32,7 +32,6 @@ workflows:
     - xcode-test@1.18.17:
         inputs:
         - xcpretty_test_options: --color --report html --output "${BITRISE_DEPLOY_DIR}/xcode-atb-test-results-${BITRISE_SCHEME}.html"
-        - should_retry_test_on_fail: 'yes'
         - scheme: AtbIntegrationTests
     - deploy-to-bitrise-io@1.3.18: {}
     - cache-push@2.0.5: {}

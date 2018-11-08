@@ -44,6 +44,7 @@ class TabViewController: UIViewController {
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
+    var longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
 
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -178,9 +179,8 @@ class TabViewController: UIViewController {
     }
     
     private func attachLongPressHandler(webView: WKWebView) {
-        let handler = WebLongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
-        handler.delegate = self
-        webView.scrollView.addGestureRecognizer(handler)
+        longPressGestureRecognizer.delegate = self
+        webView.scrollView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     private func consumeCookiesThenLoadUrl(_ url: URL?) {
@@ -1017,7 +1017,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
         if isShowBarsTap(gestureRecognizer) {
             return true
         }
-        if gestureRecognizer is WebLongPressGestureRecognizer {
+        if gestureRecognizer == longPressGestureRecognizer {
             let x = Int(gestureRecognizer.location(in: webView).x)
             let y = Int(gestureRecognizer.location(in: webView).y)
             let url = webView.getUrlAtPointSynchronously(x: x, y: y)
@@ -1028,9 +1028,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     private func isShowBarsTap(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let y = gestureRecognizer.location(in: webView).y
-        return gestureRecognizer == showBarsTapGestureRecogniser &&
-               chromeDelegate?.isToolbarHidden == true &&
-               isBottom(yPosition: y)
+        return gestureRecognizer == showBarsTapGestureRecogniser && chromeDelegate?.isToolbarHidden == true && isBottom(yPosition: y)
     }
 
     private func isBottom(yPosition y: CGFloat) -> Bool {
@@ -1038,14 +1036,10 @@ extension TabViewController: UIGestureRecognizerDelegate {
         return y > (view.frame.size.height - chromeDelegate.toolbarHeight)
     }
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                           shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
-        return gestureRecognizer == showBarsTapGestureRecogniser ||
-               gestureRecognizer is WebLongPressGestureRecognizer
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
     }
 }
-
-private class WebLongPressGestureRecognizer: UILongPressGestureRecognizer {}
 
 private extension WKNavigationAction {
     

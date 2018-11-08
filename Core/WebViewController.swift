@@ -301,7 +301,7 @@ open class WebViewController: UIViewController {
         webView.isHidden = true
         error.isHidden = false
         errorMessage.text = message
-
+        error.layoutIfNeeded()
     }
 
     private func hideErrorMessage() {

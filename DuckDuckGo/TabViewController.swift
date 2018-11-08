@@ -33,10 +33,10 @@ class TabViewController: UIViewController {
         static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
         static let minimumProgress: Float = 0.1
+    }
 
-        // swiftlint:disable line_length
-        static let desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
-        // swiftlint:enable line_length
+    private struct UserAgent {
+        static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
     }
     
     @IBOutlet weak var progressBar: UIProgressView!
@@ -284,7 +284,7 @@ class TabViewController: UIViewController {
     }
     
     private func updateUserAgent() {
-        let userAgent = tabModel.isDesktop ? Constants.desktopUserAgent : nil
+        let userAgent = tabModel.isDesktop ? UserAgent.desktop : nil
         webView.customUserAgent = userAgent
     }
     
@@ -473,7 +473,6 @@ class TabViewController: UIViewController {
             operation(domain)
             self?.reload()
         }
-
     }
 
     func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {

@@ -66,7 +66,7 @@ extension TabViewController {
                 load(url: url)
             }
         } else {
-            reload()
+            reload(scripts: false)
         }
     }
     
@@ -109,7 +109,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
         tabModel.toggleDesktopMode()
         updateUserAgent()
-        tabModel.isDesktop ? load(url: url.toDesktopUrl()) : reload()
+        tabModel.isDesktop ? load(url: url.toDesktopUrl()) : reload(scripts: false)
     }
     
     private func onReportBrokenSiteAction() {
@@ -128,10 +128,9 @@ extension TabViewController {
         let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
         let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
         
-        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+        return UIAlertAction(title: title, style: .default) { _ in
             Pixel.fire(pixel: .browsingMenuWhitelist)
             operation(domain)
-            self?.reload()
         }
     }
 }

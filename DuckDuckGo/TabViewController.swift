@@ -253,7 +253,7 @@ class TabViewController: UIViewController {
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
-        reload()
+        reload(scripts: false)
     }
     
     private func shouldReissueSearch(for url: URL) -> Bool {
@@ -276,7 +276,10 @@ class TabViewController: UIViewController {
         }
     }
     
-    public func reload() {
+    public func reload(scripts: Bool) {
+        if scripts {
+            reloadScripts()
+        }
         updateUserAgent()
         webView.reload()
     }
@@ -365,10 +368,7 @@ class TabViewController: UIViewController {
     }
 
     @objc func onContentBlockerConfigurationChanged() {
-        // defer for 0.2s so that the privacy protection UI can update without a visible delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.webView?.reload()
-        }
+        reload(scripts: true)
     }
 
     private func resetNavigationBar() {

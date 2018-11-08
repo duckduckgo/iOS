@@ -190,4 +190,10 @@ public struct AppUrls {
         url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         return url
     }
+    
+    public func removeATBAndSource(fromUrl url: URL) -> URL {
+        guard isDuckDuckGoSearch(url: url) else { return url }
+        return url.removeParam(name: Param.atb).removeParam(name: Param.source)
+    }
+
 }

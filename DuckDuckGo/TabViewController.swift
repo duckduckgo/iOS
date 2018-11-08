@@ -1039,10 +1039,3 @@ extension TabViewController: UIGestureRecognizerDelegate {
         return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
     }
 }
-
-private extension WKNavigationAction {
-    
-    func isTargetingMainFrame() -> Bool {
-        return targetFrame?.isMainFrame ?? false
-    }
-}

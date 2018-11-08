@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
+		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
 		830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */; };
 		830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375B1F6C06BF00E317A7 /* TermsOfService.swift */; };
 		830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */; };
@@ -469,6 +470,7 @@
 
 /* Begin PBXFileReference section */
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
+		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
 		830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWebViewConfigurationExtension.swift; sourceTree = "<group>"; };
 		830C375B1F6C06BF00E317A7 /* TermsOfService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		830C375D1F6C3A3B00E317A7 /* TermsOfServiceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfServiceStore.swift; sourceTree = "<group>"; };
@@ -1764,6 +1766,7 @@
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
 				830381BF1F850AAF00863075 /* WKWebViewConfigurationExtension.swift */,
 				F143C33A1E4A9A9200CFDE3A /* WKWebViewExtension.swift */,
+				83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */,
 			);
 			name = Web;
 			sourceTree = "<group>";
@@ -3031,6 +3034,7 @@
 				F143C3461E4AA32D00CFDE3A /* SearchBarExtension.swift in Sources */,
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,
 				F1B745221E549D550072547E /* UIColorExtension.swift in Sources */,
+				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
 				F16394071ECE01E400DDD653 /* DisconnectMeTrackersParser.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */,

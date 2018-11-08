@@ -101,7 +101,8 @@ extension TabViewController {
     private func onShareAction(forLink link: Link) {
         Pixel.fire(pixel: .browsingMenuShare)
         guard let menu = chromeDelegate?.omniBar.menuButton else { return }
-        presentShareSheet(withItems: [ link.url, link ], fromView: menu)
+        let url = appUrls.removeATBAndSource(fromUrl: link.url)
+        presentShareSheet(withItems: [ url, link ], fromView: menu)
     }
     
     private func onToggleDesktopSiteAction(forUrl url: URL) {

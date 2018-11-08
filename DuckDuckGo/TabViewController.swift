@@ -49,7 +49,7 @@ class TabViewController: UIViewController {
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyController: PrivacyProtectionController?
     
-    private lazy var appUrls: AppUrls = AppUrls()
+    private(set) lazy var appUrls: AppUrls = AppUrls()
     private lazy var tld = TLD()
     private lazy var statisticsStore: StatisticsStore = StatisticsUserDefaults()
     private lazy var disconnectMeStore = DisconnectMeStore()

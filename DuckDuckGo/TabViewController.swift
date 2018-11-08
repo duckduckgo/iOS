@@ -17,11 +17,7 @@
 //  limitations under the License.
 //
 
-// swiftlint:disable file_length
-// swiftlint:disable type_body_length
-
 import WebKit
-import SafariServices
 import Core
 import Device
 import StoreKit
@@ -285,7 +281,7 @@ class TabViewController: UIViewController {
         webView.reload()
     }
     
-    private func updateUserAgent() {
+    func updateUserAgent() {
         let userAgent = tabModel.isDesktop ? UserAgent.desktop : nil
         webView.customUserAgent = userAgent
     }
@@ -416,201 +412,20 @@ class TabViewController: UIViewController {
         delegate?.tab(self, didChangeSiteRating: siteRating)
         privacyController?.updateSiteRating(siteRating)
     }
-
+    
     func launchBrowsingMenu() {
         Pixel.fire(pixel: .browsingMenuOpened)
-
         guard let button = chromeDelegate?.omniBar.menuButton else { return }
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(refreshAction())
-        alert.addAction(newTabAction())
-
-        if let link = link, !isError {
-            alert.addAction(saveBookmarkAction(forLink: link))
-            alert.addAction(shareAction(forLink: link))
-            alert.addAction(toggleDesktopSiteAction(forUrl: link.url))
-        }
-
-        if let domain = siteRating?.domain {
-            alert.addAction(whitelistAction(forDomain: domain))
-        }
-        
-        alert.addAction(reportBrokenSiteAction())
-        alert.addAction(settingsAction())
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        let alert = buildBrowsingMenu()
         present(controller: alert, fromView: button)
     }
     
-    func toggleDesktopSiteAction(forUrl url: URL) -> UIAlertAction {
-        let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
-            Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
-            self?.tabModel.toggleDesktopMode()
-            let isDesktop = self?.tabModel.isDesktop ?? false
-            self?.updateUserAgent()
-            if isDesktop {
-                self?.load(url: url.toDesktopUrl())
-            } else {
-                self?.reload()
-            }
-        }
-    }
-    
-    private func whitelistAction(forDomain domain: String) -> UIAlertAction {
-
-        let whitelistManager = WhitelistManager()
-        let whitelisted = whitelistManager.isWhitelisted(domain: domain)
-        let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
-        let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
-
-        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
-            Pixel.fire(pixel: .browsingMenuWhitelist)
-            operation(domain)
-            self?.reload()
-        }
-    }
-
     private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
         Pixel.fire(pixel: .longPressMenuOpened)
-        
-        let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
-        alert.addAction(newTabAction(forUrl: url))
-        alert.addAction(newBackgroundTabAction(forUrl: url))
-        alert.addAction(openAction(forUrl: url))
-        alert.addAction(readingAction(forUrl: url))
-        alert.addAction(copyAction(forUrl: url))
-        alert.addAction(shareAction(forUrl: url, atPoint: point))
-        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        let alert = buildLongPressMenu(atPoint: point, forUrl: url)
         present(controller: alert, fromView: webView, atPoint: point)
     }
-
-    private func refreshAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuRefresh)
-            guard let strongSelf = self else { return }
-            if strongSelf.isError {
-                if let url = URL(string: strongSelf.chromeDelegate?.omniBar.textField.text ?? "") {
-                    strongSelf.load(url: url)
-                }
-            } else {
-                strongSelf.reload()
-            }
-        }
-    }
-
-    private func saveBookmarkAction(forLink link: Link) -> UIAlertAction {
-
-        let bookmarksManager = BookmarksManager()
-        if let index = bookmarksManager.indexOf(url: link.url) {
-            return UIAlertAction(title: UserText.actionRemoveBookmark, style: .default) { _ in
-                Pixel.fire(pixel: .browsingMenuRemoveBookmark)
-                bookmarksManager.delete(itemAtIndex: index)
-            }
-        } else {
-            return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
-                Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-                self?.launchSaveBookmarkAlert(bookmark: link)
-            }
-        }
-    }
-
-    private func launchSaveBookmarkAlert(bookmark: Link) {
-        let alert = EditBookmarkAlert.buildAlert (
-            title: UserText.alertSaveBookmark,
-            bookmark: bookmark,
-            saveCompletion: { [weak self] updatedBookmark in
-                BookmarksManager().save(bookmark: updatedBookmark)
-                self?.view.showBottomToast(UserText.webSaveLinkDone)
-            },
-            cancelCompletion: {})
-        present(alert, animated: true, completion: nil)
-    }
-
-    private func newTabAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuNewTab)
-            if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestNewTab(weakSelf)
-            }
-        }
-    }
-
-    private func newTabAction(forUrl url: URL) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionNewTabForUrl, style: .default) { [weak self] _ in
-            if let weakSelf = self {
-                Pixel.fire(pixel: .longPressMenuNewTabItem)
-                weakSelf.delegate?.tab(weakSelf, didRequestNewTabForUrl: url)
-            }
-        }
-    }
-
-    private func newBackgroundTabAction(forUrl url: URL) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionNewBackgroundTabForUrl, style: .default) { [weak self] _ in
-            if let weakSelf = self {
-                Pixel.fire(pixel: .longPressMenuNewBackgroundTabItem)
-                weakSelf.delegate?.tab(weakSelf, didRequestNewBackgroundTabForUrl: url)
-            }
-        }
-    }
-
-    private func openAction(forUrl url: URL) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionOpen, style: .default) { [weak self] _ in
-            if let webView = self?.webView {
-                Pixel.fire(pixel: .longPressMenuOpenItem)
-                webView.load(URLRequest(url: url))
-            }
-        }
-    }
-
-    private func readingAction(forUrl url: URL) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionReadingList, style: .default) { _ in
-            Pixel.fire(pixel: .longPressMenuReadingListItem)
-            try? SSReadingList.default()?.addItem(with: url, title: nil, previewText: nil)
-        }
-    }
-
-    private func copyAction(forUrl url: URL) -> UIAlertAction {
-        let copyText = url.absoluteString
-        return UIAlertAction(title: UserText.actionCopy, style: .default) { (_) in
-            Pixel.fire(pixel: .longPressMenuCopyItem)
-            UIPasteboard.general.string = copyText
-        }
-    }
-
-    private func shareAction(forLink link: Link) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuShare)
-            guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
-            self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
-        }
-    }
-
-    private func shareAction(forUrl url: URL, atPoint point: Point) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .longPressMenuShareItem)
-            guard let webView = self?.webView else { return }
-            self?.presentShareSheet(withItems: [url], fromView: webView, atPoint: point)
-        }
-    }
-
-    private func reportBrokenSiteAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionReportBrokenSite, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuReportBrokenSite)
-            if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestReportBrokenSite(tab: weakSelf)
-            }
-        }
-    }
-
-    private func settingsAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionSettings, style: .default) { [weak self] _ in
-            Pixel.fire(pixel: .browsingMenuSettings)
-            if let weakSelf = self {
-                weakSelf.delegate?.tabDidRequestSettings(tab: weakSelf)
-            }
-        }
-    }
-
+    
     private func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
         if shouldOpenExternally(url: url) {
             openExternally(url: url)

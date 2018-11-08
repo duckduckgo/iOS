@@ -461,7 +461,7 @@ class TabViewController: UIViewController {
         }
     }
     
-    func whitelistAction(forDomain domain: String) -> UIAlertAction {
+    private func whitelistAction(forDomain domain: String) -> UIAlertAction {
 
         let whitelistManager = WhitelistManager()
         let whitelisted = whitelistManager.isWhitelisted(domain: domain)
@@ -475,7 +475,7 @@ class TabViewController: UIViewController {
         }
     }
 
-    func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
+    private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
         Pixel.fire(pixel: .longPressMenuOpened)
         
         let alert = UIAlertController(title: nil, message: url.absoluteString, preferredStyle: .actionSheet)
@@ -695,12 +695,19 @@ class TabViewController: UIViewController {
 
 extension TabViewController: WKScriptMessageHandler {
     
+    struct TrackerDetectedKey {
+        static let protectionId = "protectionId"
+        static let blocked = "blocked"
+        static let networkName = "networkName"
+        static let url = "url"
+    }
+
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
         static let cache = "cacheMessage"
         static let log = "log"
     }
-
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
         switch message.name {
@@ -729,13 +736,6 @@ extension TabViewController: WKScriptMessageHandler {
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
-    }
-
-    struct TrackerDetectedKey {
-        static let protectionId = "protectionId"
-        static let blocked = "blocked"
-        static let networkName = "networkName"
-        static let url = "url"
     }
 
     private func handleTrackerDetected(message: WKScriptMessage) {

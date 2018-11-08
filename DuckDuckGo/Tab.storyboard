@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
+    <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -27,55 +27,90 @@
                         <viewControllerLayoutGuide type="bottom" id="KkU-8R-dtX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Sgm-Wo-lho">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yc-Gh-Vqe">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <edgeInsets key="layoutMargins" top="-50" left="0.0" bottom="0.0" right="0.0"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypz-s2-KJB">
-                                <rect key="frame" x="0.0" y="-36" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="-60" width="768" height="80"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="xhL-Yb-2Uf"/>
                                 </constraints>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cf7-Ja-fUU">
-                                <rect key="frame" x="0.0" y="44" width="375" height="2"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="2"/>
                                 <color key="progressTintColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </progressView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd4-Oi-JP2">
-                                <rect key="frame" x="0.0" y="211" width="375" height="400"/>
+                                <rect key="frame" x="0.0" y="338.5" width="768" height="367"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ErrorInfoDark" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-E3-s7Q">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo can’t load this page." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
-                                        <rect key="frame" x="27" y="313" width="321" height="20"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An unknown error has occured." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
-                                        <rect key="frame" x="38" y="344" width="299" height="16"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                        <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="09V-cw-B4O">
+                                        <rect key="frame" x="10" y="0.0" width="748" height="367"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ErrorInfoDark" translatesAutoresizingMaskIntoConstraints="NO" id="TUO-E3-s7Q">
+                                                <rect key="frame" x="186.5" y="0.0" width="375" height="280"/>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="DZ8-qm-cwD">
+                                                <rect key="frame" x="174" y="288" width="400" height="79"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo can’t load this page." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6P7-7R-riV">
+                                                        <rect key="frame" x="0.0" y="0.0" width="400" height="20"/>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Cjw-mk-QL3">
+                                                        <rect key="frame" x="0.0" y="31" width="400" height="48"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="400" id="H7S-WF-So0"/>
+                                                        </constraints>
+                                                        <string key="text">This website has an invalid certificate and could be trying to pretend to be the website you are trying to access.  Please proceed with caution.</string>
+                                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
+                                                        <color key="textColor" red="0.74117647058823533" green="0.74117647058823533" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="H7S-WF-So0"/>
+                                                            </mask>
+                                                        </variation>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <mask key="constraints">
+                                                                <include reference="H7S-WF-So0"/>
+                                                            </mask>
+                                                        </variation>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="DZ8-qm-cwD" firstAttribute="width" secondItem="09V-cw-B4O" secondAttribute="width" id="3Pi-8m-5sA"/>
+                                        </constraints>
+                                        <variation key="heightClass=compact" axis="horizontal" distribution="fillEqually">
+                                            <mask key="constraints">
+                                                <exclude reference="3Pi-8m-5sA"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <mask key="constraints">
+                                                <exclude reference="3Pi-8m-5sA"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="6P7-7R-riV" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-54" id="LuE-W6-z1U"/>
-                                    <constraint firstItem="TUO-E3-s7Q" firstAttribute="top" secondItem="Kd4-Oi-JP2" secondAttribute="top" priority="250" id="PFZ-er-jCK"/>
-                                    <constraint firstItem="6P7-7R-riV" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="Sjn-ZG-gAr"/>
-                                    <constraint firstItem="Cjw-mk-QL3" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="UQT-0H-F2p"/>
-                                    <constraint firstItem="Cjw-mk-QL3" firstAttribute="top" secondItem="6P7-7R-riV" secondAttribute="bottom" constant="11" id="Vc3-Ps-7wl"/>
-                                    <constraint firstItem="TUO-E3-s7Q" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="jYJ-tI-XcU"/>
-                                    <constraint firstItem="Cjw-mk-QL3" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-76" id="pOF-JR-JEz"/>
+                                    <constraint firstItem="09V-cw-B4O" firstAttribute="width" secondItem="Kd4-Oi-JP2" secondAttribute="width" constant="-20" id="4NR-R1-U2b">
+                                        <variation key="heightClass=compact" constant="-100"/>
+                                    </constraint>
+                                    <constraint firstItem="09V-cw-B4O" firstAttribute="height" secondItem="Kd4-Oi-JP2" secondAttribute="height" id="Adh-FG-qqP"/>
+                                    <constraint firstItem="09V-cw-B4O" firstAttribute="centerX" secondItem="Kd4-Oi-JP2" secondAttribute="centerX" id="O6k-6h-pPd"/>
                                     <constraint firstAttribute="height" priority="250" constant="400" id="r6V-b6-p3P"/>
-                                    <constraint firstItem="6P7-7R-riV" firstAttribute="top" secondItem="TUO-E3-s7Q" secondAttribute="bottom" constant="33" id="wm5-Yr-sWj"/>
+                                    <constraint firstItem="09V-cw-B4O" firstAttribute="centerY" secondItem="Kd4-Oi-JP2" secondAttribute="centerY" id="xtF-Qe-4A7"/>
                                 </constraints>
                             </view>
                         </subviews>

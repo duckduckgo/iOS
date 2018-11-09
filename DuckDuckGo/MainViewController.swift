@@ -639,7 +639,7 @@ extension MainViewController: TabSwitcherButtonDelegate {
     func showTabSwitcher() {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
-    
+
 }
 
 extension MainViewController: Themable {

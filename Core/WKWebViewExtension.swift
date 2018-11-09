@@ -19,6 +19,14 @@
 
 import WebKit
 
+public struct WebViewKeyPaths {
+    public static let estimatedProgress = "estimatedProgress"
+    public static let hasOnlySecureContent = "hasOnlySecureContent"
+    public static let url = "URL"
+    public static let canGoBack = "canGoBack"
+    public static let canGoForward = "canGoForward"
+}
+
 extension WKWebView {
 
     public func getUrlAtPoint(x: Int, y: Int, completion: @escaping (URL?) -> Void) {

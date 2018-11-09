@@ -19,7 +19,7 @@
 
 import Foundation
 
-class TLD {
+public class TLD {
 
     private(set) var tlds: [String: Int] = [:]
 
@@ -29,7 +29,7 @@ class TLD {
         return json
     }
 
-    init(bundle: Bundle = Bundle(for: TLD.self)) {
+    public init(bundle: Bundle = Bundle(for: TLD.self)) {
         guard let url = bundle.url(forResource: "tlds", withExtension: "json") else { return }
         guard let data = try? Data(contentsOf: url) else { return }
         guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
@@ -37,7 +37,7 @@ class TLD {
         self.tlds = tlds
     }
 
-    func domain(_ host: String?) -> String? {
+    public func domain(_ host: String?) -> String? {
         guard let host = host else { return nil }
 
         var parts = [String](host.components(separatedBy: ".").reversed())

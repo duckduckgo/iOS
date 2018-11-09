@@ -2571,10 +2571,10 @@
 			projectRoot = "";
 			targets = (
 				84E341911E2F7EFB00BDBA6F /* DuckDuckGo */,
-				F143C2E31E4A4CD400CFDE3A /* Core */,
 				8390446B20BDCE10006461CD /* ShareExtension */,
 				83491186217F491200610F35 /* BookmarksTodayExtension */,
 				8370942E2142C4C200A58838 /* QuickActionsTodayExtension */,
+				F143C2E31E4A4CD400CFDE3A /* Core */,
 				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
 				836B6B661F67F11E0061ECFB /* IntegrationTests */,
 				85F21DAC210F5E32002631A6 /* AtbIntegrationTests */,

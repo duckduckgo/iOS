@@ -20,5 +20,8 @@
 import UIKit
 
 class NoBookmarksCell: UITableViewCell {
+    
+    @IBOutlet var label: UILabel!
+    
     static let reuseIdentifier = "NoBookmarskCell"
 }

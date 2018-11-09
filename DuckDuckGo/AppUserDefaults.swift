@@ -25,6 +25,7 @@ public class AppUserDefaults: AppSettings {
 
     private struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
+        static let currentThemeNameKey = "com.duckduckgo.app.currentThemeNameKey"
     }
 
     private var userDefaults: UserDefaults? {
@@ -45,5 +46,29 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue, forKey: Keys.autocompleteKey)
         }
 
+    }
+    
+    var currentThemeName: ThemeName {
+        
+        get {
+            var currentThemeName = ThemeName.dark
+            if let stringName = userDefaults?.string(forKey: Keys.currentThemeNameKey) {
+                currentThemeName = ThemeName(rawValue: stringName) ?? ThemeName.dark
+            }
+            return currentThemeName
+        }
+        
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentThemeNameKey)
+        }
+        
+    }
+    
+    // MARK: - For experiment, remove when not needed anymore
+    
+    func setInitialThemeNameIfNeeded(name: ThemeName) {
+        guard userDefaults?.string(forKey: Keys.currentThemeNameKey) == nil else { return }
+        
+        currentThemeName = name
     }
 }

@@ -2,16 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ddgLogoHorizontal.pdf",
-      "scale" : "1x"
+      "filename" : "updatedLogoGrayText.pdf"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "updatedLogoGrayText2.pdf",
+      "height-class" : "compact"
     }
   ],
   "info" : {

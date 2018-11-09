@@ -28,7 +28,7 @@ class AppUserDefaultsTests: XCTestCase {
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
 
-    func testAutocompleteSet() {
+    func testWhenAutocompleteIsSetThenItIsPersisted() {
 
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.autocomplete = false
@@ -36,11 +36,48 @@ class AppUserDefaultsTests: XCTestCase {
 
     }
 
-    func testAutocompleteDefault() {
+    func testWhenReadingAutocompleteDefaultThenTrueIsReturned() {
 
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         XCTAssertTrue(appUserDefaults.autocomplete)
 
     }
+    
+    func testWhenCurrentThemeIsSetThenItIsPersisted() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.currentThemeName = .light
+        XCTAssertTrue(appUserDefaults.currentThemeName == .light)
+        
+    }
+    
+    func testWhenReadingCurrentThemeDefaultThenDarkIsReturned() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssert(appUserDefaults.currentThemeName == .dark)
+        
+    }
 
+    func testWhenThemeSettingIsEmptyThenWeCanSetInitialValue() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        
+        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
+        XCTAssert(appUserDefaults.currentThemeName == .dark)
+        
+        UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
+        
+        appUserDefaults.setInitialThemeNameIfNeeded(name: .light)
+        XCTAssert(appUserDefaults.currentThemeName == .light)
+    }
+    
+    func testWhenThemeSettingIsNotEmptyThenInitialValueCannotBeSet() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.currentThemeName = .light
+        
+        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
+        XCTAssert(appUserDefaults.currentThemeName == .light)
+        
+    }
 }

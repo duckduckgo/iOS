@@ -21,8 +21,16 @@ import UIKit
 import Core
 
 class WhitelistViewController: UITableViewController {
+    
+    @IBOutlet var infoText: UILabel!
 
     let whitelistManager = WhitelistManager()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
 
     // MARK: UITableView data source
 
@@ -61,7 +69,10 @@ class WhitelistViewController: UITableViewController {
         let cancel = UserText.actionCancel
 
         let addSiteBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
-        addSiteBox.addTextField { (textField) in textField.placeholder = placeholder }
+        addSiteBox.addTextField { (textField) in
+            textField.placeholder = placeholder
+            textField.keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
+        }
         addSiteBox.addAction(UIAlertAction.init(title: add, style: .default, handler: { _ in self.addSite(from: addSiteBox) }))
         addSiteBox.addAction(UIAlertAction.init(title: cancel, style: .cancel, handler: nil))
         present(addSiteBox, animated: true, completion: nil)
@@ -85,13 +96,31 @@ class WhitelistViewController: UITableViewController {
 
     private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         guard whitelistManager.count > 0 else {
-            return tableView.dequeueReusableCell(withIdentifier: "NoWhitelistCell")!
+            return createNoWhitelistedSitesCell(forRowAt: indexPath)
         }
         guard let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as? WhitelistItemCell else {
             fatalError("Failed to dequeue cell as WhitelistItemCell")
         }
+        
         whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
+        
+        let theme = ThemeManager.shared.currentTheme
+        whitelistItemCell.contentView.backgroundColor = theme.tableCellBackgroundColor
+        whitelistItemCell.domainLabel.textColor = theme.tableCellTintColor
+        
         return whitelistItemCell
+    }
+    
+    private func createNoWhitelistedSitesCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let noWhitelistedSitesCell = tableView.dequeueReusableCell(withIdentifier: "NoWhitelistCell") as? NoSuggestionsTableViewCell else {
+            fatalError("Failed to dequeue NoSuggestionsTableViewCell using 'NoWhitelistCell' identifier as ")
+        }
+        
+        let theme = ThemeManager.shared.currentTheme
+        noWhitelistedSitesCell.contentView.backgroundColor = theme.tableCellBackgroundColor
+        noWhitelistedSitesCell.label.textColor = theme.tableCellTintColor
+        
+        return noWhitelistedSitesCell
     }
 
 }
@@ -109,4 +138,16 @@ class WhitelistItemCell: UITableViewCell {
         }
     }
 
+}
+
+extension WhitelistViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.backgroundColor = theme.backgroundColor
+        
+        infoText.textColor = theme.tableHeaderTextColor
+        
+        tableView.reloadData()
+    }
 }

@@ -25,7 +25,7 @@ import Lottie
 class MainViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return ThemeManager.shared.currentTheme.statusBarStyle
     }
 
     @IBOutlet weak var customNavigationBar: UIView!
@@ -41,7 +41,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
-
+    
+    @IBOutlet weak var statusBarBackground: UIView!
+    
     weak var notificationView: NotificationView?
 
     var omniBar: OmniBar!
@@ -75,6 +77,8 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     private func initTabButton() {
@@ -308,6 +312,7 @@ class MainViewController: UIViewController {
             containerView.addSubview(controller.view)
             controller.didMove(toParent: self)
             autocompleteController = controller
+            omniBar.hideSeparator()
         }
         guard let autocompleteController = autocompleteController else { return }
         autocompleteController.updateQuery(query: query)
@@ -315,6 +320,7 @@ class MainViewController: UIViewController {
 
     fileprivate func dismissAutcompleteSuggestions() {
         guard let controller = autocompleteController else { return }
+        omniBar.showSeparator()
         autocompleteController = nil
         controller.willMove(toParent: nil)
         controller.view.removeFromSuperview()
@@ -336,6 +342,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func launchSettings() {
+        Pixel.fire(pixel: .settingsOpened)
         performSegue(withIdentifier: "Settings", sender: self)
     }
 
@@ -633,4 +640,25 @@ extension MainViewController: TabSwitcherButtonDelegate {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 
+}
+
+extension MainViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        setNeedsStatusBarAppearanceUpdate()
+        
+        statusBarBackground.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.tintColor = theme.barTintColor
+        
+        omniBar?.decorate(with: theme)
+        
+        toolbar?.barTintColor = theme.barBackgroundColor
+        toolbar?.tintColor = theme.barTintColor
+        
+        tabSwitcherButton.decorate(with: theme)
+        tabsButton.tintColor = theme.barTintColor
+        
+        tabManager.decorate(with: theme)
+    }
 }

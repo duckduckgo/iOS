@@ -39,14 +39,22 @@ class FeedbackViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
 
     private var feedbackModel = FeedbackModel()
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        modalPresentationCapturesStatusBarAppearance = true
+        
         view.blur(style: .dark)
         loadModel()
         configureViews()
         registerForKeyboardNotifications()
         refreshMode()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     func prepareForSegue(isBrokenSite: Bool, url: String?) {
@@ -191,5 +199,13 @@ extension FeedbackViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         messageTextView.becomeFirstResponder()
         return false
+    }
+}
+
+extension FeedbackViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        urlTextField.keyboardAppearance = theme.keyboardAppearance
+        messageTextView.keyboardAppearance = theme.keyboardAppearance
     }
 }

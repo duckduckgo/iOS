@@ -42,8 +42,10 @@ open class WebViewController: UIViewController {
     public weak var webEventsDelegate: WebEventsDelegate?
 
     @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var error: UIView!
-    @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet open private(set) weak var error: UIView!
+    @IBOutlet open private(set) weak var errorInfoImage: UIImageView!
+    @IBOutlet open private(set) weak var errorHeader: UILabel!
+    @IBOutlet open private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
 
     open private(set) var webView: WKWebView!
@@ -299,7 +301,7 @@ open class WebViewController: UIViewController {
         webView.isHidden = true
         error.isHidden = false
         errorMessage.text = message
-
+        error.layoutIfNeeded()
     }
 
     private func hideErrorMessage() {

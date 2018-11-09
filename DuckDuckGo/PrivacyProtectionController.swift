@@ -31,11 +31,12 @@ protocol PrivacyProtectionDelegate: class {
 class PrivacyProtectionController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return ThemeManager.shared.currentTheme.statusBarStyle
     }
 
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var omniBarContainer: UIView!
+    @IBOutlet weak var statusBarBackground: UIView!
     @IBOutlet weak var headerConstraint: NSLayoutConstraint!
 
     weak var delegate: PrivacyProtectionDelegate?
@@ -68,6 +69,7 @@ class PrivacyProtectionController: UIViewController {
             showInitialScreen()
         }
 
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     private func showError(withText errorText: String) {
@@ -280,4 +282,14 @@ private class SlideInFromBelowOmniBarTransitioning: NSObject, UIViewControllerAn
         return AnimationConstants.inDuration
     }
 
+}
+
+extension PrivacyProtectionController: Themable {
+    
+    func decorate(with theme: Theme) {
+        setNeedsStatusBarAppearanceUpdate()
+        
+        statusBarBackground.backgroundColor = theme.barBackgroundColor
+        omniBar?.decorate(with: theme)
+    }
 }

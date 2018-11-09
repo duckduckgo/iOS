@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let search = "com.duckduckgo.mobile.ios.newsearch"
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
-
+    
     private var testing = false
     private var appIsLaunching = false
     var authWindow: UIWindow?

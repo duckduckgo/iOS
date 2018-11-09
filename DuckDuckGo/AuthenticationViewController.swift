@@ -22,9 +22,10 @@ import UIKit
 class AuthenticationViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return ThemeManager.shared.currentTheme.statusBarStyle
     }
 
+    @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var unlockInstructions: UIView!
 
     private let authenticator = Authenticator()
@@ -42,6 +43,8 @@ class AuthenticationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUnlockInstructions()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -92,5 +95,19 @@ class AuthenticationViewController: UIViewController {
 
     private func showUnlockInstructions() {
         unlockInstructions.isHidden = false
+    }
+}
+
+extension AuthenticationViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            logo?.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            logo?.image = UIImage(named: "LogoLightText")
+        }
     }
 }

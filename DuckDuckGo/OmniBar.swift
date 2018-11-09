@@ -25,15 +25,18 @@ extension OmniBar: NibLoading {}
 class OmniBar: UIView {
 
     @IBOutlet weak var searchContainer: UIView!
+    @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var editingBackground: UIView!
+    @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var separatorView: UIView!
 
     @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeNonEditingState()
@@ -46,14 +49,19 @@ class OmniBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         configureTextField()
+        configureSeparator()
         configureEditingMenu()
         refreshState(state)
     }
 
     private func configureTextField() {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.grayish])
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.greyish])
         textField.delegate = self
+    }
+    
+    private func configureSeparator() {
+        separatorHeightConstraint.constant = 1.0 / UIScreen.main.scale
     }
 
     private func configureEditingMenu() {
@@ -65,6 +73,14 @@ class OmniBar: UIView {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()
+    }
+    
+    func showSeparator() {
+        separatorView.isHidden = false
+    }
+    
+    func hideSeparator() {
+        separatorView.isHidden = true
     }
 
     func startBrowsing() {
@@ -198,6 +214,24 @@ extension OmniBar: UITextFieldDelegate {
             omniDelegate?.onDismissed()
         }
         refreshState(state.onEditingStoppedState)
+    }
+}
+
+extension OmniBar: Themable {
+    
+    public func decorate(with theme: Theme) {
+        backgroundColor = theme.barBackgroundColor
+        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+        
+        tintColor = theme.barTintColor
+        siteRatingView.circleIndicator.tintColor = theme.barTintColor
+        searchStackContainer?.tintColor = theme.barTintColor
+        
+        editingBackground?.borderColor = theme.searchBarBackgroundColor
+        textField.textColor = theme.searchBarTextColor
+        textField.tintColor = theme.searchBarTextColor
+        
+        textField.keyboardAppearance = theme.keyboardAppearance
     }
 }
 

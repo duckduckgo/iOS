@@ -47,11 +47,13 @@ class AutocompleteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     private func configureTableView() {
         tableView.backgroundColor = UIColor.clear
         tableView.tableFooterView = UIView()
+        tableView.sectionFooterHeight = 1.0 / UIScreen.main.scale
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +121,18 @@ class AutocompleteViewController: UIViewController {
 }
 
 extension AutocompleteViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UITableViewHeaderFooterView()
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.clear
+        footer.backgroundView = backgroundView
+        footer.backgroundColor = UIColor.clear
+        
+        footer.contentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        return footer
+    }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if suggestions.isEmpty {
@@ -134,12 +148,28 @@ extension AutocompleteViewController: UITableViewDataSource {
         }
         cell.updateFor(query: query, suggestion: suggestions[indexPath.row])
         cell.plusButton.tag = indexPath.row
+        
+        let currentTheme = ThemeManager.shared.currentTheme
+        
+        cell.backgroundColor = currentTheme.tableCellBackgroundColor
+        cell.contentView.backgroundColor = currentTheme.tableCellBackgroundColor
+        cell.tintColor = currentTheme.tableCellTintColor
+        cell.label?.textColor = currentTheme.tableCellTintColor
         return cell
     }
 
     private func noSuggestionsCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let type = NoSuggestionsTableViewCell.reuseIdentifier
-        return tableView.dequeueReusableCell(withIdentifier: type, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as? NoSuggestionsTableViewCell else {
+            fatalError("Failed to dequeue \(type) as NoSuggestionTableViewCell")
+        }
+        
+        let currentTheme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = currentTheme.tableCellBackgroundColor
+        cell.contentView.backgroundColor = currentTheme.tableCellBackgroundColor
+        cell.tintColor = currentTheme.tableCellTintColor
+        cell.label?.textColor = currentTheme.tableCellTintColor
+        return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -163,5 +193,12 @@ extension AutocompleteViewController: UITableViewDelegate {
 extension AutocompleteViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return tableView == touch.view
+    }
+}
+
+extension AutocompleteViewController: Themable {
+    func decorate(with theme: Theme) {
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.reloadData()
     }
 }

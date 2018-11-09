@@ -45,6 +45,10 @@ public enum PixelName: String {
     case quickActionExtensionBookmarks = "mqe_b"
     case bookmarksExtensionSearch = "mbe_s"
     case bookmarksExtensionBookmark = "mbe_b"
+    
+    case settingsOpened = "ms"
+    case settingsThemeToggledLight = "ms_tl"
+    case settingsThemeToggledDark = "ms_td"
 
     case httpsUpgradeSiteError = "ehd"
     case httpsUpgradeSiteSummary = "ehs"

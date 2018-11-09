@@ -29,7 +29,12 @@ class AddToHomeRowCTAViewController: UIViewController {
 
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var infoView: UIView!
+    
+    @IBOutlet weak var primaryText: UILabel!
+    @IBOutlet weak var secondaryText: UILabel!
+    
     @IBOutlet weak var showMeButton: UIButton!
+    @IBOutlet weak var noThanksButton: UIButton!
 
     private var shown = false
 
@@ -38,6 +43,8 @@ class AddToHomeRowCTAViewController: UIViewController {
         configureViews()
         configureForFirstAppearance()
         addObservers()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -107,6 +114,17 @@ class AddToHomeRowCTAViewController: UIViewController {
         return controller
     }
 
+}
+
+extension AddToHomeRowCTAViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        infoView.backgroundColor = theme.homeRowBackgroundColor
+        primaryText.textColor = theme.homeRowPrimaryTextColor
+        secondaryText.textColor = theme.homeRowSecondaryTextColor
+        
+        noThanksButton.setTitleColor(theme.homeRowPrimaryTextColor, for: .normal)
+    }
 }
 
 fileprivate extension NSNotification {

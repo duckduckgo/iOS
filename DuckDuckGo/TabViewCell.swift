@@ -62,7 +62,7 @@ class TabViewCell: UICollectionViewCell {
         isCurrent = delegate?.isCurrent(tab: tab) ?? false
         
         background.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
-        background.layer.borderColor = UIColor.skyBlue.cgColor
+        background.layer.borderColor = UIColor.cornflowerBlue.cgColor
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
 
         title.text = tab.link?.displayTitle

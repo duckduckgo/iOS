@@ -25,6 +25,12 @@ import StoreKit
 
 class TabViewController: WebViewController {
 
+    struct Constants {
+        // swiftlint:disable line_length
+        static let desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
+        // swiftlint:enable line_length
+    }
+    
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
 
     weak var delegate: TabDelegate?
@@ -40,7 +46,7 @@ class TabViewController: WebViewController {
     private(set) var tabModel: Tab
     
     private var httpsForced: Bool = false
-
+    
     static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
@@ -116,10 +122,7 @@ class TabViewController: WebViewController {
     }
 
     @objc func onContentBlockerConfigurationChanged() {
-        // defer it for 0.2s so that the privacy protection UI can update instantly, otherwise this causes a visible delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.webView?.reload()
-        }
+        reload(scripts: true)
     }
 
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
@@ -173,29 +176,44 @@ class TabViewController: WebViewController {
     }
 
     func launchBrowsingMenu() {
+        Pixel.fire(pixel: .browsingMenuOpened)
+
         guard let button = chromeDelegate?.omniBar.menuButton else { return }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(refreshAction())
         alert.addAction(newTabAction())
 
-        if let link = link {
-
-            if let domain = siteRating?.domain {
-                alert.addAction(whitelistAction(forDomain: domain))
-            }
-
-            if !isError {
-                alert.addAction(saveBookmarkAction(forLink: link))
-                alert.addAction(shareAction(forLink: link))
-            }
+        if let link = link, !isError {
+            alert.addAction(saveBookmarkAction(forLink: link))
+            alert.addAction(shareAction(forLink: link))
+            alert.addAction(toggleDesktopSiteAction(forUrl: link.url))
         }
 
+        if let domain = siteRating?.domain {
+            alert.addAction(whitelistAction(forDomain: domain))
+        }
+        
         alert.addAction(reportBrokenSiteAction())
         alert.addAction(settingsAction())
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         present(controller: alert, fromView: button)
     }
-
+    
+    func toggleDesktopSiteAction(forUrl url: URL) -> UIAlertAction {
+        let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
+        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+            Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
+            self?.tabModel.toggleDesktopMode()
+            let isDesktop = self?.tabModel.isDesktop ?? false
+            self?.updateUserAgent()
+            if isDesktop {
+                self?.load(url: url.toDesktopUrl())
+            } else {
+                self?.reload(scripts: false)
+            }
+        }
+    }
+    
     func whitelistAction(forDomain domain: String) -> UIAlertAction {
 
         let whitelistManager = WhitelistManager()
@@ -203,9 +221,9 @@ class TabViewController: WebViewController {
         let title = whitelisted ? UserText.actionRemoveFromWhitelist : UserText.actionAddToWhitelist
         let operation = whitelisted ? whitelistManager.remove : whitelistManager.add
 
-        return UIAlertAction(title: title, style: .default) { [weak self] (_) in
+        return UIAlertAction(title: title, style: .default) { _ in
+            Pixel.fire(pixel: .browsingMenuWhitelist)
             operation(domain)
-            self?.reload()
         }
 
     }
@@ -226,13 +244,14 @@ class TabViewController: WebViewController {
 
     private func refreshAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionRefresh, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuRefresh)
             guard let strongSelf = self else { return }
             if strongSelf.isError {
                 if let url = URL(string: strongSelf.chromeDelegate?.omniBar.textField.text ?? "") {
                     strongSelf.load(url: url)
                 }
             } else {
-                strongSelf.reload()
+                strongSelf.reload(scripts: false)
             }
         }
     }
@@ -242,10 +261,12 @@ class TabViewController: WebViewController {
         let bookmarksManager = BookmarksManager()
         if let index = bookmarksManager.indexOf(url: link.url) {
             return UIAlertAction(title: UserText.actionRemoveBookmark, style: .default) { _ in
+                Pixel.fire(pixel: .browsingMenuRemoveBookmark)
                 bookmarksManager.delete(itemAtIndex: index)
             }
         } else {
             return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
+                Pixel.fire(pixel: .browsingMenuAddToBookmarks)
                 self?.launchSaveBookmarkAlert(bookmark: link)
             }
         }
@@ -265,6 +286,7 @@ class TabViewController: WebViewController {
 
     private func newTabAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionNewTab, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuNewTab)
             if let weakSelf = self {
                 weakSelf.delegate?.tabDidRequestNewTab(weakSelf)
             }
@@ -315,11 +337,13 @@ class TabViewController: WebViewController {
 
     private func shareAction(forLink link: Link) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuShare)
             guard let menu = self?.chromeDelegate?.omniBar.menuButton else { return }
-            self?.presentShareSheet(withItems: [ link.url, link ], fromView: menu)
+            guard let url = self?.appUrls.removeATBAndSource(fromUrl: link.url) else { return }
+            self?.presentShareSheet(withItems: [ url, link ], fromView: menu)
         }
     }
-
+    
     private func shareAction(forUrl url: URL, atPoint point: Point) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionShare, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .longPressMenuShareItem)
@@ -330,6 +354,7 @@ class TabViewController: WebViewController {
 
     private func reportBrokenSiteAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionReportBrokenSite, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuReportBrokenSite)
             if let weakSelf = self {
                 weakSelf.delegate?.tabDidRequestReportBrokenSite(tab: weakSelf)
             }
@@ -338,6 +363,7 @@ class TabViewController: WebViewController {
 
     private func settingsAction() -> UIAlertAction {
         return UIAlertAction(title: UserText.actionSettings, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuSettings)
             if let weakSelf = self {
                 weakSelf.delegate?.tabDidRequestSettings(tab: weakSelf)
             }
@@ -488,6 +514,11 @@ extension TabViewController: WebEventsDelegate {
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
         reloadScripts()
+        updateUserAgent()
+    }
+    
+    private func updateUserAgent() {
+        userAgent = tabModel.isDesktop ? Constants.desktopUserAgent : nil
     }
 
     func detached(webView: WKWebView) {

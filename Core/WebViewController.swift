@@ -42,12 +42,16 @@ open class WebViewController: UIViewController {
     public weak var webEventsDelegate: WebEventsDelegate?
 
     @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var error: UIView!
-    @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet open private(set) weak var error: UIView!
+    @IBOutlet open private(set) weak var errorInfoImage: UIImageView!
+    @IBOutlet open private(set) weak var errorHeader: UILabel!
+    @IBOutlet open private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
 
     open private(set) var webView: WKWebView!
-
+    
+    public var userAgent: String?
+    
     public var loadedURL: URL? {
         didSet {
             webEventsDelegate?.webView(webView, didChangeUrl: loadedURL)
@@ -68,9 +72,8 @@ open class WebViewController: UIViewController {
     public var name: String? {
         return webView.title
     }
-
+    
     public var url: URL? {
-        // return isError ? loadedURL : webView?.url
         return loadedURL
     }
 
@@ -170,6 +173,7 @@ open class WebViewController: UIViewController {
     public func load(url: URL) {
         loadedURL = url
         lastError = nil
+        updateUserAgent()
         load(urlRequest: URLRequest(url: url))
     }
 
@@ -225,7 +229,7 @@ open class WebViewController: UIViewController {
     private func checkForReloadOnError() {
         guard shouldReloadOnError else { return }
         shouldReloadOnError = false
-        reload()
+        reload(scripts: false)
     }
 
     private func shouldReissueSearch(for url: URL) -> Bool {
@@ -248,8 +252,16 @@ open class WebViewController: UIViewController {
         }
     }
 
-    public func reload() {
+    public func reload(scripts: Bool) {
+        if scripts {
+            reloadScripts()
+        }
+        updateUserAgent()
         webView.reload()
+    }
+
+    private func updateUserAgent() {
+        webView.customUserAgent = userAgent
     }
 
     open func goBack() {
@@ -289,7 +301,7 @@ open class WebViewController: UIViewController {
         webView.isHidden = true
         error.isHidden = false
         errorMessage.text = message
-
+        error.layoutIfNeeded()
     }
 
     private func hideErrorMessage() {
@@ -297,7 +309,7 @@ open class WebViewController: UIViewController {
         webView.isHidden = false
     }
 
-    open func reloadScripts() {
+    public func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
         webView.configuration.loadScripts(contentBlocking: !isDuckDuckGoUrl())
     }

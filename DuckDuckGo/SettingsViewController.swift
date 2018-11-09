@@ -23,15 +23,23 @@ import Core
 import Device
 
 class SettingsViewController: UITableViewController {
+    
+    private struct IndexPaths {
+        static let lightThemeOptionCell = IndexPath(row: 0, section: 0)
+    }
 
     @IBOutlet var margins: [NSLayoutConstraint]!
+    @IBOutlet weak var lightThemeToggle: UISwitch!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
     @IBOutlet weak var versionText: UILabel!
+    
+    @IBOutlet var labels: [UILabel]!
 
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
-    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
+    fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
 
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -40,9 +48,12 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureMargins()
+        configureLightThemeToggle()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     private func configureMargins() {
@@ -50,6 +61,10 @@ class SettingsViewController: UITableViewController {
         for margin in margins {
             margin.constant = 0
         }
+    }
+    
+    private func configureLightThemeToggle() {
+        lightThemeToggle.isOn = appSettings.currentThemeName == .light
     }
 
     private func configureDisableAutocompleteToggle() {
@@ -67,21 +82,46 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath == IndexPaths.lightThemeOptionCell {
+            // Show light theme toggle when user participates in experiment
+            guard let currentVariant = variantManager.currentVariant,
+                currentVariant.features.contains(.themeToggle) else {
+                return 0
+            }
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
+    }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
-            view.textLabel?.textColor = UIColor.silver
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
         }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection: Int) {
         if let view = view as? UITableViewHeaderFooterView {
-            view.textLabel?.textColor = UIColor.silver
+            let theme = ThemeManager.shared.currentTheme
+            view.textLabel?.textColor = theme.tableHeaderTextColor
         }
     }
 
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
+    }
+    
+    @IBAction func onLightThemeToggled(_ sender: UISwitch) {
+        let pixelName = sender.isOn ? PixelName.settingsThemeToggledLight : PixelName.settingsThemeToggledDark
+        Pixel.fire(pixel: pixelName)
+        ThemeManager.shared.enableTheme(with: sender.isOn ? .light : .dark)
     }
 
     @IBAction func onDonePressed(_ sender: Any) {
@@ -90,6 +130,39 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onAutocompleteToggled(_ sender: UISwitch) {
         appSettings.autocomplete = sender.isOn
+    }
+}
+
+extension SettingsViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        
+        for label in labels {
+            label.textColor = theme.tableCellTintColor
+        }
+        
+        versionText.textColor = theme.tableCellTintColor
+        
+        lightThemeToggle.onTintColor = theme.toggleSwitchColor
+        autocompleteToggle.onTintColor = theme.toggleSwitchColor
+        authenticationToggle.onTintColor = theme.toggleSwitchColor
+        
+        tableView.backgroundColor = theme.backgroundColor
+        tableView.separatorColor = theme.tableCellSeparatorColor
+        
+        if let navigationController = self.navigationController {
+            UIView.transition(with: navigationController.navigationBar,
+                              duration: 0.2,
+                              options: .transitionCrossDissolve, animations: {
+                                self.decorateNavigationBar(with: theme)
+            }, completion: nil)
+        }
+        
+        UIView.transition(with: view,
+                          duration: 0.2,
+                          options: .transitionCrossDissolve, animations: {
+                            self.tableView.reloadData()
+        }, completion: nil)
     }
 }
 

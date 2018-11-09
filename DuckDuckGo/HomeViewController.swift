@@ -21,10 +21,17 @@ import UIKit
 import Core
 
 class HomeViewController: UIViewController {
+    
+    private struct Const {
+        // This should match offset set in Launch Screen storyboard.
+        static let logoVericalCenterOffset: CGFloat = -35
+    }
 
+    @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
-    @IBOutlet weak var ctaContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
+
+    @IBOutlet weak var image: UIImageView!
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -45,6 +52,11 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        // Set to avoid possible inconsistency between storyboard and code
+        logoVerticalCenter.constant = Const.logoVericalCenterOffset
+
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -94,8 +106,10 @@ class HomeViewController: UIViewController {
 
         if diff > 0 {
             ctaContainerBottom.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0)
+            logoVerticalCenter.constant = 0
         } else {
             ctaContainerBottom.constant = 0
+            logoVerticalCenter.constant = Const.logoVericalCenterOffset
         }
 
         view.setNeedsUpdateConstraints()
@@ -132,5 +146,18 @@ class HomeViewController: UIViewController {
         removeFromParent()
         view.removeFromSuperview()
     }
-    
+}
+
+extension HomeViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            image?.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            image?.image = UIImage(named: "LogoLightText")
+        }
+    }
 }

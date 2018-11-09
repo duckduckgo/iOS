@@ -29,6 +29,21 @@ class AppUrlsTests: XCTestCase {
         mockStatisticsStore = MockStatisticsStore()
     }
 
+    func testWhenRemoveATBAndSourceFromSearchUrlThenUrlIsUnchanged() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let searchUrl = testee.searchUrl(text: "example")
+        let result = testee.removeATBAndSource(fromUrl: searchUrl)
+        XCTAssertNil(result.getParam(name: "atb"))
+        XCTAssertNil(result.getParam(name: "t"))
+    }
+
+    func testWhenRemoveATBAndSourceFromNonSearchUrlThenUrlIsUnchanged() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let example = "https://duckduckgo.com?atb=x&t=y"
+        let result = testee.removeATBAndSource(fromUrl: URL(string: example)!)
+        XCTAssertEqual(example, result.absoluteString)
+    }
+    
     func testWhenPixelUrlRequestThenCorrectURLIsReturned() {
         mockStatisticsStore.atbWithVariant = "x"
         let testee = AppUrls(statisticsStore: mockStatisticsStore)

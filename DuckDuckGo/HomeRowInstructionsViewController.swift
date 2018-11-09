@@ -22,6 +22,10 @@ import AVKit
 
 class HomeRowInstructionsViewController: UIViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
+    
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var videoContainerView: UIView!
     @IBOutlet weak var button: UIButton!
@@ -32,6 +36,8 @@ class HomeRowInstructionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        modalPresentationCapturesStatusBarAppearance = true
+        
         view.blur(style: .dark)
 
         applyCorners()

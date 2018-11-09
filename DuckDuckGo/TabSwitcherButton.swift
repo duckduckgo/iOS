@@ -42,19 +42,23 @@ class TabSwitcherButton: UIView {
     weak var delegate: TabSwitcherButtonDelegate?
     
     let tint = UIView(frame: .zero)
-    let anim = LOTAnimationView(name: "new_tab")
+    var anim = LOTAnimationView(name: "new_tab")
     let label = UILabel()
     
     var tabCount: Int = 0 {
         didSet {
-            if tabCount == 0 {
-                label.text = nil
-                return
-            }
-            
-            let text = tabCount >= Constants.maxTextTabs ? "~" : "\(tabCount)"
-            label.attributedText = NSAttributedString(string: text, attributes: attributes())
+            refresh()
         }
+    }
+    
+    private func refresh() {
+        if tabCount == 0 {
+            label.text = nil
+            return
+        }
+        
+        let text = tabCount >= Constants.maxTextTabs ? "~" : "\(tabCount)"
+        label.attributedText = NSAttributedString(string: text, attributes: attributes())
     }
     
     var hasUnread: Bool = false {
@@ -66,14 +70,9 @@ class TabSwitcherButton: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         tint.frame = frame
         label.frame = frame
         
-        anim.layer.masksToBounds = false
-        anim.isUserInteractionEnabled = false
-        
-        tint.backgroundColor = UIColor.nearlyBlackLight
         tint.alpha = 0.0
         tint.isUserInteractionEnabled = false
         
@@ -83,8 +82,28 @@ class TabSwitcherButton: UIView {
         addSubview(label)
         addSubview(tint)
         
-        anim.center = center
+        configureAnimationView()
+    }
+    
+    private func configureAnimationView() {
+        anim.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        anim.layer.masksToBounds = false
+        anim.isUserInteractionEnabled = false
         
+        anim.center = CGPoint(x: bounds.midX, y: bounds.midY)
+    }
+    
+    override var backgroundColor: UIColor? {
+        didSet {
+            tint.backgroundColor = backgroundColor
+            refresh()
+        }
+    }
+    
+    override var tintColor: UIColor! {
+        didSet {
+            refresh()
+        }
     }
     
     convenience init() {
@@ -136,7 +155,7 @@ class TabSwitcherButton: UIView {
         
         let font = UIFont.systemFont(ofSize: Constants.fontSize, weight: UIFont.Weight(Constants.fontWeight))
         return [ NSAttributedString.Key.font: font,
-                 NSAttributedString.Key.foregroundColor: UIColor.grayish,
+                 NSAttributedString.Key.foregroundColor: tintColor,
                  NSAttributedString.Key.paragraphStyle: paragraphStyle ]
     }
     
@@ -145,5 +164,25 @@ class TabSwitcherButton: UIView {
             self.tint.alpha = alpha
         }
     }
+}
+
+extension TabSwitcherButton: Themable {
     
+    func decorate(with theme: Theme) {
+        backgroundColor = theme.barBackgroundColor
+        tintColor = theme.barTintColor
+        
+        let newAnimationView: LOTAnimationView
+        switch theme.currentImageSet {
+        case .light:
+            newAnimationView = LOTAnimationView(name: "new_tab_dark")
+        case .dark:
+            newAnimationView = LOTAnimationView(name: "new_tab")
+        }
+        
+        anim.removeFromSuperview()
+        anim = newAnimationView
+        addSubview(anim)
+        configureAnimationView()
+    }
 }

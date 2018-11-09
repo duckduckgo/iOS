@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A5s-B8-hd1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A5s-B8-hd1">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,7 +53,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock for quick and easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6f-QY-3H3">
-                                                <rect key="frame" x="48.5" y="79" width="200" height="24"/>
+                                                <rect key="frame" x="48" y="79" width="200" height="24"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -82,10 +82,10 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Smile" translatesAutoresizingMaskIntoConstraints="NO" id="iS2-VE-m9O">
-                                        <rect key="frame" x="138.5" y="20" width="18" height="18"/>
+                                        <rect key="frame" x="139" y="20" width="18" height="18"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBH-J5-aEO">
-                                        <rect key="frame" x="15.5" y="396" width="264" height="38"/>
+                                        <rect key="frame" x="16" y="396" width="264" height="38"/>
                                         <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="Azr-V1-kLw"/>
@@ -183,7 +183,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add DuckDuckGo to your dock!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPH-ME-N2p">
-                                        <rect key="frame" x="9.5" y="51" width="300" height="19"/>
+                                        <rect key="frame" x="10" y="51" width="300" height="19"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="19"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -195,7 +195,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xhf-hW-8u5">
-                                        <rect key="frame" x="9.5" y="110" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="110" width="300" height="44"/>
                                         <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="yn2-hB-jiU"/>
@@ -209,7 +209,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5p-Tg-2ou">
-                                        <rect key="frame" x="119" y="177" width="83" height="29"/>
+                                        <rect key="frame" x="118.5" y="177" width="83" height="29"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <state key="normal" title="No Thanks">
                                             <color key="titleColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -219,7 +219,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="GLI-KC-6iK" firstAttribute="centerX" secondItem="qyc-ZG-rZz" secondAttribute="centerX" id="0mg-Cg-eyU"/>
                                     <constraint firstItem="Xhf-hW-8u5" firstAttribute="top" secondItem="GLI-KC-6iK" secondAttribute="bottom" constant="20" id="2K6-Nx-Mp6"/>
@@ -280,6 +280,9 @@
                     <connections>
                         <outlet property="blurView" destination="gw9-C7-D61" id="lu5-n7-7r9"/>
                         <outlet property="infoView" destination="qyc-ZG-rZz" id="yvv-F4-PVT"/>
+                        <outlet property="noThanksButton" destination="n5p-Tg-2ou" id="rlh-sM-kF1"/>
+                        <outlet property="primaryText" destination="PPH-ME-N2p" id="VN1-bu-cs8"/>
+                        <outlet property="secondaryText" destination="GLI-KC-6iK" id="7FE-Ff-8RU"/>
                         <outlet property="showMeButton" destination="Xhf-hW-8u5" id="ZEo-J1-0pv"/>
                     </connections>
                 </viewController>
@@ -290,8 +293,8 @@
     </scenes>
     <resources>
         <image name="HomeRowAppIcon" width="117" height="74"/>
-        <image name="PlayButton" width="100" height="100"/>
-        <image name="Remove" width="12" height="12"/>
+        <image name="PlayButton" width="80" height="80"/>
+        <image name="Remove" width="24" height="24"/>
         <image name="Smile" width="18" height="18"/>
     </resources>
 </document>

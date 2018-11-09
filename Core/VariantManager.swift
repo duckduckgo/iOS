@@ -20,9 +20,9 @@
 import Foundation
 
 public enum FeatureName {
-
-    // No experimental features right now
-
+    case themeToggle
+    case lightThemeByDefault
+    case darkThemeByDefault
 }
 
 public struct Variant {
@@ -31,7 +31,12 @@ public struct Variant {
         
         // SERP variants - do not remove
         Variant(name: "sc", weight: 1, features: []),
-        Variant(name: "sd", weight: 1, features: [])
+        Variant(name: "sd", weight: 1, features: []),
+        
+        // Theme experiment
+        Variant(name: "mg", weight: 2, features: []),
+        Variant(name: "mh", weight: 1, features: [.themeToggle, .lightThemeByDefault]),
+        Variant(name: "mj", weight: 1, features: [.themeToggle, .darkThemeByDefault])
     ]
 
     public let name: String

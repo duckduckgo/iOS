@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,10 +22,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
-                    <rect key="frame" x="8" y="4" width="321" height="40"/>
+                    <rect key="frame" x="8" y="4" width="319" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Atk-JN-lv8" customClass="RoundedRectangleView" customModule="Core">
-                            <rect key="frame" x="0.0" y="0.0" width="321" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="319" height="40"/>
                             <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
@@ -41,7 +41,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                            <rect key="frame" x="4" y="0.0" width="311" height="40"/>
+                            <rect key="frame" x="4" y="0.0" width="309" height="40"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
@@ -56,7 +56,7 @@
                                     </connections>
                                 </view>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="Core">
-                                    <rect key="frame" x="30" y="0.0" width="191" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="189" height="40"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                         <accessibilityTraits key="traits" searchField="YES"/>
@@ -74,7 +74,7 @@
                                     </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                    <rect key="frame" x="221" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="219" y="0.0" width="30" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
                                     </constraints>
@@ -84,7 +84,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
-                                    <rect key="frame" x="251" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="249" y="0.0" width="30" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="JrJ-da-Qn3"/>
                                     </constraints>
@@ -94,7 +94,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                    <rect key="frame" x="281" y="9" width="30" height="22"/>
+                                    <rect key="frame" x="279" y="8" width="30" height="24"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
                                     </constraints>
@@ -132,12 +132,20 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
-                    <rect key="frame" x="341" y="13" width="22" height="22"/>
+                    <rect key="frame" x="339" y="12" width="24" height="24"/>
                     <state key="normal" image="Settings"/>
                     <connections>
                         <action selector="onSettingsButtonPressed:" destination="-2" eventType="touchUpInside" id="02y-75-CFb"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-j4-fpl">
+                    <rect key="frame" x="0.0" y="53" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="n0V-et-sPt"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -146,10 +154,13 @@
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="leading" secondItem="RdS-eI-aOp" secondAttribute="leading" constant="8" id="FGr-mp-PlT"/>
                 <constraint firstAttribute="bottom" secondItem="5D5-iT-bUk" secondAttribute="bottom" constant="8" id="JTa-RA-Isu"/>
                 <constraint firstItem="1rB-5w-de3" firstAttribute="centerY" secondItem="N6K-Lj-Fn6" secondAttribute="centerY" id="Z2r-9H-b4u"/>
+                <constraint firstItem="hD7-j4-fpl" firstAttribute="width" secondItem="ojX-nM-dyN" secondAttribute="width" id="j1n-Dg-LKz"/>
+                <constraint firstAttribute="bottom" secondItem="hD7-j4-fpl" secondAttribute="top" id="nfs-pA-DD4"/>
                 <constraint firstItem="5D5-iT-bUk" firstAttribute="top" secondItem="ojX-nM-dyN" secondAttribute="top" constant="4" id="oce-E1-4Nw"/>
                 <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="5D5-iT-bUk" secondAttribute="trailing" priority="750" constant="8" id="tY7-iY-5EI"/>
                 <constraint firstItem="RdS-eI-aOp" firstAttribute="trailing" secondItem="1rB-5w-de3" secondAttribute="trailing" constant="12" id="uKO-eG-Cih"/>
                 <constraint firstItem="1rB-5w-de3" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="trailing" constant="12" id="x26-4u-hqT"/>
+                <constraint firstItem="hD7-j4-fpl" firstAttribute="leading" secondItem="ojX-nM-dyN" secondAttribute="leading" id="xxj-zc-Sw3"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -161,6 +172,9 @@
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
                 <outlet property="searchContainerToSettingsConstraint" destination="x26-4u-hqT" id="7Z7-xL-lZP"/>
+                <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>
+                <outlet property="separatorHeightConstraint" destination="n0V-et-sPt" id="NST-ka-qSe"/>
+                <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
@@ -174,9 +188,9 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="Bookmarks" width="24" height="22"/>
+        <image name="Bookmarks" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
-        <image name="Remove" width="12" height="12"/>
-        <image name="Settings" width="22" height="22"/>
+        <image name="Remove" width="24" height="24"/>
+        <image name="Settings" width="24" height="24"/>
     </resources>
 </document>

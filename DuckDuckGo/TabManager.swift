@@ -49,6 +49,8 @@ class TabManager {
         let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
         controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.isEmpty)
         controller.delegate = delegate
+        controller.loadViewIfNeeded()
+        decorate(tabController: controller, with: ThemeManager.shared.currentTheme)
         return controller
     }
 
@@ -156,7 +158,7 @@ class TabManager {
 
     func invalidateCache(forController controller: TabViewController) {
         if current === controller {
-            current?.reload()
+            current?.reload(scripts: false)
         } else {
             removeFromCache(controller)
         }
@@ -164,5 +166,33 @@ class TabManager {
 
     func save() {
         model.save()
+    }
+}
+
+extension TabManager: Themable {
+    
+    func decorate(with theme: Theme) {
+
+        for tabController in tabControllerCache {
+            decorate(tabController: tabController, with: theme)
+        }
+    }
+    
+    private func decorate(tabController controller: TabViewController,
+                          with theme: Theme) {
+        // This is done in a crude way: ideally tabController should implement
+        // 'Themable' protocol, but that would require moving Themable to 'Core'
+        // module.
+        controller.view.backgroundColor = theme.backgroundColor
+        controller.error?.backgroundColor = theme.backgroundColor
+        controller.errorHeader.textColor = theme.barTintColor
+        controller.errorMessage.textColor = theme.barTintColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            controller.errorInfoImage?.image = UIImage(named: "ErrorInfoLight")
+        case .dark:
+            controller.errorInfoImage?.image = UIImage(named: "ErrorInfoDark")
+        }
     }
 }

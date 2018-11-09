@@ -36,9 +36,12 @@ class TabViewController: UIViewController {
     }
     
     @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var error: UIView!
-    @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet private(set) weak var error: UIView!
+    @IBOutlet private(set) weak var errorInfoImage: UIImageView!
+    @IBOutlet private(set) weak var errorHeader: UILabel!
+    @IBOutlet private(set) weak var errorMessage: UILabel!
     @IBOutlet weak var webViewContainer: UIView!
+    
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     var longPressGestureRecognizer: UILongPressGestureRecognizer?
    
@@ -322,6 +325,7 @@ class TabViewController: UIViewController {
         webView.isHidden = true
         error.isHidden = false
         errorMessage.text = message
+        error.layoutIfNeeded()
     }
     
     private func hideErrorMessage() {

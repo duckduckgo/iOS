@@ -27,19 +27,24 @@ class HomeViewController: UIViewController {
         static let logoVericalCenterOffset: CGFloat = -35
     }
 
-    @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
+    // @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
-    @IBOutlet weak var image: UIImageView!
+    // @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var homeRowCTAController: UIViewController?
 
+    private var dataSource: HomeComponentsDataSource = HomeComponentsDataSource()
+    
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
 
+    private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
+    
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
@@ -53,9 +58,22 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
-        // Set to avoid possible inconsistency between storyboard and code
-        logoVerticalCenter.constant = Const.logoVericalCenterOffset
+        
+        
+        if homePageConfiguration.hasCenteredSearch {
+            // dataSource.addComponent(component: SpaceComponent())
+            dataSource.addComponent(component: LogoComponent(height: 400))
+            
+        } else {
+            tableView.bounces = false
+            dataSource.addComponent(component: CenteredLogoComponent(parent: tableView))
 
+        }
+
+        tableView.dataSource = dataSource
+        tableView.delegate = dataSource
+        tableView.showsVerticalScrollIndicator = false
+        
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
@@ -66,11 +84,22 @@ class HomeViewController: UIViewController {
             showHomeRowCTA()
         }
 
+        if homePageConfiguration.hasCenteredSearch {
+            print("***", #function)
+            chromeDelegate?.setNavigationBarHidden(true)
+            // TODO omni bar state
+        }
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewHasAppeared = true
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        tableView.reloadData()
     }
 
     func resetHomeRowCTAAnimations() {
@@ -106,10 +135,8 @@ class HomeViewController: UIViewController {
 
         if diff > 0 {
             ctaContainerBottom.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0)
-            logoVerticalCenter.constant = 0
         } else {
             ctaContainerBottom.constant = 0
-            logoVerticalCenter.constant = Const.logoVericalCenterOffset
         }
 
         view.setNeedsUpdateConstraints()
@@ -151,13 +178,91 @@ class HomeViewController: UIViewController {
 extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
+        tableView.reloadData()
         view.backgroundColor = theme.backgroundColor
-        
+    }
+}
+
+class HomeComponentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+    
+    private var homeComponents = [HomeComponent]()
+    
+    func addComponent(component: HomeComponent) {
+        homeComponents.append(component)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return homeComponents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let component = homeComponents[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: component.name) else {
+            fatalError("dequeueReusableCell failed for \(component.name)")
+        }
+        component.configure(cell: cell)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return homeComponents[indexPath.row].height
+    }
+    
+}
+
+protocol HomeComponent {
+    
+    typealias Configure = (UITableViewCell) -> Void
+    
+    var name: String { get }
+    var height: CGFloat { get }
+    
+    func configure(cell: UITableViewCell)
+    
+}
+
+class LogoComponent: HomeComponent {
+    
+    var name: String = "logo"
+    
+    var height: CGFloat
+    
+    func configure(cell: UITableViewCell) {
+        guard let image = cell.contentView.subviews[0] as? UIImageView else {
+            fatalError("Did not find image in logo cell")
+        }
+
+        let theme = ThemeManager.shared.currentTheme
         switch theme.currentImageSet {
         case .light:
-            image?.image = UIImage(named: "LogoDarkText")
+            image.image = UIImage(named: "LogoDarkText")
         case .dark:
-            image?.image = UIImage(named: "LogoLightText")
+            image.image = UIImage(named: "LogoLightText")
         }
     }
+    
+    init(height: CGFloat) {
+        self.height = height
+    }
+    
+}
+
+class CenteredLogoComponent: LogoComponent {
+    
+    weak var parent: UIView!
+    
+    init(parent: UIView) {
+        super.init(height: parent.bounds.height)
+        self.parent = parent
+    }
+    
+    override func configure(cell: UITableViewCell) {
+        super.configure(cell: cell)
+        height = parent.bounds.height
+    }
+    
 }

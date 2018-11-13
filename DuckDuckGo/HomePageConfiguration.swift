@@ -30,7 +30,7 @@ class HomePageConfiguration {
     let variantManager: VariantManager
     
     var hasCenteredSearch: Bool {
-        return true
+        return false
     }
     
     var components: [Component] {

@@ -1,5 +1,5 @@
 //
-//  AppDependencyProvider.swift
+//  HomePageManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -20,19 +20,25 @@
 import Foundation
 import Core
 
-protocol DependencyProvider {
-    var appSettings: AppSettings { get }
-    var variantManager: VariantManager { get }
-    var homePageConfiguration: HomePageConfiguration { get }
-}
-
-/// Provides dependencies for objects that are not directly instantiated
-/// through `init` call (e.g. ViewControllers created from Storyboards).
-class AppDependencyProvider: DependencyProvider {
+class HomePageConfiguration {
     
-    static var shared: DependencyProvider = AppDependencyProvider()
+    enum Component {
+        case shortcuts(Int)
+        case newsFeed(Int)
+    }
     
-    let appSettings: AppSettings = AppUserDefaults()
-    let variantManager: VariantManager = DefaultVariantManager()
-    let homePageConfiguration: HomePageConfiguration = HomePageConfiguration()
+    let variantManager: VariantManager
+    
+    var hasCenteredSearch: Bool {
+        return true
+    }
+    
+    var components: [Component] {
+        return [Component]()
+    }
+    
+    init(variantManager: VariantManager = DefaultVariantManager()) {
+        self.variantManager = variantManager
+    }
+    
 }

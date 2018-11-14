@@ -22,11 +22,6 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    private struct Const {
-        // This should match offset set in Launch Screen storyboard.
-        static let logoVericalCenterOffset: CGFloat = -35
-    }
-
     // @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
@@ -57,24 +52,42 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
-        
-        
-        if homePageConfiguration.hasCenteredSearch {
-            // dataSource.addComponent(component: SpaceComponent())
-            dataSource.addComponent(component: LogoComponent(height: 400))
-            
-        } else {
-            tableView.bounces = false
-            dataSource.addComponent(component: CenteredLogoComponent(parent: tableView))
 
-        }
-
+        configureTable()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    private func configureTable() {
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
         tableView.showsVerticalScrollIndicator = false
-        
-        applyTheme(ThemeManager.shared.currentTheme)
+
+        if homePageConfiguration.hasCenteredSearch {
+            dataSource.addComponent(component: TopSpaceComponent(parent: tableView))
+            dataSource.addComponent(component: LogoComponent())
+            dataSource.addComponent(component: SpaceComponent(height: 40))
+            dataSource.addComponent(component: SearchComponent())
+
+            for component in homePageConfiguration.components {
+                
+                switch component {
+                case .newsFeed(let count):
+                    print("*** News feed: \(count)")
+                    dataSource.addComponent(component: NewsFeedComponent(items: count))
+
+                case .shortcuts(let rows):
+                    print("*** Shortcuts: \(rows)")
+                    dataSource.addComponent(component: ShortcutsComponent(rows: rows))
+                }
+                
+            }
+            
+            tableView.scrollToRow(at: IndexPath(row: 1, section: 0), at: .top, animated: false)
+        } else {
+            tableView.bounces = false
+            dataSource.addComponent(component: CenteredLogoComponent(parent: tableView))
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,7 +100,6 @@ class HomeViewController: UIViewController {
         if homePageConfiguration.hasCenteredSearch {
             print("***", #function)
             chromeDelegate?.setNavigationBarHidden(true)
-            // TODO omni bar state
         }
 
     }
@@ -183,6 +195,13 @@ extension HomeViewController: Themable {
     }
 }
 
+class HomeLogoTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var centerYConstraint: NSLayoutConstraint!
+    
+}
+
 class HomeComponentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     private var homeComponents = [HomeComponent]()
@@ -210,59 +229,6 @@ class HomeComponentsDataSource: NSObject, UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return homeComponents[indexPath.row].height
-    }
-    
-}
-
-protocol HomeComponent {
-    
-    typealias Configure = (UITableViewCell) -> Void
-    
-    var name: String { get }
-    var height: CGFloat { get }
-    
-    func configure(cell: UITableViewCell)
-    
-}
-
-class LogoComponent: HomeComponent {
-    
-    var name: String = "logo"
-    
-    var height: CGFloat
-    
-    func configure(cell: UITableViewCell) {
-        guard let image = cell.contentView.subviews[0] as? UIImageView else {
-            fatalError("Did not find image in logo cell")
-        }
-
-        let theme = ThemeManager.shared.currentTheme
-        switch theme.currentImageSet {
-        case .light:
-            image.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            image.image = UIImage(named: "LogoLightText")
-        }
-    }
-    
-    init(height: CGFloat) {
-        self.height = height
-    }
-    
-}
-
-class CenteredLogoComponent: LogoComponent {
-    
-    weak var parent: UIView!
-    
-    init(parent: UIView) {
-        super.init(height: parent.bounds.height)
-        self.parent = parent
-    }
-    
-    override func configure(cell: UITableViewCell) {
-        super.configure(cell: cell)
-        height = parent.bounds.height
     }
     
 }

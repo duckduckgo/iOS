@@ -23,18 +23,21 @@ import Core
 class HomePageConfiguration {
     
     enum Component {
-        case shortcuts(Int)
-        case newsFeed(Int)
+        case shortcuts(rows: Int)
+        case newsFeed(items: Int)
     }
     
     let variantManager: VariantManager
     
     var hasCenteredSearch: Bool {
-        return false
+        return true
     }
     
     var components: [Component] {
-        return [Component]()
+        return [
+            .shortcuts(rows: 1),
+            .newsFeed(items: 6)
+        ]
     }
     
     init(variantManager: VariantManager = DefaultVariantManager()) {

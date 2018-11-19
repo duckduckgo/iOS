@@ -22,23 +22,20 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    // @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
-    // @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var homeRowCTAController: UIViewController?
-
-    private var dataSource: HomePageRendererDataSource!
     
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
 
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
+    private lazy var renderers = HomeViewSectionRenderers(controller: self)
     
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -51,45 +48,34 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataSource = HomePageRendererDataSource(controller: self)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
-        configureTable()
+        configureCollectionView()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    private func configureTable() {
-        tableView.dataSource = dataSource
-        tableView.delegate = dataSource
-        tableView.showsVerticalScrollIndicator = false
-        tableView.bounces = false
-
+    private func configureCollectionView() {
         homePageConfiguration.components.forEach { component in
             switch component {
-            case .centeredSearch:
-                print("*** Centered search")
-                dataSource.install(renderer: TopSpaceComponent(parent: tableView))
-                dataSource.install(renderer: LogoComponent())
-                dataSource.install(renderer: SpaceComponent(height: 40))
-                dataSource.install(renderer: CenteredSearchComponent())
-
             case .navigationBarSearch:
                 print("*** Navigation search")
-                dataSource.install(renderer: CenteredLogoComponent(parent: tableView))
+                self.renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
+                
+            case .centeredSearch:
+                print("*** Centered search")
                 
             case .newsFeed(let count):
                 print("*** News feed: \(count)")
-                dataSource.install(renderer: NewsFeedComponent(items: count))
                 
             case .shortcuts(let rows):
                 print("*** Shortcuts: \(rows)")
-                dataSource.install(renderer: ShortcutsComponent(rows: rows))
             }
         }
         
+        collectionView.dataSource = renderers
+        collectionView.delegate = renderers
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +94,7 @@ class HomeViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        tableView.reloadData()
+        collectionView.reloadData()
     }
 
     func resetHomeRowCTAAnimations() {
@@ -187,53 +173,13 @@ class HomeViewController: UIViewController {
 extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
-        tableView.reloadData()
+        collectionView.reloadData()
         view.backgroundColor = theme.backgroundColor
     }
 }
 
-class HomeLogoTableViewCell: UITableViewCell {
+class NavigationSearchCell: UICollectionViewCell {
     
-    @IBOutlet weak var logo: UIImageView!
-    @IBOutlet weak var centerYConstraint: NSLayoutConstraint!
-    
-}
-
-class HomePageRendererDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    
-    private weak var controller: HomeViewController!
-    
-    private var renderers = [HomePageComponentRenderer]()
-    
-    init(controller: HomeViewController) {
-        self.controller = controller
-        super.init()
-    }
-    
-    func install(renderer: HomePageComponentRenderer) {
-        renderer.install?(into: controller)
-        renderers.append(renderer)
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return renderers.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let component = renderers[indexPath.row]
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: component.name) else {
-            fatalError("dequeueReusableCell failed for \(component.name)")
-        }
-        component.configure?(cell: cell)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return renderers[indexPath.row].height
-    }
+    @IBOutlet weak var imageView: UIImageView!
     
 }

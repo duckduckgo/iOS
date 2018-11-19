@@ -26,16 +26,15 @@ class HomePageConfiguration {
         case navigationBarSearch
         case centeredSearch
         case shortcuts(rows: Int)
-        case newsFeed(items: Int)
     }
     
     let variantManager: VariantManager
     
     var components: [Component] {
         return [
-            .navigationBarSearch
-//            .centeredSearch,
-//            .shortcuts(rows: 1)
+//            .navigationBarSearch
+            .centeredSearch,
+            .shortcuts(rows: 1)
         ]
     }
     

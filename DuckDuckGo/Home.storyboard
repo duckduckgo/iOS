@@ -9,6 +9,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Home View Controller-->
         <scene sceneID="iIP-Az-GLU">
@@ -25,22 +33,133 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H74-G9-0WZ">
                                 <rect key="frame" x="0.0" y="10" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xVZ-2l-Z9p">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="6" minimumInteritemSpacing="0.0" id="xVZ-2l-Z9p">
                                     <size key="itemSize" width="222" height="240"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="0.0" height="8"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="76.5" y="0.0" width="222" height="240"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="shortcut" id="gUU-x4-9hP">
+                                        <rect key="frame" x="144.5" y="8" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="222" height="240"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" restorationIdentifier="shortcut" translatesAutoresizingMaskIntoConstraints="NO" id="NSk-Na-aIH" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="11" y="0.0" width="64" height="64"/>
+                                                    <color key="backgroundColor" red="0.82927141569999996" green="1" blue="0.81412457709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="64" id="VgW-x7-Dhm"/>
+                                                        <constraint firstAttribute="height" constant="64" id="dvU-cO-Lzn"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="24"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Green" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
+                                                    <rect key="frame" x="0.0" y="72" width="86" height="14"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="ub9-Ui-UI5" firstAttribute="width" secondItem="gUU-x4-9hP" secondAttribute="width" id="B3j-fd-KeV"/>
+                                            <constraint firstItem="ub9-Ui-UI5" firstAttribute="top" secondItem="NSk-Na-aIH" secondAttribute="bottom" constant="8" id="SAJ-Kl-EwG"/>
+                                            <constraint firstItem="NSk-Na-aIH" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="VO0-c5-12v"/>
+                                            <constraint firstItem="ub9-Ui-UI5" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="cFf-co-zDT"/>
+                                            <constraint firstItem="NSk-Na-aIH" firstAttribute="top" secondItem="gUU-x4-9hP" secondAttribute="top" id="urI-QN-bAv"/>
+                                        </constraints>
+                                        <size key="customSize" width="86" height="86"/>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="5" y="100" width="365" height="287"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="365" height="287"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="39W-ag-iVs">
+                                                    <rect key="frame" x="83" y="31" width="199" height="159"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jf-KE-oXj" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="13" y="228" width="339" height="48"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
+                                                            <rect key="frame" x="15" y="12" width="24" height="24"/>
+                                                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="24" id="MeG-td-OLY"/>
+                                                                <constraint firstAttribute="width" constant="24" id="Nin-Am-qlx"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
+                                                            <rect key="frame" x="47" y="17" width="126.5" height="14"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="73D-OT-n1K" firstAttribute="leading" secondItem="Cfx-pb-o8i" secondAttribute="trailing" constant="8" id="ACN-RO-pzc"/>
+                                                        <constraint firstItem="Cfx-pb-o8i" firstAttribute="centerY" secondItem="7Jf-KE-oXj" secondAttribute="centerY" id="EhU-6m-xZh"/>
+                                                        <constraint firstItem="73D-OT-n1K" firstAttribute="centerY" secondItem="7Jf-KE-oXj" secondAttribute="centerY" id="L29-pe-UIV"/>
+                                                        <constraint firstAttribute="height" constant="48" id="lfy-OM-K4Q"/>
+                                                        <constraint firstItem="Cfx-pb-o8i" firstAttribute="leading" secondItem="7Jf-KE-oXj" secondAttribute="leading" constant="15" id="zGY-Ek-4ip"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="24"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="top" secondItem="39W-ag-iVs" secondAttribute="bottom" constant="38" id="2Gq-HT-ORy"/>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="width" secondItem="54m-Mn-tex" secondAttribute="width" constant="-26" id="CT5-vR-vpQ"/>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="Nfa-2n-YVp"/>
+                                            <constraint firstAttribute="bottom" secondItem="7Jf-KE-oXj" secondAttribute="bottom" constant="11" id="bHQ-i4-np1"/>
+                                            <constraint firstItem="39W-ag-iVs" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="dUX-Ve-6mD"/>
+                                        </constraints>
+                                        <size key="customSize" width="365" height="287"/>
+                                        <connections>
+                                            <outlet property="imageView" destination="39W-ag-iVs" id="ob1-89-hb0"/>
+                                            <outlet property="promptText" destination="73D-OT-n1K" id="Cf8-Rg-Vw7"/>
+                                            <outlet property="searchBackground" destination="7Jf-KE-oXj" id="Fnx-fD-UoA"/>
+                                            <outlet property="searchLoupe" destination="Cfx-pb-o8i" id="796-zE-CwE"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="37" y="393" width="301" height="298"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="301" height="298"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="6KE-x7-bYQ">
-                                                    <rect key="frame" x="11.5" y="5.5" width="199" height="159"/>
+                                                    <rect key="frame" x="51" y="34.5" width="199" height="159"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -51,11 +170,16 @@
                                             </constraint>
                                             <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerX" secondItem="YGf-2W-c2w" secondAttribute="centerX" id="oGn-KV-u2p"/>
                                         </constraints>
+                                        <size key="customSize" width="301" height="298"/>
                                         <connections>
                                             <outlet property="imageView" destination="6KE-x7-bYQ" id="wys-xe-PcN"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TJG-EA-Atl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="8"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
@@ -97,5 +221,6 @@
     </scenes>
     <resources>
         <image name="LogoDarkText" width="199" height="159"/>
+        <image name="SearchLoupeMini" width="23" height="23"/>
     </resources>
 </document>

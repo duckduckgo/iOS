@@ -65,12 +65,11 @@ class HomeViewController: UIViewController {
                 
             case .centeredSearch:
                 print("*** Centered search")
-                
-            case .newsFeed(let count):
-                print("*** News feed: \(count)")
-                
+                self.renderers.install(renderer: CenteredSearchHomeViewSectionRenderer())
+
             case .shortcuts(let rows):
                 print("*** Shortcuts: \(rows)")
+                self.renderers.install(renderer: ShortcutsHomeViewSectionRenderer())
             }
         }
         
@@ -178,8 +177,56 @@ extension HomeViewController: Themable {
     }
 }
 
-class NavigationSearchCell: UICollectionViewCell {
+class NavigationSearchCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    
+    override func decorate(with theme: Theme) {
+        switch theme.currentImageSet {
+        case .light:
+            imageView.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            imageView.image = UIImage(named: "LogoLightText")
+        }
+    }
+    
+}
+
+class CenteredSearchCell: ThemableCollectionViewCell {
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var searchBackground: RoundedRectangleView!
+    @IBOutlet weak var promptText: UILabel!
+    @IBOutlet weak var searchLoupe: UIImageView!
+    
+    weak var parent: UIView!
+    
+    var tapGesture: UITapGestureRecognizer!
+    
+    var tapped: ((CenteredSearchCell) -> Void)?
+    
+    func loaded() {
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
+        searchBackground.addGestureRecognizer(tapGesture)
+    }
+    
+    override func decorate(with theme: Theme) {
+        searchBackground.borderColor = theme.searchBarBackgroundColor
+        searchBackground.backgroundColor = theme.searchBarBackgroundColor
+        searchLoupe.tintColor = theme.barTintColor
+        promptText.textColor = theme.searchBarTextColor
+        
+        switch theme.currentImageSet {
+        case .light:
+            imageView.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            imageView.image = UIImage(named: "LogoLightText")
+        }
+    }
+
+    @objc func onTap() {
+        print("***", #function)
+        tapped?(self)
+    }
     
 }

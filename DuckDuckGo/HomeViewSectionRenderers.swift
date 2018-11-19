@@ -19,6 +19,11 @@
 
 import UIKit
 
+class ThemableCollectionViewCell: UICollectionViewCell, Themable {
+    func decorate(with theme: Theme) {
+    }
+}
+
 @objc protocol HomeViewSectionRenderer {
     
     var numberOfItems: Int { get }
@@ -71,31 +76,84 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.chromeDelegate?.setNavigationBarHidden(false)
     }
     
-    var numberOfItems: Int {
-        return 1
-    }
+    let numberOfItems: Int = 1
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath) as? NavigationSearchCell else {
-            fatalError("cell is not a NavigationSearchCell")
+        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
+            as? ThemableCollectionViewCell else {
+            fatalError("cell is not a ThemableCollectionViewCell")
         }
-        
         view.frame = collectionView.bounds
-        
-        let theme = ThemeManager.shared.currentTheme
-        switch theme.currentImageSet {
-        case .light:
-            view.imageView.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            view.imageView.image = UIImage(named: "LogoLightText")
-        }
-        
+        view.decorate(with: ThemeManager.shared.currentTheme)
         return view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
             return collectionView.frame.size
+    }
+    
+}
+
+class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
+    
+    private weak var controller: HomeViewController!
+    
+    private var hidden = false
+    private var indexPath: IndexPath!
+    
+    var numberOfItems: Int {
+        return hidden ? 0 : 1
+    }
+    
+    func install(into controller: HomeViewController) {
+        self.controller = controller
+        controller.chromeDelegate?.setNavigationBarHidden(true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        self.indexPath = indexPath
+        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath)
+            as? CenteredSearchCell else {
+            fatalError("cell is not CenteredSearchCell")
+        }
+        view.decorate(with: ThemeManager.shared.currentTheme)
+        view.loaded()
+        view.tapped = self.tapped
+        return view
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
+        -> CGSize {
+        let height = (collectionView.frame.height * 2 / 3)
+        return CGSize(width: collectionView.frame.width, height: height)
+    }
+    
+    func tapped(view: CenteredSearchCell) {
+        hidden = true
+        
+        self.controller.chromeDelegate?.setNavigationBarHidden(false)
+        controller.collectionView.performBatchUpdates({
+            self.controller.collectionView.deleteItems(at: [indexPath])
+        }, completion: { _ in
+            self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
+        })
+        
+    }
+    
+}
+
+class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
+    
+    let numberOfItems: Int = 9
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
+        -> CGSize {
+        return CGSize(width: 80, height: 100)
     }
     
 }

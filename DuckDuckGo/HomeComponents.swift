@@ -19,18 +19,19 @@
 
 import UIKit
 
-protocol HomeComponent {
+@objc protocol HomePageComponentRenderer {
     
     typealias Configure = (UITableViewCell) -> Void
     
     var name: String { get }
     var height: CGFloat { get }
     
-    func configure(cell: UITableViewCell)
+    @objc optional func configure(cell: UITableViewCell)
+    @objc optional func install(into: HomeViewController)
     
 }
 
-class LogoComponent: HomeComponent {
+class LogoComponent: HomePageComponentRenderer {
     
     struct Constants {
         static let logoHeightPortrait: CGFloat = 170
@@ -90,7 +91,7 @@ class CenteredLogoComponent: LogoComponent {
     
 }
 
-class SpaceComponent: HomeComponent {
+class SpaceComponent: HomePageComponentRenderer {
     
     let name: String = "space"
     
@@ -100,13 +101,9 @@ class SpaceComponent: HomeComponent {
         self.height = height
     }
     
-    func configure(cell: UITableViewCell) {
-        // no-op
-    }
-    
 }
 
-class TopSpaceComponent: HomeComponent {
+class TopSpaceComponent: HomePageComponentRenderer {
     
     weak var parent: UIView!
     
@@ -115,7 +112,7 @@ class TopSpaceComponent: HomeComponent {
     var height: CGFloat {
         let logoHeight = UIDevice.current.orientation == .portrait ?
             LogoComponent.Constants.logoHeightPortrait : LogoComponent.Constants.logoHeightLandscape
-        let searchHeight = SearchComponent.Constants.height
+        let searchHeight = CenteredSearchComponent.Constants.height
         let halfScreenHeight = parent.bounds.height / 2
         let halfSearchHeight = searchHeight / 2
         let targetHeight = halfScreenHeight - logoHeight - halfSearchHeight
@@ -126,13 +123,9 @@ class TopSpaceComponent: HomeComponent {
         self.parent = parent
     }
     
-    func configure(cell: UITableViewCell) {
-        // no-op
-    }
-    
 }
 
-class SearchComponent: HomeComponent {
+class CenteredSearchComponent: HomePageComponentRenderer {
 
     struct Constants {
         static let height: CGFloat = 60
@@ -147,9 +140,13 @@ class SearchComponent: HomeComponent {
         cell.backgroundColor = UIColor.blue
     }
     
+    func install(into controller: HomeViewController) {
+        controller.chromeDelegate?.setNavigationBarHidden(true)
+    }
+    
 }
 
-class NewsFeedComponent: HomeComponent {
+class NewsFeedComponent: HomePageComponentRenderer {
     
     let name: String = "space"
     
@@ -159,14 +156,9 @@ class NewsFeedComponent: HomeComponent {
         height = CGFloat(items * 200)
     }
     
-    func configure(cell: UITableViewCell) {
-        // no-op
-        cell.backgroundColor = UIColor.red
-    }
-    
 }
 
-class ShortcutsComponent: HomeComponent {
+class ShortcutsComponent: HomePageComponentRenderer {
 
     let name: String = "space"
     
@@ -174,11 +166,6 @@ class ShortcutsComponent: HomeComponent {
     
     init(rows: Int) {
         height = CGFloat(rows * 100)
-    }
-
-    func configure(cell: UITableViewCell) {
-        // no-op
-        cell.backgroundColor = UIColor.green
     }
 
 }

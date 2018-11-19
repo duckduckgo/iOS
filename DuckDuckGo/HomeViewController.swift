@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var homeRowCTAController: UIViewController?
 
-    private var dataSource: HomeComponentsDataSource = HomeComponentsDataSource()
+    private var dataSource: HomePageRendererDataSource!
     
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
@@ -50,6 +50,9 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dataSource = HomePageRendererDataSource(controller: self)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
@@ -62,32 +65,31 @@ class HomeViewController: UIViewController {
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
         tableView.showsVerticalScrollIndicator = false
+        tableView.bounces = false
 
-        if homePageConfiguration.hasCenteredSearch {
-            dataSource.addComponent(component: TopSpaceComponent(parent: tableView))
-            dataSource.addComponent(component: LogoComponent())
-            dataSource.addComponent(component: SpaceComponent(height: 40))
-            dataSource.addComponent(component: SearchComponent())
+        homePageConfiguration.components.forEach { component in
+            switch component {
+            case .centeredSearch:
+                print("*** Centered search")
+                dataSource.install(renderer: TopSpaceComponent(parent: tableView))
+                dataSource.install(renderer: LogoComponent())
+                dataSource.install(renderer: SpaceComponent(height: 40))
+                dataSource.install(renderer: CenteredSearchComponent())
 
-            for component in homePageConfiguration.components {
+            case .navigationBarSearch:
+                print("*** Navigation search")
+                dataSource.install(renderer: CenteredLogoComponent(parent: tableView))
                 
-                switch component {
-                case .newsFeed(let count):
-                    print("*** News feed: \(count)")
-                    dataSource.addComponent(component: NewsFeedComponent(items: count))
-
-                case .shortcuts(let rows):
-                    print("*** Shortcuts: \(rows)")
-                    dataSource.addComponent(component: ShortcutsComponent(rows: rows))
-                }
+            case .newsFeed(let count):
+                print("*** News feed: \(count)")
+                dataSource.install(renderer: NewsFeedComponent(items: count))
                 
+            case .shortcuts(let rows):
+                print("*** Shortcuts: \(rows)")
+                dataSource.install(renderer: ShortcutsComponent(rows: rows))
             }
-            
-            tableView.scrollToRow(at: IndexPath(row: 1, section: 0), at: .top, animated: false)
-        } else {
-            tableView.bounces = false
-            dataSource.addComponent(component: CenteredLogoComponent(parent: tableView))
         }
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -95,11 +97,6 @@ class HomeViewController: UIViewController {
 
         if HomeRowCTA().shouldShow() {
             showHomeRowCTA()
-        }
-
-        if homePageConfiguration.hasCenteredSearch {
-            print("***", #function)
-            chromeDelegate?.setNavigationBarHidden(true)
         }
 
     }
@@ -202,12 +199,20 @@ class HomeLogoTableViewCell: UITableViewCell {
     
 }
 
-class HomeComponentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+class HomePageRendererDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    private var homeComponents = [HomeComponent]()
+    private weak var controller: HomeViewController!
     
-    func addComponent(component: HomeComponent) {
-        homeComponents.append(component)
+    private var renderers = [HomePageComponentRenderer]()
+    
+    init(controller: HomeViewController) {
+        self.controller = controller
+        super.init()
+    }
+    
+    func install(renderer: HomePageComponentRenderer) {
+        renderer.install?(into: controller)
+        renderers.append(renderer)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -215,20 +220,20 @@ class HomeComponentsDataSource: NSObject, UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return homeComponents.count
+        return renderers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let component = homeComponents[indexPath.row]
+        let component = renderers[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: component.name) else {
             fatalError("dequeueReusableCell failed for \(component.name)")
         }
-        component.configure(cell: cell)
+        component.configure?(cell: cell)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return homeComponents[indexPath.row].height
+        return renderers[indexPath.row].height
     }
     
 }

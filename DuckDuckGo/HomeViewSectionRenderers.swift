@@ -196,7 +196,7 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row + 1 == numberOfItems {
+        if isLastItem(indexPath) {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "addShortcut", for: indexPath)
         } else {
             guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath) as? ShortcutCell else {
@@ -214,7 +214,7 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         print("***", #function, indexPath)
-        return indexPath.row + 1 != numberOfItems
+        return !isLastItem(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -224,7 +224,13 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         print("***", #function, originalIndexPath, proposedIndexPath)
-        return proposedIndexPath.row + 1 == numberOfItems ? originalIndexPath : proposedIndexPath
+        guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
+        guard !isLastItem(proposedIndexPath) else { return originalIndexPath }
+        return proposedIndexPath
+    }
+    
+    func isLastItem(_ indexPath: IndexPath) -> Bool {
+        return indexPath.row + 1 == numberOfItems
     }
     
 }

@@ -62,19 +62,42 @@ class HomeViewController: UIViewController {
     @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
-            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
-                break
+            if let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) {
+                UISelectionFeedbackGenerator().selectionChanged()
+                UIMenuController.shared.setMenuVisible(false, animated: true)
+                collectionView.beginInteractiveMovementForItem(at: indexPath)
             }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            
         case .ended:
             collectionView.endInteractiveMovement()
+            UIImpactFeedbackGenerator().impactOccurred()
+            if let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) {
+                // needs to chance to settle in case the model has been updated
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.showMenu(at: indexPath)
+                }
+            }
+            
         default:
             collectionView.cancelInteractiveMovement()
         }
     }
     
+    private func showMenu(at indexPath: IndexPath) {
+        guard let menuView = collectionView.cellForItem(at: indexPath) else { return }
+        guard menuView.becomeFirstResponder() else { return }
+        let renderer = renderers.rendererFor(section: indexPath.section)
+        guard let menuItems = renderer.menuItemsFor?(itemAt: indexPath.row) else { return }
+        
+        let menuController = UIMenuController.shared
+        menuController.setTargetRect(menuView.frame, in: self.view)
+        menuController.menuItems = menuItems
+        menuController.setMenuVisible(true, animated: true)
+    }
+
     private func configureCollectionView() {
         
         homePageConfiguration.components.forEach { component in
@@ -95,7 +118,7 @@ class HomeViewController: UIViewController {
         
         collectionView.dataSource = renderers
         collectionView.delegate = renderers
-        collectionView.addGestureRecognizer(collectionViewReorderingGesture)
+        view.addGestureRecognizer(collectionViewReorderingGesture)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -259,12 +282,21 @@ class ShortcutCell: ThemableCollectionViewCell {
         static let edit = #selector(ShortcutCell.doEdit(sender:))
     }
     
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
     @objc func doDelete(sender: Any?) {
         print("***", #function)
     }
     
     @objc func doEdit(sender: Any?) {
         print("***", #function)
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        print("***", #function, action, sender)
+        return [ Actions.delete, Actions.edit ].contains(action)
     }
     
 }

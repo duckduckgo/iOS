@@ -30,6 +30,8 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     
     @objc optional func install(into controller: HomeViewController)
     
+    @objc optional func menuItemsFor(itemAt: Int) -> [UIMenuItem]
+    
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     
@@ -65,6 +67,10 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func install(renderer: HomeViewSectionRenderer) {
         renderer.install?(into: controller)
         renderers.append(renderer)
+    }
+    
+    func rendererFor(section: Int) -> HomeViewSectionRenderer {
+        return renderers[section]
     }
     
     // MARK: UICollectionViewDataSource
@@ -229,7 +235,14 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
         return proposedIndexPath
     }
     
-    func isLastItem(_ indexPath: IndexPath) -> Bool {
+    func menuItemsFor(itemAt: Int) -> [UIMenuItem] {
+        return [
+            UIMenuItem(title: "Delete", action: ShortcutCell.Actions.delete),
+            UIMenuItem(title: "Edit", action: ShortcutCell.Actions.edit)
+        ]
+    }
+    
+    private func isLastItem(_ indexPath: IndexPath) -> Bool {
         return indexPath.row + 1 == numberOfItems
     }
     

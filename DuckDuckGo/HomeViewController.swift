@@ -37,6 +37,8 @@ class HomeViewController: UIViewController {
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
     private lazy var renderers = HomeViewSectionRenderers(controller: self)
     
+    private var collectionViewLongPress: UILongPressGestureRecognizer!
+    
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
@@ -54,6 +56,26 @@ class HomeViewController: UIViewController {
         configureCollectionView()
         
         applyTheme(ThemeManager.shared.currentTheme)
+        
+    }
+    
+    @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+        
+        // TODO work out how to show the menu after the movement
     }
     
     private func configureCollectionView() {
@@ -75,6 +97,10 @@ class HomeViewController: UIViewController {
         
         collectionView.dataSource = renderers
         collectionView.delegate = renderers
+        
+        collectionViewLongPress = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
+        
+        collectionView.addGestureRecognizer(collectionViewLongPress)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -205,7 +231,7 @@ class CenteredSearchCell: ThemableCollectionViewCell {
     
     var tapped: ((CenteredSearchCell) -> Void)?
     
-    func loaded() {
+    override func awakeFromNib() {
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
         searchBackground.addGestureRecognizer(tapGesture)
     }
@@ -227,6 +253,23 @@ class CenteredSearchCell: ThemableCollectionViewCell {
     @objc func onTap() {
         print("***", #function)
         tapped?(self)
+    }
+    
+}
+
+class ShortcutCell: ThemableCollectionViewCell {
+    
+    struct Actions {
+        static let delete = #selector(ShortcutCell.doDelete(sender:))
+        static let edit = #selector(ShortcutCell.doEdit(sender:))
+    }
+    
+    @objc func doDelete(sender: Any?) {
+        print("***", #function)
+    }
+    
+    @objc func doEdit(sender: Any?) {
+        print("***", #function)
     }
     
 }

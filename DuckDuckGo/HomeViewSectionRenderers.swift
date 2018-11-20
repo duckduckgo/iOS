@@ -33,7 +33,9 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize
-    
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
+                        withSender sender: Any?) -> Bool
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -41,6 +43,8 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     private var renderers = [HomeViewSectionRenderer]()
     
     private var controller: HomeViewController
+    
+    private var deleteAction = #selector(ShortcutCell.doDelete)
     
     init(controller: HomeViewController) {
         self.controller = controller
@@ -52,6 +56,8 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         renderers.append(renderer)
     }
     
+    // MARK: UICollectionViewDataSource
+        
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return renderers.count
     }
@@ -63,14 +69,60 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
     }
+
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        print("***", #function)
+        return indexPath.section == 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("***", #function)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        print("***", #function)
+        // return renderers[indexPath.section].collectionView(collectionView, shouldShowMenuForItemAt: indexPath)
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
+                        withSender sender: Any?) -> Bool {
+        print("***", #function, action)
+        return renderers[indexPath.section].collectionView(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        print("***", #function)
+        perform(action, with: sender)
+    }
+    
+    // MARK: UICollectionViewDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        print("***", #function)
+        
+        guard proposedIndexPath.section == originalIndexPath.section else {
+            return originalIndexPath
+        }
+        
+        return proposedIndexPath
+    }
+    
+    // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
             return renderers[indexPath.section].collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
+    
 }
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
+    
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
     
     func install(into controller: HomeViewController) {
         controller.chromeDelegate?.setNavigationBarHidden(false)
@@ -91,6 +143,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
             return collectionView.frame.size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
+                        withSender sender: Any?) -> Bool {
+        return false
     }
     
 }
@@ -118,7 +175,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             fatalError("cell is not CenteredSearchCell")
         }
         view.decorate(with: ThemeManager.shared.currentTheme)
-        view.loaded()
         view.tapped = self.tapped
         return view
     }
@@ -129,16 +185,25 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         return CGSize(width: collectionView.frame.width, height: height)
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
+                        withSender sender: Any?) -> Bool {
+        return false
+    }
+    
     func tapped(view: CenteredSearchCell) {
         hidden = true
         
-        self.controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.performBatchUpdates({
+            controller.chromeDelegate?.setNavigationBarHidden(false)
             self.controller.collectionView.deleteItems(at: [indexPath])
         }, completion: { _ in
             self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
         })
-        
+    
     }
     
 }
@@ -148,12 +213,31 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
     let numberOfItems: Int = 9
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath)
+        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath) as? ShortcutCell else {
+            fatalError("not a ShortcutCell")
+        }
+        return view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
         return CGSize(width: 80, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        UIMenuController.shared.menuItems = [
+            UIMenuItem(title: "Delete", action: ShortcutCell.Actions.delete),
+            UIMenuItem(title: "Edit", action: ShortcutCell.Actions.edit)
+        ]
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
+                        withSender sender: Any?) -> Bool {
+        return [
+            ShortcutCell.Actions.delete,
+            ShortcutCell.Actions.edit
+            ].contains(action)
     }
     
 }

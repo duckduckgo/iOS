@@ -30,12 +30,23 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     
     @objc optional func install(into controller: HomeViewController)
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
-        -> CGSize
-    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool
-    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
-                        withSender sender: Any?) -> Bool
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView,
+                                       canMoveItemAt indexPath: IndexPath) -> Bool
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView,
+                                       moveItemAt sourceIndexPath: IndexPath,
+                                       to destinationIndexPath: IndexPath)
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView,
+                                       targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                                       toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -72,28 +83,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         print("***", #function)
-        return indexPath.section == 1
+        return renderers[indexPath.section].collectionView?(collectionView, canMoveItemAt: indexPath) ?? false
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("***", #function)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        print("***", #function)
-        // return renderers[indexPath.section].collectionView(collectionView, shouldShowMenuForItemAt: indexPath)
-        return false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
-                        withSender sender: Any?) -> Bool {
-        print("***", #function, action)
-        return renderers[indexPath.section].collectionView(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        print("***", #function)
-        perform(action, with: sender)
+        renderers[sourceIndexPath.section].collectionView?(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
     }
     
     // MARK: UICollectionViewDelegate
@@ -101,12 +96,9 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         print("***", #function)
-        
-        guard proposedIndexPath.section == originalIndexPath.section else {
-            return originalIndexPath
-        }
-        
-        return proposedIndexPath
+        return renderers[originalIndexPath.section].collectionView?(collectionView,
+                                                                    targetIndexPathForMoveFromItemAt: originalIndexPath,
+                                                                    toProposedIndexPath: proposedIndexPath) ?? originalIndexPath
     }
     
     // MARK: UICollectionViewDelegateFlowLayout
@@ -119,10 +111,6 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
 }
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
-    
-    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
     
     func install(into controller: HomeViewController) {
         controller.chromeDelegate?.setNavigationBarHidden(false)
@@ -145,8 +133,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             return collectionView.frame.size
     }
     
-    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
-                        withSender sender: Any?) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return false
     }
     
@@ -185,12 +172,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         return CGSize(width: collectionView.frame.width, height: height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
-                        withSender sender: Any?) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return false
     }
     
@@ -213,10 +195,16 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
     let numberOfItems: Int = 9
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath) as? ShortcutCell else {
-            fatalError("not a ShortcutCell")
+        
+        if indexPath.row + 1 == numberOfItems {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "addShortcut", for: indexPath)
+        } else {
+            guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath) as? ShortcutCell else {
+                fatalError("not a ShortcutCell")
+            }
+            return view
         }
-        return view
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
@@ -224,20 +212,19 @@ class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
         return CGSize(width: 80, height: 100)
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        UIMenuController.shared.menuItems = [
-            UIMenuItem(title: "Delete", action: ShortcutCell.Actions.delete),
-            UIMenuItem(title: "Edit", action: ShortcutCell.Actions.edit)
-        ]
-        return true
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        print("***", #function, indexPath)
+        return indexPath.row + 1 != numberOfItems
     }
     
-    func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath,
-                        withSender sender: Any?) -> Bool {
-        return [
-            ShortcutCell.Actions.delete,
-            ShortcutCell.Actions.edit
-            ].contains(action)
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("***", #function)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        print("***", #function, originalIndexPath, proposedIndexPath)
+        return proposedIndexPath.row + 1 == numberOfItems ? originalIndexPath : proposedIndexPath
     }
     
 }

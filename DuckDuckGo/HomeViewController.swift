@@ -36,8 +36,8 @@ class HomeViewController: UIViewController {
 
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
     private lazy var renderers = HomeViewSectionRenderers(controller: self)
-    
-    private var collectionViewLongPress: UILongPressGestureRecognizer!
+    private lazy var collectionViewReorderingGesture =
+        UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
     
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -59,9 +59,8 @@ class HomeViewController: UIViewController {
         
     }
     
-    @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+    @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
-
         case .began:
             guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
                 break
@@ -74,11 +73,10 @@ class HomeViewController: UIViewController {
         default:
             collectionView.cancelInteractiveMovement()
         }
-        
-        // TODO work out how to show the menu after the movement
     }
     
     private func configureCollectionView() {
+        
         homePageConfiguration.components.forEach { component in
             switch component {
             case .navigationBarSearch:
@@ -97,10 +95,7 @@ class HomeViewController: UIViewController {
         
         collectionView.dataSource = renderers
         collectionView.delegate = renderers
-        
-        collectionViewLongPress = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
-        
-        collectionView.addGestureRecognizer(collectionViewLongPress)
+        collectionView.addGestureRecognizer(collectionViewReorderingGesture)
     }
 
     override func viewWillAppear(_ animated: Bool) {

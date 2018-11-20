@@ -59,10 +59,11 @@ public class HTTPSUpgrade {
         waitForAnyReloadsToComplete()
         
         guard let bloomFilter = bloomFilter else { return false }
-        let startTimeMs = Date().timeIntervalSince1970 * Constants.millisecondsPerSecond
+        
+        let startTime = Date()
         let result = bloomFilter.contains(host)
-        let endTimeMs = Date().timeIntervalSince1970 * Constants.millisecondsPerSecond
-        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(endTimeMs - startTimeMs)ms")
+        let lookupTimeMs = abs(startTime.timeIntervalSinceNow) * Constants.millisecondsPerSecond
+        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(lookupTimeMs)ms")
         
         return result
     }

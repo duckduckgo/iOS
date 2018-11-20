@@ -21,6 +21,10 @@ import Foundation
 
 public class HTTPSUpgrade {
     
+    private struct Constants {
+        static let millisecondsPerSecond = 1000.0
+    }
+    
     public static let shared = HTTPSUpgrade()
     
     private let dataReloadLock = NSLock()
@@ -55,10 +59,11 @@ public class HTTPSUpgrade {
         waitForAnyReloadsToComplete()
         
         guard let bloomFilter = bloomFilter else { return false }
-        let startTime = Date().timeIntervalSince1970
+        
+        let startTime = Date()
         let result = bloomFilter.contains(host)
-        let endTime = Date().timeIntervalSince1970
-        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(endTime - startTime)ms")
+        let lookupTimeMs = abs(startTime.timeIntervalSinceNow) * Constants.millisecondsPerSecond
+        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(lookupTimeMs)ms")
         
         return result
     }

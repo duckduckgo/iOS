@@ -59,6 +59,10 @@ class HomeViewController: UIViewController {
         
     }
     
+    func omniBarCancelPressed() {
+        renderers.omniBarCancelPressed()
+    }
+    
     @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -258,8 +262,8 @@ class CenteredSearchCell: ThemableCollectionViewCell {
         searchBackground.borderColor = theme.searchBarBackgroundColor
         searchBackground.backgroundColor = theme.searchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
-        promptText.textColor = theme.searchBarTextColor
-        
+        promptText.textColor = UIColor.greyish
+                
         switch theme.currentImageSet {
         case .light:
             imageView.image = UIImage(named: "LogoDarkText")

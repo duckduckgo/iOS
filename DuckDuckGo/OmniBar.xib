@@ -43,8 +43,11 @@
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
                             <rect key="frame" x="4" y="0.0" width="309" height="40"/>
                             <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
+                                    <rect key="frame" x="0.0" y="8.5" width="23" height="23"/>
+                                </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="23" y="0.0" width="30" height="40"/>
                                     <accessibility key="accessibilityConfiguration" identifier="siteRating">
                                         <bool key="isElement" value="YES"/>
                                     </accessibility>
@@ -56,7 +59,7 @@
                                     </connections>
                                 </view>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="189" height="40"/>
+                                    <rect key="frame" x="53" y="0.0" width="113" height="40"/>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                         <accessibilityTraits key="traits" searchField="YES"/>
@@ -74,7 +77,7 @@
                                     </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                    <rect key="frame" x="219" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="166" y="0.0" width="30" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
                                     </constraints>
@@ -84,7 +87,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">
-                                    <rect key="frame" x="249" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="196" y="0.0" width="30" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="JrJ-da-Qn3"/>
                                     </constraints>
@@ -94,13 +97,23 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                    <rect key="frame" x="279" y="8" width="30" height="24"/>
+                                    <rect key="frame" x="226" y="8" width="30" height="24"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
                                     </constraints>
                                     <state key="normal" image="Bookmarks"/>
                                     <connections>
                                         <action selector="onBookmarksButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="oO0-yB-X3n"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-9R-ERy">
+                                    <rect key="frame" x="256" y="5.5" width="53" height="29"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
+                                    <state key="normal" title="Cancel">
+                                        <color key="titleColor" red="0.26062279939999999" green="0.57930666210000004" blue="0.94906026119999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="onCancelPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="4qy-lU-5AC"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -167,11 +180,13 @@
             <viewLayoutGuide key="safeArea" id="RdS-eI-aOp"/>
             <connections>
                 <outlet property="bookmarksButton" destination="arc-SR-Ric" id="S4A-dB-wqa"/>
+                <outlet property="cancelButton" destination="IHT-9R-ERy" id="XVf-QQ-jSa"/>
                 <outlet property="clearButton" destination="Dt8-We-5tV" id="6d0-LL-4OJ"/>
                 <outlet property="editingBackground" destination="Atk-JN-lv8" id="E2d-Lx-OrN"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
                 <outlet property="searchContainerToSettingsConstraint" destination="x26-4u-hqT" id="7Z7-xL-lZP"/>
+                <outlet property="searchLoupe" destination="u6L-hZ-ptn" id="31i-ke-yHa"/>
                 <outlet property="searchStackContainer" destination="N6K-Lj-Fn6" id="X4J-ee-eJ0"/>
                 <outlet property="separatorHeightConstraint" destination="n0V-et-sPt" id="NST-ka-qSe"/>
                 <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
@@ -179,7 +194,7 @@
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
             </connections>
-            <point key="canvasLocation" x="-37.5" y="-52"/>
+            <point key="canvasLocation" x="-37.600000000000001" y="-52.173913043478265"/>
         </view>
         <tapGestureRecognizer id="qXd-RO-1cS">
             <connections>
@@ -191,6 +206,7 @@
         <image name="Bookmarks" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
         <image name="Remove" width="24" height="24"/>
+        <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="Settings" width="24" height="24"/>
     </resources>
 </document>

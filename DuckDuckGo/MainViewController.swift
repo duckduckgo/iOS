@@ -516,6 +516,11 @@ extension MainViewController: OmniBarDelegate {
     func onSettingsPressed() {
         launchSettings()
     }
+    
+    func onCancelPressed() {
+        homeController?.omniBarCancelPressed()
+    }
+    
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {

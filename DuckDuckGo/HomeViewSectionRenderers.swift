@@ -30,6 +30,8 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     
     @objc optional func install(into controller: HomeViewController)
     
+    @objc optional func omniBarCancelPressed()
+    
     @objc optional func menuItemsFor(itemAt: Int) -> [UIMenuItem]
     
     func collectionView(_ collectionView: UICollectionView,
@@ -57,8 +59,6 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     private var controller: HomeViewController
     
-    private var deleteAction = #selector(ShortcutCell.doDelete)
-    
     init(controller: HomeViewController) {
         self.controller = controller
         super.init()
@@ -71,6 +71,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     func rendererFor(section: Int) -> HomeViewSectionRenderer {
         return renderers[section]
+    }
+    
+    func omniBarCancelPressed() {
+        renderers.forEach { renderer in
+            renderer.omniBarCancelPressed?()
+        }
     }
     
     // MARK: UICollectionViewDataSource
@@ -185,13 +191,23 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func tapped(view: CenteredSearchCell) {
         hidden = true
         
+        self.controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.performBatchUpdates({
-            controller.chromeDelegate?.setNavigationBarHidden(false)
             self.controller.collectionView.deleteItems(at: [indexPath])
         }, completion: { _ in
             self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
         })
     
+    }
+    
+    func omniBarCancelPressed() {
+        hidden = false
+
+        controller.collectionView.performBatchUpdates({
+            self.controller.chromeDelegate?.setNavigationBarHidden(true)
+            self.controller.collectionView.insertItems(at: [indexPath])
+        })
+
     }
     
 }

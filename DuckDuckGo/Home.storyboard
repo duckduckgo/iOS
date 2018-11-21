@@ -34,8 +34,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="H74-G9-0WZ">
-                                <rect key="frame" x="0.0" y="10" width="375" height="667"/>
+                                <rect key="frame" x="12.5" y="10" width="350" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="400" id="Oqy-WG-n6F"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="6" minimumInteritemSpacing="0.0" id="xVZ-2l-Z9p">
                                     <size key="itemSize" width="222" height="240"/>
                                     <size key="headerReferenceSize" width="0.0" height="8"/>
@@ -88,7 +91,7 @@
                                         <size key="customSize" width="86" height="86"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addShortcut" id="nQ3-Nq-pP3" userLabel="addShortcut" customClass="ShortcutCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="289" y="8" width="86" height="86"/>
+                                        <rect key="frame" x="264" y="8" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
@@ -133,7 +136,7 @@
                                         <size key="customSize" width="86" height="86"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="5" y="100" width="365" height="287"/>
+                                        <rect key="frame" x="0.0" y="100" width="365" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="365" height="287"/>
@@ -143,7 +146,7 @@
                                                     <rect key="frame" x="83" y="31" width="199" height="159"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jf-KE-oXj" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="13" y="228" width="339" height="48"/>
+                                                    <rect key="frame" x="0.0" y="228" width="365" height="48"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
                                                             <rect key="frame" x="15" y="12" width="24" height="24"/>
@@ -186,11 +189,12 @@
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="top" secondItem="39W-ag-iVs" secondAttribute="bottom" constant="38" id="2Gq-HT-ORy"/>
-                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="width" secondItem="54m-Mn-tex" secondAttribute="width" constant="-26" id="CT5-vR-vpQ"/>
-                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="Nfa-2n-YVp"/>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="centerX" secondItem="3i0-li-iSv" secondAttribute="centerX" id="AES-dw-R8s"/>
                                             <constraint firstAttribute="bottom" secondItem="7Jf-KE-oXj" secondAttribute="bottom" constant="11" id="bHQ-i4-np1"/>
                                             <constraint firstItem="39W-ag-iVs" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="dUX-Ve-6mD"/>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="width" secondItem="54m-Mn-tex" secondAttribute="width" id="rg4-g2-lb4"/>
                                         </constraints>
+                                        <viewLayoutGuide key="safeArea" id="3i0-li-iSv"/>
                                         <size key="customSize" width="365" height="287"/>
                                         <connections>
                                             <outlet property="imageView" destination="39W-ag-iVs" id="ob1-89-hb0"/>
@@ -225,9 +229,19 @@
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TJG-EA-Atl">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="8"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="350" height="8"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Oqy-WG-n6F"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Oqy-WG-n6F"/>
+                                    </mask>
+                                </variation>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Rf-oV-2W5">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
@@ -240,7 +254,7 @@
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="height" secondItem="klK-ZJ-wmA" secondAttribute="height" id="1lu-2N-IOp"/>
-                            <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="BjB-Gh-zsj"/>
+                            <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" constant="-25" id="BjB-Gh-zsj"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
@@ -248,6 +262,11 @@
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="vdx-nG-nrB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ijV-Vn-w9w"/>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="BjB-Gh-zsj"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="7ah-Pp-alq"/>

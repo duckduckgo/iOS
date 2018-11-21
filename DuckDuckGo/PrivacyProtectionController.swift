@@ -162,18 +162,10 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
 
 extension PrivacyProtectionController: OmniBarDelegate {
 
-    func onOmniQueryUpdated(_ query: String) {
-        // no-op
-    }
-
     func onOmniQuerySubmitted(_ query: String) {
         dismiss(animated: true) {
-            self.omniDelegate.onOmniQuerySubmitted(query)
+            self.omniDelegate.onOmniQuerySubmitted?(query)
         }
-    }
-
-    func onDismissed() {
-        // no-op
     }
 
     func onSiteRatingPressed() {
@@ -182,16 +174,8 @@ extension PrivacyProtectionController: OmniBarDelegate {
 
     func onMenuPressed() {
         dismiss(animated: true) {
-            self.omniDelegate.onMenuPressed()
+            self.omniDelegate.onMenuPressed?()
         }
-    }
-
-    func onBookmarksPressed() {
-        // shouldn't get called
-    }
-
-    func onSettingsPressed() {
-        // shouldn't get called
     }
 
 }

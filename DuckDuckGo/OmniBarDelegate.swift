@@ -19,19 +19,21 @@
 
 import Foundation
 
-protocol OmniBarDelegate: class {
+@objc protocol OmniBarDelegate: class {
 
-    func onOmniQueryUpdated(_ query: String)
+    @objc optional func onOmniQueryUpdated(_ query: String)
 
-    func onOmniQuerySubmitted(_ query: String)
+    @objc optional func onOmniQuerySubmitted(_ query: String)
 
-    func onDismissed()
+    @objc optional func onDismissed()
 
-    func onSiteRatingPressed()
+    @objc optional func onSiteRatingPressed()
 
-    func onMenuPressed()
+    @objc optional func onMenuPressed()
 
-    func onBookmarksPressed()
+    @objc optional func onBookmarksPressed()
 
-    func onSettingsPressed()
+    @objc optional func onSettingsPressed()
+    
+    @objc optional func onCancelPressed()
 }

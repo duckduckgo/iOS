@@ -24,6 +24,7 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
 
+    @IBOutlet weak var searchLoupe: UIView!
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
@@ -34,6 +35,7 @@ class OmniBar: UIView {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var cancelButton: UIButton!
 
     @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
@@ -100,12 +102,14 @@ class OmniBar: UIView {
             state = newState
         }
 
+        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
-        setVisibility(editingBackground, hidden: state.showEditingBackground)
+        setVisibility(editingBackground, hidden: !state.showBackground)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
+        setVisibility(cancelButton, hidden: !state.showCancel)
         searchContainerToSettingsConstraint.priority = state.showSettings ? .defaultHigh : .defaultLow
     }
 
@@ -163,7 +167,7 @@ class OmniBar: UIView {
             return
         }
         resignFirstResponder()
-        omniDelegate?.onOmniQuerySubmitted(query)
+        omniDelegate?.onOmniQuerySubmitted?(query)
     }
 
     @IBAction func onClearButtonPressed(_ sender: Any) {
@@ -171,19 +175,23 @@ class OmniBar: UIView {
     }
 
     @IBAction func onSiteRatingPressed(_ sender: Any) {
-        omniDelegate?.onSiteRatingPressed()
+        omniDelegate?.onSiteRatingPressed?()
     }
 
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
-        omniDelegate?.onMenuPressed()
+        omniDelegate?.onMenuPressed?()
     }
 
     @IBAction func onBookmarksButtonPressed(_ sender: Any) {
-        omniDelegate?.onBookmarksPressed()
+        omniDelegate?.onBookmarksPressed?()
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
-        omniDelegate?.onSettingsPressed()
+        omniDelegate?.onSettingsPressed?()
+    }
+    
+    @IBAction func onCancelPressed(_ sender: Any) {
+        omniDelegate?.onCancelPressed?()
     }
 }
 
@@ -200,7 +208,7 @@ extension OmniBar: UITextFieldDelegate {
         guard let oldQuery = textField.text else { return true }
         guard let queryRange = oldQuery.range(from: range) else { return true }
         let newQuery = oldQuery.replacingCharacters(in: queryRange, with: string)
-        omniDelegate?.onOmniQueryUpdated(newQuery)
+        omniDelegate?.onOmniQueryUpdated?(newQuery)
         if newQuery.isEmpty {
             refreshState(state.onTextClearedState)
         } else {
@@ -211,7 +219,7 @@ extension OmniBar: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text, text.isEmpty {
-            omniDelegate?.onDismissed()
+            omniDelegate?.onDismissed?()
         }
         refreshState(state.onEditingStoppedState)
     }
@@ -232,6 +240,8 @@ extension OmniBar: Themable {
         textField.tintColor = theme.searchBarTextColor
         
         textField.keyboardAppearance = theme.keyboardAppearance
+        
+        searchLoupe.tintColor = theme.barTintColor
     }
 }
 

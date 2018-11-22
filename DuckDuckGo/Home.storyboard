@@ -39,15 +39,10 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="Oqy-WG-n6F"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="6" minimumInteritemSpacing="0.0" id="xVZ-2l-Z9p">
-                                    <size key="itemSize" width="222" height="240"/>
-                                    <size key="headerReferenceSize" width="0.0" height="8"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
+                                <collectionViewLayout key="collectionViewLayout" id="tPv-3p-raZ" customClass="SlidingAnimationCollectionViewFlowLayout" customModule="DuckDuckGo" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="shortcut" id="gUU-x4-9hP" customClass="ShortcutCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="8" width="86" height="86"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
@@ -91,7 +86,7 @@
                                         <size key="customSize" width="86" height="86"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addShortcut" id="nQ3-Nq-pP3" userLabel="addShortcut" customClass="ShortcutCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="264" y="8" width="86" height="86"/>
+                                        <rect key="frame" x="264" y="0.0" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
@@ -136,17 +131,17 @@
                                         <size key="customSize" width="86" height="86"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="365" height="287"/>
+                                        <rect key="frame" x="2" y="96" width="346" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="365" height="287"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="346" height="287"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="39W-ag-iVs">
-                                                    <rect key="frame" x="83" y="31" width="199" height="159"/>
+                                                    <rect key="frame" x="73.5" y="31" width="199" height="159"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jf-KE-oXj" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="228" width="365" height="48"/>
+                                                    <rect key="frame" x="0.0" y="228" width="346" height="48"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
                                                             <rect key="frame" x="15" y="12" width="24" height="24"/>
@@ -195,7 +190,7 @@
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="width" secondItem="54m-Mn-tex" secondAttribute="width" id="rg4-g2-lb4"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="3i0-li-iSv"/>
-                                        <size key="customSize" width="365" height="287"/>
+                                        <size key="customSize" width="346" height="287"/>
                                         <connections>
                                             <outlet property="imageView" destination="39W-ag-iVs" id="ob1-89-hb0"/>
                                             <outlet property="promptText" destination="73D-OT-n1K" id="Cf8-Rg-Vw7"/>
@@ -228,10 +223,6 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TJG-EA-Atl">
-                                    <rect key="frame" x="0.0" y="0.0" width="350" height="8"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="Oqy-WG-n6F"/>

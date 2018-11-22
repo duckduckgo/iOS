@@ -103,6 +103,13 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         renderers[sourceIndexPath.section].collectionView?(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
     }
     
+    // we can't set this in the storyboard because we're using a custom layout for animations
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 10, height: 10)
+    }
+    
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
@@ -155,7 +162,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private var hidden = false
     private var indexPath: IndexPath!
-    private var parentSize: CGSize!
     
     func install(into controller: HomeViewController) {
         self.controller = controller
@@ -169,12 +175,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         indexPath = IndexPath(row: 0, section: section)
-        
-        // only set once for consistency as the collection view tends to change size
-        if parentSize == nil {
-            parentSize = collectionView.frame.size
-        }
-        
         return hidden ? 0 : 1
     }
     
@@ -190,8 +190,9 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-        let height = (parentSize.height * 2 / 3)
-        return CGSize(width: parentSize.width, height: height)
+        let height = UIScreen.main.bounds.height * 3 / 5
+        let width = collectionView.frame.width
+        return CGSize(width: width, height: height)
     }
     
     func tapped(view: CenteredSearchCell) {

@@ -97,7 +97,8 @@ class HomeViewController: UIViewController {
         guard let menuItems = renderer.menuItemsFor?(itemAt: indexPath.row) else { return }
         
         let menuController = UIMenuController.shared
-        menuController.setTargetRect(menuView.frame, in: self.view)
+        
+        menuController.setTargetRect(menuView.frame, in: self.collectionView)
         menuController.menuItems = menuItems
         menuController.setMenuVisible(true, animated: true)
     }
@@ -122,7 +123,7 @@ class HomeViewController: UIViewController {
         
         collectionView.dataSource = renderers
         collectionView.delegate = renderers
-        view.addGestureRecognizer(collectionViewReorderingGesture)
+        collectionView.addGestureRecognizer(collectionViewReorderingGesture)
     }
 
     override func viewWillAppear(_ animated: Bool) {

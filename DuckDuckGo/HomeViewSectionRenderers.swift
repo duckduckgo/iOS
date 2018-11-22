@@ -26,13 +26,13 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
 
 @objc protocol HomeViewSectionRenderer {
     
-    var numberOfItems: Int { get }
-    
     @objc optional func install(into controller: HomeViewController)
     
     @objc optional func omniBarCancelPressed()
     
     @objc optional func menuItemsFor(itemAt: Int) -> [UIMenuItem]
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -86,7 +86,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return renderers[section].numberOfItems
+        return renderers[section].collectionView(collectionView, numberOfItemsInSection: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -128,7 +128,9 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.chromeDelegate?.setNavigationBarHidden(false)
     }
     
-    let numberOfItems: Int = 1
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
@@ -158,17 +160,23 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var hidden = false
     private var indexPath: IndexPath!
     
-    var numberOfItems: Int {
+    func install(into controller: HomeViewController) {
+        self.controller = controller
+        
+        // TODO if there are already tabs then this must be a new tab
+        if TabsModel.get()?.count ?? 0 > 0 {
+            hidden = true
+        } else {
+            controller.chromeDelegate?.setNavigationBarHidden(true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        indexPath = IndexPath(row: 0, section: section)
         return hidden ? 0 : 1
     }
     
-    func install(into controller: HomeViewController) {
-        self.controller = controller
-        controller.chromeDelegate?.setNavigationBarHidden(true)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        self.indexPath = indexPath
         guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath)
             as? CenteredSearchCell else {
             fatalError("cell is not CenteredSearchCell")
@@ -191,11 +199,12 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func tapped(view: CenteredSearchCell) {
         hidden = true
         
-        self.controller.chromeDelegate?.setNavigationBarHidden(false)
+//
         controller.collectionView.performBatchUpdates({
+            self.controller.chromeDelegate?.setNavigationBarHidden(false)
+            self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
             self.controller.collectionView.deleteItems(at: [indexPath])
         }, completion: { _ in
-            self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
         })
     
     }
@@ -213,8 +222,13 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 }
 
 class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
+
+    // Delegate to model, plus one for the plus button
+    private let numberOfItems = 9
     
-    let numberOfItems: Int = 9
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return numberOfItems
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         

@@ -262,7 +262,7 @@ class CenteredSearchCell: ThemableCollectionViewCell {
         searchBackground.borderColor = theme.searchBarBackgroundColor
         searchBackground.backgroundColor = theme.searchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
-        promptText.textColor = UIColor.greyish
+        promptText.textColor = UIColor.greyish // TODO should this be a themeable color (if so also apply to omnibar)
                 
         switch theme.currentImageSet {
         case .light:

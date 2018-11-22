@@ -59,6 +59,8 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
+    var defaultNavTopConstant: CGFloat!
+    
     let tabSwitcherButton = TabSwitcherButton()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
@@ -70,6 +72,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        defaultNavTopConstant = navBarTop.constant
+        print("***", #function, defaultNavTopConstant)
+        
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()

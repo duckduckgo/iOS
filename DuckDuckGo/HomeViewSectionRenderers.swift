@@ -147,10 +147,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             return collectionView.frame.size
     }
     
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
 }
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
@@ -159,11 +155,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private var hidden = false
     private var indexPath: IndexPath!
+    private var parentSize: CGSize!
     
     func install(into controller: HomeViewController) {
         self.controller = controller
         
-        // TODO if there are already tabs then this must be a new tab
         if TabsModel.get()?.count ?? 0 > 0 {
             hidden = true
         } else {
@@ -173,6 +169,12 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         indexPath = IndexPath(row: 0, section: section)
+        
+        // only set once for consistency as the collection view tends to change size
+        if parentSize == nil {
+            parentSize = collectionView.frame.size
+        }
+        
         return hidden ? 0 : 1
     }
     
@@ -188,23 +190,17 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-        let height = (collectionView.frame.height * 2 / 3)
-        return CGSize(width: collectionView.frame.width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return false
+        let height = (parentSize.height * 2 / 3)
+        return CGSize(width: parentSize.width, height: height)
     }
     
     func tapped(view: CenteredSearchCell) {
         hidden = true
         
-//
         controller.collectionView.performBatchUpdates({
             self.controller.chromeDelegate?.setNavigationBarHidden(false)
             self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
             self.controller.collectionView.deleteItems(at: [indexPath])
-        }, completion: { _ in
         })
     
     }
@@ -216,7 +212,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             self.controller.chromeDelegate?.setNavigationBarHidden(true)
             self.controller.collectionView.insertItems(at: [indexPath])
         })
-
     }
     
 }

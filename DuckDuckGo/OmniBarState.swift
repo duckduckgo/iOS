@@ -81,7 +81,7 @@ struct HomeNonEditingState: OmniBarState {
     var clearTextOnStart = true
     var showSearchLoupe = true
     let showSiteRating = false
-    let showBackground = false
+    let showBackground = true
     let showClear = false
     let showMenu = false
     let showBookmarks = false

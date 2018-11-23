@@ -37,7 +37,6 @@ class OmniBar: UIView {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
 
-    @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
@@ -110,7 +109,6 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
-        searchContainerToSettingsConstraint.priority = state.showSettings ? .defaultHigh : .defaultLow
     }
 
     /*

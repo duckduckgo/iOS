@@ -10,6 +10,9 @@ import UIKit
 
 class SlidingAnimationCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    private lazy var insertedItems = [IndexPath]()
+    private lazy var deletedItems = [IndexPath]()
+    
     override init() {
         super.init()
         print("***", #function)
@@ -36,36 +39,58 @@ class SlidingAnimationCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+        super.prepare(forCollectionViewUpdates: updateItems)
         print("***", #function, updateItems)
-
-        var unprocessedItems = [UICollectionViewUpdateItem]()
+        
+        insertedItems.removeAll()
+        deletedItems.removeAll()
         
         updateItems.forEach { item in
             
             switch item.updateAction {
-                
             case .delete:
-                deleteItem(item)
+                if let path = item.indexPathBeforeUpdate {
+                    deletedItems.append(path)
+                }
+                
+            case .insert:
+                if let path = item.indexPathAfterUpdate {
+                    insertedItems.append(path)
+                }
                 
             default:
-                print("*** unknown updateAction", item)
-                unprocessedItems.append(item)
+                print("no-op")
             }
             
         }
         
-        if !unprocessedItems.isEmpty {
-            super.prepare(forCollectionViewUpdates: unprocessedItems)
+    }
+   
+    override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        print("***", #function, itemIndexPath)
+        guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) else { return nil }
+        if deletedItems.contains(itemIndexPath) {
+            attributes.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -attributes.frame.size.height)
+            attributes.alpha = 0.0
         }
-        
+        return attributes
     }
     
-    private func deleteItem(_ item: UICollectionViewUpdateItem) {
-        guard let path = item.indexPathBeforeUpdate else { return }
-        guard let view = collectionView?.cellForItem(at: path) else { return }
-        UIView.animate(withDuration: 0.3) {
-            view.frame.origin.y = -view.frame.size.height
+    override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else { return nil }
+        print("***", #function, itemIndexPath, attributes)
+        
+        if insertedItems.contains(itemIndexPath) {
+            attributes.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -attributes.frame.size.height)
+            attributes.alpha = 0.0
         }
+        
+        return attributes
+    }
+    
+    override func finalizeCollectionViewUpdates() {
+        super.finalizeCollectionViewUpdates()
+        print("***", #function)
     }
     
 }

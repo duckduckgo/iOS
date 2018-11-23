@@ -25,10 +25,10 @@
                     <rect key="frame" x="7" y="6" width="361" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
-                            <rect key="frame" x="0.0" y="0.0" width="242" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="236" height="40"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Atk-JN-lv8" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="242" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="236" height="40"/>
                                     <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
@@ -44,7 +44,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                                    <rect key="frame" x="10" y="0.0" width="226" height="40"/>
+                                    <rect key="frame" x="10" y="0.0" width="220" height="40"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
                                             <rect key="frame" x="0.0" y="8" width="23" height="24"/>
@@ -62,7 +62,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="53" y="0.0" width="113" height="40"/>
+                                            <rect key="frame" x="53" y="0.0" width="107" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -80,7 +80,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                            <rect key="frame" x="166" y="0.0" width="30" height="40"/>
+                                            <rect key="frame" x="160" y="0.0" width="30" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
                                             </constraints>
@@ -90,7 +90,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                            <rect key="frame" x="196" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="190" y="8" width="30" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
                                             </constraints>
@@ -127,13 +127,13 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1rB-5w-de3">
-                            <rect key="frame" x="246" y="0.0" width="24" height="40"/>
+                            <rect key="frame" x="240" y="0.0" width="30" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="24" id="LgT-YY-fGl"/>
+                                <constraint firstAttribute="width" priority="900" constant="30" id="LgT-YY-fGl"/>
                             </constraints>
                             <state key="normal" image="Settings"/>
                             <connections>
-                                <action selector="onSettingsButtonPressed:" destination="-2" eventType="touchUpInside" id="02y-75-CFb"/>
+                                <action selector="onSettingsButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="Vtp-d6-wPM"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-2d-gri">

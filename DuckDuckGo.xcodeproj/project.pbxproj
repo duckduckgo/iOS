@@ -91,6 +91,7 @@
 		85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C3451E4AA32D00CFDE3A /* SearchBarExtension.swift */; };
 		85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796F11E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift */; };
 		8505839221A6D7D000ED4EDB /* SlidingAnimationCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8505839121A6D7D000ED4EDB /* SlidingAnimationCollectionViewFlowLayout.swift */; };
+		8505839421A841E400ED4EDB /* CancellableOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8505839321A841E400ED4EDB /* CancellableOmniBarState.swift */; };
 		850819D61FDB68F9006561FD /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819D51FDB68F9006561FD /* Onboarding.xcassets */; };
 		850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */; };
 		850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */; };
@@ -573,6 +574,7 @@
 		85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageConfiguration.swift; sourceTree = "<group>"; };
 		85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderers.swift; sourceTree = "<group>"; };
 		8505839121A6D7D000ED4EDB /* SlidingAnimationCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingAnimationCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		8505839321A841E400ED4EDB /* CancellableOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableOmniBarState.swift; sourceTree = "<group>"; };
 		850819D51FDB68F9006561FD /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		850819DA1FDDE176006561FD /* SettingsTutorials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsTutorials.storyboard; sourceTree = "<group>"; };
 		850819DC1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SettingsTutorialAssets.xcassets; sourceTree = "<group>"; };
@@ -2079,6 +2081,7 @@
 				F130D7391E5776C500C45811 /* OmniBarDelegate.swift */,
 				F114C55C1E6717800018F95F /* OmniBar.xib */,
 				F114C55A1E66EB020018F95F /* NibLoading.swift */,
+				8505839321A841E400ED4EDB /* CancellableOmniBarState.swift */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -2945,6 +2948,7 @@
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85A9C37720DD2DC200073340 /* AddToHomeRowCTAViewController.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
+				8505839421A841E400ED4EDB /* CancellableOmniBarState.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,

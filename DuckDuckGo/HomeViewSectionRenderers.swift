@@ -30,6 +30,8 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     
     @objc optional func omniBarCancelPressed()
     
+    @objc optional func openedAsNewTab()
+    
     @objc optional func menuItemsFor(itemAt: Int) -> [UIMenuItem]
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -76,6 +78,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func omniBarCancelPressed() {
         renderers.forEach { renderer in
             renderer.omniBarCancelPressed?()
+        }
+    }
+    
+    func openedAsNewTab() {
+        renderers.forEach { renderer in
+            renderer.openedAsNewTab?()
         }
     }
     
@@ -131,8 +139,16 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
+    weak var controller: HomeViewController!
+    
     func install(into controller: HomeViewController) {
+        self.controller = controller
         controller.chromeDelegate?.setNavigationBarHidden(false)
+        controller.collectionView.isScrollEnabled = false
+    }
+    
+    func openedAsNewTab() {
+        controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -141,9 +157,10 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
-            as? ThemableCollectionViewCell else {
-            fatalError("cell is not a ThemableCollectionViewCell")
+            as? NavigationSearchCell else {
+            fatalError("cell is not a NavigationSearchCell")
         }
+        view.touched = self.touched
         view.frame = collectionView.bounds
         view.decorate(with: ThemeManager.shared.currentTheme)
         return view
@@ -152,6 +169,10 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
             return collectionView.frame.size
+    }
+    
+    func touched(view: NavigationSearchCell) {
+        controller.chromeDelegate?.omniBar.resignFirstResponder()
     }
     
 }
@@ -165,6 +186,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) {
         self.controller = controller
+        
+        controller.chromeDelegate?.omniBar.useCancellableState()
         
         if TabsModel.get()?.count ?? 0 > 0 {
             hidden = true

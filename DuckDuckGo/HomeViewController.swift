@@ -63,6 +63,10 @@ class HomeViewController: UIViewController {
         renderers.omniBarCancelPressed()
     }
     
+    func openedAsNewTab() {
+        renderers.openedAsNewTab()
+    }
+    
     @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -230,6 +234,8 @@ class NavigationSearchCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    var touched: ((NavigationSearchCell) -> Void)?
+    
     override func decorate(with theme: Theme) {
         switch theme.currentImageSet {
         case .light:
@@ -237,6 +243,11 @@ class NavigationSearchCell: ThemableCollectionViewCell {
         case .dark:
             imageView.image = UIImage(named: "LogoLightText")
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        touched?(self)
     }
     
 }
@@ -247,15 +258,12 @@ class CenteredSearchCell: ThemableCollectionViewCell {
     @IBOutlet weak var searchBackground: RoundedRectangleView!
     @IBOutlet weak var promptText: UILabel!
     @IBOutlet weak var searchLoupe: UIImageView!
-    
-    weak var parent: UIView!
-    
-    var tapGesture: UITapGestureRecognizer!
+
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
     
     var tapped: ((CenteredSearchCell) -> Void)?
     
     override func awakeFromNib() {
-        tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
         searchBackground.addGestureRecognizer(tapGesture)
     }
     

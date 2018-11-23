@@ -94,8 +94,8 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
-        if type(of: state) != type(of: newState) {
-            Logger.log(text: "OmniBar entering \(Type.name(newState))")
+        if state.name != newState.name {
+            Logger.log(text: "OmniBar entering \(newState.name)")
             if newState.clearTextOnStart {
                 clear()
             }

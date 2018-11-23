@@ -168,6 +168,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         if TabsModel.get()?.count ?? 0 > 0 {
             hidden = true
+            controller.chromeDelegate?.omniBar.becomeFirstResponder()
         } else {
             controller.chromeDelegate?.setNavigationBarHidden(true)
         }

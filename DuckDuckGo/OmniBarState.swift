@@ -46,7 +46,7 @@ struct HomeEmptyEditingState: OmniBarState {
     let showBackground = false
     let showClear = false
     let showMenu = false
-    let showBookmarks = true
+    let showBookmarks = false
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
@@ -81,7 +81,7 @@ struct HomeNonEditingState: OmniBarState {
     var clearTextOnStart = true
     var showSearchLoupe = true
     let showSiteRating = false
-    let showBackground = true
+    let showBackground = false
     let showClear = false
     let showMenu = false
     let showBookmarks = false

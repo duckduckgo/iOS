@@ -617,7 +617,6 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         attachHomeScreen()
-        omniBar.becomeFirstResponder()
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {

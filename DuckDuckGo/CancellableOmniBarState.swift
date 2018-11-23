@@ -20,11 +20,11 @@ struct SupportingCancelButtonHomeEmptyEditingState: OmniBarState {
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return SupportingCancelButtonHomeNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return self }
-    var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
-    var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
+    var onTextEnteredState: OmniBarState { return SupportingCancelButtonHomeTextEditingState() }
+    var onBrowsingStartedState: OmniBarState { return SupportingCancelButtonBrowsingNonEditingState() }
     var onBrowsingStoppedState: OmniBarState { return self }
     var supportingCancelButtonState: OmniBarState { return self }
 }
@@ -40,12 +40,12 @@ struct SupportingCancelButtonHomeTextEditingState: OmniBarState {
     let showSettings = false
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return SupportingCancelButtonHomeNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
-    var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
+    var onTextClearedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return self }
-    var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
-    var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
+    var onBrowsingStartedState: OmniBarState { return SupportingCancelButtonBrowsingNonEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
     var supportingCancelButtonState: OmniBarState { return self }
 }
 
@@ -61,11 +61,11 @@ struct SupportingCancelButtonHomeNonEditingState: OmniBarState {
     let showCancel: Bool = true
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return self }
-    var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
-    var onTextClearedState: OmniBarState { return HomeEmptyEditingState() }
-    var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
-    var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
-    var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
+    var onEditingStartedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
+    var onTextClearedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
+    var onTextEnteredState: OmniBarState { return SupportingCancelButtonHomeTextEditingState() }
+    var onBrowsingStartedState: OmniBarState { return SupportingCancelButtonBrowsingNonEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return SupportingCancelButtonHomeNonEditingState() }
     var supportingCancelButtonState: OmniBarState { return self }
 }
 
@@ -80,12 +80,12 @@ struct SupportingCancelButtonBrowsingEmptyEditingState: OmniBarState {
     let showSettings = false
     let showCancel: Bool = false
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return SupportingCancelButtonBrowsingNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
     var onTextClearedState: OmniBarState { return self }
-    var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
+    var onTextEnteredState: OmniBarState { return SupportingCancelButtonBrowsingTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return self }
-    var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
     var supportingCancelButtonState: OmniBarState { return self }
 }
 
@@ -100,12 +100,12 @@ struct SupportingCancelButtonBrowsingTextEditingState: OmniBarState {
     let showSettings = false
     let showCancel: Bool = false
     var name: String { return Type.name(self) }
-    var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
+    var onEditingStoppedState: OmniBarState { return SupportingCancelButtonBrowsingNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
-    var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
+    var onTextClearedState: OmniBarState { return SupportingCancelButtonBrowsingEmptyEditingState() }
     var onTextEnteredState: OmniBarState { return self }
     var onBrowsingStartedState: OmniBarState { return self }
-    var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
     var supportingCancelButtonState: OmniBarState { return self }
 }
 
@@ -121,10 +121,10 @@ struct SupportingCancelButtonBrowsingNonEditingState: OmniBarState {
     let showCancel: Bool = false
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return self }
-    var onEditingStartedState: OmniBarState { return BrowsingTextEditingState() }
-    var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
-    var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
+    var onEditingStartedState: OmniBarState { return SupportingCancelButtonBrowsingTextEditingState() }
+    var onTextClearedState: OmniBarState { return SupportingCancelButtonBrowsingEmptyEditingState() }
+    var onTextEnteredState: OmniBarState { return SupportingCancelButtonBrowsingTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return self }
-    var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
+    var onBrowsingStoppedState: OmniBarState { return SupportingCancelButtonHomeNonEditingState() }
     var supportingCancelButtonState: OmniBarState { return self }
 }

@@ -32,9 +32,9 @@ class HomePageConfiguration {
     
     var components: [Component] {
         return [
-            .navigationBarSearch
-//            .centeredSearch,
-//            .shortcuts(rows: 1)
+//            .navigationBarSearch
+            .centeredSearch,
+            .shortcuts(rows: 1)
         ]
     }
     

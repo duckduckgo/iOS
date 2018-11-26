@@ -22,7 +22,10 @@ import WebKit
 import Core
 import Lottie
 
+// swiftlint:disable type_body_length
+// swiftlint:disable file_length
 class MainViewController: UIViewController {
+// swiftlint:enable type_body_length
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -671,4 +674,6 @@ extension MainViewController: Themable {
         
         tabManager.decorate(with: theme)
     }
+    
 }
+// swiftlint:enable file_length

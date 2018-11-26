@@ -22,8 +22,11 @@ import Core
 import Device
 import StoreKit
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class TabViewController: UIViewController {
-    
+// swiftlint:enable type_body_length
+
     private struct Constants {
         static let unsupportedUrlErrorCode = -1002
         static let urlCouldNotBeLoaded = 101
@@ -212,11 +215,13 @@ class TabViewController: UIViewController {
         webView.load(urlRequest)
     }
     
+    // swiftlint:disable block_based_kvo
     open override func observeValue(forKeyPath keyPath: String?,
                                     of object: Any?,
                                     change: [NSKeyValueChangeKey: Any]?,
                                     context: UnsafeMutableRawPointer?) {
-        
+        // swiftlint:enable block_based_kvo
+
         guard let keyPath = keyPath else { return }
         
         switch keyPath {
@@ -860,3 +865,4 @@ extension TabViewController: UIGestureRecognizerDelegate {
         return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
     }
 }
+// swiftlint:enable file_length

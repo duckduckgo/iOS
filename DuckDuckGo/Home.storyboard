@@ -41,11 +41,11 @@
                                 </constraints>
                                 <collectionViewLayout key="collectionViewLayout" id="tPv-3p-raZ" customClass="SlidingAnimationCollectionViewFlowLayout" customModule="DuckDuckGo" customModuleProvider="target"/>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="shortcut" id="gUU-x4-9hP" customClass="ShortcutCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="favorite" id="gUU-x4-9hP" customClass="FavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="86" height="110"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="86" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSk-Na-aIH" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
@@ -68,8 +68,8 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Green" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
-                                                    <rect key="frame" x="0.0" y="72" width="86" height="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End of the World Party" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
+                                                    <rect key="frame" x="0.0" y="72" width="86" height="28"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -83,10 +83,10 @@
                                             <constraint firstItem="ub9-Ui-UI5" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="cFf-co-zDT"/>
                                             <constraint firstItem="NSk-Na-aIH" firstAttribute="top" secondItem="gUU-x4-9hP" secondAttribute="top" id="urI-QN-bAv"/>
                                         </constraints>
-                                        <size key="customSize" width="86" height="86"/>
+                                        <size key="customSize" width="86" height="110"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addShortcut" id="nQ3-Nq-pP3" userLabel="addShortcut" customClass="ShortcutCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="264" y="0.0" width="86" height="86"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addFavorite" id="nQ3-Nq-pP3">
+                                        <rect key="frame" x="264" y="12" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
@@ -130,8 +130,8 @@
                                         </constraints>
                                         <size key="customSize" width="86" height="86"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="2" y="96" width="346" height="287"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="2" y="120" width="346" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="346" height="287"/>
@@ -198,8 +198,8 @@
                                             <outlet property="searchLoupe" destination="Cfx-pb-o8i" id="796-zE-CwE"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="393" width="301" height="298"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="417" width="301" height="298"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="301" height="298"/>

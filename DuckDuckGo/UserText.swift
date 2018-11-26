@@ -145,4 +145,7 @@ public struct UserText {
     public static let sectionTitleBookmarks = NSLocalizedString("section.title.bookmarks", comment: "Bookmarks section title")
     public static let sectionTitleFavorites = NSLocalizedString("section.title.favorites", comment: "Favorites section title")
 
+    public static let favoriteMenuDelete = NSLocalizedString("favorite.menu.delete", comment: "Favorite menu: delete")
+    public static let favoriteMenuEdit = NSLocalizedString("favorite.menu.edit", comment: "Favorite menu: edit")
+
 }

@@ -25,7 +25,7 @@ class HomePageConfiguration {
     enum Component {
         case navigationBarSearch
         case centeredSearch
-        case shortcuts(rows: Int)
+        case favorites
     }
     
     let variantManager: VariantManager
@@ -34,7 +34,7 @@ class HomePageConfiguration {
         return [
 //            .navigationBarSearch
             .centeredSearch,
-            .shortcuts(rows: 1)
+            .favorites
         ]
     }
     

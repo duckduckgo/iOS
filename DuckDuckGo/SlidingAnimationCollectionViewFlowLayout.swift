@@ -24,35 +24,9 @@ class SlidingAnimationCollectionViewFlowLayout: UICollectionViewFlowLayout {
     private lazy var insertedItems = [IndexPath]()
     private lazy var deletedItems = [IndexPath]()
     
-    override init() {
-        super.init()
-        print("***", #function)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        print("***", #function)
-    }
-    
-    override func prepare(forAnimatedBoundsChange oldBounds: CGRect) {
-        super.prepare(forAnimatedBoundsChange: oldBounds)
-        print("***", #function, oldBounds)
-    }
-    
-    override func finalizeAnimatedBoundsChange() {
-        super.finalizeAnimatedBoundsChange()
-        print("***", #function)
-    }
-    
-    override func prepare() {
-        super.prepare()
-        print("***", #function)
-    }
-    
     override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
         super.prepare(forCollectionViewUpdates: updateItems)
-        print("***", #function, updateItems)
-        
+
         insertedItems.removeAll()
         deletedItems.removeAll()
         
@@ -69,8 +43,8 @@ class SlidingAnimationCollectionViewFlowLayout: UICollectionViewFlowLayout {
                     insertedItems.append(path)
                 }
                 
-            default:
-                print("no-op")
+            default: break
+                
             }
             
         }
@@ -78,30 +52,24 @@ class SlidingAnimationCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
    
     override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        print("***", #function, itemIndexPath)
         guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) else { return nil }
         if deletedItems.contains(itemIndexPath) {
-            attributes.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -attributes.frame.size.height)
-            attributes.alpha = 0.0
+            applySlideProperties(to: attributes)
         }
         return attributes
     }
     
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else { return nil }
-        print("***", #function, itemIndexPath, attributes)
-        
         if insertedItems.contains(itemIndexPath) {
-            attributes.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -attributes.frame.size.height)
-            attributes.alpha = 0.0
+            applySlideProperties(to: attributes)
         }
-        
         return attributes
     }
     
-    override func finalizeCollectionViewUpdates() {
-        super.finalizeCollectionViewUpdates()
-        print("***", #function)
+    func applySlideProperties(to attributes: UICollectionViewLayoutAttributes) {
+        attributes.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -attributes.frame.size.height)
+        attributes.alpha = 0.0
     }
     
 }

@@ -130,6 +130,9 @@
 		85371D242121B9D500920548 /* new_tab.json in Resources */ = {isa = PBXBuildFile; fileRef = 85371D232121B9D400920548 /* new_tab.json */; };
 		85371D262121BA2800920548 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85371D252121BA2800920548 /* Lottie.framework */; };
 		85374D3521AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */; };
+		85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */; };
+		85374D3A21AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */; };
+		85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3B21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift */; };
 		85393121203C5F1F009C0B12 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85393120203C5F1F009C0B12 /* main.swift */; };
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
 		853A717620F62FE800FE60BC /* Pixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717520F62FE800FE60BC /* Pixel.swift */; };
@@ -617,6 +620,9 @@
 		85371D232121B9D400920548 /* new_tab.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab.json; sourceTree = "<group>"; };
 		85371D252121BA2800920548 /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/iOS/Lottie.framework; sourceTree = "<group>"; };
 		85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksAndFavoritesDataSource.swift; sourceTree = "<group>"; };
+		85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSearchHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
+		85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredSearchHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
+		85374D3B21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		85393120203C5F1F009C0B12 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
 		853A717520F62FE800FE60BC /* Pixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pixel.swift; sourceTree = "<group>"; };
@@ -1397,6 +1403,16 @@
 			name = PrivacyProtection;
 			sourceTree = "<group>";
 		};
+		85374D3621AC417200FF5A1E /* Renderers */ = {
+			isa = PBXGroup;
+			children = (
+				85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */,
+				85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */,
+				85374D3B21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift */,
+			);
+			name = Renderers;
+			sourceTree = "<group>";
+		};
 		8595BF491FE847EB00F692EC /* ios-js-support */ = {
 			isa = PBXGroup;
 			children = (
@@ -1702,6 +1718,7 @@
 		F13B4BF31F18C73A00814661 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				85374D3621AC417200FF5A1E /* Renderers */,
 				F16390811E648B7A005B4550 /* HomeViewController.swift */,
 				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
 				8563A0341F8E369400F04442 /* Home.storyboard */,
@@ -2929,6 +2946,7 @@
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
+				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
 				839F46B620DD9D31003B8A66 /* FeedbackViewController.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
@@ -2967,6 +2985,7 @@
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
+				85374D3A21AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
 				851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */,
@@ -2988,6 +3007,7 @@
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
+				85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */,
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,

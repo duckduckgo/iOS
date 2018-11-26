@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
     private var defaultVerticalAlignConstant: CGFloat = 0
 
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
-    private lazy var renderers = HomeViewSectionRenderers(controller: self)
+    private lazy var renderers = HomeViewSectionRenderers(controller: self, theme: ThemeManager.shared.currentTheme)
     private lazy var collectionViewReorderingGesture =
         UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
     
@@ -112,16 +112,13 @@ class HomeViewController: UIViewController {
         homePageConfiguration.components.forEach { component in
             switch component {
             case .navigationBarSearch:
-                print("*** Navigation search")
                 self.renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
                 
             case .centeredSearch:
-                print("*** Centered search")
                 self.renderers.install(renderer: CenteredSearchHomeViewSectionRenderer())
 
-            case .shortcuts(let rows):
-                print("*** Shortcuts: \(rows)")
-                self.renderers.install(renderer: ShortcutsHomeViewSectionRenderer())
+            case .favorites:
+                self.renderers.install(renderer: FavoritesHomeViewSectionRenderer())
             }
         }
         
@@ -225,16 +222,17 @@ class HomeViewController: UIViewController {
 extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
+        renderers.theme = theme
         collectionView.reloadData()
         view.backgroundColor = theme.backgroundColor
     }
 }
 
-class NavigationSearchCell: ThemableCollectionViewCell {
+class NavigationSearchHomeCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    var touched: ((NavigationSearchCell) -> Void)?
+    var touched: ((NavigationSearchHomeCell) -> Void)?
     
     override func decorate(with theme: Theme) {
         switch theme.currentImageSet {
@@ -252,7 +250,7 @@ class NavigationSearchCell: ThemableCollectionViewCell {
     
 }
 
-class CenteredSearchCell: ThemableCollectionViewCell {
+class CenteredSearchHomeCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var searchBackground: RoundedRectangleView!
@@ -261,9 +259,10 @@ class CenteredSearchCell: ThemableCollectionViewCell {
 
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
     
-    var tapped: ((CenteredSearchCell) -> Void)?
+    var tapped: ((CenteredSearchHomeCell) -> Void)?
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         searchBackground.addGestureRecognizer(tapGesture)
     }
     
@@ -288,11 +287,11 @@ class CenteredSearchCell: ThemableCollectionViewCell {
     
 }
 
-class ShortcutCell: ThemableCollectionViewCell {
+class FavoriteHomeCell: ThemableCollectionViewCell {
     
     struct Actions {
-        static let delete = #selector(ShortcutCell.doDelete(sender:))
-        static let edit = #selector(ShortcutCell.doEdit(sender:))
+        static let delete = #selector(FavoriteHomeCell.doDelete(sender:))
+        static let edit = #selector(FavoriteHomeCell.doEdit(sender:))
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -308,7 +307,7 @@ class ShortcutCell: ThemableCollectionViewCell {
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        print("***", #function, action, sender)
+        print("***", #function, action)
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     

@@ -53,16 +53,20 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     @objc optional func collectionView(_ collectionView: UICollectionView,
                                        targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath
+    
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    var theme: Theme
+
+    private let controller: HomeViewController
+    
     private var renderers = [HomeViewSectionRenderer]()
     
-    private var controller: HomeViewController
-    
-    init(controller: HomeViewController) {
+    init(controller: HomeViewController, theme: Theme) {
         self.controller = controller
+        self.theme = theme
         super.init()
     }
     
@@ -98,7 +102,11 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
+        let cell = renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
+        if let themable = cell as? ThemableCollectionViewCell {
+            themable.decorate(with: theme)
+        }
+        return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -134,171 +142,4 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         -> CGSize {
             return renderers[indexPath.section].collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
-    
-}
-
-class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
-    
-    weak var controller: HomeViewController!
-    
-    func install(into controller: HomeViewController) {
-        self.controller = controller
-        controller.chromeDelegate?.setNavigationBarHidden(false)
-        controller.collectionView.isScrollEnabled = false
-    }
-    
-    func openedAsNewTab() {
-        controller.chromeDelegate?.omniBar.becomeFirstResponder()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
-            as? NavigationSearchCell else {
-            fatalError("cell is not a NavigationSearchCell")
-        }
-        view.touched = self.touched
-        view.frame = collectionView.bounds
-        view.decorate(with: ThemeManager.shared.currentTheme)
-        return view
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
-        -> CGSize {
-            return collectionView.frame.size
-    }
-    
-    func touched(view: NavigationSearchCell) {
-        controller.chromeDelegate?.omniBar.resignFirstResponder()
-    }
-    
-}
-
-class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
-    
-    private weak var controller: HomeViewController!
-    
-    private var hidden = false
-    private var indexPath: IndexPath!
-    
-    func install(into controller: HomeViewController) {
-        self.controller = controller
-        
-        controller.chromeDelegate?.omniBar.useCancellableState()
-        
-        if TabsModel.get()?.count ?? 0 > 0 {
-            hidden = true
-            controller.chromeDelegate?.omniBar.becomeFirstResponder()
-        } else {
-            controller.chromeDelegate?.setNavigationBarHidden(true)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        indexPath = IndexPath(row: 0, section: section)
-        return hidden ? 0 : 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath)
-            as? CenteredSearchCell else {
-            fatalError("cell is not CenteredSearchCell")
-        }
-        view.decorate(with: ThemeManager.shared.currentTheme)
-        view.tapped = self.tapped
-        return view
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
-        -> CGSize {
-        let height = UIScreen.main.bounds.height * 3 / 5
-        let width = collectionView.frame.width
-        return CGSize(width: width, height: height)
-    }
-    
-    func tapped(view: CenteredSearchCell) {
-        hidden = true
-
-        self.controller.chromeDelegate?.setNavigationBarHidden(false)
-        self.controller.chromeDelegate?.omniBar.alpha = 0.0
-        self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
-        controller.collectionView.performBatchUpdates({
-            self.controller.collectionView.deleteItems(at: [indexPath])
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.3) {
-                self.controller.chromeDelegate?.omniBar.alpha = 1.0
-            }
-        })
-        
-    }
-    
-    func omniBarCancelPressed() {
-        hidden = false
-
-        controller.collectionView.performBatchUpdates({
-            self.controller.chromeDelegate?.setNavigationBarHidden(true)
-            self.controller.collectionView.insertItems(at: [indexPath])
-        })
-    }
-    
-}
-
-class ShortcutsHomeViewSectionRenderer: HomeViewSectionRenderer {
-
-    // Delegate to model, plus one for the plus button
-    private let numberOfItems = 9
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfItems
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if isLastItem(indexPath) {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "addShortcut", for: indexPath)
-        } else {
-            guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "shortcut", for: indexPath) as? ShortcutCell else {
-                fatalError("not a ShortcutCell")
-            }
-            return view
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
-        -> CGSize {
-        return CGSize(width: 80, height: 100)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        print("***", #function, indexPath)
-        return !isLastItem(indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("***", #function)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
-                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-        print("***", #function, originalIndexPath, proposedIndexPath)
-        guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
-        guard !isLastItem(proposedIndexPath) else { return originalIndexPath }
-        return proposedIndexPath
-    }
-    
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem] {
-        return [
-            UIMenuItem(title: "Delete", action: ShortcutCell.Actions.delete),
-            UIMenuItem(title: "Edit", action: ShortcutCell.Actions.edit)
-        ]
-    }
-    
-    private func isLastItem(_ indexPath: IndexPath) -> Bool {
-        return indexPath.row + 1 == numberOfItems
-    }
-    
 }

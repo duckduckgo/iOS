@@ -126,3 +126,6 @@
 
 "section.title.bookmarks" = "Bookmarks";
 "section.title.favorites" = "Favorites";
+
+"favorite.menu.delete" = "Delete";
+"favorite.menu.edit" = "Edit";

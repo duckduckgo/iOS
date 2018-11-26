@@ -23,8 +23,8 @@ import NotificationCenter
 
 class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDelegate, UITableViewDataSource {
     
-    enum StaticRows: Int, CaseIterable {
-        case search = 0
+    struct Constants {
+        static let maxCompactModeBookmarks = 3
     }
     
     private var bookmarks = [Link]()
@@ -44,7 +44,8 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
 
     private func configureWidgetSize() {
         guard let context = extensionContext else { return }
-        let mode = bookmarks.count > 2 ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
+        let compactModeOverflow = bookmarks.count > Constants.maxCompactModeBookmarks
+        let mode = compactModeOverflow ? NCWidgetDisplayMode.expanded : NCWidgetDisplayMode.compact
         context.widgetLargestAvailableDisplayMode = mode
 
         let maxSize = context.widgetMaximumSize(for: mode)
@@ -86,22 +87,15 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StaticRows.allCases.count + (bookmarks.isEmpty ? 1 : bookmarks.count)
+        return bookmarks.isEmpty ? 1 : bookmarks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == StaticRows.search.rawValue {
-            return searchCell(for: indexPath)
-        }
         if bookmarks.isEmpty {
             return noBookmarksCell(for: indexPath)
         }
         let bookmark = bookmarks[bookmarkIndex(forTableIndex: indexPath)!]
         return bookmarkCell(for: indexPath, bookmark: bookmark)
-    }
-
-    func searchCell(for indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "Search", for: indexPath)
     }
     
     func noBookmarksCell(for indexPath: IndexPath) -> UITableViewCell {
@@ -117,18 +111,8 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == StaticRows.search.rawValue {
-            launchSearch()
-            return
-        }
         guard let bookmarkIndex = bookmarkIndex(forTableIndex: indexPath) else { return }
         launchBookmark(at: bookmarkIndex)
-    }
-    
-    private func launchSearch() {
-        let url = URL(string: AppDeepLinks.newSearch)!
-        Pixel.fire(pixel: .bookmarksExtensionSearch)
-        extensionContext?.open(url, completionHandler: nil)
     }
     
     private func launchBookmark(at index: Int) {
@@ -140,7 +124,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
     
     private func bookmarkIndex(forTableIndex indexPath: IndexPath) -> Int? {
-        let bookmarkIndex = indexPath.row - StaticRows.allCases.count
+        let bookmarkIndex = indexPath.row
         guard bookmarkIndex >= 0, bookmarkIndex < bookmarks.count else {
             return nil
         }

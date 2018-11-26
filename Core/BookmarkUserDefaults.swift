@@ -27,6 +27,7 @@ public class BookmarkUserDefaults: BookmarkStore {
 
     private struct Keys {
         static let bookmarkKey = "com.duckduckgo.bookmarks.bookmarkKey"
+        static let favoritesKey = "com.duckduckgo.bookmarks.favoritesKey"
     }
 
     private let userDefaults: UserDefaults
@@ -50,10 +51,31 @@ public class BookmarkUserDefaults: BookmarkStore {
         }
     }
 
+    public var favorites: [Link]? {
+        get {
+            if let data = userDefaults.data(forKey: Keys.favoritesKey) {
+                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
+            }
+            return nil
+        }
+        set(newFavorites) {
+            if let newFavorites = newFavorites {
+                let data = NSKeyedArchiver.archivedData(withRootObject: newFavorites)
+                userDefaults.set(data, forKey: Keys.favoritesKey)
+            }
+        }
+    }
+
     public func addBookmark(_ bookmark: Link) {
         var newBookmarks = bookmarks ?? [Link]()
         newBookmarks.append(bookmark)
         bookmarks = newBookmarks
+    }
+    
+    public func addFavorite(_ favorite: Link) {
+        var newFavorites = favorites ?? [Link]()
+        newFavorites.append(favorite)
+        favorites = newFavorites
     }
 
 }

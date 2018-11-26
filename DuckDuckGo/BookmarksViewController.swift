@@ -26,7 +26,8 @@ class BookmarksViewController: UITableViewController {
 
     weak var delegate: BookmarksDelegate?
 
-    fileprivate lazy var dataSource = BookmarksDataSource()
+    // TODO variant
+    fileprivate lazy var dataSource = BookmarksAndFavoritesDataSource()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +40,9 @@ class BookmarksViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
-            showEditBookmarkAlert(forIndex: indexPath.row)
+            showEditBookmarkAlert(for: indexPath)
         } else {
-            selectBookmark(dataSource.bookmark(atIndex: indexPath.row))
+            selectBookmark(dataSource.bookmark(at: indexPath))
         }
     }
 
@@ -100,22 +101,18 @@ class BookmarksViewController: UITableViewController {
         editButton.isEnabled = false
     }
 
-    fileprivate func showEditBookmarkAlert(forIndex index: Int) {
+    fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
         let title = UserText.alertEditBookmark
-        let bookmark = dataSource.bookmark(atIndex: index)
+        let link = dataSource.bookmark(at: indexPath)
         let alert = EditBookmarkAlert.buildAlert(
             title: title,
-            bookmark: bookmark,
-            saveCompletion: { [weak self] (updatedBookmark) in self?.updateBookmark(updatedBookmark, atIndex: index) },
+            bookmark: link,
+            saveCompletion: { [weak self] (updatedBookmark) in
+                self?.dataSource.tableView(self!.tableView, updateBookmark: updatedBookmark, at: indexPath)
+            },
             cancelCompletion: {}
         )
         present(alert, animated: true)
-    }
-
-    private func updateBookmark(_ updatedBookmark: Link, atIndex index: Int) {
-        let bookmarksManager = BookmarksManager()
-        bookmarksManager.update(index: index, withBookmark: updatedBookmark)
-        tableView.reloadData()
     }
 
     fileprivate func selectBookmark(_ bookmark: Link) {

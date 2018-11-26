@@ -29,8 +29,9 @@ public struct UserText {
     public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo Home")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or type URL")
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Session cleared")
-    public static let webSaveLinkDone = NSLocalizedString("web.url.save.done", comment: "Bookmark saved")
-    
+    public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", comment: "Bookmark saved")
+    public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", comment: "Favorite saved")
+
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
         
@@ -53,10 +54,12 @@ public struct UserText {
     public static let actionRequestDesktopSite = NSLocalizedString("action.title.request.desktop.site", comment: "Request Mobile Site")
     public static let actionRequestMobileSite = NSLocalizedString("action.title.request.mobile.site", comment: "Request Desktop Site")
     public static let actionSaveBookmark = NSLocalizedString("action.title.save.bookmark", comment: "Save Bookmark action")
+    public static let actionSaveFavorite = NSLocalizedString("action.title.save.favorite", comment: "Save Favorite action")
     public static let actionRemoveBookmark = NSLocalizedString("action.title.remove.bookmark", comment: "Remove Bookmark action")
     public static let actionReportBrokenSite = NSLocalizedString("action.title.reportBrokenSite", comment: "Report broken site action")
     public static let actionSettings = NSLocalizedString("action.title.settings", comment: "Settings action")
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", comment: "Save Bookmark action")
+    public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", comment: "Save Favorite action")
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
@@ -138,5 +141,8 @@ public struct UserText {
     public static let customUrlSchemeDontOpen = NSLocalizedString("prompt.custom.url.scheme.dontopen", comment: "Don't open custom url button")
 
     public static let failedToOpenExternally = NSLocalizedString("open.externally.failed", comment: "Don't open custom url button")
+    
+    public static let sectionTitleBookmarks = NSLocalizedString("section.title.bookmarks", comment: "Bookmarks section title")
+    public static let sectionTitleFavorites = NSLocalizedString("section.title.favorites", comment: "Favorites section title")
 
 }

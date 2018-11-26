@@ -27,53 +27,115 @@ class BookmarksManager {
         self.dataStore = dataStore
     }
 
-    var isEmpty: Bool {
-        return dataStore.bookmarks?.isEmpty ?? true
-    }
-
-    var count: Int {
+    var bookmarksCount: Int {
         return dataStore.bookmarks?.count ?? 0
+    }
+    
+    var favoritesCount: Int {
+        return dataStore.favorites?.count ?? 0
     }
 
     func bookmark(atIndex index: Int) -> Link {
         return dataStore.bookmarks![index]
     }
 
+    func favorite(atIndex index: Int) -> Link {
+        return dataStore.favorites![index]
+    }
+
     func save(bookmark: Link) {
         dataStore.addBookmark(bookmark)
     }
 
-    func delete(itemAtIndex index: Int) {
-        if var newBookmarks = dataStore.bookmarks {
-            newBookmarks.remove(at: index)
-            dataStore.bookmarks = newBookmarks
-        }
+    func save(favorite: Link) {
+        dataStore.addFavorite(favorite)
     }
 
-    func move(itemAtIndex oldIndex: Int, to newIndex: Int) {
-        if var newBookmarks = dataStore.bookmarks {
-            let link = newBookmarks.remove(at: oldIndex)
-            newBookmarks.insert(link, at: newIndex)
-            dataStore.bookmarks = newBookmarks
-        }
+    func moveFavorite(at favoriteIndex: Int, toBookmark bookmarkIndex: Int) {
+        guard let link = dataStore.favorites?[favoriteIndex] else { return }
+        guard var bookmarks = dataStore.bookmarks else { return }
+        guard var favorites = dataStore.favorites else { return }
+
+        bookmarks.insert(link, at: bookmarkIndex)
+        favorites.remove(at: favoriteIndex)
+        
+        dataStore.bookmarks = bookmarks
+        dataStore.favorites = favorites
     }
 
-    func update(index: Int, withBookmark newBookmark: Link) {
-        if var newBookmarks = dataStore.bookmarks {
-            _ = newBookmarks.remove(at: index)
-            newBookmarks.insert(newBookmark, at: index)
-            dataStore.bookmarks = newBookmarks
-        }
+    func moveFavorite(at fromIndex: Int, to toIndex: Int) {
+        guard var favorites = dataStore.favorites else { return }
+        let link = favorites.remove(at: fromIndex)
+        favorites.insert(link, at: toIndex)
+        dataStore.favorites = favorites
+    }
+    
+    func moveBookmark(at bookmarkIndex: Int, toFavorite favoriteIndex: Int) {
+        guard let link = dataStore.bookmarks?[bookmarkIndex] else { return }
+        guard var favorites = dataStore.favorites else { return }
+        guard var bookmarks = dataStore.bookmarks else { return }
+
+        favorites.insert(link, at: favoriteIndex)
+        bookmarks.remove(at: bookmarkIndex)
+        
+        dataStore.bookmarks = bookmarks
+        dataStore.favorites = favorites
+    }
+    
+    func moveBookmark(at fromIndex: Int, to toIndex: Int) {
+        guard var bookmarks = dataStore.bookmarks else { return }
+        let link = bookmarks.remove(at: fromIndex)
+        bookmarks.insert(link, at: toIndex)
+        dataStore.bookmarks = bookmarks
+    }
+
+    func deleteBookmark(at index: Int) {
+        guard var bookmarks = dataStore.bookmarks else { return }
+        bookmarks.remove(at: index)
+        dataStore.bookmarks = bookmarks
+    }
+
+    func deleteFavorite(at index: Int) {
+        guard var favorites = dataStore.favorites else { return }
+        favorites.remove(at: index)
+        dataStore.favorites = favorites
+    }
+
+    func updateFavorite(at index: Int, with link: Link) {
+        guard var favorites = dataStore.favorites else { return }
+        _ = favorites.remove(at: index)
+        favorites.insert(link, at: index)
+        dataStore.favorites = favorites
+    }
+
+    func updateBookmark(at index: Int, with link: Link) {
+        guard var bookmarks = dataStore.bookmarks else { return }
+        _ = bookmarks.remove(at: index)
+        bookmarks.insert(link, at: index)
+        dataStore.bookmarks = bookmarks
     }
 
     func clear() {
         dataStore.bookmarks = [Link]()
     }
 
-    func indexOf(url: URL) -> Int? {
+    private func indexOfBookmark(url: URL) -> Int? {
         guard let bookmarks = dataStore.bookmarks else { return nil }
+        return indexOf(url, in: bookmarks)
+    }
+    
+    func contains(url: URL) -> Bool {
+        return nil != indexOfFavorite(url: url) || nil != indexOfBookmark(url: url)
+    }
+
+    private func indexOfFavorite(url: URL) -> Int? {
+        guard let favorites = dataStore.favorites else { return nil }
+        return indexOf(url, in: favorites)
+    }
+    
+    private func indexOf(_ url: URL, in links: [Link]) -> Int? {
         var index = 0
-        for link in bookmarks {
+        for link in links {
             if link.url == url {
                 return index
             }
@@ -81,5 +143,5 @@ class BookmarksManager {
         }
         return nil
     }
-
+    
 }

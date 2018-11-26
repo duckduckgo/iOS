@@ -21,7 +21,8 @@
 "home.link.title" = "DuckDuckGo Home";
 "search.hint.duckduckgo" = "Search or type URL";
 "web.session.clear" = "Session cleared";
-"web.url.save.done" = "Bookmark saved";
+"web.url.save.bookmark.done" = "Bookmark saved";
+"web.url.save.favorite.done" = "Favorite saved";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";
@@ -46,9 +47,11 @@
 "action.title.remove.from.whitelist" = "Remove from Whitelist";
 "action.title.remove.bookmark" = "Remove Bookmark";
 "action.title.save.bookmark" = "Add to Bookmarks";
+"action.title.save.favorite" = "Add to Favorites";
 "action.title.reportBrokenSite" = "Report Broken Site";
 "action.title.settings" = "Settings...";
 "alert.title.save.bookmark" = "Save Bookmark";
+"alert.title.save.favorite" = "Save Favorite";
 "alert.title.edit.bookmark" = "Edit Bookmark";
 
 "alert.title.add.to.whitelist" = "Add to Whitelist";
@@ -120,3 +123,6 @@
 "prompt.custom.url.scheme.dontopen" = "No";
 
 "open.externally.failed" = "Sorry, no app can handle that link.";
+
+"section.title.bookmarks" = "Bookmarks";
+"section.title.favorites" = "Favorites";

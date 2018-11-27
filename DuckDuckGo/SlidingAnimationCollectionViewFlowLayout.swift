@@ -53,17 +53,16 @@ class SlidingAnimationCollectionViewFlowLayout: UICollectionViewFlowLayout {
    
     override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) else { return nil }
-        if deletedItems.contains(itemIndexPath) {
-            applySlideProperties(to: attributes)
-        }
+        guard deletedItems.contains(itemIndexPath) else { return attributes }
+        guard collectionView?.cellForItem(at: itemIndexPath) is CenteredSearchHomeCell else { return attributes }
+        applySlideProperties(to: attributes)
         return attributes
     }
     
     override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else { return nil }
-        if insertedItems.contains(itemIndexPath) {
-            applySlideProperties(to: attributes)
-        }
+        guard insertedItems.contains(itemIndexPath) else { return attributes }
+        applySlideProperties(to: attributes)
         return attributes
     }
     

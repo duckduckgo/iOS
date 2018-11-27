@@ -29,5 +29,4 @@ protocol HomeControllerDelegate: class {
 
     func showInstructions(_ home: HomeViewController)
     
-    func addNewFavorite()
 }

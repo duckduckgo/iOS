@@ -563,20 +563,6 @@ extension MainViewController: HomeControllerDelegate {
         launchInstructions()
     }
     
-    func addNewFavorite() {
-        let alert = EditBookmarkAlert.buildAlert (
-            title: UserText.alertSaveFavorite,
-            bookmark: nil,
-            saveCompletion: { [weak self] newLink in
-                
-            self?.bookmarkStore.addFavorite(newLink)
-            self?.homeController?.refresh()
-                
-        },
-            cancelCompletion: {})
-        self.present(alert, animated: true, completion: nil)
-    }
-    
 }
 
 extension MainViewController: TabDelegate {

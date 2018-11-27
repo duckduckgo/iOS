@@ -291,8 +291,10 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
 
+    var onDelete: (() -> Void)?
+    var onEdit: (() -> Void)?
+    
     private var link: Link!
-    private var indexPath: IndexPath!
     
     struct Actions {
         static let delete = #selector(FavoriteHomeCell.doDelete(sender:))
@@ -312,10 +314,12 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     
     @objc func doDelete(sender: Any?) {
         print("***", #function)
+        onDelete?()
     }
     
     @objc func doEdit(sender: Any?) {
         print("***", #function)
+        onEdit?()
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -323,9 +327,8 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
-    func updateFor(link: Link, at indexPath: IndexPath) {
+    func updateFor(link: Link) {
         self.link = link
-        self.indexPath = indexPath
         
         let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
         iconLabel.text = "\(host.capitalized.first ?? " ")"
@@ -345,10 +348,6 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
             iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { image, error, _, _ in
                 guard error == nil else { return }
                 guard let image = image else { return }
-            
-                // guard image.size.width >= 64, image.size.height >= 64 else { return }
-                
-                print("***", domain, image.size)
                 
                 self.iconLabel.isHidden = true
                 

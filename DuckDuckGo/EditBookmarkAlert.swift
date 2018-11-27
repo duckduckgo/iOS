@@ -57,7 +57,7 @@ class EditBookmarkAlert {
             guard let title = editBox.textFields?[0].text else { return }
             guard var urlString = editBox.textFields?[1].text else { return }
             
-            if !urlString.hasPrefix("http://") || !urlString.hasPrefix("https://") {
+            if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") {
                 urlString = "http://\(urlString)"
             }
             

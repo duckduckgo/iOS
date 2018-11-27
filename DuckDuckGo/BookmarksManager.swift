@@ -53,8 +53,8 @@ class BookmarksManager {
 
     func moveFavorite(at favoriteIndex: Int, toBookmark bookmarkIndex: Int) {
         guard let link = dataStore.favorites?[favoriteIndex] else { return }
-        guard var bookmarks = dataStore.bookmarks else { return }
         guard var favorites = dataStore.favorites else { return }
+        var bookmarks = dataStore.bookmarks ?? []
 
         bookmarks.insert(link, at: bookmarkIndex)
         favorites.remove(at: favoriteIndex)
@@ -72,8 +72,8 @@ class BookmarksManager {
     
     func moveBookmark(at bookmarkIndex: Int, toFavorite favoriteIndex: Int) {
         guard let link = dataStore.bookmarks?[bookmarkIndex] else { return }
-        guard var favorites = dataStore.favorites else { return }
         guard var bookmarks = dataStore.bookmarks else { return }
+        var favorites = dataStore.favorites ?? []
 
         favorites.insert(link, at: favoriteIndex)
         bookmarks.remove(at: bookmarkIndex)

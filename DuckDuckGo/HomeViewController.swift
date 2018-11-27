@@ -284,6 +284,26 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
     
 }
 
+class AddFavoriteHomeCell: ThemableCollectionViewCell {
+    
+    @IBOutlet weak var plusImage: UIImageView!
+    @IBOutlet weak var plusBackground: UIView!
+    
+    override func decorate(with theme: Theme) {
+        
+        switch theme.currentImageSet {
+        case .light:
+            plusImage.image = UIImage(named: "AddFavoriteLight")
+            plusBackground.backgroundColor = UIColor.mercury
+            
+        case .dark:
+            plusImage.image = UIImage(named: "AddFavoriteDark")
+            plusBackground.backgroundColor = UIColor.black
+        }
+    }
+    
+}
+
 class FavoriteHomeCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -306,6 +326,7 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     }
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         iconBackground.layer.shadowRadius = 1
         iconBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
         iconBackground.layer.shadowColor = UIColor.black.cgColor

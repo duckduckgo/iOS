@@ -30,8 +30,8 @@ class BookmarkCell: UITableViewCell {
 
     private(set) var bookmark: Link?
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func awakeFromNib() {
+        super.awakeFromNib()
         showsReorderControl = true
     }
 

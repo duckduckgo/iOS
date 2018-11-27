@@ -47,8 +47,8 @@ class OmniBar: UIView {
         return OmniBar.load(nibName: "OmniBar")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func awakeFromNib() {
+        super.awakeFromNib()
         configureTextField()
         configureSeparator()
         configureEditingMenu()
@@ -98,7 +98,7 @@ class OmniBar: UIView {
 
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
-            Logger.log(text: "OmniBar entering \(newState.name)")
+            Logger.log(text: "OmniBar entering \(newState.name) from \(state.name)")
             if newState.clearTextOnStart {
                 clear()
             }
@@ -244,6 +244,14 @@ extension OmniBar: Themable {
         textField.keyboardAppearance = theme.keyboardAppearance
         
         searchLoupe.tintColor = theme.barTintColor
+        
+        switch theme.currentImageSet {
+        case .dark:
+            cancelButton.setTitleColor(UIColor.lightGreyish, for: .normal)
+
+        case .light:
+            cancelButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
+        }
     }
 }
 

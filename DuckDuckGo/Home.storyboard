@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="proximanova-bold.otf">
-            <string>ProximaNova-Bold</string>
-        </array>
         <array key="proximanova-light.otf">
             <string>ProximaNova-Light</string>
         </array>
@@ -111,7 +108,7 @@
                                             <outlet property="titleLabel" destination="ub9-Ui-UI5" id="ipc-Fc-slx"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addFavorite" id="nQ3-Nq-pP3">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addFavorite" id="nQ3-Nq-pP3" customClass="AddFavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="264" y="12" width="86" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -121,18 +118,15 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFb-1e-ukI" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="11" y="0.0" width="64" height="64"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kl-fs-YHg">
-                                                            <rect key="frame" x="20" y="12.5" width="24" height="47"/>
-                                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="40"/>
-                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddFavoriteDark" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-Qc-r6G">
+                                                            <rect key="frame" x="20" y="20" width="24" height="24"/>
+                                                        </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstItem="8kl-fs-YHg" firstAttribute="centerX" secondItem="xFb-1e-ukI" secondAttribute="centerX" id="AtB-iJ-GjQ"/>
+                                                        <constraint firstItem="O5x-Qc-r6G" firstAttribute="centerY" secondItem="xFb-1e-ukI" secondAttribute="centerY" id="YUF-IN-Xoo"/>
                                                         <constraint firstAttribute="height" constant="64" id="gTp-Pg-ux9"/>
-                                                        <constraint firstItem="8kl-fs-YHg" firstAttribute="centerY" secondItem="xFb-1e-ukI" secondAttribute="centerY" constant="4" id="mNH-Mf-akC"/>
+                                                        <constraint firstItem="O5x-Qc-r6G" firstAttribute="centerX" secondItem="xFb-1e-ukI" secondAttribute="centerX" id="pEh-F4-m7v"/>
                                                         <constraint firstAttribute="width" constant="64" id="pO5-7O-I8t"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -155,6 +149,10 @@
                                             <constraint firstItem="xFb-1e-ukI" firstAttribute="centerX" secondItem="nQ3-Nq-pP3" secondAttribute="centerX" id="YHB-fQ-Ziz"/>
                                         </constraints>
                                         <size key="customSize" width="86" height="86"/>
+                                        <connections>
+                                            <outlet property="plusBackground" destination="xFb-1e-ukI" id="go8-q4-Szx"/>
+                                            <outlet property="plusImage" destination="O5x-Qc-r6G" id="wo2-BP-32F"/>
+                                        </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="2" y="120" width="346" height="287"/>
@@ -177,8 +175,8 @@
                                                                 <constraint firstAttribute="width" constant="24" id="Nin-Am-qlx"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
-                                                            <rect key="frame" x="47" y="16" width="128" height="16.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter an address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
+                                                            <rect key="frame" x="47" y="17" width="169" height="14"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -304,6 +302,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AddFavoriteDark" width="24" height="24"/>
         <image name="LogoDarkText" width="199" height="159"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="SplashBackground" width="375" height="667"/>

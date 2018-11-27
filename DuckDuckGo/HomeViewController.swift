@@ -297,7 +297,7 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
-    
+
     private var link: Link!
     private var indexPath: IndexPath!
     
@@ -308,6 +308,13 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    override func awakeFromNib() {
+        iconBackground.layer.shadowRadius = 1
+        iconBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
+        iconBackground.layer.shadowColor = UIColor.black.cgColor
+        iconBackground.layer.shadowOpacity = 0.12
     }
     
     @objc func doDelete(sender: Any?) {
@@ -342,16 +349,23 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         
         if let domain = link.url.host {
             let resource = AppUrls().faviconUrl(forDomain: domain)
-            iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, url in
+            iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { image, error, _, _ in
                 guard error == nil else { return }
                 guard let image = image else { return }
-//                guard image.size.width >= 64, image.size.height >= 64 else { return }
+            
+                // guard image.size.width >= 64, image.size.height >= 64 else { return }
                 
                 print("***", domain, image.size)
                 
-                self.iconImage.isHidden = false
-                self.iconBackground.backgroundColor = UIColor.white
                 self.iconLabel.isHidden = true
+                
+                self.iconImage.isHidden = false
+                self.iconImage.contentMode = image.size.width >= 64 ? .scaleAspectFit : .center
+                self.iconImage.layer.masksToBounds = true
+                self.iconImage.layer.cornerRadius = 8
+                
+                self.iconBackground.backgroundColor = UIColor.white
+
             }
         }
         

@@ -66,7 +66,7 @@ extension UIView {
         layer.shadowOffset = CGSize(width: 0, height: 1.5)
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 1.5
-        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
+        // layer.shadowPath = UIBezierPath(rect: bounds).cgPath
     }
 
     public func clearSubviews() {

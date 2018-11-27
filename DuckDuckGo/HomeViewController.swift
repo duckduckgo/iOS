@@ -59,6 +59,10 @@ class HomeViewController: UIViewController {
         
     }
     
+    func refresh() {
+        collectionView.reloadData()
+    }
+    
     func omniBarCancelPressed() {
         renderers.omniBarCancelPressed()
     }
@@ -289,6 +293,14 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
 
 class FavoriteHomeCell: ThemableCollectionViewCell {
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var iconLabel: UILabel!
+    @IBOutlet weak var iconBackground: UIView!
+    @IBOutlet weak var iconImage: UIImageView!
+    
+    private var link: Link!
+    private var indexPath: IndexPath!
+    
     struct Actions {
         static let delete = #selector(FavoriteHomeCell.doDelete(sender:))
         static let edit = #selector(FavoriteHomeCell.doEdit(sender:))
@@ -309,6 +321,50 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         print("***", #function, action)
         return [ Actions.delete, Actions.edit ].contains(action)
+    }
+    
+    func updateFor(link: Link, at indexPath: IndexPath) {
+        self.link = link
+        self.indexPath = indexPath
+        
+        let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
+        iconLabel.text = "\(host.capitalized.first ?? " ")"
+        
+        let hash = host.consistentHash
+        let red = CGFloat((hash >> 0) & 0xFF)
+        let green = CGFloat((hash >> 8) & 0xFF)
+        let blue = CGFloat((hash >> 16) & 0xFF)
+        iconBackground.backgroundColor = UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1.0)
+        titleLabel.text = link.title
+        
+        iconImage.isHidden = true
+        iconLabel.isHidden = false
+        
+        if let domain = link.url.host {
+            let resource = AppUrls().faviconUrl(forDomain: domain)
+            iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { image, error, cacheType, url in
+                guard error == nil else { return }
+                guard let image = image else { return }
+//                guard image.size.width >= 64, image.size.height >= 64 else { return }
+                
+                print("***", domain, image.size)
+                
+                self.iconImage.isHidden = false
+                self.iconBackground.backgroundColor = UIColor.white
+                self.iconLabel.isHidden = true
+            }
+        }
+        
+    }
+    
+}
+
+fileprivate extension String {
+    
+    var consistentHash: Int {
+        return self.utf8
+            .map { return $0 }
+            .reduce(5381) { ($0 << 5) &+ $0 &+ Int($1) }
     }
     
 }

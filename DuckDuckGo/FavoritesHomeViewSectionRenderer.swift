@@ -10,8 +10,12 @@ import UIKit
 
 class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
-    // Delegate to model, plus one for the plus button
-    private let numberOfItems = 9
+    private lazy var bookmarksManager = BookmarksManager()
+
+    // The add button is the plus one
+    private var numberOfItems: Int {
+        return bookmarksManager.favoritesCount + 1
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItems
@@ -22,10 +26,13 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         if isLastItem(indexPath) {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "addFavorite", for: indexPath)
         } else {
-            guard let view = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
                 fatalError("not a FavoriteCell")
             }
-            return view
+            
+            let link = bookmarksManager.favorite(atIndex: indexPath.row)
+            cell.updateFor(link: link, at: indexPath)
+            return cell
         }
         
     }
@@ -42,6 +49,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("***", #function)
+        bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,

@@ -12,9 +12,15 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private lazy var bookmarksManager = BookmarksManager()
 
+    private weak var controller: HomeViewController!
+    
     // The add button is the plus one
     private var numberOfItems: Int {
         return bookmarksManager.favoritesCount + 1
+    }
+    
+    func install(into controller: HomeViewController) {
+        self.controller = controller
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -69,6 +75,20 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private func isLastItem(_ indexPath: IndexPath) -> Bool {
         return indexPath.row + 1 == numberOfItems
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isLastItem(indexPath) {
+            controller.delegate?.addNewFavorite()
+        } else {
+            let link = bookmarksManager.favorite(atIndex: indexPath.row)
+            UISelectionFeedbackGenerator().selectionChanged()
+            controller.delegate?.home(controller, didRequestUrl: link.url)
+        }
     }
     
 }

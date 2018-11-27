@@ -31,7 +31,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             as? NavigationSearchHomeCell else {
                 fatalError("cell is not a NavigationSearchHomeCell")
         }
-        cell.touched = self.touched
         cell.frame = collectionView.bounds
         return cell
     }
@@ -41,8 +40,12 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
     }
+  
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
-    func touched(view: NavigationSearchHomeCell) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         controller.chromeDelegate?.omniBar.resignFirstResponder()
     }
     

@@ -26,7 +26,7 @@ class EditBookmarkAlert {
     typealias CancelCompletion = () -> Void
 
     static func buildAlert(title: String,
-                           bookmark: Link,
+                           bookmark: Link?,
                            saveCompletion: @escaping SaveCompletion,
                            cancelCompletion: @escaping CancelCompletion) -> UIAlertController {
 
@@ -34,11 +34,13 @@ class EditBookmarkAlert {
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         editBox.addTextField { (textField) in
-            textField.text = bookmark.title
+            textField.text = bookmark?.title
+            textField.placeholder = "Website Title"
             textField.keyboardAppearance = keyboardAppearance
         }
         editBox.addTextField { (textField) in
-            textField.text = bookmark.url.absoluteString
+            textField.text = bookmark?.url.absoluteString
+            textField.placeholder = "www.example.com"
             textField.keyboardAppearance = keyboardAppearance
         }
         editBox.addAction(saveAction(editBox: editBox, originalBookmark: bookmark, completion: saveCompletion))
@@ -47,16 +49,22 @@ class EditBookmarkAlert {
     }
 
     private static func saveAction(editBox: UIAlertController,
-                                   originalBookmark bookmark: Link,
+                                   originalBookmark bookmark: Link?,
                                    completion: @escaping SaveCompletion) -> UIAlertAction {
         
         return UIAlertAction(title: UserText.actionSave, style: .default) { (_) in
-            if let title = editBox.textFields?[0].text,
-                let urlString = editBox.textFields?[1].text,
-                let url = URL(string: urlString) {
-                let newBookmark = Link(title: title, url: url)
-                completion(newBookmark)
+            
+            guard let title = editBox.textFields?[0].text else { return }
+            guard var urlString = editBox.textFields?[1].text else { return }
+            
+            if !urlString.hasPrefix("http://") || !urlString.hasPrefix("https://") {
+                urlString = "http://\(urlString)"
             }
+            
+            guard let url = URL(string: urlString) else { return }
+            
+            completion(Link(title: title, url: url))
+
         }
     }
 

@@ -54,6 +54,10 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
                                        targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath
     
+    @objc optional func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -117,6 +121,14 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("***", #function)
         renderers[sourceIndexPath.section].collectionView?(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return renderers[indexPath.section].collectionView?(collectionView, shouldSelectItemAt: indexPath) ?? false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        renderers[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
     }
     
     // we can't set this in the storyboard because we're using a custom layout for animations

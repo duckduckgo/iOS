@@ -236,8 +236,6 @@ class NavigationSearchHomeCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    var touched: ((NavigationSearchHomeCell) -> Void)?
-    
     override func decorate(with theme: Theme) {
         switch theme.currentImageSet {
         case .light:
@@ -245,11 +243,6 @@ class NavigationSearchHomeCell: ThemableCollectionViewCell {
         case .dark:
             imageView.image = UIImage(named: "LogoLightText")
         }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        touched?(self)
     }
     
 }

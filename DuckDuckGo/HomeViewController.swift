@@ -314,7 +314,8 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     
-    private var link: Link!
+    private var link: Link?
+    private var theme: Theme?
     
     struct Actions {
         static let delete = #selector(FavoriteHomeCell.doDelete(sender:))
@@ -348,40 +349,56 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
+    override func decorate(with theme: Theme) {
+        super.decorate(with: theme)
+        self.theme = theme
+        
+        if let link = link {
+            updateFor(link: link)
+        }
+    }
+    
     func updateFor(link: Link) {
         self.link = link
         
         let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
         iconLabel.text = "\(host.capitalized.first ?? " ")"
         
-        let hash = host.consistentHash
-        let red = CGFloat((hash >> 0) & 0xFF)
-        let green = CGFloat((hash >> 8) & 0xFF)
-        let blue = CGFloat((hash >> 16) & 0xFF)
-        iconBackground.backgroundColor = UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1.0)
         titleLabel.text = link.title
         
         iconImage.isHidden = true
         iconLabel.isHidden = false
         
+        iconBackground.backgroundColor = host.color
+        
         if let domain = link.url.host {
             let resource = AppUrls().faviconUrl(forDomain: domain)
-            iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { image, error, _, _ in
+            iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { [weak self] image, error, _, _ in
                 guard error == nil else { return }
                 guard let image = image else { return }
-                
-                self.iconLabel.isHidden = true
-                
-                self.iconImage.isHidden = false
-                self.iconImage.contentMode = image.size.width >= 64 ? .scaleAspectFit : .center
-                self.iconImage.layer.masksToBounds = true
-                self.iconImage.layer.cornerRadius = 8
-                
-                self.iconBackground.backgroundColor = UIColor.white
-
+                guard image.size.width > 16 else { return }
+                self?.applyFavicon(image)
             }
         }
         
+    }
+      
+    func applyFavicon(_ image: UIImage) {
+        iconLabel.isHidden = true
+        
+        iconImage.isHidden = false
+        iconImage.contentMode = image.size.width >= 64 ? .scaleAspectFit : .center
+        iconImage.layer.masksToBounds = true
+        iconImage.layer.cornerRadius = 8
+        
+        guard let theme = theme else { return }
+        switch theme.currentImageSet {
+        case .dark:
+            iconBackground.backgroundColor = UIColor.charcoalGrey
+            
+        case .light:
+            iconBackground.backgroundColor = UIColor.white
+        }
     }
     
 }
@@ -392,6 +409,14 @@ fileprivate extension String {
         return self.utf8
             .map { return $0 }
             .reduce(5381) { ($0 << 5) &+ $0 &+ Int($1) }
+    }
+    
+    var color: UIColor {
+        let hash = consistentHash
+        let red = CGFloat((hash >> 0) & 0xFF)
+        let green = CGFloat((hash >> 8) & 0xFF)
+        let blue = CGFloat((hash >> 16) & 0xFF)
+        return UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1.0)
     }
     
 }

@@ -51,7 +51,7 @@
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSk-Na-aIH" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="11" y="0.0" width="64" height="64"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashBackground" translatesAutoresizingMaskIntoConstraints="NO" id="l4L-qz-0fA">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l4L-qz-0fA">
                                                             <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                         </imageView>
                                                     </subviews>
@@ -78,15 +78,15 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo: End of the World Party" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
-                                                    <rect key="frame" x="0.0" y="72" width="86" height="28"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <rect key="frame" x="0.0" y="72" width="86" height="24"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37H-y3-Odu">
-                                                    <rect key="frame" x="27.5" y="5" width="31" height="54"/>
+                                                    <rect key="frame" x="27.5" y="9" width="31" height="54"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Light" family="Proxima Nova" pointSize="54"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -95,7 +95,7 @@
                                             <constraint firstItem="ub9-Ui-UI5" firstAttribute="width" secondItem="gUU-x4-9hP" secondAttribute="width" id="B3j-fd-KeV"/>
                                             <constraint firstItem="ub9-Ui-UI5" firstAttribute="top" secondItem="NSk-Na-aIH" secondAttribute="bottom" constant="8" id="SAJ-Kl-EwG"/>
                                             <constraint firstItem="NSk-Na-aIH" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="VO0-c5-12v"/>
-                                            <constraint firstItem="37H-y3-Odu" firstAttribute="centerY" secondItem="NSk-Na-aIH" secondAttribute="centerY" id="Z6g-HY-CMG"/>
+                                            <constraint firstItem="37H-y3-Odu" firstAttribute="centerY" secondItem="NSk-Na-aIH" secondAttribute="centerY" constant="4" id="Z6g-HY-CMG"/>
                                             <constraint firstItem="ub9-Ui-UI5" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="cFf-co-zDT"/>
                                             <constraint firstItem="37H-y3-Odu" firstAttribute="centerX" secondItem="NSk-Na-aIH" secondAttribute="centerX" id="raW-fO-Fna"/>
                                             <constraint firstItem="NSk-Na-aIH" firstAttribute="top" secondItem="gUU-x4-9hP" secondAttribute="top" id="urI-QN-bAv"/>
@@ -305,6 +305,5 @@
         <image name="AddFavoriteDark" width="24" height="24"/>
         <image name="LogoDarkText" width="199" height="159"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
-        <image name="SplashBackground" width="375" height="667"/>
     </resources>
 </document>

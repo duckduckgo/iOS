@@ -58,6 +58,10 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     
     @objc optional func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
     
+    @objc optional func collectionView(_ collectionView: UICollectionView,
+                                       layout collectionViewLayout: UICollectionViewLayout,
+                                       referenceSizeForHeaderInSection section: Int) -> CGSize
+    
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -131,13 +135,6 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         renderers[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
     }
     
-    // we can't set this in the storyboard because we're using a custom layout for animations
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 10)
-    }
-    
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
@@ -148,6 +145,13 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
                                                                     toProposedIndexPath: proposedIndexPath) ?? originalIndexPath
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section)
+            ?? CGSize.zero
+    }
+
     // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)

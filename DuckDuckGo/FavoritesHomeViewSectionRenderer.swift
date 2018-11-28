@@ -77,7 +77,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            return CGSize(width: 80, height: 100)
+            return CGSize(width: 68, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
@@ -97,7 +97,14 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         guard !isLastItem(proposedIndexPath) else { return originalIndexPath }
         return proposedIndexPath
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        return CGSize(width: 1, height: 39)
+    }
+
     func menuItemsFor(itemAt: Int) -> [UIMenuItem] {
         return [
             UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),

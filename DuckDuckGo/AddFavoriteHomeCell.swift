@@ -22,7 +22,7 @@ class AddFavoriteHomeCell: ThemableCollectionViewCell {
             
         case .dark:
             plusImage.tintColor = UIColor.darkGreyish.applyAlpha(0.6)
-            plusBackground.backgroundColor = UIColor.black
+            plusBackground.backgroundColor = UIColor.reallyBlack
         }
     }
     

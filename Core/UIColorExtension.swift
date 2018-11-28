@@ -20,7 +20,11 @@
 import UIKit
 
 extension UIColor {
-    
+
+    public static var reallyBlack: UIColor {
+        return UIColor(red: 25.0 / 255.0, green: 25.0 / 255.0, blue: 25.0 / 255.0, alpha: 1.0)
+    }
+
     public static var nearlyBlackLight: UIColor {
         return UIColor(red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
     }

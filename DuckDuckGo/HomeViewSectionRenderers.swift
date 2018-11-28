@@ -124,12 +124,10 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     }
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        print("***", #function)
         return renderers[indexPath.section].collectionView?(collectionView, canMoveItemAt: indexPath) ?? false
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("***", #function)
         renderers[sourceIndexPath.section].collectionView?(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
     }
     
@@ -145,7 +143,6 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-        print("***", #function)
         return renderers[originalIndexPath.section].collectionView?(collectionView,
                                                                     targetIndexPathForMoveFromItemAt: originalIndexPath,
                                                                     toProposedIndexPath: proposedIndexPath) ?? originalIndexPath

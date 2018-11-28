@@ -36,28 +36,32 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
                 fatalError("not a FavoriteCell")
             }
-            
+
             let link = bookmarksManager.favorite(atIndex: indexPath.row)
             cell.updateFor(link: link)
+
+            // can't use captured index path because deleting items can change it
             cell.onDelete = { [weak self] in
-                self?.deleteFavorite(at: indexPath, in: collectionView)
+                self?.deleteFavorite(cell, collectionView)
             }
             cell.onEdit = { [weak self] in
-                self?.editFavorite(at: indexPath, in: collectionView)
+                self?.editFavorite(cell, collectionView)
             }
             return cell
         }
         
     }
     
-    private func deleteFavorite(at indexPath: IndexPath, in collectionView: UICollectionView) {
+    private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         bookmarksManager.deleteFavorite(at: indexPath.row)
         collectionView.performBatchUpdates({
             collectionView.deleteItems(at: [indexPath])
         })
     }
     
-    private func editFavorite(at indexPath: IndexPath, in collectionView: UICollectionView) {
+    private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveFavorite,
             bookmark: bookmarksManager.favorite(atIndex: indexPath.row),
@@ -81,18 +85,15 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        print("***", #function, indexPath)
         return !isLastItem(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("***", #function)
         bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-        print("***", #function, originalIndexPath, proposedIndexPath)
         guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
         guard !isLastItem(proposedIndexPath) else { return originalIndexPath }
         return proposedIndexPath

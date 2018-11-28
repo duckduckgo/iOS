@@ -42,12 +42,10 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
     }
     
     @IBAction func onSettingsTapped() {
-        print("***", #function)
         settingsTapped?(self)
     }
     
     @objc func onTap() {
-        print("***", #function)
         tapped?(self)
     }
     

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -26,48 +26,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="36" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MWS-Zg-U7j">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="37" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="MWS-Zg-U7j">
                                 <rect key="frame" x="12" y="0.0" width="296" height="180"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Search" id="orn-7K-1Ne">
-                                        <rect key="frame" x="0.0" y="28" width="296" height="36"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="orn-7K-1Ne" id="3J3-QD-jWz">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="35.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="5X6-1f-6Xw">
-                                                    <rect key="frame" x="12" y="11" width="16" height="16"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="Nua-6G-sgl"/>
-                                                        <constraint firstAttribute="width" constant="16" id="ZmL-jn-UMJ"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Private Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozS-NB-CBy">
-                                                    <rect key="frame" x="40" y="0.0" width="244" height="37.5"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
-                                                    <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="5X6-1f-6Xw" firstAttribute="leading" secondItem="3J3-QD-jWz" secondAttribute="leading" constant="12" id="2Cu-t1-lig"/>
-                                                <constraint firstItem="ozS-NB-CBy" firstAttribute="top" secondItem="3J3-QD-jWz" secondAttribute="top" id="6YI-Jd-EHD"/>
-                                                <constraint firstItem="5X6-1f-6Xw" firstAttribute="centerY" secondItem="3J3-QD-jWz" secondAttribute="centerY" id="6ZF-7A-FMe"/>
-                                                <constraint firstAttribute="trailing" secondItem="ozS-NB-CBy" secondAttribute="trailing" constant="12" id="EMH-zv-Ezi"/>
-                                                <constraint firstItem="ozS-NB-CBy" firstAttribute="leading" secondItem="5X6-1f-6Xw" secondAttribute="trailing" constant="12" id="PSo-u5-WLd"/>
-                                                <constraint firstAttribute="bottom" secondItem="ozS-NB-CBy" secondAttribute="bottom" id="qa9-g5-Wo3"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Bookmark" id="bj8-hq-ZTt" customClass="BookmarkCell" customModule="BookmarksTodayExtension" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="296" height="36"/>
+                                        <rect key="frame" x="0.0" y="1" width="296" height="37"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bj8-hq-ZTt" id="TMa-E4-eO9">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="35.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="36.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GlobeSmall" translatesAutoresizingMaskIntoConstraints="NO" id="vgB-1o-UpV">
@@ -78,18 +45,17 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwn-xD-5yb">
-                                                    <rect key="frame" x="40" y="0.0" width="244" height="37.5"/>
+                                                    <rect key="frame" x="40" y="12.5" width="244" height="13"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="bwn-xD-5yb" firstAttribute="top" secondItem="TMa-E4-eO9" secondAttribute="top" id="1N2-An-EZM"/>
                                                 <constraint firstItem="vgB-1o-UpV" firstAttribute="leading" secondItem="TMa-E4-eO9" secondAttribute="leading" constant="12" id="Jg6-Z6-XIK"/>
                                                 <constraint firstAttribute="trailing" secondItem="bwn-xD-5yb" secondAttribute="trailing" constant="12" id="POc-ax-KN4"/>
                                                 <constraint firstItem="bwn-xD-5yb" firstAttribute="leading" secondItem="vgB-1o-UpV" secondAttribute="trailing" constant="12" id="Q4I-Bl-Gey"/>
-                                                <constraint firstAttribute="bottom" secondItem="bwn-xD-5yb" secondAttribute="bottom" id="tZt-fK-0lL"/>
+                                                <constraint firstItem="bwn-xD-5yb" firstAttribute="centerY" secondItem="TMa-E4-eO9" secondAttribute="centerY" id="QU6-hJ-Ubv"/>
                                                 <constraint firstItem="vgB-1o-UpV" firstAttribute="centerY" secondItem="TMa-E4-eO9" secondAttribute="centerY" id="y8y-E8-fCm"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -101,14 +67,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NoBookmarks" textLabel="yga-ZB-lD8" style="IBUITableViewCellStyleDefault" id="DER-8H-iW5">
-                                        <rect key="frame" x="0.0" y="100" width="296" height="36"/>
+                                        <rect key="frame" x="0.0" y="38" width="296" height="37"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DER-8H-iW5" id="Umv-Da-dOh">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="35.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="36.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="No bookmarks yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yga-ZB-lD8">
-                                                    <rect key="frame" x="15" y="0.0" width="266" height="35.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="266" height="36.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="11"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.0039215686269999999" blue="0.0039215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -154,6 +120,5 @@
     </scenes>
     <resources>
         <image name="GlobeSmall" width="24" height="24"/>
-        <image name="SearchLoupe" width="24" height="24"/>
     </resources>
 </document>

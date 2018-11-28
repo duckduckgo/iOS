@@ -565,6 +565,10 @@ extension MainViewController: HomeControllerDelegate {
         launchInstructions()
     }
     
+    func showSettings(_ home: HomeViewController) {
+        launchSettings()
+    }
+    
 }
 
 extension MainViewController: TabDelegate {

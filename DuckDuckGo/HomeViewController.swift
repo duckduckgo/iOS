@@ -55,7 +55,7 @@ class HomeViewController: UIViewController {
 
         configureCollectionView()
         
-        applyTheme(ThemeManager.shared.currentTheme)        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     func refresh() {
@@ -68,6 +68,10 @@ class HomeViewController: UIViewController {
     
     func openedAsNewTab() {
         renderers.openedAsNewTab()
+    }
+    
+    func launchSettings() {
+        delegate?.showSettings(self)
     }
     
     @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {

@@ -118,8 +118,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFb-1e-ukI" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="2" y="0.0" width="64" height="64"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-Qc-r6G">
-                                                            <rect key="frame" x="25" y="25" width="14" height="14"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddFavorite" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-Qc-r6G">
+                                                            <rect key="frame" x="20" y="20" width="24" height="24"/>
                                                             <color key="tintColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                     </subviews>
@@ -155,7 +155,7 @@
                                             <outlet property="plusImage" destination="O5x-Qc-r6G" id="wo2-BP-32F"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="24.5" y="120" width="326" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -204,15 +204,24 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-YB-mZi">
+                                                    <rect key="frame" x="303" y="15" width="24" height="24"/>
+                                                    <state key="normal" image="Settings"/>
+                                                    <connections>
+                                                        <action selector="onSettingsTapped" destination="54m-Mn-tex" eventType="touchUpInside" id="yBO-D8-mf8"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="top" secondItem="39W-ag-iVs" secondAttribute="bottom" constant="38" id="2Gq-HT-ORy"/>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="centerX" secondItem="3i0-li-iSv" secondAttribute="centerX" id="AES-dw-R8s"/>
+                                            <constraint firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="-1" id="Mac-gu-g1e"/>
                                             <constraint firstAttribute="bottom" secondItem="7Jf-KE-oXj" secondAttribute="bottom" id="bHQ-i4-np1"/>
                                             <constraint firstItem="39W-ag-iVs" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="dUX-Ve-6mD"/>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="width" secondItem="54m-Mn-tex" secondAttribute="width" id="rg4-g2-lb4"/>
+                                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="54m-Mn-tex" secondAttribute="top" constant="15" id="wuB-lf-WDk"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="3i0-li-iSv"/>
                                         <size key="customSize" width="326" height="287"/>
@@ -221,6 +230,7 @@
                                             <outlet property="promptText" destination="73D-OT-n1K" id="Cf8-Rg-Vw7"/>
                                             <outlet property="searchBackground" destination="7Jf-KE-oXj" id="Fnx-fD-UoA"/>
                                             <outlet property="searchLoupe" destination="Cfx-pb-o8i" id="796-zE-CwE"/>
+                                            <outlet property="settingsButton" destination="kcN-YB-mZi" id="40k-vR-jA5"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
@@ -303,8 +313,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add" width="14" height="14"/>
+        <image name="AddFavorite" width="24" height="24"/>
         <image name="LogoDarkText" width="160" height="128"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
+        <image name="Settings" width="24" height="24"/>
     </resources>
 </document>

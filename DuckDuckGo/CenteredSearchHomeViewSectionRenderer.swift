@@ -38,6 +38,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             fatalError("cell is not CenteredSearchCell")
         }
         cell.tapped = self.tapped
+        cell.settingsTapped = self.settingsTapped
         return cell
     }
     
@@ -58,7 +59,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         })
         
     }
-    
+
+    func settingsTapped(view: CenteredSearchHomeCell) {
+        controller?.launchSettings()
+    }
+
     func omniBarCancelPressed() {
         hidden = false
         

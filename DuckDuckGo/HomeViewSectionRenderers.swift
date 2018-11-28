@@ -66,6 +66,12 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    struct Constants {
+        
+        static let sideInsets: CGFloat = 25
+        
+    }
+    
     var theme: Theme
 
     private let controller: HomeViewController
@@ -158,4 +164,10 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         -> CGSize {
             return renderers[indexPath.section].collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
+        -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
+    }
+    
 }

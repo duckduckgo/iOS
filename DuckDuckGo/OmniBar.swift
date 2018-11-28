@@ -245,13 +245,7 @@ extension OmniBar: Themable {
         
         searchLoupe.tintColor = theme.barTintColor
         
-        switch theme.currentImageSet {
-        case .dark:
-            cancelButton.setTitleColor(UIColor.lightGreyish, for: .normal)
-
-        case .light:
-            cancelButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
-        }
+        cancelButton.setTitleColor(theme.barTintColor, for: .normal)
     }
 }
 

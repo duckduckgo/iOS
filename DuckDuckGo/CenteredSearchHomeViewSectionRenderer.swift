@@ -44,7 +44,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
             let height = UIScreen.main.bounds.height * 1 / 2
-            let width = collectionView.frame.width
+            let width = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
     

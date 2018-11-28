@@ -37,17 +37,14 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     }
     
     @objc func doDelete(sender: Any?) {
-        print("***", #function)
         onDelete?()
     }
     
     @objc func doEdit(sender: Any?) {
-        print("***", #function)
         onEdit?()
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        print("***", #function, action)
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
@@ -57,10 +54,10 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         
         switch theme.currentImageSet {
         case .dark:
-            titleLabel.textColor = UIColor.greyishBrown2
+            titleLabel.textColor = UIColor.greyish
             
         case .light:
-            titleLabel.textColor = UIColor.greyish
+            titleLabel.textColor = UIColor.darkGreyish
         }
         
         if let link = link {

@@ -123,7 +123,8 @@
                                                             <color key="tintColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="O5x-Qc-r6G" firstAttribute="centerY" secondItem="xFb-1e-ukI" secondAttribute="centerY" id="YUF-IN-Xoo"/>
                                                         <constraint firstAttribute="height" constant="64" id="gTp-Pg-ux9"/>

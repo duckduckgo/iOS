@@ -55,9 +55,7 @@ class HomeViewController: UIViewController {
 
         configureCollectionView()
         
-        applyTheme(ThemeManager.shared.currentTheme)
-        
-
+        applyTheme(ThemeManager.shared.currentTheme)        
     }
     
     func refresh() {

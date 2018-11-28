@@ -33,10 +33,7 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        iconBackground.layer.shadowRadius = 1
-        iconBackground.layer.shadowOffset = CGSize(width: 0, height: 1)
-        iconBackground.layer.shadowColor = UIColor.black.cgColor
-        iconBackground.layer.shadowOpacity = 0.12
+        FavoriteHomeCell.applyDropshadow(to: iconBackground)
     }
     
     @objc func doDelete(sender: Any?) {
@@ -58,7 +55,13 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         super.decorate(with: theme)
         self.theme = theme
         
-        titleLabel.textColor = theme.tableHeaderTextColor
+        switch theme.currentImageSet {
+        case .dark:
+            titleLabel.textColor = UIColor.greyishBrown2
+            
+        case .light:
+            titleLabel.textColor = UIColor.greyish
+        }
         
         if let link = link {
             updateFor(link: link)
@@ -90,7 +93,7 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         
     }
     
-    func applyFavicon(_ image: UIImage) {
+    private func applyFavicon(_ image: UIImage) {
         iconLabel.isHidden = true
         
         iconImage.isHidden = false
@@ -104,6 +107,14 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         case .light:
             iconBackground.backgroundColor = UIColor.white
         }
+    }
+    
+    class func applyDropshadow(to view: UIView) {
+        view.layer.shadowRadius = 1
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.12
+        view.layer.masksToBounds = false
     }
     
 }

@@ -13,8 +13,12 @@ class AddFavoriteHomeCell: ThemableCollectionViewCell {
     @IBOutlet weak var plusImage: UIImageView!
     @IBOutlet weak var plusBackground: UIView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        FavoriteHomeCell.applyDropshadow(to: plusBackground)
+    }
+    
     override func decorate(with theme: Theme) {
-        
         switch theme.currentImageSet {
         case .light:
             plusImage.tintColor = UIColor.greyish.applyAlpha(0.6)

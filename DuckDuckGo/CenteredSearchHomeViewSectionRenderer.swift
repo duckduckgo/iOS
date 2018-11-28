@@ -52,14 +52,9 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         hidden = true
         
         self.controller.chromeDelegate?.setNavigationBarHidden(false)
-        self.controller.chromeDelegate?.omniBar.alpha = 0.0
         self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
         controller.collectionView.performBatchUpdates({
             self.controller.collectionView.deleteItems(at: [indexPath])
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.3) {
-                self.controller.chromeDelegate?.omniBar.alpha = 1.0
-            }
         })
         
     }

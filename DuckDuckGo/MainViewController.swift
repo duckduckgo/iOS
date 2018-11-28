@@ -449,6 +449,7 @@ extension MainViewController: BrowserChromeDelegate {
             UIView.animate(withDuration: ChromeAnimationConstants.duration, delay: 0.0, options: .allowUserInteraction, animations: {
                 self.omniBar.alpha = hidden ? 0 : 1
                 self.toolbar.alpha = hidden ? 0 : 1
+
                 self.view.layoutIfNeeded()
             }, completion: nil)
 
@@ -461,9 +462,10 @@ extension MainViewController: BrowserChromeDelegate {
 
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
-
+        
         updateNavBarConstant(hidden)
         omniBar.alpha = hidden ? 0 : 1
+        statusBarBackground.alpha = hidden ? 0 : 1
     }
 
     var isToolbarHidden: Bool {
@@ -659,9 +661,9 @@ extension MainViewController: Themable {
     
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
-        
+  
         statusBarBackground.backgroundColor = theme.barBackgroundColor
-        customNavigationBar?.backgroundColor = theme.barBackgroundColor
+        customNavigationBar?.backgroundColor = theme.backgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
         
         omniBar?.decorate(with: theme)

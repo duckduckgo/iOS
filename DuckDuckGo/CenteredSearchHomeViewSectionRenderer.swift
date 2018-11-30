@@ -12,7 +12,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private weak var controller: HomeViewController!
     
-    private var hidden = false
+    private var hidden = false {
+        didSet {
+            controller.settingsButton.isHidden = hidden
+        }
+    }
     private var indexPath: IndexPath!
     
     func install(into controller: HomeViewController) {
@@ -38,7 +42,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             fatalError("cell is not CenteredSearchCell")
         }
         cell.tapped = self.tapped
-        cell.settingsTapped = self.settingsTapped
         return cell
     }
     
@@ -58,10 +61,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             self.controller.collectionView.deleteItems(at: [indexPath])
         })
         
-    }
-
-    func settingsTapped(view: CenteredSearchHomeCell) {
-        controller?.launchSettings()
     }
 
     func omniBarCancelPressed() {

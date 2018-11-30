@@ -26,6 +26,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var ctaContainer: UIView!
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var settingsButton: UIButton!
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -70,7 +71,7 @@ class HomeViewController: UIViewController {
         renderers.openedAsNewTab()
     }
     
-    func launchSettings() {
+    @IBAction func launchSettings() {
         delegate?.showSettings(self)
     }
     
@@ -232,5 +233,11 @@ extension HomeViewController: Themable {
         renderers.theme = theme
         collectionView.reloadData()
         view.backgroundColor = theme.backgroundColor
+        switch theme.currentImageSet {
+        case .light:
+            settingsButton.tintColor = UIColor.darkGreyish
+        case .dark:
+            settingsButton.tintColor = UIColor.greyish
+        }
     }
 }

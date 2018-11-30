@@ -14,11 +14,9 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
     @IBOutlet weak var searchBackground: RoundedRectangleView!
     @IBOutlet weak var promptText: UILabel!
     @IBOutlet weak var searchLoupe: UIImageView!
-    @IBOutlet weak var settingsButton: UIButton!
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
     
-    var settingsTapped: ((CenteredSearchHomeCell) -> Void)?
     var tapped: ((CenteredSearchHomeCell) -> Void)?
     
     override func awakeFromNib() {
@@ -34,15 +32,9 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
         switch theme.currentImageSet {
         case .light:
             imageView.image = UIImage(named: "LogoDarkText")
-            settingsButton.tintColor = UIColor.darkGreyish
         case .dark:
             imageView.image = UIImage(named: "LogoLightText")
-            settingsButton.tintColor = UIColor.greyish
         }
-    }
-    
-    @IBAction func onSettingsTapped() {
-        settingsTapped?(self)
     }
     
     @objc func onTap() {

@@ -238,7 +238,7 @@
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="top" secondItem="a8e-Ri-3yS" secondAttribute="bottom" constant="15" id="QqP-UV-2Ok"/>
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="ceJ-FA-nQB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
-                            <constraint firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="24" id="moD-HB-CMD"/>
+                            <constraint firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="18" id="moD-HB-CMD"/>
                             <constraint firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
                         </constraints>
                     </view>

@@ -21,9 +21,9 @@ import Core
 
 class BookmarksManager {
 
-    private let dataStore: BookmarkUserDefaults
+    private var dataStore: BookmarkStore
 
-    init(dataStore: BookmarkUserDefaults = BookmarkUserDefaults()) {
+    init(dataStore: BookmarkStore = BookmarkUserDefaults()) {
         self.dataStore = dataStore
     }
 

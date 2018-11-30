@@ -23,4 +23,5 @@ public protocol BookmarkStore {
     var bookmarks: [Link]? { get set }
     var favorites: [Link]? { get set }
     func addBookmark(_ bookmark: Link)
+    func addFavorite(_ favorite: Link)
 }

@@ -16,6 +16,8 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
     
+    @IBOutlet var iconConstraints: [NSLayoutConstraint]!
+    
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     
@@ -34,6 +36,7 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         FavoriteHomeCell.applyDropshadow(to: iconBackground)
+        iconImage.layer.cornerRadius = 3
     }
     
     @objc func doDelete(sender: Any?) {
@@ -91,10 +94,10 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     }
     
     private func applyFavicon(_ image: UIImage) {
+
         iconLabel.isHidden = true
-        
         iconImage.isHidden = false
-        iconImage.contentMode = image.size.width >= 40 ? .scaleAspectFit : .center
+        iconImage.contentMode = image.size.width < 40 ? .center : .scaleAspectFit
         
         guard let theme = theme else { return }
         switch theme.currentImageSet {

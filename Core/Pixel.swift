@@ -43,7 +43,6 @@ public enum PixelName: String {
     case quickActionExtensionSearch = "mqe_s"
     case quickActionExtensionFire = "mqe_f"
     case quickActionExtensionBookmarks = "mqe_b"
-    case bookmarksExtensionSearch = "mbe_s"
     case bookmarksExtensionBookmark = "mbe_b"
     
     case settingsOpened = "ms"

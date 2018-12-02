@@ -37,7 +37,6 @@ extension TabViewController {
                 alert.addAction(action)
             }
             
-            // TODO variant
             if let action = buildSaveFavoriteAction(forLink: link) {
                 alert.addAction(action)
             }
@@ -101,6 +100,11 @@ extension TabViewController {
     }
     
     private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
+        guard let currentVariant = DefaultVariantManager().currentVariant,
+                currentVariant.features.contains(.homeScreen) else {
+            return nil
+        }
+        
         let bookmarksManager = BookmarksManager()
         guard !bookmarksManager.contains(url: link.url) else { return nil }
 

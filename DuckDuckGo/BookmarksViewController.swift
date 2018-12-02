@@ -26,9 +26,14 @@ class BookmarksViewController: UITableViewController {
 
     weak var delegate: BookmarksDelegate?
 
-    // TODO variant
-    fileprivate lazy var dataSource = BookmarksAndFavoritesDataSource()
-
+    fileprivate lazy var dataSource: BookmarksDataSource = {
+        guard let currentVariant = DefaultVariantManager().currentVariant,
+                currentVariant.features.contains(.homeScreen) else {
+            return BookmarksDataSource()
+        }
+        return BookmarksAndFavoritesDataSource()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addAplicationActiveObserver()

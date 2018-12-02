@@ -27,7 +27,9 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
     override func decorate(with theme: Theme) {
         searchBackground.backgroundColor = theme.searchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
-        promptText.textColor = UIColor.greyish // TODO should this be a themeable color (if so also apply to omnibar)
+        
+        // omnibar also uses this, maybe it should be themeable?
+        promptText.textColor = UIColor.greyish
 
         switch theme.currentImageSet {
         case .light:

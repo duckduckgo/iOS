@@ -110,8 +110,7 @@ class BookmarksViewController: UITableViewController {
             bookmark: link,
             saveCompletion: { [weak self] (updatedBookmark) in
                 self?.dataSource.tableView(self!.tableView, updateBookmark: updatedBookmark, at: indexPath)
-            },
-            cancelCompletion: {}
+            }
         )
         present(alert, animated: true)
     }

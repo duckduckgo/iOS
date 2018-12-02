@@ -95,8 +95,7 @@ extension TabViewController {
             let alert = EditBookmarkAlert.buildAlert (
                 title: UserText.alertSaveBookmark,
                 bookmark: link,
-                saveCompletion: saveCompletion,
-                cancelCompletion: {})
+                saveCompletion: saveCompletion)
             self?.present(alert, animated: true, completion: nil)
         }
     }
@@ -114,8 +113,7 @@ extension TabViewController {
             let alert = EditBookmarkAlert.buildAlert (
                 title: UserText.alertSaveFavorite,
                 bookmark: link,
-                saveCompletion: saveCompletion,
-                cancelCompletion: {})
+                saveCompletion: saveCompletion)
             self?.present(alert, animated: true, completion: nil)
         }
     }

@@ -28,7 +28,7 @@ class EditBookmarkAlert {
     static func buildAlert(title: String,
                            bookmark: Link?,
                            saveCompletion: @escaping SaveCompletion,
-                           cancelCompletion: @escaping CancelCompletion) -> UIAlertController {
+                           cancelCompletion: CancelCompletion? = nil) -> UIAlertController {
 
         let editBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
         
@@ -68,9 +68,9 @@ class EditBookmarkAlert {
         }
     }
 
-    private static func cancelAction(completion: @escaping CancelCompletion) -> UIAlertAction {
+    private static func cancelAction(completion: CancelCompletion?) -> UIAlertAction {
         return UIAlertAction(title: UserText.actionCancel, style: .cancel) { (_) in
-            completion()
+            completion?()
         }
     }
 }

@@ -29,26 +29,26 @@ class HomePageConfiguration {
     }
     
     let variantManager: VariantManager
-    let statisticsStore: StatisticsStore
-    let bookmarksManager: BookmarksManager
     
     var components: [Component] {
+        guard let currentVariant = variantManager.currentVariant,
+                currentVariant.features.contains(.homeScreen) else {
+            return [ .navigationBarSearch ]
+        }
+        
         return [
-//            .navigationBarSearch
             .centeredSearch,
             .favorites
         ]
     }
     
-    init(variantManager: VariantManager = DefaultVariantManager(),
-         statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-         bookmarksManager: BookmarksManager = BookmarksManager()) {
+    init(variantManager: VariantManager = DefaultVariantManager()) {
         self.variantManager = variantManager
-        self.statisticsStore = statisticsStore
-        self.bookmarksManager = bookmarksManager
     }
  
-    func installNewUserFavorites() {
+    static func installNewUserFavorites(variantManager: VariantManager = DefaultVariantManager(),
+                                        statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+                                        bookmarksManager: BookmarksManager = BookmarksManager()) {
         guard statisticsStore.atb == nil else {
             Logger.log(text: "atb detected, not installing new user favorites")
             return
@@ -63,12 +63,21 @@ class HomePageConfiguration {
             Logger.log(text: "bookmarks detected, not installing new user favorites")
             return
         }
-
-        print("***", #function)
         
-        bookmarksManager.save(favorite: Link(title: "Privacy Crash Course", url: URL(string: "https://duckduckgo.com/newsletter")!))
-        bookmarksManager.save(favorite: Link(title: "Wikipedia", url: URL(string: "https://wikipedia.org")!))
-        bookmarksManager.save(favorite: Link(title: "Apple", url: URL(string: "https://apple.com")!))
+        guard let currentVariant = variantManager.currentVariant else {
+            Logger.log(text: "no current variant, not installing new user favorites")
+            return
+        }
+
+        if currentVariant.features.contains(FeatureName.singleFavorite) {
+            bookmarksManager.save(favorite: Link(title: "Twitter", url: URL(string: "https://twitter.com")!))
+        }
+        
+        if currentVariant.features.contains(FeatureName.additionalFavorites) {
+            bookmarksManager.save(favorite: Link(title: "Spread Privacy", url: URL(string: "https://spreadprivacy.com")!))
+            bookmarksManager.save(favorite: Link(title: "Quora", url:
+                URL(string: "https://www.quora.com/Why-should-I-use-DuckDuckGo-instead-of-Google/answer/Gabriel-Weinberg")!))
+        }
 
     }
     

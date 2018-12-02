@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Core
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
@@ -30,6 +31,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         }
 
         controller.chromeDelegate?.setNavigationBarHidden(!hidden)
+        
+        Pixel.fire(pixel: .homeScreenShown)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -53,6 +56,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func tapped(view: CenteredSearchHomeCell) {
+        Pixel.fire(pixel: .homeScreenSearchTapped)
+        
         hidden = true
         
         self.controller.chromeDelegate?.setNavigationBarHidden(false)

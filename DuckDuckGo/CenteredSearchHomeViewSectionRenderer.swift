@@ -53,7 +53,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath) as? CenteredSearchHomeCell else {
-            fatalError("cell is not CenteredSearchCell")
+            fatalError("cell is not a CenteredSearchHomeCell")
         }
         cell.tapped = self.tapped
         return cell

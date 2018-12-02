@@ -46,9 +46,9 @@ class HomePageConfiguration {
         self.variantManager = variantManager
     }
  
-    static func installNewUserFavorites(variantManager: VariantManager = DefaultVariantManager(),
-                                        statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-                                        bookmarksManager: BookmarksManager = BookmarksManager()) {
+    static func installNewUserFavorites(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+                                        bookmarksManager: BookmarksManager = BookmarksManager(),
+                                        variantManager: VariantManager = DefaultVariantManager()) {
         guard statisticsStore.atb == nil else {
             Logger.log(text: "atb detected, not installing new user favorites")
             return

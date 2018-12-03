@@ -82,8 +82,8 @@ struct SupportingCancelButtonHomeNonEditingState: OmniBarState {
 
 struct SupportingCancelButtonBrowsingEmptyEditingState: OmniBarState {
     var clearTextOnStart = true
-    var showSearchLoupe = false
-    let showSiteRating = true
+    var showSearchLoupe = true
+    let showSiteRating = false
     let showBackground = false
     let showClear = false
     let showMenu = false
@@ -102,8 +102,8 @@ struct SupportingCancelButtonBrowsingEmptyEditingState: OmniBarState {
 
 struct SupportingCancelButtonBrowsingTextEditingState: OmniBarState {
     var clearTextOnStart = false
-    var showSearchLoupe = false
-    let showSiteRating = true
+    var showSearchLoupe = true
+    let showSiteRating = false
     let showBackground = false
     let showClear = true
     let showMenu = false

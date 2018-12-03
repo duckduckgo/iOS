@@ -81,4 +81,18 @@ class HomePageConfiguration {
 
     }
     
+    static func configureOmniBar(_ omniBar: OmniBar, variantManager: VariantManager = DefaultVariantManager()) {
+        guard let currentVariant = variantManager.currentVariant else {
+            Logger.log(text: "no current variant, not configuring omnibar")
+            return
+        }
+        
+        guard currentVariant.features.contains(.homeScreen) else {
+            Logger.log(text: "no home screen in variant, not configuring omnibar")
+            return
+        }
+
+        omniBar.useCancellableState()
+    }
+    
 }

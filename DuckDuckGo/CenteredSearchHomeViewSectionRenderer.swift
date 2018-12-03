@@ -34,8 +34,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         
-        controller.chromeDelegate?.omniBar.useCancellableState()
-        
         if TabsModel.get()?.count ?? 0 > 0 {
             hidden = true
             controller.chromeDelegate?.omniBar.becomeFirstResponder()

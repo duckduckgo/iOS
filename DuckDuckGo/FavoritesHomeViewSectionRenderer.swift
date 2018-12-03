@@ -48,7 +48,9 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
                 fatalError("not a FavoriteCell")
             }
 
-            let link = bookmarksManager.favorite(atIndex: indexPath.row)
+            guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else {
+                return cell
+            }
             cell.updateFor(link: link)
 
             // can't use captured index path because deleting items can change it
@@ -144,7 +146,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
         Pixel.fire(pixel: .homeScreenFavoriteLaunched)
-        let link = bookmarksManager.favorite(atIndex: indexPath.row)
+        guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
         controller.delegate?.home(controller, didRequestUrl: link.url)
     }

@@ -28,7 +28,7 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var title: UILabel!
 
-    private(set) var bookmark: Link?
+    private(set) var link: Link?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,10 +40,10 @@ class BookmarkCell: UITableViewCell {
         super.setEditing(editing, animated: animated)
     }
 
-    func update(withBookmark bookmark: Link) {
-        self.bookmark = bookmark
-        title.text = bookmark.title
-        configureFavicon(forDomain: bookmark.url.host)
+    func update(withLink link: Link) {
+        self.link = link
+        title.text = link.title
+        configureFavicon(forDomain: link.url.host)
     }
 
     private func configureFavicon(forDomain domain: String?) {

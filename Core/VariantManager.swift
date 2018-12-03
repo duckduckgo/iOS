@@ -72,7 +72,7 @@ public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
         // return variants.first(where: { $0.name == storage.variant })
-        return Variant.defaultVariants.last
+        return variants.last
     }
 
     private let variants: [Variant]

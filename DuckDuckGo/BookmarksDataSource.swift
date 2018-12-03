@@ -28,7 +28,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         return bookmarksManager.bookmarksCount == 0
     }
 
-    func bookmark(at indexPath: IndexPath) -> Link {        
+    func link(at indexPath: IndexPath) -> Link? {
         return bookmarksManager.bookmark(atIndex: indexPath.row)
     }
 
@@ -57,11 +57,12 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     private func createBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
-        let bookmark = self.bookmark(at: indexPath)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
-        cell.update(withBookmark: bookmark)
+
+        guard let link = link(at: indexPath) else { return cell }
+        cell.update(withLink: link)
         
         let theme = ThemeManager.shared.currentTheme
         cell.contentView.backgroundColor = theme.tableCellBackgroundColor

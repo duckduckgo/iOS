@@ -35,12 +35,18 @@ class BookmarksManager {
         return dataStore.favorites?.count ?? 0
     }
 
-    func bookmark(atIndex index: Int) -> Link {
-        return dataStore.bookmarks![index]
+    func bookmark(atIndex index: Int) -> Link? {
+        return link(at: index, in: dataStore.bookmarks)
     }
 
-    func favorite(atIndex index: Int) -> Link {
-        return dataStore.favorites![index]
+    func favorite(atIndex index: Int) -> Link? {
+        return link(at: index, in: dataStore.favorites)
+    }
+    
+    private func link(at index: Int, in links: [Link]?) -> Link? {
+        guard let links = links else { return nil }
+        guard links.count >= index else { return nil }
+        return links[index]
     }
 
     func save(bookmark: Link) {
@@ -113,10 +119,6 @@ class BookmarksManager {
         _ = bookmarks.remove(at: index)
         bookmarks.insert(link, at: index)
         dataStore.bookmarks = bookmarks
-    }
-
-    func clear() {
-        dataStore.bookmarks = [Link]()
     }
 
     private func indexOfBookmark(url: URL) -> Int? {

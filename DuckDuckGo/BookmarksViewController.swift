@@ -46,8 +46,8 @@ class BookmarksViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             showEditBookmarkAlert(for: indexPath)
-        } else {
-            selectBookmark(dataSource.bookmark(at: indexPath))
+        } else if let link = dataSource.link(at: indexPath) {
+            selectLink(link)
         }
     }
 
@@ -109,7 +109,7 @@ class BookmarksViewController: UITableViewController {
 
     fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
         let title = UserText.alertEditBookmark
-        let link = dataSource.bookmark(at: indexPath)
+        let link = dataSource.link(at: indexPath)
         let alert = EditBookmarkAlert.buildAlert(
             title: title,
             bookmark: link,
@@ -120,9 +120,9 @@ class BookmarksViewController: UITableViewController {
         present(alert, animated: true)
     }
 
-    fileprivate func selectBookmark(_ bookmark: Link) {
+    fileprivate func selectLink(_ link: Link) {
         dismiss()
-        delegate?.bookmarksDidSelect(link: bookmark)
+        delegate?.bookmarksDidSelect(link: link)
     }
 
     private func dismiss() {

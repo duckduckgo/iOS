@@ -28,7 +28,7 @@ class BookmarksAndFavoritesDataSource: BookmarksDataSource {
         return bookmarksManager.favoritesCount == 0 && bookmarksManager.bookmarksCount == 0
     }
     
-    override func bookmark(at indexPath: IndexPath) -> Link {
+    override func link(at indexPath: IndexPath) -> Link? {
         if indexPath.section == 0 {
             return bookmarksManager.favorite(atIndex: indexPath.row)
         } else {

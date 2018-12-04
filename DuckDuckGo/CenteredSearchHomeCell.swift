@@ -29,7 +29,14 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
     
     var tapped: ((CenteredSearchHomeCell) -> Void)?
-    
+
+    var searchHeaderTransition: CGFloat = 0.0 {
+        didSet {
+            let percent = 1 - searchHeaderTransition
+            contentView.alpha = percent
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         searchBackground.addGestureRecognizer(tapGesture)

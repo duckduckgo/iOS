@@ -21,12 +21,18 @@ import UIKit
 import Core
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
-    
+
     private weak var controller: HomeViewController!
-    
+    private weak var cell: CenteredSearchHomeCell?
+
+    private var sectionHeight: CGFloat {
+        return UIScreen.main.bounds.height * 1 / 2
+    }
     private var hidden = false {
         didSet {
+            controller.allowContentUnderflow = false
             controller.settingsButton.isHidden = hidden
+            controller.searchHeaderTransition = 1.0
         }
     }
     private var indexPath: IndexPath!
@@ -39,8 +45,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             controller.chromeDelegate?.omniBar.becomeFirstResponder()
         }
 
-        controller.chromeDelegate?.setNavigationBarHidden(!hidden)
-        
+        controller.allowContentUnderflow = true
+
+        controller.searchHeaderTransition = 0.0
+        cell?.searchHeaderTransition = 0.0
+
         Pixel.fire(pixel: .homeScreenShown)
     }
     
@@ -54,16 +63,46 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             fatalError("cell is not a CenteredSearchHomeCell")
         }
         cell.tapped = self.tapped
+        self.cell = cell
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            let height = UIScreen.main.bounds.height * 1 / 2
+            let height = sectionHeight
             let width = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
-    
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let targetHeight = sectionHeight - 60
+        let y = scrollView.contentOffset.y
+        guard y > 0 else { return }
+
+        let offsetY: CGFloat = 60
+
+        let diff = targetHeight - y
+        print("***", diff)
+
+        guard diff < offsetY else {
+            controller.searchHeaderTransition = 0.0
+            cell?.searchHeaderTransition = 0.0
+            print("*** diff < offsetY")
+            return
+        }
+        guard diff > 0 else {
+            controller.searchHeaderTransition = 1.0
+            cell?.searchHeaderTransition = 1.0
+            print("*** diff > offsetY")
+            return
+        }
+
+        let percent = 1 - (diff / offsetY)
+        print("*** diff percent", percent)
+        controller.searchHeaderTransition = percent
+        cell?.searchHeaderTransition = percent
+    }
+
     func tapped(view: CenteredSearchHomeCell) {
         Pixel.fire(pixel: .homeScreenSearchTapped)
         
@@ -78,6 +117,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
 
     func omniBarCancelPressed() {
+        guard hidden else {
+            controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+            return
+        }
+
         hidden = false
         
         controller.collectionView.performBatchUpdates({

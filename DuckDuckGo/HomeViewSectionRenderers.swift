@@ -61,7 +61,8 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
     @objc optional func collectionView(_ collectionView: UICollectionView,
                                        layout collectionViewLayout: UICollectionViewLayout,
                                        referenceSizeForHeaderInSection section: Int) -> CGSize
-    
+
+    @objc optional func scrollViewDidScroll(_ scrollView: UIScrollView)
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -102,6 +103,14 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func openedAsNewTab() {
         renderers.forEach { renderer in
             renderer.openedAsNewTab?()
+        }
+    }
+
+    // MARK: UIScrollViewDelegate
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        renderers.forEach {
+            $0.scrollViewDidScroll?(scrollView)
         }
     }
     

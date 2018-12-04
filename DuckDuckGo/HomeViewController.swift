@@ -28,6 +28,24 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var settingsButton: UIButton!
 
+    var statusBarBackground: UIView? {
+        return (parent as? MainViewController)?.statusBarBackground
+    }
+
+    var navigationBar: UIView? {
+        return (parent as? MainViewController)?.customNavigationBar
+    }
+
+    var searchHeaderTransition: CGFloat = 0.0 {
+        didSet {
+            let percent = searchHeaderTransition
+            statusBarBackground?.alpha = percent
+            chromeDelegate?.omniBar.alpha = percent
+            navigationBar?.alpha = percent
+            settingsButton.alpha = 1 - percent
+        }
+    }
+
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var homeRowCTAController: UIViewController?
@@ -58,7 +76,15 @@ class HomeViewController: UIViewController {
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
+
+    var allowContentUnderflow: Bool = false {
+        didSet {
+            let constant = allowContentUnderflow ? -(navigationBar?.frame.size.height ?? 0) : 0
+            (parent as? MainViewController)?.containerViewTop.constant = constant
+        }
+
+    }
+
     func refresh() {
         collectionView.reloadData()
     }

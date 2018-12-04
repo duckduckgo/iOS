@@ -40,6 +40,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
+    @IBOutlet weak var containerViewTop: NSLayoutConstraint!
 
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
@@ -666,6 +667,8 @@ extension MainViewController: Themable {
     
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
+
+        view.backgroundColor = theme.backgroundColor
   
         statusBarBackground.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.backgroundColor = theme.backgroundColor

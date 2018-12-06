@@ -21,6 +21,10 @@ import Foundation
 
 public class HTTPSUpgrade {
     
+    private struct Constants {
+        static let millisecondsPerSecond = 1000.0
+    }
+    
     public static let shared = HTTPSUpgrade()
     
     private let dataReloadLock = NSLock()
@@ -31,7 +35,7 @@ public class HTTPSUpgrade {
         self.store = store
     }
     
-    func upgrade(url: URL) -> URL? {
+    public func upgrade(url: URL) -> URL? {
         
         guard url.scheme == "http" else { return nil }
         
@@ -43,7 +47,7 @@ public class HTTPSUpgrade {
         return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
     }
     
-     func isInUpgradeList(url: URL) -> Bool {
+    public func isInUpgradeList(url: URL) -> Bool {
         
         guard let host = url.host else { return false }
 
@@ -55,10 +59,11 @@ public class HTTPSUpgrade {
         waitForAnyReloadsToComplete()
         
         guard let bloomFilter = bloomFilter else { return false }
-        let startTime = Date().timeIntervalSince1970
+        
+        let startTime = Date()
         let result = bloomFilter.contains(host)
-        let endTime = Date().timeIntervalSince1970
-        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(endTime - startTime)ms")
+        let lookupTimeMs = abs(startTime.timeIntervalSinceNow) * Constants.millisecondsPerSecond
+        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(lookupTimeMs)ms")
         
         return result
     }

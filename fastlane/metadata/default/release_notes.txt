@@ -1,6 +1,1 @@
-In this release:
-
-• We have added a much requested feature allowing users to request desktop sites
-• We have fixed a bug to ensure the privacy protection toggle and whitelist takes effect immediately
-• We have fixed a bug to make the network summary in the privacy protection dashboard clearer
-• We have fixed a cosmetic bug on the about screen
+In this release, we renamed our today view widgets to make them easier to find and improved our bookmarks widget layout to display an additional bookmark.

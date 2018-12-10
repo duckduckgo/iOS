@@ -23,23 +23,50 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var searchBackground: RoundedRectangleView!
+    @IBOutlet weak var searchBackgroundHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchBackgroundLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchBackgroundTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchLoupeLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var promptText: UILabel!
     @IBOutlet weak var searchLoupe: UIImageView!
     
+    weak var omniBar: OmniBar!
+    
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
+    
+    var targetSearchHeight: CGFloat = 40
+    var targetSearchRadius: CGFloat = 20
     
     var tapped: ((CenteredSearchHomeCell) -> Void)?
 
+    var defaultSearchLoupeOffset: CGFloat = 15
+    var defaultSearchHeight: CGFloat!
+    var defaultSearchRadius: CGFloat!
+    
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
-            let percent = 1 - searchHeaderTransition
-            contentView.alpha = percent
+            let heightDiff = defaultSearchHeight - targetSearchHeight
+            searchBackgroundHeightConstraint.constant = defaultSearchHeight - (heightDiff * searchHeaderTransition)
+            
+            let radiusDiff = defaultSearchRadius - targetSearchRadius
+            searchBackground.layer.cornerRadius = defaultSearchRadius - (radiusDiff * searchHeaderTransition)
+            
+            let searchLeftOffset: CGFloat = -18 // way more in landscape
+            searchBackgroundLeadingConstraint.constant = searchLeftOffset * searchHeaderTransition
+            
+            let searchRightOffset: CGFloat = 80 // way less then zero in landscape
+            searchBackgroundTrailingConstraint.constant = searchRightOffset * searchHeaderTransition
+            
+            let searchLooupDiff: CGFloat = -6
+            searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLooupDiff * searchHeaderTransition)
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         searchBackground.addGestureRecognizer(tapGesture)
+        defaultSearchHeight = searchBackground.frame.height
+        defaultSearchRadius = searchBackground.layer.cornerRadius
     }
     
     override func decorate(with theme: Theme) {

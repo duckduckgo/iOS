@@ -62,6 +62,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath) as? CenteredSearchHomeCell else {
             fatalError("cell is not a CenteredSearchHomeCell")
         }
+        cell.omniBar = controller.chromeDelegate?.omniBar
         cell.tapped = self.tapped
         self.cell = cell
         return cell
@@ -75,11 +76,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let targetHeight = sectionHeight - 60
+        let offsetY: CGFloat = 46
+        
+        let targetHeight = sectionHeight - offsetY
         let y = scrollView.contentOffset.y
         guard y > 0 else { return }
-
-        let offsetY: CGFloat = 60
 
         let diff = targetHeight - y
         print("***", diff)

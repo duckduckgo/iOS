@@ -42,14 +42,14 @@
                                 <collectionViewLayout key="collectionViewLayout" id="tPv-3p-raZ" customClass="SlidingAnimationCollectionViewFlowLayout" customModule="DuckDuckGo" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="navigationSearch" id="YGf-2W-c2w" customClass="NavigationSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="37" y="0.0" width="301" height="298"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="210" height="298"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="301" height="298"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="210" height="298"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="6KE-x7-bYQ">
-                                                    <rect key="frame" x="70.5" y="50" width="160" height="128"/>
+                                                    <rect key="frame" x="25" y="50" width="160" height="128"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -60,13 +60,13 @@
                                             </constraint>
                                             <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerX" secondItem="YGf-2W-c2w" secondAttribute="centerX" id="oGn-KV-u2p"/>
                                         </constraints>
-                                        <size key="customSize" width="301" height="298"/>
+                                        <size key="customSize" width="210" height="298"/>
                                         <connections>
                                             <outlet property="imageView" destination="6KE-x7-bYQ" id="wys-xe-PcN"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="favorite" id="gUU-x4-9hP" customClass="FavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="308" width="134" height="110"/>
+                                        <rect key="frame" x="241" y="94" width="134" height="110"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="134" height="110"/>
@@ -135,7 +135,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addFavorite" id="nQ3-Nq-pP3" customClass="AddFavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="208" y="320" width="167" height="86"/>
+                                        <rect key="frame" x="104" y="308" width="167" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="167" height="86"/>
@@ -183,17 +183,17 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="centeredSearch" id="54m-Mn-tex" customClass="CenteredSearchHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="428" width="326" height="287"/>
+                                        <rect key="frame" x="0.0" y="404" width="342" height="287"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="326" height="287"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="287"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoDarkText" translatesAutoresizingMaskIntoConstraints="NO" id="39W-ag-iVs">
-                                                    <rect key="frame" x="83" y="73" width="160" height="128"/>
+                                                    <rect key="frame" x="91" y="73" width="160" height="128"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Jf-KE-oXj" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="239" width="326" height="48"/>
+                                                    <rect key="frame" x="0.0" y="239" width="342" height="48"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
                                                             <rect key="frame" x="15" y="12" width="24" height="24"/>
@@ -237,17 +237,22 @@
                                         <constraints>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="top" secondItem="39W-ag-iVs" secondAttribute="bottom" constant="38" id="2Gq-HT-ORy"/>
                                             <constraint firstItem="7Jf-KE-oXj" firstAttribute="centerX" secondItem="3i0-li-iSv" secondAttribute="centerX" id="AES-dw-R8s"/>
+                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="leading" secondItem="3i0-li-iSv" secondAttribute="leading" id="REP-d5-G0y"/>
                                             <constraint firstAttribute="bottom" secondItem="7Jf-KE-oXj" secondAttribute="bottom" id="bHQ-i4-np1"/>
                                             <constraint firstItem="39W-ag-iVs" firstAttribute="centerX" secondItem="54m-Mn-tex" secondAttribute="centerX" id="dUX-Ve-6mD"/>
-                                            <constraint firstItem="7Jf-KE-oXj" firstAttribute="width" secondItem="54m-Mn-tex" secondAttribute="width" id="rg4-g2-lb4"/>
+                                            <constraint firstItem="3i0-li-iSv" firstAttribute="trailing" secondItem="7Jf-KE-oXj" secondAttribute="trailing" id="vbj-Ii-RiP"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="3i0-li-iSv"/>
-                                        <size key="customSize" width="326" height="287"/>
+                                        <size key="customSize" width="342" height="287"/>
                                         <connections>
                                             <outlet property="imageView" destination="39W-ag-iVs" id="ob1-89-hb0"/>
                                             <outlet property="promptText" destination="73D-OT-n1K" id="Cf8-Rg-Vw7"/>
                                             <outlet property="searchBackground" destination="7Jf-KE-oXj" id="Fnx-fD-UoA"/>
+                                            <outlet property="searchBackgroundHeightConstraint" destination="lfy-OM-K4Q" id="MaW-TK-NzF"/>
+                                            <outlet property="searchBackgroundLeadingConstraint" destination="REP-d5-G0y" id="sTC-he-fGy"/>
+                                            <outlet property="searchBackgroundTrailingConstraint" destination="vbj-Ii-RiP" id="YRO-nU-p1r"/>
                                             <outlet property="searchLoupe" destination="Cfx-pb-o8i" id="796-zE-CwE"/>
+                                            <outlet property="searchLoupeLeadingConstraint" destination="zGY-Ek-4ip" id="RUp-zT-xMm"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -269,7 +274,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-YB-mZi">
-                                <rect key="frame" x="333" y="35" width="24" height="24"/>
+                                <rect key="frame" x="333" y="34" width="24" height="24"/>
                                 <state key="normal" image="Settings"/>
                                 <connections>
                                     <action selector="launchSettings" destination="LJ1-RN-ckE" eventType="primaryActionTriggered" id="ywh-FM-XNP"/>
@@ -284,7 +289,7 @@
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="18" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
-                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="15" id="h6x-yo-1bE"/>
+                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="14" id="h6x-yo-1bE"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="vdx-nG-nrB"/>
@@ -303,6 +308,7 @@
                         <outlet property="ctaContainer" destination="5Rf-oV-2W5" id="KSc-be-02P"/>
                         <outlet property="ctaContainerBottom" destination="iP8-nF-jOV" id="agE-fI-Leh"/>
                         <outlet property="settingsButton" destination="kcN-YB-mZi" id="iyr-9W-6gY"/>
+                        <outlet property="settingsButtonTrailingConstraint" destination="R0H-sl-aBO" id="TPf-FH-V5E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vtg-6j-Bq6" userLabel="First Responder" sceneMemberID="firstResponder"/>

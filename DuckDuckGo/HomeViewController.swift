@@ -27,6 +27,9 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var settingsButtonTrailingConstraint: NSLayoutConstraint!
+    
+    var settingsButtonTrailingConstraintConstant: CGFloat = 0
 
     var statusBarBackground: UIView? {
         return (parent as? MainViewController)?.statusBarBackground
@@ -38,11 +41,11 @@ class HomeViewController: UIViewController {
 
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
-            let percent = searchHeaderTransition
+            let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
             statusBarBackground?.alpha = percent
             chromeDelegate?.omniBar.alpha = percent
             navigationBar?.alpha = percent
-            settingsButton.alpha = 1 - percent
+            settingsButtonTrailingConstraint.constant = settingsButtonTrailingConstraintConstant + (56 * searchHeaderTransition)
         }
     }
 
@@ -72,6 +75,8 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
+        settingsButtonTrailingConstraintConstant = settingsButtonTrailingConstraint.constant
+        
         configureCollectionView()
         
         applyTheme(ThemeManager.shared.currentTheme)

@@ -19,7 +19,7 @@
 
 "app.authentication.unlock" = "Unlock DuckDuckGo";
 "home.link.title" = "DuckDuckGo Home";
-"search.hint.duckduckgo" = "Search or enter an address";
+"search.hint.duckduckgo" = "Search or enter address";
 "web.session.clear" = "Session cleared";
 "web.url.save.bookmark.done" = "Bookmark saved";
 "web.url.save.favorite.done" = "Favorite saved";

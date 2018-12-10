@@ -263,7 +263,7 @@
                                 </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
-                                        <include reference="Oqy-WG-n6F"/>
+                                        <exclude reference="Oqy-WG-n6F"/>
                                     </mask>
                                 </variation>
                             </collectionView>
@@ -285,7 +285,7 @@
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="height" secondItem="klK-ZJ-wmA" secondAttribute="height" id="1lu-2N-IOp"/>
-                            <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="BjB-Gh-zsj"/>
+                            <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="ijV-Vn-w9w" secondAttribute="width" id="BjB-Gh-zsj"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="18" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
@@ -297,7 +297,7 @@
                         <viewLayoutGuide key="safeArea" id="ijV-Vn-w9w"/>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <exclude reference="BjB-Gh-zsj"/>
+                                <include reference="BjB-Gh-zsj"/>
                             </mask>
                         </variation>
                     </view>

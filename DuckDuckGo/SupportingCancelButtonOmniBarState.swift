@@ -69,7 +69,7 @@ struct SupportingCancelButtonHomeNonEditingState: OmniBarState {
     let showMenu = false
     let showBookmarks = false
     let showSettings = true
-    let showCancel: Bool = true
+    let showCancel: Bool = false
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return self }
     var onEditingStartedState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }

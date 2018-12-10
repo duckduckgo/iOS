@@ -40,6 +40,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(CenteredSearchHomeViewSectionRenderer.rotated),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+        
         if TabsModel.get()?.count ?? 0 > 0 {
             hidden = true
             controller.chromeDelegate?.omniBar.becomeFirstResponder()
@@ -51,6 +56,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         cell?.searchHeaderTransition = 0.0
 
         Pixel.fire(pixel: .homeScreenShown)
+    }
+    
+    @objc func rotated() {
+        print("***", #function)
+        scrollViewDidScroll(controller.collectionView)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -80,7 +90,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         let targetHeight = sectionHeight - offsetY
         let y = scrollView.contentOffset.y
-        guard y > 0 else { return }
 
         let diff = targetHeight - y
         print("***", diff)
@@ -129,6 +138,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             self.controller.chromeDelegate?.setNavigationBarHidden(true)
             self.controller.collectionView.insertItems(at: [indexPath])
         })
+    }
+    
+    deinit {
+        print("***", self, #function)
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

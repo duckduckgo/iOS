@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
             statusBarBackground?.alpha = percent
             chromeDelegate?.omniBar.alpha = percent
             navigationBar?.alpha = percent
-            settingsButtonTrailingConstraint.constant = settingsButtonTrailingConstraintConstant + (56 * searchHeaderTransition)
+            settingsButtonTrailingConstraint.constant = settingsButtonTrailingConstraintConstant + (-8 * searchHeaderTransition)
         }
     }
 

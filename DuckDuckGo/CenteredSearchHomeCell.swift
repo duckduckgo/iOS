@@ -51,14 +51,14 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
             let radiusDiff = defaultSearchRadius - targetSearchRadius
             searchBackground.layer.cornerRadius = defaultSearchRadius - (radiusDiff * searchHeaderTransition)
             
-            let searchLeftOffset: CGFloat = -18 // way more in landscape
+            let searchLeftOffset: CGFloat = -18
             searchBackgroundLeadingConstraint.constant = searchLeftOffset * searchHeaderTransition
             
-            let searchRightOffset: CGFloat = 80 // way less then zero in landscape
+            let searchRightOffset: CGFloat = 16
             searchBackgroundTrailingConstraint.constant = searchRightOffset * searchHeaderTransition
             
-            let searchLooupDiff: CGFloat = -6
-            searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLooupDiff * searchHeaderTransition)
+            let searchLoupeDiff: CGFloat = -6
+            searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
         }
     }
 

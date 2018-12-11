@@ -525,6 +525,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onCancelPressed() {
+        dismissAutcompleteSuggestions()
         homeController?.omniBarCancelPressed()
     }
     

@@ -53,6 +53,13 @@ class MainViewController: UIViewController {
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
+    var allowContentUnderflow = false {
+        didSet {
+            let constant = allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
+            containerViewTop.constant = constant
+        }
+    }
+    
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
 
@@ -198,6 +205,8 @@ class MainViewController: UIViewController {
     }
 
     func loadUrlInNewTab(_ url: URL) {
+        allowContentUnderflow = false
+        customNavigationBar.alpha = 1
         loadViewIfNeeded()
         addTab(url: url)
         refreshOmniBar()

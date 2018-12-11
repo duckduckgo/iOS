@@ -125,7 +125,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
+        print("***", #function)
         return CGSize(width: 1, height: 39)
     }
     
@@ -172,7 +172,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         Pixel.fire(pixel: .homeScreenFavoriteLaunched)
         guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
-        controller.delegate?.home(controller, didRequestUrl: link.url)
+        controller.launch(link)
     }
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {

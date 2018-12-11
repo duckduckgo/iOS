@@ -24,18 +24,9 @@ class HomeCollectionView: UICollectionView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        let nc = NotificationCenter.default
-        let queue = OperationQueue.main
-        
-        keyboardWillShowToken = nc.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: queue) { notification in
-            self.keyboardWillShow(notification)
-        }
 
-        keyboardWillHideToken = nc.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: queue) { notification in
-            self.keyboardWillHide(notification)
-        }
-
+        listenForKeyboardEvents()
+        contentInset = UIEdgeInsets(top: 59, left: 0, bottom: 0, right: 0)
     }
     
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {
@@ -126,16 +117,29 @@ class HomeCollectionView: UICollectionView {
 
 extension HomeCollectionView {
     
+    private func listenForKeyboardEvents() {
+        let nc = NotificationCenter.default
+        let queue = OperationQueue.main
+        
+        keyboardWillShowToken = nc.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: queue) { notification in
+            self.keyboardWillShow(notification)
+        }
+        
+        keyboardWillHideToken = nc.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: queue) { notification in
+            self.keyboardWillHide(notification)
+        }
+    }
+    
     func keyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
         let bottomOffset = controller.bottomOffset
-        contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight - bottomOffset, right: 0)
+        contentInset = UIEdgeInsets(top: 59, left: 0, bottom: keyboardHeight - bottomOffset, right: 0)
     }
     
     func keyboardWillHide(_ notification: Notification) {
-        contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        contentInset = UIEdgeInsets(top: 59, left: 0, bottom: 0, right: 0)
     }
     
 }

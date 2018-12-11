@@ -86,12 +86,14 @@ class HomeViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
-    var allowContentUnderflow: Bool = false {
-        didSet {
-            let constant = allowContentUnderflow ? -(navigationBar?.frame.size.height ?? 0) : 0
-            (parent as? MainViewController)?.containerViewTop.constant = constant
+    func allowContentUnderflow() {
+        if let parent = parent as? MainViewController {
+            parent.allowContentUnderflow = true
         }
-
+    }
+    
+    func launch(_ link: Link) {
+        delegate?.home(self, didRequestUrl: link.url)
     }
 
     func refresh() {

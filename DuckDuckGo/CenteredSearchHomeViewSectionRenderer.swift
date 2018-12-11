@@ -28,13 +28,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var sectionHeight: CGFloat {
         return UIScreen.main.bounds.height * 1 / 2
     }
-    private var hidden = false {
-        didSet {
-            controller.allowContentUnderflow = false
-            controller.settingsButton.isHidden = hidden
-            controller.searchHeaderTransition = 1.0
-        }
-    }
     private var indexPath: IndexPath!
     
     func install(into controller: HomeViewController) {
@@ -45,12 +38,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
         
-        if TabsModel.get()?.count ?? 0 > 0 {
-            hidden = true
-            controller.chromeDelegate?.omniBar.becomeFirstResponder()
-        }
-
-        controller.allowContentUnderflow = true
+        controller.allowContentUnderflow()
 
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
@@ -63,8 +51,17 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        indexPath = IndexPath(row: 0, section: section)
-        return hidden ? 0 : 1
+        
+        if indexPath == nil {
+            indexPath = IndexPath(row: 0, section: section)
+            if TabsModel.get()?.count ?? 0 > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.activateSearch()
+                }
+            }
+        }
+        
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -114,29 +111,18 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     func tapped(view: CenteredSearchHomeCell) {
         Pixel.fire(pixel: .homeScreenSearchTapped)
-        
-        hidden = true
-        
-        self.controller.chromeDelegate?.setNavigationBarHidden(false)
-        self.controller.chromeDelegate?.omniBar.becomeFirstResponder()
-        controller.collectionView.performBatchUpdates({
-            self.controller.collectionView.deleteItems(at: [indexPath])
-        })
-        
+        activateSearch()
+        controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }
-
+    
+    private func activateSearch() {
+        let indexPath = IndexPath(row: 0, section: self.indexPath.section + 1)
+        controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        controller.chromeDelegate?.omniBar.becomeFirstResponder()
+    }
+    
     func omniBarCancelPressed() {
-        guard hidden else {
-            controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-            return
-        }
-
-        hidden = false
-        
-        controller.collectionView.performBatchUpdates({
-            self.controller.chromeDelegate?.setNavigationBarHidden(true)
-            self.controller.collectionView.insertItems(at: [indexPath])
-        })
+        controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     deinit {

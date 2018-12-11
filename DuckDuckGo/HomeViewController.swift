@@ -38,10 +38,21 @@ class HomeViewController: UIViewController {
     var navigationBar: UIView? {
         return (parent as? MainViewController)?.customNavigationBar
     }
+    
+    var bottomOffset: CGFloat {
+        // doesn't take in to account extra space on iPhone X but is good enough to show the bottom items in the collection view
+        return ((parent as? MainViewController)?.toolbar.frame.height ?? 0)
+    }
 
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
             let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
+            
+            // hide the keyboard if transitioning away
+            if oldValue == 1.0 && searchHeaderTransition != 1.0 {
+                chromeDelegate?.omniBar.resignFirstResponder()
+            }
+            
             statusBarBackground?.alpha = percent
             chromeDelegate?.omniBar.alpha = percent
             navigationBar?.alpha = percent

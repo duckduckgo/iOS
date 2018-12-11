@@ -93,16 +93,20 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         let diff = targetHeight - y
 
         guard diff < offsetY else {
+            // centered search bar is visible
             controller.searchHeaderTransition = 0.0
             cell?.searchHeaderTransition = 0.0
             return
         }
+        
         guard diff > 0 else {
+            // centered search bar is not visible
             controller.searchHeaderTransition = 1.0
             cell?.searchHeaderTransition = 1.0
             return
         }
 
+        // centered search bar is transitioning
         let percent = 1 - (diff / offsetY)
         controller.searchHeaderTransition = percent
         cell?.searchHeaderTransition = percent

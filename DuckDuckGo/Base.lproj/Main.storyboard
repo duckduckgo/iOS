@@ -84,7 +84,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="iiL-6e-jxs" firstAttribute="bottom" secondItem="nQT-PV-ULm" secondAttribute="top" id="1ip-bk-RO5"/>
+                            <constraint firstItem="iiL-6e-jxs" firstAttribute="bottom" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="1ip-bk-RO5"/>
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="top" secondItem="uBn-Md-Q2c" secondAttribute="top" id="BrS-Dd-c0g"/>
                             <constraint firstItem="iiL-6e-jxs" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="CfL-Ud-UIC"/>
                             <constraint firstItem="iiL-6e-jxs" firstAttribute="centerX" secondItem="uBn-Md-Q2c" secondAttribute="centerX" id="GYY-82-9YX"/>

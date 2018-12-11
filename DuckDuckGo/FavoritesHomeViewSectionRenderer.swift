@@ -26,6 +26,8 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     private weak var controller: HomeViewController!
     
+    private weak var reorderingCell: FavoriteHomeCell?
+    
     // Plus one for the add button
     private var numberOfItems: Int {
         return bookmarksManager.favoritesCount + 1
@@ -93,16 +95,24 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         })
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
-        -> CGSize {
-            return CGSize(width: 68, height: 100)
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 68, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return !isLastItem(indexPath)
+        print("***", #function)
+        guard !isLastItem(indexPath) else { return false }
+        if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
+            cell.isReordering = true
+            reorderingCell = cell
+        }
+        return true
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("***", #function)
         Pixel.fire(pixel: .homeScreenFavoriteMoved)
         bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
     }
@@ -120,8 +130,25 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         return CGSize(width: 1, height: 39)
     }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        return CGSize(width: 1, height: 10)
+    }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem] {
+        
+        if let reorderingCell = reorderingCell {
+            reorderingCell.isReordering = false
+            if let indexPath = controller.collectionView.indexPath(for: reorderingCell) {
+                controller.collectionView.reloadItems(at: [indexPath])
+            }
+            self.reorderingCell = nil
+        }
+        
+        print("***", #function)
         return [
             UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),
             UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)

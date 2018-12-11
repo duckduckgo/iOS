@@ -158,7 +158,6 @@ class HomeViewController: UIViewController {
 
             case .favorites:
                 self.renderers.install(renderer: FavoritesHomeViewSectionRenderer())
-                self.renderers.install(renderer: SpaceHomeViewSectionRenderer(height: 10))
             }
         }
         

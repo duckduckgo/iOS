@@ -137,7 +137,6 @@
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
 		853A717620F62FE800FE60BC /* Pixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717520F62FE800FE60BC /* Pixel.swift */; };
 		853A717820F645FB00FE60BC /* PixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717720F645FB00FE60BC /* PixelTests.swift */; };
-		853C5F5921BFD987001F7A05 /* SpaceHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F5821BFD987001F7A05 /* SpaceHomeViewSectionRenderer.swift */; };
 		85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */; };
 		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
 		855D914F206563A000C4B448 /* TLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914E206563A000C4B448 /* TLD.swift */; };
@@ -634,7 +633,6 @@
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
 		853A717520F62FE800FE60BC /* Pixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pixel.swift; sourceTree = "<group>"; };
 		853A717720F645FB00FE60BC /* PixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTests.swift; sourceTree = "<group>"; };
-		853C5F5821BFD987001F7A05 /* SpaceHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivacyProtection.xcassets; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* CompositeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTransition.swift; sourceTree = "<group>"; };
 		855D914E206563A000C4B448 /* TLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLD.swift; sourceTree = "<group>"; };
@@ -1423,7 +1421,6 @@
 				85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */,
 				85374D3B21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift */,
 				85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */,
-				853C5F5821BFD987001F7A05 /* SpaceHomeViewSectionRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -3006,7 +3003,6 @@
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
-				853C5F5921BFD987001F7A05 /* SpaceHomeViewSectionRenderer.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,

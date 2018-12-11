@@ -63,6 +63,10 @@ class ThemableCollectionViewCell: UICollectionViewCell, Themable {
                                        referenceSizeForHeaderInSection section: Int) -> CGSize
 
     @objc optional func scrollViewDidScroll(_ scrollView: UIScrollView)
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView,
+                                       layout collectionViewLayout: UICollectionViewLayout,
+                                       referenceSizeForFooterInSection section: Int) -> CGSize
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -161,6 +165,13 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section)
+            ?? CGSize.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
+        return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForFooterInSection: section)
             ?? CGSize.zero
     }
 

@@ -29,6 +29,14 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     
     @IBOutlet var iconConstraints: [NSLayoutConstraint]!
     
+    var isReordering = false {
+        didSet {
+            let scale: CGFloat = isReordering ? 1.2 : 1.0
+            transform = CGAffineTransform.identity.scaledBy(x: scale, y: scale)
+            contentView.alpha = isReordering ? 0.5 : 1.0
+        }
+    }
+    
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     

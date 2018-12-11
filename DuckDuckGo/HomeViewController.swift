@@ -25,7 +25,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: HomeCollectionView!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var settingsButtonTrailingConstraint: NSLayoutConstraint!
     
@@ -56,11 +56,6 @@ class HomeViewController: UIViewController {
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
 
-    private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
-    private lazy var renderers = HomeViewSectionRenderers(controller: self, theme: ThemeManager.shared.currentTheme)
-    private lazy var collectionViewReorderingGesture =
-        UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
-    
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
@@ -74,11 +69,9 @@ class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-
+        
         settingsButtonTrailingConstraintConstant = settingsButtonTrailingConstraint.constant
-        
-        configureCollectionView()
-        
+        collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
@@ -95,77 +88,17 @@ class HomeViewController: UIViewController {
     }
     
     func omniBarCancelPressed() {
-        renderers.omniBarCancelPressed()
+        collectionView.omniBarCancelPressed()
     }
     
     func openedAsNewTab() {
-        renderers.openedAsNewTab()
+        collectionView.openedAsNewTab()
     }
     
     @IBAction func launchSettings() {
         delegate?.showSettings(self)
     }
     
-    @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            if let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) {
-                UISelectionFeedbackGenerator().selectionChanged()
-                UIMenuController.shared.setMenuVisible(false, animated: true)
-                collectionView.beginInteractiveMovementForItem(at: indexPath)
-            }
-            
-        case .changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-            
-        case .ended:
-            collectionView.endInteractiveMovement()
-            UIImpactFeedbackGenerator().impactOccurred()
-            if let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) {
-                // needs to chance to settle in case the model has been updated
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.showMenu(at: indexPath)
-                }
-            }
-            
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-    }
-    
-    private func showMenu(at indexPath: IndexPath) {
-        guard let menuView = collectionView.cellForItem(at: indexPath) else { return }
-        guard menuView.becomeFirstResponder() else { return }
-        let renderer = renderers.rendererFor(section: indexPath.section)
-        guard let menuItems = renderer.menuItemsFor?(itemAt: indexPath.row) else { return }
-        
-        let menuController = UIMenuController.shared
-        
-        menuController.setTargetRect(menuView.frame, in: self.collectionView)
-        menuController.menuItems = menuItems
-        menuController.setMenuVisible(true, animated: true)
-    }
-
-    private func configureCollectionView() {
-        
-        homePageConfiguration.components.forEach { component in
-            switch component {
-            case .navigationBarSearch:
-                self.renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
-                
-            case .centeredSearch:
-                self.renderers.install(renderer: CenteredSearchHomeViewSectionRenderer())
-
-            case .favorites:
-                self.renderers.install(renderer: FavoritesHomeViewSectionRenderer())
-            }
-        }
-        
-        collectionView.dataSource = renderers
-        collectionView.delegate = renderers
-        collectionView.addGestureRecognizer(collectionViewReorderingGesture)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -261,8 +194,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
-        renderers.theme = theme
-        collectionView.reloadData()
+        collectionView.decorate(with: theme)
         view.backgroundColor = theme.backgroundColor
         switch theme.currentImageSet {
         case .light:

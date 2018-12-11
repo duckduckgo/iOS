@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-class FavoriteHomeCell: ThemableCollectionViewCell {
+class FavoriteHomeCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var iconLabel: UILabel!
@@ -68,23 +68,6 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return [ Actions.delete, Actions.edit ].contains(action)
-    }
-    
-    override func decorate(with theme: Theme) {
-        super.decorate(with: theme)
-        self.theme = theme
-        
-        switch theme.currentImageSet {
-        case .dark:
-            titleLabel.textColor = UIColor.greyish
-            
-        case .light:
-            titleLabel.textColor = UIColor.darkGreyish
-        }
-        
-        if let link = link {
-            updateFor(link: link)
-        }
     }
     
     func updateFor(link: Link) {
@@ -136,6 +119,26 @@ class FavoriteHomeCell: ThemableCollectionViewCell {
         view.layer.masksToBounds = false
     }
     
+}
+
+extension FavoriteHomeCell: Themable {
+    
+    func decorate(with theme: Theme) {
+        self.theme = theme
+        
+        switch theme.currentImageSet {
+        case .dark:
+            titleLabel.textColor = UIColor.greyish
+            
+        case .light:
+            titleLabel.textColor = UIColor.darkGreyish
+        }
+        
+        if let link = link {
+            updateFor(link: link)
+        }
+    }
+
 }
 
 fileprivate extension String {

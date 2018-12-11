@@ -102,7 +102,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        print("***", #function)
         guard !isLastItem(indexPath) else { return false }
         if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
             cell.isReordering = true
@@ -112,7 +111,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        print("***", #function)
         Pixel.fire(pixel: .homeScreenFavoriteMoved)
         bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
     }
@@ -148,7 +146,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
             self.reorderingCell = nil
         }
         
-        print("***", #function)
         return [
             UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),
             UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)

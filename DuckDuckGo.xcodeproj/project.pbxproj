@@ -137,6 +137,7 @@
 		8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */; };
 		853A717620F62FE800FE60BC /* Pixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717520F62FE800FE60BC /* Pixel.swift */; };
 		853A717820F645FB00FE60BC /* PixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717720F645FB00FE60BC /* PixelTests.swift */; };
+		853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */; };
 		85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */; };
 		855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914C2063EF6A00C4B448 /* CompositeTransition.swift */; };
 		855D914F206563A000C4B448 /* TLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855D914E206563A000C4B448 /* TLD.swift */; };
@@ -633,6 +634,7 @@
 		8539D9F61FA756AD00BE8746 /* PrivacyProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionController.swift; sourceTree = "<group>"; };
 		853A717520F62FE800FE60BC /* Pixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pixel.swift; sourceTree = "<group>"; };
 		853A717720F645FB00FE60BC /* PixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTests.swift; sourceTree = "<group>"; };
+		853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionView.swift; sourceTree = "<group>"; };
 		85436C3E1FA74BC300F4EEE1 /* PrivacyProtection.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PrivacyProtection.xcassets; sourceTree = "<group>"; };
 		855D914C2063EF6A00C4B448 /* CompositeTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeTransition.swift; sourceTree = "<group>"; };
 		855D914E206563A000C4B448 /* TLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLD.swift; sourceTree = "<group>"; };
@@ -1759,14 +1761,15 @@
 		F13B4BF31F18C73A00814661 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				85B9CB8321AEBD72009001F1 /* Cells */,
-				85374D3621AC417200FF5A1E /* Renderers */,
-				F16390811E648B7A005B4550 /* HomeViewController.swift */,
-				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
 				8563A0341F8E369400F04442 /* Home.storyboard */,
+				853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */,
+				F1E90C1F1E678E7C005E7E21 /* HomeControllerDelegate.swift */,
 				85058365219AE9EA00ED4EDB /* HomePageConfiguration.swift */,
+				F16390811E648B7A005B4550 /* HomeViewController.swift */,
 				85058367219C49E000ED4EDB /* HomeViewSectionRenderers.swift */,
 				8505839121A6D7D000ED4EDB /* SlidingAnimationCollectionViewFlowLayout.swift */,
+				85B9CB8321AEBD72009001F1 /* Cells */,
+				85374D3621AC417200FF5A1E /* Renderers */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -2941,6 +2944,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */,
+				853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,

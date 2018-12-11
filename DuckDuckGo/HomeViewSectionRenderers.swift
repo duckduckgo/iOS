@@ -19,11 +19,6 @@
 
 import UIKit
 
-class ThemableCollectionViewCell: UICollectionViewCell, Themable {
-    func decorate(with theme: Theme) {
-    }
-}
-
 @objc protocol HomeViewSectionRenderer {
     
     @objc optional func install(into controller: HomeViewController)
@@ -77,10 +72,8 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         
     }
     
-    var theme: Theme
-
     private let controller: HomeViewController
-    
+    private var theme: Theme
     private var renderers = [HomeViewSectionRenderer]()
     
     init(controller: HomeViewController, theme: Theme) {
@@ -130,7 +123,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
-        if let themable = cell as? ThemableCollectionViewCell {
+        if let themable = cell as? Themable {
             themable.decorate(with: theme)
         }
         return cell
@@ -185,6 +178,14 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
+    }
+    
+}
+
+extension HomeViewSectionRenderers: Themable {
+    
+    func decorate(with theme: Theme) {
+        self.theme = theme
     }
     
 }

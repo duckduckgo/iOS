@@ -19,7 +19,7 @@
 
 import UIKit
 
-class CenteredSearchHomeCell: ThemableCollectionViewCell {
+class CenteredSearchHomeCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var searchBackground: RoundedRectangleView!
@@ -68,14 +68,21 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
         defaultSearchHeight = searchBackground.frame.height
         defaultSearchRadius = searchBackground.layer.cornerRadius
     }
+
+    @objc func onTap() {
+        tapped?(self)
+    }
     
-    override func decorate(with theme: Theme) {
+}
+
+extension CenteredSearchHomeCell: Themable {
+    func decorate(with theme: Theme) {
         searchBackground.backgroundColor = theme.searchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
         
         // omnibar also uses this, maybe it should be themeable?
         promptText.textColor = UIColor.greyish
-
+        
         switch theme.currentImageSet {
         case .light:
             imageView.image = UIImage(named: "LogoDarkText")
@@ -83,9 +90,4 @@ class CenteredSearchHomeCell: ThemableCollectionViewCell {
             imageView.image = UIImage(named: "LogoLightText")
         }
     }
-    
-    @objc func onTap() {
-        tapped?(self)
-    }
-    
 }

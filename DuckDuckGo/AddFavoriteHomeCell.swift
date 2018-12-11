@@ -19,12 +19,15 @@
 
 import UIKit
 
-class AddFavoriteHomeCell: ThemableCollectionViewCell {
+class AddFavoriteHomeCell: UICollectionViewCell {
     
     @IBOutlet weak var plusImage: UIImageView!
     @IBOutlet weak var plusBackground: UIView!
     
-    override func decorate(with theme: Theme) {
+}
+
+extension AddFavoriteHomeCell: Themable {
+    func decorate(with theme: Theme) {
         switch theme.currentImageSet {
         case .light:
             plusImage.tintColor = UIColor.greyish.applyAlpha(0.6)
@@ -35,7 +38,6 @@ class AddFavoriteHomeCell: ThemableCollectionViewCell {
             plusBackground.backgroundColor = UIColor.reallyBlack
         }
     }
-    
 }
 
 fileprivate extension UIColor {

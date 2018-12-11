@@ -19,11 +19,15 @@
 
 import UIKit
 
-class NavigationSearchHomeCell: ThemableCollectionViewCell {
+class NavigationSearchHomeCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    override func decorate(with theme: Theme) {
+}
+
+extension NavigationSearchHomeCell: Themable {
+    
+    func decorate(with theme: Theme) {
         switch theme.currentImageSet {
         case .light:
             imageView.image = UIImage(named: "LogoDarkText")

@@ -59,7 +59,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     @objc func rotated() {
-        print("***", #function)
         scrollViewDidScroll(controller.collectionView)
     }
     
@@ -92,23 +91,19 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         let y = scrollView.contentOffset.y
 
         let diff = targetHeight - y
-        print("***", diff)
 
         guard diff < offsetY else {
             controller.searchHeaderTransition = 0.0
             cell?.searchHeaderTransition = 0.0
-            print("*** diff < offsetY")
             return
         }
         guard diff > 0 else {
             controller.searchHeaderTransition = 1.0
             cell?.searchHeaderTransition = 1.0
-            print("*** diff > offsetY")
             return
         }
 
         let percent = 1 - (diff / offsetY)
-        print("*** diff percent", percent)
         controller.searchHeaderTransition = percent
         cell?.searchHeaderTransition = percent
     }
@@ -141,7 +136,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     deinit {
-        print("***", self, #function)
         NotificationCenter.default.removeObserver(self)
     }
     

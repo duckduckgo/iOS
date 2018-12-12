@@ -71,11 +71,11 @@ class CenteredSearchHomeCell: UICollectionViewCell {
         searchBackground.layer.cornerRadius = defaultSearchRadius - (radiusDiff * searchHeaderTransition)
         
         let leadingOffset = -18 * searchHeaderTransition
-        let trailingOffset = 16 * searchHeaderTransition
-        
         searchBackgroundLeadingConstraint.constant = leadingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
-        searchBackgroundTrailingConstraint.constant = trailingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
         
+        let trailingOffset = 16 * searchHeaderTransition
+        searchBackgroundTrailingConstraint.constant = trailingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
+
         let searchLoupeDiff: CGFloat = -6
         searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
     }
@@ -84,7 +84,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
 
 extension CenteredSearchHomeCell: Themable {
     func decorate(with theme: Theme) {
-        print("***", #function, frame.width)
+        // called on rotation too, so ideal time to update
         updateForTransition()
         
         searchBackground.backgroundColor = theme.searchBarBackgroundColor

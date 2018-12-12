@@ -64,6 +64,10 @@ import UIKit
     @objc optional func collectionView(_ collectionView: UICollectionView,
                                        layout collectionViewLayout: UICollectionViewLayout,
                                        referenceSizeForFooterInSection section: Int) -> CGSize
+    
+    @objc optional func collectionView(_ collectionView: UICollectionView,
+                                       layout collectionViewLayout: UICollectionViewLayout,
+                                       insetForSectionAt section: Int) -> UIEdgeInsets
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -136,7 +140,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         }
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return renderers[indexPath.section].collectionView?(collectionView, canMoveItemAt: indexPath) ?? false
     }
@@ -185,7 +189,9 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
+            
+        return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, insetForSectionAt: section) ??
+            UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
     }
     
 }

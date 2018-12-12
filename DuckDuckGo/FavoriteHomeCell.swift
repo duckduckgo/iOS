@@ -177,22 +177,12 @@ fileprivate extension String {
     
 }
 
-extension UIColor {
+fileprivate extension UIColor {
 
     // from: https://stackoverflow.com/a/27203691/73479
     class func fromHexString(_ hex: String) -> UIColor {
-        var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        
-        if cString.hasPrefix("#") {
-            cString.remove(at: cString.startIndex)
-        }
-        
-        if (cString.count) != 6 {
-            return UIColor.gray
-        }
-        
         var rgbValue: UInt32 = 0
-        Scanner(string: cString).scanHexInt32(&rgbValue)
+        Scanner(string: hex).scanHexInt32(&rgbValue)
         
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

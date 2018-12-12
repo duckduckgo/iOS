@@ -152,22 +152,22 @@ fileprivate extension String {
     var color: UIColor {
         
         let palette = [
-            UIColor.fromHexString("94B3AF"),
-            UIColor.fromHexString("727998"),
-            UIColor.fromHexString("645468"),
-            UIColor.fromHexString("4D5F7F"),
-            UIColor.fromHexString("855DB6"),
-            UIColor.fromHexString("5E5ADB"),
-            UIColor.fromHexString("678FFF"),
-            UIColor.fromHexString("6BB4EF"),
-            UIColor.fromHexString("4A9BAE"),
-            UIColor.fromHexString("66C4C6"),
-            UIColor.fromHexString("55D388"),
-            UIColor.fromHexString("99DB7A"),
-            UIColor.fromHexString("ECCC7B"),
-            UIColor.fromHexString("E7A538"),
-            UIColor.fromHexString("DD6B4C"),
-            UIColor.fromHexString("D65D62")
+            UIColor(hex: "94B3AF"),
+            UIColor(hex: "727998"),
+            UIColor(hex: "645468"),
+            UIColor(hex: "4D5F7F"),
+            UIColor(hex: "855DB6"),
+            UIColor(hex: "5E5ADB"),
+            UIColor(hex: "678FFF"),
+            UIColor(hex: "6BB4EF"),
+            UIColor(hex: "4A9BAE"),
+            UIColor(hex: "66C4C6"),
+            UIColor(hex: "55D388"),
+            UIColor(hex: "99DB7A"),
+            UIColor(hex: "ECCC7B"),
+            UIColor(hex: "E7A538"),
+            UIColor(hex: "DD6B4C"),
+            UIColor(hex: "D65D62")
         ]
         
         let hash = consistentHash
@@ -179,12 +179,11 @@ fileprivate extension String {
 
 fileprivate extension UIColor {
 
-    // from: https://stackoverflow.com/a/27203691/73479
-    class func fromHexString(_ hex: String) -> UIColor {
+    convenience init(hex: String) {
         var rgbValue: UInt32 = 0
         Scanner(string: hex).scanHexInt32(&rgbValue)
         
-        return UIColor(
+        self.init(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,

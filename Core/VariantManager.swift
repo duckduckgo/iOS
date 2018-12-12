@@ -71,15 +71,15 @@ public protocol VariantManager {
 public class DefaultVariantManager: VariantManager {
 
     public var currentVariant: Variant? {
-        if isDebugBuild {
-            return Variant(name: "hacked", weight: 0, features:
-                [.themeToggle,
-                 .lightThemeByDefault,
-                 .homeScreen,
-                 .singleFavorite,
-                 .additionalFavorites])
-        }
-        return variants.first(where: { $0.name == storage.variant })
+        // TODO return variants.first(where: { $0.name == storage.variant })
+        return Variant(name: "hacked", weight: 0, features:
+            [.themeToggle,
+             .lightThemeByDefault,
+             .homeScreen,
+             .singleFavorite,
+             .additionalFavorites
+            ])
+
     }
 
     private let variants: [Variant]

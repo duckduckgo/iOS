@@ -150,11 +150,56 @@ fileprivate extension String {
     }
     
     var color: UIColor {
+        
+        let palette = [
+            UIColor.fromHexString("94B3AF"),
+            UIColor.fromHexString("727998"),
+            UIColor.fromHexString("645468"),
+            UIColor.fromHexString("4D5F7F"),
+            UIColor.fromHexString("855DB6"),
+            UIColor.fromHexString("5E5ADB"),
+            UIColor.fromHexString("678FFF"),
+            UIColor.fromHexString("6BB4EF"),
+            UIColor.fromHexString("4A9BAE"),
+            UIColor.fromHexString("66C4C6"),
+            UIColor.fromHexString("55D388"),
+            UIColor.fromHexString("99DB7A"),
+            UIColor.fromHexString("ECCC7B"),
+            UIColor.fromHexString("E7A538"),
+            UIColor.fromHexString("DD6B4C"),
+            UIColor.fromHexString("D65D62")
+        ]
+        
         let hash = consistentHash
-        let red = CGFloat((hash >> 0) & 0xFF)
-        let green = CGFloat((hash >> 8) & 0xFF)
-        let blue = CGFloat((hash >> 16) & 0xFF)
-        return UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1.0)
+        let index = hash % palette.count
+        return palette[abs(index)]
+    }
+    
+}
+
+extension UIColor {
+
+    // from: https://stackoverflow.com/a/27203691/73479
+    class func fromHexString(_ hex: String) -> UIColor {
+        var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if cString.hasPrefix("#") {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if (cString.count) != 6 {
+            return UIColor.gray
+        }
+        
+        var rgbValue: UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
     
 }

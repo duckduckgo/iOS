@@ -202,6 +202,10 @@ class HomeViewController: UIViewController {
         removeFromParent()
         view.removeFromSuperview()
     }
+    
+    func launchNewSearch() {
+        collectionView.launchNewSearch()
+    }
 }
 
 extension HomeViewController: Themable {

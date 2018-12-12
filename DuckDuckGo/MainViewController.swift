@@ -215,6 +215,7 @@ class MainViewController: UIViewController {
     func launchNewSearch() {
         loadViewIfNeeded()
         attachHomeScreen()
+        homeController?.launchNewSearch()
         omniBar.becomeFirstResponder()
     }
 

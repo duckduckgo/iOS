@@ -28,7 +28,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var sectionHeight: CGFloat {
         return UIScreen.main.bounds.height * 1 / 2
     }
-    private var indexPath: IndexPath!
+    private var indexPath: IndexPath?
     
     func install(into controller: HomeViewController) {
         self.controller = controller
@@ -116,13 +116,21 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private func activateSearch() {
-        let indexPath = IndexPath(row: 0, section: self.indexPath.section + 1)
-        controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        guard let thisIndexPath = indexPath else { return }
+        let targetIndexPath = IndexPath(row: 0, section: thisIndexPath.section + 1)
+        controller.collectionView.scrollToItem(at: targetIndexPath, at: .top, animated: true)
         controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
     func omniBarCancelPressed() {
+        guard let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+    }
+    
+    func launchNewSearch() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.activateSearch()
+        }
     }
     
     deinit {

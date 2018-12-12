@@ -29,6 +29,8 @@ import UIKit
     
     @objc optional func menuItemsFor(itemAt: Int) -> [UIMenuItem]
     
+    @objc optional func launchNewSearch()
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
     func collectionView(_ collectionView: UICollectionView,
@@ -100,6 +102,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func openedAsNewTab() {
         renderers.forEach { renderer in
             renderer.openedAsNewTab?()
+        }
+    }
+    
+    func launchNewSearch() {
+        renderers.forEach { renderer in
+            renderer.launchNewSearch?()
         }
     }
 

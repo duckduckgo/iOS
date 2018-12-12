@@ -18,9 +18,6 @@ class HomeCollectionView: UICollectionView {
         UILongPressGestureRecognizer(target: self, action: #selector(self.collectionViewReorderingGestureHandler(gesture:)))
     
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
-    
-    private var keyboardWillShowToken: NSObjectProtocol?
-    private var keyboardWillHideToken: NSObjectProtocol?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +46,10 @@ class HomeCollectionView: UICollectionView {
         dataSource = renderers
         delegate = renderers
         addGestureRecognizer(collectionViewReorderingGesture)
+    }
+    
+    func launchNewSearch() {
+        renderers.launchNewSearch()
     }
  
     @objc func collectionViewReorderingGestureHandler(gesture: UILongPressGestureRecognizer) {
@@ -99,20 +100,6 @@ class HomeCollectionView: UICollectionView {
         renderers.openedAsNewTab()
     }
 
-    deinit {
-        
-        if let token = keyboardWillShowToken {
-            NotificationCenter.default.removeObserver(token)
-            keyboardWillShowToken = nil
-        }
-        
-        if let token = keyboardWillHideToken {
-            NotificationCenter.default.removeObserver(token)
-            keyboardWillHideToken = nil
-        }
-        
-    }
-    
 }
 
 extension HomeCollectionView: Themable {

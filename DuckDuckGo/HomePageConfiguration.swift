@@ -70,7 +70,7 @@ class HomePageConfiguration {
         }
 
         if currentVariant.features.contains(FeatureName.singleFavorite) {
-            bookmarksManager.save(favorite: Link(title: "Twitter", url: URL(string: "https://twitter.com")!))
+            bookmarksManager.save(favorite: Link(title: "Twitter", url: URL(string: "https://twitter.com/DuckDuckGo")!))
         }
         
         if currentVariant.features.contains(FeatureName.additionalFavorites) {

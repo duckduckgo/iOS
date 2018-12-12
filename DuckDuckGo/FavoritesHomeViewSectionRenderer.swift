@@ -125,7 +125,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        print("***", #function)
+        
         return CGSize(width: 1, height: 39)
     }
     

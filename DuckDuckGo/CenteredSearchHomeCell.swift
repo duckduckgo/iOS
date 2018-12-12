@@ -39,26 +39,16 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     
     var tapped: ((CenteredSearchHomeCell) -> Void)?
 
+    var defaultSearchBackgroundMargin: CGFloat {
+        return UIDevice.current.orientation.isPortrait ? 0 : (frame.width - 380) / 2
+    }
     var defaultSearchLoupeOffset: CGFloat = 15
     var defaultSearchHeight: CGFloat!
     var defaultSearchRadius: CGFloat!
     
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
-            let heightDiff = defaultSearchHeight - targetSearchHeight
-            searchBackgroundHeightConstraint.constant = defaultSearchHeight - (heightDiff * searchHeaderTransition)
-            
-            let radiusDiff = defaultSearchRadius - targetSearchRadius
-            searchBackground.layer.cornerRadius = defaultSearchRadius - (radiusDiff * searchHeaderTransition)
-            
-            let searchLeftOffset: CGFloat = -18
-            searchBackgroundLeadingConstraint.constant = searchLeftOffset * searchHeaderTransition
-            
-            let searchRightOffset: CGFloat = 16
-            searchBackgroundTrailingConstraint.constant = searchRightOffset * searchHeaderTransition
-            
-            let searchLoupeDiff: CGFloat = -6
-            searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
+            updateForTransition()
         }
     }
 
@@ -72,11 +62,31 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     @objc func onTap() {
         tapped?(self)
     }
+
+    private func updateForTransition() {
+        let heightDiff = defaultSearchHeight - targetSearchHeight
+        searchBackgroundHeightConstraint.constant = defaultSearchHeight - (heightDiff * searchHeaderTransition)
+        
+        let radiusDiff = defaultSearchRadius - targetSearchRadius
+        searchBackground.layer.cornerRadius = defaultSearchRadius - (radiusDiff * searchHeaderTransition)
+        
+        let leadingOffset = -18 * searchHeaderTransition
+        let trailingOffset = 16 * searchHeaderTransition
+        
+        searchBackgroundLeadingConstraint.constant = leadingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
+        searchBackgroundTrailingConstraint.constant = trailingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
+        
+        let searchLoupeDiff: CGFloat = -6
+        searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
+    }
     
 }
 
 extension CenteredSearchHomeCell: Themable {
     func decorate(with theme: Theme) {
+        print("***", #function, frame.width)
+        updateForTransition()
+        
         searchBackground.backgroundColor = theme.searchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
         

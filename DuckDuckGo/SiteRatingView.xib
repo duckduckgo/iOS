@@ -39,6 +39,6 @@
         </view>
     </objects>
     <resources>
-        <image name="PP Indicator Unknown" width="22" height="22"/>
+        <image name="PP Indicator Unknown" width="24" height="24"/>
     </resources>
 </document>

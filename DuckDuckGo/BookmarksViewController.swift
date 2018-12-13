@@ -94,7 +94,6 @@ class BookmarksViewController: UITableViewController {
     private func finishEditing() {
         tableView.isEditing = false
         refreshEditButton()
-        delegate?.bookmarksUpdated()
     }
 
     private func enableEditButton() {
@@ -126,6 +125,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func dismiss() {
+        delegate?.bookmarksUpdated()
         dismiss(animated: true, completion: nil)
     }
 

@@ -114,7 +114,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 68, height: 100)
+        return CGSize(width: FavoriteHomeCell.Constants.width, height: FavoriteHomeCell.Constants.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {

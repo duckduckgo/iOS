@@ -25,9 +25,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private weak var controller: HomeViewController!
     private weak var cell: CenteredSearchHomeCell?
 
-    private var sectionHeight: CGFloat {
-        return UIScreen.main.bounds.height * 1 / 2
-    }
     private var indexPath: IndexPath?
     
     func install(into controller: HomeViewController) {
@@ -76,7 +73,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            let height = sectionHeight
+            let height = (collectionView.frame.height / 2)
             let width = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
@@ -84,7 +81,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY: CGFloat = 46
         
-        let targetHeight = sectionHeight - offsetY
+        let targetHeight = (scrollView.frame.height / 2) - offsetY
         let y = scrollView.contentOffset.y
 
         let diff = targetHeight - y

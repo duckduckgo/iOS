@@ -21,6 +21,11 @@ import UIKit
 import Core
 
 class FavoriteHomeCell: UICollectionViewCell {
+
+    struct Constants {
+        static let width: CGFloat = 68
+        static let height: CGFloat = 100
+    }
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var iconLabel: UILabel!

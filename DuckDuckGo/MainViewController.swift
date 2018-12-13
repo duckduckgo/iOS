@@ -536,6 +536,7 @@ extension MainViewController: OmniBarDelegate {
     
     func onCancelPressed() {
         dismissAutcompleteSuggestions()
+        omniBar.resignFirstResponder()
         homeController?.omniBarCancelPressed()
     }
     

@@ -10,6 +10,10 @@ import UIKit
 
 class HomeCollectionView: UICollectionView {
     
+    struct Constants {
+        static let topInset: CGFloat = 79
+    }
+    
     private weak var controller: HomeViewController!
     
     private var renderers: HomeViewSectionRenderers!
@@ -21,8 +25,8 @@ class HomeCollectionView: UICollectionView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        contentInset = UIEdgeInsets(top: 79, left: 0, bottom: 0, right: 0)
+        
+        contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {
@@ -100,7 +104,6 @@ class HomeCollectionView: UICollectionView {
     func openedAsNewTab() {
         renderers.openedAsNewTab()
     }
-
 }
 
 extension HomeCollectionView: Themable {

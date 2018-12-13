@@ -38,10 +38,12 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isEmpty {
+        
+        if link(at: indexPath) != nil {
+            return createBookmarkCell(tableView, forIndexPath: indexPath)
+        } else {
             return createEmptyCell(tableView)
         }
-        return createBookmarkCell(tableView, forIndexPath: indexPath)
     }
 
     private func createEmptyCell(_ tableView: UITableView) -> UITableViewCell {

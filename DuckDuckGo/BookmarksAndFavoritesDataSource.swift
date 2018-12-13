@@ -53,33 +53,48 @@ class BookmarksAndFavoritesDataSource: BookmarksDataSource {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isEmpty { return 1 }
-        return section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount
+        return max(1, section == 0 ? bookmarksManager.favoritesCount : bookmarksManager.bookmarksCount)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            var reload = false
+            
             if indexPath.section == 0 {
                 bookmarksManager.deleteFavorite(at: indexPath.row)
+                reload = bookmarksManager.favoritesCount == 0
             } else {
                 bookmarksManager.deleteBookmark(at: indexPath.row)
+                reload = bookmarksManager.bookmarksCount == 0
+            }
+            
+            if reload {
+                // because we're replacing this cell with a place holder that says "no whatever yet"
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }
-        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
+        var reload = false
         if sourceIndexPath.section == 0 && destinationIndexPath.section == 0 {
             bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
         } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
             bookmarksManager.moveFavorite(at: sourceIndexPath.row, toBookmark: destinationIndexPath.row)
+            reload = bookmarksManager.favoritesCount == 0 || bookmarksManager.bookmarksCount == 1
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 1 {
             bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
             bookmarksManager.moveBookmark(at: sourceIndexPath.row, toFavorite: destinationIndexPath.row)
+            reload = bookmarksManager.bookmarksCount == 0 || bookmarksManager.favoritesCount == 1
         }
-        
+
+        if reload {
+            tableView.reloadData()
+        }
     }
 
     override func tableView(_ tableView: UITableView, updateBookmark updatedBookmark: Link, at indexPath: IndexPath) {
@@ -92,6 +107,10 @@ class BookmarksAndFavoritesDataSource: BookmarksDataSource {
         }
         
         tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return link(at: indexPath) != nil
     }
 
 }

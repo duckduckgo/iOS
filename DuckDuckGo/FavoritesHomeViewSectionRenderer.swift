@@ -37,6 +37,13 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         self.controller = controller
     }
     
+    func endReordering() {
+        if let cell = reorderingCell {
+            cell.isReordering = false
+            reorderingCell = nil
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets {
         
@@ -111,12 +118,11 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        guard !isLastItem(indexPath) else { return false }
         if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
             cell.isReordering = true
             reorderingCell = cell
         }
-        return true
+        return !isLastItem(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -146,15 +152,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem] {
-        
-        if let reorderingCell = reorderingCell {
-            reorderingCell.isReordering = false
-            if let indexPath = controller.collectionView.indexPath(for: reorderingCell) {
-                controller.collectionView.reloadItems(at: [indexPath])
-            }
-            self.reorderingCell = nil
-        }
-        
         return [
             UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),
             UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)

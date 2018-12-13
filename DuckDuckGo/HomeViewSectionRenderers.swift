@@ -68,6 +68,9 @@ import UIKit
     @objc optional func collectionView(_ collectionView: UICollectionView,
                                        layout collectionViewLayout: UICollectionViewLayout,
                                        insetForSectionAt section: Int) -> UIEdgeInsets
+    
+    @objc optional func endReordering()
+    
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -112,6 +115,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func launchNewSearch() {
         renderers.forEach { renderer in
             renderer.launchNewSearch?()
+        }
+    }
+    
+    func endReordering() {
+        renderers.forEach { renderer in
+            renderer.endReordering?()
         }
     }
 

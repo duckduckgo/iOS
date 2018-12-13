@@ -65,6 +65,7 @@ class HomeCollectionView: UICollectionView {
             updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
             
         case .ended:
+            renderers.endReordering()
             endInteractiveMovement()
             UIImpactFeedbackGenerator().impactOccurred()
             if let indexPath = indexPathForItem(at: gesture.location(in: self)) {

@@ -37,12 +37,18 @@ class BookmarksAndFavoritesDataSource: BookmarksDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if isEmpty { return 1 }
         return 2
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let emptyCell = cell as? NoBookmarksCell {
+            emptyCell.label.text = indexPath.section == 0 ? UserText.emptyFavorites : UserText.emptyBookmarks
+        }
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard !isEmpty else { return nil }
         return section == 0 ? UserText.sectionTitleFavorites : UserText.sectionTitleBookmarks
     }
     

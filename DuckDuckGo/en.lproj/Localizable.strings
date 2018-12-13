@@ -129,3 +129,6 @@
 
 "favorite.menu.delete" = "Delete";
 "favorite.menu.edit" = "Edit";
+
+"empty.bookmarks" = "No bookmarks yet";
+"empty.favorites" = "No favorites yet";

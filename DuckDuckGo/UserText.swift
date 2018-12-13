@@ -148,4 +148,7 @@ public struct UserText {
     public static let favoriteMenuDelete = NSLocalizedString("favorite.menu.delete", comment: "Favorite menu: delete")
     public static let favoriteMenuEdit = NSLocalizedString("favorite.menu.edit", comment: "Favorite menu: edit")
 
+    public static let emptyBookmarks = NSLocalizedString("empty.bookmarks", comment: "No bookmarks")
+    public static let emptyFavorites = NSLocalizedString("empty.favorites", comment: "No favorites")
+    
 }

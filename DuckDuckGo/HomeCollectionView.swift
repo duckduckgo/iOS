@@ -22,7 +22,7 @@ class HomeCollectionView: UICollectionView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        contentInset = UIEdgeInsets(top: 59, left: 0, bottom: 0, right: 0)
+        contentInset = UIEdgeInsets(top: 79, left: 0, bottom: 0, right: 0)
     }
     
     func configure(withController controller: HomeViewController, andTheme theme: Theme) {

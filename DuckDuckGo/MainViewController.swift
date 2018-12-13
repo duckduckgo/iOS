@@ -641,6 +641,8 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        customNavigationBar.alpha = 1
+        allowContentUnderflow = false
         select(tabAt: index)
     }
 

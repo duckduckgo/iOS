@@ -42,7 +42,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
         let landscapeMargin = (controller.collectionView.frame.width - 400 + defaultMargin) / 2
-        let margin = UIDevice.current.orientation.isPortrait ? defaultMargin : landscapeMargin
+        let margin = isPortrait ? defaultMargin : landscapeMargin
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
     

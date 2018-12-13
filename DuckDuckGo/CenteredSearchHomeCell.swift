@@ -40,7 +40,8 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     var tapped: ((CenteredSearchHomeCell) -> Void)?
 
     var defaultSearchBackgroundMargin: CGFloat {
-        return UIDevice.current.orientation.isPortrait ? 0 : (frame.width - 380) / 2
+        // this only gives two distinct states unlike device orientation which can be unknown and flat
+        return isPortrait ? 0 : (frame.width - 380) / 2
     }
     var defaultSearchLoupeOffset: CGFloat = 15
     var defaultSearchHeight: CGFloat!

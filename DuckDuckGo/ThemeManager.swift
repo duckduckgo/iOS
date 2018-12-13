@@ -61,15 +61,6 @@ class ThemeManager {
          rootProvider: RootControllerProvider = UIApplicationRootControllerProvider()) {
         variantManager.assignVariantIfNeeded()
         
-        // Set default theme in case user participates in experiment
-        if let variant = variantManager.currentVariant {
-            if variant.features.contains(.lightThemeByDefault) {
-                settings.setInitialThemeNameIfNeeded(name: .light)
-            } else if variant.features.contains(.darkThemeByDefault) {
-                settings.setInitialThemeNameIfNeeded(name: .dark)
-            }
-        }
-        
         appSettings = settings
         currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)
         rootControllerProvider = rootProvider

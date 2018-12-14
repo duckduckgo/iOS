@@ -21,6 +21,15 @@ import UIKit
 
 class CenteredSearchHomeCell: UICollectionViewCell {
     
+    struct Constants {
+        
+        static let searchWidth: CGFloat = 380
+        static let targetSearchLeadingOffset: CGFloat = -18
+        static let targetSearchTrailingOffset: CGFloat = 16
+        static let targetSearchLoupeOffset: CGFloat = -6
+        
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var searchBackground: RoundedRectangleView!
     @IBOutlet weak var searchBackgroundHeightConstraint: NSLayoutConstraint!
@@ -30,22 +39,20 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     @IBOutlet weak var promptText: UILabel!
     @IBOutlet weak var searchLoupe: UIImageView!
     
-    weak var omniBar: OmniBar!
-    
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTap))
-    
-    var targetSearchHeight: CGFloat = 40
-    var targetSearchRadius: CGFloat = 20
-    
+
     var tapped: ((CenteredSearchHomeCell) -> Void)?
+    
+    var targetSearchHeight: CGFloat!
+    var targetSearchRadius: CGFloat!
+    var defaultSearchLoupeOffset: CGFloat!
+    var defaultSearchHeight: CGFloat!
+    var defaultSearchRadius: CGFloat!
 
     var defaultSearchBackgroundMargin: CGFloat {
         // this only gives two distinct states unlike device orientation which can be unknown and flat
-        return isPortrait ? 0 : (frame.width - 380) / 2
+        return isPortrait ? 0 : (frame.width - Constants.searchWidth) / 2
     }
-    var defaultSearchLoupeOffset: CGFloat = 15
-    var defaultSearchHeight: CGFloat!
-    var defaultSearchRadius: CGFloat!
     
     var searchHeaderTransition: CGFloat = 0.0 {
         didSet {
@@ -58,6 +65,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
         searchBackground.addGestureRecognizer(tapGesture)
         defaultSearchHeight = searchBackground.frame.height
         defaultSearchRadius = searchBackground.layer.cornerRadius
+        defaultSearchLoupeOffset = searchLoupeLeadingConstraint.constant
     }
 
     @objc func onTap() {
@@ -71,13 +79,13 @@ class CenteredSearchHomeCell: UICollectionViewCell {
         let radiusDiff = defaultSearchRadius - targetSearchRadius
         searchBackground.layer.cornerRadius = defaultSearchRadius - (radiusDiff * searchHeaderTransition)
         
-        let leadingOffset = -18 * searchHeaderTransition
+        let leadingOffset = Constants.targetSearchLeadingOffset * searchHeaderTransition
         searchBackgroundLeadingConstraint.constant = leadingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
         
-        let trailingOffset = 16 * searchHeaderTransition
+        let trailingOffset = Constants.targetSearchTrailingOffset * searchHeaderTransition
         searchBackgroundTrailingConstraint.constant = trailingOffset + (defaultSearchBackgroundMargin * (1 - searchHeaderTransition))
 
-        let searchLoupeDiff: CGFloat = -6
+        let searchLoupeDiff: CGFloat = Constants.targetSearchLoupeOffset
         searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
     }
     

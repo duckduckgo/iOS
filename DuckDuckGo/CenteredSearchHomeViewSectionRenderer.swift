@@ -65,8 +65,9 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath) as? CenteredSearchHomeCell else {
             fatalError("cell is not a CenteredSearchHomeCell")
         }
-        cell.omniBar = controller.chromeDelegate?.omniBar
         cell.tapped = self.tapped
+        cell.targetSearchHeight = controller.chromeDelegate?.omniBar.editingBackground.frame.height ?? 0
+        cell.targetSearchRadius = controller.chromeDelegate?.omniBar.editingBackground.layer.cornerRadius ?? 0
         self.cell = cell
         return cell
     }

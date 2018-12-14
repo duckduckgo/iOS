@@ -26,82 +26,89 @@ public enum FeatureName {
 }
 
 public struct Variant {
-
+    
     public static let defaultVariants: [Variant] = [
         
         // SERP variants - do not remove
         Variant(name: "sc", weight: 1, features: []),
         Variant(name: "sd", weight: 1, features: []),
-
+        
         // Enhanced home page experiment
         Variant(name: "mk", weight: 2, features: []),
         Variant(name: "ml", weight: 1, features: [.homeScreen, .singleFavorite]),
         Variant(name: "mm", weight: 1, features: [.homeScreen, .singleFavorite, .additionalFavorites])
     ]
-
+    
     public let name: String
     public let weight: Int
     public let features: [FeatureName]
-
+    
 }
 
 public protocol VariantRNG {
-
+    
     func nextInt(upperBound: Int) -> Int
-
+    
 }
 
 public protocol VariantManager {
-
+    
     var currentVariant: Variant? { get }
     func assignVariantIfNeeded()
-
+    
 }
 
 public class DefaultVariantManager: VariantManager {
-
+    
     public var currentVariant: Variant? {
-        // TODO return variants.first(where: { $0.name == storage.variant })
-        return Variant(name: "hacked", weight: 0, features:
-            [.homeScreen,
-             .singleFavorite,
-             .additionalFavorites
-            ])
-
+        return variants.first(where: { $0.name == storage.variant })
     }
-
+    
     private let variants: [Variant]
     private let storage: StatisticsStore
     private let rng: VariantRNG
-
+    private let uiIdiom: UIUserInterfaceIdiom
+    
     public init(variants: [Variant] = Variant.defaultVariants,
                 storage: StatisticsStore = StatisticsUserDefaults(),
-                rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
+                rng: VariantRNG = Arc4RandomUniformVariantRNG(),
+                uiIdiom: UIUserInterfaceIdiom = UI_USER_INTERFACE_IDIOM()) {
         self.variants = variants
         self.storage = storage
         self.rng = rng
+        self.uiIdiom = uiIdiom
     }
-
+    
     public func assignVariantIfNeeded() {
         guard !storage.hasInstallStatistics else {
             Logger.log(text: "no new variant needed for existing user")
             return
         }
-
+        
         if let variant = currentVariant {
             Logger.log(text: "already assigned variant: \(variant)")
             return
         }
-
-        let variant = selectVariant()
-        storage.variant = variant?.name
-        Logger.log(text: "newly assigned variant: \(currentVariant as Any)")
+        
+        guard let variant = selectVariant() else {
+            Logger.log(text: "Failed to assign variant")
+            return
+        }
+        
+        if !isHomeThemeExperimentAndPad(variant) {
+            storage.variant = variant.name
+            Logger.log(text: "newly assigned variant: \(currentVariant as Any)")
+        }
     }
-
+    
+    private func isHomeThemeExperimentAndPad(_ variant: Variant) -> Bool {
+        return !variant.name.starts(with: "s") && uiIdiom == .pad
+    }
+    
     private func selectVariant() -> Variant? {
         let totalWeight = variants.reduce(0, { $0 + $1.weight })
         let randomPercent = rng.nextInt(upperBound: totalWeight)
-
+        
         var runningTotal = 0
         for variant in variants {
             runningTotal += variant.weight
@@ -109,18 +116,18 @@ public class DefaultVariantManager: VariantManager {
                 return variant
             }
         }
-
+        
         return nil
     }
-
+    
 }
 
 public class Arc4RandomUniformVariantRNG: VariantRNG {
-
+    
     public init() { }
-
+    
     public func nextInt(upperBound: Int) -> Int {
         return Int(arc4random_uniform(UInt32(upperBound)))
     }
-
+    
 }

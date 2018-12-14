@@ -34,7 +34,7 @@ class BookmarksManagerTests: XCTestCase {
         static let otherLink = Link(title: otherTitle, url: otherUrl)
     }
     
-    lazy var mockStore = MockBookmarkStore()
+    lazy var mockStore: MockBookmarkStore = MockBookmarkStore()
     lazy var manager = BookmarksManager(dataStore: mockStore)
 
     func testWhenFavoriteMovedToBookmarkThenBookmarksAndFavoritesAreUpdated() {
@@ -165,22 +165,4 @@ class BookmarksManagerTests: XCTestCase {
         XCTAssertEqual(0, manager.bookmarksCount)
     }
     
-    class MockBookmarkStore: BookmarkStore {
-
-        var bookmarks: [Link]?
-        
-        var favorites: [Link]?
-        
-        var addedBookmarks = [Link]()
-        func addBookmark(_ bookmark: Link) {
-            addedBookmarks.append(bookmark)
-        }
-        
-        var addedFavorites = [Link]()
-        func addFavorite(_ favorite: Link) {
-            addedFavorites.append(favorite)
-        }
-        
-    }
-
 }

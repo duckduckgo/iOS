@@ -77,11 +77,6 @@ class HomePageConfiguration {
             bookmarksManager.save(favorite: Link(title: "Spread Privacy", url: URL(string: "https://spreadprivacy.com")!))
             bookmarksManager.save(favorite: Link(title: "Quora", url:
                 URL(string: "https://www.quora.com/Why-should-I-use-DuckDuckGo-instead-of-Google/answer/Gabriel-Weinberg")!))
-
-            for i in 0 ..< 20 {
-                bookmarksManager.save(favorite: Link(title: "Domain \(i)", url: URL(string: "https://domain\(i).com")!))
-            }
-            
         }
 
     }

@@ -45,7 +45,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
-        -> UIEdgeInsets {
+        -> UIEdgeInsets? {
         
         let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
         let landscapeMargin = (controller.collectionView.frame.width - 400 + defaultMargin) / 2
@@ -131,7 +131,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
-                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath? {
         guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
         guard !isLastItem(proposedIndexPath) else { return originalIndexPath }
         return proposedIndexPath
@@ -139,19 +139,19 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+                        referenceSizeForHeaderInSection section: Int) -> CGSize? {
         
         return CGSize(width: 1, height: 39)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int) -> CGSize {
+                        referenceSizeForFooterInSection section: Int) -> CGSize? {
         
         return CGSize(width: 1, height: 10)
     }
 
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem] {
+    func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
         return [
             UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),
             UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)

@@ -19,18 +19,10 @@
 
 import UIKit
 
-@objc protocol HomeViewSectionRenderer {
-    
-    @objc optional func install(into controller: HomeViewController)
-    
-    @objc optional func omniBarCancelPressed()
-    
-    @objc optional func openedAsNewTab()
-    
-    @objc optional func menuItemsFor(itemAt: Int) -> [UIMenuItem]
-    
-    @objc optional func launchNewSearch()
-    
+protocol HomeViewSectionRenderer {
+
+    // MARK: required
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     
     func collectionView(_ collectionView: UICollectionView,
@@ -40,36 +32,107 @@ import UIKit
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize
     
-    @objc optional func collectionView(_ collectionView: UICollectionView,
-                                       canMoveItemAt indexPath: IndexPath) -> Bool
+    // MARK: optional
     
-    @objc optional func collectionView(_ collectionView: UICollectionView,
-                                       moveItemAt sourceIndexPath: IndexPath,
-                                       to destinationIndexPath: IndexPath)
+    func install(into controller: HomeViewController)
     
-    @objc optional func collectionView(_ collectionView: UICollectionView,
-                                       targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
-                                       toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath
+    func omniBarCancelPressed()
     
-    @objc optional func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool
+    func openedAsNewTab()
     
-    @objc optional func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    func menuItemsFor(itemAt: Int) -> [UIMenuItem]?
     
-    @objc optional func collectionView(_ collectionView: UICollectionView,
-                                       layout collectionViewLayout: UICollectionViewLayout,
-                                       referenceSizeForHeaderInSection section: Int) -> CGSize
+    func launchNewSearch()
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        canMoveItemAt indexPath: IndexPath) -> Bool
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        moveItemAt sourceIndexPath: IndexPath,
+                        to destinationIndexPath: IndexPath)
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath?
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize?
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize?
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets?
+    
+    func endReordering()
+    
+}
 
-    @objc optional func scrollViewDidScroll(_ scrollView: UIScrollView)
+extension HomeViewSectionRenderer {
     
-    @objc optional func collectionView(_ collectionView: UICollectionView,
-                                       layout collectionViewLayout: UICollectionViewLayout,
-                                       referenceSizeForFooterInSection section: Int) -> CGSize
+    func install(into controller: HomeViewController) { }
     
-    @objc optional func collectionView(_ collectionView: UICollectionView,
-                                       layout collectionViewLayout: UICollectionViewLayout,
-                                       insetForSectionAt section: Int) -> UIEdgeInsets
+    func omniBarCancelPressed() { }
     
-    @objc optional func endReordering()
+    func openedAsNewTab() { }
+    
+    func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
+        return nil
+    }
+    
+    func launchNewSearch() { }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        canMoveItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        moveItemAt sourceIndexPath: IndexPath,
+                        to destinationIndexPath: IndexPath) { }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
+                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize? {
+        return nil
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize? {
+        return nil
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets? {
+        return nil
+    }
+    
+    func endReordering() { }
     
 }
 
@@ -92,7 +155,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     }
     
     func install(renderer: HomeViewSectionRenderer) {
-        renderer.install?(into: controller)
+        renderer.install(into: controller)
         renderers.append(renderer)
     }
     
@@ -102,38 +165,38 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     func omniBarCancelPressed() {
         renderers.forEach { renderer in
-            renderer.omniBarCancelPressed?()
+            renderer.omniBarCancelPressed()
         }
     }
     
     func openedAsNewTab() {
         renderers.forEach { renderer in
-            renderer.openedAsNewTab?()
+            renderer.openedAsNewTab()
         }
     }
     
     func launchNewSearch() {
         renderers.forEach { renderer in
-            renderer.launchNewSearch?()
+            renderer.launchNewSearch()
         }
     }
     
     func endReordering() {
         renderers.forEach { renderer in
-            renderer.endReordering?()
+            renderer.endReordering()
         }
     }
-
+    
     // MARK: UIScrollViewDelegate
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         renderers.forEach {
-            $0.scrollViewDidScroll?(scrollView)
+            $0.scrollViewDidScroll(scrollView)
         }
     }
     
     // MARK: UICollectionViewDataSource
-        
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return renderers.count
     }
@@ -151,44 +214,44 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return renderers[indexPath.section].collectionView?(collectionView, canMoveItemAt: indexPath) ?? false
+        return renderers[indexPath.section].collectionView(collectionView, canMoveItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        renderers[sourceIndexPath.section].collectionView?(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
+        renderers[sourceIndexPath.section].collectionView(collectionView, moveItemAt: sourceIndexPath, to: destinationIndexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return renderers[indexPath.section].collectionView?(collectionView, shouldSelectItemAt: indexPath) ?? false
+        return renderers[indexPath.section].collectionView(collectionView, shouldSelectItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        renderers[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
+        renderers[indexPath.section].collectionView(collectionView, didSelectItemAt: indexPath)
     }
     
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
-        return renderers[originalIndexPath.section].collectionView?(collectionView,
-                                                                    targetIndexPathForMoveFromItemAt: originalIndexPath,
-                                                                    toProposedIndexPath: proposedIndexPath) ?? originalIndexPath
+        return renderers[originalIndexPath.section].collectionView(collectionView,
+                                                                   targetIndexPathForMoveFromItemAt: originalIndexPath,
+                                                                   toProposedIndexPath: proposedIndexPath) ?? originalIndexPath
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section)
+        return renderers[section].collectionView(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section)
             ?? CGSize.zero
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
-        return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForFooterInSection: section)
+        return renderers[section].collectionView(collectionView, layout: collectionViewLayout, referenceSizeForFooterInSection: section)
             ?? CGSize.zero
     }
-
+    
     // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
@@ -199,8 +262,8 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets {
             
-        return renderers[section].collectionView?(collectionView, layout: collectionViewLayout, insetForSectionAt: section) ??
-            UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
+            return renderers[section].collectionView(collectionView, layout: collectionViewLayout, insetForSectionAt: section) ??
+                UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
     }
     
 }

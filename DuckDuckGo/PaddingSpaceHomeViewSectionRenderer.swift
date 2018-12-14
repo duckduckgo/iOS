@@ -77,8 +77,4 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.collectionView.contentInset = UIEdgeInsets(top: HomeCollectionView.Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
 }

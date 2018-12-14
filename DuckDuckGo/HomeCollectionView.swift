@@ -99,7 +99,7 @@ class HomeCollectionView: UICollectionView {
         guard let menuView = cellForItem(at: indexPath) else { return }
         guard menuView.becomeFirstResponder() else { return }
         let renderer = renderers.rendererFor(section: indexPath.section)
-        guard let menuItems = renderer.menuItemsFor?(itemAt: indexPath.row) else { return }
+        guard let menuItems = renderer.menuItemsFor(itemAt: indexPath.row) else { return }
         
         let menuController = UIMenuController.shared
         

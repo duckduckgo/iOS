@@ -66,7 +66,6 @@ private class ValidatingAlert: UIAlertController {
         
         saveAction = createSaveAction(with: saveCompletion)
         addAction(title: UserText.actionCancel, style: .cancel) {
-            print("*** cancel!")
             cancelCompletion?()
         }
         updateSave()

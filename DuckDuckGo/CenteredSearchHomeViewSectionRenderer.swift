@@ -130,8 +130,4 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
 }

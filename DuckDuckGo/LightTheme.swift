@@ -33,7 +33,7 @@ struct LightTheme: Theme {
     
     var tintOnBlurColor = UIColor.white
     
-    var searchBarBackgroundColor = UIColor.lightGreyish
+    var searchBarBackgroundColor = UIColor.mercury
     var searchBarTextColor = UIColor.darkGreyish
     
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight

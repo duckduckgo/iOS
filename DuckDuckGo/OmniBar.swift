@@ -169,7 +169,7 @@ class OmniBar: UIView {
             return
         }
         resignFirstResponder()
-        omniDelegate?.onOmniQuerySubmitted?(query)
+        omniDelegate?.onOmniQuerySubmitted(query)
     }
 
     @IBAction func onClearButtonPressed(_ sender: Any) {
@@ -177,23 +177,23 @@ class OmniBar: UIView {
     }
 
     @IBAction func onSiteRatingPressed(_ sender: Any) {
-        omniDelegate?.onSiteRatingPressed?()
+        omniDelegate?.onSiteRatingPressed()
     }
 
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {
-        omniDelegate?.onMenuPressed?()
+        omniDelegate?.onMenuPressed()
     }
 
     @IBAction func onBookmarksButtonPressed(_ sender: Any) {
-        omniDelegate?.onBookmarksPressed?()
+        omniDelegate?.onBookmarksPressed()
     }
 
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
-        omniDelegate?.onSettingsPressed?()
+        omniDelegate?.onSettingsPressed()
     }
     
     @IBAction func onCancelPressed(_ sender: Any) {
-        omniDelegate?.onCancelPressed?()
+        omniDelegate?.onCancelPressed()
     }
 }
 
@@ -210,7 +210,7 @@ extension OmniBar: UITextFieldDelegate {
         guard let oldQuery = textField.text else { return true }
         guard let queryRange = oldQuery.range(from: range) else { return true }
         let newQuery = oldQuery.replacingCharacters(in: queryRange, with: string)
-        omniDelegate?.onOmniQueryUpdated?(newQuery)
+        omniDelegate?.onOmniQueryUpdated(newQuery)
         if newQuery.isEmpty {
             refreshState(state.onTextClearedState)
         } else {
@@ -221,7 +221,7 @@ extension OmniBar: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text, text.isEmpty {
-            omniDelegate?.onDismissed?()
+            omniDelegate?.onDismissed()
         }
         refreshState(state.onEditingStoppedState)
     }

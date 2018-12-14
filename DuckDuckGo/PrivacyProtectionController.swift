@@ -164,7 +164,7 @@ extension PrivacyProtectionController: OmniBarDelegate {
 
     func onOmniQuerySubmitted(_ query: String) {
         dismiss(animated: true) {
-            self.omniDelegate.onOmniQuerySubmitted?(query)
+            self.omniDelegate.onOmniQuerySubmitted(query)
         }
     }
 
@@ -174,7 +174,7 @@ extension PrivacyProtectionController: OmniBarDelegate {
 
     func onMenuPressed() {
         dismiss(animated: true) {
-            self.omniDelegate.onMenuPressed?()
+            self.omniDelegate.onMenuPressed()
         }
     }
 

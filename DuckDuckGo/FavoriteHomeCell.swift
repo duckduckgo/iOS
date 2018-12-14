@@ -25,6 +25,8 @@ class FavoriteHomeCell: UICollectionViewCell {
     struct Constants {
         static let width: CGFloat = 68
         static let height: CGFloat = 100
+        static let smallFaviconSize: CGFloat = 16
+        static let largeFaviconSize: CGFloat = 40
     }
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -93,7 +95,7 @@ class FavoriteHomeCell: UICollectionViewCell {
             iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { [weak self] image, error, _, _ in
                 guard error == nil else { return }
                 guard let image = image else { return }
-                guard image.size.width > 16 else { return }
+                guard image.size.width > Constants.smallFaviconSize else { return }
                 self?.applyFavicon(image)
             }
         }
@@ -104,7 +106,7 @@ class FavoriteHomeCell: UICollectionViewCell {
 
         iconLabel.isHidden = true
         iconImage.isHidden = false
-        iconImage.contentMode = image.size.width < 40 ? .center : .scaleAspectFit
+        iconImage.contentMode = image.size.width < Constants.largeFaviconSize ? .center : .scaleAspectFit
         
         guard let theme = theme else { return }
         iconBackground.backgroundColor = theme.faviconBackgroundColor

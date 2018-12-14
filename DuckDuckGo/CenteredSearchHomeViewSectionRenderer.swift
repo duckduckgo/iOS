@@ -22,6 +22,13 @@ import Core
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
+    struct Constants {
+        
+        static let searchCenterOffset: CGFloat = 50
+        static let scrollUpAdjustment: CGFloat = 46
+        
+    }
+    
     private weak var controller: HomeViewController!
     private weak var cell: CenteredSearchHomeCell?
 
@@ -74,13 +81,13 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            let height = (collectionView.frame.height / 2) - 50
+            let height = (collectionView.frame.height / 2) - Constants.searchCenterOffset
             let width = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY: CGFloat = 96
+        let offsetY: CGFloat = Constants.searchCenterOffset + Constants.scrollUpAdjustment
         
         let targetHeight = (scrollView.frame.height / 2) - offsetY
         let y = scrollView.contentOffset.y

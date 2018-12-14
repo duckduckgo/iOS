@@ -150,5 +150,8 @@ public struct UserText {
 
     public static let emptyBookmarks = NSLocalizedString("empty.bookmarks", comment: "No bookmarks")
     public static let emptyFavorites = NSLocalizedString("empty.favorites", comment: "No favorites")
-    
+
+    public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", comment: "Bookmark Title Placeholder")
+    public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", comment: "Bookmark Title Placeholder")
+
 }

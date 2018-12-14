@@ -107,13 +107,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconImage.contentMode = image.size.width < 40 ? .center : .scaleAspectFit
         
         guard let theme = theme else { return }
-        switch theme.currentImageSet {
-        case .dark:
-            iconBackground.backgroundColor = UIColor.charcoalGrey
-            
-        case .light:
-            iconBackground.backgroundColor = UIColor.white
-        }
+        iconBackground.backgroundColor = theme.faviconBackgroundColor
     }
     
     class func applyDropshadow(to view: UIView) {
@@ -130,15 +124,7 @@ extension FavoriteHomeCell: Themable {
     
     func decorate(with theme: Theme) {
         self.theme = theme
-        
-        switch theme.currentImageSet {
-        case .dark:
-            titleLabel.textColor = UIColor.greyish
-            
-        case .light:
-            titleLabel.textColor = UIColor.darkGreyish
-        }
-        
+        titleLabel.textColor = theme.favoriteTextColor
         if let link = link {
             updateFor(link: link)
         }

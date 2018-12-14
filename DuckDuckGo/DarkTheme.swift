@@ -49,4 +49,11 @@ struct DarkTheme: Theme {
     
     var aboutScreenTextColor = UIColor.white
     var aboutScreenButtonColor = UIColor.cornflowerBlue
+    
+    var favoritesPlusTintColor = UIColor.greyishBrown2
+    var favoritesPlusBackgroundColor = UIColor.reallyBlack
+
+    var faviconBackgroundColor = UIColor.charcoalGrey
+    var favoriteTextColor = UIColor.greyish
+    
 }

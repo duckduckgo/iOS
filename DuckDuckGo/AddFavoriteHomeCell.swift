@@ -28,22 +28,9 @@ class AddFavoriteHomeCell: UICollectionViewCell {
 
 extension AddFavoriteHomeCell: Themable {
     func decorate(with theme: Theme) {
-        switch theme.currentImageSet {
-        case .light:
-            plusImage.tintColor = UIColor.greyish.applyAlpha(0.6)
-            plusBackground.backgroundColor = UIColor.mercury
-            
-        case .dark:
-            plusImage.tintColor = UIColor.darkGreyish.applyAlpha(0.6)
-            plusBackground.backgroundColor = UIColor.reallyBlack
-        }
+        
+        plusImage.tintColor = theme.favoritesPlusTintColor
+        plusBackground.backgroundColor = theme.favoritesPlusBackgroundColor
+        
     }
-}
-
-fileprivate extension UIColor {
-    
-    func applyAlpha(_ alpha: CGFloat) -> UIColor {
-        return UIColor(red: redComponent, green: greenComponent, blue: blueComponent, alpha: alpha)
-    }
-    
 }

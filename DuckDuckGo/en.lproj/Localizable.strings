@@ -133,5 +133,5 @@
 "empty.bookmarks" = "No bookmarks yet";
 "empty.favorites" = "No favorites yet";
 
-"bookmark.title.place.holder" = "Website title";
-"bookmark.address.place.holder" = "www.example.com";
+"bookmark.title.placeholder" = "Website title";
+"bookmark.address.placeholder" = "www.example.com";

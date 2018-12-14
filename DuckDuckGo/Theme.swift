@@ -56,4 +56,10 @@ protocol Theme {
     
     var aboutScreenTextColor: UIColor { get }
     var aboutScreenButtonColor: UIColor { get }
+
+    var favoritesPlusTintColor: UIColor { get }
+    var favoritesPlusBackgroundColor: UIColor { get }
+    var faviconBackgroundColor: UIColor { get }
+    var favoriteTextColor: UIColor { get }
+    
 }

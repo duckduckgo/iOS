@@ -213,11 +213,6 @@ extension HomeViewController: Themable {
     func decorate(with theme: Theme) {
         collectionView.decorate(with: theme)
         view.backgroundColor = theme.backgroundColor
-        switch theme.currentImageSet {
-        case .light:
-            settingsButton.tintColor = UIColor.darkGreyish
-        case .dark:
-            settingsButton.tintColor = UIColor.greyish
-        }
+        settingsButton.tintColor = theme.barTintColor        
     }
 }

@@ -63,6 +63,11 @@ public enum PixelName: String {
     case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
 
+    case tabBarBackPressed = "mt_bk"
+    case tabBarForwardPressed = "mt_fw"
+    case tabBarBookmarksPressed = "mt_bm"
+    case tabBarTabSwitcherPressed = "mt_tb"
+
 }
 
 public class Pixel {

@@ -175,12 +175,19 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onBackPressed() {
+        Pixel.fire(pixel: .tabBarBackPressed)
         currentTab?.goBack()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
+        Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
+    }
+    
+    @IBAction func onTabBarBookmarksPressed() {
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
     }
 
     public var siteRating: SiteRating? {
@@ -637,6 +644,7 @@ extension MainViewController: BookmarksDelegate {
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func showTabSwitcher() {
+        Pixel.fire(pixel: .tabBarTabSwitcherPressed)
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 

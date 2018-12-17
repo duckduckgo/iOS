@@ -101,9 +101,12 @@ class AddToHomeRowCTAViewController: UIViewController {
 
     private func dismiss() {
         HomeRowCTA().dismissed()
-        UIView.animate(withDuration: Constants.appearanceAnimationDuration) {
+        UIView.animate(withDuration: Constants.appearanceAnimationDuration, animations: {
             self.configureForFirstAppearance()
-        }
+        }, completion: { _ in
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+        })
     }
     
     static func loadFromStoryboard() -> AddToHomeRowCTAViewController {

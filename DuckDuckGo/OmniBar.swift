@@ -24,6 +24,7 @@ extension OmniBar: NibLoading {}
 
 class OmniBar: UIView {
 
+    @IBOutlet weak var searchLoupe: UIView!
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var siteRatingView: SiteRatingView!
@@ -34,8 +35,8 @@ class OmniBar: UIView {
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var cancelButton: UIButton!
 
-    @IBOutlet weak var searchContainerToSettingsConstraint: NSLayoutConstraint!
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
     weak var omniDelegate: OmniBarDelegate?
@@ -46,14 +47,18 @@ class OmniBar: UIView {
         return OmniBar.load(nibName: "OmniBar")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func awakeFromNib() {
+        super.awakeFromNib()
         configureTextField()
         configureSeparator()
         configureEditingMenu()
         refreshState(state)
     }
-
+    
+    public func useCancellableState() {
+        refreshState(state.supportingCancelButtonState)
+    }
+    
     private func configureTextField() {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.greyish])
@@ -92,21 +97,22 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
-        if type(of: state) != type(of: newState) {
-            Logger.log(text: "OmniBar entering \(Type.name(newState))")
+        if state.name != newState.name {
+            Logger.log(text: "OmniBar entering \(newState.name) from \(state.name)")
             if newState.clearTextOnStart {
                 clear()
             }
             state = newState
         }
 
+        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
-        setVisibility(editingBackground, hidden: !state.showEditingBackground)
+        setVisibility(editingBackground, hidden: !state.showBackground)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
-        searchContainerToSettingsConstraint.priority = state.showSettings ? .defaultHigh : .defaultLow
+        setVisibility(cancelButton, hidden: !state.showCancel)
     }
 
     /*
@@ -185,6 +191,10 @@ class OmniBar: UIView {
     @IBAction func onSettingsButtonPressed(_ sender: Any) {
         omniDelegate?.onSettingsPressed()
     }
+    
+    @IBAction func onCancelPressed(_ sender: Any) {
+        omniDelegate?.onCancelPressed()
+    }
 }
 
 extension OmniBar: UITextFieldDelegate {
@@ -232,6 +242,10 @@ extension OmniBar: Themable {
         textField.tintColor = theme.searchBarTextColor
         
         textField.keyboardAppearance = theme.keyboardAppearance
+        
+        searchLoupe.tintColor = theme.barTintColor
+        
+        cancelButton.setTitleColor(theme.barTintColor, for: .normal)
     }
 }
 

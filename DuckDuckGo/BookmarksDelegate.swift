@@ -23,4 +23,7 @@ import Core
 protocol BookmarksDelegate: class {
 
     func bookmarksDidSelect(link: Link)
+    
+    func bookmarksUpdated()
+    
 }

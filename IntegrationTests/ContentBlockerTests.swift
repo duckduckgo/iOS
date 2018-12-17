@@ -122,7 +122,7 @@ class ContentBlockerTests: XCTestCase {
     private func enterSearch(_ text: String, submit: Bool = true) {
         print("enterSearch text:", text, "submit:", submit)
 
-        let searchOrTypeUrlTextField = app.searchFields["Search or type URL"]
+        let searchOrTypeUrlTextField = app.searchFields["Search or enter address"]
         searchOrTypeUrlTextField.tap()
         searchOrTypeUrlTextField.typeText(text)
 

@@ -25,10 +25,12 @@ class MockDependencyProvider: DependencyProvider {
     
     var appSettings: AppSettings
     var variantManager: VariantManager
+    var homePageConfiguration: HomePageConfiguration
     
     init() {
         let defaultProvider = AppDependencyProvider()
         appSettings = defaultProvider.appSettings
         variantManager = defaultProvider.variantManager
+        homePageConfiguration = defaultProvider.homePageConfiguration
     }
 }

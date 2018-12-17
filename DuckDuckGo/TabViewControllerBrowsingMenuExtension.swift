@@ -33,8 +33,14 @@ extension TabViewController {
         }
         
         if let link = link, !isError {
-            alert.addAction(buildSaveBookmarkAction(forLink: link))
+            if let action = buildSaveBookmarkAction(forLink: link) {
+                alert.addAction(action)
+            }
             
+            if let action = buildSaveFavoriteAction(forLink: link) {
+                alert.addAction(action)
+            }
+
             alert.addAction(title: UserText.actionShare) { [weak self] in
                 self?.onShareAction(forLink: link)
             }
@@ -75,29 +81,47 @@ extension TabViewController {
         delegate?.tabDidRequestNewTab(self)
     }
     
-    private func buildSaveBookmarkAction(forLink link: Link) -> UIAlertAction {
+    private func buildSaveBookmarkAction(forLink link: Link) -> UIAlertAction? {
         let bookmarksManager = BookmarksManager()
-        if let index = bookmarksManager.indexOf(url: link.url) {
-            return UIAlertAction(title: UserText.actionRemoveBookmark, style: .default) { _ in
-                Pixel.fire(pixel: .browsingMenuRemoveBookmark)
-                bookmarksManager.delete(itemAtIndex: index)
-            }
-        }
+        guard !bookmarksManager.contains(url: link.url) else { return nil }
+        
         return UIAlertAction(title: UserText.actionSaveBookmark, style: .default) { [weak self] _ in
             Pixel.fire(pixel: .browsingMenuAddToBookmarks)
             let saveCompletion: (Link) -> Void = { [weak self] updatedBookmark in
                 bookmarksManager.save(bookmark: updatedBookmark)
-                self?.view.showBottomToast(UserText.webSaveLinkDone)
+                self?.view.showBottomToast(UserText.webSaveBookmarkDone)
             }
             let alert = EditBookmarkAlert.buildAlert (
                 title: UserText.alertSaveBookmark,
                 bookmark: link,
-                saveCompletion: saveCompletion,
-                cancelCompletion: {})
+                saveCompletion: saveCompletion)
             self?.present(alert, animated: true, completion: nil)
         }
     }
     
+    private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
+        guard let currentVariant = DefaultVariantManager().currentVariant,
+                currentVariant.features.contains(.homeScreen) else {
+            return nil
+        }
+        
+        let bookmarksManager = BookmarksManager()
+        guard !bookmarksManager.contains(url: link.url) else { return nil }
+
+        return UIAlertAction(title: UserText.actionSaveFavorite, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuAddToFavorites)
+            let saveCompletion: (Link) -> Void = { [weak self] favorite in
+                bookmarksManager.save(favorite: favorite)
+                self?.view.showBottomToast(UserText.webSaveFavoriteDone)
+            }
+            let alert = EditBookmarkAlert.buildAlert (
+                title: UserText.alertSaveFavorite,
+                bookmark: link,
+                saveCompletion: saveCompletion)
+            self?.present(alert, animated: true, completion: nil)
+        }
+    }
+
     private func onShareAction(forLink link: Link) {
         Pixel.fire(pixel: .browsingMenuShare)
         guard let menu = chromeDelegate?.omniBar.menuButton else { return }

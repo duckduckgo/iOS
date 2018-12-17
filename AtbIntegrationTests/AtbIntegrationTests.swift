@@ -155,6 +155,11 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     private func search(forText text: String) {
+        if !app.searchFields["searchEntry"].exists {
+            app.buttons["No Thanks"].tap()
+            app.collectionViews.otherElements["activateSearch"].tap()
+        }
+        
         let searchentrySearchField = app.searchFields["searchEntry"]
         searchentrySearchField.tap()
         searchentrySearchField.typeText("\(text)\r")

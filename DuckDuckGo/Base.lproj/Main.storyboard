@@ -65,7 +65,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
                                     <barButtonItem image="Bookmarks" id="M7u-mw-fly">
                                         <connections>
-                                            <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" modalPresentationStyle="overCurrentContext" id="PFq-7F-8UP"/>
+                                            <action selector="onTabBarBookmarksPressed" destination="C1X-Zd-UbA" id="vSg-Ua-w22"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
@@ -127,6 +127,7 @@
                         <segue destination="Lcg-P1-w26" kind="presentation" identifier="instructions" modalPresentationStyle="overCurrentContext" id="vjb-jn-qZe"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" modalPresentationStyle="overCurrentContext" id="URp-Fv-PV5"/>
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
+                        <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" modalPresentationStyle="overCurrentContext" id="jTg-q6-spe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>

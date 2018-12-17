@@ -63,6 +63,11 @@ public enum PixelName: String {
     case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
 
+    case tabBarBackPressed = "mt_bk"
+    case tabBarForwardPressed = "mt_fw"
+    case tabBarBookmarksPressed = "mt_bm"
+    case tabBarTabSwitcherPressed = "mt_tb"
+
     case homeScreenShown = "mh"
     case homeScreenSearchTapped = "mh_st"
     case homeScreenFavoriteLaunched = "mh_fl"
@@ -72,6 +77,7 @@ public enum PixelName: String {
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
     case homeScreenFavoriteMoved = "mh_fm"
+    
 }
 
 public class Pixel {

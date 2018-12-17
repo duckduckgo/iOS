@@ -26,43 +26,75 @@ class EditBookmarkAlert {
     typealias CancelCompletion = () -> Void
 
     static func buildAlert(title: String,
-                           bookmark: Link,
+                           bookmark: Link?,
                            saveCompletion: @escaping SaveCompletion,
-                           cancelCompletion: @escaping CancelCompletion) -> UIAlertController {
+                           cancelCompletion: CancelCompletion? = nil) -> UIAlertController {
 
-        let editBox = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        return ValidatingAlert(title: title, link: bookmark, saveCompletion: saveCompletion, cancelCompletion: cancelCompletion)
+    }
+}
+
+private class ValidatingAlert: UIAlertController {
+    
+    var titleField: UITextField!
+    var urlField: UITextField!
+    var saveAction: UIAlertAction!
+    
+    convenience init(title: String,
+                     link: Link?,
+                     saveCompletion: @escaping EditBookmarkAlert.SaveCompletion,
+                     cancelCompletion: EditBookmarkAlert.CancelCompletion?) {
+        
+        self.init(title: title, message: nil, preferredStyle: .alert)
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
-        editBox.addTextField { (textField) in
-            textField.text = bookmark.title
+        addTextField { textField in
+            textField.text = link?.title
+            textField.placeholder = UserText.bookmarkTitlePlaceholder
             textField.keyboardAppearance = keyboardAppearance
+            self.titleField = textField
         }
-        editBox.addTextField { (textField) in
-            textField.text = bookmark.url.absoluteString
+        addTextField { textField in
+            textField.text = link?.url.absoluteString
+            textField.placeholder = UserText.bookmarkAddressPlaceholder
             textField.keyboardAppearance = keyboardAppearance
+            self.urlField = textField
         }
-        editBox.addAction(saveAction(editBox: editBox, originalBookmark: bookmark, completion: saveCompletion))
-        editBox.addAction(cancelAction(completion: cancelCompletion))
-        return editBox
-    }
-
-    private static func saveAction(editBox: UIAlertController,
-                                   originalBookmark bookmark: Link,
-                                   completion: @escaping SaveCompletion) -> UIAlertAction {
         
-        return UIAlertAction(title: UserText.actionSave, style: .default) { (_) in
-            if let title = editBox.textFields?[0].text,
-                let urlString = editBox.textFields?[1].text,
-                let url = URL(string: urlString) {
-                let newBookmark = Link(title: title, url: url)
-                completion(newBookmark)
+        titleField.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
+        urlField.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
+        
+        saveAction = createSaveAction(with: saveCompletion)
+        addAction(title: UserText.actionCancel, style: .cancel) {
+            cancelCompletion?()
+        }
+        updateSave()
+    }
+    
+    private func createSaveAction(with completion: @escaping EditBookmarkAlert.SaveCompletion) -> UIAlertAction {
+        return addAction(title: "Save", style: .default) {
+            guard let title = self.titleField.text else { return }
+            guard var urlString = self.urlField.text else { return }
+            
+            if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") {
+                urlString = "http://\(urlString)"
             }
+            
+            guard let url = URL(string: urlString) else { return }
+            
+            completion(Link(title: title, url: url))
         }
     }
-
-    private static func cancelAction(completion: @escaping CancelCompletion) -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionCancel, style: .cancel) { (_) in
-            completion()
-        }
+    
+    @objc func onTextChanged() {
+        updateSave()
     }
+    
+    func updateSave() {
+        saveAction.isEnabled = false
+        guard let title = titleField.text?.trimWhitespace(), !title.isEmpty else { return }
+        guard let url = urlField.text?.trimWhitespace(), !url.isEmpty else { return }
+        saveAction.isEnabled = true
+    }
+    
 }

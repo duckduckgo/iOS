@@ -22,16 +22,55 @@ import Foundation
 protocol OmniBarDelegate: class {
 
     func onOmniQueryUpdated(_ query: String)
-
+    
     func onOmniQuerySubmitted(_ query: String)
-
+    
     func onDismissed()
-
+    
     func onSiteRatingPressed()
-
+    
     func onMenuPressed()
-
+    
     func onBookmarksPressed()
-
+    
     func onSettingsPressed()
+    
+    func onCancelPressed()
+
+}
+
+extension OmniBarDelegate {
+    
+    func onOmniQueryUpdated(_ query: String) {
+        
+    }
+    
+    func onOmniQuerySubmitted(_ query: String) {
+        
+    }
+    
+    func onDismissed() {
+        
+    }
+    
+    func onSiteRatingPressed() {
+        
+    }
+    
+    func onMenuPressed() {
+        
+    }
+    
+    func onBookmarksPressed() {
+        
+    }
+    
+    func onSettingsPressed() {
+        
+    }
+    
+    func onCancelPressed() {
+        
+    }
+
 }

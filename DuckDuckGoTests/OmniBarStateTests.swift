@@ -26,7 +26,7 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeEmptyEditingState()
-        XCTAssertTrue(testee.showEditingBackground)
+        XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
@@ -71,7 +71,7 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInHomeTextEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeTextEditingState()
-        XCTAssertTrue(testee.showEditingBackground)
+        XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
@@ -116,7 +116,7 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInHomeNonEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeNonEditingState()
-        XCTAssertFalse(testee.showEditingBackground)
+        XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
@@ -161,7 +161,7 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingEmptyEditingState()
-        XCTAssertTrue(testee.showEditingBackground)
+        XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
@@ -206,7 +206,7 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingTextEditingState()
-        XCTAssertTrue(testee.showEditingBackground)
+        XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
@@ -251,7 +251,7 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingNonEditingState()
-        XCTAssertFalse(testee.showEditingBackground)
+        XCTAssertFalse(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertTrue(testee.showMenu)

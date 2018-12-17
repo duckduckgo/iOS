@@ -1,8 +1,8 @@
 //
-//  UserText.swift
+//  NavigationSearchHomeCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2018 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,8 +17,23 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 
-public struct UserText {
-        
+class NavigationSearchHomeCell: UICollectionViewCell {
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+}
+
+extension NavigationSearchHomeCell: Themable {
+    
+    func decorate(with theme: Theme) {
+        switch theme.currentImageSet {
+        case .light:
+            imageView.image = UIImage(named: "LogoDarkText")
+        case .dark:
+            imageView.image = UIImage(named: "LogoLightText")
+        }
+    }
+    
 }

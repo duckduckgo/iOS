@@ -83,7 +83,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, UITableViewDeleg
     }
 
     private func getData() -> [Link] {
-        return bookmarkStore.bookmarks ?? [Link]()
+        return bookmarkStore.bookmarks
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

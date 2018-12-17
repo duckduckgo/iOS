@@ -23,7 +23,6 @@ import WebKit
 class TabManager {
 
     private(set) var model: TabsModel
-    private var disconnectMeStore = DisconnectMeStore()
     private var tabControllerCache = [TabViewController]()
 
     private weak var delegate: TabDelegate?

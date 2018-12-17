@@ -20,9 +20,11 @@
 import UIKit
 
 public extension UIAlertController {
-    func addAction(title: String, style: UIAlertAction.Style = .default, handler: (() -> Void)? = nil) {
-        addAction(UIAlertAction(title: title, style: style) { _ in
+    @discardableResult func addAction(title: String, style: UIAlertAction.Style = .default, handler: (() -> Void)? = nil) -> UIAlertAction {
+        let action = UIAlertAction(title: title, style: style) { _ in
             handler?()
-        })
+        }
+        addAction(action)
+        return action
     }
 }

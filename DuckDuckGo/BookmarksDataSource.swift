@@ -25,23 +25,25 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
 
     var isEmpty: Bool {
-        return bookmarksManager.isEmpty
+        return bookmarksManager.bookmarksCount == 0
     }
 
-    func bookmark(atIndex index: Int) -> Link {
-        return bookmarksManager.bookmark(atIndex: index)
+    func link(at indexPath: IndexPath) -> Link? {
+        return bookmarksManager.bookmark(atIndex: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isEmpty { return 1 }
-        return bookmarksManager.count
+        return bookmarksManager.bookmarksCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if bookmarksManager.isEmpty {
+        
+        if link(at: indexPath) != nil {
+            return createBookmarkCell(tableView, forIndexPath: indexPath)
+        } else {
             return createEmptyCell(tableView)
         }
-        return createBookmarkCell(tableView, forIndex: indexPath.row)
     }
 
     private func createEmptyCell(_ tableView: UITableView) -> UITableViewCell {
@@ -56,12 +58,13 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         return cell
     }
 
-    private func createBookmarkCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
-        let bookmark = bookmarksManager.bookmark(atIndex: index)
+    private func createBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
-        cell.update(withBookmark: bookmark)
+
+        guard let link = link(at: indexPath) else { return cell }
+        cell.update(withLink: link)
         
         let theme = ThemeManager.shared.currentTheme
         cell.contentView.backgroundColor = theme.tableCellBackgroundColor
@@ -80,12 +83,18 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            bookmarksManager.delete(itemAtIndex: indexPath.row)
+            bookmarksManager.deleteBookmark(at: indexPath.row)
         }
         tableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        bookmarksManager.move(itemAtIndex: sourceIndexPath.row, to: destinationIndexPath.row)
+        bookmarksManager.moveBookmark(at: sourceIndexPath.row, to: destinationIndexPath.row)
     }
+    
+    func tableView(_ tableView: UITableView, updateBookmark updatedBookmark: Link, at indexPath: IndexPath) {
+        bookmarksManager.updateBookmark(at: indexPath.row, with: updatedBookmark)
+        tableView.reloadData()
+    }
+    
 }

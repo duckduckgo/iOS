@@ -47,11 +47,12 @@ public struct TermsOfService: Decodable {
         case classification = "class"
         case score
         case match
-
+        // swiftlint:disable nesting
         enum Match: String, CodingKey {
             case good
             case bad
         }
+        // swiftlint:enable nesting
     }
 
     public let classification: Classification?

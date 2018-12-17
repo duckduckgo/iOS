@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9p-Sf-e96">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -21,25 +22,21 @@
         <scene sceneID="x1c-tI-gDe">
             <objects>
                 <viewController storyboardIdentifier="TabSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="G9p-Sf-e96" customClass="TabSwitcherViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="a8e-Ri-3yS"/>
-                        <viewControllerLayoutGuide type="bottom" id="RLs-RI-FXc"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WJ0-lP-E4v">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-Lb-veV">
-                                <rect key="frame" x="190.33333333333334" y="38" width="33.333333333333343" height="16"/>
+                                <rect key="frame" x="190.33333333333334" y="39" width="33.333333333333343" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7l-vl-rDZ">
-                                <rect key="frame" x="368" y="35" width="22" height="22"/>
+                                <rect key="frame" x="380" y="35" width="24" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="22" id="3is-x4-uWE"/>
-                                    <constraint firstAttribute="height" constant="22" id="XXt-3T-rvh"/>
+                                    <constraint firstAttribute="width" constant="24" id="3is-x4-uWE"/>
+                                    <constraint firstAttribute="height" constant="24" id="XXt-3T-rvh"/>
                                 </constraints>
                                 <state key="normal" image="Settings"/>
                                 <connections>
@@ -48,7 +45,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
-                                <rect key="frame" x="0.0" y="72" width="414" height="620"/>
+                                <rect key="frame" x="0.0" y="73" width="414" height="619"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="70"/>
@@ -64,7 +61,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="327" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puo-AS-QV7" customClass="RoundedRectangleView" customModule="Core">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puo-AS-QV7" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="0.0" width="307" height="70"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G2C-qh-g3T">
@@ -229,18 +226,19 @@
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="RLs-RI-FXc" firstAttribute="top" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
-                            <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="2c3-VD-tFG"/>
+                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="bottom" secondItem="PrD-ff-flI" secondAttribute="bottom" id="0oA-Ll-zZd"/>
+                            <constraint firstItem="XZT-ek-lrC" firstAttribute="leading" secondItem="Nqt-nV-6p2" secondAttribute="leading" id="2c3-VD-tFG"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="leading" secondItem="WJ0-lP-E4v" secondAttribute="leading" id="B4L-BE-vvi"/>
                             <constraint firstAttribute="trailing" secondItem="PrD-ff-flI" secondAttribute="trailing" id="BaM-0l-RFS"/>
-                            <constraint firstItem="Cy7-Lb-veV" firstAttribute="centerX" secondItem="WJ0-lP-E4v" secondAttribute="centerX" id="CZo-Zg-g4J"/>
+                            <constraint firstItem="Cy7-Lb-veV" firstAttribute="centerX" secondItem="Nqt-nV-6p2" secondAttribute="centerX" id="CZo-Zg-g4J"/>
                             <constraint firstItem="PrD-ff-flI" firstAttribute="top" secondItem="XZT-ek-lrC" secondAttribute="bottom" id="J8G-Xc-ZM0"/>
-                            <constraint firstItem="L7l-vl-rDZ" firstAttribute="top" secondItem="a8e-Ri-3yS" secondAttribute="bottom" constant="15" id="QqP-UV-2Ok"/>
+                            <constraint firstItem="L7l-vl-rDZ" firstAttribute="top" secondItem="Nqt-nV-6p2" secondAttribute="top" constant="15" id="QqP-UV-2Ok"/>
                             <constraint firstItem="L7l-vl-rDZ" firstAttribute="centerY" secondItem="Cy7-Lb-veV" secondAttribute="centerY" id="ceJ-FA-nQB"/>
                             <constraint firstItem="XZT-ek-lrC" firstAttribute="top" secondItem="Cy7-Lb-veV" secondAttribute="bottom" constant="18" id="dJv-kk-vTH"/>
-                            <constraint firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="24" id="moD-HB-CMD"/>
-                            <constraint firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
+                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="L7l-vl-rDZ" secondAttribute="trailing" constant="10" id="moD-HB-CMD"/>
+                            <constraint firstItem="Nqt-nV-6p2" firstAttribute="trailing" secondItem="XZT-ek-lrC" secondAttribute="trailing" id="pZH-4b-XAH"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="Nqt-nV-6p2"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="XZT-ek-lrC" id="iNF-Uj-4dl"/>

@@ -1,1 +1,1 @@
-In this release, we renamed our today view widgets to make them easier to find and improved our bookmarks widget layout to display an additional bookmark.
+In this release we added a light theme, visit app settings to try it out.

@@ -61,8 +61,7 @@ public protocol VariantManager {
 public class DefaultVariantManager: VariantManager {
     
     public var currentVariant: Variant? {
-        // return variants.first(where: { $0.name == storage.variant })
-        return variants.last
+        return variants.first(where: { $0.name == storage.variant })
     }
     
     private let variants: [Variant]

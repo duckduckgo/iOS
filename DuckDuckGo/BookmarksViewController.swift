@@ -26,8 +26,14 @@ class BookmarksViewController: UITableViewController {
 
     weak var delegate: BookmarksDelegate?
 
-    fileprivate lazy var dataSource = BookmarksDataSource()
-
+    fileprivate lazy var dataSource: BookmarksDataSource = {
+        guard let currentVariant = DefaultVariantManager().currentVariant,
+                currentVariant.features.contains(.homeScreen) else {
+            return BookmarksDataSource()
+        }
+        return BookmarksAndFavoritesDataSource()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addAplicationActiveObserver()
@@ -39,9 +45,9 @@ class BookmarksViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
-            showEditBookmarkAlert(forIndex: indexPath.row)
-        } else {
-            selectBookmark(dataSource.bookmark(atIndex: indexPath.row))
+            showEditBookmarkAlert(for: indexPath)
+        } else if let link = dataSource.link(at: indexPath) {
+            selectLink(link)
         }
     }
 
@@ -100,30 +106,26 @@ class BookmarksViewController: UITableViewController {
         editButton.isEnabled = false
     }
 
-    fileprivate func showEditBookmarkAlert(forIndex index: Int) {
+    fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
         let title = UserText.alertEditBookmark
-        let bookmark = dataSource.bookmark(atIndex: index)
+        let link = dataSource.link(at: indexPath)
         let alert = EditBookmarkAlert.buildAlert(
             title: title,
-            bookmark: bookmark,
-            saveCompletion: { [weak self] (updatedBookmark) in self?.updateBookmark(updatedBookmark, atIndex: index) },
-            cancelCompletion: {}
+            bookmark: link,
+            saveCompletion: { [weak self] (updatedBookmark) in
+                self?.dataSource.tableView(self!.tableView, updateBookmark: updatedBookmark, at: indexPath)
+            }
         )
         present(alert, animated: true)
     }
 
-    private func updateBookmark(_ updatedBookmark: Link, atIndex index: Int) {
-        let bookmarksManager = BookmarksManager()
-        bookmarksManager.update(index: index, withBookmark: updatedBookmark)
-        tableView.reloadData()
-    }
-
-    fileprivate func selectBookmark(_ bookmark: Link) {
+    fileprivate func selectLink(_ link: Link) {
         dismiss()
-        delegate?.bookmarksDidSelect(link: bookmark)
+        delegate?.bookmarksDidSelect(link: link)
     }
 
     private func dismiss() {
+        delegate?.bookmarksUpdated()
         dismiss(animated: true, completion: nil)
     }
 

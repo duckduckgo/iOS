@@ -33,7 +33,7 @@ struct DarkTheme: Theme {
     
     var tintOnBlurColor = UIColor.white
     
-    var searchBarBackgroundColor = UIColor.greyishBrown
+    var searchBarBackgroundColor = UIColor.charcoalGrey
     var searchBarTextColor = UIColor.white
     
     var tableCellBackgroundColor = UIColor.nearlyBlackLight
@@ -49,4 +49,11 @@ struct DarkTheme: Theme {
     
     var aboutScreenTextColor = UIColor.white
     var aboutScreenButtonColor = UIColor.cornflowerBlue
+    
+    var favoritesPlusTintColor = UIColor.greyishBrown2
+    var favoritesPlusBackgroundColor = UIColor.reallyBlack
+
+    var faviconBackgroundColor = UIColor.charcoalGrey
+    var favoriteTextColor = UIColor.greyish
+    
 }

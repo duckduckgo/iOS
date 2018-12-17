@@ -27,6 +27,7 @@ public class BookmarkUserDefaults: BookmarkStore {
 
     private struct Keys {
         static let bookmarkKey = "com.duckduckgo.bookmarks.bookmarkKey"
+        static let favoritesKey = "com.duckduckgo.bookmarks.favoritesKey"
     }
 
     private let userDefaults: UserDefaults
@@ -35,25 +36,42 @@ public class BookmarkUserDefaults: BookmarkStore {
         self.userDefaults = userDefaults
     }
 
-    public var bookmarks: [Link]? {
+    public var bookmarks: [Link] {
         get {
             if let data = userDefaults.data(forKey: Keys.bookmarkKey) {
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
+                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link] ?? []
             }
-            return nil
+            return []
         }
         set(newBookmarks) {
-            if let newBookmarks = newBookmarks {
-                let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
-                userDefaults.set(data, forKey: Keys.bookmarkKey)
+            let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
+            userDefaults.set(data, forKey: Keys.bookmarkKey)
+        }
+    }
+
+    public var favorites: [Link] {
+        get {
+            if let data = userDefaults.data(forKey: Keys.favoritesKey) {
+                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link] ?? []
             }
+            return []
+        }
+        set(newFavorites) {
+            let data = NSKeyedArchiver.archivedData(withRootObject: newFavorites)
+            userDefaults.set(data, forKey: Keys.favoritesKey)
         }
     }
 
     public func addBookmark(_ bookmark: Link) {
-        var newBookmarks = bookmarks ?? [Link]()
+        var newBookmarks = bookmarks
         newBookmarks.append(bookmark)
         bookmarks = newBookmarks
+    }
+    
+    public func addFavorite(_ favorite: Link) {
+        var newFavorites = favorites
+        newFavorites.append(favorite)
+        favorites = newFavorites
     }
 
 }

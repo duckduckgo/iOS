@@ -22,21 +22,44 @@ import Core
 
 class HomeViewController: UIViewController {
     
-    private struct Const {
-        // This should match offset set in Launch Screen storyboard.
-        static let logoVericalCenterOffset: CGFloat = -35
-    }
-
-    @IBOutlet weak var logoVerticalCenter: NSLayoutConstraint!
     @IBOutlet weak var ctaContainerBottom: NSLayoutConstraint!
     @IBOutlet weak var ctaContainer: UIView!
 
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var collectionView: HomeCollectionView!
+    @IBOutlet weak var settingsButton: UIButton!
+    
+    var statusBarBackground: UIView? {
+        return (parent as? MainViewController)?.statusBarBackground
+    }
+
+    var navigationBar: UIView? {
+        return (parent as? MainViewController)?.customNavigationBar
+    }
+    
+    var bottomOffset: CGFloat {
+        // doesn't take in to account extra space on iPhone X but is good enough to show the bottom items in the collection view
+        return ((parent as? MainViewController)?.toolbar.frame.height ?? 0)
+    }
+
+    var searchHeaderTransition: CGFloat = 0.0 {
+        didSet {
+            let percent = searchHeaderTransition > 0.99 ? searchHeaderTransition : 0.0
+            
+            // hide the keyboard if transitioning away
+            if oldValue == 1.0 && searchHeaderTransition != 1.0 {
+                chromeDelegate?.omniBar.resignFirstResponder()
+            }
+            
+            statusBarBackground?.alpha = percent
+            chromeDelegate?.omniBar.alpha = percent
+            navigationBar?.alpha = percent
+        }
+    }
 
     weak var delegate: HomeControllerDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     weak var homeRowCTAController: UIViewController?
-
+    
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
 
@@ -50,15 +73,40 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
-        // Set to avoid possible inconsistency between storyboard and code
-        logoVerticalCenter.constant = Const.logoVericalCenterOffset
-
+        collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
+    func allowContentUnderflow() {
+        if let parent = parent as? MainViewController {
+            parent.allowContentUnderflow = true
+        }
+    }
+    
+    func launch(_ link: Link) {
+        delegate?.home(self, didRequestUrl: link.url)
+    }
+
+    func refresh() {
+        collectionView.reloadData()
+    }
+    
+    func omniBarCancelPressed() {
+        collectionView.omniBarCancelPressed()
+    }
+    
+    func openedAsNewTab() {
+        collectionView.openedAsNewTab()
+    }
+    
+    @IBAction func launchSettings() {
+        delegate?.showSettings(self)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -71,6 +119,11 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewHasAppeared = true
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        collectionView.reloadData()
     }
 
     func resetHomeRowCTAAnimations() {
@@ -106,10 +159,8 @@ class HomeViewController: UIViewController {
 
         if diff > 0 {
             ctaContainerBottom.constant = endFrame.size.height - (chromeDelegate?.toolbarHeight ?? 0)
-            logoVerticalCenter.constant = 0
         } else {
             ctaContainerBottom.constant = 0
-            logoVerticalCenter.constant = Const.logoVericalCenterOffset
         }
 
         view.setNeedsUpdateConstraints()
@@ -146,18 +197,17 @@ class HomeViewController: UIViewController {
         removeFromParent()
         view.removeFromSuperview()
     }
+    
+    func launchNewSearch() {
+        collectionView.launchNewSearch()
+    }
 }
 
 extension HomeViewController: Themable {
 
     func decorate(with theme: Theme) {
+        collectionView.decorate(with: theme)
         view.backgroundColor = theme.backgroundColor
-        
-        switch theme.currentImageSet {
-        case .light:
-            image?.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            image?.image = UIImage(named: "LogoLightText")
-        }
+        settingsButton.tintColor = theme.barTintColor        
     }
 }

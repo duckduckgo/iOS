@@ -22,7 +22,10 @@ import WebKit
 import Core
 import Lottie
 
+// swiftlint:disable type_body_length
+// swiftlint:disable file_length
 class MainViewController: UIViewController {
+// swiftlint:enable type_body_length
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
@@ -37,6 +40,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navBarTop: NSLayoutConstraint!
     @IBOutlet weak var toolbarBottom: NSLayoutConstraint!
+    @IBOutlet weak var containerViewTop: NSLayoutConstraint!
 
     @IBOutlet weak var notificationContainer: UIView!
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
@@ -49,6 +53,13 @@ class MainViewController: UIViewController {
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
 
+    var allowContentUnderflow = false {
+        didSet {
+            let constant = allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
+            containerViewTop.constant = constant
+        }
+    }
+    
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
 
@@ -69,7 +80,7 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
@@ -139,6 +150,7 @@ class MainViewController: UIViewController {
         omniBar.omniDelegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
+        HomePageConfiguration.configureOmniBar(omniBar)
     }
 
     fileprivate func attachHomeScreen() {
@@ -175,12 +187,19 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onBackPressed() {
+        Pixel.fire(pixel: .tabBarBackPressed)
         currentTab?.goBack()
         refreshOmniBar()
     }
 
     @IBAction func onForwardPressed() {
+        Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
+    }
+    
+    @IBAction func onTabBarBookmarksPressed() {
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
     }
 
     public var siteRating: SiteRating? {
@@ -193,6 +212,8 @@ class MainViewController: UIViewController {
     }
 
     func loadUrlInNewTab(_ url: URL) {
+        allowContentUnderflow = false
+        customNavigationBar.alpha = 1
         loadViewIfNeeded()
         addTab(url: url)
         refreshOmniBar()
@@ -201,6 +222,7 @@ class MainViewController: UIViewController {
     func launchNewSearch() {
         loadViewIfNeeded()
         attachHomeScreen()
+        homeController?.launchNewSearch()
         omniBar.becomeFirstResponder()
     }
 
@@ -446,6 +468,7 @@ extension MainViewController: BrowserChromeDelegate {
             UIView.animate(withDuration: ChromeAnimationConstants.duration, delay: 0.0, options: .allowUserInteraction, animations: {
                 self.omniBar.alpha = hidden ? 0 : 1
                 self.toolbar.alpha = hidden ? 0 : 1
+
                 self.view.layoutIfNeeded()
             }, completion: nil)
 
@@ -458,9 +481,10 @@ extension MainViewController: BrowserChromeDelegate {
 
     func setNavigationBarHidden(_ hidden: Bool) {
         if hidden { hideKeyboard() }
-
+        
         updateNavBarConstant(hidden)
         omniBar.alpha = hidden ? 0 : 1
+        statusBarBackground.alpha = hidden ? 0 : 1
     }
 
     var isToolbarHidden: Bool {
@@ -516,6 +540,13 @@ extension MainViewController: OmniBarDelegate {
     func onSettingsPressed() {
         launchSettings()
     }
+    
+    func onCancelPressed() {
+        dismissAutcompleteSuggestions()
+        omniBar.resignFirstResponder()
+        homeController?.omniBarCancelPressed()
+    }
+    
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -554,6 +585,11 @@ extension MainViewController: HomeControllerDelegate {
     func showInstructions(_ home: HomeViewController) {
         launchInstructions()
     }
+    
+    func showSettings(_ home: HomeViewController) {
+        launchSettings()
+    }
+    
 }
 
 extension MainViewController: TabDelegate {
@@ -567,7 +603,7 @@ extension MainViewController: TabDelegate {
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
         attachHomeScreen()
-        omniBar.becomeFirstResponder()
+        homeController?.openedAsNewTab()
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
@@ -607,11 +643,13 @@ extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
         attachHomeScreen()
-        omniBar.becomeFirstResponder()
+        homeController?.openedAsNewTab()
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        customNavigationBar.alpha = 1
+        allowContentUnderflow = false
         select(tabAt: index)
     }
 
@@ -632,11 +670,16 @@ extension MainViewController: BookmarksDelegate {
         omniBar.resignFirstResponder()
         loadUrl(link.url)
     }
+    
+    func bookmarksUpdated() {
+        homeController?.refresh()
+    }
 }
 
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func showTabSwitcher() {
+        Pixel.fire(pixel: .tabBarTabSwitcherPressed)
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 
@@ -646,7 +689,9 @@ extension MainViewController: Themable {
     
     func decorate(with theme: Theme) {
         setNeedsStatusBarAppearanceUpdate()
-        
+
+        view.backgroundColor = theme.backgroundColor
+  
         statusBarBackground.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.backgroundColor = theme.barBackgroundColor
         customNavigationBar?.tintColor = theme.barTintColor
@@ -661,4 +706,6 @@ extension MainViewController: Themable {
         
         tabManager.decorate(with: theme)
     }
+    
 }
+// swiftlint:enable file_length

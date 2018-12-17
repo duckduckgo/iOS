@@ -33,12 +33,12 @@ struct LightTheme: Theme {
     
     var tintOnBlurColor = UIColor.white
     
-    var searchBarBackgroundColor = UIColor.lightGreyish
+    var searchBarBackgroundColor = UIColor.mercury
     var searchBarTextColor = UIColor.darkGreyish
     
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight
     var tableCellTintColor = UIColor.darkGreyish
-    var tableCellSeparatorColor = UIColor.lightGreyish
+    var tableCellSeparatorColor = UIColor.mercury
     var tableHeaderTextColor = UIColor.greyish3
     
     var toggleSwitchColor = UIColor.cornflowerBlue
@@ -49,4 +49,10 @@ struct LightTheme: Theme {
     
     var aboutScreenTextColor = UIColor.charcoalGrey
     var aboutScreenButtonColor = UIColor.cornflowerBlue
+    
+    var favoritesPlusTintColor = UIColor.greyish3
+    var favoritesPlusBackgroundColor = UIColor.mercury
+    
+    var faviconBackgroundColor = UIColor.white
+    var favoriteTextColor = UIColor.darkGreyish
 }

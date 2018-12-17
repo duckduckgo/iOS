@@ -44,11 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         HTTPSUpgrade.shared.loadDataAsync()
-
+        
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
+        HomePageConfiguration.installNewUserFavorites()
 
         appIsLaunching = true
         return true

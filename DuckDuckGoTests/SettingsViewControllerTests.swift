@@ -78,34 +78,4 @@ class SettingsViewControllerTests: XCTestCase {
         
         XCTAssert(appSettings.currentThemeName == .dark)
     }
-
-    func testWhenNotRunningExperimentThenLightThemeCellIsCollapsed() {
-        mockDependencyProvider.variantManager = MockVariantManager(currentVariant: Variant(name: "v",
-                                                                                           weight: 100,
-                                                                                           features: []))
-        
-        guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-            let settingsController = navController.topViewController as? SettingsViewController else {
-                assertionFailure("Could not load Setting View Controller")
-                return
-        }
-        
-        let height = settingsController.tableView(settingsController.tableView, heightForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertEqual(height, 0)
-    }
-    
-    func testWhenRunningExperimentThenLightThemeCellIsExpanded() {
-        mockDependencyProvider.variantManager = MockVariantManager(currentVariant: Variant(name: "v",
-                                                                                           weight: 100,
-                                                                                           features: [.themeToggle]))
-        
-        guard let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
-            let settingsController = navController.topViewController as? SettingsViewController else {
-                assertionFailure("Could not load Setting View Controller")
-                return
-        }
-        
-        let height = settingsController.tableView(settingsController.tableView, heightForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertGreaterThan(height, 0)
-    }
 }

@@ -41,28 +41,28 @@ class BookmarksManagerTests: XCTestCase {
         mockStore.favorites = [Constants.otherLink, Constants.exampleLink]
         manager.moveFavorite(at: 0, toBookmark: 0)
         
-        XCTAssertEqual(1, mockStore.bookmarks?.count)
-        XCTAssertEqual(1, mockStore.favorites?.count)
+        XCTAssertEqual(1, mockStore.bookmarks.count)
+        XCTAssertEqual(1, mockStore.favorites.count)
         
-        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks[0].url)
         
-        XCTAssertEqual(Constants.exampleTitle, mockStore.favorites?[0].title)
-        XCTAssertEqual(Constants.exampleUrl, mockStore.favorites?[0].url)
+        XCTAssertEqual(Constants.exampleTitle, mockStore.favorites[0].title)
+        XCTAssertEqual(Constants.exampleUrl, mockStore.favorites[0].url)
     }
 
     func testWhenBookmarkMovedToFavoritesThenBookmarksAndFavoritesAreUpdated() {
         mockStore.bookmarks = [Constants.exampleLink, Constants.otherLink]
         manager.moveBookmark(at: 0, toFavorite: 0)
 
-        XCTAssertEqual(1, mockStore.bookmarks?.count)
-        XCTAssertEqual(1, mockStore.favorites?.count)
+        XCTAssertEqual(1, mockStore.bookmarks.count)
+        XCTAssertEqual(1, mockStore.favorites.count)
         
-        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks[0].url)
 
-        XCTAssertEqual(Constants.exampleTitle, mockStore.favorites?[0].title)
-        XCTAssertEqual(Constants.exampleUrl, mockStore.favorites?[0].url)
+        XCTAssertEqual(Constants.exampleTitle, mockStore.favorites[0].title)
+        XCTAssertEqual(Constants.exampleUrl, mockStore.favorites[0].url)
     }
     
     func testWhenFavoriteMovedInFavoritesThenFavoritesAreUpdated() {
@@ -70,14 +70,14 @@ class BookmarksManagerTests: XCTestCase {
         mockStore.favorites = [Constants.exampleLink, Constants.otherLink]
         manager.moveFavorite(at: 0, to: 1)
         
-        XCTAssertEqual(Constants.otherTitle, mockStore.favorites?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.favorites?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.favorites[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.favorites[0].url)
         
         mockStore.favorites = [Constants.exampleLink, Constants.otherLink]
         manager.moveFavorite(at: 1, to: 0)
         
-        XCTAssertEqual(Constants.otherTitle, mockStore.favorites?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.favorites?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.favorites[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.favorites[0].url)
     }
     
     func testWhenBookmarkMovedInBookmarksThenBookmarksAreUpdated() {
@@ -85,28 +85,28 @@ class BookmarksManagerTests: XCTestCase {
         mockStore.bookmarks = [Constants.exampleLink, Constants.otherLink]
         manager.moveBookmark(at: 0, to: 1)
         
-        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks[0].url)
 
         mockStore.bookmarks = [Constants.exampleLink, Constants.otherLink]
         manager.moveBookmark(at: 1, to: 0)
         
-        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks[0].url)
     }
     
     func testWhenUpdateFavoriteThenBookmarkIsUpdatedInStore() {
         mockStore.favorites = [Constants.exampleLink]
         manager.updateFavorite(at: 0, with: Constants.otherLink)
-        XCTAssertEqual(Constants.otherTitle, mockStore.favorites?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.favorites?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.favorites[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.favorites[0].url)
     }
 
     func testWhenUpdateBookmarkThenBookmarkIsUpdatedInStore() {
         mockStore.bookmarks = [Constants.exampleLink]
         manager.updateBookmark(at: 0, with: Constants.otherLink)
-        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks?[0].title)
-        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks?[0].url)
+        XCTAssertEqual(Constants.otherTitle, mockStore.bookmarks[0].title)
+        XCTAssertEqual(Constants.otherUrl, mockStore.bookmarks[0].url)
     }
     
     func testWhenDeleteFavoriteThenCountIsCorrect() {

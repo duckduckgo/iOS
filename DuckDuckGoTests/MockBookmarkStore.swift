@@ -21,9 +21,9 @@ import Core
 
 class MockBookmarkStore: BookmarkStore {
     
-    var bookmarks: [Link]?
+    var bookmarks: [Link] = []
     
-    var favorites: [Link]?
+    var favorites: [Link] = []
     
     var addedBookmarks = [Link]()
     func addBookmark(_ bookmark: Link) {

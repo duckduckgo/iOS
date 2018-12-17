@@ -36,44 +36,40 @@ public class BookmarkUserDefaults: BookmarkStore {
         self.userDefaults = userDefaults
     }
 
-    public var bookmarks: [Link]? {
+    public var bookmarks: [Link] {
         get {
             if let data = userDefaults.data(forKey: Keys.bookmarkKey) {
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
+                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link] ?? []
             }
-            return nil
+            return []
         }
         set(newBookmarks) {
-            if let newBookmarks = newBookmarks {
-                let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
-                userDefaults.set(data, forKey: Keys.bookmarkKey)
-            }
+            let data = NSKeyedArchiver.archivedData(withRootObject: newBookmarks)
+            userDefaults.set(data, forKey: Keys.bookmarkKey)
         }
     }
 
-    public var favorites: [Link]? {
+    public var favorites: [Link] {
         get {
             if let data = userDefaults.data(forKey: Keys.favoritesKey) {
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link]
+                return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Link] ?? []
             }
-            return nil
+            return []
         }
         set(newFavorites) {
-            if let newFavorites = newFavorites {
-                let data = NSKeyedArchiver.archivedData(withRootObject: newFavorites)
-                userDefaults.set(data, forKey: Keys.favoritesKey)
-            }
+            let data = NSKeyedArchiver.archivedData(withRootObject: newFavorites)
+            userDefaults.set(data, forKey: Keys.favoritesKey)
         }
     }
 
     public func addBookmark(_ bookmark: Link) {
-        var newBookmarks = bookmarks ?? [Link]()
+        var newBookmarks = bookmarks
         newBookmarks.append(bookmark)
         bookmarks = newBookmarks
     }
     
     public func addFavorite(_ favorite: Link) {
-        var newFavorites = favorites ?? [Link]()
+        var newFavorites = favorites
         newFavorites.append(favorite)
         favorites = newFavorites
     }

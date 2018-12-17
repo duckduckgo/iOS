@@ -55,16 +55,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        if indexPath == nil {
-            indexPath = IndexPath(row: 0, section: section)
-            if TabsModel.get()?.count ?? 0 > 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.activateSearch()
-                }
-            }
-        }
-        
+        indexPath = IndexPath(row: 0, section: section)
         return 1
     }
     
@@ -95,20 +86,20 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         let diff = targetHeight - y
 
         guard diff < offsetY else {
-            // centered search bar is visible
+            // search bar is in the center
             controller.searchHeaderTransition = 0.0
             cell?.searchHeaderTransition = 0.0
             return
         }
         
         guard diff > 0 else {
-            // centered search bar is not visible
+            // search bar is in the navigation bar
             controller.searchHeaderTransition = 1.0
             cell?.searchHeaderTransition = 1.0
             return
         }
 
-        // centered search bar is transitioning
+        // search bar is transitioning
         let percent = 1 - (diff / offsetY)
         controller.searchHeaderTransition = percent
         cell?.searchHeaderTransition = percent

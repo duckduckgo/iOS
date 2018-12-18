@@ -21,4 +21,4 @@ Device Privacy Tips: https://spreadprivacy.com/tag/device-privacy-tips/
 More Privacy Education: https://spreadprivacy.com/tag/privacy-newsletter/
 Our Privacy Policy: https://duckduckgo.com/privacy/
 
-This app is open source at https://github.com/duckduckgo/iOS
+This app is open source at https://github.com/duckduckgo/iOS.

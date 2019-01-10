@@ -117,6 +117,30 @@ class APIRequestTests: XCTestCase {
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
+    
+    func testWhenMultipleRequestsAreFiredThenCallbacksAreProcessedOnSerialQueue() {
+        
+        stub(condition: isHost(host)) { _ in
+            return fixture(filePath: self.validJson(), status: 200, headers: nil)
+        }
+        
+        let expectFirst = expectation(description: "first request has been processed")
+        let expectLast = expectation(description: "second request has been processed")
+        
+        APIRequest.request(url: url) { (_, error) in
+            // Give second request a chance to execute the callback
+            Thread.sleep(forTimeInterval: 0.2)
+            XCTAssertNil(error)
+            expectFirst.fulfill()
+        }
+        
+        APIRequest.request(url: url) { (_, error) in
+            XCTAssertNil(error)
+            expectLast.fulfill()
+        }
+        
+        wait(for: [expectFirst, expectLast], timeout: 1.0, enforceOrder: true)
+    }
 
     func validJson() -> String {
         return OHPathForFile("MockFiles/disconnect.json", type(of: self))!

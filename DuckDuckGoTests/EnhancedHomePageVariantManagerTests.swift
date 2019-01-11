@@ -65,5 +65,21 @@ class EnhancedHomePageVariantManagerTests: XCTestCase {
         
         XCTAssertNil(mockStatisticsStore.variant)
     }
+
+    func testWhenAssigningVariantThenOnHoldVariantsAreNotSelected() {
+
+        for i in 0 ..< Variant.defaultVariants.count {
+
+            let mockStatisticsStore = MockStatisticsStore()
+            let mockRng = MockVariantRNG(returnValue: i)
+
+            let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .pad)
+            variantManager.assignVariantIfNeeded()
+
+            XCTAssertNotEqual("ml", variantManager.currentVariant?.name)
+            XCTAssertNotEqual("mm", variantManager.currentVariant?.name)
+        }
+
+    }
     
 }

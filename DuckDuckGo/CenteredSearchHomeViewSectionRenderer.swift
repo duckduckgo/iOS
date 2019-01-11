@@ -27,12 +27,24 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         static let searchCenterOffset: CGFloat = 50
         static let scrollUpAdjustment: CGFloat = 46
         
+        static let fixedSearchCenterOffset: CGFloat = -62
+        
+    }
+    
+    private var searchCenterOffset: CGFloat {
+        return fixed && isPortrait ? Constants.fixedSearchCenterOffset : Constants.searchCenterOffset
     }
     
     private weak var controller: HomeViewController!
     private weak var cell: CenteredSearchHomeCell?
 
     private var indexPath: IndexPath?
+    
+    private let fixed: Bool
+    
+    init(fixed: Bool = false) {
+        self.fixed = fixed
+    }
     
     func install(into controller: HomeViewController) {
         self.controller = controller
@@ -41,9 +53,10 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                                                selector: #selector(CenteredSearchHomeViewSectionRenderer.rotated),
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
-        
-        controller.allowContentUnderflow()
 
+        controller.collectionView.isScrollEnabled = !fixed
+
+        controller.allowContentUnderflow()
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
 
@@ -72,18 +85,18 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            let height = (collectionView.frame.height / 2) - Constants.searchCenterOffset
+            let height = (collectionView.frame.height / 2) - searchCenterOffset
             let width = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY: CGFloat = Constants.searchCenterOffset + Constants.scrollUpAdjustment
+        let offsetY: CGFloat = Constants.scrollUpAdjustment
         
-        let targetHeight = (scrollView.frame.height / 2) - offsetY
+        let targetHeight = (scrollView.frame.height / 2) - searchCenterOffset
         let y = scrollView.contentOffset.y
 
-        let diff = targetHeight - y
+        let diff = targetHeight - y - offsetY
 
         guard diff < offsetY else {
             // search bar is in the center
@@ -100,7 +113,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         }
 
         // search bar is transitioning
-        let percent = 1 - (diff / offsetY)
+        let percent = 1 - (diff / 46)
         controller.searchHeaderTransition = percent
         cell?.searchHeaderTransition = percent
     }

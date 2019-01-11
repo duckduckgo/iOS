@@ -20,6 +20,7 @@
 import Foundation
 
 public enum FeatureName {
+    case centeredSearchHomeScreen
     case homeScreen
     case singleFavorite
     case additionalFavorites
@@ -34,9 +35,10 @@ public struct Variant {
         Variant(name: "sd", weight: 1, features: []),
         
         // Enhanced home page experiment
-        Variant(name: "mk", weight: 2, features: []),
-        Variant(name: "ml", weight: 1, features: [.homeScreen, .singleFavorite]),
-        Variant(name: "mm", weight: 1, features: [.homeScreen, .singleFavorite, .additionalFavorites])
+        Variant(name: "mk", weight: 1, features: []),
+        Variant(name: "ml", weight: 0, features: [.homeScreen, .singleFavorite]),
+        Variant(name: "mm", weight: 0, features: [.homeScreen, .singleFavorite, .additionalFavorites]),
+        Variant(name: "mn", weight: 1, features: [.centeredSearchHomeScreen])
     ]
     
     public let name: String
@@ -95,14 +97,15 @@ public class DefaultVariantManager: VariantManager {
             return
         }
         
-        if !isHomeThemeExperimentAndPad(variant) {
+        if !isHomeScreenExperimentAndPad(variant) {
             storage.variant = variant.name
             Logger.log(text: "newly assigned variant: \(currentVariant as Any)")
         }
     }
     
-    private func isHomeThemeExperimentAndPad(_ variant: Variant) -> Bool {
-        return !variant.name.starts(with: "s") && uiIdiom == .pad
+    private func isHomeScreenExperimentAndPad(_ variant: Variant) -> Bool {
+        return (variant.features.contains(.homeScreen) || variant.features.contains(.centeredSearchHomeScreen))
+            && uiIdiom == .pad
     }
     
     private func selectVariant() -> Variant? {

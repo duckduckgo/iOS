@@ -47,7 +47,7 @@ class EnhancedHomePageVariantManagerTests: XCTestCase {
     func testWhenEnhancedHomePageVariantAndNotOnPadThenVariantIsSelected() {
         
         let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: Variant.defaultVariants.count)
+        let mockRng = MockVariantRNG(returnValue: 3)
         
         let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .phone)
         variantManager.assignVariantIfNeeded()

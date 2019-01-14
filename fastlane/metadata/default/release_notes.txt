@@ -1,1 +1,1 @@
-In this release we added a light theme, visit app settings to try it out.
+This is a small release to fix a UI bug where the fire icon appears to move when the tab switcher is open.

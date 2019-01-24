@@ -33,7 +33,8 @@ protocol BrowserChromeDelegate: class {
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     struct Constants {
-        static let threshold: CGFloat = 30
+        static let dragThreshold: CGFloat = 30
+        static let zoomThreshold: CGFloat = 0.1
     }
 
     weak var delegate: BrowserChromeDelegate?
@@ -41,26 +42,46 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     var hidden = false
     var dragging = false
     var draggingStartPosY: CGFloat = 0
+    var startZoomScale: CGFloat = 0
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !scrollView.isZooming else { return }
         guard dragging else { return }
-        guard canHideBars(for: scrollView) else { return }
+        guard canUpdateBars(for: scrollView) else { return }
         
         let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
         guard isInBottomBounceArea == false else { return }
 
-        if scrollView.contentOffset.y - draggingStartPosY > Constants.threshold {
+        if scrollView.contentOffset.y - draggingStartPosY > Constants.dragThreshold {
             updateBars(shouldHide: true)
         }
     }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        guard scrollView.isTracking else { return }
+        guard !scrollView.isZoomBouncing else { return }
+        
+        if scrollView.fullyZoomedOut {
+            updateBars(shouldHide: false)
+        } else if abs(scrollView.zoomScale - startZoomScale) > Constants.zoomThreshold {
+            updateBars(shouldHide: true)
+        }
+        
+    }
+    
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        startZoomScale = scrollView.zoomScale
+    }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guard !scrollView.isZooming else { return }
         dragging = true
         draggingStartPosY = scrollView.contentOffset.y
     }
-
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        guard canHideBars(for: scrollView) else { return }
+        guard !scrollView.isZooming else { return }
+        guard canUpdateBars(for: scrollView) else { return }
         
         let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
         let startedFromVeryBottom = abs(draggingStartPosY - scrollView.contentOffsetYAtBottom) < 1
@@ -96,8 +117,8 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
     
     /// Bars should not be hidden in case ScrollView content is smaller than viewport.
-    private func canHideBars(for scrollView: UIScrollView) -> Bool {
-        return scrollView.bounds.height < scrollView.contentSize.height
+    private func canUpdateBars(for scrollView: UIScrollView) -> Bool {
+        return hidden || scrollView.bounds.height < scrollView.contentSize.height
     }
 
     private func updateBars(shouldHide: Bool) {
@@ -123,4 +144,9 @@ fileprivate extension UIScrollView {
             return yOffset
         }
     }
+    
+    var fullyZoomedOut: Bool {
+        return zoomScale <= minimumZoomScale
+    }
+    
 }

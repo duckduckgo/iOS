@@ -251,6 +251,26 @@
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
 		98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D9217B37200011A0D4 /* LightTheme.swift */; };
 		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
+		B66BF04E22013840005D4973 /* flames0001.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF03A22013840005D4973 /* flames0001.png */; };
+		B66BF04F22013840005D4973 /* flames0002.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF03B22013840005D4973 /* flames0002.png */; };
+		B66BF05022013840005D4973 /* flames0003.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF03C22013840005D4973 /* flames0003.png */; };
+		B66BF05122013840005D4973 /* flames0004.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF03D22013840005D4973 /* flames0004.png */; };
+		B66BF05222013840005D4973 /* flames0005.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF03E22013840005D4973 /* flames0005.png */; };
+		B66BF05322013840005D4973 /* flames0006.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF03F22013840005D4973 /* flames0006.png */; };
+		B66BF05422013840005D4973 /* flames0007.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04022013840005D4973 /* flames0007.png */; };
+		B66BF05522013840005D4973 /* flames0008.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04122013840005D4973 /* flames0008.png */; };
+		B66BF05622013840005D4973 /* flames0009.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04222013840005D4973 /* flames0009.png */; };
+		B66BF05722013840005D4973 /* flames0010.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04322013840005D4973 /* flames0010.png */; };
+		B66BF05822013840005D4973 /* flames0011.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04422013840005D4973 /* flames0011.png */; };
+		B66BF05922013840005D4973 /* flames0012.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04522013840005D4973 /* flames0012.png */; };
+		B66BF05A22013840005D4973 /* flames0013.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04622013840005D4973 /* flames0013.png */; };
+		B66BF05B22013840005D4973 /* flames0014.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04722013840005D4973 /* flames0014.png */; };
+		B66BF05C22013840005D4973 /* flames0015.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04822013840005D4973 /* flames0015.png */; };
+		B66BF05D22013840005D4973 /* flames0016.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04922013840005D4973 /* flames0016.png */; };
+		B66BF05E22013840005D4973 /* flames0017.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04A22013840005D4973 /* flames0017.png */; };
+		B66BF05F22013840005D4973 /* flames0018.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04B22013840005D4973 /* flames0018.png */; };
+		B66BF06022013840005D4973 /* flames0019.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04C22013840005D4973 /* flames0019.png */; };
+		B66BF06122013840005D4973 /* flames0020.png in Resources */ = {isa = PBXBuildFile; fileRef = B66BF04D22013840005D4973 /* flames0020.png */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
 		F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103076A1E800DC30059FEC7 /* BookmarksManager.swift */; };
@@ -753,6 +773,26 @@
 		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		98F3A1D9217B37200011A0D4 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
 		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
+		B66BF03A22013840005D4973 /* flames0001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0001.png; sourceTree = "<group>"; };
+		B66BF03B22013840005D4973 /* flames0002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0002.png; sourceTree = "<group>"; };
+		B66BF03C22013840005D4973 /* flames0003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0003.png; sourceTree = "<group>"; };
+		B66BF03D22013840005D4973 /* flames0004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0004.png; sourceTree = "<group>"; };
+		B66BF03E22013840005D4973 /* flames0005.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0005.png; sourceTree = "<group>"; };
+		B66BF03F22013840005D4973 /* flames0006.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0006.png; sourceTree = "<group>"; };
+		B66BF04022013840005D4973 /* flames0007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0007.png; sourceTree = "<group>"; };
+		B66BF04122013840005D4973 /* flames0008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0008.png; sourceTree = "<group>"; };
+		B66BF04222013840005D4973 /* flames0009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0009.png; sourceTree = "<group>"; };
+		B66BF04322013840005D4973 /* flames0010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0010.png; sourceTree = "<group>"; };
+		B66BF04422013840005D4973 /* flames0011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0011.png; sourceTree = "<group>"; };
+		B66BF04522013840005D4973 /* flames0012.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0012.png; sourceTree = "<group>"; };
+		B66BF04622013840005D4973 /* flames0013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0013.png; sourceTree = "<group>"; };
+		B66BF04722013840005D4973 /* flames0014.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0014.png; sourceTree = "<group>"; };
+		B66BF04822013840005D4973 /* flames0015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0015.png; sourceTree = "<group>"; };
+		B66BF04922013840005D4973 /* flames0016.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0016.png; sourceTree = "<group>"; };
+		B66BF04A22013840005D4973 /* flames0017.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0017.png; sourceTree = "<group>"; };
+		B66BF04B22013840005D4973 /* flames0018.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0018.png; sourceTree = "<group>"; };
+		B66BF04C22013840005D4973 /* flames0019.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0019.png; sourceTree = "<group>"; };
+		B66BF04D22013840005D4973 /* flames0020.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flames0020.png; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		F103076A1E800DC30059FEC7 /* BookmarksManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
@@ -1282,6 +1322,7 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
+				B66BF03922013840005D4973 /* FlameImages */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
@@ -1589,6 +1630,33 @@
 			);
 			name = Themes;
 			sourceTree = "<group>";
+		};
+		B66BF03922013840005D4973 /* FlameImages */ = {
+			isa = PBXGroup;
+			children = (
+				B66BF03A22013840005D4973 /* flames0001.png */,
+				B66BF03B22013840005D4973 /* flames0002.png */,
+				B66BF03C22013840005D4973 /* flames0003.png */,
+				B66BF03D22013840005D4973 /* flames0004.png */,
+				B66BF03E22013840005D4973 /* flames0005.png */,
+				B66BF03F22013840005D4973 /* flames0006.png */,
+				B66BF04022013840005D4973 /* flames0007.png */,
+				B66BF04122013840005D4973 /* flames0008.png */,
+				B66BF04222013840005D4973 /* flames0009.png */,
+				B66BF04322013840005D4973 /* flames0010.png */,
+				B66BF04422013840005D4973 /* flames0011.png */,
+				B66BF04522013840005D4973 /* flames0012.png */,
+				B66BF04622013840005D4973 /* flames0013.png */,
+				B66BF04722013840005D4973 /* flames0014.png */,
+				B66BF04822013840005D4973 /* flames0015.png */,
+				B66BF04922013840005D4973 /* flames0016.png */,
+				B66BF04A22013840005D4973 /* flames0017.png */,
+				B66BF04B22013840005D4973 /* flames0018.png */,
+				B66BF04C22013840005D4973 /* flames0019.png */,
+				B66BF04D22013840005D4973 /* flames0020.png */,
+			);
+			path = FlameImages;
+			sourceTree = SOURCE_ROOT;
 		};
 		F11044FE1ECFD6AF00C5E3D3 /* Parser */ = {
 			isa = PBXGroup;
@@ -2531,7 +2599,7 @@
 				TargetAttributes = {
 					83491186217F491200610F35 = {
 						CreatedOnToolsVersion = 10.0;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = EVTC585PHG;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -2548,7 +2616,7 @@
 					};
 					8370942E2142C4C200A58838 = {
 						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = EVTC585PHG;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2559,7 +2627,7 @@
 					};
 					8390446B20BDCE10006461CD = {
 						CreatedOnToolsVersion = 9.3.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = EVTC585PHG;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
@@ -2572,7 +2640,7 @@
 					};
 					84E341911E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HKE973VLUW;
+						DevelopmentTeam = EVTC585PHG;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -2718,6 +2786,7 @@
 				F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */,
 				F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */,
 				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
+				B66BF06122013840005D4973 /* flames0020.png in Resources */,
 				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
 				8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */,
 				85371D242121B9D500920548 /* new_tab.json in Resources */,
@@ -2726,31 +2795,50 @@
 				F14513531F45FAAE00710C46 /* SiteRatingView.xib in Resources */,
 				85AE66942098BAC10014CF04 /* home-row-instructions.mp4 in Resources */,
 				850819D61FDB68F9006561FD /* Onboarding.xcassets in Resources */,
+				B66BF05E22013840005D4973 /* flames0017.png in Resources */,
 				8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */,
 				F1E4A4451EE89460006F2EAE /* Bookmarks.storyboard in Resources */,
 				84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */,
 				F114C55E1E6717800018F95F /* OmniBar.xib in Resources */,
 				F1AE54EA1F04263600D9A700 /* Authentication.storyboard in Resources */,
 				859872241F5743D800041CB8 /* FireAnimation.xib in Resources */,
+				B66BF05522013840005D4973 /* flames0008.png in Resources */,
 				85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */,
 				85A313972028E78A00327D00 /* release_notes.txt in Resources */,
+				B66BF05D22013840005D4973 /* flames0016.png in Resources */,
+				B66BF04E22013840005D4973 /* flames0001.png in Resources */,
+				B66BF05622013840005D4973 /* flames0009.png in Resources */,
+				B66BF05222013840005D4973 /* flames0005.png in Resources */,
+				B66BF05822013840005D4973 /* flames0011.png in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
+				B66BF05122013840005D4973 /* flames0004.png in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */,
 				85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */,
+				B66BF05722013840005D4973 /* flames0010.png in Resources */,
 				850819DD1FDDE1A8006561FD /* SettingsTutorialAssets.xcassets in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
 				85436C3F1FA74BC300F4EEE1 /* PrivacyProtection.xcassets in Resources */,
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
+				B66BF04F22013840005D4973 /* flames0002.png in Resources */,
+				B66BF05F22013840005D4973 /* flames0018.png in Resources */,
 				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
+				B66BF05322013840005D4973 /* flames0006.png in Resources */,
+				B66BF06022013840005D4973 /* flames0019.png in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
+				B66BF05A22013840005D4973 /* flames0013.png in Resources */,
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
+				B66BF05C22013840005D4973 /* flames0015.png in Resources */,
+				B66BF05022013840005D4973 /* flames0003.png in Resources */,
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
+				B66BF05922013840005D4973 /* flames0012.png in Resources */,
+				B66BF05B22013840005D4973 /* flames0014.png in Resources */,
 				98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */,
 				85081A051FE05D40006561FD /* Localizable.stringsdict in Resources */,
+				B66BF05422013840005D4973 /* flames0007.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2826,7 +2914,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n   swiftlint lint\nelse\n   echo \"error: SwiftLint not installed. Install using \\`brew install swiftlint\\`\"\n   exit 1\nfi\n";
+			shellScript = "
+";
 		};
 		85F21DB92110817C002631A6 /* Carthage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3427,7 +3516,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -3457,7 +3546,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -3516,7 +3605,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -3540,7 +3629,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = QuickActionsTodayExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -3563,7 +3652,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -3586,7 +3675,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -3750,7 +3839,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -3773,7 +3862,7 @@
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = HKE973VLUW;
+				DEVELOPMENT_TEAM = EVTC585PHG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

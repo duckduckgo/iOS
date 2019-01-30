@@ -66,10 +66,23 @@ class FireAnimation: UIView {
         var images = [UIImage]()
         for i in 1...20 {
             let filename = String(format: "flames00%02d", i)
-            let image = #imageLiteral(resourceName: filename)
-            images.append(image)
+            images.append(loadFlame(imageName: filename))
         }
         return images
     }
 
+    private static func loadFlame(imageName: String) -> UIImage {
+        guard let url = Bundle.main.url(forResource: imageName, withExtension: "png") else { return UIImage() }
+        let options = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, options) else { return UIImage() }
+        
+        let opts = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceCreateThumbnailWithTransform: true
+        ] as CFDictionary
+        
+        guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, opts) else { return UIImage() }
+        return UIImage(cgImage: image)
+    }
 }

@@ -71,4 +71,5 @@ class FireAnimation: UIView {
         }
         return images
     }
+
 }

@@ -1,11 +1,11 @@
 # DuckDuckGo iOS
 
 
-We are excited to engage the community in development and will open up this project to contributions soon.
+We are excited to engage the community in development!
 
 
 ## We are hiring!
-We are looking for a Senior Cross-Platform/iOS engineer to help shape our mobile apps. We embrace diverse perspectives, and seek out passionate, self-motivated people, committed to our shared vision of raising the standard of trust online. Visit our [careers](https://duckduckgo.com/hiring/#open) page to find out more!
+We are looking for a Senior Cross-Platform engineer to help shape our mobile apps. We embrace diverse perspectives, and seek out passionate, self-motivated people, committed to our shared vision of raising the standard of trust online. Visit our [careers](https://duckduckgo.com/hiring/#open) page to find out more!
 
 ## Building
 
@@ -24,11 +24,15 @@ You can also run the unit tests to do the above and ensure everything seems in o
 ### Fonts
 We use Proxima Nova fonts which are proprietary and cannot be committed to source control, see [fonts](https://github.com/duckduckgo/iOS/tree/develop/fonts/licensed). 
 
+## Contribute
+
+Plese refer to [contributing](CONTRIBUTING.md).
+
 ## Discuss
 
-Contact us at https://duckduckgo.com/feedback if you have feedback, questions or want to chat.
+Contact us at https://duckduckgo.com/feedback if you have feedback, questions or want to chat. You can also use Feedback form embedded within our Mobile App - to do so please navigate to the Settings and select "Send Feedback".
 
 ## License
-DuckDuckGo Search & Stories is distributed under the Apache 2.0 [license](https://github.com/duckduckgo/ios/blob/master/LICENSE).
+DuckDuckGo is distributed under the Apache 2.0 [license](https://github.com/duckduckgo/ios/blob/master/LICENSE).
 
 

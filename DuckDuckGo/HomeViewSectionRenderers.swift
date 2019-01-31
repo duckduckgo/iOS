@@ -144,7 +144,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         
     }
     
-    private let controller: HomeViewController
+    private weak var controller: HomeViewController!
     private var theme: Theme
     private var renderers = [HomeViewSectionRenderer]()
     

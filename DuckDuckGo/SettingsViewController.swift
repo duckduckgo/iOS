@@ -28,6 +28,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var lightThemeToggle: UISwitch!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
+    @IBOutlet weak var autoClearDataAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     
     @IBOutlet var labels: [UILabel]!
@@ -51,6 +52,12 @@ class SettingsViewController: UITableViewController {
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        configureAutoClearDataCellAccessory()
+    }
 
     private func configureMargins() {
         guard #available(iOS 11, *) else { return }
@@ -69,6 +76,14 @@ class SettingsViewController: UITableViewController {
 
     private func configureSecurityToggles() {
         authenticationToggle.isOn = privacyStore.authenticationEnabled
+    }
+    
+    private func configureAutoClearDataCellAccessory() {
+        if AutoClearDataSettings(settings: appSettings) != nil {
+            autoClearDataAccessoryText.text = "On"
+        } else {
+            autoClearDataAccessoryText.text = "Off"
+        }
     }
 
     private func configureVersionText() {
@@ -126,6 +141,7 @@ extension SettingsViewController: Themable {
             label.textColor = theme.tableCellTintColor
         }
         
+        autoClearDataAccessoryText.textColor = theme.tableCellTintColor
         versionText.textColor = theme.tableCellTintColor
         
         lightThemeToggle.onTintColor = theme.toggleSwitchColor

@@ -1,0 +1,59 @@
+//
+//  AutoClearDataSettings.swift
+//  DuckDuckGo
+//
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+
+import Foundation
+import UIKit
+
+/// This struct is a model of Auto Clear Data settings
+struct AutoClearDataSettings: Equatable {
+    
+    struct Mode: OptionSet {
+        let rawValue: Int
+        
+        static let clearData = Mode(rawValue: 1 << 0)
+        static let clearTabs = Mode(rawValue: 1 << 1)
+    }
+    
+    enum Timing: Int {
+        case termination
+        case delay5min
+        case delay15min
+        case delay30min
+        case delay60min
+    }
+    
+    var mode: Mode
+    var timing: Timing
+    
+    /// Create settings model based on last user selection that is stored in settings.
+    ///
+    /// - Returns: Settings model, or nil in case user did not enable this feature.
+    init?(settings: AppSettings) {
+        mode = Mode(rawValue: settings.autoClearMode)
+        guard mode.isEmpty == false else { return nil }
+        
+        timing = Timing(rawValue: settings.autoClearTiming) ?? .termination
+    }
+    
+    /// Create settings model with default values.
+    init() {
+        mode = [.clearData]
+        timing = .termination
+    }
+}

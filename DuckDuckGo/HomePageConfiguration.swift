@@ -25,21 +25,31 @@ class HomePageConfiguration {
     enum Component {
         case navigationBarSearch
         case centeredSearch
+        case fixedCenteredSearch
         case favorites
     }
     
     let variantManager: VariantManager
     
     var components: [Component] {
-        guard let currentVariant = variantManager.currentVariant,
-                currentVariant.features.contains(.homeScreen) else {
+        guard let currentVariant = variantManager.currentVariant else {
             return [ .navigationBarSearch ]
         }
+
+        if currentVariant.features.contains(.homeScreen) {
+            return [
+                .centeredSearch,
+                .favorites
+            ]
+        }
         
-        return [
-            .centeredSearch,
-            .favorites
-        ]
+        if currentVariant.features.contains(.centeredSearchHomeScreen) {
+            return [
+                .fixedCenteredSearch
+            ]
+        }
+        
+        return [ .navigationBarSearch ]
     }
     
     init(variantManager: VariantManager = DefaultVariantManager()) {
@@ -87,7 +97,8 @@ class HomePageConfiguration {
             return
         }
         
-        guard currentVariant.features.contains(.homeScreen) else {
+        let homeScreen = currentVariant.features.contains(.homeScreen) || currentVariant.features.contains(.centeredSearchHomeScreen)
+        guard homeScreen else {
             Logger.log(text: "no home screen in variant, not configuring omnibar")
             return
         }

@@ -24,6 +24,8 @@ public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 
 public class APIRequest {
     
+    private static let callbackQueue = DispatchQueue(label: "APIRequest callback queue", qos: .utility)
+    
     public struct Response {
         
         var data: Data?
@@ -41,7 +43,7 @@ public class APIRequest {
         
         return Alamofire.request(url, method: method, parameters: parameters, headers: APIHeaders().defaultHeaders)
             .validate(statusCode: 200..<300)
-            .responseData(queue: DispatchQueue.global(qos: .utility)) { response in
+            .responseData(queue: callbackQueue) { response in
                 
                 Logger.log(text: "Request for \(url) completed with response code: \(String(describing: response.response?.statusCode))")
                 Logger.log(text: " and headers \(String(describing: response.response?.allHeaderFields))")

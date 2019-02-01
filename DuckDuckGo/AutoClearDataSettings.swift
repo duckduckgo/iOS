@@ -23,11 +23,11 @@ import UIKit
 /// This struct is a model of Auto Clear Data settings
 struct AutoClearDataSettings: Equatable {
     
-    struct Mode: OptionSet {
+    struct Action: OptionSet {
         let rawValue: Int
         
-        static let clearData = Mode(rawValue: 1 << 0)
-        static let clearTabs = Mode(rawValue: 1 << 1)
+        static let clearTabs = Action(rawValue: 1 << 0)
+        static let clearData = Action(rawValue: 1 << 1)
     }
     
     enum Timing: Int {
@@ -38,14 +38,14 @@ struct AutoClearDataSettings: Equatable {
         case delay60min
     }
     
-    var mode: Mode
+    var mode: Action
     var timing: Timing
     
     /// Create settings model based on last user selection that is stored in settings.
     ///
     /// - Returns: Settings model, or nil in case user did not enable this feature.
     init?(settings: AppSettings) {
-        mode = Mode(rawValue: settings.autoClearMode)
+        mode = Action(rawValue: settings.autoClearMode)
         guard mode.isEmpty == false else { return nil }
         
         timing = Timing(rawValue: settings.autoClearTiming) ?? .termination
@@ -53,7 +53,7 @@ struct AutoClearDataSettings: Equatable {
     
     /// Create settings model with default values.
     init() {
-        mode = [.clearData]
+        mode = [.clearTabs]
         timing = .termination
     }
 }

@@ -45,7 +45,7 @@ class AutoClearDataScreenTests: XCTestCase {
             assertionFailure("Could not load View Controller")
         }
         
-        appSettigns.autoClearMode = AutoClearDataSettings.Mode.clearData.rawValue
+        appSettigns.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
         
         if let settingsController = AutoClearDataViewController.loadFromStoryboard() as? AutoClearDataViewController {
             settingsController.loadViewIfNeeded()

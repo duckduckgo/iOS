@@ -135,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func displayBlankSnapshotWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
-        guard AutoClearDataSettings(settings: AppDependencyProvider.shared.appSettings) != nil else { return }
+        guard autoClearLogic?.isClearingEnabled ?? false else { return }
         
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.rootViewController = BlankSnapshotViewController.loadFromStoryboard()

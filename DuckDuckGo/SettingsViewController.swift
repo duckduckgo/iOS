@@ -58,6 +58,12 @@ class SettingsViewController: UITableViewController {
         
         configureAutoClearDataCellAccessory()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is AutoClearDataViewController {
+            Pixel.fire(pixel: .autoClearDataSettingsShown)
+        }
+    }
 
     private func configureMargins() {
         guard #available(iOS 11, *) else { return }

@@ -47,7 +47,7 @@ class SettingsViewControllerTests: XCTestCase {
             assertionFailure("Could not load Setting View Controller")
         }
         
-        appSettigns.autoClearMode = AutoClearDataSettings.Mode.clearData.rawValue
+        appSettigns.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
         
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController {

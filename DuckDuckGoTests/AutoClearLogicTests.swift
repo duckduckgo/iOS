@@ -47,7 +47,7 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenModeIsSetToCleanDataThenDataIsCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Mode.clearData.rawValue
+        appSettings.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
         appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
@@ -61,7 +61,7 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenModeIsSetToCleanTabsThenTabsAreCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Mode.clearTabs.rawValue
+        appSettings.autoClearMode = AutoClearDataSettings.Action.clearTabs.rawValue
         appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
@@ -75,7 +75,7 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenModeIsSetToCleanTabsAndDataThenBothAreCleared() {
         let appSettings = AppUserDefaults()
-        let mode: AutoClearDataSettings.Mode = [.clearData, .clearTabs]
+        let mode: AutoClearDataSettings.Action = [.clearData, .clearTabs]
         appSettings.autoClearMode = mode.rawValue
         appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
         
@@ -104,7 +104,7 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Mode.clearData.rawValue
+        appSettings.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
         appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data should not be cleared")
@@ -121,7 +121,7 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceThimeHasElapsed() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Mode.clearData.rawValue
+        appSettings.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
         
         let cases: [AutoClearDataSettings.Timing: TimeInterval] = [.delay5min: 5 * 60,
                                                                     .delay15min: 15 * 60,

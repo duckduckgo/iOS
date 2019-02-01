@@ -26,11 +26,11 @@ We use Proxima Nova fonts which are proprietary and cannot be committed to sourc
 
 ## Contribute
 
-Plese refer to [contributing](CONTRIBUTING.md).
+Please refer to [contributing](CONTRIBUTING.md).
 
 ## Discuss
 
-Contact us at https://duckduckgo.com/feedback if you have feedback, questions or want to chat. You can also use Feedback form embedded within our Mobile App - to do so please navigate to the Settings and select "Send Feedback".
+Contact us at https://duckduckgo.com/feedback if you have feedback, questions or want to chat. You can also use the feedback form embedded within our Mobile App - to do so please navigate to Settings and select "Send Feedback".
 
 ## License
 DuckDuckGo is distributed under the Apache 2.0 [license](https://github.com/duckduckgo/ios/blob/master/LICENSE).

@@ -147,7 +147,7 @@ extension SettingsViewController: Themable {
             label.textColor = theme.tableCellTintColor
         }
         
-        autoClearDataAccessoryText.textColor = theme.tableCellTintColor
+        autoClearDataAccessoryText.textColor = theme.tableCellAccessoryTextColor
         versionText.textColor = theme.tableCellTintColor
         
         lightThemeToggle.onTintColor = theme.toggleSwitchColor

@@ -12,9 +12,6 @@
         <array key="proximanova-bold.otf">
             <string>ProximaNova-Bold</string>
         </array>
-        <array key="proximanova-light.otf">
-            <string>ProximaNova-Light</string>
-        </array>
         <array key="proximanova-regular.otf">
             <string>ProximaNova-Regular</string>
         </array>
@@ -103,7 +100,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
+                            <tableViewSection headerTitle="Privacy &amp; Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you'll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="FgW-X9-qoE" detailTextLabel="Ccm-w6-p6U" style="IBUITableViewCellStyleValue1" id="z07-QI-waz">
                                         <rect key="frame" x="0.0" y="207" width="375" height="44"/>
@@ -113,16 +110,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Automatically Clear Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FgW-X9-qoE">
-                                                    <rect key="frame" x="16" y="15" width="177" height="16"/>
+                                                    <rect key="frame" x="16" y="14" width="177" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Off" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ccm-w6-p6U">
-                                                    <rect key="frame" x="318" y="14" width="22" height="17"/>
+                                                    <rect key="frame" x="318.5" y="14" width="21.5" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Light" family="Proxima Nova" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -647,7 +644,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Desired timing" footerTitle="Leaving the app means once you’ve put the app in the background or swipe the app closed." id="vSJ-YJ-bBs">
+                            <tableViewSection headerTitle="Desired timing" footerTitle="App exit is defined by swiping the app to close it while inactivity is when the app is in the background." id="vSJ-YJ-bBs">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" id="oLB-OV-jSI">
                                         <rect key="frame" x="0.0" y="298.5" width="375" height="44"/>

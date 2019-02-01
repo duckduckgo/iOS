@@ -24,7 +24,7 @@ import Lottie
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, AutoClearWorker {
 // swiftlint:enable type_body_length
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -279,14 +279,23 @@ class MainViewController: UIViewController {
             attachHomeScreen()
         }
     }
+    
+    func forgetTabs() {
+        tabManager.removeAll()
+        showBars()
+        attachHomeScreen()
+    }
+    
+    func forgetData() {
+        ServerTrustCache.shared.clear()
+        WebCacheManager.clear()
+    }
 
     fileprivate func forgetAll(completion: @escaping () -> Void) {
         Pixel.fire(pixel: .forgetAllExecuted)
-        ServerTrustCache.shared.clear()
-        WebCacheManager.clear()
+        forgetData()
         FireAnimation.animate {
-            self.tabManager.removeAll()
-            self.attachHomeScreen()
+            self.forgetTabs()
             completion()
         }
         let window = UIApplication.shared.keyWindow

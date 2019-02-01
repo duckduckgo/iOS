@@ -1,5 +1,5 @@
 //
-//  AutoClearDataScreenTests.swift
+//  AutoClearSettingsScreenTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-class AutoClearDataScreenTests: XCTestCase {
+class AutoClearSettingsScreenTests: XCTestCase {
     
     var mockDependencyProvider: MockDependencyProvider!
     
@@ -38,16 +38,16 @@ class AutoClearDataScreenTests: XCTestCase {
         let appSettigns = AppUserDefaults()
         appSettigns.autoClearMode = 0
         
-        if let settingsController = AutoClearDataViewController.loadFromStoryboard() as? AutoClearDataViewController {
+        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController {
             settingsController.loadViewIfNeeded()
             XCTAssertFalse(settingsController.clearDataToggle.isOn)
         } else {
             assertionFailure("Could not load View Controller")
         }
         
-        appSettigns.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
+        appSettigns.autoClearMode = AutoClearSettingsModel.Action.clearData.rawValue
         
-        if let settingsController = AutoClearDataViewController.loadFromStoryboard() as? AutoClearDataViewController {
+        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController {
             settingsController.loadViewIfNeeded()
             XCTAssert(settingsController.clearDataToggle.isOn)
         } else {
@@ -59,7 +59,7 @@ class AutoClearDataScreenTests: XCTestCase {
         let appSettings = AppUserDefaults()
         appSettings.autoClearMode = 0
         
-        guard let settingsController = AutoClearDataViewController.loadFromStoryboard() as? AutoClearDataViewController else {
+        guard let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController else {
                 assertionFailure("Could not load View Controller")
                 return
         }

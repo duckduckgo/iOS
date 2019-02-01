@@ -42,18 +42,18 @@ class SettingsViewControllerTests: XCTestCase {
             let settingsController = navController.topViewController as? SettingsViewController {
             settingsController.loadViewIfNeeded()
             settingsController.viewWillAppear(true)
-            XCTAssertEqual(settingsController.autoClearDataAccessoryText.text, "Off")
+            XCTAssertEqual(settingsController.autoClearAccessoryText.text, "Off")
         } else {
             assertionFailure("Could not load Setting View Controller")
         }
         
-        appSettigns.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
+        appSettigns.autoClearMode = AutoClearSettingsModel.Action.clearData.rawValue
         
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController {
             settingsController.loadViewIfNeeded()
             settingsController.viewWillAppear(true)
-            XCTAssertEqual(settingsController.autoClearDataAccessoryText.text, "On")
+            XCTAssertEqual(settingsController.autoClearAccessoryText.text, "On")
         } else {
             assertionFailure("Could not load Setting View Controller")
         }

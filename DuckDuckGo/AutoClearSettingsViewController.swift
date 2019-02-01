@@ -24,7 +24,7 @@ import Device
 
 // Back button
 
-class AutoClearDataViewController: UITableViewController {
+class AutoClearSettingsViewController: UITableViewController {
     
     enum Sections: Int, CaseIterable {
         case toggle
@@ -36,10 +36,10 @@ class AutoClearDataViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
-    private var clearDataSettings: AutoClearDataSettings?
+    private var clearDataSettings: AutoClearSettingsModel?
     
     static func loadFromStoryboard() -> UIViewController {
-        return UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearDataViewController")
+        return UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")
     }
     
     override func viewDidLoad() {
@@ -52,8 +52,8 @@ class AutoClearDataViewController: UITableViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    private func loadClearDataSettings() -> AutoClearDataSettings? {
-        return AutoClearDataSettings(settings: appSettings)
+    private func loadClearDataSettings() -> AutoClearSettingsModel? {
+        return AutoClearSettingsModel(settings: appSettings)
     }
     
     private func configureClearDataToggle() {
@@ -75,48 +75,48 @@ class AutoClearDataViewController: UITableViewController {
             appSettings.autoClearMode = settings.mode.rawValue
             appSettings.autoClearTiming = settings.timing.rawValue
         } else {
-            appSettings.autoClearMode = AutoClearDataSettings.Action().rawValue
-            appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
+            appSettings.autoClearMode = AutoClearSettingsModel.Action().rawValue
+            appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         }
     }
     
-    private func sendPixels(oldState: AutoClearDataSettings) {
+    private func sendPixels(oldState: AutoClearSettingsModel) {
         if let settings = clearDataSettings {
             if settings.mode != oldState.mode {
                 if settings.mode.contains(.clearData) {
-                    Pixel.fire(pixel: .autoClearDataActionOptionTabsAndData)
+                    Pixel.fire(pixel: .autoClearActionOptionTabsAndData)
                 } else if settings.mode.contains(.clearTabs) {
-                    Pixel.fire(pixel: .autoClearDataActionOptionTabs)
+                    Pixel.fire(pixel: .autoClearActionOptionTabs)
                 }
             }
             
             if settings.timing != oldState.timing {
                 switch settings.timing {
                 case .termination:
-                    Pixel.fire(pixel: .autoClearDataTimingOptionExit)
+                    Pixel.fire(pixel: .autoClearTimingOptionExit)
                 case .delay5min:
-                    Pixel.fire(pixel: .autoClearDataTimingOptionExitOr5Mins)
+                    Pixel.fire(pixel: .autoClearTimingOptionExitOr5Mins)
                 case .delay15min:
-                    Pixel.fire(pixel: .autoClearDataTimingOptionExitOr15Mins)
+                    Pixel.fire(pixel: .autoClearTimingOptionExitOr15Mins)
                 case .delay30min:
-                    Pixel.fire(pixel: .autoClearDataTimingOptionExitOr30Mins)
+                    Pixel.fire(pixel: .autoClearTimingOptionExitOr30Mins)
                 case .delay60min:
-                    Pixel.fire(pixel: .autoClearDataTimingOptionExitOr60Mins)
+                    Pixel.fire(pixel: .autoClearTimingOptionExitOr60Mins)
                 }
             }
         } else {
-            Pixel.fire(pixel: .autoClearDataActionOptionNone)
+            Pixel.fire(pixel: .autoClearActionOptionNone)
         }
     }
     
-    private func indexPathOf(mode: AutoClearDataSettings.Action) -> IndexPath {
+    private func indexPathOf(mode: AutoClearSettingsModel.Action) -> IndexPath {
         if mode.contains(.clearTabs) {
             return IndexPath(row: 1, section: Sections.action.rawValue)
         }
         return IndexPath(row: 0, section: Sections.action.rawValue)
     }
     
-    private func indexPathOf(timing: AutoClearDataSettings.Timing) -> IndexPath {
+    private func indexPathOf(timing: AutoClearSettingsModel.Timing) -> IndexPath {
         return IndexPath(row: timing.rawValue, section: Sections.timing.rawValue)
     }
     
@@ -137,7 +137,7 @@ class AutoClearDataViewController: UITableViewController {
                 clearDataSettings?.mode = [.clearData, .clearTabs]
             }
         } else if indexPath.section == Sections.timing.rawValue {
-            clearDataSettings?.timing = AutoClearDataSettings.Timing(rawValue: indexPath.row) ?? .termination
+            clearDataSettings?.timing = AutoClearSettingsModel.Timing(rawValue: indexPath.row) ?? .termination
         }
         tableView.reloadData()
     }
@@ -174,7 +174,7 @@ class AutoClearDataViewController: UITableViewController {
     
     @IBAction func onClearDataToggled(_ sender: UISwitch) {
         if sender.isOn {
-            clearDataSettings = AutoClearDataSettings()
+            clearDataSettings = AutoClearSettingsModel()
             tableView.insertSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)
         } else {
             clearDataSettings = nil
@@ -183,7 +183,7 @@ class AutoClearDataViewController: UITableViewController {
     }
 }
 
-extension AutoClearDataViewController: Themable {
+extension AutoClearSettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
         

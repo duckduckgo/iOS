@@ -1,5 +1,5 @@
 //
-//  AutoClearDataSettings.swift
+//  AutoClearSettingsModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Foundation
 import UIKit
 
 /// This struct is a model of Auto Clear Data settings
-struct AutoClearDataSettings: Equatable {
+struct AutoClearSettingsModel: Equatable {
     
     struct Action: OptionSet {
         let rawValue: Int

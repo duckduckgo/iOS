@@ -28,7 +28,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var lightThemeToggle: UISwitch!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
-    @IBOutlet weak var autoClearDataAccessoryText: UILabel!
+    @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     
     @IBOutlet var labels: [UILabel]!
@@ -56,12 +56,12 @@ class SettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        configureAutoClearDataCellAccessory()
+        configureAutoClearCellAccessory()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is AutoClearDataViewController {
-            Pixel.fire(pixel: .autoClearDataSettingsShown)
+        if segue.destination is AutoClearSettingsViewController {
+            Pixel.fire(pixel: .autoClearSettingsShown)
         }
     }
 
@@ -84,11 +84,11 @@ class SettingsViewController: UITableViewController {
         authenticationToggle.isOn = privacyStore.authenticationEnabled
     }
     
-    private func configureAutoClearDataCellAccessory() {
-        if AutoClearDataSettings(settings: appSettings) != nil {
-            autoClearDataAccessoryText.text = "On"
+    private func configureAutoClearCellAccessory() {
+        if AutoClearSettingsModel(settings: appSettings) != nil {
+            autoClearAccessoryText.text = "On"
         } else {
-            autoClearDataAccessoryText.text = "Off"
+            autoClearAccessoryText.text = "Off"
         }
     }
 
@@ -147,7 +147,7 @@ extension SettingsViewController: Themable {
             label.textColor = theme.tableCellTintColor
         }
         
-        autoClearDataAccessoryText.textColor = theme.tableCellAccessoryTextColor
+        autoClearAccessoryText.textColor = theme.tableCellAccessoryTextColor
         versionText.textColor = theme.tableCellTintColor
         
         lightThemeToggle.onTintColor = theme.toggleSwitchColor

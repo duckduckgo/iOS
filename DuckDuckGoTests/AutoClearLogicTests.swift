@@ -47,8 +47,8 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenModeIsSetToCleanDataThenDataIsCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
-        appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
+        appSettings.autoClearMode = AutoClearSettingsModel.Action.clearData.rawValue
+        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
@@ -61,8 +61,8 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenModeIsSetToCleanTabsThenTabsAreCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Action.clearTabs.rawValue
-        appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
+        appSettings.autoClearMode = AutoClearSettingsModel.Action.clearTabs.rawValue
+        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetDataExpectation?.isInverted = true
@@ -75,9 +75,9 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenModeIsSetToCleanTabsAndDataThenBothAreCleared() {
         let appSettings = AppUserDefaults()
-        let mode: AutoClearDataSettings.Action = [.clearData, .clearTabs]
+        let mode: AutoClearSettingsModel.Action = [.clearData, .clearTabs]
         appSettings.autoClearMode = mode.rawValue
-        appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
+        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
@@ -90,7 +90,7 @@ class AutoClearLogicTests: XCTestCase {
     func testWhenModeIsNotSetThenNothingIsCleared() {
         let appSettings = AppUserDefaults()
         appSettings.autoClearMode = 0
-        appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
+        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetDataExpectation?.isInverted = true
@@ -104,8 +104,8 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
-        appSettings.autoClearTiming = AutoClearDataSettings.Timing.termination.rawValue
+        appSettings.autoClearMode = AutoClearSettingsModel.Action.clearData.rawValue
+        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         
         worker.forgetDataExpectation = expectation(description: "Data should not be cleared")
         worker.forgetDataExpectation?.isInverted = true
@@ -121,9 +121,9 @@ class AutoClearLogicTests: XCTestCase {
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceThimeHasElapsed() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearMode = AutoClearDataSettings.Action.clearData.rawValue
+        appSettings.autoClearMode = AutoClearSettingsModel.Action.clearData.rawValue
         
-        let cases: [AutoClearDataSettings.Timing: TimeInterval] = [.delay5min: 5 * 60,
+        let cases: [AutoClearSettingsModel.Timing: TimeInterval] = [.delay5min: 5 * 60,
                                                                     .delay15min: 15 * 60,
                                                                     .delay30min: 30 * 60,
                                                                     .delay60min: 60 * 60]

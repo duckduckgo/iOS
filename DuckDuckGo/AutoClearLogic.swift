@@ -35,7 +35,7 @@ class AutoClearLogic {
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
     var isClearingEnabled: Bool {
-        return AutoClearDataSettings(settings: appSettings) != nil
+        return AutoClearSettingsModel(settings: appSettings) != nil
     }
     
     init(worker: AutoClearWorker) {
@@ -43,7 +43,7 @@ class AutoClearLogic {
     }
     
     private func clearData() {
-        guard let settings = AutoClearDataSettings(settings: appSettings) else { return }
+        guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
         if settings.mode.contains(.clearData) {
             worker.forgetData()
@@ -66,7 +66,7 @@ class AutoClearLogic {
     }
     
     private func shouldClearData(elapsedTime: TimeInterval) -> Bool {
-        guard let settings = AutoClearDataSettings(settings: appSettings) else { return false }
+        guard let settings = AutoClearSettingsModel(settings: appSettings) else { return false }
         
         switch settings.timing {
         case .termination:

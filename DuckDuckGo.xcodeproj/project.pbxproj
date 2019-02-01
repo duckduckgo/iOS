@@ -242,11 +242,11 @@
 		85FAAE63214EFD37006AD5DA /* PrevalenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */; };
 		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
 		9817C9C321EF594700884F65 /* AutoClearLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClearLogic.swift */; };
-		981FED692201FE69008488D7 /* AutoClearDataScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearDataScreenTests.swift */; };
+		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
 		981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981FED702202519C008488D7 /* BlankSnapshot.storyboard */; };
 		981FED7422046017008488D7 /* AutoClearLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearLogicTests.swift */; };
-		981FED76220464EF008488D7 /* AutoClearDataSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearDataSettings.swift */; };
+		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
 		98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */; };
 		98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */; };
@@ -254,7 +254,7 @@
 		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
 		98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */; };
 		98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EF177C21837E35006750C1 /* new_tab_dark.json */; };
-		98F0FC2021FF18E700CE77AB /* AutoClearDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0FC1F21FF18E700CE77AB /* AutoClearDataViewController.swift */; };
+		98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */; };
 		98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D7217B37010011A0D4 /* Theme.swift */; };
 		98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1D9217B37200011A0D4 /* LightTheme.swift */; };
 		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
@@ -751,11 +751,11 @@
 		85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevalenceStore.swift; sourceTree = "<group>"; };
 		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
 		9817C9C221EF594700884F65 /* AutoClearLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearLogic.swift; sourceTree = "<group>"; };
-		981FED682201FE69008488D7 /* AutoClearDataScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearDataScreenTests.swift; sourceTree = "<group>"; };
+		981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsScreenTests.swift; sourceTree = "<group>"; };
 		981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSnapshotViewController.swift; sourceTree = "<group>"; };
 		981FED702202519C008488D7 /* BlankSnapshot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BlankSnapshot.storyboard; sourceTree = "<group>"; };
 		981FED7322046017008488D7 /* AutoClearLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearLogicTests.swift; sourceTree = "<group>"; };
-		981FED75220464EF008488D7 /* AutoClearDataSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearDataSettings.swift; sourceTree = "<group>"; };
+		981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsModel.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
 		98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyProvider.swift; sourceTree = "<group>"; };
 		98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyProvider.swift; sourceTree = "<group>"; };
@@ -763,7 +763,7 @@
 		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
-		98F0FC1F21FF18E700CE77AB /* AutoClearDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearDataViewController.swift; sourceTree = "<group>"; };
+		98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsViewController.swift; sourceTree = "<group>"; };
 		98F3A1D7217B37010011A0D4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		98F3A1D9217B37200011A0D4 /* LightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightTheme.swift; sourceTree = "<group>"; };
 		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
@@ -1580,7 +1580,7 @@
 		9817C9C121EF58BA00884F65 /* AutoClear */ = {
 			isa = PBXGroup;
 			children = (
-				981FED75220464EF008488D7 /* AutoClearDataSettings.swift */,
+				981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */,
 				9817C9C221EF594700884F65 /* AutoClearLogic.swift */,
 			);
 			name = AutoClear;
@@ -1606,7 +1606,7 @@
 			isa = PBXGroup;
 			children = (
 				98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */,
-				981FED682201FE69008488D7 /* AutoClearDataScreenTests.swift */,
+				981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -2152,7 +2152,7 @@
 				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
 				8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */,
-				98F0FC1F21FF18E700CE77AB /* AutoClearDataViewController.swift */,
+				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3054,7 +3054,7 @@
 				85B9CB8721AEBDB7009001F1 /* CenteredSearchHomeCell.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
-				98F0FC2021FF18E700CE77AB /* AutoClearDataViewController.swift in Sources */,
+				98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
@@ -3062,7 +3062,7 @@
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
 				8505836D219F424500ED4EDB /* Point.swift in Sources */,
 				F114C5611E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift in Sources */,
-				981FED76220464EF008488D7 /* AutoClearDataSettings.swift in Sources */,
+				981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */,
 				83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */,
@@ -3168,7 +3168,7 @@
 				F13B4BFB1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift in Sources */,
 				8528AE7E212EF5FF00D0BD74 /* AppRatingPromptTests.swift in Sources */,
 				85C9E5F521B422D300460EBC /* BookmarksManagerTests.swift in Sources */,
-				981FED692201FE69008488D7 /* AutoClearDataScreenTests.swift in Sources */,
+				981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */,
 				F14513591F4664E900710C46 /* SiteRatingTests.swift in Sources */,
 				857EEB7120934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift in Sources */,
 				85267D2B215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift in Sources */,

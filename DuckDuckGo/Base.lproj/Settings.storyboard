@@ -343,7 +343,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="authenticationToggle" destination="24S-Ml-5cq" id="5By-WD-2tX"/>
-                        <outlet property="autoClearDataAccessoryText" destination="Ccm-w6-p6U" id="1wX-zy-6k5"/>
+                        <outlet property="autoClearAccessoryText" destination="Ccm-w6-p6U" id="1wX-zy-6k5"/>
                         <outlet property="autocompleteToggle" destination="PNd-rx-En1" id="KD7-z4-4OW"/>
                         <outlet property="lightThemeToggle" destination="xE6-kW-NSs" id="8cT-yH-0u4"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
@@ -542,7 +542,7 @@ After all, the internet shouldn't feel so creepy, and getting the privacy you de
         <!--Auto Clear Data-->
         <scene sceneID="y9R-2c-mBz">
             <objects>
-                <tableViewController storyboardIdentifier="AutoClearDataViewController" title="Auto Clear Data" id="fdJ-b1-Des" userLabel="Auto Clear Data" customClass="AutoClearDataViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AutoClearSettingsViewController" title="Auto Clear Data" id="fdJ-b1-Des" userLabel="Auto Clear Data" customClass="AutoClearSettingsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="TDo-S0-c8g">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

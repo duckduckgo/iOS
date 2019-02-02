@@ -36,7 +36,7 @@ class SettingsViewControllerTests: XCTestCase {
     
     func testWhenOpeningSettingsThenAutoClearStatusIsSetBasedOnAppSettings() {
         let appSettigns = AppUserDefaults()
-        appSettigns.autoClearMode = 0
+        appSettigns.autoClearAction = 0
         
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController {
@@ -47,7 +47,7 @@ class SettingsViewControllerTests: XCTestCase {
             assertionFailure("Could not load Setting View Controller")
         }
         
-        appSettigns.autoClearMode = AutoClearSettingsModel.Action.clearData.rawValue
+        appSettigns.autoClearAction = AutoClearSettingsModel.Action.clearData.rawValue
         
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
             let settingsController = navController.topViewController as? SettingsViewController {

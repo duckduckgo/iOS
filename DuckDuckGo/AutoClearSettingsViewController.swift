@@ -63,8 +63,8 @@ class AutoClearSettingsViewController: UITableViewController {
     override func willMove(toParent parent: UIViewController?) {
         guard parent == nil else { return }
         
-        if let oldSettings = loadClearDataSettings(),
-            oldSettings != clearDataSettings {
+        let oldSettings = loadClearDataSettings()
+        if oldSettings != clearDataSettings {
             sendPixels(oldState: oldSettings)
             store()
         }
@@ -72,25 +72,25 @@ class AutoClearSettingsViewController: UITableViewController {
     
     private func store() {
         if let settings = clearDataSettings {
-            appSettings.autoClearMode = settings.mode.rawValue
+            appSettings.autoClearAction = settings.action.rawValue
             appSettings.autoClearTiming = settings.timing.rawValue
         } else {
-            appSettings.autoClearMode = AutoClearSettingsModel.Action().rawValue
+            appSettings.autoClearAction = AutoClearSettingsModel.Action().rawValue
             appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
         }
     }
     
-    private func sendPixels(oldState: AutoClearSettingsModel) {
+    private func sendPixels(oldState: AutoClearSettingsModel?) {
         if let settings = clearDataSettings {
-            if settings.mode != oldState.mode {
-                if settings.mode.contains(.clearData) {
+            if settings.action != oldState?.action {
+                if settings.action.contains(.clearData) {
                     Pixel.fire(pixel: .autoClearActionOptionTabsAndData)
-                } else if settings.mode.contains(.clearTabs) {
+                } else if settings.action.contains(.clearTabs) {
                     Pixel.fire(pixel: .autoClearActionOptionTabs)
                 }
             }
             
-            if settings.timing != oldState.timing {
+            if settings.timing != oldState?.timing {
                 switch settings.timing {
                 case .termination:
                     Pixel.fire(pixel: .autoClearTimingOptionExit)
@@ -109,8 +109,8 @@ class AutoClearSettingsViewController: UITableViewController {
         }
     }
     
-    private func indexPathOf(mode: AutoClearSettingsModel.Action) -> IndexPath {
-        if mode.contains(.clearTabs) {
+    private func indexPathOf(action: AutoClearSettingsModel.Action) -> IndexPath {
+        if action.contains(.clearData) {
             return IndexPath(row: 1, section: Sections.action.rawValue)
         }
         return IndexPath(row: 0, section: Sections.action.rawValue)
@@ -132,9 +132,9 @@ class AutoClearSettingsViewController: UITableViewController {
         
         if indexPath.section == Sections.action.rawValue {
             if indexPath.row == 0 {
-                clearDataSettings?.mode = .clearTabs
+                clearDataSettings?.action = .clearTabs
             } else {
-                clearDataSettings?.mode = [.clearData, .clearTabs]
+                clearDataSettings?.action = [.clearTabs, .clearData]
             }
         } else if indexPath.section == Sections.timing.rawValue {
             clearDataSettings?.timing = AutoClearSettingsModel.Timing(rawValue: indexPath.row) ?? .termination
@@ -151,7 +151,7 @@ class AutoClearSettingsViewController: UITableViewController {
         cell.tintColor = theme.toggleSwitchColor
         
         if let settings = clearDataSettings,
-            indexPathOf(mode: settings.mode) == indexPath || indexPathOf(timing: settings.timing) == indexPath {
+            indexPathOf(action: settings.action) == indexPath || indexPathOf(timing: settings.timing) == indexPath {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none

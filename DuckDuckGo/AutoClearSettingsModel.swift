@@ -38,22 +38,22 @@ struct AutoClearSettingsModel: Equatable {
         case delay60min
     }
     
-    var mode: Action
+    var action: Action
     var timing: Timing
     
     /// Create settings model based on last user selection that is stored in settings.
     ///
     /// - Returns: Settings model, or nil in case user did not enable this feature.
     init?(settings: AppSettings) {
-        mode = Action(rawValue: settings.autoClearMode)
-        guard mode.isEmpty == false else { return nil }
+        action = Action(rawValue: settings.autoClearAction)
+        guard action.isEmpty == false else { return nil }
         
         timing = Timing(rawValue: settings.autoClearTiming) ?? .termination
     }
     
     /// Create settings model with default values.
     init() {
-        mode = [.clearTabs]
+        action = [.clearTabs]
         timing = .termination
     }
 }

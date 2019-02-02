@@ -38,7 +38,7 @@ class BlankSnapshotViewController: UIViewController {
     static func loadFromStoryboard() -> BlankSnapshotViewController {
         let storyboard = UIStoryboard(name: "BlankSnapshot", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? BlankSnapshotViewController else {
-            fatalError("Failed to instantiate correct Authentication view controller")
+            fatalError("Failed to instantiate correct Blank Snapshot view controller")
         }
         return controller
     }

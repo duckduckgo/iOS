@@ -53,7 +53,8 @@ class BlankSnapshotViewController: UIViewController {
     
     private func configureOmniBar(variantManager: VariantManager = DefaultVariantManager()) {
         if let currentVariant = variantManager.currentVariant,
-            currentVariant.features.contains(.homeScreen) {
+            currentVariant.features.contains(.homeScreen) ||
+                currentVariant.features.contains(.centeredSearchHomeScreen) {
             statusBarBackground.isHidden = true
             customNavigationBar.isHidden = true
         } else {

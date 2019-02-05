@@ -67,26 +67,31 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    var autoClearAction: Int {
+    var autoClearAction: AutoClearSettingsModel.Action {
         
         get {
-            return userDefaults?.integer(forKey: Keys.autoClearActionKey) ?? 0
+            let value = userDefaults?.integer(forKey: Keys.autoClearActionKey) ?? 0
+            return AutoClearSettingsModel.Action(rawValue: value)
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.autoClearActionKey)
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.autoClearActionKey)
         }
         
     }
     
-    var autoClearTiming: Int {
+    var autoClearTiming: AutoClearSettingsModel.Timing {
         
         get {
-            return userDefaults?.integer(forKey: Keys.autoClearTimingKey) ?? 0
+            if let rawValue = userDefaults?.integer(forKey: Keys.autoClearTimingKey),
+                let value = AutoClearSettingsModel.Timing(rawValue: rawValue) {
+                return value
+            }
+            return .termination
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.autoClearTimingKey)
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.autoClearTimingKey)
         }
         
     }

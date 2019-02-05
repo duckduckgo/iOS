@@ -21,8 +21,8 @@ protocol AppSettings {
     var autocomplete: Bool { get set }
     var currentThemeName: ThemeName { get set }
     
-    var autoClearAction: Int { get set }
-    var autoClearTiming: Int { get set }
+    var autoClearAction: AutoClearSettingsModel.Action { get set }
+    var autoClearTiming: AutoClearSettingsModel.Timing { get set }
     
     // Required for Light Theme experiment
     func setInitialThemeNameIfNeeded(name: ThemeName)

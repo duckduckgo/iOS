@@ -47,8 +47,8 @@ class AutoClearTests: XCTestCase {
     
     func testWhenModeIsSetToCleanDataThenDataIsCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = AutoClearSettingsModel.Action.clearData.rawValue
-        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
+        appSettings.autoClearAction = .clearData
+        appSettings.autoClearTiming = .termination
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
@@ -61,8 +61,8 @@ class AutoClearTests: XCTestCase {
     
     func testWhenModeIsSetToCleanTabsThenTabsAreCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = AutoClearSettingsModel.Action.clearTabs.rawValue
-        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
+        appSettings.autoClearAction = .clearTabs
+        appSettings.autoClearTiming = .termination
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetDataExpectation?.isInverted = true
@@ -75,9 +75,8 @@ class AutoClearTests: XCTestCase {
     
     func testWhenModeIsSetToCleanTabsAndDataThenBothAreCleared() {
         let appSettings = AppUserDefaults()
-        let mode: AutoClearSettingsModel.Action = [.clearData, .clearTabs]
-        appSettings.autoClearAction = mode.rawValue
-        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
+        appSettings.autoClearAction = [.clearData, .clearTabs]
+        appSettings.autoClearTiming = .termination
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
@@ -89,8 +88,8 @@ class AutoClearTests: XCTestCase {
     
     func testWhenModeIsNotSetThenNothingIsCleared() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = 0
-        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
+        appSettings.autoClearAction = []
+        appSettings.autoClearTiming = .termination
         
         worker.forgetDataExpectation = expectation(description: "Data Cleared")
         worker.forgetDataExpectation?.isInverted = true
@@ -104,8 +103,8 @@ class AutoClearTests: XCTestCase {
     
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = AutoClearSettingsModel.Action.clearData.rawValue
-        appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
+        appSettings.autoClearAction = .clearData
+        appSettings.autoClearTiming = .termination
         
         worker.forgetDataExpectation = expectation(description: "Data should not be cleared")
         worker.forgetDataExpectation?.isInverted = true
@@ -121,7 +120,7 @@ class AutoClearTests: XCTestCase {
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceThimeHasElapsed() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = AutoClearSettingsModel.Action.clearData.rawValue
+        appSettings.autoClearAction = .clearData
         
         let cases: [AutoClearSettingsModel.Timing: TimeInterval] = [.delay5min: 5 * 60,
                                                                     .delay15min: 15 * 60,
@@ -129,7 +128,7 @@ class AutoClearTests: XCTestCase {
                                                                     .delay60min: 60 * 60]
         
         for (timing, delay) in cases {
-            appSettings.autoClearTiming = timing.rawValue
+            appSettings.autoClearTiming = timing
             
             worker.forgetDataExpectation = expectation(description: "Data not cleared")
             worker.forgetDataExpectation?.isInverted = true

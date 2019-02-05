@@ -36,7 +36,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
     
     func testWhenOpeningSettingsThenClearDataToggleIsSetBasedOnAppSettings() {
         let appSettigns = AppUserDefaults()
-        appSettigns.autoClearAction = 0
+        appSettigns.autoClearAction = []
         
         if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController {
             settingsController.loadViewIfNeeded()
@@ -45,7 +45,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
             assertionFailure("Could not load View Controller")
         }
         
-        appSettigns.autoClearAction = AutoClearSettingsModel.Action.clearData.rawValue
+        appSettigns.autoClearAction = .clearData
         
         if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController {
             settingsController.loadViewIfNeeded()
@@ -57,7 +57,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
     
     func testWhenClearDataSwitchIsToggledThenTableIsUpdated() {
         let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = 0
+        appSettings.autoClearAction = []
         
         guard let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController else {
                 assertionFailure("Could not load View Controller")

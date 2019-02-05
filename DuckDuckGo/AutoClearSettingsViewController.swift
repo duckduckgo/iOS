@@ -70,11 +70,11 @@ class AutoClearSettingsViewController: UITableViewController {
     
     private func store() {
         if let settings = clearDataSettings {
-            appSettings.autoClearAction = settings.action.rawValue
-            appSettings.autoClearTiming = settings.timing.rawValue
+            appSettings.autoClearAction = settings.action
+            appSettings.autoClearTiming = settings.timing
         } else {
-            appSettings.autoClearAction = AutoClearSettingsModel.Action().rawValue
-            appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination.rawValue
+            appSettings.autoClearAction = AutoClearSettingsModel.Action()
+            appSettings.autoClearTiming = AutoClearSettingsModel.Timing.termination
         }
     }
     

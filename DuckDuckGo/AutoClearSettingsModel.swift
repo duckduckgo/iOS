@@ -53,7 +53,7 @@ struct AutoClearSettingsModel: Equatable {
     
     /// Create settings model with default values.
     init() {
-        action = [.clearTabs]
+        action = [.clearTabs, .clearData]
         timing = .termination
     }
 }

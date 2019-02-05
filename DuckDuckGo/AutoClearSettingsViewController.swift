@@ -105,9 +105,9 @@ class AutoClearSettingsViewController: UITableViewController {
     
     private func indexPathOf(action: AutoClearSettingsModel.Action) -> IndexPath {
         if action.contains(.clearData) {
-            return IndexPath(row: 1, section: Sections.action.rawValue)
+            return IndexPath(row: 0, section: Sections.action.rawValue)
         }
-        return IndexPath(row: 0, section: Sections.action.rawValue)
+        return IndexPath(row: 1, section: Sections.action.rawValue)
     }
     
     private func indexPathOf(timing: AutoClearSettingsModel.Timing) -> IndexPath {
@@ -126,9 +126,9 @@ class AutoClearSettingsViewController: UITableViewController {
         
         if indexPath.section == Sections.action.rawValue {
             if indexPath.row == 0 {
-                clearDataSettings?.action = .clearTabs
-            } else {
                 clearDataSettings?.action = [.clearTabs, .clearData]
+            } else {
+                clearDataSettings?.action = .clearTabs
             }
         } else if indexPath.section == Sections.timing.rawValue {
             clearDataSettings?.timing = AutoClearSettingsModel.Timing(rawValue: indexPath.row) ?? .termination

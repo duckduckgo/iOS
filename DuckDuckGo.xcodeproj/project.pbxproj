@@ -241,11 +241,11 @@
 		85FAAE61214EFD21006AD5DA /* prevalence.json in Resources */ = {isa = PBXBuildFile; fileRef = 85FAAE60214EFD20006AD5DA /* prevalence.json */; };
 		85FAAE63214EFD37006AD5DA /* PrevalenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */; };
 		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
-		9817C9C321EF594700884F65 /* AutoClearLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClearLogic.swift */; };
+		9817C9C321EF594700884F65 /* AutoClear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClear.swift */; };
 		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
 		981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981FED702202519C008488D7 /* BlankSnapshot.storyboard */; };
-		981FED7422046017008488D7 /* AutoClearLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearLogicTests.swift */; };
+		981FED7422046017008488D7 /* AutoClearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearTests.swift */; };
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
 		98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */; };
@@ -750,11 +750,11 @@
 		85FAAE60214EFD20006AD5DA /* prevalence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = prevalence.json; sourceTree = "<group>"; };
 		85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevalenceStore.swift; sourceTree = "<group>"; };
 		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
-		9817C9C221EF594700884F65 /* AutoClearLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearLogic.swift; sourceTree = "<group>"; };
+		9817C9C221EF594700884F65 /* AutoClear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClear.swift; sourceTree = "<group>"; };
 		981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsScreenTests.swift; sourceTree = "<group>"; };
 		981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSnapshotViewController.swift; sourceTree = "<group>"; };
 		981FED702202519C008488D7 /* BlankSnapshot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BlankSnapshot.storyboard; sourceTree = "<group>"; };
-		981FED7322046017008488D7 /* AutoClearLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearLogicTests.swift; sourceTree = "<group>"; };
+		981FED7322046017008488D7 /* AutoClearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearTests.swift; sourceTree = "<group>"; };
 		981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsModel.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
 		98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyProvider.swift; sourceTree = "<group>"; };
@@ -1581,7 +1581,7 @@
 			isa = PBXGroup;
 			children = (
 				981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */,
-				9817C9C221EF594700884F65 /* AutoClearLogic.swift */,
+				9817C9C221EF594700884F65 /* AutoClear.swift */,
 			);
 			name = AutoClear;
 			sourceTree = "<group>";
@@ -1589,7 +1589,7 @@
 		981FED7222045FFA008488D7 /* AutoClear */ = {
 			isa = PBXGroup;
 			children = (
-				981FED7322046017008488D7 /* AutoClearLogicTests.swift */,
+				981FED7322046017008488D7 /* AutoClearTests.swift */,
 			);
 			name = AutoClear;
 			sourceTree = "<group>";
@@ -3070,7 +3070,7 @@
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85A9C37720DD2DC200073340 /* AddToHomeRowCTAViewController.swift in Sources */,
-				9817C9C321EF594700884F65 /* AutoClearLogic.swift in Sources */,
+				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				8505839421A841E400ED4EDB /* SupportingCancelButtonOmniBarState.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
@@ -3174,7 +3174,7 @@
 				85267D2B215274F700A0CE28 /* DownloadedEntityMappingStoreTests.swift in Sources */,
 				85124C13201F5B4900288070 /* SurrogateTests.swift in Sources */,
 				F194FAFB1F14E622009B4DF8 /* UIFontExtensionTests.swift in Sources */,
-				981FED7422046017008488D7 /* AutoClearLogicTests.swift in Sources */,
+				981FED7422046017008488D7 /* AutoClearTests.swift in Sources */,
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				853C5F6521C3E697001F7A05 /* MockBookmarkStore.swift in Sources */,
 				85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */,

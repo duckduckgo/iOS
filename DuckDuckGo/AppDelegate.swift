@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
-    private var autoClearLogic: AutoClearLogic?
+    private var autoClear: AutoClear?
 
     // MARK: lifecycle
 
@@ -63,8 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
-            autoClearLogic = AutoClearLogic(worker: mainViewController!)
-            autoClearLogic?.applicationDidLaunch()
+            autoClear = AutoClear(worker: mainViewController!)
+            autoClear?.applicationDidLaunch()
             AppConfigurationFetch().start(completion: nil)
             displayAuthenticationWindow()
             beginAuthentication()
@@ -74,12 +74,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         beginAuthentication()
-        autoClearLogic?.applicationWillEnterForeground()
+        autoClear?.applicationWillEnterForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayOverlay()
-        autoClearLogic?.applicationDidEnterBackground()
+        autoClear?.applicationDidEnterBackground()
     }
 
     func application(_ application: UIApplication,
@@ -135,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func displayBlankSnapshotWindow() {
         guard overlayWindow == nil, let frame = window?.frame else { return }
-        guard autoClearLogic?.isClearingEnabled ?? false else { return }
+        guard autoClear?.isClearingEnabled ?? false else { return }
         
         overlayWindow = UIWindow(frame: frame)
         overlayWindow?.rootViewController = BlankSnapshotViewController.loadFromStoryboard()

@@ -1,5 +1,5 @@
 //
-//  AutoClearLogic.swift
+//  AutoClear.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -20,14 +20,13 @@
 import Foundation
 import UIKit
 
-/// Represents worker that can peform clearing operation.
 protocol AutoClearWorker {
     
     func forgetData()
     func forgetTabs()
 }
 
-class AutoClearLogic {
+class AutoClear {
     
     private let worker: AutoClearWorker
     private var timestamp: TimeInterval?

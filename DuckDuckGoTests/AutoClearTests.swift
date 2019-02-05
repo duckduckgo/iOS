@@ -1,5 +1,5 @@
 //
-//  AutoClearLogicTests.swift
+//  AutoClearTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
-class AutoClearLogicTests: XCTestCase {
+class AutoClearTests: XCTestCase {
     
     class MockWorker: AutoClearWorker {
         
@@ -38,11 +38,11 @@ class AutoClearLogicTests: XCTestCase {
     }
     
     private var worker: MockWorker!
-    private var logic: AutoClearLogic!
+    private var logic: AutoClear!
 
     override func setUp() {
         worker = MockWorker()
-        logic = AutoClearLogic(worker: worker)
+        logic = AutoClear(worker: worker)
     }
     
     func testWhenModeIsSetToCleanDataThenDataIsCleared() {

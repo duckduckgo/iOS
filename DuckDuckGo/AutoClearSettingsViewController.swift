@@ -22,8 +22,6 @@ import MessageUI
 import Core
 import Device
 
-// Back button
-
 class AutoClearSettingsViewController: UITableViewController {
     
     enum Sections: Int, CaseIterable {

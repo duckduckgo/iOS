@@ -36,10 +36,6 @@ class AutoClearSettingsViewController: UITableViewController {
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     private var clearDataSettings: AutoClearSettingsModel?
     
-    static func loadFromStoryboard() -> UIViewController {
-        return UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -21,6 +21,15 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
+extension AutoClearSettingsViewController {
+    
+    static func loadFromStoryboard() -> AutoClearSettingsViewController? {
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")
+        return controller as? AutoClearSettingsViewController
+    }
+    
+}
+
 class AutoClearSettingsScreenTests: XCTestCase {
     
     var mockDependencyProvider: MockDependencyProvider!
@@ -38,7 +47,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
         let appSettigns = AppUserDefaults()
         appSettigns.autoClearAction = []
         
-        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController {
+        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() {
             settingsController.loadViewIfNeeded()
             XCTAssertFalse(settingsController.clearDataToggle.isOn)
         } else {
@@ -47,7 +56,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
         
         appSettigns.autoClearAction = .clearData
         
-        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController {
+        if let settingsController = AutoClearSettingsViewController.loadFromStoryboard() {
             settingsController.loadViewIfNeeded()
             XCTAssert(settingsController.clearDataToggle.isOn)
         } else {
@@ -59,7 +68,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = []
         
-        guard let settingsController = AutoClearSettingsViewController.loadFromStoryboard() as? AutoClearSettingsViewController else {
+        guard let settingsController = AutoClearSettingsViewController.loadFromStoryboard() else {
                 assertionFailure("Could not load View Controller")
                 return
         }

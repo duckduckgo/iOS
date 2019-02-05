@@ -24,7 +24,7 @@ import Lottie
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
-class MainViewController: UIViewController, AutoClearWorker {
+class MainViewController: UIViewController {
 // swiftlint:enable type_body_length
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -278,28 +278,6 @@ class MainViewController: UIViewController, AutoClearWorker {
         } else {
             attachHomeScreen()
         }
-    }
-    
-    func forgetTabs() {
-        tabManager.removeAll()
-        showBars()
-        attachHomeScreen()
-    }
-    
-    func forgetData() {
-        ServerTrustCache.shared.clear()
-        WebCacheManager.clear()
-    }
-
-    fileprivate func forgetAll(completion: @escaping () -> Void) {
-        Pixel.fire(pixel: .forgetAllExecuted)
-        forgetData()
-        FireAnimation.animate {
-            self.forgetTabs()
-            completion()
-        }
-        let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
 
     fileprivate func refreshControls() {
@@ -692,6 +670,32 @@ extension MainViewController: TabSwitcherButtonDelegate {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 
+}
+
+extension MainViewController: AutoClearWorker {
+    
+    func forgetTabs() {
+        tabManager.removeAll()
+        showBars()
+        attachHomeScreen()
+    }
+    
+    func forgetData() {
+        ServerTrustCache.shared.clear()
+        WebCacheManager.clear()
+    }
+    
+    fileprivate func forgetAll(completion: @escaping () -> Void) {
+        Pixel.fire(pixel: .forgetAllExecuted)
+        forgetData()
+        FireAnimation.animate {
+            self.forgetTabs()
+            completion()
+        }
+        let window = UIApplication.shared.keyWindow
+        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
+    }
+    
 }
 
 extension MainViewController: Themable {

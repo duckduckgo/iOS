@@ -25,15 +25,15 @@ class AutoClearTests: XCTestCase {
     
     class MockWorker: AutoClearWorker {
         
-        var forgetDataExpectation: XCTestExpectation?
-        var forgetTabsExpectation: XCTestExpectation?
+        var forgetDataInvocationCount = 0
+        var forgetTabsInvocationCount = 0
         
         func forgetData() {
-            forgetDataExpectation?.fulfill()
+            forgetDataInvocationCount += 1
         }
         
         func forgetTabs() {
-            forgetTabsExpectation?.fulfill()
+            forgetTabsInvocationCount += 1
         }
     }
     
@@ -50,13 +50,10 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
-        worker.forgetDataExpectation = expectation(description: "Data Cleared")
-        worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
-        worker.forgetTabsExpectation?.isInverted = true
-        
         logic.applicationDidLaunch()
         
-        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
+        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
     }
     
     func testWhenModeIsSetToCleanTabsThenTabsAreCleared() {
@@ -64,13 +61,10 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = .clearTabs
         appSettings.autoClearTiming = .termination
         
-        worker.forgetDataExpectation = expectation(description: "Data Cleared")
-        worker.forgetDataExpectation?.isInverted = true
-        worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
-        
         logic.applicationDidLaunch()
         
-        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
+        XCTAssertEqual(worker.forgetTabsInvocationCount, 1)
     }
     
     func testWhenModeIsSetToCleanTabsAndDataThenBothAreCleared() {
@@ -78,12 +72,10 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = [.clearData, .clearTabs]
         appSettings.autoClearTiming = .termination
         
-        worker.forgetDataExpectation = expectation(description: "Data Cleared")
-        worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
-        
         logic.applicationDidLaunch()
         
-        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
+        XCTAssertEqual(worker.forgetTabsInvocationCount, 1)
     }
     
     func testWhenModeIsNotSetThenNothingIsCleared() {
@@ -91,14 +83,10 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = []
         appSettings.autoClearTiming = .termination
         
-        worker.forgetDataExpectation = expectation(description: "Data Cleared")
-        worker.forgetDataExpectation?.isInverted = true
-        worker.forgetTabsExpectation = expectation(description: "Tabs Cleared")
-        worker.forgetTabsExpectation?.isInverted = true
-        
         logic.applicationDidLaunch()
         
-        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
+        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
     }
     
     func testWhenTimingIsSetToTerminationThenOnlyRestartClearsData() {
@@ -106,16 +94,14 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
-        worker.forgetDataExpectation = expectation(description: "Data should not be cleared")
-        worker.forgetDataExpectation?.isInverted = true
-
         logic.applicationWillEnterForeground()
         logic.applicationDidEnterBackground()
         
-        worker.forgetDataExpectation = expectation(description: "Data cleared")
+        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
+        
         logic.applicationDidLaunch()
         
-        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(worker.forgetDataInvocationCount, 1)
     }
     
     func testWhenDesiredTimingIsSetThenDataIsClearedOnceThimeHasElapsed() {
@@ -127,21 +113,20 @@ class AutoClearTests: XCTestCase {
                                                                     .delay30min: 30 * 60,
                                                                     .delay60min: 60 * 60]
         
+        var iterationCount = 0
         for (timing, delay) in cases {
             appSettings.autoClearTiming = timing
-            
-            worker.forgetDataExpectation = expectation(description: "Data not cleared")
-            worker.forgetDataExpectation?.isInverted = true
             
             logic.applicationDidEnterBackground(CACurrentMediaTime() - delay + 1)
             logic.applicationWillEnterForeground()
             
-            worker.forgetDataExpectation = expectation(description: "Data cleared")
+            XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
             logic.applicationDidEnterBackground(CACurrentMediaTime() - delay - 1)
             logic.applicationWillEnterForeground()
+            
+            iterationCount += 1
+            XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
         }
-        
-        waitForExpectations(timeout: 1, handler: nil)
     }
 }

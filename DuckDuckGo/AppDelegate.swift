@@ -24,7 +24,6 @@ import Core
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private struct ShortcutKey {
-        static let search = "com.duckduckgo.mobile.ios.newsearch"
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
     
@@ -146,9 +145,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         clearNavigationStack()
-        if shortcutItem.type ==  ShortcutKey.search {
-            mainViewController?.launchNewSearch()
-        }
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
         }

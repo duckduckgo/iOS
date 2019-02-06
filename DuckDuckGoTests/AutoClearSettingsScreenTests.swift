@@ -21,15 +21,6 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-extension AutoClearSettingsViewController {
-    
-    static func loadFromStoryboard() -> AutoClearSettingsViewController? {
-        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")
-        return controller as? AutoClearSettingsViewController
-    }
-    
-}
-
 class AutoClearSettingsScreenTests: XCTestCase {
     
     var mockDependencyProvider: MockDependencyProvider!
@@ -86,4 +77,13 @@ class AutoClearSettingsScreenTests: XCTestCase {
         
         XCTAssertEqual(settingsController.numberOfSections(in: settingsController.tableView), 1)
     }
+}
+
+fileprivate extension AutoClearSettingsViewController {
+    
+    static func loadFromStoryboard() -> AutoClearSettingsViewController? {
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")
+        return controller as? AutoClearSettingsViewController
+    }
+    
 }

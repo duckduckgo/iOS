@@ -22,6 +22,26 @@ import XCTest
 
 class EnhancedHomePageVariantManagerTests: XCTestCase {
     
+    func testWhenControlGroupAndNotOnPadThenVariantNotSelected() {
+        let mockStatisticsStore = MockStatisticsStore()
+        let mockRng = MockVariantRNG(returnValue: 2)
+        
+        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .phone)
+        variantManager.assignVariantIfNeeded()
+        
+        XCTAssertEqual("mk", variantManager.currentVariant?.name)
+    }
+
+    func testWhenControlGroupAndOnPadThenVariantIsNotSelected() {
+        let mockStatisticsStore = MockStatisticsStore()
+        let mockRng = MockVariantRNG(returnValue: 2)
+        
+        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .pad)
+        variantManager.assignVariantIfNeeded()
+        
+        XCTAssertNil(variantManager.currentVariant)
+    }
+    
     func testWhenSerpVariantAndOnPadThenVariantIsSelected() {
         
         let mockStatisticsStore = MockStatisticsStore()

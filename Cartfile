@@ -15,9 +15,7 @@ github "duckduckgo/CommonCrypto" ~> 1.1.0
 
 github "duckduckgo/SimulatorStatusMagic" "tags/1.9.5"
 
-github "duckduckgo/swifter" == 1.4.3
-
 github "duckduckgo/lottie-ios" "tags/2.5.0"
 
-github "duckduckgo/PunycodeSwift" "tags/1.0.1"
+github "duckduckgo/PunycodeSwift" "brindy/app_extension_api_flag"
 

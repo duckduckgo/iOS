@@ -80,8 +80,8 @@ extension String {
             .map { $0.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed) ?? $0 }
             .joined(separator: "/")
         
-        let hostSeparator = !encodedPath.isEmpty || hasSuffix("/") ? "/" : ""
-        let url = originalScheme + host + hostSeparator + encodedPath + query
+        let hostPathSeparator = !encodedPath.isEmpty || hasSuffix("/") ? "/" : ""
+        let url = originalScheme + host + hostPathSeparator + encodedPath + query
         return URL(string: url)
     }
     

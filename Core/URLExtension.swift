@@ -160,9 +160,11 @@ extension URL {
             originalScheme = components[0] + "//"
             components = [String](components.dropFirst())
         }
-        
-        components[0] = components[0].punycodeDecodedHostname
-        return originalScheme + components.joined(separator: "/")
+ 
+        let hostname = components[0].punycodeDecodedHostname
+        let path = components.dropFirst().map { $0.removingPercentEncoding ?? $0 }.joined(separator: "/")
+        let hostPathSeparator = !path.isEmpty || s.hasSuffix("/") ? "/" : ""
+        return originalScheme + hostname + hostPathSeparator + path
     }
 
 }

@@ -158,7 +158,7 @@ public class SiteRating {
     }
     
     public func isFor(_ url: URL?) -> Bool {
-        return domain == url?.host
+        return self.url.host == url?.host
     }
 
     private func uniqueMajorTrackerNetworks(trackers: [DetectedTracker: Int]) -> Int {

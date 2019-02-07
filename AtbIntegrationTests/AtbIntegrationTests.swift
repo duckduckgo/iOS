@@ -194,6 +194,45 @@ class AtbIntegrationTests: XCTestCase {
         assertExtiCalledOnce()
     }
     
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated1() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated2() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated3() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated4() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated5() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated6() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated7() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated8() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated9() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated10() {
+        testWhenUserSearchesWithOldAtbThenAtbIsUpdated()
+    }
+    
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         
         search(forText: "http://localhost:8080?q=beagles")

@@ -21,6 +21,16 @@ import XCTest
 
 class StringExtensionTests: XCTestCase {
 
+    func testWhenPunycodeUrlIsCalledWithValidUrlsThenUrlIsReturned() {
+        XCTAssertEqual("xn--ls8h.la", "💩.la".punycodedUrl?.absoluteString)
+        XCTAssertEqual("82.xn--b1aew.xn--p1ai", "82.мвд.рф".punycodedUrl?.absoluteString)
+
+        XCTAssertEqual("http://xn--ls8h.la", "http://💩.la".punycodedUrl?.absoluteString)
+        XCTAssertEqual("https://xn--ls8h.la", "https://💩.la".punycodedUrl?.absoluteString)
+        XCTAssertEqual("https://xn--ls8h.la/path/to/resource", "https://💩.la/path/to/resource".punycodedUrl?.absoluteString)
+        XCTAssertEqual("https://xn--ls8h.la/path/to/resource?query=true", "https://💩.la/path/to/resource?query=true".punycodedUrl?.absoluteString)
+    }
+    
     func testWhenDropPrefixIsCalledWithoutMatchingPrefixThenStringIsUnchanged() {
         XCTAssertEqual("subdomain.example.com", "subdomain.example.com".dropPrefix(prefix: "www."))
     }

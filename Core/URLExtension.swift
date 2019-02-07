@@ -21,11 +21,11 @@ import Foundation
 
 extension URL {
 
-    enum URLProtocol: String {
+    public enum URLProtocol: String {
         case http
         case https
 
-        var scheme: String {
+        public var scheme: String {
             return "\(rawValue)://"
         }
     }
@@ -141,7 +141,7 @@ extension URL {
         }
 
         // from https://stackoverflow.com/a/25717506/73479
-        let hostNameRegex = "^(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,63})$"
+        let hostNameRegex = "^(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z0-9-]{2,63})$"
         return host.matches(pattern: hostNameRegex)
     }
 

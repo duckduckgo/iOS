@@ -19,3 +19,5 @@ github "duckduckgo/swifter" == 1.4.3
 
 github "duckduckgo/lottie-ios" "tags/2.5.0"
 
+github "duckduckgo/PunycodeSwift" "tags/1.0.1"
+

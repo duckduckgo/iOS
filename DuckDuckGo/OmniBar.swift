@@ -169,7 +169,13 @@ class OmniBar: UIView {
             return
         }
         resignFirstResponder()
-        omniDelegate?.onOmniQuerySubmitted(query)
+        
+        if let url = query.punycodedUrl {
+            omniDelegate?.onOmniQuerySubmitted(url.absoluteString)
+        } else {
+            omniDelegate?.onOmniQuerySubmitted(query)
+        }
+        
     }
 
     @IBAction func onClearButtonPressed(_ sender: Any) {

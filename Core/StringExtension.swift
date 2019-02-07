@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Punycode
 
 extension String {
 
@@ -47,6 +48,44 @@ extension String {
             return String(dropFirst(prefix.count))
         }
         return self
+    }
+
+    /// URL and URLComponents can't cope with emojis and international characters
+    public var punycodedUrl: URL? {
+        if contains(" ") {
+            return nil
+        }
+        
+        var originalScheme = ""
+        var s = self
+        
+        if hasPrefix(URL.URLProtocol.http.scheme) {
+            originalScheme = URL.URLProtocol.http.scheme
+        } else if hasPrefix(URL.URLProtocol.https.scheme) {
+            originalScheme = URL.URLProtocol.https.scheme
+        } else if !contains(".") {
+            // could be a local domain but user needs to use the protocol to specify that
+            return nil
+        } else {
+            s = URL.URLProtocol.https.scheme + s
+        }
+        
+        var urlAndQuery = s.split(separator: "?")
+        let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
+        var componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
+        componentsWithoutQuery[0] = componentsWithoutQuery[0].punycodedHostname
+        return URL(string: originalScheme + componentsWithoutQuery.joined(separator: "/") + query)
+    }
+    
+    public var punycodedHostname: String {
+        return self.split(separator: ".").map { String($0) }.map {
+//            if let encoded = $0.punycodeEncoded {
+//                return "xn--" + encoded
+//            } else {
+//                return $0
+//            }
+                $0.idnaEncoded ?? $0
+            }.joined(separator: ".")
     }
 
 }

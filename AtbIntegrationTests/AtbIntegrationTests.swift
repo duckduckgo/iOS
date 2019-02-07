@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import Swifter
 
 class AtbIntegrationTests: XCTestCase {
 

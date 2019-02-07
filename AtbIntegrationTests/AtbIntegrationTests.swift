@@ -293,8 +293,14 @@ class AtbIntegrationTests: XCTestCase {
         
         let searchentrySearchField = app.searchFields["searchEntry"]
         searchentrySearchField.tap()
-        searchentrySearchField.typeText("\(text)\r")
-        Snapshot.waitForLoadingIndicatorToDisappear(within: 5.0)
+        
+        let keyboard = app.keyboards.element
+        if keyboard.waitForExistence(timeout: 2) {
+            searchentrySearchField.typeText("\(text)\r")
+            Snapshot.waitForLoadingIndicatorToDisappear(within: 5.0)
+        } else {
+            XCTFail("No keyboard present after tapping search field")
+        }
     }
 
     private func addRequestHandlers() {

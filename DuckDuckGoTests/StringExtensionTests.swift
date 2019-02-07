@@ -21,14 +21,24 @@ import XCTest
 
 class StringExtensionTests: XCTestCase {
 
+    func testWhenPunycodeUrlIsCalledOnQueryThenUrlIsNotReturned() {
+        XCTAssertNil(" ".punycodedUrl?.absoluteString)
+    }
+
+    func testWhenPunycodeUrlIsCalledOnLocalHostnameThenUrlIsNotReturned() {
+        XCTAssertNil("💩".punycodedUrl?.absoluteString)
+    }
+    
     func testWhenPunycodeUrlIsCalledWithValidUrlsThenUrlIsReturned() {
         XCTAssertEqual("xn--ls8h.la", "💩.la".punycodedUrl?.absoluteString)
+        XCTAssertEqual("xn--ls8h.la/", "💩.la/".punycodedUrl?.absoluteString)
         XCTAssertEqual("82.xn--b1aew.xn--p1ai", "82.мвд.рф".punycodedUrl?.absoluteString)
-
         XCTAssertEqual("http://xn--ls8h.la", "http://💩.la".punycodedUrl?.absoluteString)
         XCTAssertEqual("https://xn--ls8h.la", "https://💩.la".punycodedUrl?.absoluteString)
+        XCTAssertEqual("https://xn--ls8h.la/", "https://💩.la/".punycodedUrl?.absoluteString)
         XCTAssertEqual("https://xn--ls8h.la/path/to/resource", "https://💩.la/path/to/resource".punycodedUrl?.absoluteString)
         XCTAssertEqual("https://xn--ls8h.la/path/to/resource?query=true", "https://💩.la/path/to/resource?query=true".punycodedUrl?.absoluteString)
+        XCTAssertEqual("https://xn--ls8h.la/%F0%9F%92%A9", "https://💩.la/💩".punycodedUrl?.absoluteString)
     }
     
     func testWhenDropPrefixIsCalledWithoutMatchingPrefixThenStringIsUnchanged() {

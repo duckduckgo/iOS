@@ -50,7 +50,8 @@ extension String {
         return self
     }
 
-    /// URL and URLComponents can't cope with emojis and international characters
+    /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to
+    ///  retain the input as much as possible.
     public var punycodedUrl: URL? {
         if contains(" ") {
             return nil
@@ -70,11 +71,18 @@ extension String {
             s = URL.URLProtocol.https.scheme + s
         }
         
-        var urlAndQuery = s.split(separator: "?")
+        let urlAndQuery = s.split(separator: "?")
         let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
-        var componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
-        componentsWithoutQuery[0] = componentsWithoutQuery[0].punycodeEncodedHostname
-        return URL(string: originalScheme + componentsWithoutQuery.joined(separator: "/") + query)
+        let componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
+        let host = componentsWithoutQuery[0].punycodeEncodedHostname
+        let encodedPath = componentsWithoutQuery
+            .dropFirst()
+            .map { $0.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed) ?? $0 }
+            .joined(separator: "/")
+        
+        let hostSeparator = !encodedPath.isEmpty || hasSuffix("/") ? "/" : ""
+        let url = originalScheme + host + hostSeparator + encodedPath + query
+        return URL(string: url)
     }
     
     public var punycodeEncodedHostname: String {

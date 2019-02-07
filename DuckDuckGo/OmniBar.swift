@@ -156,7 +156,7 @@ class OmniBar: UIView {
         if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
         } else {
-            textField.text = url.absoluteString
+            textField.text = url.punycodeDecodedAbsoluteString
         }
     }
 

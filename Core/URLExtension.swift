@@ -150,5 +150,19 @@ extension URL {
         let ipRegex = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
         return host.matches(pattern: ipRegex)
     }
+    
+    public var punycodeDecodedAbsoluteString: String {
+        let s = absoluteString
+        var components = s.split(separator: "/").map { String($0) }
+        var originalScheme = ""
+        
+        if self.scheme != nil {
+            originalScheme = components[0] + "//"
+            components = [String](components.dropFirst())
+        }
+        
+        components[0] = components[0].punycodeDecodedHostname
+        return originalScheme + components.joined(separator: "/")
+    }
 
 }

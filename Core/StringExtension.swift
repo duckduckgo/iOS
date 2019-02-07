@@ -73,19 +73,22 @@ extension String {
         var urlAndQuery = s.split(separator: "?")
         let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
         var componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
-        componentsWithoutQuery[0] = componentsWithoutQuery[0].punycodedHostname
+        componentsWithoutQuery[0] = componentsWithoutQuery[0].punycodeEncodedHostname
         return URL(string: originalScheme + componentsWithoutQuery.joined(separator: "/") + query)
     }
     
-    public var punycodedHostname: String {
-        return self.split(separator: ".").map { String($0) }.map {
-//            if let encoded = $0.punycodeEncoded {
-//                return "xn--" + encoded
-//            } else {
-//                return $0
-//            }
-                $0.idnaEncoded ?? $0
-            }.joined(separator: ".")
+    public var punycodeEncodedHostname: String {
+        return self.split(separator: ".")
+            .map { String($0) }
+            .map { $0.idnaEncoded ?? $0 }
+            .joined(separator: ".")
+    }
+
+    public var punycodeDecodedHostname: String {
+        return self.split(separator: ".")
+            .map { String($0) }
+            .map { $0.idnaDecoded ?? $0 }
+            .joined(separator: ".")
     }
 
 }

@@ -55,7 +55,7 @@ private class ValidatingAlert: UIAlertController {
             self.titleField = textField
         }
         addTextField { textField in
-            textField.text = link?.url.absoluteString
+            textField.text = link?.url.punycodeDecodedAbsoluteString
             textField.placeholder = UserText.bookmarkAddressPlaceholder
             textField.keyboardAppearance = keyboardAppearance
             self.urlField = textField

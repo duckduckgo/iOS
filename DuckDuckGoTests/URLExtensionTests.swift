@@ -21,6 +21,12 @@ import XCTest
 
 class URLExtensionTests: XCTestCase {
 
+    func testWhenContainsPunycodeThenPunyDecodedAbsoluteStringReturnsEmoji() {
+        XCTAssertEqual("💩.la", URL(string: "xn--ls8h.la")?.punycodeDecodedAbsoluteString)
+        XCTAssertEqual("https://💩.la", URL(string: "https://xn--ls8h.la")?.punycodeDecodedAbsoluteString)
+        XCTAssertEqual("http://💩.la", URL(string: "http://xn--ls8h.la")?.punycodeDecodedAbsoluteString)
+    }
+    
     func testWhenHostnameHasMultiplePunycodedPartsThenItIsConsideredValid() {
         XCTAssertTrue(URL.isValidHostname("82.xn--b1aew.xn--p1ai"))
     }

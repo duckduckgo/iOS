@@ -80,7 +80,7 @@ private class ValidatingAlert: UIAlertController {
                 urlString = "http://\(urlString)"
             }
             
-            guard let url = URL(string: urlString) else { return }
+            guard let url = urlString.punycodedUrl else { return }
             
             completion(Link(title: title, url: url))
         }

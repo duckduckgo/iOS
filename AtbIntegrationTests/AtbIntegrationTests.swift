@@ -88,6 +88,96 @@ class AtbIntegrationTests: XCTestCase {
         assertExtiCalledOnce()
     }
     
+    func testWhenSearchPerformedThenAtbIsAddedToRequest1() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest2() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest3() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest4() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest5() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest6() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest7() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest8() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest9() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
+    func testWhenSearchPerformedThenAtbIsAddedToRequest10() throws {
+        
+        search(forText: "oranges")
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        
+        assertExtiCalledOnce()
+    }
+    
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
         atbToSet = Constants.retentionAtb
 

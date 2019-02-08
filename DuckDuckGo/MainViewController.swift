@@ -738,13 +738,19 @@ extension MainViewController {
     }
     
     @objc func keyboardFind() {
-        omniBar.becomeFirstResponder()
+        if let controller = homeController {
+            controller.launchNewSearch()
+        } else {
+            omniBar.becomeFirstResponder()
+        }
     }
     
     @objc func keyboardEscape() {
         
         if let controller = autocompleteController {
             controller.keyboardEscape()
+        } else if let controller = homeController {
+            controller.omniBarCancelPressed()
         } else {
             omniBar.resignFirstResponder()
         }
@@ -761,6 +767,8 @@ extension MainViewController {
     @objc func keyboardNewTab() {
         if let tab = currentTab {
             tabDidRequestNewTab(tab)
+        } else {
+            keyboardFind()
         }
     }
     

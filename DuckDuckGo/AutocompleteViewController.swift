@@ -211,30 +211,30 @@ extension AutocompleteViewController {
  
     func keyboardMoveSelectionDown() {
         guard !suggestions.isEmpty else { return }
-        selectedItem = (selectedItem + 1 >= suggestions.count) ? 0 : selectedItem + 1
-        
-        if selectedItem >= maxItems {
-            selectedItem = 0
-        }
-        
+        selectedItem = (selectedItem + 1 >= itemCount()) ? 0 : selectedItem + 1
         delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
         tableView.reloadData()
     }
 
     func keyboardMoveSelectionUp() {
         guard !suggestions.isEmpty else { return }
-        selectedItem = (selectedItem - 1 < 0) ? suggestions.count - 1 : selectedItem - 1
-
-        if selectedItem >= maxItems {
-            selectedItem = maxItems - 1
-        }
-
+        selectedItem = (selectedItem - 1 < 0) ? itemCount() - 1 : selectedItem - 1
         delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
         tableView.reloadData()
     }
     
     func keyboardEscape() {
         delegate?.autocompleteWasDismissed()
+    }
+    
+    private func itemCount() -> Int {
+        if suggestions.isEmpty {
+            return minItems
+        }
+        if suggestions.count > maxItems {
+            return maxItems
+        }
+        return 0
     }
 
 }

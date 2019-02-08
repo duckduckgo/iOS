@@ -720,7 +720,8 @@ extension MainViewController {
             UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab)),
             UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab)),
             UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
-            UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab))
+            UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab)),
+            UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs))
         ]
     }
     
@@ -750,6 +751,10 @@ extension MainViewController {
         guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
         let targetTabIndex = index - 1 < 0 ? tabManager.model.count - 1 : index - 1
         select(tabAt: targetTabIndex)
+    }
+    
+    @objc func keyboardShowAllTabs() {
+        showTabSwitcher()
     }
     
 }

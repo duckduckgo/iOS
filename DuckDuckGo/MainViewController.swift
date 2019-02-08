@@ -328,6 +328,7 @@ class MainViewController: UIViewController {
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {
+            allowContentUnderflow = false
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
             addChild(controller)
@@ -749,6 +750,7 @@ extension MainViewController {
         
         if let controller = autocompleteController {
             controller.keyboardEscape()
+            homeController?.collectionView.omniBarCancelPressed()
         } else if let controller = homeController {
             controller.omniBarCancelPressed()
         } else {

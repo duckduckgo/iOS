@@ -61,4 +61,8 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.chromeDelegate?.omniBar.resignFirstResponder()
     }
     
+    func launchNewSearch() {
+        controller.chromeDelegate?.omniBar.becomeFirstResponder()
+    }
+    
 }

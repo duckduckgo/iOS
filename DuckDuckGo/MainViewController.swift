@@ -721,7 +721,11 @@ extension MainViewController {
             UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab)),
             UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
             UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab)),
-            UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs))
+            UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs)),
+            UIKeyCommand(input: "]", modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
+            UIKeyCommand(input: "[", modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
+            UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
+            UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
         ]
     }
     
@@ -755,6 +759,14 @@ extension MainViewController {
     
     @objc func keyboardShowAllTabs() {
         showTabSwitcher()
+    }
+ 
+    @objc func keyboardBrowserForward() {
+        currentTab?.goForward()
+    }
+    
+    @objc func keyboardBrowserBack() {
+        currentTab?.goBack()
     }
     
 }

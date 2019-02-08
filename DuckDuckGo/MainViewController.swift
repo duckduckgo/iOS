@@ -732,8 +732,8 @@ extension MainViewController {
             UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
             UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
             UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
+            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardArrowUp)),
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardArrowDown)),
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
     }
@@ -758,12 +758,20 @@ extension MainViewController {
         }
     }
     
-    @objc func keyboardMoveSelectionDown() {
-        autocompleteController?.keyboardMoveSelectionDown()
+    @objc func keyboardArrowDown() {
+        if let controller = autocompleteController {
+            controller.keyboardMoveSelectionDown()
+        } else {
+            currentTab?.webView.becomeFirstResponder()
+        }
     }
     
-    @objc func keyboardMoveSelectionUp() {
-        autocompleteController?.keyboardMoveSelectionUp()
+    @objc func keyboardArrowUp() {
+        if let controller = autocompleteController {
+            controller.keyboardMoveSelectionUp()
+        } else {
+            currentTab?.webView.becomeFirstResponder()
+        }
     }
 
     @objc func keyboardNewTab() {

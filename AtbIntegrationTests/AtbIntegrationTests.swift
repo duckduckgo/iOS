@@ -156,14 +156,22 @@ class AtbIntegrationTests: XCTestCase {
     
     private func search(forText text: String) {
         if !app.searchFields["searchEntry"].exists {
-            app.buttons["No Thanks"].tap()
+            let noThanksButton = app.buttons["No Thanks"]
+            _ = noThanksButton.waitForExistence(timeout: 2)
+            noThanksButton.tap()
             app.collectionViews.otherElements["activateSearch"].tap()
         }
         
         let searchentrySearchField = app.searchFields["searchEntry"]
         searchentrySearchField.tap()
-        searchentrySearchField.typeText("\(text)\r")
-        Snapshot.waitForLoadingIndicatorToDisappear(within: 5.0)
+        
+        let keyboard = app.keyboards.element
+        if keyboard.waitForExistence(timeout: 2) {
+            searchentrySearchField.typeText("\(text)\r")
+            Snapshot.waitForLoadingIndicatorToDisappear(within: 5.0)
+        } else {
+            XCTFail("No keyboard present after tapping search field")
+        }
     }
 
     private func addRequestHandlers() {
@@ -189,6 +197,10 @@ class AtbIntegrationTests: XCTestCase {
     
     private func skipOnboarding() {
         let continueButton = app.buttons["Continue"]
+        guard continueButton.waitForExistence(timeout: 2) else {
+            fatalError("Cound not skip onboarding")
+        }
+        
         continueButton.tap()
         continueButton.tap()
     }

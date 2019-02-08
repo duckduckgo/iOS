@@ -35,6 +35,8 @@ class AutocompleteViewController: UIViewController {
     private var hidesBarsOnSwipeDefault = true
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var selectedItem = -1
 
     static func loadFromStoryboard() -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
@@ -151,8 +153,10 @@ extension AutocompleteViewController: UITableViewDataSource {
         
         let currentTheme = ThemeManager.shared.currentTheme
         
-        cell.backgroundColor = currentTheme.tableCellBackgroundColor
-        cell.contentView.backgroundColor = currentTheme.tableCellBackgroundColor
+        let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : currentTheme.tableCellBackgroundColor
+        
+        cell.backgroundColor = color
+        cell.contentView.backgroundColor = color
         cell.tintColor = currentTheme.tableCellTintColor
         cell.label?.textColor = currentTheme.tableCellTintColor
         return cell
@@ -201,4 +205,36 @@ extension AutocompleteViewController: Themable {
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.reloadData()
     }
+}
+
+extension AutocompleteViewController {
+ 
+    func keyboardMoveSelectionDown() {
+        guard !suggestions.isEmpty else { return }
+        selectedItem = (selectedItem + 1 >= suggestions.count) ? 0 : selectedItem + 1
+        
+        if selectedItem >= maxItems {
+            selectedItem = 0
+        }
+        
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
+        tableView.reloadData()
+    }
+
+    func keyboardMoveSelectionUp() {
+        guard !suggestions.isEmpty else { return }
+        selectedItem = (selectedItem - 1 < 0) ? suggestions.count - 1 : selectedItem - 1
+
+        if selectedItem >= maxItems {
+            selectedItem = maxItems - 1
+        }
+
+        delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestions[selectedItem].suggestion)
+        tableView.reloadData()
+    }
+    
+    func keyboardEscape() {
+        delegate?.autocompleteWasDismissed()
+    }
+
 }

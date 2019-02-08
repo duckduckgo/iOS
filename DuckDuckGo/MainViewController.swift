@@ -724,11 +724,31 @@ extension MainViewController {
             UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs)),
             UIKeyCommand(input: "]", modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
             UIKeyCommand(input: "[", modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
+            UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
             UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
             UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
+            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
+            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
     }
     
+    @objc func keyboardFind() {
+        omniBar.becomeFirstResponder()
+    }
+    
+    @objc func keyboardEscape() {
+        autocompleteController?.keyboardEscape()
+    }
+    
+    @objc func keyboardMoveSelectionDown() {
+        autocompleteController?.keyboardMoveSelectionDown()
+    }
+    
+    @objc func keyboardMoveSelectionUp() {
+        autocompleteController?.keyboardMoveSelectionUp()
+    }
+
     @objc func keyboardNewTab() {
         if let tab = currentTab {
             tabDidRequestNewTab(tab)

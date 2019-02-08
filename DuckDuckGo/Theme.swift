@@ -44,6 +44,7 @@ protocol Theme {
     var searchBarTextColor: UIColor { get }
     
     var tableCellBackgroundColor: UIColor { get }
+    var tableCellSelectedColor: UIColor { get }
     var tableCellTintColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
     var tableHeaderTextColor: UIColor { get }

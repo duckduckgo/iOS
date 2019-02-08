@@ -718,7 +718,9 @@ extension MainViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab)),
-            UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab))
+            UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab)),
+            UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
+            UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab))
         ]
     }
     
@@ -729,12 +731,25 @@ extension MainViewController {
     }
     
     @objc func keyboardCloseTab() {
-        if let tab = currentTab {
-            closeTab(tab.tabModel)
-            if tabManager.count == 0 {
-                launchNewSearch()
-            }
+        guard let tab = currentTab else { return }
+        closeTab(tab.tabModel)
+        if tabManager.count == 0 {
+            launchNewSearch()
         }
+    }
+    
+    @objc func keyboardNextTab() {
+        guard let tab = currentTab else { return }
+        guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
+        let targetTabIndex = index + 1 >= tabManager.model.count ? 0 : index + 1
+        select(tabAt: targetTabIndex)
+    }
+    
+    @objc func keyboardPreviousTab() {
+        guard let tab = currentTab else { return }
+        guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
+        let targetTabIndex = index - 1 < 0 ? tabManager.model.count - 1 : index - 1
+        select(tabAt: targetTabIndex)
     }
     
 }

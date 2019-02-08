@@ -29,10 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var testing = false
     private var appIsLaunching = false
-    var authWindow: UIWindow?
+    var overlayWindow: UIWindow?
     var window: UIWindow?
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+    private var autoClear: AutoClear?
 
     // MARK: lifecycle
 
@@ -61,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
+            autoClear = AutoClear(worker: mainViewController!)
+            autoClear?.applicationDidLaunch()
             AppConfigurationFetch().start(completion: nil)
             displayAuthenticationWindow()
             beginAuthentication()
@@ -70,10 +73,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         beginAuthentication()
+        autoClear?.applicationWillEnterForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        displayAuthenticationWindow()
+        displayOverlay()
+        autoClear?.applicationDidEnterBackground()
     }
 
     func application(_ application: UIApplication,
@@ -112,26 +117,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)
     }
+    
+    private func displayOverlay() {
+        displayAuthenticationWindow()
+        displayBlankSnapshotWindow()
+    }
 
     private func displayAuthenticationWindow() {
         let privacyStore = PrivacyUserDefaults()
-        guard authWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }
-        authWindow = UIWindow(frame: frame)
-        authWindow?.rootViewController = AuthenticationViewController.loadFromStoryboard()
-        authWindow?.makeKeyAndVisible()
+        guard overlayWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }
+        overlayWindow = UIWindow(frame: frame)
+        overlayWindow?.rootViewController = AuthenticationViewController.loadFromStoryboard()
+        overlayWindow?.makeKeyAndVisible()
+        window?.isHidden = true
+    }
+    
+    private func displayBlankSnapshotWindow() {
+        guard overlayWindow == nil, let frame = window?.frame else { return }
+        guard autoClear?.isClearingEnabled ?? false else { return }
+        
+        overlayWindow = UIWindow(frame: frame)
+        overlayWindow?.rootViewController = BlankSnapshotViewController.loadFromStoryboard()
+        overlayWindow?.makeKeyAndVisible()
         window?.isHidden = true
     }
 
     private func beginAuthentication() {
-        guard let controller = authWindow?.rootViewController as? AuthenticationViewController else { return }
+        guard let controller = overlayWindow?.rootViewController as? AuthenticationViewController else {
+            removeOverlay()
+            return
+        }
         controller.beginAuthentication { [weak self] in
-            self?.completeAuthentication()
+            self?.removeOverlay()
         }
     }
 
-    private func completeAuthentication() {
+    private func removeOverlay() {
         window?.makeKeyAndVisible()
-        authWindow = nil
+        overlayWindow = nil
     }
 
     private func startOnboardingFlowIfNotSeenBefore() {

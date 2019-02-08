@@ -719,6 +719,10 @@ extension MainViewController {
         return [
             UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab)),
             UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab)),
+            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: .control, action: #selector(keyboardNextTab)),
+            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [.control, .shift], action: #selector(keyboardPreviousTab)),
+            UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
+            UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab)),
             UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
             UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab)),
             UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs)),
@@ -738,7 +742,12 @@ extension MainViewController {
     }
     
     @objc func keyboardEscape() {
-        autocompleteController?.keyboardEscape()
+        
+        if let controller = autocompleteController {
+            controller.keyboardEscape()
+        } else {
+            omniBar.resignFirstResponder()
+        }
     }
     
     @objc func keyboardMoveSelectionDown() {

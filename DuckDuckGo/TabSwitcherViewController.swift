@@ -198,15 +198,23 @@ extension TabSwitcherViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             
+            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardCloseWindow)),
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow)),
             UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown))
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
+            UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab))
 
         ]
     }
     
     @objc func keyboardCloseWindow() {
         markCurrentAsViewedAndDismiss()
+    }
+    
+    @objc func keyboardRemoveTab() {
+        guard let current = tabsModel.currentIndex else { return }
+        let tab = tabsModel.get(tabAt: current)
+        deleteTab(tab: tab)
     }
     
     @objc func keyboardMoveSelectionUp() {

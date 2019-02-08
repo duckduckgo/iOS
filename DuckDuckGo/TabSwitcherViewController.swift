@@ -78,6 +78,10 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
+        markCurrentAsViewedAndDismiss()
+    }
+    
+    private func markCurrentAsViewedAndDismiss() {
         if let current = tabsModel.currentIndex {
             tabsModel.get(tabAt: current).viewed = true
             tabsModel.save()
@@ -187,4 +191,41 @@ extension TabSwitcherViewController: Themable {
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
     }
+}
+
+extension TabSwitcherViewController {
+    
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            
+            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow)),
+            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown))
+
+        ]
+    }
+    
+    @objc func keyboardCloseWindow() {
+        markCurrentAsViewedAndDismiss()
+    }
+    
+    @objc func keyboardMoveSelectionUp() {
+        guard let current = tabsModel.currentIndex else { return }
+        let targetIndex = current - 1 < 0 ? tabsModel.count - 1 : current - 1
+        softSelect(tabAtIndex: targetIndex)
+    }
+    
+    @objc func keyboardMoveSelectionDown() {
+        guard let current = tabsModel.currentIndex else { return }
+        let targetIndex = current + 1 >= tabsModel.count ? 0 : current + 1
+        softSelect(tabAtIndex: targetIndex)
+    }
+
+    private func softSelect(tabAtIndex index: Int) {
+        tabsModel.select(tabAt: index)
+        let tab = tabsModel.get(tabAt: index)
+        delegate.tabSwitcher(self, didSelectTab: tab)
+        collectionView.reloadData()
+    }
+    
 }

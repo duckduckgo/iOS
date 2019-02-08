@@ -865,19 +865,4 @@ extension TabViewController: UIGestureRecognizerDelegate {
         return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
     }
 }
-
-extension TabViewController {
-    
-    override var keyCommands: [UIKeyCommand]? {
-        return [
-            UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab))
-        ]
-    }
-    
-    @objc func keyboardNewTab() {
-        delegate?.tabDidRequestNewTab(self)
-    }
-    
-}
-
 // swiftlint:enable file_length

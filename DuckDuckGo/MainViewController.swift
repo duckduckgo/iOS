@@ -654,6 +654,10 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
+        closeTab(tab)
+    }
+    
+    private func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         remove(tabAt: index)
     }
@@ -708,4 +712,31 @@ extension MainViewController: Themable {
     }
     
 }
+
+extension MainViewController {
+    
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab)),
+            UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab))
+        ]
+    }
+    
+    @objc func keyboardNewTab() {
+        if let tab = currentTab {
+            tabDidRequestNewTab(tab)
+        }
+    }
+    
+    @objc func keyboardCloseTab() {
+        if let tab = currentTab {
+            closeTab(tab.tabModel)
+            if tabManager.count == 0 {
+                launchNewSearch()
+            }
+        }
+    }
+    
+}
+
 // swiftlint:enable file_length

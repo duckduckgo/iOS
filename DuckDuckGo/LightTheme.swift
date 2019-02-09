@@ -40,6 +40,7 @@ struct LightTheme: Theme {
     var tableCellSelectedColor = UIColor.mercury
     var tableCellTintColor = UIColor.darkGreyish
     var tableCellSeparatorColor = UIColor.mercury
+    var tableCellAccessoryTextColor = UIColor.greyish3
     var tableHeaderTextColor = UIColor.greyish3
     
     var toggleSwitchColor = UIColor.cornflowerBlue

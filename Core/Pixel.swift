@@ -48,6 +48,16 @@ public enum PixelName: String {
     case settingsOpened = "ms"
     case settingsThemeToggledLight = "ms_tl"
     case settingsThemeToggledDark = "ms_td"
+    
+    case autoClearSettingsShown = "mac_s"
+    case autoClearActionOptionNone = "macwhat_n"
+    case autoClearActionOptionTabs = "macwhat_t"
+    case autoClearActionOptionTabsAndData = "macwhat_td"
+    case autoClearTimingOptionExit = "macwhen_x"
+    case autoClearTimingOptionExitOr5Mins = "macwhen_5"
+    case autoClearTimingOptionExitOr15Mins = "macwhen_15"
+    case autoClearTimingOptionExitOr30Mins = "macwhen_30"
+    case autoClearTimingOptionExitOr60Mins = "macwhen_60"
 
     case httpsUpgradeSiteError = "ehd"
     case httpsUpgradeSiteSummary = "ehs"

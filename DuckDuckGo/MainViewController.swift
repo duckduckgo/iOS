@@ -280,19 +280,6 @@ class MainViewController: UIViewController {
         }
     }
 
-    fileprivate func forgetAll(completion: @escaping () -> Void) {
-        Pixel.fire(pixel: .forgetAllExecuted)
-        ServerTrustCache.shared.clear()
-        WebCacheManager.clear()
-        FireAnimation.animate {
-            self.tabManager.removeAll()
-            self.attachHomeScreen()
-            completion()
-        }
-        let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
-    }
-
     fileprivate func refreshControls() {
         refreshTabIcon()
         refreshOmniBar()
@@ -688,6 +675,32 @@ extension MainViewController: TabSwitcherButtonDelegate {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 
+}
+
+extension MainViewController: AutoClearWorker {
+    
+    func forgetTabs() {
+        tabManager.removeAll()
+        showBars()
+        attachHomeScreen()
+    }
+    
+    func forgetData() {
+        ServerTrustCache.shared.clear()
+        WebCacheManager.clear()
+    }
+    
+    fileprivate func forgetAll(completion: @escaping () -> Void) {
+        Pixel.fire(pixel: .forgetAllExecuted)
+        forgetData()
+        FireAnimation.animate {
+            self.forgetTabs()
+            completion()
+        }
+        let window = UIApplication.shared.keyWindow
+        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
+    }
+    
 }
 
 extension MainViewController: Themable {

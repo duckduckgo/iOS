@@ -104,8 +104,7 @@ public class DefaultVariantManager: VariantManager {
     }
     
     private func isHomeScreenExperimentAndPad(_ variant: Variant) -> Bool {
-        return (variant.features.contains(.homeScreen) || variant.features.contains(.centeredSearchHomeScreen))
-            && uiIdiom == .pad
+        return ["mk", "ml", "mm", "mn"].contains(variant.name) && uiIdiom == .pad
     }
     
     private func selectVariant() -> Variant? {

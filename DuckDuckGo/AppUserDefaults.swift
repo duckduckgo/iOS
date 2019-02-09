@@ -26,6 +26,9 @@ public class AppUserDefaults: AppSettings {
     private struct Keys {
         static let autocompleteKey = "com.duckduckgo.app.autocompleteDisabledKey"
         static let currentThemeNameKey = "com.duckduckgo.app.currentThemeNameKey"
+        
+        static let autoClearActionKey = "com.duckduckgo.app.autoClearActionKey"
+        static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
     }
 
     private var userDefaults: UserDefaults? {
@@ -60,6 +63,35 @@ public class AppUserDefaults: AppSettings {
         
         set {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentThemeNameKey)
+        }
+        
+    }
+    
+    var autoClearAction: AutoClearSettingsModel.Action {
+        
+        get {
+            let value = userDefaults?.integer(forKey: Keys.autoClearActionKey) ?? 0
+            return AutoClearSettingsModel.Action(rawValue: value)
+        }
+        
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.autoClearActionKey)
+        }
+        
+    }
+    
+    var autoClearTiming: AutoClearSettingsModel.Timing {
+        
+        get {
+            if let rawValue = userDefaults?.integer(forKey: Keys.autoClearTimingKey),
+                let value = AutoClearSettingsModel.Timing(rawValue: rawValue) {
+                return value
+            }
+            return .termination
+        }
+        
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.autoClearTimingKey)
         }
         
     }

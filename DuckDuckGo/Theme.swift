@@ -47,6 +47,7 @@ protocol Theme {
     var tableCellBackgroundColor: UIColor { get }
     var tableCellTintColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
+    var tableCellAccessoryTextColor: UIColor { get }
     var tableHeaderTextColor: UIColor { get }
     
     var toggleSwitchColor: UIColor { get }

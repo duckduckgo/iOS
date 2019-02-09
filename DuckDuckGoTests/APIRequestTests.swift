@@ -129,10 +129,12 @@ class APIRequestTests: XCTestCase {
         
         APIRequest.request(url: url) { (_, error) in
             // Give second request a chance to execute the callback
-            Thread.sleep(forTimeInterval: 0.2)
+            Thread.sleep(forTimeInterval: 0.4)
             XCTAssertNil(error)
             expectFirst.fulfill()
         }
+        
+        Thread.sleep(forTimeInterval: 0.1)
         
         APIRequest.request(url: url) { (_, error) in
             XCTAssertNil(error)

@@ -33,6 +33,31 @@ class SettingsViewControllerTests: XCTestCase {
     override func tearDown() {
         AppDependencyProvider.shared = AppDependencyProvider()
     }
+    
+    func testWhenOpeningSettingsThenAutoClearStatusIsSetBasedOnAppSettings() {
+        let appSettigns = AppUserDefaults()
+        appSettigns.autoClearAction = []
+        
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+            let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            settingsController.viewWillAppear(true)
+            XCTAssertEqual(settingsController.autoClearAccessoryText.text, "Off")
+        } else {
+            assertionFailure("Could not load Setting View Controller")
+        }
+        
+        appSettigns.autoClearAction = .clearData
+        
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+            let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            settingsController.viewWillAppear(true)
+            XCTAssertEqual(settingsController.autoClearAccessoryText.text, "On")
+        } else {
+            assertionFailure("Could not load Setting View Controller")
+        }
+    }
 
     func testWhenOpeningSettingsThenLightThemeToggleIsSetBasedOnAppSettings() {
         let appSettigns = AppUserDefaults()

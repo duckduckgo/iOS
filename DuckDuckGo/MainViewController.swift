@@ -70,6 +70,7 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
+    weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
@@ -109,6 +110,7 @@ class MainViewController: UIViewController {
             controller.transitioningDelegate = blurTransition
             controller.delegate = self
             controller.tabsModel = tabManager.model
+            tabSwitcherController = controller
             return
         }
 
@@ -754,6 +756,8 @@ extension MainViewController {
     }
     
     @objc func keyboardFind() {
+        guard tabSwitcherController == nil else { return }
+        
         if let controller = homeController {
             controller.launchNewSearch()
         } else {
@@ -762,7 +766,8 @@ extension MainViewController {
     }
     
     @objc func keyboardEscape() {
-        
+        guard tabSwitcherController == nil else { return }
+
         if let controller = autocompleteController {
             controller.keyboardEscape()
             homeController?.collectionView.omniBarCancelPressed()
@@ -774,6 +779,8 @@ extension MainViewController {
     }
     
     @objc func keyboardArrowDown() {
+        guard tabSwitcherController == nil else { return }
+        
         if let controller = autocompleteController {
             controller.keyboardMoveSelectionDown()
         } else {
@@ -782,6 +789,8 @@ extension MainViewController {
     }
     
     @objc func keyboardArrowUp() {
+        guard tabSwitcherController == nil else { return }
+        
         if let controller = autocompleteController {
             controller.keyboardMoveSelectionUp()
         } else {
@@ -790,6 +799,8 @@ extension MainViewController {
     }
 
     @objc func keyboardNewTab() {
+        guard tabSwitcherController == nil else { return }
+        
         if currentTab != nil {
             newTab()
         } else {
@@ -798,6 +809,8 @@ extension MainViewController {
     }
     
     @objc func keyboardCloseTab() {
+        guard tabSwitcherController == nil else { return }
+        
         guard let tab = currentTab else { return }
         closeTab(tab.tabModel)
         if tabManager.count == 0 {
@@ -806,6 +819,8 @@ extension MainViewController {
     }
     
     @objc func keyboardNextTab() {
+        guard tabSwitcherController == nil else { return }
+        
         guard let tab = currentTab else { return }
         guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
         let targetTabIndex = index + 1 >= tabManager.model.count ? 0 : index + 1
@@ -814,6 +829,8 @@ extension MainViewController {
     }
     
     @objc func keyboardPreviousTab() {
+        guard tabSwitcherController == nil else { return }
+        
         guard let tab = currentTab else { return }
         guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
         let targetTabIndex = index - 1 < 0 ? tabManager.model.count - 1 : index - 1
@@ -822,15 +839,21 @@ extension MainViewController {
     }
     
     @objc func keyboardShowAllTabs() {
+        guard tabSwitcherController == nil else { return }
+        
         onCancelPressed()
         showTabSwitcher()
     }
  
     @objc func keyboardBrowserForward() {
+        guard tabSwitcherController == nil else { return }
+        
         currentTab?.goForward()
     }
     
     @objc func keyboardBrowserBack() {
+        guard tabSwitcherController == nil else { return }
+        
         currentTab?.goBack()
     }
     

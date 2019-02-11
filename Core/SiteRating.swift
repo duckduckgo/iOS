@@ -26,7 +26,7 @@ public class SiteRating {
     }
 
     public var domain: String? {
-        return url.host?.punycodeDecodedHostname
+        return url.host
     }
     
     public var scores: Grade.Scores {

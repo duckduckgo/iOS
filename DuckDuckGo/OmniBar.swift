@@ -161,7 +161,7 @@ class OmniBar: UIView {
     }
 
     private func demphasisePath(forUrl url: URL) -> NSAttributedString {
-        let s = url.punycodeDecodedAbsoluteString
+        let s = url.absoluteString
         let parts = s.split(separator: "/")
         let offset = (parts[0] + "//" + parts[1]).count
         

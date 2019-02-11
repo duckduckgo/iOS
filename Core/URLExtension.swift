@@ -151,20 +151,4 @@ extension URL {
         return host.matches(pattern: ipRegex)
     }
     
-    public var punycodeDecodedAbsoluteString: String {
-        let s = absoluteString
-        var components = s.split(separator: "/").map { String($0) }
-        var originalScheme = ""
-        
-        if self.scheme != nil {
-            originalScheme = components[0] + "//"
-            components = [String](components.dropFirst())
-        }
- 
-        let hostname = components[0].punycodeDecodedHostname
-        let path = components.dropFirst().map { $0.removingPercentEncoding ?? $0 }.joined(separator: "/")
-        let hostPathSeparator = !path.isEmpty || s.hasSuffix("/") ? "/" : ""
-        return originalScheme + hostname + hostPathSeparator + path
-    }
-
 }

@@ -91,12 +91,5 @@ extension String {
             .map { $0.idnaEncoded ?? $0 }
             .joined(separator: ".")
     }
-
-    public var punycodeDecodedHostname: String {
-        return self.split(separator: ".")
-            .map { String($0) }
-            .map { $0.idnaDecoded ?? $0 }
-            .joined(separator: ".")
-    }
-
+    
 }

@@ -818,6 +818,7 @@ extension MainViewController {
     }
     
     @objc func keyboardShowAllTabs() {
+        onCancelPressed()
         showTabSwitcher()
     }
  

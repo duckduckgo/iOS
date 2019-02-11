@@ -218,13 +218,19 @@ extension TabSwitcherViewController {
     }
     
     @objc func keyboardMoveSelectionUp() {
-        guard let current = tabsModel.currentIndex else { return }
+        guard let current = tabsModel.currentIndex else {
+            softSelect(tabAtIndex: tabsModel.count - 1)
+            return
+        }
         let targetIndex = current - 1 < 0 ? tabsModel.count - 1 : current - 1
         softSelect(tabAtIndex: targetIndex)
     }
     
     @objc func keyboardMoveSelectionDown() {
-        guard let current = tabsModel.currentIndex else { return }
+        guard let current = tabsModel.currentIndex else {
+            softSelect(tabAtIndex: 0)
+            return
+        }
         let targetIndex = current + 1 >= tabsModel.count ? 0 : current + 1
         softSelect(tabAtIndex: targetIndex)
     }

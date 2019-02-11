@@ -86,7 +86,7 @@ class TabSwitcherViewController: UIViewController {
         dismiss()
     }
     
-    private func markCurrentAsViewedAndDismiss() {
+    func markCurrentAsViewedAndDismiss() {
         if let current = currentSelection {
             let tab = tabsModel.get(tabAt: current)
             tab.viewed = true
@@ -109,7 +109,7 @@ class TabSwitcherViewController: UIViewController {
         self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
 
-    fileprivate func dismiss() {
+    func dismiss() {
         dismiss(animated: true, completion: nil)
     }
 }
@@ -195,69 +195,3 @@ extension TabSwitcherViewController: Themable {
     }
 }
 
-extension TabSwitcherViewController {
-    
-    override var keyCommands: [UIKeyCommand]? {
-        return [
-            
-            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow)),
-            UIKeyCommand(input: "t", modifierFlags: [ .command ], action: #selector(keyboardNewTab)),
-            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardSelectCurrent)),
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
-            UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab))
-
-        ]
-    }
-    
-    @objc func keyboardNewTab() {
-        delegate?.tabSwitcherDidRequestNewTab(tabSwitcher: self)
-        dismiss()
-    }
-    
-    @objc func keyboardCloseWindow() {
-        dismiss()
-    }
-    
-    @objc func keyboardSelectCurrent() {
-        guard currentSelection != nil else { return }
-        markCurrentAsViewedAndDismiss()
-    }
-    
-    @objc func keyboardRemoveTab() {
-        guard let current = currentSelection else { return }
-        let tab = tabsModel.get(tabAt: current)
-        deleteTab(tab: tab)
-    }
-    
-    @objc func keyboardMoveSelectionUp() {
-        guard let current = currentSelection else {
-            softSelect(tabAtIndex: tabsModel.count - 1)
-            return
-        }
-        let targetIndex = current - 1 < 0 ? tabsModel.count - 1 : current - 1
-        softSelect(tabAtIndex: targetIndex)
-    }
-    
-    @objc func keyboardMoveSelectionDown() {
-        guard let current = currentSelection else {
-            softSelect(tabAtIndex: 0)
-            return
-        }
-        let targetIndex = current + 1 >= tabsModel.count ? 0 : current + 1
-        softSelect(tabAtIndex: targetIndex)
-    }
-
-    private func softSelect(tabAtIndex index: Int) {
-        guard tabsModel.count > 0 else { return }
-        
-        var paths = [IndexPath(row: index, section: 0)]
-        if let oldSelection = currentSelection {
-            paths.append(IndexPath(row: oldSelection, section: 0))
-        }
-        currentSelection = index
-        collectionView.reloadItems(at: paths)
-        collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .top, animated: true)
-    }
-    
-}

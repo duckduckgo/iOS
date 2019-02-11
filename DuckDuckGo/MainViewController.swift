@@ -60,12 +60,12 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate var homeController: HomeViewController?
-    fileprivate var autocompleteController: AutocompleteViewController?
+    var homeController: HomeViewController?
+    var autocompleteController: AutocompleteViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
-    fileprivate var tabManager: TabManager!
+    var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
@@ -75,7 +75,7 @@ class MainViewController: UIViewController {
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
-    fileprivate var currentTab: TabViewController? {
+    var currentTab: TabViewController? {
         return tabManager?.current
     }
 
@@ -247,7 +247,7 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
 
-    fileprivate func select(tabAt index: Int) {
+    func select(tabAt index: Int) {
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
     }
@@ -649,7 +649,7 @@ extension MainViewController: TabSwitcherDelegate {
         closeTab(tab)
     }
     
-    private func closeTab(_ tab: Tab) {
+    func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         remove(tabAt: index)
     }
@@ -727,134 +727,6 @@ extension MainViewController: Themable {
         tabsButton.tintColor = theme.barTintColor
         
         tabManager.decorate(with: theme)
-    }
-    
-}
-
-extension MainViewController {
-    
-    override var keyCommands: [UIKeyCommand]? {
-        return [
-            UIKeyCommand(input: "t", modifierFlags: .command, action: #selector(keyboardNewTab)),
-            UIKeyCommand(input: "w", modifierFlags: .command, action: #selector(keyboardCloseTab)),
-            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: .control, action: #selector(keyboardNextTab)),
-            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [.control, .shift], action: #selector(keyboardPreviousTab)),
-            UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
-            UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab)),
-            UIKeyCommand(input: "]", modifierFlags: [.shift, .command], action: #selector(keyboardNextTab)),
-            UIKeyCommand(input: "[", modifierFlags: [.shift, .command], action: #selector(keyboardPreviousTab)),
-            UIKeyCommand(input: "\\", modifierFlags: [.shift, .control], action: #selector(keyboardShowAllTabs)),
-            UIKeyCommand(input: "]", modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
-            UIKeyCommand(input: "[", modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
-            UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
-            UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
-            UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardArrowUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardArrowDown)),
-            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
-        ]
-    }
-    
-    @objc func keyboardFind() {
-        guard tabSwitcherController == nil else { return }
-        
-        if let controller = homeController {
-            controller.launchNewSearch()
-        } else {
-            omniBar.becomeFirstResponder()
-        }
-    }
-    
-    @objc func keyboardEscape() {
-        guard tabSwitcherController == nil else { return }
-
-        if let controller = autocompleteController {
-            controller.keyboardEscape()
-            homeController?.collectionView.omniBarCancelPressed()
-        } else if let controller = homeController {
-            controller.omniBarCancelPressed()
-        } else {
-            omniBar.resignFirstResponder()
-        }
-    }
-    
-    @objc func keyboardArrowDown() {
-        guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardMoveSelectionDown()
-        } else {
-            currentTab?.webView.becomeFirstResponder()
-        }
-    }
-    
-    @objc func keyboardArrowUp() {
-        guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardMoveSelectionUp()
-        } else {
-            currentTab?.webView.becomeFirstResponder()
-        }
-    }
-
-    @objc func keyboardNewTab() {
-        guard tabSwitcherController == nil else { return }
-        
-        if currentTab != nil {
-            newTab()
-        } else {
-            keyboardFind()
-        }
-    }
-    
-    @objc func keyboardCloseTab() {
-        guard tabSwitcherController == nil else { return }
-        
-        guard let tab = currentTab else { return }
-        closeTab(tab.tabModel)
-        if tabManager.count == 0 {
-            launchNewSearch()
-        }
-    }
-    
-    @objc func keyboardNextTab() {
-        guard tabSwitcherController == nil else { return }
-        
-        guard let tab = currentTab else { return }
-        guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
-        let targetTabIndex = index + 1 >= tabManager.model.count ? 0 : index + 1
-        onCancelPressed()
-        select(tabAt: targetTabIndex)
-    }
-    
-    @objc func keyboardPreviousTab() {
-        guard tabSwitcherController == nil else { return }
-        
-        guard let tab = currentTab else { return }
-        guard let index = tabManager.model.indexOf(tab: tab.tabModel) else { return }
-        let targetTabIndex = index - 1 < 0 ? tabManager.model.count - 1 : index - 1
-        onCancelPressed()
-        select(tabAt: targetTabIndex)
-    }
-    
-    @objc func keyboardShowAllTabs() {
-        guard tabSwitcherController == nil else { return }
-        
-        onCancelPressed()
-        showTabSwitcher()
-    }
- 
-    @objc func keyboardBrowserForward() {
-        guard tabSwitcherController == nil else { return }
-        
-        currentTab?.goForward()
-    }
-    
-    @objc func keyboardBrowserBack() {
-        guard tabSwitcherController == nil else { return }
-        
-        currentTab?.goBack()
     }
     
 }

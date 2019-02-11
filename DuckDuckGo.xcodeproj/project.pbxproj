@@ -128,9 +128,9 @@
 		8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8536A1C9209AF6480050739E /* HomeRowReminderTests.swift */; };
 		85371D242121B9D500920548 /* new_tab.json in Resources */ = {isa = PBXBuildFile; fileRef = 85371D232121B9D400920548 /* new_tab.json */; };
 		85371D262121BA2800920548 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85371D252121BA2800920548 /* Lottie.framework */; };
-		85372447220DD103009D09CD /* UIKeyCommandExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85372446220DD103009D09CD /* UIKeyCommandExtension.swift */; };
 		85372444220C6AD7009D09CD /* Punycode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8537243F220C5BB3009D09CD /* Punycode.framework */; };
 		85372445220CC4C1009D09CD /* Punycode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8537243F220C5BB3009D09CD /* Punycode.framework */; };
+		85372447220DD103009D09CD /* UIKeyCommandExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85372446220DD103009D09CD /* UIKeyCommandExtension.swift */; };
 		85374D3521AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */; };
 		85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */; };
 		85374D3A21AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */; };
@@ -238,6 +238,8 @@
 		85F21DBF2112155E002631A6 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1C81A731F33873800241DE6 /* Alamofire.framework */; };
 		85F21DC021123B03002631A6 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		85F21DC621145DD5002631A6 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBF2061B6110085E862 /* global.swift */; };
+		85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */; };
+		85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */; };
 		85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */; };
 		85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */; };
 		85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6191A20D293AC003904D1 /* HomeRowCTA.swift */; };
@@ -638,8 +640,8 @@
 		8536A1C9209AF6480050739E /* HomeRowReminderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRowReminderTests.swift; sourceTree = "<group>"; };
 		85371D232121B9D400920548 /* new_tab.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab.json; sourceTree = "<group>"; };
 		85371D252121BA2800920548 /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/iOS/Lottie.framework; sourceTree = "<group>"; };
-		85372446220DD103009D09CD /* UIKeyCommandExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommandExtension.swift; sourceTree = "<group>"; };
 		8537243F220C5BB3009D09CD /* Punycode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Punycode.framework; path = Carthage/Build/iOS/Punycode.framework; sourceTree = "<group>"; };
+		85372446220DD103009D09CD /* UIKeyCommandExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommandExtension.swift; sourceTree = "<group>"; };
 		85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksAndFavoritesDataSource.swift; sourceTree = "<group>"; };
 		85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSearchHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredSearchHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
@@ -749,6 +751,8 @@
 		85F21DB1210F5E32002631A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85F21DB721107F46002631A6 /* Swifter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swifter.framework; path = Carthage/Build/iOS/Swifter.framework; sourceTree = "<group>"; };
 		85F21DBD21121147002631A6 /* AtbServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbServerTests.swift; sourceTree = "<group>"; };
+		85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+KeyCommands.swift"; sourceTree = "<group>"; };
+		85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabSwitcherViewController+KeyCommands.swift"; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequest.swift; sourceTree = "<group>"; };
 		85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackerTests.swift; sourceTree = "<group>"; };
 		85F6191A20D293AC003904D1 /* HomeRowCTA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRowCTA.swift; sourceTree = "<group>"; };
@@ -1799,11 +1803,12 @@
 		F1386BA21E6846320062FC3C /* TabSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */,
 				F1ED309B1EDC2EA400651986 /* TabSwitcher.storyboard */,
 				F1617C181E573EA800DEDCAF /* TabSwitcherDelegate.swift */,
 				F1617C121E572E0300DEDCAF /* TabSwitcherViewController.swift */,
+				85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */,
 				F1DE78571E5CAE350058895A /* TabViewCell.swift */,
-				F159BDB41F0C0D0D00B4A01D /* TabsFooter.swift */,
 			);
 			name = TabSwitcher;
 			sourceTree = "<group>";
@@ -2222,11 +2227,12 @@
 		F1C5ECFA1E37B15B00C599A4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				85371D232121B9D400920548 /* new_tab.json */,
-				98EF177C21837E35006750C1 /* new_tab_dark.json */,
+				8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
-				8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */,
+				85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */,
+				98EF177C21837E35006750C1 /* new_tab_dark.json */,
+				85371D232121B9D400920548 /* new_tab.json */,
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
 			);
 			name = Main;
@@ -3044,6 +3050,7 @@
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
+				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
@@ -3080,6 +3087,7 @@
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
+				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85A9C37720DD2DC200073340 /* AddToHomeRowCTAViewController.swift in Sources */,

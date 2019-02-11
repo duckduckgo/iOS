@@ -37,11 +37,13 @@ class TabSwitcherViewController: UIViewController {
     weak var tabsModel: TabsModel!
 
     fileprivate var hasSeenFooter = false
+    
+    var currentSelection: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
-        
+        currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
@@ -82,9 +84,11 @@ class TabSwitcherViewController: UIViewController {
     }
     
     private func markCurrentAsViewedAndDismiss() {
-        if let current = tabsModel.currentIndex {
-            tabsModel.get(tabAt: current).viewed = true
+        if let current = currentSelection {
+            let tab = tabsModel.get(tabAt: current)
+            tab.viewed = true
             tabsModel.save()
+            delegate?.tabSwitcher(self, didSelectTab: tab)
         }
         dismiss()
     }
@@ -123,7 +127,7 @@ extension TabSwitcherViewController: TabViewCellDelegate {
     }
     
     func isCurrent(tab: Tab) -> Bool {
-        return tabsModel.currentIndex == tabsModel.indexOf(tab: tab)
+        return currentSelection == tabsModel.indexOf(tab: tab)
     }
 
 }
@@ -162,13 +166,8 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 extension TabSwitcherViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? TabViewCell else {
-            fatalError("Failed to load cell as TabViewCell")
-        }
-        guard let tab = cell.tab else { return }
-        tab.viewed = true
-        delegate.tabSwitcher(self, didSelectTab: tab)
-        dismiss()
+        currentSelection = indexPath.row
+        markCurrentAsViewedAndDismiss()
     }
 }
 
@@ -198,8 +197,8 @@ extension TabSwitcherViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             
-            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardCloseWindow)),
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow)),
+            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardSelectCurrent)),
             UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
             UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab))
@@ -208,17 +207,22 @@ extension TabSwitcherViewController {
     }
     
     @objc func keyboardCloseWindow() {
+        dismiss()
+    }
+    
+    @objc func keyboardSelectCurrent() {
+        guard currentSelection != nil else { return }
         markCurrentAsViewedAndDismiss()
     }
     
     @objc func keyboardRemoveTab() {
-        guard let current = tabsModel.currentIndex else { return }
+        guard let current = currentSelection else { return }
         let tab = tabsModel.get(tabAt: current)
         deleteTab(tab: tab)
     }
     
     @objc func keyboardMoveSelectionUp() {
-        guard let current = tabsModel.currentIndex else {
+        guard let current = currentSelection else {
             softSelect(tabAtIndex: tabsModel.count - 1)
             return
         }
@@ -227,7 +231,7 @@ extension TabSwitcherViewController {
     }
     
     @objc func keyboardMoveSelectionDown() {
-        guard let current = tabsModel.currentIndex else {
+        guard let current = currentSelection else {
             softSelect(tabAtIndex: 0)
             return
         }
@@ -236,9 +240,7 @@ extension TabSwitcherViewController {
     }
 
     private func softSelect(tabAtIndex index: Int) {
-        tabsModel.select(tabAt: index)
-        let tab = tabsModel.get(tabAt: index)
-        delegate.tabSwitcher(self, didSelectTab: tab)
+        currentSelection = index
         collectionView.reloadData()
     }
     

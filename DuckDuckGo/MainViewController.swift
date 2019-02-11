@@ -431,6 +431,10 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
+    func newTab() {
+        attachHomeScreen()
+        homeController?.openedAsNewTab()
+    }
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -590,8 +594,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
-        attachHomeScreen()
-        homeController?.openedAsNewTab()
+        newTab()
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
@@ -630,8 +633,7 @@ extension MainViewController: TabDelegate {
 extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
-        attachHomeScreen()
-        homeController?.openedAsNewTab()
+        newTab()
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
@@ -788,8 +790,8 @@ extension MainViewController {
     }
 
     @objc func keyboardNewTab() {
-        if let tab = currentTab {
-            tabDidRequestNewTab(tab)
+        if currentTab != nil {
+            newTab()
         } else {
             keyboardFind()
         }

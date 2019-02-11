@@ -86,6 +86,7 @@ class AutocompleteViewController: UIViewController {
 
     func updateQuery(query: String) {
         self.query = query
+        selectedItem = -1
         cancelInFlightRequests()
         requestSuggestions(query: query)
     }
@@ -228,13 +229,7 @@ extension AutocompleteViewController {
     }
     
     private func itemCount() -> Int {
-        if suggestions.isEmpty {
-            return minItems
-        }
-        if suggestions.count > maxItems {
-            return maxItems
-        }
-        return 0
+        return min(suggestions.count, maxItems)
     }
 
 }

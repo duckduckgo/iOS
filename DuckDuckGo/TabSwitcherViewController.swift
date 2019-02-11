@@ -194,4 +194,3 @@ extension TabSwitcherViewController: Themable {
         toolbar.tintColor = theme.barTintColor
     }
 }
-

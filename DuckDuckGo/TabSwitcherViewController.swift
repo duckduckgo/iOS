@@ -38,6 +38,8 @@ class TabSwitcherViewController: UIViewController {
 
     fileprivate var hasSeenFooter = false
     
+    override var canBecomeFirstResponder: Bool { return true }
+    
     var currentSelection: Int?
 
     override func viewDidLoad() {
@@ -45,6 +47,7 @@ class TabSwitcherViewController: UIViewController {
         refreshTitle()
         currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
+        becomeFirstResponder()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +83,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
-        markCurrentAsViewedAndDismiss()
+        dismiss()
     }
     
     private func markCurrentAsViewedAndDismiss() {
@@ -240,8 +243,13 @@ extension TabSwitcherViewController {
     }
 
     private func softSelect(tabAtIndex index: Int) {
+        var paths = [IndexPath(row: index, section: 0)]
+        if let oldSelection = currentSelection {
+            paths.append(IndexPath(row: oldSelection, section: 0))
+        }
         currentSelection = index
-        collectionView.reloadData()
+        collectionView.reloadItems(at: paths)
+        collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .top, animated: true)
     }
     
 }

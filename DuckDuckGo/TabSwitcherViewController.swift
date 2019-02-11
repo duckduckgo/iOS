@@ -201,12 +201,18 @@ extension TabSwitcherViewController {
         return [
             
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow)),
+            UIKeyCommand(input: "t", modifierFlags: [ .command ], action: #selector(keyboardNewTab)),
             UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardSelectCurrent)),
             UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
             UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab))
 
         ]
+    }
+    
+    @objc func keyboardNewTab() {
+        delegate?.tabSwitcherDidRequestNewTab(tabSwitcher: self)
+        dismiss()
     }
     
     @objc func keyboardCloseWindow() {
@@ -243,6 +249,8 @@ extension TabSwitcherViewController {
     }
 
     private func softSelect(tabAtIndex index: Int) {
+        guard tabsModel.count > 0 else { return }
+        
         var paths = [IndexPath(row: index, section: 0)]
         if let oldSelection = currentSelection {
             paths.append(IndexPath(row: oldSelection, section: 0))

@@ -27,6 +27,9 @@ class SiteRatingTests: XCTestCase {
         static let withHost = URL(string: "http://host")!
         static let http = URL(string: "http://example.com")!
         static let https = URL(string: "https://example.com")!
+        static let httpsWithPath = URL(string: "https://example.com/path/to/resource")!
+        static let international = URL(string: "https://82.xn--b1aew.xn--p1ai/")!
+        static let internationalWithPath = URL(string: "https://82.xn--b1aew.xn--p1ai/path/to/resource")!
         static let google = URL(string: "https://google.com")!
         static let googlemail = URL(string: "https://googlemail.com")!
         static let tracker = "http://www.atracker.com"
@@ -46,6 +49,20 @@ class SiteRatingTests: XCTestCase {
 
     override func setUp() {
         GradeCache.shared.reset()
+    }
+
+    func testWhenSiteIsForSameInternationalDomainWithDifferentPathThenReturnsTrue() {
+        
+        let testee = SiteRating(url: Url.international)
+        XCTAssertTrue(testee.isFor(Url.internationalWithPath))
+        
+    }
+
+    func testWhenSiteIsForSameDomainWithDifferentPathThenReturnsTrue() {
+        
+        let testee = SiteRating(url: Url.https)
+        XCTAssertTrue(testee.isFor(Url.httpsWithPath))
+        
     }
     
     func testWhenEntityHasHighPrevalenceThenScoreSetCorrectly() {

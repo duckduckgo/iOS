@@ -129,6 +129,8 @@
 		85371D242121B9D500920548 /* new_tab.json in Resources */ = {isa = PBXBuildFile; fileRef = 85371D232121B9D400920548 /* new_tab.json */; };
 		85371D262121BA2800920548 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85371D252121BA2800920548 /* Lottie.framework */; };
 		85372447220DD103009D09CD /* UIKeyCommandExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85372446220DD103009D09CD /* UIKeyCommandExtension.swift */; };
+		85372444220C6AD7009D09CD /* Punycode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8537243F220C5BB3009D09CD /* Punycode.framework */; };
+		85372445220CC4C1009D09CD /* Punycode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8537243F220C5BB3009D09CD /* Punycode.framework */; };
 		85374D3521AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */; };
 		85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */; };
 		85374D3A21AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */; };
@@ -637,6 +639,7 @@
 		85371D232121B9D400920548 /* new_tab.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab.json; sourceTree = "<group>"; };
 		85371D252121BA2800920548 /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/iOS/Lottie.framework; sourceTree = "<group>"; };
 		85372446220DD103009D09CD /* UIKeyCommandExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyCommandExtension.swift; sourceTree = "<group>"; };
+		8537243F220C5BB3009D09CD /* Punycode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Punycode.framework; path = Carthage/Build/iOS/Punycode.framework; sourceTree = "<group>"; };
 		85374D3421AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksAndFavoritesDataSource.swift; sourceTree = "<group>"; };
 		85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSearchHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		85374D3921AC41BD00FF5A1E /* CenteredSearchHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteredSearchHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
@@ -999,6 +1002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85372445220CC4C1009D09CD /* Punycode.framework in Frameworks */,
 				83C389CC212D818500C11612 /* CommonCrypto.framework in Frameworks */,
 				85F21DC021123B03002631A6 /* Core.framework in Frameworks */,
 				85F21DBF2112155E002631A6 /* Alamofire.framework in Frameworks */,
@@ -1010,6 +1014,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85372444220C6AD7009D09CD /* Punycode.framework in Frameworks */,
 				8328AABF212B5D2000293140 /* CommonCrypto.framework in Frameworks */,
 				F1C81A741F33873800241DE6 /* Alamofire.framework in Frameworks */,
 			);
@@ -2133,6 +2138,7 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8537243F220C5BB3009D09CD /* Punycode.framework */,
 				85371D252121BA2800920548 /* Lottie.framework */,
 				8328AABA212ADAD100293140 /* CommonCrypto.framework */,
 				85F21DB721107F46002631A6 /* Swifter.framework */,
@@ -2878,16 +2884,18 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Swifter.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CommonCrypto.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Punycode.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Swifter.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CommonCrypto.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Punycode.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		85F4D03A1F44A7BE0018BFD5 /* Install Fonts */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2931,6 +2939,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Lottie.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CommonCrypto.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Punycode.framework",
 			);
 			name = "Cathage Copy Frameworks";
 			outputPaths = (
@@ -2940,10 +2949,11 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Lottie.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CommonCrypto.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Punycode.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

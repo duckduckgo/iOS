@@ -51,8 +51,14 @@ extension TabSwitcherViewController {
     @objc func keyboardRemoveTab() {
         guard let current = currentSelection else { return }
         let tab = tabsModel.get(tabAt: current)
+        
         deleteTab(tab: tab)
-        currentSelection = nil
+        if tabsModel.count > 0 {
+            currentSelection = max(0, current - 1)
+        } else {
+            currentSelection = nil
+        }
+        collectionView.reloadData()
     }
     
     @objc func keyboardMoveSelectionUp() {

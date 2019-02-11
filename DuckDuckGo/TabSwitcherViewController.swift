@@ -117,16 +117,9 @@ class TabSwitcherViewController: UIViewController {
 extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
-        let index = tabsModel.indexOf(tab: tab)
-
         delegate.tabSwitcher(self, didRemoveTab: tab)
         refreshTitle()
-
-        if let index = index {
-            collectionView.deleteItems(at: [ IndexPath(row: index, section: 0) ])
-        } else {
-            collectionView.reloadData()
-        }
+        collectionView.reloadData()
     }
     
     func isCurrent(tab: Tab) -> Bool {

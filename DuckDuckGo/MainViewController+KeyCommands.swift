@@ -37,6 +37,7 @@ extension MainViewController {
             UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .command, .alternate ], action: #selector(keyboardFire)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .control, .alternate ], action: #selector(keyboardFire)),
+            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [], action: #selector(keyboardTab)),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: .control, action: #selector(keyboardNextTab)),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [.control, .shift], action: #selector(keyboardPreviousTab)),
             UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
@@ -46,7 +47,11 @@ extension MainViewController {
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
     }
-    
+
+    @objc func keyboardTab() {
+        keyboardFind()
+    }
+
     @objc func keyboardFire() {
         onQuickFirePressed()
     }

@@ -37,6 +37,8 @@ protocol OmniBarDelegate: class {
     
     func onCancelPressed()
 
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar)
+
 }
 
 extension OmniBarDelegate {
@@ -70,6 +72,10 @@ extension OmniBarDelegate {
     }
     
     func onCancelPressed() {
+        
+    }
+
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
         
     }
 

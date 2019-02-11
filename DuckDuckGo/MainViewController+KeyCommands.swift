@@ -37,7 +37,6 @@ extension MainViewController {
             UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .command, .alternate ], action: #selector(keyboardFire)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .control, .alternate ], action: #selector(keyboardFire)),
-            UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [], action: #selector(keyboardTab)),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: .control, action: #selector(keyboardNextTab)),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: [.control, .shift], action: #selector(keyboardPreviousTab)),
             UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
@@ -46,10 +45,6 @@ extension MainViewController {
             UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardArrowDown)),
             UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardEscape))
         ]
-    }
-
-    @objc func keyboardTab() {
-        keyboardFind()
     }
 
     @objc func keyboardFire() {
@@ -68,15 +63,8 @@ extension MainViewController {
     
     @objc func keyboardEscape() {
         guard tabSwitcherController == nil else { return }
-        
-        if let controller = autocompleteController {
-            controller.keyboardEscape()
-            homeController?.collectionView.omniBarCancelPressed()
-        } else if let controller = homeController {
-            controller.omniBarCancelPressed()
-        } else {
-            omniBar.resignFirstResponder()
-        }
+        autocompleteController?.keyboardEscape()
+        onCancelPressed()
     }
     
     @objc func keyboardArrowDown() {

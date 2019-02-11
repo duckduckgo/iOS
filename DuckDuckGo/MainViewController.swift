@@ -536,9 +536,13 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onCancelPressed() {
-        dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
+        autocompleteController?.keyboardEscape()
         homeController?.omniBarCancelPressed()
+    }
+
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+        homeController?.launchNewSearch()
     }
     
 }

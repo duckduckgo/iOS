@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>7.14.2</string>
+	<string>7.15.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -64,14 +64,6 @@
 	<array>
 		<dict>
 			<key>UIApplicationShortcutItemIconFile</key>
-			<string>SearchLoupe</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Search</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.duckduckgo.mobile.ios.newsearch</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
 			<string>Clipboard</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Paste from clipboard</string>
@@ -79,6 +71,8 @@
 			<string>com.duckduckgo.mobile.ios.clipboard</string>
 		</dict>
 	</array>
+	<key>UIApplicationShortcutWidget</key>
+	<string>com.duckduckgo.mobile.ios.QuickActionsTodayExtension</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

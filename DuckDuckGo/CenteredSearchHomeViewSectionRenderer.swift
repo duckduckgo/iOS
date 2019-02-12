@@ -134,12 +134,17 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func omniBarCancelPressed() {
         guard let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        controller.allowContentUnderflow()
     }
     
     func launchNewSearch() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.activateSearch()
         }
+    }
+    
+    func openedAsNewTab() {
+        launchNewSearch()
     }
     
 }

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Punycode
 
 extension String {
 
@@ -49,4 +50,46 @@ extension String {
         return self
     }
 
+    /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to
+    ///  retain the input as much as possible.
+    public var punycodedUrl: URL? {
+        if contains(" ") {
+            return nil
+        }
+        
+        var originalScheme = ""
+        var s = self
+        
+        if hasPrefix(URL.URLProtocol.http.scheme) {
+            originalScheme = URL.URLProtocol.http.scheme
+        } else if hasPrefix(URL.URLProtocol.https.scheme) {
+            originalScheme = URL.URLProtocol.https.scheme
+        } else if !contains(".") {
+            // could be a local domain but user needs to use the protocol to specify that
+            return nil
+        } else {
+            s = URL.URLProtocol.https.scheme + s
+        }
+        
+        let urlAndQuery = s.split(separator: "?")
+        let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
+        let componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
+        let host = componentsWithoutQuery[0].punycodeEncodedHostname
+        let encodedPath = componentsWithoutQuery
+            .dropFirst()
+            .map { $0.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed) ?? $0 }
+            .joined(separator: "/")
+        
+        let hostPathSeparator = !encodedPath.isEmpty || hasSuffix("/") ? "/" : ""
+        let url = originalScheme + host + hostPathSeparator + encodedPath + query
+        return URL(string: url)
+    }
+    
+    public var punycodeEncodedHostname: String {
+        return self.split(separator: ".")
+            .map { String($0) }
+            .map { $0.idnaEncoded ?? $0 }
+            .joined(separator: ".")
+    }
+    
 }

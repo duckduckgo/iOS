@@ -32,10 +32,8 @@ class SuggestionTableViewCell: UITableViewCell {
         let text = suggestion.suggestion
         if URL.isWebUrl(text: text) {
             typeImage.image = #imageLiteral(resourceName: "GlobeSmall")
-            plusButton.isHidden = true
         } else {
             typeImage.image = #imageLiteral(resourceName: "SearchLoupeMini")
-            plusButton.isHidden = false
         }
         styleText(query: query, text: suggestion.suggestion)
     }

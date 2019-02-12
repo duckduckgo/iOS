@@ -37,12 +37,17 @@ class TabSwitcherViewController: UIViewController {
     weak var tabsModel: TabsModel!
 
     fileprivate var hasSeenFooter = false
+    
+    override var canBecomeFirstResponder: Bool { return true }
+    
+    var currentSelection: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
-        
+        currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
+        becomeFirstResponder()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,9 +83,15 @@ class TabSwitcherViewController: UIViewController {
     }
 
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
-        if let current = tabsModel.currentIndex {
-            tabsModel.get(tabAt: current).viewed = true
+        dismiss()
+    }
+    
+    func markCurrentAsViewedAndDismiss() {
+        if let current = currentSelection {
+            let tab = tabsModel.get(tabAt: current)
+            tab.viewed = true
             tabsModel.save()
+            delegate?.tabSwitcher(self, didSelectTab: tab)
         }
         dismiss()
     }
@@ -98,7 +109,7 @@ class TabSwitcherViewController: UIViewController {
         self.delegate.tabSwitcherDidRequestForgetAll(tabSwitcher: self)
     }
 
-    fileprivate func dismiss() {
+    func dismiss() {
         dismiss(animated: true, completion: nil)
     }
 }
@@ -106,20 +117,13 @@ class TabSwitcherViewController: UIViewController {
 extension TabSwitcherViewController: TabViewCellDelegate {
 
     func deleteTab(tab: Tab) {
-        let index = tabsModel.indexOf(tab: tab)
-
         delegate.tabSwitcher(self, didRemoveTab: tab)
         refreshTitle()
-
-        if let index = index {
-            collectionView.deleteItems(at: [ IndexPath(row: index, section: 0) ])
-        } else {
-            collectionView.reloadData()
-        }
+        collectionView.reloadData()
     }
     
     func isCurrent(tab: Tab) -> Bool {
-        return tabsModel.currentIndex == tabsModel.indexOf(tab: tab)
+        return currentSelection == tabsModel.indexOf(tab: tab)
     }
 
 }
@@ -158,13 +162,8 @@ extension TabSwitcherViewController: UICollectionViewDataSource {
 extension TabSwitcherViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? TabViewCell else {
-            fatalError("Failed to load cell as TabViewCell")
-        }
-        guard let tab = cell.tab else { return }
-        tab.viewed = true
-        delegate.tabSwitcher(self, didSelectTab: tab)
-        dismiss()
+        currentSelection = indexPath.row
+        markCurrentAsViewedAndDismiss()
     }
 }
 

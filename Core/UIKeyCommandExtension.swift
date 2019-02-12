@@ -1,8 +1,8 @@
 //
-//  AppSettings.swift
+//  UIKeyCommandExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,13 +17,12 @@
 //  limitations under the License.
 //
 
-protocol AppSettings {
-    var autocomplete: Bool { get set }
-    var currentThemeName: ThemeName { get set }
+import Foundation
+
+public extension UIKeyCommand {
     
-    var autoClearAction: AutoClearSettingsModel.Action { get set }
-    var autoClearTiming: AutoClearSettingsModel.Timing { get set }
+    public static let inputBackspace = String(UnicodeScalar(8))
+    public static let inputTab = String(UnicodeScalar(9))
+    public static let inputEnter = String(UnicodeScalar(13))
     
-    // Required for Light Theme experiment
-    func setInitialThemeNameIfNeeded(name: ThemeName)
 }

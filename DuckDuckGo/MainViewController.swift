@@ -60,21 +60,22 @@ class MainViewController: UIViewController {
         }
     }
     
-    fileprivate var homeController: HomeViewController?
-    fileprivate var autocompleteController: AutocompleteViewController?
+    var homeController: HomeViewController?
+    var autocompleteController: AutocompleteViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
-    fileprivate var tabManager: TabManager!
+    var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
+    weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
-    fileprivate var currentTab: TabViewController? {
+    var currentTab: TabViewController? {
         return tabManager?.current
     }
 
@@ -109,6 +110,7 @@ class MainViewController: UIViewController {
             controller.transitioningDelegate = blurTransition
             controller.delegate = self
             controller.tabsModel = tabManager.model
+            tabSwitcherController = controller
             return
         }
 
@@ -245,7 +247,7 @@ class MainViewController: UIViewController {
         addToView(tab: tab)
     }
 
-    fileprivate func select(tabAt index: Int) {
+    func select(tabAt index: Int) {
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
     }
@@ -278,19 +280,6 @@ class MainViewController: UIViewController {
         } else {
             attachHomeScreen()
         }
-    }
-
-    fileprivate func forgetAll(completion: @escaping () -> Void) {
-        Pixel.fire(pixel: .forgetAllExecuted)
-        ServerTrustCache.shared.clear()
-        WebCacheManager.clear()
-        FireAnimation.animate {
-            self.tabManager.removeAll()
-            self.attachHomeScreen()
-            completion()
-        }
-        let window = UIApplication.shared.keyWindow
-        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
     }
 
     fileprivate func refreshControls() {
@@ -328,6 +317,7 @@ class MainViewController: UIViewController {
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {
+            allowContentUnderflow = false
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.delegate = self
             addChild(controller)
@@ -443,6 +433,10 @@ class MainViewController: UIViewController {
         toolbar.setItems(newItems, animated: false)
     }
 
+    func newTab() {
+        attachHomeScreen()
+        homeController?.openedAsNewTab()
+    }
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -542,9 +536,13 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onCancelPressed() {
-        dismissAutcompleteSuggestions()
-        omniBar.resignFirstResponder()
+        dismissOmniBar()
+        autocompleteController?.keyboardEscape()
         homeController?.omniBarCancelPressed()
+    }
+
+    func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
+        homeController?.launchNewSearch()
     }
     
 }
@@ -602,8 +600,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
-        attachHomeScreen()
-        homeController?.openedAsNewTab()
+        newTab()
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
@@ -642,8 +639,7 @@ extension MainViewController: TabDelegate {
 extension MainViewController: TabSwitcherDelegate {
 
     func tabSwitcherDidRequestNewTab(tabSwitcher: TabSwitcherViewController) {
-        attachHomeScreen()
-        homeController?.openedAsNewTab()
+        newTab()
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
@@ -654,6 +650,10 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
+        closeTab(tab)
+    }
+    
+    func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         remove(tabAt: index)
     }
@@ -685,6 +685,32 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
 }
 
+extension MainViewController: AutoClearWorker {
+    
+    func forgetTabs() {
+        tabManager.removeAll()
+        showBars()
+        attachHomeScreen()
+    }
+    
+    func forgetData() {
+        ServerTrustCache.shared.clear()
+        WebCacheManager.clear()
+    }
+    
+    fileprivate func forgetAll(completion: @escaping () -> Void) {
+        Pixel.fire(pixel: .forgetAllExecuted)
+        forgetData()
+        FireAnimation.animate {
+            self.forgetTabs()
+            completion()
+        }
+        let window = UIApplication.shared.keyWindow
+        window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)
+    }
+    
+}
+
 extension MainViewController: Themable {
     
     func decorate(with theme: Theme) {
@@ -708,4 +734,5 @@ extension MainViewController: Themable {
     }
     
 }
+
 // swiftlint:enable file_length

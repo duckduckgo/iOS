@@ -156,10 +156,31 @@ class OmniBar: UIView {
         if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
         } else {
-            textField.text = url.absoluteString
+            textField.attributedText = demphasisePath(forUrl: url)
         }
     }
 
+    private func demphasisePath(forUrl url: URL) -> NSAttributedString {
+        let s = url.absoluteString
+        let parts = s.split(separator: "/")
+        let offset = (parts[0] + "//" + parts[1]).count
+        
+        let attributedString = NSMutableAttributedString(string: s)
+        let theme = ThemeManager.shared.currentTheme
+        
+        let idx = s.unicodeScalars.index(s.unicodeScalars.startIndex, offsetBy: offset)
+        
+        let domainRange = NSRange(s.unicodeScalars.startIndex ..< idx, in: s)
+        attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: domainRange)
+        
+        let pathRange = NSRange(idx ..< s.endIndex, in: s)
+        if pathRange.length >= 0 {
+            attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextDeemphasisColor, range: pathRange)
+        }
+        
+        return attributedString
+    }
+    
     @IBAction func onTextEntered(_ sender: Any) {
         onQuerySubmitted()
     }
@@ -169,7 +190,13 @@ class OmniBar: UIView {
             return
         }
         resignFirstResponder()
-        omniDelegate?.onOmniQuerySubmitted(query)
+        
+        if let url = query.punycodedUrl {
+            omniDelegate?.onOmniQuerySubmitted(url.absoluteString)
+        } else {
+            omniDelegate?.onOmniQuerySubmitted(query)
+        }
+        
     }
 
     @IBAction func onClearButtonPressed(_ sender: Any) {
@@ -200,6 +227,7 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        omniDelegate?.onTextFieldDidBeginEditing(self)
         refreshState(state.onEditingStartedState)
         DispatchQueue.main.async {
             self.textField.selectAll(nil)
@@ -239,6 +267,11 @@ extension OmniBar: Themable {
         
         editingBackground?.borderColor = theme.searchBarBackgroundColor
         textField.textColor = theme.searchBarTextColor
+        
+        if let url = textField.text?.punycodedUrl {
+            textField.attributedText = demphasisePath(forUrl: url)
+        }
+        
         textField.tintColor = theme.searchBarTextColor
         
         textField.keyboardAppearance = theme.keyboardAppearance

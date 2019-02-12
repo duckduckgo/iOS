@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startOnboardingFlowIfNotSeenBefore()
         
         if appIsLaunching {
+            appIsLaunching = false
             onApplicationLaunch(application)
         }
     }
@@ -78,8 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear?.applicationDidLaunch()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
-        
-        appIsLaunching = false
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

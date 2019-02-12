@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+    private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
 
     // MARK: lifecycle
@@ -57,22 +58,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
+        
         Pixel.fire(pixel: .appLaunch)
         StatisticsLoader.shared.load()
         startOnboardingFlowIfNotSeenBefore()
+        
         if appIsLaunching {
-            appIsLaunching = false
-            autoClear = AutoClear(worker: mainViewController!)
-            autoClear?.applicationDidLaunch()
-            AppConfigurationFetch().start(completion: nil)
+            onApplicationLaunch(application)
+        }
+    }
+    
+    private func onApplicationLaunch(_ application: UIApplication) {
+        if privacyStore.authenticationEnabled {
             displayAuthenticationWindow()
             beginAuthentication()
-            initialiseBackgroundFetch(application)
         }
+        
+        autoClear = AutoClear(worker: mainViewController!)
+        autoClear?.applicationDidLaunch()
+        AppConfigurationFetch().start(completion: nil)
+        initialiseBackgroundFetch(application)
+        
+        appIsLaunching = false
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        beginAuthentication()
+        if privacyStore.authenticationEnabled {
+            beginAuthentication()
+        }
         autoClear?.applicationWillEnterForeground()
     }
 
@@ -119,14 +132,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func displayOverlay() {
-        displayAuthenticationWindow()
-        displayBlankSnapshotWindow()
+        if privacyStore.authenticationEnabled {
+            displayAuthenticationWindow()
+        } else {
+            displayBlankSnapshotWindow()
+        }
     }
 
     private func displayAuthenticationWindow() {
-        let privacyStore = PrivacyUserDefaults()
-        guard overlayWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }
+        guard overlayWindow == nil, let frame = window?.frame else { return }
         overlayWindow = UIWindow(frame: frame)
+        overlayWindow?.windowLevel = UIWindow.Level.alert
         overlayWindow?.rootViewController = AuthenticationViewController.loadFromStoryboard()
         overlayWindow?.makeKeyAndVisible()
         window?.isHidden = true
@@ -137,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard autoClear?.isClearingEnabled ?? false else { return }
         
         overlayWindow = UIWindow(frame: frame)
+        overlayWindow?.windowLevel = UIWindow.Level.alert
         overlayWindow?.rootViewController = BlankSnapshotViewController.loadFromStoryboard()
         overlayWindow?.makeKeyAndVisible()
         window?.isHidden = true

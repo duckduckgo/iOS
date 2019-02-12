@@ -1,1 +1,16 @@
-This is a small release to fix a UI bug where the fire icon appears to move when the tab switcher is open.
+• You can now have your tabs and data cleared automatically. Go to settings to configure this feature.
+• Support for external keyboards with a range of shortcuts.  See the full list below.
+• Support for international and emoji based URLs
+• Bug fixes and improvements
+
+Keyboard shortcuts:
+• Cmd-T or Cmd-N to open a new tab
+• Cmd-W to close tab
+• Shift-Cmd-] and Shift-Cmd-[ or Ctrl-Tab and Ctrl-Shift-Tab to move to the next/previous tab
+• Ctrl-Shift-\ or Cmd-Shift-\ to show all tabs
+• Esc to cancel typing in the address bar OR close the tab switcher OR close the suggestions
+• Enter to select the current tab and close the tab switcher
+• Cmd-[ and Cmd-] or Cmd-Right Arrow and Cmd-Left Arrow to move back/forward
+• Alt-Cmd-F to edit address field
+• Up/Down Arrow to navigate auto complete suggestions and tabs in the tab-switcher
+• Cmd-Alt-Backspace to quickly delete all your tabs and data

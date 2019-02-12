@@ -227,6 +227,7 @@ class OmniBar: UIView {
 extension OmniBar: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        omniDelegate?.onTextFieldDidBeginEditing(self)
         refreshState(state.onEditingStartedState)
         DispatchQueue.main.async {
             self.textField.selectAll(nil)

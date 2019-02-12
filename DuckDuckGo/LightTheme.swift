@@ -38,6 +38,7 @@ struct LightTheme: Theme {
     var searchBarTextDeemphasisColor = UIColor.greyish3
 
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight
+    var tableCellSelectedColor = UIColor.mercury
     var tableCellTintColor = UIColor.darkGreyish
     var tableCellSeparatorColor = UIColor.mercury
     var tableCellAccessoryTextColor = UIColor.greyish3

@@ -43,7 +43,6 @@ class AuthenticationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideUnlockInstructions()
-        
         applyTheme(ThemeManager.shared.currentTheme)
     }
 

@@ -70,9 +70,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func onApplicationLaunch(_ application: UIApplication) {
+       
         if privacyStore.authenticationEnabled {
             displayAuthenticationWindow()
             beginAuthentication()
+        } else {
+            removeOverlay()
         }
         
         autoClear = AutoClear(worker: mainViewController!)

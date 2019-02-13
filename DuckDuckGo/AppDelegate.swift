@@ -74,8 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if privacyStore.authenticationEnabled {
             displayAuthenticationWindow()
             beginAuthentication()
-        } else {
-            removeOverlay()
         }
         
         autoClear = AutoClear(worker: mainViewController!)
@@ -87,6 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         if privacyStore.authenticationEnabled {
             beginAuthentication()
+        } else {
+            removeOverlay()
         }
         autoClear?.applicationWillEnterForeground()
     }

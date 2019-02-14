@@ -172,9 +172,9 @@ class AtbIntegrationTests: XCTestCase {
             if !searchentrySearchField.waitForExistence(timeout: 2) {
                 fatalError("Search field could not be activated")
             }
+        } else {
+            searchentrySearchField.tap()
         }
-        
-        searchentrySearchField.tap()
         
         let keyboard = app.keyboards.element
         if keyboard.waitForExistence(timeout: 2) {

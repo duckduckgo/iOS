@@ -76,10 +76,14 @@ extension String {
         }
         
         let urlAndQuery = s.split(separator: "?")
+        guard urlAndQuery.count > 0 else {
+            return nil
+        }
+        
         let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
         let componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
         guard componentsWithoutQuery.count > 0 else {
-            return URL(string: self)
+            return nil
         }
         
         let host = componentsWithoutQuery[0].punycodeEncodedHostname

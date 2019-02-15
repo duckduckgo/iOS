@@ -59,7 +59,7 @@ class AtbIntegrationTests: XCTestCase {
         Springboard.deleteMyApp()
         app.launch()
         skipOnboarding()
-
+        dismissAddToDockDialog()
     }
     
     override func tearDown() {
@@ -154,16 +154,27 @@ class AtbIntegrationTests: XCTestCase {
 
     }
     
-    private func search(forText text: String) {
-        if !app.searchFields["searchEntry"].exists {
-            let noThanksButton = app.buttons["No Thanks"]
-            _ = noThanksButton.waitForExistence(timeout: 2)
-            noThanksButton.tap()
-            app.collectionViews.otherElements["activateSearch"].tap()
+    private func dismissAddToDockDialog() {
+        let noThanksButton = app.buttons["No Thanks"]
+        guard noThanksButton.waitForExistence(timeout: 2) else {
+            fatalError("No 'add to dock' view present")
         }
-        
+        noThanksButton.tap()
+    }
+    
+    private func search(forText text: String) {
         let searchentrySearchField = app.searchFields["searchEntry"]
-        searchentrySearchField.tap()
+        
+        if !searchentrySearchField.waitForExistence(timeout: 2) {
+            // Centered home screen variant
+            app.collectionViews.otherElements["activateSearch"].tap()
+            
+            if !searchentrySearchField.waitForExistence(timeout: 2) {
+                fatalError("Search field could not be activated")
+            }
+        } else {
+            searchentrySearchField.tap()
+        }
         
         let keyboard = app.keyboards.element
         if keyboard.waitForExistence(timeout: 2) {

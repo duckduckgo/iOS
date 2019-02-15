@@ -126,7 +126,14 @@ class MainViewController: UIViewController {
     }
 
     private func configureTabManager() {
-        let tabsModel = TabsModel.get() ?? TabsModel()
+        let tabsModel: TabsModel
+        let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil
+        if shouldClearTabsModelOnStartup {
+            tabsModel = TabsModel()
+            tabsModel.save()
+        } else {
+            tabsModel = TabsModel.get() ?? TabsModel()
+        }
         tabManager = TabManager(model: tabsModel, delegate: self)
     }
 

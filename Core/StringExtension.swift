@@ -53,6 +53,10 @@ extension String {
     /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to
     ///  retain the input as much as possible.
     public var punycodedUrl: URL? {
+        if let url = URL(string: self) {
+            return url
+        }
+        
         if contains(" ") {
             return nil
         }
@@ -72,8 +76,16 @@ extension String {
         }
         
         let urlAndQuery = s.split(separator: "?")
+        guard urlAndQuery.count > 0 else {
+            return nil
+        }
+        
         let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
         let componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
+        guard componentsWithoutQuery.count > 0 else {
+            return nil
+        }
+        
         let host = componentsWithoutQuery[0].punycodeEncodedHostname
         let encodedPath = componentsWithoutQuery
             .dropFirst()

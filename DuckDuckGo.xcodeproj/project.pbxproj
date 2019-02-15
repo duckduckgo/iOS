@@ -231,6 +231,7 @@
 		85F1E9B91FB7CB7100A75AC1 /* testcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9B81FB7CB7100A75AC1 /* testcert.der */; };
 		85F1E9BB1FB7D06300A75AC1 /* ddgcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */; };
 		85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */; };
+		85F200072217032E006BB258 /* OmniBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F20005221702F7006BB258 /* OmniBarTests.swift */; };
 		85F21DB0210F5E32002631A6 /* AtbIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DAF210F5E32002631A6 /* AtbIntegrationTests.swift */; };
 		85F21DB821107F46002631A6 /* Swifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F21DB721107F46002631A6 /* Swifter.framework */; };
 		85F21DBC2110AE1D002631A6 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBD20615EB30085E862 /* SnapshotHelper.swift */; };
@@ -746,6 +747,7 @@
 		85F1E9B81FB7CB7100A75AC1 /* testcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = testcert.der; sourceTree = "<group>"; };
 		85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgcert.der; sourceTree = "<group>"; };
 		85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgissuercert.der; sourceTree = "<group>"; };
+		85F20005221702F7006BB258 /* OmniBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarTests.swift; sourceTree = "<group>"; };
 		85F21DAD210F5E32002631A6 /* AtbIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtbIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F21DAF210F5E32002631A6 /* AtbIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbIntegrationTests.swift; sourceTree = "<group>"; };
 		85F21DB1210F5E32002631A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2269,6 +2271,7 @@
 			isa = PBXGroup;
 			children = (
 				F1D477C81F2139410031ED49 /* OmniBarStateTests.swift */,
+				85F20005221702F7006BB258 /* OmniBarTests.swift */,
 			);
 			name = OmniBar;
 			sourceTree = "<group>";
@@ -3221,6 +3224,7 @@
 				83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */,
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
+				85F200072217032E006BB258 /* OmniBarTests.swift in Sources */,
 				F11E23091ED3559700523BC9 /* DisconnectMeTrackersParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

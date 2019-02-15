@@ -156,26 +156,32 @@ class OmniBar: UIView {
         if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
         } else {
-            textField.attributedText = demphasisePath(forUrl: url)
+            textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
     }
 
-    private func demphasisePath(forUrl url: URL) -> NSAttributedString {
-        let s = url.absoluteString
-        let parts = s.split(separator: "/")
-        let offset = (parts[0] + "//" + parts[1]).count
+    public class func demphasisePath(forUrl url: URL) -> NSAttributedString? {
         
+        let s = url.absoluteString
         let attributedString = NSMutableAttributedString(string: s)
+        guard let c = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            return attributedString
+        }
+        
         let theme = ThemeManager.shared.currentTheme
         
-        let idx = s.unicodeScalars.index(s.unicodeScalars.startIndex, offsetBy: offset)
-        
-        let domainRange = NSRange(s.unicodeScalars.startIndex ..< idx, in: s)
-        attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: domainRange)
-        
-        let pathRange = NSRange(idx ..< s.endIndex, in: s)
-        if pathRange.length >= 0 {
+        if let pathStart = c.rangeOfPath?.lowerBound {
+            let urlEnd = s.endIndex
+            
+            let pathRange = NSRange(pathStart ..< urlEnd, in: s)
             attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextDeemphasisColor, range: pathRange)
+            
+            let domainRange = NSRange(s.startIndex ..< pathStart, in: s)
+            attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: domainRange)
+            
+        } else {
+            let range = NSRange(s.startIndex ..< s.endIndex, in: s)
+            attributedString.addAttribute(.foregroundColor, value: theme.searchBarTextColor, range: range)
         }
         
         return attributedString
@@ -269,7 +275,7 @@ extension OmniBar: Themable {
         textField.textColor = theme.searchBarTextColor
         
         if let url = textField.text?.punycodedUrl {
-            textField.attributedText = demphasisePath(forUrl: url)
+            textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
         
         textField.tintColor = theme.searchBarTextColor

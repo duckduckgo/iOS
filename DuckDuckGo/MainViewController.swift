@@ -47,6 +47,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var statusBarBackground: UIView!
+    @IBOutlet weak var findInPageView: FindInPageView!
     
     weak var notificationView: NotificationView?
 
@@ -266,6 +267,7 @@ class MainViewController: UIViewController {
 
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
+        updateFindInPage()
         currentTab?.chromeDelegate = nil
         addToView(controller: tab)
         tab.webView.scrollView.delegate = chromeManager
@@ -444,6 +446,20 @@ class MainViewController: UIViewController {
         attachHomeScreen()
         homeController?.openedAsNewTab()
     }
+    
+    func updateFindInPage() {
+        currentTab?.findInPage?.delegate = self
+        findInPageView.update(with: currentTab?.findInPage)
+    }
+    
+}
+
+extension MainViewController: FindInPageDelegate {
+    
+    func updated(findInPage: FindInPage) {
+        findInPageView.update(with: findInPage)
+    }
+    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -639,6 +655,10 @@ extension MainViewController: TabDelegate {
 
     func showBars() {
         chromeManager.reset()
+    }
+    
+    func tabDidRequestFindInPage(tab: TabViewController) {
+        updateFindInPage()
     }
 
 }

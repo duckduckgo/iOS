@@ -35,6 +35,8 @@ protocol TabDelegate: class {
     func tabDidRequestReportBrokenSite(tab: TabViewController)
 
     func tabDidRequestSettings(tab: TabViewController)
+    
+    func tabDidRequestFindInPage(tab: TabViewController)
 
     func tabContentProcessDidTerminate(tab: TabViewController)
 

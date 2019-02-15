@@ -50,6 +50,7 @@ class TabViewController: UIViewController {
    
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
+    var findInPage: FindInPage?
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()

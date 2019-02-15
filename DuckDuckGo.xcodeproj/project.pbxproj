@@ -231,6 +231,8 @@
 		85F1E9B91FB7CB7100A75AC1 /* testcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9B81FB7CB7100A75AC1 /* testcert.der */; };
 		85F1E9BB1FB7D06300A75AC1 /* ddgcert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */; };
 		85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */; };
+		85F200002215C17B006BB258 /* FindInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFFF2215C17B006BB258 /* FindInPage.swift */; };
+		85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F200032216F5D8006BB258 /* FindInPageView.swift */; };
 		85F21DB0210F5E32002631A6 /* AtbIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F21DAF210F5E32002631A6 /* AtbIntegrationTests.swift */; };
 		85F21DB821107F46002631A6 /* Swifter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F21DB721107F46002631A6 /* Swifter.framework */; };
 		85F21DBC2110AE1D002631A6 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBD20615EB30085E862 /* SnapshotHelper.swift */; };
@@ -240,6 +242,7 @@
 		85F21DC621145DD5002631A6 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBF2061B6110085E862 /* global.swift */; };
 		85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */; };
 		85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */; };
+		85F2FFFD2215C020006BB258 /* findinpage.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F2FFFC2215C020006BB258 /* findinpage.js */; };
 		85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */; };
 		85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */; };
 		85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6191A20D293AC003904D1 /* HomeRowCTA.swift */; };
@@ -746,6 +749,7 @@
 		85F1E9B81FB7CB7100A75AC1 /* testcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = testcert.der; sourceTree = "<group>"; };
 		85F1E9BA1FB7D06300A75AC1 /* ddgcert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgcert.der; sourceTree = "<group>"; };
 		85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgissuercert.der; sourceTree = "<group>"; };
+		85F200032216F5D8006BB258 /* FindInPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPageView.swift; sourceTree = "<group>"; };
 		85F21DAD210F5E32002631A6 /* AtbIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AtbIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F21DAF210F5E32002631A6 /* AtbIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbIntegrationTests.swift; sourceTree = "<group>"; };
 		85F21DB1210F5E32002631A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -753,6 +757,8 @@
 		85F21DBD21121147002631A6 /* AtbServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbServerTests.swift; sourceTree = "<group>"; };
 		85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+KeyCommands.swift"; sourceTree = "<group>"; };
 		85F2FFCE2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabSwitcherViewController+KeyCommands.swift"; sourceTree = "<group>"; };
+		85F2FFFC2215C020006BB258 /* findinpage.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = findinpage.js; path = "submodules/ios-js-support/src/findinpage.js"; sourceTree = SOURCE_ROOT; };
+		85F2FFFF2215C17B006BB258 /* FindInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindInPage.swift; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* ContentBlockerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequest.swift; sourceTree = "<group>"; };
 		85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackerTests.swift; sourceTree = "<group>"; };
 		85F6191A20D293AC003904D1 /* HomeRowCTA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRowCTA.swift; sourceTree = "<group>"; };
@@ -1312,6 +1318,8 @@
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
+				839F119520DBC489007CD8C2 /* Feedback */,
+				85F2FFFE2215C163006BB258 /* FindInPage */,
 				F13B4BF31F18C73A00814661 /* Home */,
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
@@ -1319,7 +1327,6 @@
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
-				839F119520DBC489007CD8C2 /* Feedback */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F1E249411EF2075C008C947A /* SiteMonitoring */,
 				F13B4BF41F18C74500814661 /* Tabs */,
@@ -1468,6 +1475,7 @@
 				85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */,
 				85B547091FE852CE0008E1E5 /* bloom-filter-packed-es2015.js */,
 				85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */,
+				85F2FFFC2215C020006BB258 /* findinpage.js */,
 			);
 			name = "ios-js-support";
 			sourceTree = "<group>";
@@ -1576,6 +1584,14 @@
 				85F21DB1210F5E32002631A6 /* Info.plist */,
 			);
 			path = AtbIntegrationTests;
+			sourceTree = "<group>";
+		};
+		85F2FFFE2215C163006BB258 /* FindInPage */ = {
+			isa = PBXGroup;
+			children = (
+				85F2FFFF2215C17B006BB258 /* FindInPage.swift */,
+			);
+			name = FindInPage;
 			sourceTree = "<group>";
 		};
 		85FAAE64214EFE40006AD5DA /* Store */ = {
@@ -1852,11 +1868,11 @@
 		F13B4BF61F18C76600814661 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8563A0371F8E54F100F04442 /* Tab.storyboard */,
+				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
 				83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */,
 				83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */,
-				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
-				8563A0371F8E54F100F04442 /* Tab.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2234,6 +2250,7 @@
 				98EF177C21837E35006750C1 /* new_tab_dark.json */,
 				85371D232121B9D400920548 /* new_tab.json */,
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
+				85F200032216F5D8006BB258 /* FindInPageView.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -2850,6 +2867,7 @@
 				85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */,
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */,
+				85F2FFFD2215C020006BB258 /* findinpage.js in Resources */,
 				85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */,
 				85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */,
 				85325A8D2024BB7C003EB195 /* detection.js in Resources */,
@@ -3028,6 +3046,7 @@
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
+				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
@@ -3047,6 +3066,7 @@
 				83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
+				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,

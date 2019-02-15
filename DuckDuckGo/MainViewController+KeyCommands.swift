@@ -35,6 +35,7 @@ extension MainViewController {
             UIKeyCommand(input: "]", modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
             UIKeyCommand(input: "[", modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
             UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
+            UIKeyCommand(input: "l", modifierFlags: [.command], action: #selector(keyboardFind)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .command, .alternate ], action: #selector(keyboardFire)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .control, .alternate ], action: #selector(keyboardFire)),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: .control, action: #selector(keyboardNextTab)),

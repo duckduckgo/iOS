@@ -50,14 +50,14 @@ class OmniBarTests: XCTestCase {
 
     private func testWith(prefix: String) {
         
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: prefix)!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)#")!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)#/fragment")!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?")!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1")!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1&")!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1&y=1")!))
-        XCTAssertNotNil(OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1&y=1,2")!))
+        _ = OmniBar.demphasisePath(forUrl: URL(string: prefix)!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)#")!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)#/fragment")!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?")!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1")!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1&")!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1&y=1")!)
+        _ = OmniBar.demphasisePath(forUrl: URL(string: "\(prefix)?x=1&y=1,2")!)
         
     }
     

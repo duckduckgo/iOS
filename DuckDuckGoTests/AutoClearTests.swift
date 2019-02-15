@@ -56,18 +56,7 @@ class AutoClearTests: XCTestCase {
         XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
     }
     
-    func testWhenModeIsSetToCleanTabsThenTabsAreCleared() {
-        let appSettings = AppUserDefaults()
-        appSettings.autoClearAction = .clearTabs
-        appSettings.autoClearTiming = .termination
-        
-        logic.applicationDidLaunch()
-        
-        XCTAssertEqual(worker.forgetDataInvocationCount, 0)
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 1)
-    }
-    
-    func testWhenModeIsSetToCleanTabsAndDataThenBothAreCleared() {
+    func testWhenModeIsSetToCleanTabsAndDataThenDataIsCleared() {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = [.clearData, .clearTabs]
         appSettings.autoClearTiming = .termination
@@ -75,7 +64,9 @@ class AutoClearTests: XCTestCase {
         logic.applicationDidLaunch()
         
         XCTAssertEqual(worker.forgetDataInvocationCount, 1)
-        XCTAssertEqual(worker.forgetTabsInvocationCount, 1)
+        
+        // Tabs are cleared when loading TabsModel for the first time
+        XCTAssertEqual(worker.forgetTabsInvocationCount, 0)
     }
     
     func testWhenModeIsNotSetThenNothingIsCleared() {
@@ -94,7 +85,7 @@ class AutoClearTests: XCTestCase {
         appSettings.autoClearAction = .clearData
         appSettings.autoClearTiming = .termination
         
-        logic.applicationWillEnterForeground()
+        logic.applicationWillMoveToForeground()
         logic.applicationDidEnterBackground()
         
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
@@ -118,12 +109,12 @@ class AutoClearTests: XCTestCase {
             appSettings.autoClearTiming = timing
             
             logic.applicationDidEnterBackground(CACurrentMediaTime() - delay + 1)
-            logic.applicationWillEnterForeground()
+            logic.applicationWillMoveToForeground()
             
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
             logic.applicationDidEnterBackground(CACurrentMediaTime() - delay - 1)
-            logic.applicationWillEnterForeground()
+            logic.applicationWillMoveToForeground()
             
             iterationCount += 1
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)

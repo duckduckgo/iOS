@@ -54,9 +54,12 @@ class AutoClear {
     }
     
     func applicationDidLaunch() {
-        guard isClearingEnabled else { return }
+        guard let settings = AutoClearSettingsModel(settings: appSettings) else { return }
         
-        clearData()
+        // Note: for startup, we clear only Data, as TabsModel is cleared on load
+        if settings.action.contains(.clearData) {
+            worker.forgetData()
+        }
     }
     
     /// Note: function is parametrised because of tests.
@@ -81,12 +84,12 @@ class AutoClear {
         }
     }
     
-    func applicationWillEnterForeground() {
+    func applicationWillMoveToForeground() {
         guard isClearingEnabled,
             let timestamp = timestamp,
             shouldClearData(elapsedTime: CACurrentMediaTime() - timestamp) else { return }
         
         clearData()
+        self.timestamp = nil
     }
-    
 }

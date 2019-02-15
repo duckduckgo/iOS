@@ -51,6 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
         HomePageConfiguration.installNewUserFavorites()
+        
+        if !testing {
+            autoClear = AutoClear(worker: mainViewController!)
+            autoClear?.applicationDidLaunch()
+        }
 
         appIsLaunching = true
         return true
@@ -76,8 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             beginAuthentication()
         }
         
-        autoClear = AutoClear(worker: mainViewController!)
-        autoClear?.applicationDidLaunch()
         AppConfigurationFetch().start(completion: nil)
         initialiseBackgroundFetch(application)
     }
@@ -88,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             removeOverlay()
         }
-        autoClear?.applicationWillEnterForeground()
+        autoClear?.applicationWillMoveToForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -105,6 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
         clearNavigationStack()
+        autoClear?.applicationWillMoveToForeground()
+        
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.launchNewSearch()
         } else if AppDeepLinks.isQuickLink(url: url) {
@@ -187,6 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         clearNavigationStack()
+        autoClear?.applicationWillMoveToForeground()
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
         }

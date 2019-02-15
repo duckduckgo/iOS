@@ -88,6 +88,7 @@ public enum PixelName: String {
     case homeScreenDeleteFavorite = "mh_df"
     case homeScreenFavoriteMoved = "mh_fm"
     
+    case bookmarkShare = "bm_sh"
 }
 
 public class Pixel {

@@ -50,6 +50,17 @@ class BookmarksViewController: UITableViewController {
             selectLink(link)
         }
     }
+    
+    @available(iOS 11.0, *)
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let shareContextualAction = UIContextualAction.init(style: .normal, title: "Share") { (_, _, completionHandler) in
+            Logger.log(text: "share action")
+            self.showShareSheet(for: indexPath)
+            completionHandler(true)
+        }
+        shareContextualAction.backgroundColor = UIColor.ppGreen
+        return UISwipeActionsConfiguration.init(actions: [shareContextualAction])
+    }
 
     private func addAplicationActiveObserver() {
         NotificationCenter.default.addObserver(self,
@@ -117,6 +128,17 @@ class BookmarksViewController: UITableViewController {
             }
         )
         present(alert, animated: true)
+    }
+    
+    fileprivate func showShareSheet(for indexPath: IndexPath) {
+        Pixel.fire(pixel: .browsingMenuShare)
+        if let link = dataSource.link(at: indexPath) {
+            let appUrls: AppUrls = AppUrls()
+            let url = appUrls.removeATBAndSource(fromUrl: link.url)
+            presentShareSheet(withItems: [ url, link ], fromView: self.view)
+        } else {
+            Logger.log(text: "Invalid share link found")
+        }
     }
 
     fileprivate func selectLink(_ link: Link) {

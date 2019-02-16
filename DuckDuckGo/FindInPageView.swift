@@ -58,6 +58,15 @@ class FindInPageView: UIView {
 
 }
 
+extension FindInPageView: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        next()
+        return true
+    }
+
+}
+
 extension FindInPageView: Themable {
     func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor

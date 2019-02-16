@@ -885,5 +885,11 @@ extension TabViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
     }
+
+    func requestFindInPage() {
+        guard findInPage == nil else { return }
+        findInPage = FindInPage(webView: webView)
+        delegate?.tabDidRequestFindInPage(tab: self)
+    }
 }
 // swiftlint:enable file_length

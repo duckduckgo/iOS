@@ -34,8 +34,8 @@ extension MainViewController {
             UIKeyCommand(input: "\\", modifierFlags: [.shift, .command], action: #selector(keyboardShowAllTabs)),
             UIKeyCommand(input: "]", modifierFlags: [.command], action: #selector(keyboardBrowserForward)),
             UIKeyCommand(input: "[", modifierFlags: [.command], action: #selector(keyboardBrowserBack)),
-            UIKeyCommand(input: "f", modifierFlags: [.alternate, .command], action: #selector(keyboardFind)),
-            UIKeyCommand(input: "l", modifierFlags: [.command], action: #selector(keyboardFind)),
+            UIKeyCommand(input: "f", modifierFlags: [.command], action: #selector(keyboardFind)),
+            UIKeyCommand(input: "l", modifierFlags: [.command], action: #selector(keyboardLocation)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .command, .alternate ], action: #selector(keyboardFire)),
             UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [ .control, .alternate ], action: #selector(keyboardFire)),
             UIKeyCommand(input: UIKeyCommand.inputTab, modifierFlags: .control, action: #selector(keyboardNextTab)),
@@ -48,22 +48,27 @@ extension MainViewController {
         ]
     }
 
-    @objc func keyboardFire() {
-        onQuickFirePressed()
-    }
-    
-    @objc func keyboardFind() {
+    @objc func keyboardLocation() {
         guard tabSwitcherController == nil else { return }
-        
+
         if let controller = homeController {
             controller.launchNewSearch()
         } else {
             omniBar.becomeFirstResponder()
         }
     }
+
+    @objc func keyboardFire() {
+        onQuickFirePressed()
+    }
+    
+    @objc func keyboardFind() {
+        currentTab?.requestFindInPage()
+    }
     
     @objc func keyboardEscape() {
         guard tabSwitcherController == nil else { return }
+        findInPageView.done()
         autocompleteController?.keyboardEscape()
         onCancelPressed()
     }

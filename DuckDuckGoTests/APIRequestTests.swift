@@ -124,24 +124,36 @@ class APIRequestTests: XCTestCase {
             return fixture(filePath: self.validJson(), status: 200, headers: nil)
         }
         
-        let expectFirst = expectation(description: "first request has been processed")
-        let expectLast = expectation(description: "second request has been processed")
+        let completion = expectation(description: "requests completed")
+        completion.expectedFulfillmentCount = 2
+        
+        let lock = NSLock()
         
         APIRequest.request(url: url) { (_, error) in
-            // Give second request a chance to execute the callback
-            Thread.sleep(forTimeInterval: 0.4)
+            // 1. Completion executed on (supposedly) private, serial queue.
             XCTAssertNil(error)
-            expectFirst.fulfill()
+            lock.lock()
+            
+            // 2. Dispatch another request.
+            APIRequest.request(url: self.url) { (_, error) in
+                XCTAssertNil(error)
+                
+                // 4. In case completion is indeed executed on serial queue,
+                // lock should be unlocked by the time this code is executed
+                XCTAssert(lock.try())
+                
+                completion.fulfill()
+                lock.unlock()
+            }
+            
+            // 3. Wait a bit...
+            Thread.sleep(forTimeInterval: 1)
+            completion.fulfill()
+            
+            lock.unlock()
         }
-        
-        Thread.sleep(forTimeInterval: 0.1)
-        
-        APIRequest.request(url: url) { (_, error) in
-            XCTAssertNil(error)
-            expectLast.fulfill()
-        }
-        
-        wait(for: [expectFirst, expectLast], timeout: 1.0, enforceOrder: true)
+
+        waitForExpectations(timeout: 2, handler: nil)
     }
 
     func validJson() -> String {

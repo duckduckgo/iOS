@@ -34,30 +34,22 @@ class FindInPage: NSObject {
 
     func done() {
         delegate?.done(findInPage: self)
-        webView.evaluateJavaScript("window.__firefox__.findDone()") { _, error in
-            Logger.log(text: "\(String(describing: error))")
-        }
+        webView.evaluateJavaScript("window.__firefox__.findDone()")
     }
 
     func next() {
-        webView.evaluateJavaScript("window.__firefox__.findNext()") { _, error in
-            Logger.log(text: "\(String(describing: error))")
-        }
+        webView.evaluateJavaScript("window.__firefox__.findNext()")
     }
 
     func previous() {
         delegate?.updated(findInPage: self)
-        webView.evaluateJavaScript("window.__firefox__.findPrevious()") { _, error in
-            Logger.log(text: "\(String(describing: error))")
-        }
+        webView.evaluateJavaScript("window.__firefox__.findPrevious()")
     }
 
     func search(forText text: String) {
         guard text != searchTerm else { return }
         searchTerm = text
-        webView.evaluateJavaScript("window.__firefox__.find('\(text)')") { _, error in
-            Logger.log(text: "\(String(describing: error))")
-        }
+        webView.evaluateJavaScript("window.__firefox__.find('\(text)')")
     }
 
     func update(currentResult: Int?, totalResults: Int?) {

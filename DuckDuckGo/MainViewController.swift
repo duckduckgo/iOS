@@ -48,6 +48,7 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var statusBarBackground: UIView!
     @IBOutlet weak var findInPageView: FindInPageView!
+    @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
     
     weak var notificationView: NotificationView?
 
@@ -90,10 +91,44 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
-        
+
+        findInPageBottomLayoutConstraint.constant = 0
+        registerForKeyboardNotifications()
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
+
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+
+        findInPageBottomLayoutConstraint.constant = keyboardFrame.size.height
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        
+        findInPageBottomLayoutConstraint.constant = 0
+        UIView.animate(withDuration: duration) { [weak self] in
+            self?.view.layoutIfNeeded()
+        }
+    }
+
     private func initTabButton() {
         tabSwitcherButton.delegate = self
         tabsButton.customView = tabSwitcherButton
@@ -164,6 +199,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func attachHomeScreen() {
+        findInPageView.isHidden = true
         removeHomeScreen()
 
         let controller = HomeViewController.loadFromStoryboard()
@@ -659,6 +695,7 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
+        findInPageView?.becomeFirstResponder()
     }
 
 }
@@ -758,6 +795,8 @@ extension MainViewController: Themable {
         tabsButton.tintColor = theme.barTintColor
         
         tabManager.decorate(with: theme)
+
+        findInPageView.decorate(with: theme)
     }
     
 }

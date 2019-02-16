@@ -16,7 +16,7 @@ protocol FindInPageDelegate: NSObjectProtocol {
 }
 
 class FindInPage {
-    
+
     weak var delegate: FindInPageDelegate?
     let webView: WKWebView
     

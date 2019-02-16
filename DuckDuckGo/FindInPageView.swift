@@ -18,17 +18,42 @@ class FindInPageView: UIView {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var inputText: UITextField!
 
-    func update(with findInPage: FindInPage?) {
-        guard let findInPage = findInPage else {
-            isHidden = true
-            return
-        }
+    weak var findInPage: FindInPage?
 
-        isHidden = false
+    func update(with findInPage: FindInPage?) {
+        self.findInPage = findInPage
+        isHidden = findInPage == nil
+        inputText?.text = findInPage?.searchTerm
+        counterLabel.isHidden = findInPage?.total ?? 0 == 0
+
+        let current = findInPage?.current ?? 0
+        let total = findInPage?.total ?? 0
+        counterLabel.text = "\(current) of \(total)"
     }
 
     override func becomeFirstResponder() -> Bool {
         return inputText.becomeFirstResponder()
+    }
+
+    @IBAction func done() {
+        isHidden = true
+        findInPage?.done()
+        inputText.resignFirstResponder()        
+    }
+
+    @IBAction func next() {
+        findInPage?.next()
+    }
+
+    @IBAction func previous() {
+        findInPage?.previous()
+    }
+
+    @IBAction func textChanged() {
+        guard let text = inputText.text else {
+            return
+        }
+        findInPage?.search(forText: text)
     }
 
 }

@@ -495,6 +495,10 @@ extension MainViewController: FindInPageDelegate {
     func updated(findInPage: FindInPage) {
         findInPageView.update(with: findInPage)
     }
+
+    func done(findInPage: FindInPage) {
+        currentTab?.findInPage = nil
+    }
     
 }
 

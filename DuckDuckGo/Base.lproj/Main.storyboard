@@ -95,6 +95,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8N-Ee-U1n">
                                         <rect key="frame" x="319" y="9.5" width="37" height="30"/>
                                         <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="done" destination="Vrw-HM-EuC" eventType="touchUpInside" id="Y9e-W7-nCO"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="piX-Du-shO" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="99" y="6.5" width="201" height="36"/>
@@ -123,6 +126,9 @@
                                                         <real key="value" value="0.0"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="textChanged" destination="Vrw-HM-EuC" eventType="editingChanged" id="AM9-Dr-pUB"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.57647058819999997" green="0.69411764710000001" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -150,6 +156,9 @@
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="find-previous-dark"/>
+                                        <connections>
+                                            <action selector="previous" destination="Vrw-HM-EuC" eventType="touchUpInside" id="IVu-FC-ve6"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwE-sE-qcT">
                                         <rect key="frame" x="20" y="14.5" width="19" height="20"/>
@@ -158,6 +167,9 @@
                                         </constraints>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="find-next-dark"/>
+                                        <connections>
+                                            <action selector="next" destination="Vrw-HM-EuC" eventType="touchUpInside" id="a5z-QY-i0X"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

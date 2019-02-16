@@ -100,33 +100,37 @@ class MainViewController: UIViewController {
 
     private func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
+                                               selector: #selector(keyboardWillChangeFrame),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+    // based on https://stackoverflow.com/a/46117073/73479
+    @objc private func keyboardWillChangeFrame(_ notification: Notification) {
 
-        findInPageBottomLayoutConstraint.constant = keyboardFrame.size.height
-        UIView.animate(withDuration: duration) { [weak self] in
-            self?.view.layoutIfNeeded()
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+                return
         }
-    }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
-        
-        findInPageBottomLayoutConstraint.constant = 0
-        UIView.animate(withDuration: duration) { [weak self] in
-            self?.view.layoutIfNeeded()
+        var height = keyboardFrame.size.height
+
+        if #available(iOS 11, *) {
+            let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
+            let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
+            let intersection = safeAreaFrame.intersection(keyboardFrameInView)
+            height = intersection.height
         }
+
+        let duration: TimeInterval = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+        let animationCurveRawNSN = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+        let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
+
+        findInPageBottomLayoutConstraint.constant = height
+        UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 
     private func initTabButton() {
@@ -699,7 +703,7 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
-        findInPageView?.becomeFirstResponder()
+        _ = findInPageView?.becomeFirstResponder()
     }
 
 }

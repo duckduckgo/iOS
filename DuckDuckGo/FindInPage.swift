@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import Core
 
 protocol FindInPageDelegate: NSObjectProtocol {
     
@@ -17,8 +18,7 @@ protocol FindInPageDelegate: NSObjectProtocol {
 
 }
 
-// TODO call the JS
-class FindInPage {
+class FindInPage: NSObject {
 
     weak var delegate: FindInPageDelegate?
     let webView: WKWebView
@@ -29,33 +29,49 @@ class FindInPage {
 
     init(webView: WKWebView) {
         self.webView = webView
+        super.init()
     }
 
     func done() {
         delegate?.done(findInPage: self)
+        webView.evaluateJavaScript("window.__firefox__.findDone()") { _, error in
+            Logger.log(text: "\(String(describing: error))")
+        }
     }
 
     func next() {
-        current += 1
-        if current > total {
-            current = 1
+        webView.evaluateJavaScript("window.__firefox__.findNext()") { _, error in
+            Logger.log(text: "\(String(describing: error))")
         }
-        delegate?.updated(findInPage: self)
     }
 
     func previous() {
-        current -= 1
-        if current < 1 {
-            current = total
-        }
         delegate?.updated(findInPage: self)
+        webView.evaluateJavaScript("window.__firefox__.findPrevious()") { _, error in
+            Logger.log(text: "\(String(describing: error))")
+        }
     }
 
     func search(forText text: String) {
+        guard text != searchTerm else { return }
         searchTerm = text
-        total = text.isEmpty ? 0 : 3
-        current = 1
+        webView.evaluateJavaScript("window.__firefox__.find('\(text)')") { _, error in
+            Logger.log(text: "\(String(describing: error))")
+        }
+    }
+
+    func update(currentResult: Int?, totalResults: Int?) {
+        current = currentResult ?? current
+        total = totalResults ?? total
         delegate?.updated(findInPage: self)
+    }
+
+}
+
+extension FindInPage: WKScriptMessageHandler {
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+
     }
 
 }

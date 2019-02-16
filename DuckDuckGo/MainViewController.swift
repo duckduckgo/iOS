@@ -501,6 +501,7 @@ extension MainViewController: FindInPageDelegate {
     }
 
     func done(findInPage: FindInPage) {
+        findInPageView.isHidden = true
         currentTab?.findInPage = nil
     }
     

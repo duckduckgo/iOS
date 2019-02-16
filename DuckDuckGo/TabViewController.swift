@@ -744,9 +744,13 @@ extension TabViewController: WKNavigationDelegate {
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,
-            decision == .allow,
-            appUrls.isDuckDuckGoSearch(url: url) {
-            StatisticsLoader.shared.refreshRetentionAtb()
+            decision == .allow {
+
+            if appUrls.isDuckDuckGoSearch(url: url) {
+                StatisticsLoader.shared.refreshRetentionAtb()
+            }
+
+            findInPage?.done()
         }
         
         decisionHandler(decision)

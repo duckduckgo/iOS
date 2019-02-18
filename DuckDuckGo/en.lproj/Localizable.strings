@@ -135,3 +135,6 @@
 
 "bookmark.title.placeholder" = "Website title";
 "bookmark.address.placeholder" = "www.example.com";
+
+"findinpage.title" = "Find in Page";
+"findinpage.count" = "%1$d of %2$d";

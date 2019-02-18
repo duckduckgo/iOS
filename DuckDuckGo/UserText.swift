@@ -154,5 +154,7 @@ public struct UserText {
     public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", comment: "Bookmark Title Placeholder")
     public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", comment: "Bookmark Title Placeholder")
 
-    public static let findInPage = "Find in Page"
+    public static let findInPage = NSLocalizedString("findinpage.title", comment: "%d of %d")
+    public static let findInPageCount = NSLocalizedString("findinpage.count", comment: "%d of %d")
+    
 }

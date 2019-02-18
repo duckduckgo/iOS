@@ -128,6 +128,7 @@ class MainViewController: UIViewController {
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
 
         findInPageBottomLayoutConstraint.constant = height
+        currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)

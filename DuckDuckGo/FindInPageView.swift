@@ -20,6 +20,14 @@ class FindInPageView: UIView {
 
     weak var findInPage: FindInPage?
 
+    override func awakeFromNib() {
+        layer.shadowRadius = 1
+        layer.shadowOffset = CGSize(width: 0, height: -1)
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.12
+        layer.masksToBounds = false
+    }
+    
     func update(with findInPage: FindInPage?) {
         self.findInPage = findInPage
         isHidden = findInPage == nil
@@ -28,7 +36,7 @@ class FindInPageView: UIView {
 
         let current = findInPage?.current ?? 0
         let total = findInPage?.total ?? 0
-        counterLabel.text = "\(current) of \(total)"
+        counterLabel.text = UserText.findInPageCount.format(arguments: current, total)
     }
 
     override func becomeFirstResponder() -> Bool {
@@ -55,7 +63,7 @@ class FindInPageView: UIView {
         }
         findInPage?.search(forText: text)
     }
-
+    
 }
 
 extension FindInPageView: UITextFieldDelegate {
@@ -64,7 +72,7 @@ extension FindInPageView: UITextFieldDelegate {
         next()
         return true
     }
-
+    
 }
 
 extension FindInPageView: Themable {

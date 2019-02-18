@@ -70,11 +70,3 @@ class FindInPage: NSObject {
     }
 
 }
-
-extension FindInPage: WKScriptMessageHandler {
-
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
-    }
-
-}

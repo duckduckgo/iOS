@@ -87,6 +87,7 @@ extension TabViewController {
     
     private func buildFindInPageAction(forLink link: Link) -> UIAlertAction? {
         return UIAlertAction(title: UserText.findInPage, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuFindInPage)
             self?.requestFindInPage()
         }
     }

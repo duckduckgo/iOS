@@ -540,6 +540,7 @@ extension MainViewController: BrowserChromeDelegate {
 
     private func hideKeyboard() {
         omniBar.resignFirstResponder()
+        _ = findInPageView.resignFirstResponder()
     }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {

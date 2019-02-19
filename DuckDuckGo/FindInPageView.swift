@@ -39,6 +39,10 @@ class FindInPageView: UIView {
         layer.masksToBounds = false
     }
     
+    override func resignFirstResponder() -> Bool {
+        return inputText.resignFirstResponder()
+    }
+    
     func update(with findInPage: FindInPage?) {
         self.findInPage = findInPage
         isHidden = findInPage == nil
@@ -80,6 +84,7 @@ class FindInPageView: UIView {
 extension FindInPageView: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        inputText.resignFirstResponder()
         next()
         return true
     }

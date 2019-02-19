@@ -34,6 +34,7 @@ class FindInPageView: UIView {
     @IBOutlet weak var searchBackground: UIView!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var inputText: UITextField!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
 
     weak var delegate: FindInPageViewDelegate?
     weak var findInPage: FindInPage?
@@ -51,6 +52,8 @@ class FindInPageView: UIView {
     }
     
     func update(with findInPage: FindInPage?) {
+        activityView.stopAnimating()
+        
         self.findInPage = findInPage
         isHidden = findInPage == nil
         inputText?.text = findInPage?.searchTerm
@@ -84,6 +87,8 @@ class FindInPageView: UIView {
         guard let text = inputText.text else {
             return
         }
+        counterLabel.isHidden = true
+        activityView.startAnimating()
         findInPage?.search(forText: text)
     }
     
@@ -112,5 +117,6 @@ extension FindInPageView: Themable {
         inputText.keyboardAppearance = theme.keyboardAppearance
         searchLoupe.tintColor = theme.barTintColor
         doneButton.setTitleColor(theme.barTintColor, for: .normal)
+        activityView.style = theme.activityStyle
     }
 }

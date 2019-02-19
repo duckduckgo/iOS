@@ -177,13 +177,18 @@
                                                     <action selector="next" destination="yPc-P1-sCk" eventType="touchUpInside" id="qhU-57-4Ou"/>
                                                 </connections>
                                             </button>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NKG-8h-dYm">
+                                                <rect key="frame" x="230" y="14.5" width="20" height="20"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="X8N-Ee-U1n" secondAttribute="trailing" constant="12" id="1vy-nC-4mO"/>
                                             <constraint firstAttribute="height" constant="49" id="48d-v1-4zk"/>
                                             <constraint firstItem="X8N-Ee-U1n" firstAttribute="leading" secondItem="piX-Du-shO" secondAttribute="trailing" constant="12" id="4kw-bl-vIX"/>
                                             <constraint firstItem="kT9-LB-Wus" firstAttribute="centerY" secondItem="Vrw-HM-EuC" secondAttribute="centerY" id="P6r-Q3-V5a"/>
+                                            <constraint firstItem="NKG-8h-dYm" firstAttribute="centerY" secondItem="Vrw-HM-EuC" secondAttribute="centerY" id="Q2d-EA-7r7"/>
                                             <constraint firstItem="piX-Du-shO" firstAttribute="leading" secondItem="kT9-LB-Wus" secondAttribute="trailing" constant="8" id="fXp-C1-9PE"/>
+                                            <constraint firstAttribute="trailing" secondItem="NKG-8h-dYm" secondAttribute="trailing" constant="70" id="hTf-kg-MiW"/>
                                             <constraint firstItem="piX-Du-shO" firstAttribute="centerY" secondItem="Vrw-HM-EuC" secondAttribute="centerY" id="jiH-kn-vbO"/>
                                             <constraint firstItem="FwE-sE-qcT" firstAttribute="leading" secondItem="Vrw-HM-EuC" secondAttribute="leading" constant="8" id="l4p-i6-wlY"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="768" id="lBZ-Pq-WpN"/>
@@ -202,6 +207,7 @@
                                     <constraint firstAttribute="height" constant="49" id="wa0-5u-6yz"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="activityView" destination="NKG-8h-dYm" id="llx-pJ-Iht"/>
                                     <outlet property="counterLabel" destination="rSE-zZ-iud" id="Oxs-jP-qud"/>
                                     <outlet property="doneButton" destination="X8N-Ee-U1n" id="7Bp-5f-gZ3"/>
                                     <outlet property="inputText" destination="IBB-TQ-d5c" id="a5x-Tu-hw4"/>

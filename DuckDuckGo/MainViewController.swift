@@ -796,17 +796,20 @@ extension MainViewController: TabSwitcherButtonDelegate {
 extension MainViewController: AutoClearWorker {
     
     func forgetTabs() {
+        findInPageView?.done()
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
     }
     
     func forgetData() {
+        findInPageView?.done()
         ServerTrustCache.shared.clear()
         WebCacheManager.clear()
     }
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
+        findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {

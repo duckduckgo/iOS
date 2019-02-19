@@ -19,6 +19,12 @@
 
 import UIKit
 
+protocol FindInPageViewDelegate: NSObjectProtocol {
+    
+    func done(findInPageView: FindInPageView)
+    
+}
+
 class FindInPageView: UIView {
 
     @IBOutlet weak var nextButton: UIButton!
@@ -29,6 +35,7 @@ class FindInPageView: UIView {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var inputText: UITextField!
 
+    weak var delegate: FindInPageViewDelegate?
     weak var findInPage: FindInPage?
 
     override func awakeFromNib() {
@@ -61,7 +68,8 @@ class FindInPageView: UIView {
     @IBAction func done() {
         isHidden = true
         findInPage?.done()
-        inputText.resignFirstResponder()        
+        delegate?.done(findInPageView: self)
+        inputText.resignFirstResponder()
     }
 
     @IBAction func next() {

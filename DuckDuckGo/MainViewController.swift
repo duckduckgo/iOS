@@ -92,6 +92,7 @@ class MainViewController: UIViewController {
         loadInitialView()
         addLaunchTabNotificationObserver()
 
+        findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
         registerForKeyboardNotifications()
 
@@ -525,8 +526,11 @@ extension MainViewController: FindInPageDelegate {
         findInPageView.update(with: findInPage)
     }
 
-    func done(findInPage: FindInPage) {
-        findInPageView.isHidden = true
+}
+
+extension MainViewController: FindInPageViewDelegate {
+    
+    func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
     }
     
@@ -687,6 +691,8 @@ extension MainViewController: HomeControllerDelegate {
 extension MainViewController: TabDelegate {
 
     func tabLoadingStateDidChange(tab: TabViewController) {
+        findInPageView.done()
+        
         if currentTab == tab {
             refreshControls()
         }
@@ -694,6 +700,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
+        _ = findInPageView.resignFirstResponder()
         newTab()
     }
 
@@ -703,6 +710,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
+        _ = findInPageView.resignFirstResponder()
         loadUrlInNewTab(url)
     }
 
@@ -721,6 +729,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {
+        findInPageView.done()
         tabManager.invalidateCache(forController: tab)
     }
 

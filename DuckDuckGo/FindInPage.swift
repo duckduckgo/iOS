@@ -25,8 +25,6 @@ protocol FindInPageDelegate: NSObjectProtocol {
     
     func updated(findInPage: FindInPage)
 
-    func done(findInPage: FindInPage)
-
 }
 
 class FindInPage: NSObject {
@@ -44,7 +42,6 @@ class FindInPage: NSObject {
     }
 
     func done() {
-        delegate?.done(findInPage: self)
         webView.evaluateJavaScript("window.__firefox__.findDone()")
     }
 

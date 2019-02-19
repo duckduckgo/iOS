@@ -156,5 +156,18 @@ public struct UserText {
 
     public static let findInPage = NSLocalizedString("findinpage.title", comment: "Find in Page")
     public static let findInPageCount = NSLocalizedString("findinpage.count", comment: "%d of %d")
-    
+
+    public static let keyCommandShowAllTabs = NSLocalizedString("keyCommandShowAllTabs", comment: "Show all tabs")
+    public static let keyCommandNewTab = NSLocalizedString("keyCommandNewTab", comment: "New tab")
+    public static let keyCommandCloseTab = NSLocalizedString("keyCommandCloseTab", comment: "Close tab")
+    public static let keyCommandNextTab = NSLocalizedString("keyCommandNextTab", comment: "Next tab")
+    public static let keyCommandPreviousTab = NSLocalizedString("keyCommandPreviousTab", comment: "Previous tab")
+    public static let keyCommandBrowserForward = NSLocalizedString("keyCommandBrowserForward", comment: "Browse forward")
+    public static let keyCommandBrowserBack = NSLocalizedString("keyCommandBrowserBack", comment: "Browse back")
+    public static let keyCommandFind = NSLocalizedString("keyCommandFind", comment: "Find in page")
+    public static let keyCommandLocation = NSLocalizedString("keyCommandLocation", comment: "Search or enter address")
+    public static let keyCommandFire = NSLocalizedString("keyCommandFire", comment: "Clear all tabs and data")
+    public static let keyCommandClose = NSLocalizedString("keyCommandClose", comment: "Close")
+    public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", comment: "Select")
+
 }

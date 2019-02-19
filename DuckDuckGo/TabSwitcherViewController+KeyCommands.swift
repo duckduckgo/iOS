@@ -24,12 +24,20 @@ extension TabSwitcherViewController {
     override var keyCommands: [UIKeyCommand]? {
         return [
             
-            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow)),
-            UIKeyCommand(input: "t", modifierFlags: [ .command ], action: #selector(keyboardNewTab)),
-            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardSelectCurrent)),
-            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp)),
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown)),
-            UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab))
+            UIKeyCommand(input: UIKeyCommand.inputEscape, modifierFlags: [], action: #selector(keyboardCloseWindow),
+                         discoverabilityTitle: UserText.keyCommandClose),
+            UIKeyCommand(input: "t", modifierFlags: [ .command ], action: #selector(keyboardNewTab),
+                        discoverabilityTitle: UserText.keyCommandNewTab),
+            UIKeyCommand(input: "n", modifierFlags: [ .command ], action: #selector(keyboardNewTab),
+                discoverabilityTitle: UserText.keyCommandNewTab),
+            UIKeyCommand(input: UIKeyCommand.inputEnter, modifierFlags: [], action: #selector(keyboardSelectCurrent),
+                         discoverabilityTitle: UserText.keyCommandSelect),
+            UIKeyCommand(input: UIKeyCommand.inputUpArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionUp),
+                         discoverabilityTitle: UserText.keyCommandPreviousTab),
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: [], action: #selector(keyboardMoveSelectionDown),
+                         discoverabilityTitle: UserText.keyCommandNextTab),
+            UIKeyCommand(input: UIKeyCommand.inputBackspace, modifierFlags: [], action: #selector(keyboardRemoveTab),
+                         discoverabilityTitle: UserText.keyCommandCloseTab)
             
         ]
     }

@@ -33,7 +33,7 @@ class FindInPageView: UIView {
 
     override func awakeFromNib() {
         layer.shadowRadius = 1
-        layer.shadowOffset = CGSize(width: 0, height: -1)
+        layer.shadowOffset = CGSize(width: 0, height: -1.0 / UIScreen.main.scale)
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.12
         layer.masksToBounds = false

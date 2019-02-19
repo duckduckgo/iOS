@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var bookmarksButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
@@ -72,6 +73,7 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
+    let gestureBookmarksButton = GestureToolBarButton()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
@@ -85,6 +87,7 @@ class MainViewController: UIViewController {
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
+        initBookmarksButton()
         attachOmniBar()
         configureTabManager()
         loadInitialView()
@@ -96,6 +99,12 @@ class MainViewController: UIViewController {
     private func initTabButton() {
         tabSwitcherButton.delegate = self
         tabsButton.customView = tabSwitcherButton
+    }
+    
+    private func initBookmarksButton() {
+        gestureBookmarksButton.delegate = self
+        gestureBookmarksButton.image = UIImage.init(named: "Bookmarks")
+        bookmarksButton.customView = gestureBookmarksButton
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -206,10 +215,10 @@ class MainViewController: UIViewController {
         currentTab?.goForward()
     }
     
-    @IBAction func onTabBarBookmarksPressed() {
-        Pixel.fire(pixel: .tabBarBookmarksPressed)
-        onBookmarksPressed()
-    }
+//    @IBAction func onTabBarBookmarksPressed() {
+//        Pixel.fire(pixel: .tabBarBookmarksPressed)
+//        onBookmarksPressed()
+//    }
 
     public var siteRating: SiteRating? {
         return currentTab?.siteRating
@@ -692,6 +701,22 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
 }
 
+extension MainViewController: GestureToolBarButtonDelegate {
+    
+    func singleTapHandler() {
+        Logger.log(items: "MVC single press handler")
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
+    }
+    
+    func longPressHandler() {
+        Logger.log(items: "MVC long press handler")
+        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
+        currentTab?.promptSaveBookmarkAction()
+    }
+    
+}
+
 extension MainViewController: AutoClearWorker {
     
     func forgetTabs() {
@@ -735,6 +760,7 @@ extension MainViewController: Themable {
         toolbar?.tintColor = theme.barTintColor
         
         tabSwitcherButton.decorate(with: theme)
+        gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
         
         tabManager.decorate(with: theme)

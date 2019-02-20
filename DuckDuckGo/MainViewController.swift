@@ -694,6 +694,14 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
 extension MainViewController: AutoClearWorker {
     
+    func clearNavigationStack() {
+        if let presented = presentedViewController {
+            presented.dismiss(animated: false) { [weak self] in
+                self?.clearNavigationStack()
+            }
+        }
+    }
+    
     func forgetTabs() {
         tabManager.removeAll()
         showBars()

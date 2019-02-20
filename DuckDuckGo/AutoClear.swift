@@ -22,6 +22,7 @@ import UIKit
 
 protocol AutoClearWorker {
     
+    func clearNavigationStack()
     func forgetData()
     func forgetTabs()
 }
@@ -89,6 +90,7 @@ class AutoClear {
             let timestamp = timestamp,
             shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
+        worker.clearNavigationStack()
         clearData()
         self.timestamp = nil
     }

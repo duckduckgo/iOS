@@ -69,7 +69,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
-                                    <barButtonItem image="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
+                                    <barButtonItem title="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
@@ -188,6 +188,5 @@
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
-        <image name="Tabs" width="24" height="24"/>
     </resources>
 </document>

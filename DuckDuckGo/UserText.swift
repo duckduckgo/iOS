@@ -153,5 +153,9 @@ public struct UserText {
 
     public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", comment: "Bookmark Title Placeholder")
     public static let bookmarkAddressPlaceholder = NSLocalizedString("bookmark.address.placeholder", comment: "Bookmark Title Placeholder")
-
+    
+    public static let bookmarkAllTabsNotFound = NSLocalizedString("bookmarkAll.tabs.notfound", comment: "No open tabs found to bookmark")
+    public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", comment: "All open tabs are bookmarked")
+    public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", comment: "Failed to bookmark %lu out of %lu tabs")
+    
 }

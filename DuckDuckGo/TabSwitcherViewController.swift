@@ -28,6 +28,7 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var toolbar: UIToolbar!
     
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var bookmarkAllButton: UIButton!
     
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
@@ -70,6 +71,52 @@ class TabSwitcherViewController: UIViewController {
     private func refreshTitle() {
         let count = tabsModel.count
         titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
+    }
+    
+    fileprivate func displayBookmarkStatusToast(_ savedBookmarks: [Int], _ alreadySavedBookmarks: [Int]) {
+        if (tabsModel.tabs.count == savedBookmarks.count) || (tabsModel.tabs.count == savedBookmarks.count + alreadySavedBookmarks.count) {
+            self.view.showBottomToast(UserText.bookmarkAllTabsSaved)
+        } else {
+            let failedSaveCount = tabsModel.tabs.count - savedBookmarks.count - alreadySavedBookmarks.count
+            let statusMessage = String.localizedStringWithFormat(UserText.bookmarkAllTabsFailedToSave, failedSaveCount, tabsModel.tabs.count)
+            self.view.showBottomToast(statusMessage)
+        }
+    }
+    
+    fileprivate func bookmarkAll(_ openTabs: [Tab] ) -> ([Int], [Int]) {
+        
+        let bookmarksManager = BookmarksManager()
+        // here tab index are stored in arrays, in case we need to close bookmarked tabs
+        var savedBookmarks: [Int] = []
+        var alreadySavedBookmarks: [Int] = []
+        
+        for (index, aTab) in openTabs.enumerated() {
+            if let link = aTab.link {
+                if bookmarksManager.contains(url: link.url) {
+                    alreadySavedBookmarks.append(index)
+                    Logger.log(text: "\(link.url) already bookmarked")
+                } else {
+                    bookmarksManager.save(bookmark: link)
+                    savedBookmarks.append(index)
+                }
+            } else {
+                Logger.log(text: "no valid link found for tab \(aTab)")
+            }
+        }
+        return (savedBookmarks: savedBookmarks, alreadySavedBookmarks: alreadySavedBookmarks)
+    }
+    
+    @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
+        
+        Pixel.fire(pixel: .bookmarkAllOpenTabs)
+        guard tabsModel.tabs.count > 0 else {
+            self.view.showBottomToast(UserText.bookmarkAllTabsNotFound)
+            Logger.log(text: "No open tabs found to bookmark")
+            return
+        }
+        
+        let (savedBookmarks, alreadySavedBookmarks) = bookmarkAll(tabsModel.tabs)
+        displayBookmarkStatusToast(savedBookmarks, alreadySavedBookmarks)
     }
     
     @IBAction func onSettingsPressed(_ sender: UIButton) {
@@ -182,6 +229,7 @@ extension TabSwitcherViewController: Themable {
     func decorate(with theme: Theme) {
         titleView.textColor = theme.tintOnBlurColor
         settingsButton.tintColor = theme.tintOnBlurColor
+        bookmarkAllButton.tintColor = theme.tintOnBlurColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

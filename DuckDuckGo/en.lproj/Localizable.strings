@@ -135,3 +135,7 @@
 
 "bookmark.title.placeholder" = "Website title";
 "bookmark.address.placeholder" = "www.example.com";
+
+"bookmarkAll.tabs.notfound" = "No open tabs found to bookmark";
+"bookmarkAll.tabs.saved" = "All open tabs are bookmarked";
+"bookmarkAll.tabs.failed" = "Failed to bookmark %lu out of %lu tab(s)";

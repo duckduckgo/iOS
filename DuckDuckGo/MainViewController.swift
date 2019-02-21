@@ -47,6 +47,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var statusBarBackground: UIView!
+    @IBOutlet weak var findInPageView: FindInPageView!
+    @IBOutlet weak var findInPageBottomLayoutConstraint: NSLayoutConstraint!
     
     weak var notificationView: NotificationView?
 
@@ -89,10 +91,74 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
-        
+
+        findInPageView.delegate = self
+        findInPageBottomLayoutConstraint.constant = 0
+        registerForKeyboardNotifications()
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
+
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChangeFrame),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+
+    /// This is only really for iOS 10 devices that don't properly support the change frame approach.
+    @objc private func keyboardWillHide(_ notification: Notification) {
+
+        guard findInPageBottomLayoutConstraint.constant > 0,
+            let userInfo = notification.userInfo else {
+            return
+        }
+
+        findInPageBottomLayoutConstraint.constant = 0
+        animateForKeyboard(userInfo: userInfo)
+    }
     
+    /// Based on https://stackoverflow.com/a/46117073/73479
+    ///  Handles iPhone X devices properly.
+    @objc private func keyboardWillChangeFrame(_ notification: Notification) {
+
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        var height = keyboardFrame.size.height
+
+        if #available(iOS 11, *) {
+            let keyboardFrameInView = view.convert(keyboardFrame, from: nil)
+            let safeAreaFrame = view.safeAreaLayoutGuide.layoutFrame.insetBy(dx: 0, dy: -additionalSafeAreaInsets.bottom)
+            let intersection = safeAreaFrame.intersection(keyboardFrameInView)
+            height = intersection.height
+            
+        }
+
+        findInPageBottomLayoutConstraint.constant = height
+        currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        animateForKeyboard(userInfo: userInfo)
+    }
+    
+    private func animateForKeyboard(userInfo: [AnyHashable: Any]) {
+        let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+        let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+        let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
+        
+        UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+
+    }
+
     private func initTabButton() {
         tabSwitcherButton.delegate = self
         tabsButton.customView = tabSwitcherButton
@@ -163,6 +229,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func attachHomeScreen() {
+        findInPageView.isHidden = true
         removeHomeScreen()
 
         let controller = HomeViewController.loadFromStoryboard()
@@ -266,6 +333,7 @@ class MainViewController: UIViewController {
 
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
+        updateFindInPage()
         currentTab?.chromeDelegate = nil
         addToView(controller: tab)
         tab.webView.scrollView.delegate = chromeManager
@@ -444,6 +512,28 @@ class MainViewController: UIViewController {
         attachHomeScreen()
         homeController?.openedAsNewTab()
     }
+    
+    func updateFindInPage() {
+        currentTab?.findInPage?.delegate = self
+        findInPageView.update(with: currentTab?.findInPage)
+    }
+    
+}
+
+extension MainViewController: FindInPageDelegate {
+    
+    func updated(findInPage: FindInPage) {
+        findInPageView.update(with: findInPage)
+    }
+
+}
+
+extension MainViewController: FindInPageViewDelegate {
+    
+    func done(findInPageView: FindInPageView) {
+        currentTab?.findInPage = nil
+    }
+    
 }
 
 extension MainViewController: BrowserChromeDelegate {
@@ -454,6 +544,7 @@ extension MainViewController: BrowserChromeDelegate {
 
     private func hideKeyboard() {
         omniBar.resignFirstResponder()
+        _ = findInPageView.resignFirstResponder()
     }
 
     func setBarsHidden(_ hidden: Bool, animated: Bool) {
@@ -600,6 +691,8 @@ extension MainViewController: HomeControllerDelegate {
 extension MainViewController: TabDelegate {
 
     func tabLoadingStateDidChange(tab: TabViewController) {
+        findInPageView.done()
+        
         if currentTab == tab {
             refreshControls()
         }
@@ -607,6 +700,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
+        _ = findInPageView.resignFirstResponder()
         newTab()
     }
 
@@ -616,6 +710,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL) {
+        _ = findInPageView.resignFirstResponder()
         loadUrlInNewTab(url)
     }
 
@@ -634,11 +729,17 @@ extension MainViewController: TabDelegate {
     }
 
     func tabContentProcessDidTerminate(tab: TabViewController) {
+        findInPageView.done()
         tabManager.invalidateCache(forController: tab)
     }
 
     func showBars() {
         chromeManager.reset()
+    }
+    
+    func tabDidRequestFindInPage(tab: TabViewController) {
+        updateFindInPage()
+        _ = findInPageView?.becomeFirstResponder()
     }
 
 }
@@ -694,18 +795,29 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
 extension MainViewController: AutoClearWorker {
     
+    func clearNavigationStack() {
+        if let presented = presentedViewController {
+            presented.dismiss(animated: false) { [weak self] in
+                self?.clearNavigationStack()
+            }
+        }
+    }
+    
     func forgetTabs() {
+        findInPageView?.done()
         tabManager.removeAll()
         showBars()
         attachHomeScreen()
     }
     
     func forgetData() {
+        findInPageView?.done()
         ServerTrustCache.shared.clear()
         WebCacheManager.clear()
     }
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
+        findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
@@ -738,6 +850,8 @@ extension MainViewController: Themable {
         tabsButton.tintColor = theme.barTintColor
         
         tabManager.decorate(with: theme)
+
+        findInPageView.decorate(with: theme)
     }
     
 }

@@ -82,7 +82,7 @@ private class Loader {
     }
 
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document ] )
+        load(scripts: [ .document, .findinpage ] )
     }
 
     private func loadContentBlockingScripts() {

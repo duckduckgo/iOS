@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
-        clearNavigationStack()
+        mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         
         if AppDeepLinks.isNewSearch(url: url) {
@@ -191,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
-        clearNavigationStack()
+        mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
@@ -200,13 +200,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
-    }
-
-    private func clearNavigationStack() {
-        if let presented = mainViewController?.presentedViewController {
-            presented.dismiss(animated: false) { [weak self] in
-                self?.clearNavigationStack()
-            }
-        }
     }
 }

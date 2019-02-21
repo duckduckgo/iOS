@@ -33,6 +33,10 @@ extension TabViewController {
         }
         
         if let link = link, !isError {
+            if let action = buildFindInPageAction(forLink: link) {
+                alert.addAction(action)
+            }
+            
             if let action = buildSaveBookmarkAction(forLink: link) {
                 alert.addAction(action)
             }
@@ -79,6 +83,13 @@ extension TabViewController {
     private func onNewTabAction() {
         Pixel.fire(pixel: .browsingMenuNewTab)
         delegate?.tabDidRequestNewTab(self)
+    }
+    
+    private func buildFindInPageAction(forLink link: Link) -> UIAlertAction? {
+        return UIAlertAction(title: UserText.findInPage, style: .default) { [weak self] _ in
+            Pixel.fire(pixel: .browsingMenuFindInPage)
+            self?.requestFindInPage()
+        }
     }
     
     private func buildSaveBookmarkAction(forLink link: Link) -> UIAlertAction? {

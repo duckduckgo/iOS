@@ -50,6 +50,7 @@ class TabViewController: UIViewController {
    
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
+    var findInPage: FindInPage?
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
@@ -159,9 +160,11 @@ class TabViewController: UIViewController {
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webViewContainer.addSubview(webView)
-        webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
-        webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
-        webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
+        let controller = webView.configuration.userContentController
+        controller.add(self, name: MessageHandlerNames.trackerDetected)
+        controller.add(self, name: MessageHandlerNames.cache)
+        controller.add(self, name: MessageHandlerNames.log)
+        controller.add(self, name: MessageHandlerNames.findInPageHandler)
         reloadScripts()
         updateUserAgent()
 
@@ -493,9 +496,12 @@ class TabViewController: UIViewController {
         tearDownCount += 1
         removeObservers()
         webView.removeFromSuperview()
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.log)
+
+        let controller = webView.configuration.userContentController
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
     }
     
     private func removeObservers() {
@@ -525,6 +531,7 @@ extension TabViewController: WKScriptMessageHandler {
         static let trackerDetected = "trackerDetectedMessage"
         static let cache = "cacheMessage"
         static let log = "log"
+        static let findInPageHandler = "findInPageHandler"
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -540,9 +547,19 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.log:
             handleLog(message: message)
 
+        case MessageHandlerNames.findInPageHandler:
+            handleFindInPage(message: message)
+
         default:
             assertionFailure("Unhandled message: \(message.name)")
         }
+    }
+
+    private func handleFindInPage(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any] else { return }
+        let currentResult = dict["currentResult"] as? Int
+        let totalResults = dict["totalResults"] as? Int
+        findInPage?.update(currentResult: currentResult, totalResults: totalResults)
     }
 
     private func handleLog(message: WKScriptMessage) {
@@ -727,9 +744,13 @@ extension TabViewController: WKNavigationDelegate {
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,
-            decision == .allow,
-            appUrls.isDuckDuckGoSearch(url: url) {
-            StatisticsLoader.shared.refreshRetentionAtb()
+            decision == .allow {
+
+            if appUrls.isDuckDuckGoSearch(url: url) {
+                StatisticsLoader.shared.refreshRetentionAtb()
+            }
+
+            findInPage?.done()
         }
         
         decisionHandler(decision)
@@ -863,6 +884,12 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer
+    }
+
+    func requestFindInPage() {
+        guard findInPage == nil else { return }
+        findInPage = FindInPage(webView: webView)
+        delegate?.tabDidRequestFindInPage(tab: self)
     }
 }
 // swiftlint:enable file_length

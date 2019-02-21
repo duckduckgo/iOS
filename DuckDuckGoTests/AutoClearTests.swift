@@ -25,8 +25,13 @@ class AutoClearTests: XCTestCase {
     
     class MockWorker: AutoClearWorker {
         
+        var clearNavigationStackInvocationCount = 0
         var forgetDataInvocationCount = 0
         var forgetTabsInvocationCount = 0
+        
+        func clearNavigationStack() {
+            clearNavigationStackInvocationCount += 1
+        }
         
         func forgetData() {
             forgetDataInvocationCount += 1
@@ -88,6 +93,7 @@ class AutoClearTests: XCTestCase {
         logic.applicationWillMoveToForeground()
         logic.applicationDidEnterBackground()
         
+        XCTAssertEqual(worker.clearNavigationStackInvocationCount, 0)
         XCTAssertEqual(worker.forgetDataInvocationCount, 0)
         
         logic.applicationDidLaunch()
@@ -95,7 +101,7 @@ class AutoClearTests: XCTestCase {
         XCTAssertEqual(worker.forgetDataInvocationCount, 1)
     }
     
-    func testWhenDesiredTimingIsSetThenDataIsClearedOnceThimeHasElapsed() {
+    func testWhenDesiredTimingIsSetThenDataIsClearedOnceTimeHasElapsed() {
         let appSettings = AppUserDefaults()
         appSettings.autoClearAction = .clearData
         
@@ -108,15 +114,17 @@ class AutoClearTests: XCTestCase {
         for (timing, delay) in cases {
             appSettings.autoClearTiming = timing
             
-            logic.applicationDidEnterBackground(CACurrentMediaTime() - delay + 1)
+            logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay + 1)
             logic.applicationWillMoveToForeground()
             
+            XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
             
-            logic.applicationDidEnterBackground(CACurrentMediaTime() - delay - 1)
+            logic.applicationDidEnterBackground(Date().timeIntervalSince1970 - delay - 1)
             logic.applicationWillMoveToForeground()
             
             iterationCount += 1
+            XCTAssertEqual(worker.clearNavigationStackInvocationCount, iterationCount)
             XCTAssertEqual(worker.forgetDataInvocationCount, iterationCount)
         }
     }

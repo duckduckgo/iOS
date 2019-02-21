@@ -22,6 +22,7 @@ import UIKit
 
 protocol AutoClearWorker {
     
+    func clearNavigationStack()
     func forgetData()
     func forgetTabs()
 }
@@ -63,7 +64,7 @@ class AutoClear {
     }
     
     /// Note: function is parametrised because of tests.
-    func applicationDidEnterBackground(_ time: TimeInterval = CACurrentMediaTime()) {
+    func applicationDidEnterBackground(_ time: TimeInterval = Date().timeIntervalSince1970) {
         timestamp = time
     }
     
@@ -87,8 +88,9 @@ class AutoClear {
     func applicationWillMoveToForeground() {
         guard isClearingEnabled,
             let timestamp = timestamp,
-            shouldClearData(elapsedTime: CACurrentMediaTime() - timestamp) else { return }
+            shouldClearData(elapsedTime: Date().timeIntervalSince1970 - timestamp) else { return }
         
+        worker.clearNavigationStack()
         clearData()
         self.timestamp = nil
     }

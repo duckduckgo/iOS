@@ -64,7 +64,12 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     @objc func rotated() {
-        scrollViewDidScroll(controller.collectionView)
+        controller.collectionView.invalidateIntrinsicContentSize()
+        controller.collectionView.collectionViewLayout.invalidateLayout()
+        
+        DispatchQueue.main.async {
+            self.scrollViewDidScroll(self.controller.collectionView)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

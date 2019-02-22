@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
     
     private func initBookmarksButton() {
         gestureBookmarksButton.delegate = self
-        gestureBookmarksButton.image = UIImage.init(named: "Bookmarks")
+        gestureBookmarksButton.image = UIImage(named: "Bookmarks")
         bookmarksButton.customView = gestureBookmarksButton
     }
     
@@ -704,14 +704,13 @@ extension MainViewController: TabSwitcherButtonDelegate {
 extension MainViewController: GestureToolBarButtonDelegate {
     
     func singleTapHandler() {
-        Logger.log(items: "MVC single press handler")
+//        Logger.log(items: "MVC single press handler")
         Pixel.fire(pixel: .tabBarBookmarksPressed)
         onBookmarksPressed()
     }
     
     func longPressHandler() {
-        Logger.log(items: "MVC long press handler")
-        Pixel.fire(pixel: .tabBarBookmarksLongPressed)
+//        Logger.log(items: "MVC long press handler")
         currentTab?.promptSaveBookmarkAction()
     }
     

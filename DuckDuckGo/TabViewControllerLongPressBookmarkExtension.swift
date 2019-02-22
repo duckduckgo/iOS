@@ -20,7 +20,6 @@ extension TabViewController {
                 return
             }
             
-            Pixel.fire(pixel: .longPressTabBarBookmark)
             let saveCompletion: (Link) -> Void = { [weak self] updatedBookmark in
                 bookmarksManager.save(bookmark: updatedBookmark)
                 self?.view.showBottomToast(UserText.webSaveBookmarkDone)

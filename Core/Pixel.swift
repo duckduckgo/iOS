@@ -39,7 +39,6 @@ public enum PixelName: String {
     case longPressMenuReadingListItem = "mlp_r"
     case longPressMenuCopyItem = "mlp_c"
     case longPressMenuShareItem = "mlp_s"
-    case longPressTabBarBookmark = "mlp_bm_s" //MobileLongPress_BookMark_Save
     
     case quickActionExtensionSearch = "mqe_s"
     case quickActionExtensionFire = "mqe_f"
@@ -77,7 +76,6 @@ public enum PixelName: String {
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
-    case tabBarBookmarksLongPressed = "mt_bm_l" //Mobile_Tabbar_BookMark_Longpress
     case tabBarTabSwitcherPressed = "mt_tb"
 
     case homeScreenShown = "mh"

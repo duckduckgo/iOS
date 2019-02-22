@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
+class OnboardingViewController: UIViewController, UIPageViewControllerDelegate, Onboarding {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -34,6 +34,8 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
 
     private var currentPageIndex = 0
+    
+    weak var delegate: OnboardingDelegate?
 
     static func loadFromStoryboard() -> OnboardingViewController {
         let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
@@ -151,9 +153,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate {
     }
 
     private func finishOnboardingFlow() {
-        var settings = TutorialSettings()
-        settings.hasSeenOnboarding = true
-        dismiss(animated: true)
+        delegate?.onboardingCompleted()
     }
 
     fileprivate var currentController: UIViewController {

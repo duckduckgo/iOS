@@ -42,8 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+            return true
         }
-
+        
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
@@ -51,9 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
         HomePageConfiguration.installNewUserFavorites()
-        
-        if !testing {
-            autoClear = AutoClear(worker: mainViewController!)
+        startOnboardingFlowIfNotSeenBefore()
+
+        if let main = mainViewController {
+            autoClear = AutoClear(worker: main)
             autoClear?.applicationDidLaunch()
         }
 
@@ -66,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Pixel.fire(pixel: .appLaunch)
         StatisticsLoader.shared.load()
-        startOnboardingFlowIfNotSeenBefore()
         
         if appIsLaunching {
             appIsLaunching = false
@@ -182,11 +183,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func startOnboardingFlowIfNotSeenBefore() {
-        guard let main = mainViewController else { return }
         let settings = TutorialSettings()
-        if !settings.hasSeenOnboarding {
-            main.showOnboarding()
+        guard !settings.hasSeenOnboarding else { return }
+            
+        let onboardingFlow: String
+        
+        let variant = DefaultVariantManager().currentVariant
+        if variant?.features.contains(.onboardingSummary) ?? false {
+            onboardingFlow = "OnboardingSummary"
+        } else {
+            onboardingFlow = "Onboarding"
         }
+        
+        window?.rootViewController = UIStoryboard(name: onboardingFlow, bundle: nil).instantiateInitialViewController()
+        if var onboarding = window?.rootViewController as? Onboarding {
+            onboarding.delegate = self
+        }
+
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
@@ -201,4 +214,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
+}
+
+extension AppDelegate: OnboardingDelegate {
+    
+    func onboardingCompleted() {
+        
+        var settings = TutorialSettings()
+        settings.hasSeenOnboarding = true
+        
+        let modalTransitionStyle: UIModalTransitionStyle
+  
+        let variant = DefaultVariantManager().currentVariant
+        
+        if variant?.features.contains(.onboardingSummary) ?? false {
+            modalTransitionStyle = .crossDissolve
+        } else {
+            modalTransitionStyle = .flipHorizontal
+        }
+        
+        guard let mainViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() else {
+            fatalError("Unable to instantiate main view controller")
+        }
+        
+        mainViewController.modalTransitionStyle = modalTransitionStyle
+        window?.rootViewController?.present(mainViewController, animated: true) {
+            self.window?.rootViewController = mainViewController
+        }
+        
+    }
+    
 }

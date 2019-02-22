@@ -101,6 +101,9 @@
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
 		851B1286221FE756004781BC /* VariantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1284221FE716004781BC /* VariantTests.swift */; };
+		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
+		851B128A22204800004781BC /* OnboardingSummary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 851B128922204800004781BC /* OnboardingSummary.storyboard */; };
+		851B128C2220483A004781BC /* OnboardingSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingSummaryViewController.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -619,6 +622,9 @@
 		8517D98A221783A0006A8DD0 /* FindInPage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FindInPage.xcassets; sourceTree = "<group>"; };
 		851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImproveOnboardingExperiment1Tests.swift; sourceTree = "<group>"; };
 		851B1284221FE716004781BC /* VariantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantTests.swift; sourceTree = "<group>"; };
+		851B128722200575004781BC /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		851B128922204800004781BC /* OnboardingSummary.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingSummary.storyboard; sourceTree = "<group>"; };
+		851B128B2220483A004781BC /* OnboardingSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryViewController.swift; sourceTree = "<group>"; };
 		851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButton.swift; sourceTree = "<group>"; };
 		851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButtonTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
@@ -2218,6 +2224,9 @@
 				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
 				F1BE545D1E69FB9900FCF649 /* OnboardingTutorialPageViewController.swift */,
 				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
+				851B128722200575004781BC /* Onboarding.swift */,
+				851B128922204800004781BC /* OnboardingSummary.storyboard */,
+				851B128B2220483A004781BC /* OnboardingSummaryViewController.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -2814,6 +2823,7 @@
 				85A313972028E78A00327D00 /* release_notes.txt in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,
+				851B128A22204800004781BC /* OnboardingSummary.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */,
 				85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */,
@@ -3053,6 +3063,7 @@
 				85374D3521AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
+				851B128C2220483A004781BC /* OnboardingSummaryViewController.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
@@ -3088,6 +3099,7 @@
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
+				851B128822200575004781BC /* Onboarding.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */,

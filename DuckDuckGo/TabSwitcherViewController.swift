@@ -108,7 +108,6 @@ class TabSwitcherViewController: UIViewController {
     
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
         
-        Pixel.fire(pixel: .bookmarkAllOpenTabs)
         guard tabsModel.tabs.count > 0 else {
             self.view.showBottomToast(UserText.bookmarkAllTabsNotFound)
             Logger.log(text: "No open tabs found to bookmark")

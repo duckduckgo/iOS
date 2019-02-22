@@ -65,4 +65,6 @@ protocol Theme {
     var faviconBackgroundColor: UIColor { get }
     var favoriteTextColor: UIColor { get }
     
+    var activityStyle: UIActivityIndicatorView.Style { get }
+    
 }

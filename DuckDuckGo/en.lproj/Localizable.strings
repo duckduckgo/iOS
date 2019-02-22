@@ -136,6 +136,22 @@
 "bookmark.title.placeholder" = "Website title";
 "bookmark.address.placeholder" = "www.example.com";
 
+"findinpage.title" = "Find in Page";
+"findinpage.count" = "%1$d of %2$d";
+
+"keyCommandShowAllTabs" = "Show all tabs";
+"keyCommandNewTab" = "New tab";
+"keyCommandCloseTab" = "Close tab";
+"keyCommandNextTab" = "Next tab";
+"keyCommandPreviousTab" = "Previous tab";
+"keyCommandBrowserForward" = "Browse forward";
+"keyCommandBrowserBack" = "Browse back";
+"keyCommandFind" = "Find in page";
+"keyCommandLocation" = "Search or enter address";
+"keyCommandFire" = "Clear all tabs and data";
+"keyCommandClose" = "Close";
+"keyCommandSelect" = "Select";
+
 "bookmarkAll.tabs.notfound" = "No open tabs found to bookmark";
 "bookmarkAll.tabs.saved" = "All open tabs are bookmarked";
 "bookmarkAll.tabs.failed" = "Failed to bookmark %lu out of %lu tab(s)";

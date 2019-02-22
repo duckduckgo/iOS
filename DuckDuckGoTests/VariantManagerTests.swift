@@ -25,9 +25,26 @@ class VariantManagerTests: XCTestCase {
     let testVariants = [
         Variant(name: "mb", weight: 50, features: []),
         Variant(name: "mc", weight: 25, features: []),
+        Variant(name: "mt", weight: Variant.doNotAllocate, features: []),
         Variant(name: "md", weight: 25, features: [])
     ]
 
+    func testWhenVariantIsMarkedDoNotAllocateThenItIsNotAllocated() {
+
+        let mockStore = MockStatisticsStore()
+        mockStore.atb = "atb"
+        mockStore.retentionAtb = "ratb"
+
+        for i in 0 ..< 100 {
+            
+            let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i))
+            subject.assignVariantIfNeeded()
+            XCTAssertNotEqual("mt", subject.currentVariant?.name)
+
+        }
+        
+    }
+    
     func testWhenExistingUserThenAssignIfNeededDoesNothing() {
 
         let mockStore = MockStatisticsStore()

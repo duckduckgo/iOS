@@ -24,21 +24,26 @@ public enum FeatureName {
     case homeScreen
     case singleFavorite
     case additionalFavorites
+    case onboardingSummary
+    case onboardingContextual
 }
 
 public struct Variant {
     
+    static let doNotAllocate = 0
+    
     public static let defaultVariants: [Variant] = [
-        
-        // SERP variants - do not remove
+        // Shared control group
         Variant(name: "sc", weight: 1, features: []),
-        Variant(name: "sd", weight: 1, features: []),
         
-        // Enhanced home page experiment
-        Variant(name: "mk", weight: 1, features: []),
-        Variant(name: "ml", weight: 0, features: [.homeScreen, .singleFavorite]),
-        Variant(name: "mm", weight: 0, features: [.homeScreen, .singleFavorite, .additionalFavorites]),
-        Variant(name: "mn", weight: 1, features: [.centeredSearchHomeScreen])
+        // Enhanced home page experiment (DISABLED)
+        Variant(name: "ml", weight: doNotAllocate, features: [.homeScreen, .singleFavorite]),
+        Variant(name: "mm", weight: doNotAllocate, features: [.homeScreen, .singleFavorite, .additionalFavorites]),
+        Variant(name: "mn", weight: doNotAllocate, features: [.centeredSearchHomeScreen]),
+        
+        // Improve app onboarding experiment 1
+        Variant(name: "mq", weight: 1, features: [.onboardingSummary]),
+        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingContextual])
     ]
     
     public let name: String

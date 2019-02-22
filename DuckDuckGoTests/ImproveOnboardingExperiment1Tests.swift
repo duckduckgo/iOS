@@ -1,5 +1,5 @@
 //
-//  VariantTests.swift
+//  ImproveOnboardingExperiment1Tests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,12 +20,15 @@
 import XCTest
 @testable import Core
 
-class VariantTests: XCTestCase {
-
-    func testSharedControlGroupIsDefined() {
+class ImproveOnboardingExperiment1Tests: XCTestCase {
+    
+    func testWhenOnboardingExperimentVariantsHaveWeightThenItIsSetToOne() {
+        let variantNames = [ "mq", "mr" ]
         
-        XCTAssertTrue(Variant.defaultVariants.map { $0.name }.contains("sc"))
-        
+        for variant in Variant.defaultVariants {
+            guard variantNames.contains(variant.name) else { continue }
+            XCTAssertEqual(variant.weight, 1, variant.name)
+        }
     }
     
 }

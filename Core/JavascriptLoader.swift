@@ -23,6 +23,7 @@ import WebKit
 public class JavascriptLoader {
 
     public enum Script: String {
+        case findinpage
         case document
         case disconnectme
         case contentblocker

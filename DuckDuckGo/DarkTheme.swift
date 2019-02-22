@@ -59,4 +59,5 @@ struct DarkTheme: Theme {
     var faviconBackgroundColor = UIColor.charcoalGrey
     var favoriteTextColor = UIColor.greyish
     
+    var activityStyle: UIActivityIndicatorView.Style = .white
 }

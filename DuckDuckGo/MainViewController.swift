@@ -805,14 +805,17 @@ extension MainViewController: TabSwitcherButtonDelegate {
 extension MainViewController: GestureToolBarButtonDelegate {
     
     func singleTapHandler() {
-//        Logger.log(items: "MVC single press handler")
         Pixel.fire(pixel: .tabBarBookmarksPressed)
         onBookmarksPressed()
     }
     
     func longPressHandler() {
-//        Logger.log(items: "MVC long press handler")
-        currentTab?.promptSaveBookmarkAction()
+        
+        guard currentTab != nil else {
+            self.view.showBottomToast(UserText.webSaveBookmarkNone)
+            return
+        }
+        currentTab!.promptSaveBookmarkAction()
     }
     
 }

@@ -72,6 +72,7 @@ public enum PixelName: String {
     case browsingMenuWhitelist = "mb_wl"
     case browsingMenuReportBrokenSite = "mb_rb"
     case browsingMenuSettings = "mb_st"
+    case browsingMenuFindInPage = "mb_fp"
 
     case tabBarBackPressed = "mt_bk"
     case tabBarForwardPressed = "mt_fw"

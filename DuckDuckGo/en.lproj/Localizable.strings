@@ -152,6 +152,6 @@
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
 
-"bookmarkAll.tabs.notfound" = "No open tabs found to bookmark";
-"bookmarkAll.tabs.saved" = "All open tabs are bookmarked";
-"bookmarkAll.tabs.failed" = "Failed to bookmark %lu out of %lu tab(s)";
+"bookmarkAll.tabs.notfound" = "No tabs to bookmark";
+"bookmarkAll.tabs.saved" = "All tabs bookmarked";
+"bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";

@@ -33,6 +33,8 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
+    
+    typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
 
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
@@ -73,49 +75,46 @@ class TabSwitcherViewController: UIViewController {
         titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
     }
     
-    fileprivate func displayBookmarkStatusToast(_ savedBookmarks: [Int], _ alreadySavedBookmarks: [Int]) {
-        if (tabsModel.tabs.count == savedBookmarks.count) || (tabsModel.tabs.count == savedBookmarks.count + alreadySavedBookmarks.count) {
+    fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {
+        if openTabsCount == results.newBookmarksCount + results.existingBookmarksCount {
             self.view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
-            let failedSaveCount = tabsModel.tabs.count - savedBookmarks.count - alreadySavedBookmarks.count
-            let statusMessage = String.localizedStringWithFormat(UserText.bookmarkAllTabsFailedToSave, failedSaveCount, tabsModel.tabs.count)
-            self.view.showBottomToast(statusMessage)
+            let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
+            Logger.log(text: "Failed to save \(failedToSaveCount) tabs")
+            self.view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
         }
     }
     
-    fileprivate func bookmarkAll(_ openTabs: [Tab] ) -> ([Int], [Int]) {
+    fileprivate func bookmarkAll(_ tabs: [Tab] ) -> BookmarkAllResult {
         
         let bookmarksManager = BookmarksManager()
-        // here tab index are stored in arrays, in case we need to close bookmarked tabs
-        var savedBookmarks: [Int] = []
-        var alreadySavedBookmarks: [Int] = []
+        var newBookmarksCount: Int = 0
+        var existingBookmarksCount: Int = 0
         
-        for (index, aTab) in openTabs.enumerated() {
+        for aTab in tabs {
             if let link = aTab.link {
                 if bookmarksManager.contains(url: link.url) {
-                    alreadySavedBookmarks.append(index)
-                    Logger.log(text: "\(link.url) already bookmarked")
+                    existingBookmarksCount += 1
                 } else {
                     bookmarksManager.save(bookmark: link)
-                    savedBookmarks.append(index)
+                    newBookmarksCount += 1
                 }
             } else {
                 Logger.log(text: "no valid link found for tab \(aTab)")
             }
         }
-        return (savedBookmarks: savedBookmarks, alreadySavedBookmarks: alreadySavedBookmarks)
+        return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
     }
     
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
         
         guard tabsModel.tabs.count > 0 else {
             self.view.showBottomToast(UserText.bookmarkAllTabsNotFound)
-            Logger.log(text: "No open tabs found to bookmark")
             return
         }
         
-        let (savedBookmarks, alreadySavedBookmarks) = bookmarkAll(tabsModel.tabs)
-        displayBookmarkStatusToast(savedBookmarks, alreadySavedBookmarks)
+        let savedState = bookmarkAll(tabsModel.tabs)
+        displayBookmarkAllStatusToast(with: savedState, openTabsCount: tabsModel.tabs.count)
     }
     
     @IBAction func onSettingsPressed(_ sender: UIButton) {

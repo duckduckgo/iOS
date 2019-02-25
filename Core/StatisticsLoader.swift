@@ -20,19 +20,19 @@
 import Foundation
 
 public class StatisticsLoader {
-
+    
     public typealias Completion =  (() -> Void)
-
+    
     public static let shared = StatisticsLoader()
-
+    
     private let statisticsStore: StatisticsStore
     private let appUrls = AppUrls()
     private let parser = AtbParser()
-
+    
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
     }
-
+    
     public func load(completion: @escaping Completion = {}) {
         if statisticsStore.hasInstallStatistics {
             completion()
@@ -40,16 +40,15 @@ public class StatisticsLoader {
         }
         requestInstallStatistics(completion: completion)
     }
-
+    
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
-        APIRequest.request(url: appUrls.atb) { response, error in
-
+        APIRequest.request(url: appUrls.initialAtb) { response, error in
             if let error = error {
                 Logger.log(text: "Initial atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
-
+            
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.requestExti(atb: atb, completion: completion)
             } else {
@@ -57,12 +56,10 @@ public class StatisticsLoader {
             }
         }
     }
-
+    
     private func requestExti(atb: Atb, completion: @escaping Completion = {}) {
-
+        
         let installAtb = atb.version + (statisticsStore.variant ?? "")
-        let retentionAtb = atb.version
-
         APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in
             if let error = error {
                 Logger.log(text: "Exti request failed with error \(error.localizedDescription)")
@@ -70,31 +67,46 @@ public class StatisticsLoader {
                 return
             }
             self.statisticsStore.atb = atb.version
-            self.statisticsStore.retentionAtb = retentionAtb
             completion()
         }
     }
-
-    public func refreshRetentionAtb(completion: @escaping Completion = {}) {
+    
+    public func refreshSearchRetentionAtb(completion: @escaping Completion = {}) {
         
-        guard statisticsStore.hasInstallStatistics else {
-            requestInstallStatistics {
-                completion()
-            }
+        guard let url = appUrls.searchAtb else {
+            requestInstallStatistics(completion: completion)
             return
         }
-
-        APIRequest.request(url: appUrls.atb) { response, error in
+        
+        APIRequest.request(url: url) { response, error in
             if let error = error {
-                Logger.log(text: "Atb request failed with error \(error.localizedDescription)")
+                Logger.log(text: "Search atb request failed with error \(error.localizedDescription)")
                 completion()
                 return
             }
-
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
-                self.statisticsStore.retentionAtb = atb.version
+                self.statisticsStore.searchRetentionAtb = atb.version
             }
-
+            completion()
+        }
+    }
+    
+    public func refreshAppRetentionAtb(completion: @escaping Completion = {}) {
+        
+        guard let url = appUrls.appAtb else {
+            requestInstallStatistics(completion: completion)
+            return
+        }
+        
+        APIRequest.request(url: url) { response, error in
+            if let error = error {
+                Logger.log(text: "App atb request failed with error \(error.localizedDescription)")
+                completion()
+                return
+            }
+            if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
+                self.statisticsStore.appRetentionAtb = atb.version
+            }
             completion()
         }
     }

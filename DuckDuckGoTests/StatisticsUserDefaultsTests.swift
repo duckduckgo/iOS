@@ -25,7 +25,8 @@ class StatisticsUserDefaultsTests: XCTestCase {
     struct Constants {
         static let userDefaultsSuit = "StatisticsUserDefaultsTestSuit"
         static let atb = "atb"
-        static let retentionAtb = "retentionAtb"
+        static let appRetentionAtb = "appAtb"
+        static let searchRetentionAtb = "searchAtb"
         static let variant = "testVariant"
     }
 
@@ -36,13 +37,13 @@ class StatisticsUserDefaultsTests: XCTestCase {
         testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }
 
-    func testWhenAtbAndVariantThenAtbWithVariantThenReturnsAtbWithVariant() {
+    func testWhenAtbAndVariantThenAtbWithVariantReturnsAtbWithVariant() {
         testee.atb = Constants.atb
         testee.variant = Constants.variant
         XCTAssertEqual(testee.atbWithVariant, "\(Constants.atb)\(Constants.variant)")
     }
 
-    func testWhenAtbAndNoVariantThenAtbWithVariantThenReturnsAtb() {
+    func testWhenAtbAndNoVariantThenAtbWithVariantReturnsAtb() {
         testee.atb = Constants.atb
         testee.variant = nil
         XCTAssertEqual(testee.atbWithVariant, Constants.atb)
@@ -53,34 +54,44 @@ class StatisticsUserDefaultsTests: XCTestCase {
         XCTAssertEqual(testee.variant, Constants.variant)
     }
 
-    func testWhenFirstInitialisedThenHasStatisticsIsFalseAndAtbValuesNil() {
+    func testWhenFirstInitialisedThenHasStatisticsIsFalseAndAtbNil() {
         XCTAssertNil(testee.atb)
-        XCTAssertNil(testee.retentionAtb)
         XCTAssertFalse(testee.hasInstallStatistics)
         XCTAssertNil(testee.variant)
     }
 
-    func testWhenAtbValuesBothSetThenHasStatisticsIsTrue() {
+    func testWhenAtbValueSetThenHasStatisticsIsTrue() {
         testee.atb = Constants.atb
-        testee.retentionAtb = Constants.retentionAtb
         XCTAssertTrue(testee.hasInstallStatistics)
     }
 
     func testWhenAtbNotSetThenHasStatisticsIsFalse() {
-        testee.atb = Constants.atb
         XCTAssertFalse(testee.hasInstallStatistics)
     }
-
-    func testWhenRetentionAtbNotSetThenHasStatisticsIsFalse() {
-        testee.retentionAtb = Constants.retentionAtb
-        XCTAssertFalse(testee.hasInstallStatistics)
-    }
-
-    func testWhenAtbValuesSetThenDefaultsUpdated() {
+    
+    func testWhenAtbValueSetThenDefaultsUpdated() {
         testee.atb = Constants.atb
-        testee.retentionAtb = Constants.retentionAtb
         XCTAssertEqual(testee.atb, Constants.atb)
-        XCTAssertEqual(testee.retentionAtb, Constants.retentionAtb)
+    }
+    
+    func testWhenAppRetentionAtbValueSetThenDefaultsUpdated() {
+        testee.appRetentionAtb = Constants.appRetentionAtb
+        XCTAssertEqual(testee.appRetentionAtb, Constants.appRetentionAtb)
+    }
+    
+    func testWhenAppRetentionAtbNotSetThenAtbDefaultReturned() {
+        testee.atb = Constants.atb
+        XCTAssertEqual(testee.appRetentionAtb, Constants.atb)
+    }
+    
+    func testWhenSearchRetentionAtbValueSetThenDefaultsUpdated() {
+        testee.searchRetentionAtb = Constants.searchRetentionAtb
+        XCTAssertEqual(testee.searchRetentionAtb, Constants.searchRetentionAtb)
+    }
+    
+    func testWhenSearchRetentionAtbNotSetThenAtbDefaultIsReturned() {
+        testee.atb = Constants.atb
+        XCTAssertEqual(testee.searchRetentionAtb, Constants.atb)
     }
 
 }

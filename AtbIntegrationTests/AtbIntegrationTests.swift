@@ -24,24 +24,25 @@ class AtbIntegrationTests: XCTestCase {
 
     struct Constants {
         static let initialAtb = "v100-1"
-        static let retentionAtb = "v102-7"
+        static let searchRetentionAtb = "v102-7"
+        static let appRetentionAtb = "v102-6"
         static let devmode = "test"
         static let atbParam = "atb"
         static let setAtbParam = "set_atb"
+        static let activityType = "at"
     }
     
     let app = XCUIApplication()
     let server = HttpServer()
     var searchRequests = [HttpRequest]()
     var extiRequests = [HttpRequest]()
-    var atbRequests = [HttpRequest]()
-    var atbToSet = Constants.initialAtb
+    var installAtbRequests = [HttpRequest]()
+    var appRetentionAtbRequests = [HttpRequest]()
+    var searchRetentionAtbRequests = [HttpRequest]()
     
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
-        
-        atbToSet = Constants.initialAtb
         
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
@@ -68,66 +69,62 @@ class AtbIntegrationTests: XCTestCase {
         
         searchRequests.removeAll()
         extiRequests.removeAll()
-        atbRequests.removeAll()
-
+        installAtbRequests.removeAll()
+        searchRetentionAtbRequests.removeAll()
+        appRetentionAtbRequests.removeAll()
     }
     
-    func testWhenAppIsInstalledThenInitialAtbIsRetrieved() throws {
-
-        assertGetAtbCalled()
+    func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
+        assertInstallAtbCalledOnce()
         assertExtiCalledOnce()
-
     }
     
     func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
-        
         search(forText: "oranges")
         assertSearch(text: "oranges", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
         
+        assertInstallAtbCalledOnce()
         assertExtiCalledOnce()
     }
-    
-    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
-        atbToSet = Constants.retentionAtb
 
+    func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
         search(forText: "lemons")
-        assertSearch(text: "lemons", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        searchRequests.removeAll()
-        atbRequests.removeAll()
+        assertSearch(text: "lemons", atb: Constants.initialAtb, numberOfRequests: 1)
+        assertSearchRetentionAtbCalled(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, numberOfRequests: 1)
 
         search(forText: "pears")
-        assertSearch(text: "pears", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb, expectedRequestCount: 1)
+        assertSearch(text: "pears", atb: Constants.initialAtb, numberOfRequests: 2)
+        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, numberOfRequests: 2)
         
+        assertInstallAtbCalledOnce()
         assertExtiCalledOnce()
     }
     
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
-        
         search(forText: "http://localhost:8080?q=beagles")
         assertSearch(text: "beagles", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-
+        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+    }
+    
+    func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
+        assertAppRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, numberOfRequests: 1)
+        app.launch()
+        assertAppRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, numberOfRequests: 2)
+        assertInstallAtbCalledOnce()
         assertExtiCalledOnce()
     }
     
-    func assertGetAtbCalled() {
-        XCTAssertEqual(1, atbRequests.count)
-        guard let request = atbRequests.first else { fatalError() }
-        
+    func assertInstallAtbCalledOnce() {
+        XCTAssertEqual(1, installAtbRequests.count)
+        guard let request = installAtbRequests.last else { fatalError() }
         XCTAssertEqual(1, request.queryParams.count)
         XCTAssertEqual("1", request.queryParam(Constants.devmode))
     }
     
-    func assertSearch(text: String, atb: String) {
-        XCTAssertEqual(1, searchRequests.count)
-
-        guard let request = searchRequests.last else {
-            XCTFail("No search request")
-            return
-        }
+    func assertSearch(text: String, atb: String, numberOfRequests: Int = 1) {
+        XCTAssertEqual(numberOfRequests, searchRequests.count)
+        guard let request = searchRequests.last  else { fatalError() }
         XCTAssertEqual(text, request.queryParam("q"))
         XCTAssertTrue(request.queryParam(Constants.atbParam)?.hasPrefix(atb) ?? false)
     }
@@ -138,20 +135,24 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
     }
     
-    // by default expects 2 atb requests, the initial get atb and the one being asserted
-    func assertAtb(expectedAtb: String, expectedSetAtb: String, expectedRequestCount: Int = 2) {
-        XCTAssertEqual(expectedRequestCount, atbRequests.count)
-        guard let request = atbRequests.last else {
-            XCTFail("No atb request")
-            return
-        }
-        
-        XCTAssertEqual(3, request.queryParams.count)
+    func assertSearchRetentionAtb(expectedAtb: String, expectedSetAtb: String, numberOfRequests: Int = 1) {
+        XCTAssertEqual(numberOfRequests, searchRetentionAtbRequests.count)
+        guard let request = searchRetentionAtbRequests.last else { fatalError() }
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
                       "first.atb does not start with \(expectedSetAtb)")
         XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
+        XCTAssertNil(request.queryParam(Constants.activityType))
         XCTAssertEqual("1", request.queryParam(Constants.devmode))
+    }
 
+    func assertAppRetentionAtb(expectedAtb: String, expectedSetAtb: String, numberOfRequests: Int = 1) {
+        XCTAssertEqual(numberOfRequests, appRetentionAtbRequests.count)
+        guard let request = appRetentionAtbRequests.last else { fatalError() }
+        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
+                      "first.atb does not start with \(expectedSetAtb)")
+        XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
+        XCTAssertEqual("ao", request.queryParam(Constants.activityType))
+        XCTAssertEqual("1", request.queryParam(Constants.devmode))
     }
     
     private func dismissAddToDockDialog() {
@@ -198,12 +199,21 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         server["/atb.js"] = {
-            self.atbRequests.append($0)
+            var atb = ""
+            if $0.queryParam(Constants.activityType)  != nil {
+                atb = Constants.appRetentionAtb
+                self.appRetentionAtbRequests.append($0)
+            } else if $0.queryParam(Constants.atbParam)  != nil {
+                atb = Constants.searchRetentionAtb
+                self.searchRetentionAtbRequests.append($0)
+            } else {
+                atb = Constants.initialAtb
+                self.installAtbRequests.append($0)
+            }
             return .ok(.json([
-                "version": self.atbToSet
+                "version": atb
                 ] as AnyObject))
         }
-        
     }
     
     private func skipOnboarding() {

@@ -747,7 +747,7 @@ extension TabViewController: WKNavigationDelegate {
             decision == .allow {
 
             if appUrls.isDuckDuckGoSearch(url: url) {
-                StatisticsLoader.shared.refreshRetentionAtb()
+                StatisticsLoader.shared.refreshSearchRetentionAtb()
             }
 
             findInPage?.done()

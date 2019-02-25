@@ -22,10 +22,11 @@
 class MockStatisticsStore: StatisticsStore {
 
     var atb: String?
-    var retentionAtb: String?
+    var searchRetentionAtb: String?
+    var appRetentionAtb: String?
 
     var hasInstallStatistics: Bool {
-        return atb != nil && retentionAtb != nil
+        return atb != nil
     }
 
     var variant: String?

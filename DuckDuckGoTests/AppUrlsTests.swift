@@ -158,20 +158,44 @@ class AppUrlsTests: XCTestCase {
         XCTAssertEqual("a term", actual.getParam(name: "q"))
     }
 
-    func testWhenNoAtbParamsPersistsedThenAtbUrlHasNoAtbParams() {
+    func testInitialAtbDoesNotContainAtbParams() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let url = testee.atb
+        let url = testee.initialAtb
         XCTAssertNil(url.getParam(name: "atb"))
         XCTAssertNil(url.getParam(name: "set_atb"))
+        XCTAssertNil(url.getParam(name: "ua"))
     }
 
-    func testWhenAtbParamsPersistsedThenAtbUrlHasParams() {
-        mockStatisticsStore.atbWithVariant = "x"
-        mockStatisticsStore.retentionAtb = "y"
+    func testWhenAtbNotPersistsedThenSearchRetentionAtbUrlIsNil() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let url = testee.atb
-        XCTAssertEqual(url.getParam(name: "atb"), "x")
-        XCTAssertEqual(url.getParam(name: "set_atb"), "y")
+        XCTAssertNil(testee.searchAtb)
+    }
+
+    func testWhenAtbPersistsedThenSearchRetentionUrlHasCorrectParams() {
+        mockStatisticsStore.atbWithVariant = "x"
+        mockStatisticsStore.searchRetentionAtb = "y"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let url = testee.searchAtb
+        XCTAssertNotNil(url)
+        XCTAssertEqual(url!.getParam(name: "atb"), "x")
+        XCTAssertEqual(url!.getParam(name: "set_atb"), "y")
+        XCTAssertNil(url!.getParam(name: "ua"))
+    }
+    
+    func testWhenAtbNotPersistsedThenAppRetentionAtbUrlIsNil() {
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        XCTAssertNil(testee.appAtb)
+    }
+    
+    func testWhenAtbPersistsedThenAppRetentionUrlHasCorrectParams() {
+        mockStatisticsStore.atbWithVariant = "x"
+        mockStatisticsStore.appRetentionAtb = "y"
+        let testee = AppUrls(statisticsStore: mockStatisticsStore)
+        let url = testee.appAtb
+        XCTAssertNotNil(url)
+        XCTAssertEqual(url!.getParam(name: "atb"), "x")
+        XCTAssertEqual(url!.getParam(name: "set_atb"), "y")
+        XCTAssertEqual(url!.getParam(name: "at"), "ao")
     }
 
     func testSearchUrlCreatesUrlWithQueryParam() {

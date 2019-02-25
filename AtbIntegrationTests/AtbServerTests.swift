@@ -45,7 +45,7 @@ class AtbServerTests: XCTestCase {
     func testExtiCall() {
 
         let waitForCompletion = expectation(description: "wait for completion")
-        loader.refreshRetentionAtb {
+        loader.load {
             waitForCompletion.fulfill()
         }
         
@@ -54,25 +54,38 @@ class AtbServerTests: XCTestCase {
         XCTAssertNotNil(store.atb)
     }
     
-    func testSetAtb() {
-        
+    func testApphRetentionAtb() {
+
         store.atb = "v117-2"
         store.hasInstallStatistics = true
       
         let waitForCompletion = expectation(description: "wait for completion")
-        loader.load {
-            
-        }
-        loader.refreshRetentionAtb {
+        loader.refreshAppRetentionAtb {
             waitForCompletion.fulfill()
         }
         
         wait(for: [waitForCompletion], timeout: 5.0)
 
-        XCTAssertNotNil(store.retentionAtb)
-        XCTAssertNotEqual(store.atb, store.retentionAtb)
+        XCTAssertNotNil(store.appRetentionAtb)
+        XCTAssertNotEqual(store.atb, store.appRetentionAtb)
     }
     
+    func testSearchRetentionAtb() {
+        
+        store.atb = "v117-2"
+        store.hasInstallStatistics = true
+        
+        let waitForCompletion = expectation(description: "wait for completion")
+        loader.refreshSearchRetentionAtb {
+            waitForCompletion.fulfill()
+        }
+        
+        wait(for: [waitForCompletion], timeout: 5.0)
+        
+        XCTAssertNotNil(store.searchRetentionAtb)
+        XCTAssertNotEqual(store.atb, store.searchRetentionAtb)
+    }
+
 }
 
 class MockStatisticsStore: StatisticsStore {
@@ -81,8 +94,10 @@ class MockStatisticsStore: StatisticsStore {
     
     var atb: String?
     
-    var retentionAtb: String?
+    var appRetentionAtb: String?
     
+    var searchRetentionAtb: String?
+
     var variant: String?
     
     var atbWithVariant: String?

@@ -18,8 +18,6 @@
 //
 
 import Foundation
-
-import Foundation
 import XCTest
 @testable import DuckDuckGo
 @testable import Core

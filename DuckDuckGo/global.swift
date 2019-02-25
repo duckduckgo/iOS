@@ -25,3 +25,8 @@ import UIKit
 var isPortrait: Bool {
     return UIApplication.shared.statusBarOrientation.isPortrait
 }
+
+/// Shortcut to `UIDevice.current.userInterfaceIdiom == .pad`
+var isPad: Bool {
+    return UIDevice.current.userInterfaceIdiom == .pad
+}

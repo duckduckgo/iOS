@@ -50,8 +50,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     var defaultSearchRadius: CGFloat!
 
     var defaultSearchBackgroundMargin: CGFloat {
-        // this only gives two distinct states unlike device orientation which can be unknown and flat
-        return isPortrait ? 0 : (frame.width - Constants.searchWidth) / 2
+        return isPortrait && !isPad ? 0 : (frame.width - Constants.searchWidth) / 2
     }
     
     var searchHeaderTransition: CGFloat = 0.0 {

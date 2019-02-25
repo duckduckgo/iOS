@@ -26,10 +26,12 @@ extension HomeViewController: HomeScreenTipsDelegate {
         print("***", #function)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let view = self?.chromeDelegate?.omniBar.searchStackContainer else { return }
+            guard let view = self?.chromeDelegate?.omniBar else { return }
             guard let superView = self?.parent?.view else { return }
-            
-            let tip = EasyTipView(text: "Learn how you are kept safe and private while browsing",
+
+            EasyTipView.globalPreferences.positioning.vOffset = -5
+
+            let tip = EasyTipView(text: "Searching with DuckDuckGo means your searches are never tracked. (Ever)",
                                   icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
             tip.show(animated: true, forView: view, withinSuperview: superView)
             tip.handleGlobalTouch()
@@ -40,7 +42,20 @@ extension HomeViewController: HomeScreenTipsDelegate {
     func showCustomizeTip() {
         print("***", #function)
         
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let omniBar = self?.chromeDelegate?.omniBar else { return }
+            guard let settings = omniBar.settingsButton.imageView else { return }
+            guard let superView = self?.parent?.view else { return }
+
+            EasyTipView.globalPreferences.positioning.vOffset = 0
+
+            let tip = EasyTipView(text: "Pick a theme to make the DuckDuckGo Privacy browser yours.",
+                                  icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
+
+            tip.show(animated: true, forView: settings, withinSuperview: superView)
+            tip.handleGlobalTouch()
+        }
+
     }
  
     func installHomeScreenTips() {

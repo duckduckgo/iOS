@@ -27,13 +27,29 @@ protocol HomeRowCTAStorage: class {
 
 class HomeRowCTA {
 
+    struct Constants {
+        static let homeRowCTADelay: Double = 24 * 60 * 60
+    }
+    
     private let storage: HomeRowCTAStorage
+    private let variantManager: VariantManager
+    private let statistics: StatisticsStore
 
-    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage()) {
+    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(),
+         variantManager: VariantManager = DefaultVariantManager(),
+         statistics: StatisticsStore = StatisticsUserDefaults()) {
         self.storage = storage
+        self.variantManager = variantManager
+        self.statistics = statistics
     }
 
     func shouldShow() -> Bool {
+        
+        if (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual)
+            && abs((statistics.installDate ?? Date()).timeIntervalSinceNow) <= Constants.homeRowCTADelay {
+            return false
+        }
+        
         return !storage.dismissed
     }
 

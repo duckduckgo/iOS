@@ -23,22 +23,49 @@ import XCTest
 
 class HomeRowCTATests: XCTestCase {
     
+    func testWhenContextualOnboardingFeatureEnabledAnd24HoursPassedSinceInstallThenShowCTA() {
+        
+        let statistics = MockStatisticsStore()
+        statistics.installDate = Date(timeIntervalSinceNow: -24 * 60 * 60)
+        
+        var variantManager = MockVariantManager()
+        variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])
+        
+        let storage = MockHomeRowOnboardingStorage(dismissed: false)
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, statistics: statistics)
+        XCTAssertTrue(feature.shouldShow())
+        
+    }
+    
+    func testWhenContextualOnboardingFeatureEnabledAndNot24HoursPassedSinceInstallThenDontShowCTA() {
+        
+        let statistics = MockStatisticsStore()
+        
+        var variantManager = MockVariantManager()
+        variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])
+        
+        let storage = MockHomeRowOnboardingStorage(dismissed: false)
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, statistics: statistics)
+        XCTAssertFalse(feature.shouldShow())
+        
+    }
+
     func testWhenDismissedThenDismissedStateStored() {
         let storage = MockHomeRowOnboardingStorage(dismissed: false)
-        let feature = HomeRowCTA(storage: storage)
+        let feature = HomeRowCTA(storage: storage, variantManager: MockVariantManager())
         feature.dismissed()
         XCTAssertTrue(storage.dismissed)
     }
 
     func testWhenDismissedThenShouldNotShow() {
         let storage = MockHomeRowOnboardingStorage(dismissed: true)
-        let feature = HomeRowCTA(storage: storage)
+        let feature = HomeRowCTA(storage: storage, variantManager: MockVariantManager())
         XCTAssertFalse(feature.shouldShow())
     }
 
     func testWhenNotDismissedThenShouldShow() {
         let storage = MockHomeRowOnboardingStorage(dismissed: false)
-        let feature = HomeRowCTA(storage: storage)
+        let feature = HomeRowCTA(storage: storage, variantManager: MockVariantManager())
         XCTAssertTrue(feature.shouldShow())
     }
     

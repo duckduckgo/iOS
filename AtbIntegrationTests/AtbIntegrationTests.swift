@@ -151,7 +151,7 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
                       "first.atb does not start with \(expectedSetAtb)")
         XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
-        XCTAssertEqual("ao", request.queryParam(Constants.activityType))
+        XCTAssertEqual("au", request.queryParam(Constants.activityType))
         XCTAssertEqual("1", request.queryParam(Constants.devmode))
     }
     

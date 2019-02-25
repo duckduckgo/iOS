@@ -59,7 +59,7 @@ public struct AppUrls {
 
     private struct ParamValue {
         static let source = "ddg_ios"
-        static let appOpen = "ao"
+        static let appUsage = "au"
     }
 
     let statisticsStore: StatisticsStore
@@ -127,7 +127,7 @@ public struct AppUrls {
             return nil
         }
         return URL(string: Url.atb)!
-            .addParam(name: Param.activityType, value: ParamValue.appOpen)
+            .addParam(name: Param.activityType, value: ParamValue.appUsage)
             .addParam(name: Param.atb, value: atbWithVariant)
             .addParam(name: Param.setAtb, value: setAtb)
     }

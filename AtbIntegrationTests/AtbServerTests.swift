@@ -57,8 +57,8 @@ class AtbServerTests: XCTestCase {
     func testApphRetentionAtb() {
 
         store.atb = "v117-2"
-        store.hasInstallStatistics = true
-      
+        store.appRetentionAtb = "v117-2"
+
         let waitForCompletion = expectation(description: "wait for completion")
         loader.refreshAppRetentionAtb {
             waitForCompletion.fulfill()
@@ -73,7 +73,7 @@ class AtbServerTests: XCTestCase {
     func testSearchRetentionAtb() {
         
         store.atb = "v117-2"
-        store.hasInstallStatistics = true
+        store.searchRetentionAtb = "v117-2"
         
         let waitForCompletion = expectation(description: "wait for completion")
         loader.refreshSearchRetentionAtb {

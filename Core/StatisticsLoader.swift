@@ -26,11 +26,12 @@ public class StatisticsLoader {
     public static let shared = StatisticsLoader()
     
     private let statisticsStore: StatisticsStore
-    private let appUrls = AppUrls()
+    private let appUrls: AppUrls
     private let parser = AtbParser()
     
     init(statisticsStore: StatisticsStore = StatisticsUserDefaults()) {
         self.statisticsStore = statisticsStore
+        self.appUrls = AppUrls(statisticsStore: statisticsStore)
     }
     
     public func load(completion: @escaping Completion = {}) {

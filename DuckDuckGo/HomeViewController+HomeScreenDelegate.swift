@@ -1,5 +1,5 @@
 //
-//  Onboarding.swift
+//  HomeViewController+HomeScreenDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,14 +19,14 @@
 
 import Foundation
 
-protocol OnboardingDelegate: NSObjectProtocol {
+extension HomeViewController: HomeScreenTipsDelegate {
     
-    func onboardingCompleted()
+    func showPrivateSearchTip() {
+        print("***", #function)
+    }
     
-}
-
-protocol Onboarding {
-    
-    var delegate: OnboardingDelegate? { get set }
+    func showCustomizeTip() {
+        print("***", #function)
+    }
     
 }

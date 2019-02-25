@@ -63,6 +63,8 @@ class HomeViewController: UIViewController {
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
 
+    private var tips: HomeScreenTips?
+    
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
@@ -113,6 +115,9 @@ class HomeViewController: UIViewController {
         if HomeRowCTA().shouldShow() {
             showHomeRowCTA()
         }
+        
+        tips = HomeScreenTips(delegate: self)
+        tips?.trigger()
 
     }
 

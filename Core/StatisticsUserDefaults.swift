@@ -55,7 +55,7 @@ public class StatisticsUserDefaults: StatisticsStore {
     
     public var installDate: Date? {
         get {
-            guard let interval = userDefaults?.double(forKey: Keys.installDate) else {
+            guard let interval = userDefaults?.double(forKey: Keys.installDate), interval > 0 else {
                 return nil
             }
             return Date(timeIntervalSince1970: interval)

@@ -189,7 +189,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let onboardingFlow: String
         
         let variant = DefaultVariantManager().currentVariant
-        if variant?.features.contains(.onboardingSummary) ?? false {
+        if variant?.features.contains(.onboardingContextual) ?? false {
+            return
+        } else if variant?.features.contains(.onboardingSummary) ?? false {
             onboardingFlow = "OnboardingSummary"
         } else {
             onboardingFlow = "Onboarding"

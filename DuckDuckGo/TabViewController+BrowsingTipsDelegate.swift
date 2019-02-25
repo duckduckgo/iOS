@@ -1,5 +1,5 @@
 //
-//  Onboarding.swift
+//  TabViewController+BrowsingTipsDelegate.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,14 +19,14 @@
 
 import Foundation
 
-protocol OnboardingDelegate: NSObjectProtocol {
+extension TabViewController: BrowsingTipsDelegate {
     
-    func onboardingCompleted()
+    func showPrivacyGradeTip() {
+        print("***", #function)
+    }
     
-}
-
-protocol Onboarding {
-    
-    var delegate: OnboardingDelegate? { get set }
-    
+    func showFireButtonTip() {
+        print("***", #function)
+    }
+        
 }

@@ -40,6 +40,7 @@ class HomeRowCTATests: XCTestCase {
     func testWhenContextualOnboardingFeatureEnabledAndNot24HoursPassedSinceInstallThenDontShowCTA() {
         
         let statistics = MockStatisticsStore()
+        statistics.installDate = Date()
         
         var variantManager = MockVariantManager()
         variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])

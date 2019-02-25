@@ -91,7 +91,7 @@ class AtbIntegrationTests: XCTestCase {
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
         search(forText: "lemons")
         assertSearch(text: "lemons", atb: Constants.initialAtb, numberOfRequests: 1)
-        assertSearchRetentionAtbCalled(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, numberOfRequests: 1)
+        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, numberOfRequests: 1)
 
         search(forText: "pears")
         assertSearch(text: "pears", atb: Constants.initialAtb, numberOfRequests: 2)

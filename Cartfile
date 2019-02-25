@@ -21,3 +21,4 @@ github "duckduckgo/lottie-ios" "tags/2.5.0"
 
 github "duckduckgo/PunycodeSwift" "master"
 
+github "brindy/EasyTipView" "brindy/icon_support"

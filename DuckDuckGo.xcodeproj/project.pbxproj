@@ -109,6 +109,9 @@
 		851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129922242E89004781BC /* ContextualTipsStorage.swift */; };
 		851B129C22243178004781BC /* BrowsingTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129B22243178004781BC /* BrowsingTips.swift */; };
 		851B129E222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129D222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift */; };
+		851B12A1222440D1004781BC /* EasyTipView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851B129F222440B3004781BC /* EasyTipView.framework */; };
+		851B12A622246625004781BC /* TouchWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A522246625004781BC /* TouchWindow.swift */; };
+		851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A722246B84004781BC /* EasyTipViewExtension.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -635,6 +638,9 @@
 		851B129922242E89004781BC /* ContextualTipsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualTipsStorage.swift; sourceTree = "<group>"; };
 		851B129B22243178004781BC /* BrowsingTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingTips.swift; sourceTree = "<group>"; };
 		851B129D222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabViewController+BrowsingTipsDelegate.swift"; sourceTree = "<group>"; };
+		851B129F222440B3004781BC /* EasyTipView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyTipView.framework; path = Carthage/Build/iOS/EasyTipView.framework; sourceTree = "<group>"; };
+		851B12A522246625004781BC /* TouchWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchWindow.swift; sourceTree = "<group>"; };
+		851B12A722246B84004781BC /* EasyTipViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTipViewExtension.swift; sourceTree = "<group>"; };
 		851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButton.swift; sourceTree = "<group>"; };
 		851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButtonTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
@@ -1000,6 +1006,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				851B12A1222440D1004781BC /* EasyTipView.framework in Frameworks */,
 				85371D262121BA2800920548 /* Lottie.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				F17BA43D1F1CD99800460FFA /* Device.framework in Frameworks */,
@@ -1417,6 +1424,7 @@
 				851B129522242D94004781BC /* HomeScreenTips.swift */,
 				851B129722242E2D004781BC /* HomeViewController+HomeScreenDelegate.swift */,
 				851B129D222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift */,
+				851B12A722246B84004781BC /* EasyTipViewExtension.swift */,
 			);
 			name = Contextual;
 			sourceTree = "<group>";
@@ -2197,6 +2205,7 @@
 		F1AA545F1E48D90700223211 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				851B129F222440B3004781BC /* EasyTipView.framework */,
 				8537243F220C5BB3009D09CD /* Punycode.framework */,
 				85371D252121BA2800920548 /* Lottie.framework */,
 				8328AABA212ADAD100293140 /* CommonCrypto.framework */,
@@ -2277,6 +2286,7 @@
 				F1134EC01F40DD9300B73467 /* AppVersionExtension.swift */,
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				853C5F6021C277C7001F7A05 /* global.swift */,
+				851B12A522246625004781BC /* TouchWindow.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -3007,6 +3017,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Lottie.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CommonCrypto.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Punycode.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/EasyTipView.framework",
 			);
 			name = "Cathage Copy Frameworks";
 			outputPaths = (
@@ -3017,6 +3028,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Lottie.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CommonCrypto.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Punycode.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/EasyTipView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3112,6 +3124,7 @@
 				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
 				83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
+				851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
 				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
@@ -3165,6 +3178,7 @@
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				8505839421A841E400ED4EDB /* SupportingCancelButtonOmniBarState.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
+				851B12A622246625004781BC /* TouchWindow.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,

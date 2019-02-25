@@ -19,12 +19,20 @@
 
 import UIKit
 import Core
+import EasyTipView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private struct ShortcutKey {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
+    }
+    
+    static var shared: AppDelegate {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError()
+        }
+        return delegate
     }
     
     private var testing = false
@@ -45,6 +53,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
+        if window != nil {
+            let window = TouchWindow()
+            window.rootViewController = self.window?.rootViewController
+            self.window = window
+        }
+        
+        EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"

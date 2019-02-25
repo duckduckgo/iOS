@@ -18,15 +18,33 @@
 //
 
 import Foundation
+import EasyTipView
 
 extension HomeViewController: HomeScreenTipsDelegate {
     
     func showPrivateSearchTip() {
         print("***", #function)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let view = self?.chromeDelegate?.omniBar.searchStackContainer else { return }
+            guard let superView = self?.parent?.view else { return }
+            
+            let tip = EasyTipView(text: "Learn how you are kept safe and private while browsing",
+                                  icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
+            tip.show(animated: true, forView: view, withinSuperview: superView)
+            tip.handleGlobalTouch()
+        }
+        
     }
     
     func showCustomizeTip() {
         print("***", #function)
+        
+        
+    }
+ 
+    func installHomeScreenTips() {
+        HomeScreenTips(delegate: self)?.trigger()
     }
     
 }

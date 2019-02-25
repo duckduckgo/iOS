@@ -62,8 +62,6 @@ class HomeViewController: UIViewController {
     
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
-
-    private var tips: HomeScreenTips?
     
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -72,7 +70,7 @@ class HomeViewController: UIViewController {
         }
         return controller
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -109,20 +107,15 @@ class HomeViewController: UIViewController {
         delegate?.showSettings(self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         if HomeRowCTA().shouldShow() {
             showHomeRowCTA()
         }
         
-        tips = HomeScreenTips(delegate: self)
-        tips?.trigger()
+        installHomeScreenTips()
 
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         viewHasAppeared = true
     }
     

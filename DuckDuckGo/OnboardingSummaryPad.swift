@@ -1,5 +1,5 @@
 //
-//  OnboardingSummaryViewController.swift
+//  OnboardingSummaryPad.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,24 +19,18 @@
 
 import UIKit
 
-class OnboardingSummaryViewController: UIViewController, Onboarding {
-    
+class OnboardingSummaryPad: UIViewController, Onboarding, OnboardingDelegate {
+
     weak var delegate: OnboardingDelegate?
-    
-    @IBAction func done() {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if var onboarding = segue.destination as? Onboarding {
+            onboarding.delegate = self
+        }
+    }
+
+    func onboardingCompleted(controller: UIViewController) {
         delegate?.onboardingCompleted(controller: self)
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return [ .portrait ]
-    }
-
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .portrait
-    }
-
-    override var shouldAutorotate: Bool {
-        return true 
-    }
-    
 }

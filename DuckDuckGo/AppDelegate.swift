@@ -198,7 +198,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         overlayWindow = nil
     }
 
-
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
         mainViewController?.clearNavigationStack()

@@ -52,7 +52,7 @@ extension MainViewController {
             return
         } else if variant?.features.contains(.onboardingSummary) ?? false {
             modalTransitionStyle = .crossDissolve
-            onboardingFlow = "OnboardingSummary"
+            onboardingFlow = isPad ? "OnboardingSummary-iPad" : "OnboardingSummary"
         } else {
             modalTransitionStyle = .crossDissolve
             onboardingFlow = "Onboarding"

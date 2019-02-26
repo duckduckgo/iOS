@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,11 +20,11 @@
             <objects>
                 <viewController id="X59-2u-JR5" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R3B-sO-IVB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                <rect key="frame" x="52" y="60" width="271" height="80"/>
+                                <rect key="frame" x="71.666666666666686" y="84" width="271" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="271" id="Xng-lb-Ecr"/>
                                     <constraint firstAttribute="height" constant="80" id="ozC-RA-X8n"/>
@@ -43,7 +43,7 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                <rect key="frame" x="52" y="151" width="271" height="48"/>
+                                <rect key="frame" x="71.666666666666686" y="175" width="271" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="271" id="FOk-vM-2GT"/>
                                     <constraint firstAttribute="height" constant="48" id="p28-LD-Hf4"/>
@@ -62,7 +62,7 @@ been this easy.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU">
-                                <rect key="frame" x="39.5" y="263" width="296" height="286"/>
+                                <rect key="frame" x="59" y="287" width="296" height="286"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
                                         <rect key="frame" x="0.0" y="0.0" width="296" height="64"/>
@@ -71,7 +71,7 @@ been this easy.</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="204" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
-                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <rect key="frame" x="87.666666666666643" y="0.0" width="208.33333333333337" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Search privately, by default.">
                                                         <attributes>
@@ -92,7 +92,7 @@ been this easy.</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
-                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <rect key="frame" x="87.666666666666643" y="0.0" width="208.33333333333337" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Block advertising trackers while you browse.">
                                                         <attributes>
@@ -113,7 +113,7 @@ been this easy.</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
-                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <rect key="frame" x="87.666666666666643" y="0.0" width="208.33333333333337" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Easily clear your browsing data.">
                                                         <attributes>
@@ -134,7 +134,7 @@ been this easy.</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
-                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <rect key="frame" x="87.666666666666643" y="0.0" width="208.33333333333337" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Customize your browsing experience.">
                                                         <attributes>
@@ -154,7 +154,7 @@ been this easy.</string>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Done BG" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="62.5" y="592" width="250" height="50"/>
+                                <rect key="frame" x="82" y="787" width="250" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
@@ -184,13 +184,13 @@ been this easy.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="d2U-SO-dZU" firstAttribute="top" secondItem="JgA-Kx-QGf" secondAttribute="bottom" priority="250" constant="64" id="50t-wj-XIx"/>
+                            <constraint firstItem="d2U-SO-dZU" firstAttribute="top" relation="lessThanOrEqual" secondItem="JgA-Kx-QGf" secondAttribute="bottom" constant="64" id="50t-wj-XIx"/>
                             <constraint firstItem="u7Q-MU-drX" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" priority="999" constant="40" id="7MZ-Qz-Ebx"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="top" secondItem="u7Q-MU-drX" secondAttribute="bottom" constant="11" id="Hew-Sj-pXV"/>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ZZ1-JB-aZP"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="25" id="ZoN-Cf-uMJ"/>
                             <constraint firstItem="u7Q-MU-drX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="h6G-yT-1Xs"/>
-                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="d2U-SO-dZU" secondAttribute="bottom" constant="12" id="oBq-sb-aHy"/>
+                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="top" secondItem="d2U-SO-dZU" secondAttribute="bottom" priority="250" constant="12" id="oBq-sb-aHy"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ubw-iD-6Jr"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ymH-zK-lMr"/>
                         </constraints>
@@ -199,7 +199,7 @@ been this easy.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-60" y="31.934032983508249"/>
+            <point key="canvasLocation" x="-482" y="186"/>
         </scene>
     </scenes>
     <resources>

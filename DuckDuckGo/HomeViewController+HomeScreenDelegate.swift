@@ -29,10 +29,13 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let view = self?.chromeDelegate?.omniBar else { return }
             guard let superView = self?.parent?.view else { return }
 
-            EasyTipView.globalPreferences.positioning.vOffset = -5
+            var preferences = EasyTipView.globalPreferences
+            preferences.positioning.vOffset = -5
 
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately")!, position: .left, alignment: .topOrLeft)
             let tip = EasyTipView(text: "Searching with DuckDuckGo means your searches are never tracked. (Ever)",
-                                  icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
+                                  icon: icon,
+                                  preferences: preferences)
             tip.show(animated: true, forView: view, withinSuperview: superView)
             tip.handleGlobalTouch()
         }
@@ -47,10 +50,9 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let settings = omniBar.settingsButton.imageView else { return }
             guard let superView = self?.parent?.view else { return }
 
-            EasyTipView.globalPreferences.positioning.vOffset = 0
-
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize")!, position: .left, alignment: .topOrLeft)
             let tip = EasyTipView(text: "Pick a theme to make the DuckDuckGo Privacy browser yours.",
-                                  icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
+                                  icon: icon)
 
             tip.show(animated: true, forView: settings, withinSuperview: superView)
             tip.handleGlobalTouch()

@@ -29,10 +29,9 @@ extension TabViewController: BrowsingTipsDelegate {
             guard let grade = omniBar.siteRatingView else { return }
             guard let superView = self?.parent?.view else { return }
 
-            EasyTipView.globalPreferences.positioning.vOffset = 0
-
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconBlockTrackers")!, position: .left, alignment: .topOrLeft)
             let tip = EasyTipView(text: "You're browsing with tracker protection and smarter encryption enabled by default.",
-                                  icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
+                                  icon: icon)
 
             tip.show(animated: true, forView: grade, withinSuperview: superView)
             tip.handleGlobalTouch()
@@ -48,10 +47,14 @@ extension TabViewController: BrowsingTipsDelegate {
             guard let button = mainViewController.fireButton else { return }
             guard let superView = self?.parent?.view else { return }
 
-            EasyTipView.globalPreferences.positioning.vOffset = -5
+            var preferences = EasyTipView.globalPreferences
+            preferences.drawing.arrowPosition = .bottom
+            preferences.positioning.vOffset = 2
 
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame")!, position: .left, alignment: .topOrLeft)
             let tip = EasyTipView(text: "Tap the Fire Button to erase your tabs and browsing data.",
-                                  icon: EasyTipView.Icon(image: UIImage(named: "Home")!, position: .left, alignment: .topOrLeft))
+                                  icon: icon,
+                                  preferences: preferences)
             tip.show(forItem: button, withinSuperView: superView)
             tip.handleGlobalTouch()
         }

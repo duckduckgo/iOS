@@ -105,6 +105,8 @@ class AtbIntegrationTests: XCTestCase {
         search(forText: "http://localhost:8080?q=beagles")
         assertSearch(text: "beagles", atb: Constants.initialAtb)
         assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
+        assertInstallAtbCalledOnce()
+        assertExtiCalledOnce()
     }
     
     func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {

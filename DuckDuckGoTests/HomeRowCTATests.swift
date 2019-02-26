@@ -23,32 +23,32 @@ import XCTest
 
 class HomeRowCTATests: XCTestCase {
     
-    func testWhenContextualOnboardingFeatureEnabledAnd24HoursPassedSinceInstallThenShowCTA() {
-        
-        let statistics = MockStatisticsStore()
-        statistics.installDate = Date(timeIntervalSinceNow: -24 * 60 * 60)
+    func testWhenContextualOnboardingFeatureEnabledAndAllHomeScreenTipsShownThenCanShowCTA() {
         
         var variantManager = MockVariantManager()
         variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])
         
+        var tipsStorage = MockContextualTipsStorage()
+        tipsStorage.hasMoreHomeScreenTips = false
+
         let storage = MockHomeRowOnboardingStorage(dismissed: false)
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, statistics: statistics)
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage)
         XCTAssertTrue(feature.shouldShow())
         
     }
     
-    func testWhenContextualOnboardingFeatureEnabledAndNot24HoursPassedSinceInstallThenDontShowCTA() {
-        
-        let statistics = MockStatisticsStore()
-        statistics.installDate = Date()
+    func testWhenContextualOnboardingFeatureEnabledAndNotAllHomeScreenTipsShownThenDontShowCTA() {
         
         var variantManager = MockVariantManager()
         variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])
         
-        let storage = MockHomeRowOnboardingStorage(dismissed: false)
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, statistics: statistics)
-        XCTAssertFalse(feature.shouldShow())
+        var tipsStorage = MockContextualTipsStorage()
+        tipsStorage.hasMoreHomeScreenTips = true
         
+        let storage = MockHomeRowOnboardingStorage(dismissed: false)
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage)
+        XCTAssertFalse(feature.shouldShow())
+
     }
 
     func testWhenDismissedThenDismissedStateStored() {

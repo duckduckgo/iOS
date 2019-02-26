@@ -26,27 +26,23 @@ protocol HomeRowCTAStorage: class {
 }
 
 class HomeRowCTA {
-
-    struct Constants {
-        static let homeRowCTADelay: Double = 24 * 60 * 60
-    }
     
     private let storage: HomeRowCTAStorage
     private let variantManager: VariantManager
-    private let statistics: StatisticsStore
+    private let tipsStorage: ContextualTipsStorage
 
     init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(),
          variantManager: VariantManager = DefaultVariantManager(),
-         statistics: StatisticsStore = StatisticsUserDefaults()) {
+         tipsStorage: ContextualTipsStorage = DefaultContextualTipsStorage()) {
         self.storage = storage
         self.variantManager = variantManager
-        self.statistics = statistics
+        self.tipsStorage = tipsStorage
     }
 
     func shouldShow() -> Bool {
         
-        if (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual)
-            && abs((statistics.installDate ?? Date()).timeIntervalSinceNow) <= Constants.homeRowCTADelay {
+        if (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual) &&
+             tipsStorage.hasMoreHomeScreenTips {
             return false
         }
         

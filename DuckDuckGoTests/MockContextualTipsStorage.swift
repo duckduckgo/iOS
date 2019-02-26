@@ -1,5 +1,5 @@
 //
-//  TouchWindow.swift
+//  MockContextualTipsStorage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -17,19 +17,15 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
+@testable import DuckDuckGo
 
-class TouchWindow: UIWindow {
-
-    static let touchNotification = NSNotification.Name(rawValue: "com.duckduckgo.touchwindow.notifications.touch")
+struct MockContextualTipsStorage: ContextualTipsStorage {
     
-    convenience init() {
-        self.init(frame: UIScreen.main.bounds)
-    }
+    var nextHomeScreenTip: Int = 0
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        NotificationCenter.default.post(name: TouchWindow.touchNotification, object: self)
-        return super.hitTest(point, with: event)
-    }
+    var nextBrowsingTip: Int = 0
+    
+    var hasMoreHomeScreenTips: Bool = false
     
 }

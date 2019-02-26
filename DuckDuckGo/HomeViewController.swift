@@ -115,7 +115,7 @@ class HomeViewController: UIViewController {
         }
         
         installHomeScreenTips()
-
+        
         viewHasAppeared = true
     }
     

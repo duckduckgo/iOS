@@ -112,6 +112,7 @@
 		851B12A1222440D1004781BC /* EasyTipView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851B129F222440B3004781BC /* EasyTipView.framework */; };
 		851B12A622246625004781BC /* TouchWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A522246625004781BC /* TouchWindow.swift */; };
 		851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A722246B84004781BC /* EasyTipViewExtension.swift */; };
+		851B12AB22259DDE004781BC /* MockContextualTipsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -641,6 +642,7 @@
 		851B129F222440B3004781BC /* EasyTipView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyTipView.framework; path = Carthage/Build/iOS/EasyTipView.framework; sourceTree = "<group>"; };
 		851B12A522246625004781BC /* TouchWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchWindow.swift; sourceTree = "<group>"; };
 		851B12A722246B84004781BC /* EasyTipViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTipViewExtension.swift; sourceTree = "<group>"; };
+		851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockContextualTipsStorage.swift; sourceTree = "<group>"; };
 		851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButton.swift; sourceTree = "<group>"; };
 		851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButtonTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
@@ -2098,6 +2100,7 @@
 				F1134EBA1F40D3D000B73467 /* MockStatisticsStore.swift */,
 				8536A1C7209AF2410050739E /* MockVariantManager.swift */,
 				98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */,
+				851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -3290,6 +3293,7 @@
 				F16BB6601F56494C00B47A42 /* FeaturesViewControllerTests.swift in Sources */,
 				85F1E9B71FB7C81C00A75AC1 /* NativeDisplayableCertificateBuilderDriverTests.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewExtensionTests.swift in Sources */,
+				851B12AB22259DDE004781BC /* MockContextualTipsStorage.swift in Sources */,
 				8364F7131F961E5E00562989 /* DisconnectMeStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
 				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,

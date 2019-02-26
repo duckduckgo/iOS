@@ -32,7 +32,10 @@ class HomeScreenTips {
     
     enum Tips: Int {
         case privateSearch
-        case showCusomize
+        case showCustomize
+        
+        static let all = [ privateSearch, showCustomize ]
+        
     }
     
     private weak var delegate: HomeScreenTipsDelegate?
@@ -58,7 +61,7 @@ class HomeScreenTips {
         case .privateSearch:
             delegate?.showPrivateSearchTip()
             
-        case .showCusomize:
+        case .showCustomize:
             delegate?.showCustomizeTip()
             
         }

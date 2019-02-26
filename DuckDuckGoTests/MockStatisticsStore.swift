@@ -30,7 +30,11 @@ class MockStatisticsStore: StatisticsStore {
     }
 
     var variant: String?
-    var atbWithVariant: String?
+    
+    var atbWithVariant: String? {
+        guard let atb = atb else { return nil }
+        return atb + (variant ?? "")
+    }
     
     var httpsUpgradesTotal = 0
     var httpsUpgradesFailures = 0

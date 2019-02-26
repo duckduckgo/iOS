@@ -18,25 +18,198 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                <rect key="frame" x="169" y="587" width="37" height="30"/>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="JJe-pe-VGc"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
+                                <rect key="frame" x="52" y="80" width="271" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="271" id="Xng-lb-Ecr"/>
+                                    <constraint firstAttribute="height" constant="80" id="ozC-RA-X8n"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Welcome to
+DuckDuckGo!</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="36" name="ProximaNova-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="40" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
+                                <rect key="frame" x="52" y="171" width="271" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="271" id="FOk-vM-2GT"/>
+                                    <constraint firstAttribute="height" constant="48" id="p28-LD-Hf4"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Protecting your data has never 
+been this easy.</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="24" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="gBi-2S-XVd">
+                                <rect key="frame" x="42.5" y="254" width="290.5" height="64"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="ttJ-zb-Kai">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="hPb-ZT-Ztp">
+                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Block advertising trackers while you browse.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290.5" id="cbI-sD-8bj"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="y4W-Nc-GV1">
+                                <rect key="frame" x="42.5" y="332" width="290.5" height="64"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="JaF-ui-dNu">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="204" translatesAutoresizingMaskIntoConstraints="NO" id="jLj-xr-9G1">
+                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Search privately, by default.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290.5" id="pnu-w4-C8n"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="ST9-yF-Cpf">
+                                <rect key="frame" x="42.5" y="408" width="290.5" height="64"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="J2a-iP-1Qq">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="ZSm-dH-5Mc">
+                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Easily clear your browsing data.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290.5" id="CvI-aN-dre"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="TTG-kR-cg7">
+                                <rect key="frame" x="42.5" y="488" width="290.5" height="64"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="sw4-KH-1Y6">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="cJa-y2-jcv">
+                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Customize your browsing experience.">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="290.5" id="BCN-qA-Sf2"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="25" y="592" width="325" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
+                                        <rect key="frame" x="0.0" y="0.0" width="325" height="50"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="JJe-pe-VGc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="6C6-ov-zFY"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
+                                    <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
+                                    <constraint firstAttribute="width" constant="325" id="x5d-ta-xOz"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ciS-pA-ovS" secondAttribute="bottom" constant="50" id="Vvt-Ze-Rca"/>
-                            <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="aVi-9D-Hz3"/>
+                            <constraint firstItem="u7Q-MU-drX" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="60" id="7MZ-Qz-Ebx"/>
+                            <constraint firstItem="TTG-kR-cg7" firstAttribute="leading" secondItem="ST9-yF-Cpf" secondAttribute="leading" id="Awa-7D-5vt"/>
+                            <constraint firstItem="JgA-Kx-QGf" firstAttribute="top" secondItem="u7Q-MU-drX" secondAttribute="bottom" constant="11" id="Hew-Sj-pXV"/>
+                            <constraint firstItem="hPb-ZT-Ztp" firstAttribute="top" secondItem="JgA-Kx-QGf" secondAttribute="bottom" constant="35" id="LtU-DE-PRz"/>
+                            <constraint firstItem="y4W-Nc-GV1" firstAttribute="leading" secondItem="gBi-2S-XVd" secondAttribute="leading" id="Ry7-AW-nt2"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="25" id="ZoN-Cf-uMJ"/>
+                            <constraint firstItem="gBi-2S-XVd" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="dVk-M4-jlI"/>
+                            <constraint firstItem="u7Q-MU-drX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="h6G-yT-1Xs"/>
+                            <constraint firstItem="TTG-kR-cg7" firstAttribute="top" secondItem="ST9-yF-Cpf" secondAttribute="bottom" constant="16" id="iHO-eB-GHa"/>
+                            <constraint firstItem="ST9-yF-Cpf" firstAttribute="leading" secondItem="y4W-Nc-GV1" secondAttribute="leading" id="mza-hK-Pod"/>
+                            <constraint firstItem="ST9-yF-Cpf" firstAttribute="top" secondItem="y4W-Nc-GV1" secondAttribute="bottom" constant="12" id="sav-n2-BqF"/>
+                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ubw-iD-6Jr"/>
+                            <constraint firstItem="y4W-Nc-GV1" firstAttribute="top" secondItem="gBi-2S-XVd" secondAttribute="bottom" constant="14" id="vyi-g4-xmM"/>
+                            <constraint firstItem="JgA-Kx-QGf" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ymH-zK-lMr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-60" y="32"/>
+            <point key="canvasLocation" x="-60" y="31.934032983508249"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="OnboardingIconBlockTrackers" width="64" height="64"/>
+        <image name="OnboardingIconCustomize" width="64" height="64"/>
+        <image name="OnboardingIconFlame" width="64" height="64"/>
+        <image name="OnboardingIconSearchPrivately" width="64" height="64"/>
+    </resources>
 </document>

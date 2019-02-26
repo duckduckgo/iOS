@@ -154,10 +154,10 @@ been this easy.</string>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Done BG" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="82" y="787" width="250" height="50"/>
+                                <rect key="frame" x="44.666666666666657" y="787" width="325" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="325" height="50"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Done"/>
@@ -173,7 +173,7 @@ been this easy.</string>
                                     <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
-                                    <constraint firstAttribute="width" constant="250" id="x5d-ta-xOz"/>
+                                    <constraint firstAttribute="width" priority="750" constant="325" id="x5d-ta-xOz"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -187,9 +187,11 @@ been this easy.</string>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="top" relation="lessThanOrEqual" secondItem="JgA-Kx-QGf" secondAttribute="bottom" constant="64" id="50t-wj-XIx"/>
                             <constraint firstItem="u7Q-MU-drX" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" priority="999" constant="40" id="7MZ-Qz-Ebx"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="top" secondItem="u7Q-MU-drX" secondAttribute="bottom" constant="11" id="Hew-Sj-pXV"/>
+                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2Fp-cs-AKH" secondAttribute="leading" constant="12" id="JIv-At-Lnm"/>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ZZ1-JB-aZP"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="25" id="ZoN-Cf-uMJ"/>
                             <constraint firstItem="u7Q-MU-drX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="h6G-yT-1Xs"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZEn-eD-MPB" secondAttribute="trailing" constant="12" id="hdj-9b-PWp"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="top" secondItem="d2U-SO-dZU" secondAttribute="bottom" priority="250" constant="12" id="oBq-sb-aHy"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ubw-iD-6Jr"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ymH-zK-lMr"/>

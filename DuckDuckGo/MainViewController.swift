@@ -99,6 +99,10 @@ class MainViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+    
     private func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame),

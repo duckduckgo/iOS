@@ -163,9 +163,8 @@ been this easy.</string>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
                                         <rect key="frame" x="0.0" y="0.0" width="325" height="50"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        </state>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Done"/>
                                         <connections>
                                             <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="JJe-pe-VGc"/>
                                         </connections>

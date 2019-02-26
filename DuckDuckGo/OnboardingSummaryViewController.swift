@@ -27,4 +27,12 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
         delegate?.onboardingCompleted()
     }
     
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
 }

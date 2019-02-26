@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,11 +20,11 @@
             <objects>
                 <viewController id="X59-2u-JR5" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R3B-sO-IVB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                <rect key="frame" x="52" y="80" width="271" height="80"/>
+                                <rect key="frame" x="24.5" y="40" width="271" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="271" id="Xng-lb-Ecr"/>
                                     <constraint firstAttribute="height" constant="80" id="ozC-RA-X8n"/>
@@ -43,7 +43,7 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                <rect key="frame" x="52" y="171" width="271" height="48"/>
+                                <rect key="frame" x="24.5" y="131" width="271" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="271" id="FOk-vM-2GT"/>
                                     <constraint firstAttribute="height" constant="48" id="p28-LD-Hf4"/>
@@ -61,107 +61,103 @@ been this easy.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="gBi-2S-XVd">
-                                <rect key="frame" x="42.5" y="254" width="290.5" height="64"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU">
+                                <rect key="frame" x="12" y="195" width="296" height="286"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="ttJ-zb-Kai">
-                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="hPb-ZT-Ztp">
-                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Block advertising trackers while you browse.">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
+                                        <rect key="frame" x="0.0" y="0.0" width="296" height="64"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-dU-Ih3">
+                                                <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="204" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
+                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Search privately, by default.">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
+                                        <rect key="frame" x="0.0" y="74" width="296" height="64"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
+                                                <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
+                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Block advertising trackers while you browse.">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="jMm-V2-J1P" userLabel="Clear your data">
+                                        <rect key="frame" x="0.0" y="148" width="296" height="64"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="i66-EN-Pg4">
+                                                <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
+                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Easily clear your browsing data.">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-CD-VRZ" userLabel="Customize">
+                                        <rect key="frame" x="0.0" y="222" width="296" height="64"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="HtO-i5-Mle">
+                                                <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
+                                                <rect key="frame" x="87.5" y="0.0" width="208.5" height="64"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Customize your browsing experience.">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="290.5" id="cbI-sD-8bj"/>
+                                    <constraint firstAttribute="width" constant="296" id="EES-oO-jnN"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="y4W-Nc-GV1">
-                                <rect key="frame" x="42.5" y="332" width="290.5" height="64"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="JaF-ui-dNu">
-                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="204" translatesAutoresizingMaskIntoConstraints="NO" id="jLj-xr-9G1">
-                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Search privately, by default.">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="290.5" id="pnu-w4-C8n"/>
-                                </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="ST9-yF-Cpf">
-                                <rect key="frame" x="42.5" y="408" width="290.5" height="64"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="J2a-iP-1Qq">
-                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="ZSm-dH-5Mc">
-                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Easily clear your browsing data.">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="290.5" id="CvI-aN-dre"/>
-                                </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="TTG-kR-cg7">
-                                <rect key="frame" x="42.5" y="488" width="290.5" height="64"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="sw4-KH-1Y6">
-                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="cJa-y2-jcv">
-                                        <rect key="frame" x="87.5" y="0.0" width="203" height="64"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Customize your browsing experience.">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" size="17" name="ProximaNova-Semibold"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="290.5" id="BCN-qA-Sf2"/>
-                                </constraints>
-                            </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="25" y="592" width="325" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Done BG" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="35" y="493" width="250" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                        <rect key="frame" x="0.0" y="0.0" width="325" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="50"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Done"/>
@@ -177,7 +173,7 @@ been this easy.</string>
                                     <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
-                                    <constraint firstAttribute="width" constant="325" id="x5d-ta-xOz"/>
+                                    <constraint firstAttribute="width" constant="250" id="x5d-ta-xOz"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -188,19 +184,14 @@ been this easy.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="u7Q-MU-drX" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="60" id="7MZ-Qz-Ebx"/>
-                            <constraint firstItem="TTG-kR-cg7" firstAttribute="leading" secondItem="ST9-yF-Cpf" secondAttribute="leading" id="Awa-7D-5vt"/>
+                            <constraint firstItem="d2U-SO-dZU" firstAttribute="top" secondItem="JgA-Kx-QGf" secondAttribute="bottom" priority="250" constant="32" id="50t-wj-XIx"/>
+                            <constraint firstItem="u7Q-MU-drX" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="20" id="7MZ-Qz-Ebx"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="top" secondItem="u7Q-MU-drX" secondAttribute="bottom" constant="11" id="Hew-Sj-pXV"/>
-                            <constraint firstItem="hPb-ZT-Ztp" firstAttribute="top" secondItem="JgA-Kx-QGf" secondAttribute="bottom" constant="35" id="LtU-DE-PRz"/>
-                            <constraint firstItem="y4W-Nc-GV1" firstAttribute="leading" secondItem="gBi-2S-XVd" secondAttribute="leading" id="Ry7-AW-nt2"/>
+                            <constraint firstItem="d2U-SO-dZU" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ZZ1-JB-aZP"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="25" id="ZoN-Cf-uMJ"/>
-                            <constraint firstItem="gBi-2S-XVd" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="dVk-M4-jlI"/>
                             <constraint firstItem="u7Q-MU-drX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="h6G-yT-1Xs"/>
-                            <constraint firstItem="TTG-kR-cg7" firstAttribute="top" secondItem="ST9-yF-Cpf" secondAttribute="bottom" constant="16" id="iHO-eB-GHa"/>
-                            <constraint firstItem="ST9-yF-Cpf" firstAttribute="leading" secondItem="y4W-Nc-GV1" secondAttribute="leading" id="mza-hK-Pod"/>
-                            <constraint firstItem="ST9-yF-Cpf" firstAttribute="top" secondItem="y4W-Nc-GV1" secondAttribute="bottom" constant="12" id="sav-n2-BqF"/>
+                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="d2U-SO-dZU" secondAttribute="bottom" constant="12" id="oBq-sb-aHy"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ubw-iD-6Jr"/>
-                            <constraint firstItem="y4W-Nc-GV1" firstAttribute="top" secondItem="gBi-2S-XVd" secondAttribute="bottom" constant="14" id="vyi-g4-xmM"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ymH-zK-lMr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>

@@ -17,6 +17,7 @@ extension EasyTipView {
         preferences.drawing.foregroundColor = UIColor.charcoalGrey
         preferences.drawing.shadowOpacity = 0.1
         preferences.drawing.shadowOffset = CGSize(width: 0, height: 1)
+        preferences.drawing.textAlignment = .left
         preferences.animating.dismissOnTap = false
         EasyTipView.globalPreferences = preferences
     }

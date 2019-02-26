@@ -24,7 +24,7 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
     weak var delegate: OnboardingDelegate?
     
     @IBAction func done() {
-        delegate?.onboardingCompleted()
+        delegate?.onboardingCompleted(controller: self)
     }
     
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {

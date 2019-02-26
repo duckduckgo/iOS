@@ -53,8 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
+        // only replace an existing window in case starting up for background mode
         if window != nil {
             let window = TouchWindow()
+            window.makeKey()
             window.rootViewController = self.window?.rootViewController
             self.window = window
         }
@@ -67,7 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
         HomePageConfiguration.installNewUserFavorites()
-        startOnboardingFlowIfNotSeenBefore()
 
         if let main = mainViewController {
             autoClear = AutoClear(worker: main)
@@ -197,27 +198,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         overlayWindow = nil
     }
 
-    private func startOnboardingFlowIfNotSeenBefore() {
-        let settings = TutorialSettings()
-        guard !settings.hasSeenOnboarding else { return }
-            
-        let onboardingFlow: String
-        
-        let variant = DefaultVariantManager().currentVariant
-        if variant?.features.contains(.onboardingContextual) ?? false {
-            return
-        } else if variant?.features.contains(.onboardingSummary) ?? false {
-            onboardingFlow = "OnboardingSummary"
-        } else {
-            onboardingFlow = "Onboarding"
-        }
-        
-        window?.rootViewController = UIStoryboard(name: onboardingFlow, bundle: nil).instantiateInitialViewController()
-        if var onboarding = window?.rootViewController as? Onboarding {
-            onboarding.delegate = self
-        }
-
-    }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
         Logger.log(text: "Handling shortcut item: \(shortcutItem.type)")
@@ -231,34 +211,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
-}
-
-extension AppDelegate: OnboardingDelegate {
-    
-    func onboardingCompleted() {
-        
-        var settings = TutorialSettings()
-        settings.hasSeenOnboarding = true
-        
-        let modalTransitionStyle: UIModalTransitionStyle
-  
-        let variant = DefaultVariantManager().currentVariant
-        
-        if variant?.features.contains(.onboardingSummary) ?? false {
-            modalTransitionStyle = .crossDissolve
-        } else {
-            modalTransitionStyle = .flipHorizontal
-        }
-        
-        guard let mainViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() else {
-            fatalError("Unable to instantiate main view controller")
-        }
-        
-        mainViewController.modalTransitionStyle = modalTransitionStyle
-        window?.rootViewController?.present(mainViewController, animated: true) {
-            self.window?.rootViewController = mainViewController
-        }
-        
-    }
-    
 }

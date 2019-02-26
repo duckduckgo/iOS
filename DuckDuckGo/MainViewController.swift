@@ -97,6 +97,7 @@ class MainViewController: UIViewController {
         registerForKeyboardNotifications()
 
         applyTheme(ThemeManager.shared.currentTheme)
+        
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -188,11 +189,6 @@ class MainViewController: UIViewController {
             controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
             return
         }
-    }
-
-    func showOnboarding() {
-        performSegue(withIdentifier: "Onboarding", sender: self)
-        homeController?.resetHomeRowCTAAnimations()
     }
 
     private func configureTabManager() {

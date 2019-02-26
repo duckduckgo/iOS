@@ -153,7 +153,7 @@ class OnboardingViewController: UIViewController, UIPageViewControllerDelegate, 
     }
 
     private func finishOnboardingFlow() {
-        delegate?.onboardingCompleted()
+        delegate?.onboardingCompleted(controller: self)
     }
 
     fileprivate var currentController: UIViewController {

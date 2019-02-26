@@ -47,14 +47,13 @@ extension TabViewController: BrowsingTipsDelegate {
             guard let button = mainViewController.fireButton else { return }
             guard let superView = self?.parent?.view else { return }
 
-            var preferences = EasyTipView.globalPreferences
-            preferences.drawing.arrowPosition = .bottom
-            preferences.positioning.vOffset = 2
-
+            var prefs = EasyTipView.globalPreferences
+            prefs.positioning.hOffset = 2
+            
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame")!, position: .left, alignment: .topOrLeft)
             let tip = EasyTipView(text: "Tap the Fire Button to erase your tabs and browsing data.",
                                   icon: icon,
-                                  preferences: preferences)
+                                  preferences: prefs)
             tip.show(forItem: button, withinSuperView: superView)
             tip.handleGlobalTouch()
         }

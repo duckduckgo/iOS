@@ -29,13 +29,9 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let view = self?.chromeDelegate?.omniBar else { return }
             guard let superView = self?.parent?.view else { return }
 
-            var preferences = EasyTipView.globalPreferences
-            preferences.positioning.vOffset = -5
-
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately")!, position: .left, alignment: .topOrLeft)
             let tip = EasyTipView(text: "Searching with DuckDuckGo means your searches are never tracked. (Ever)",
-                                  icon: icon,
-                                  preferences: preferences)
+                                  icon: icon)
             tip.show(animated: true, forView: view, withinSuperview: superView)
             tip.handleGlobalTouch()
         }

@@ -151,3 +151,8 @@
 "keyCommandFire" = "Clear all tabs and data";
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
+
+"contextualOnboardingSearchPrivately" = "Searching with DuckDuckGo means your searches are never tracked. Ever.";
+"contextualOnboardingCustomize" = "Pick a theme to make the DuckDuckGo Privacy browser yours.";
+"contextualOnboardingBlockTrackers" = "You're browsing with tracker protection and smarter encryption enabled by default.";
+"contextualOnboardingFireButton" = "Tap the Fire Button to erase your tabs and browsing data.";

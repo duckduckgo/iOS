@@ -31,7 +31,7 @@ extension TabViewController: BrowsingTipsDelegate {
             self?.delegate?.showBars()
 
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconBlockTrackers")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: "You're browsing with tracker protection and smarter encryption enabled by default.",
+            let tip = EasyTipView(text: UserText.contextualOnboardingBlockTrackers,
                                   icon: icon)
 
             tip.show(animated: true, forView: grade, withinSuperview: superView)
@@ -50,7 +50,7 @@ extension TabViewController: BrowsingTipsDelegate {
             self?.delegate?.showBars()
             
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: "Tap the Fire Button to erase your tabs and browsing data.",
+            let tip = EasyTipView(text: UserText.contextualOnboardingFireButton,
                                   icon: icon)
             tip.show(forItem: button, withinSuperView: superView)
             tip.handleGlobalTouch()

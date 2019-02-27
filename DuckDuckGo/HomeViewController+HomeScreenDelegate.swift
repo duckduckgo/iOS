@@ -29,7 +29,7 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let superView = self?.parent?.view else { return }
 
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: "Searching with DuckDuckGo means your searches are never tracked. Ever.",
+            let tip = EasyTipView(text: UserText.contextualOnboardingSearchPrivately,
                                   icon: icon)
             tip.show(animated: true, forView: view, withinSuperview: superView)
             tip.handleGlobalTouch()
@@ -45,7 +45,7 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let superView = self?.parent?.view else { return }
 
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: "Pick a theme to make the DuckDuckGo Privacy browser yours.",
+            let tip = EasyTipView(text: UserText.contextualOnboardingCustomize,
                                   icon: icon)
 
             tip.show(animated: true, forView: settings, withinSuperview: superView)

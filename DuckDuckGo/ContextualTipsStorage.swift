@@ -24,8 +24,6 @@ protocol ContextualTipsStorage {
     var nextHomeScreenTip: Int { get set }
     var nextBrowsingTip: Int { get set }
     
-    var hasMoreHomeScreenTips: Bool { get }
-    
 }
 
 class DefaultContextualTipsStorage: ContextualTipsStorage {
@@ -59,10 +57,6 @@ class DefaultContextualTipsStorage: ContextualTipsStorage {
         
     }
 
-    var hasMoreHomeScreenTips: Bool {
-        return nextHomeScreenTip < HomeScreenTips.Tips.all.count
-    }
-    
     private let userDefaults: UserDefaults
     
     public init(userDefaults: UserDefaults = UserDefaults.standard) {

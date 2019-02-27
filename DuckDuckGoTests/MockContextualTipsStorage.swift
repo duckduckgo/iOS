@@ -26,6 +26,4 @@ struct MockContextualTipsStorage: ContextualTipsStorage {
     
     var nextBrowsingTip: Int = 0
     
-    var hasMoreHomeScreenTips: Bool = false
-    
 }

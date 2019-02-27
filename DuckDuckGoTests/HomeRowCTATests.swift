@@ -29,7 +29,7 @@ class HomeRowCTATests: XCTestCase {
         variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])
         
         var tipsStorage = MockContextualTipsStorage()
-        tipsStorage.hasMoreHomeScreenTips = false
+        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.all.count
 
         let storage = MockHomeRowOnboardingStorage(dismissed: false)
         let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage)
@@ -43,7 +43,7 @@ class HomeRowCTATests: XCTestCase {
         variantManager.currentVariant = Variant(name: "x", weight: 0, features: [ .onboardingContextual ])
         
         var tipsStorage = MockContextualTipsStorage()
-        tipsStorage.hasMoreHomeScreenTips = true
+        tipsStorage.nextHomeScreenTip = 0
         
         let storage = MockHomeRowOnboardingStorage(dismissed: false)
         let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage)

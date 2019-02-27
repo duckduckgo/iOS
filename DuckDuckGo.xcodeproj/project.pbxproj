@@ -113,6 +113,9 @@
 		851B12A622246625004781BC /* TouchWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A522246625004781BC /* TouchWindow.swift */; };
 		851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A722246B84004781BC /* EasyTipViewExtension.swift */; };
 		851B12AB22259DDE004781BC /* MockContextualTipsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */; };
+		851B12AF2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */; };
+		851B12B12226BEE3004781BC /* HomeScreenTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B02226BEE3004781BC /* HomeScreenTipsTests.swift */; };
+		851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B22226D062004781BC /* BrowsingTipsTests.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -645,6 +648,9 @@
 		851B12A522246625004781BC /* TouchWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchWindow.swift; sourceTree = "<group>"; };
 		851B12A722246B84004781BC /* EasyTipViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTipViewExtension.swift; sourceTree = "<group>"; };
 		851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockContextualTipsStorage.swift; sourceTree = "<group>"; };
+		851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultContextualTipsStorageTests.swift; sourceTree = "<group>"; };
+		851B12B02226BEE3004781BC /* HomeScreenTipsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenTipsTests.swift; sourceTree = "<group>"; };
+		851B12B22226D062004781BC /* BrowsingTipsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingTipsTests.swift; sourceTree = "<group>"; };
 		851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButton.swift; sourceTree = "<group>"; };
 		851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButtonTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
@@ -1435,6 +1441,16 @@
 			name = Contextual;
 			sourceTree = "<group>";
 		};
+		851B12AD2226B18A004781BC /* Contextual */ = {
+			isa = PBXGroup;
+			children = (
+				851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */,
+				851B12B02226BEE3004781BC /* HomeScreenTipsTests.swift */,
+				851B12B22226D062004781BC /* BrowsingTipsTests.swift */,
+			);
+			name = Contextual;
+			sourceTree = "<group>";
+		};
 		851DFD88212C5ED600D95F20 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1833,6 +1849,7 @@
 		F12790DD1EBBDDF3001D3AEC /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				851B12AD2226B18A004781BC /* Contextual */,
 				85C11E4D2090893900BFFEB4 /* HomeRow */,
 				F12790EC1EBBEDBB001D3AEC /* Onboarding */,
 			);
@@ -3245,7 +3262,9 @@
 				8570656E1F6AAE270044DCB1 /* DetectedTrackerTests.swift in Sources */,
 				85267D2D215286C500A0CE28 /* PrivacyPracticesTests.swift in Sources */,
 				83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */,
+				851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */,
 				85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */,
+				851B12B12226BEE3004781BC /* HomeScreenTipsTests.swift in Sources */,
 				F1FCF3B31F3550BD00C23128 /* APIRequestTests.swift in Sources */,
 				856D57C720656A28000170B5 /* TLDTests.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
@@ -3295,6 +3314,7 @@
 				853C5F6521C3E697001F7A05 /* MockBookmarkStore.swift in Sources */,
 				85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */,
 				851B1286221FE756004781BC /* VariantTests.swift in Sources */,
+				851B12AF2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift in Sources */,
 				85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* OmniBarStateTests.swift in Sources */,
 				85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */,

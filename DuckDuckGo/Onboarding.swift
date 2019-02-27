@@ -54,7 +54,7 @@ extension MainViewController {
             modalTransitionStyle = .crossDissolve
             onboardingFlow = isPad ? "OnboardingSummary-iPad" : "OnboardingSummary"
         } else {
-            modalTransitionStyle = .crossDissolve
+            modalTransitionStyle = .flipHorizontal
             onboardingFlow = "Onboarding"
         }
         

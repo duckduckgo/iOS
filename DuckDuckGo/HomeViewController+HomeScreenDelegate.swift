@@ -23,13 +23,12 @@ import EasyTipView
 extension HomeViewController: HomeScreenTipsDelegate {
     
     func showPrivateSearchTip() {
-        print("***", #function)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let view = self?.chromeDelegate?.omniBar else { return }
             guard let superView = self?.parent?.view else { return }
 
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately")!, position: .left, alignment: .topOrLeft)
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: "Searching with DuckDuckGo means your searches are never tracked. (Ever)",
                                   icon: icon)
             tip.show(animated: true, forView: view, withinSuperview: superView)
@@ -39,14 +38,13 @@ extension HomeViewController: HomeScreenTipsDelegate {
     }
     
     func showCustomizeTip() {
-        print("***", #function)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let omniBar = self?.chromeDelegate?.omniBar else { return }
             guard let settings = omniBar.settingsButton.imageView else { return }
             guard let superView = self?.parent?.view else { return }
 
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize")!, position: .left, alignment: .topOrLeft)
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: "Pick a theme to make the DuckDuckGo Privacy browser yours.",
                                   icon: icon)
 

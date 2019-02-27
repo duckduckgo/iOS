@@ -25,12 +25,16 @@ extension EasyTipView {
         var preferences = EasyTipView.Preferences()
         preferences.drawing.arrowPosition = .any
         preferences.drawing.backgroundColor = UIColor.white
-        preferences.drawing.font = UIFont(name: "ProximaNova-Regular", size: 14)!
+        preferences.drawing.font = UIFont(name: "ProximaNova-Semibold", size: 16)!
         preferences.drawing.foregroundColor = UIColor.charcoalGrey
         preferences.drawing.shadowOpacity = 0.3
         preferences.drawing.shadowOffset = CGSize(width: 0, height: 1)
         preferences.drawing.textAlignment = .left
-        preferences.drawing.textLineHeight = 22
+        preferences.drawing.textLineHeight = 20
+        preferences.positioning.bubbleHInset = 3
+        preferences.positioning.textHInset = 24
+        preferences.positioning.textVInset = 20
+        preferences.positioning.iconPadding = 24
         preferences.animating.dismissOnTap = false
         EasyTipView.globalPreferences = preferences
     }

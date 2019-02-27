@@ -22,14 +22,15 @@ import EasyTipView
 extension TabViewController: BrowsingTipsDelegate {
     
     func showPrivacyGradeTip() {
-        print("***", #function)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let omniBar = self?.chromeDelegate?.omniBar else { return }
             guard let grade = omniBar.siteRatingView else { return }
             guard let superView = self?.parent?.view else { return }
 
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconBlockTrackers")!, position: .left, alignment: .topOrLeft)
+            self?.delegate?.showBars()
+
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconBlockTrackers")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: "You're browsing with tracker protection and smarter encryption enabled by default.",
                                   icon: icon)
 
@@ -40,20 +41,17 @@ extension TabViewController: BrowsingTipsDelegate {
     }
     
     func showFireButtonTip() {
-        print("***", #function)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let mainViewController = self?.parent as? MainViewController else { return }
             guard let button = mainViewController.fireButton else { return }
             guard let superView = self?.parent?.view else { return }
-
-            var prefs = EasyTipView.globalPreferences
-            prefs.positioning.hOffset = 2
             
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame")!, position: .left, alignment: .topOrLeft)
+            self?.delegate?.showBars()
+            
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: "Tap the Fire Button to erase your tabs and browsing data.",
-                                  icon: icon,
-                                  preferences: prefs)
+                                  icon: icon)
             tip.show(forItem: button, withinSuperView: superView)
             tip.handleGlobalTouch()
         }

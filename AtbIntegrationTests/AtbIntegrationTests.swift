@@ -45,7 +45,8 @@ class AtbIntegrationTests: XCTestCase {
         
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
-            "BASE_PIXEL_URL": "http://localhost:8080"
+            "BASE_PIXEL_URL": "http://localhost:8080",
+            "VARIANT": "sc"
         ]
         
         addRequestHandlers()

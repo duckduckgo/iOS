@@ -68,7 +68,8 @@ public protocol VariantManager {
 public class DefaultVariantManager: VariantManager {
     
     public var currentVariant: Variant? {
-        return variants.first(where: { $0.name == storage.variant })
+        let variantName = ProcessInfo.processInfo.environment["VARIANT", default: storage.variant ?? "" ]
+        return variants.first(where: { $0.name == variantName })
     }
     
     private let variants: [Variant]

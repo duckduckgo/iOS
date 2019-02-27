@@ -51,7 +51,7 @@ extension MainViewController {
         if variant?.features.contains(.onboardingContextual) ?? false {
             return
         } else if variant?.features.contains(.onboardingSummary) ?? false {
-            modalTransitionStyle = .crossDissolve
+            modalTransitionStyle = .coverVertical
             onboardingFlow = isPad ? "OnboardingSummary-iPad" : "OnboardingSummary"
         } else {
             modalTransitionStyle = .flipHorizontal

@@ -154,5 +154,5 @@
 
 "contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomize" = "Want a different look? Try the light theme!";
-"contextualOnboardingPrivacyGrade" = "Tap to see how we enhance each site's privacy with tracker blocking and encryption.";
-"contextualOnboardingFireButton" = "Tap to erase your tabs and browsing data. Visit settings to customize.";
+"contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap to learn how.";
+"contextualOnboardingFireButton" = "Tap to erase your tabs and browsing data, or make it automatic in settings.";

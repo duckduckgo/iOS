@@ -23,19 +23,29 @@ extension EasyTipView {
     
     static func updateGlobalPreferences() {
         var preferences = EasyTipView.Preferences()
+        
+        preferences.drawing.arrowHeight = 9
+        preferences.drawing.arrowWidth = 18
         preferences.drawing.arrowPosition = .any
-        preferences.drawing.backgroundColor = UIColor.white
+        
         preferences.drawing.font = UIFont(name: "ProximaNova-Semibold", size: 16)!
-        preferences.drawing.foregroundColor = UIColor.charcoalGrey
-        preferences.drawing.shadowOpacity = 0.3
-        preferences.drawing.shadowOffset = CGSize(width: 0, height: 1)
+        preferences.drawing.foregroundColor = UIColor.nearlyBlackLight
+        preferences.drawing.backgroundColor = UIColor.white
+
+        preferences.drawing.shadowOpacity = 0.5
+        preferences.drawing.shadowOffset = CGSize(width: 0, height: 0)
+        preferences.drawing.shadowRadius = 3
+
         preferences.drawing.textAlignment = .left
         preferences.drawing.textLineHeight = 20
-        preferences.positioning.bubbleHInset = 3
+        
+        preferences.positioning.bubbleVInset = 8
         preferences.positioning.textHInset = 24
         preferences.positioning.textVInset = 20
-        preferences.positioning.iconPadding = 24
+        preferences.positioning.iconPadding = 12
+        
         preferences.animating.dismissOnTap = false
+        
         EasyTipView.globalPreferences = preferences
     }
     

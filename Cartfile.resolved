@@ -1,7 +1,7 @@
 github "duckduckgo/Alamofire" "4.7.3"
 github "duckduckgo/CommonCrypto" "v1.1.0"
 github "duckduckgo/Device.swift" "1.1.2"
-github "duckduckgo/EasyTipView" "fc3cfb19f17da7caea1f377eb698c35942ac2b92"
+github "duckduckgo/EasyTipView" "e8762e2207020e809ba23b221a69c0c068ca489a"
 github "duckduckgo/Kingfisher" "4.10.0"
 github "duckduckgo/OHHTTPStubs" "6.1.0"
 github "duckduckgo/PunycodeSwift" "b5d91da73fc9770362e1d14be692a2bddc1b4e37"

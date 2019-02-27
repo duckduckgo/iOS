@@ -39,7 +39,9 @@ extension TabViewController: BrowsingTipsDelegate {
                                   preferences: preferences)
 
             tip.show(animated: true, forView: grade, withinSuperview: superView)
-            tip.handleGlobalTouch()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                tip.handleGlobalTouch()
+            }
         }
 
     }
@@ -60,8 +62,10 @@ extension TabViewController: BrowsingTipsDelegate {
             let tip = EasyTipView(text: UserText.contextualOnboardingFireButton,
                                   icon: icon,
                                   preferences: preferences)
-            tip.show(forItem: button, withinSuperView: superView)
-            tip.handleGlobalTouch()
+            tip.show(forItem: button, withinSuperView: superView)            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                tip.handleGlobalTouch()
+            }
         }
     }
         

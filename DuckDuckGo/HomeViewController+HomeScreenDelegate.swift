@@ -36,7 +36,9 @@ extension HomeViewController: HomeScreenTipsDelegate {
                                   icon: icon,
                                   preferences: preferences)
             tip.show(animated: true, forView: view, withinSuperview: superView)
-            tip.handleGlobalTouch()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                tip.handleGlobalTouch()
+            }
         }
         
     }
@@ -57,7 +59,9 @@ extension HomeViewController: HomeScreenTipsDelegate {
                                   preferences: preferences)
 
             tip.show(animated: true, forView: settings, withinSuperview: superView)
-            tip.handleGlobalTouch()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                tip.handleGlobalTouch()
+            }
         }
 
     }

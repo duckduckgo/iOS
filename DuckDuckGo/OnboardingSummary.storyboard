@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -21,11 +21,11 @@
             <objects>
                 <viewController id="X59-2u-JR5" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R3B-sO-IVB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                <rect key="frame" x="24.5" y="60" width="271" height="80"/>
+                                <rect key="frame" x="71.666666666666686" y="60" width="271" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="271" id="Xng-lb-Ecr"/>
                                     <constraint firstAttribute="height" constant="80" id="ozC-RA-X8n"/>
@@ -44,7 +44,7 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                <rect key="frame" x="24.5" y="148" width="271" height="50"/>
+                                <rect key="frame" x="71.666666666666686" y="148" width="271" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="271" id="FOk-vM-2GT"/>
                                     <constraint firstAttribute="height" constant="50" id="p28-LD-Hf4"/>
@@ -63,10 +63,10 @@ been this easy.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU">
-                                <rect key="frame" x="24" y="212" width="272" height="274"/>
+                                <rect key="frame" x="24" y="255" width="366" height="274"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
-                                        <rect key="frame" x="0.0" y="0.0" width="272" height="64"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -75,8 +75,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="height" constant="64" id="wmx-bL-EOc"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
-                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
+                                                <rect key="frame" x="72" y="0.0" width="294" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Block trackers and browse securely by default.">
                                                         <attributes>
@@ -91,7 +91,7 @@ been this easy.</string>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
-                                        <rect key="frame" x="0.0" y="70" width="272" height="64"/>
+                                        <rect key="frame" x="0.0" y="70" width="366" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-dU-Ih3">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -100,8 +100,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="width" constant="64" id="gla-on-vsJ"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
-                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
+                                                <rect key="frame" x="72" y="0.0" width="294" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Keep your searches private.">
                                                         <attributes>
@@ -116,7 +116,7 @@ been this easy.</string>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jMm-V2-J1P" userLabel="Clear your data">
-                                        <rect key="frame" x="0.0" y="140" width="272" height="64"/>
+                                        <rect key="frame" x="0.0" y="140" width="366" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="i66-EN-Pg4">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -125,8 +125,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="height" constant="64" id="Jry-0u-6rm"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
-                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
+                                                <rect key="frame" x="72" y="0.0" width="294" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Erase your browsing data with the tap of a button.">
                                                         <attributes>
@@ -141,7 +141,7 @@ been this easy.</string>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-CD-VRZ" userLabel="Customize">
-                                        <rect key="frame" x="0.0" y="210" width="272" height="64"/>
+                                        <rect key="frame" x="0.0" y="210" width="366" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="HtO-i5-Mle">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -150,8 +150,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="height" constant="64" id="jPy-wT-mQZ"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
-                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
+                                                <rect key="frame" x="72" y="0.0" width="294" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Pick your theme and customize privacy features.">
                                                         <attributes>
@@ -168,10 +168,10 @@ been this easy.</string>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Done BG" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="16" y="506" width="288" height="50"/>
+                                <rect key="frame" x="16" y="674" width="382" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                        <rect key="frame" x="87" y="0.0" width="114" height="50"/>
+                                        <rect key="frame" x="134" y="0.0" width="114" height="50"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Start Browsing"/>

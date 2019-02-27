@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -62,10 +63,10 @@ been this easy.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU">
-                                <rect key="frame" x="32" y="212" width="256" height="274"/>
+                                <rect key="frame" x="24" y="212" width="272" height="274"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
-                                        <rect key="frame" x="0.0" y="0.0" width="256" height="64"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
+                                        <rect key="frame" x="0.0" y="0.0" width="272" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -74,10 +75,10 @@ been this easy.</string>
                                                     <constraint firstAttribute="height" constant="64" id="wmx-bL-EOc"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
-                                                <rect key="frame" x="87.5" y="0.0" width="168.5" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
+                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
                                                 <attributedString key="attributedText">
-                                                    <fragment content="Block trackers and encrypt connections while you browse.">
+                                                    <fragment content="Block trackers and browse securely by default.">
                                                         <attributes>
                                                             <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
@@ -89,8 +90,8 @@ been this easy.</string>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
-                                        <rect key="frame" x="0.0" y="70" width="256" height="64"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
+                                        <rect key="frame" x="0.0" y="70" width="272" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-dU-Ih3">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -99,8 +100,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="width" constant="64" id="gla-on-vsJ"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
-                                                <rect key="frame" x="87.5" y="0.0" width="168.5" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
+                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Keep your searches private.">
                                                         <attributes>
@@ -114,8 +115,8 @@ been this easy.</string>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="jMm-V2-J1P" userLabel="Clear your data">
-                                        <rect key="frame" x="0.0" y="140" width="256" height="64"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jMm-V2-J1P" userLabel="Clear your data">
+                                        <rect key="frame" x="0.0" y="140" width="272" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="i66-EN-Pg4">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -124,8 +125,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="height" constant="64" id="Jry-0u-6rm"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
-                                                <rect key="frame" x="87.5" y="0.0" width="168.5" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
+                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Erase your browsing data with the tap of a button.">
                                                         <attributes>
@@ -139,8 +140,8 @@ been this easy.</string>
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="23.5" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-CD-VRZ" userLabel="Customize">
-                                        <rect key="frame" x="0.0" y="210" width="256" height="64"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-CD-VRZ" userLabel="Customize">
+                                        <rect key="frame" x="0.0" y="210" width="272" height="64"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="HtO-i5-Mle">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -149,8 +150,8 @@ been this easy.</string>
                                                     <constraint firstAttribute="height" constant="64" id="jPy-wT-mQZ"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
-                                                <rect key="frame" x="87.5" y="0.0" width="168.5" height="64"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
+                                                <rect key="frame" x="72" y="0.0" width="200" height="64"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Pick your theme and customize privacy features.">
                                                         <attributes>
@@ -203,7 +204,7 @@ been this easy.</string>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ZZ1-JB-aZP"/>
                             <constraint firstItem="u7Q-MU-drX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="h6G-yT-1Xs"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="top" secondItem="d2U-SO-dZU" secondAttribute="bottom" priority="250" constant="20" id="oBq-sb-aHy"/>
-                            <constraint firstItem="d2U-SO-dZU" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-64" id="pNO-U8-ZD6"/>
+                            <constraint firstItem="d2U-SO-dZU" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-48" id="pNO-U8-ZD6"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ubw-iD-6Jr"/>
                             <constraint firstItem="JgA-Kx-QGf" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ymH-zK-lMr"/>
                         </constraints>

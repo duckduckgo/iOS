@@ -28,9 +28,13 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let view = self?.chromeDelegate?.omniBar else { return }
             guard let superView = self?.parent?.view else { return }
 
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately")!, position: .left, alignment: .centerOrMiddle)
+            var preferences = EasyTipView.globalPreferences
+            preferences.positioning.bubbleVInset = 8
+
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconSearchPrivately48")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: UserText.contextualOnboardingSearchPrivately,
-                                  icon: icon)
+                                  icon: icon,
+                                  preferences: preferences)
             tip.show(animated: true, forView: view, withinSuperview: superView)
             tip.handleGlobalTouch()
         }
@@ -44,9 +48,13 @@ extension HomeViewController: HomeScreenTipsDelegate {
             guard let settings = omniBar.settingsButton.imageView else { return }
             guard let superView = self?.parent?.view else { return }
 
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize")!, position: .left, alignment: .centerOrMiddle)
+            var preferences = EasyTipView.globalPreferences
+            preferences.positioning.bubbleHInset = 8
+            
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize48")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: UserText.contextualOnboardingCustomize,
-                                  icon: icon)
+                                  icon: icon,
+                                  preferences: preferences)
 
             tip.show(animated: true, forView: settings, withinSuperview: superView)
             tip.handleGlobalTouch()

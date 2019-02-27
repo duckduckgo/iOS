@@ -30,9 +30,13 @@ extension TabViewController: BrowsingTipsDelegate {
 
             self?.delegate?.showBars()
 
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconBlockTrackers")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: UserText.contextualOnboardingBlockTrackers,
-                                  icon: icon)
+            var preferences = EasyTipView.globalPreferences
+            preferences.positioning.bubbleHInset = 8
+            
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconBlockTrackers48")!, position: .left, alignment: .centerOrMiddle)
+            let tip = EasyTipView(text: UserText.contextualOnboardingPrivacyGrade,
+                                  icon: icon,
+                                  preferences: preferences)
 
             tip.show(animated: true, forView: grade, withinSuperview: superView)
             tip.handleGlobalTouch()
@@ -49,9 +53,13 @@ extension TabViewController: BrowsingTipsDelegate {
             
             self?.delegate?.showBars()
             
-            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame")!, position: .left, alignment: .centerOrMiddle)
+            var preferences = EasyTipView.globalPreferences
+            preferences.positioning.bubbleHInset = 8
+
+            let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconFlame48")!, position: .left, alignment: .centerOrMiddle)
             let tip = EasyTipView(text: UserText.contextualOnboardingFireButton,
-                                  icon: icon)
+                                  icon: icon,
+                                  preferences: preferences)
             tip.show(forItem: button, withinSuperView: superView)
             tip.handleGlobalTouch()
         }

@@ -39,10 +39,11 @@ extension EasyTipView {
         preferences.drawing.textAlignment = .left
         preferences.drawing.textLineHeight = 20
         
-        preferences.positioning.bubbleVInset = 8
-        preferences.positioning.textHInset = 24
-        preferences.positioning.textVInset = 20
-        preferences.positioning.iconPadding = 12
+        preferences.positioning.textHInset = 16
+        preferences.positioning.textVInset = 12
+        preferences.positioning.iconPadding = 8
+        
+        preferences.positioning.maxWidth = 276
         
         preferences.animating.dismissOnTap = false
         

@@ -54,12 +54,12 @@ public struct AppUrls {
         static let source = "t"
         static let atb = "atb"
         static let setAtb = "set_atb"
-        static let activityType = "at"
+        static let activityType = "type"
     }
 
     private struct ParamValue {
         static let source = "ddg_ios"
-        static let appUsage = "au"
+        static let appUsage = "app_use"
     }
 
     let statisticsStore: StatisticsStore

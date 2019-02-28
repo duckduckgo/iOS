@@ -29,7 +29,7 @@ class AtbIntegrationTests: XCTestCase {
         static let devmode = "test"
         static let atbParam = "atb"
         static let setAtbParam = "set_atb"
-        static let activityType = "at"
+        static let activityType = "type"
     }
     
     let app = XCUIApplication()
@@ -153,7 +153,7 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
                       "first.atb does not start with \(expectedSetAtb)")
         XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
-        XCTAssertEqual("au", request.queryParam(Constants.activityType))
+        XCTAssertEqual("app_use", request.queryParam(Constants.activityType))
         XCTAssertEqual("1", request.queryParam(Constants.devmode))
     }
     

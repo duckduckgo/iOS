@@ -195,7 +195,7 @@ class AppUrlsTests: XCTestCase {
         XCTAssertNotNil(url)
         XCTAssertEqual(url!.getParam(name: "atb"), "x")
         XCTAssertEqual(url!.getParam(name: "set_atb"), "y")
-        XCTAssertEqual(url!.getParam(name: "at"), "au")
+        XCTAssertEqual(url!.getParam(name: "type"), "app_use")
     }
 
     func testSearchUrlCreatesUrlWithQueryParam() {

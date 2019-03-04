@@ -53,6 +53,7 @@ class SubmitFeedbackViewController: UIViewController {
     }
     
     @IBAction func submitFeedbackPressed() {
+        view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
         // TODO
         dismiss(animated: true, completion: nil)
     }

@@ -26,9 +26,9 @@ class CategorizedFeedbackViewController: UITableViewController {
     @IBOutlet weak var supplementaryText: UILabel!
     
     private var options = [String]()
-    private var selectionHandler: (String) -> Void = { _ in }
+    private var selectionHandler: (DisambiguatedFeedbackModel) -> Void = { _ in }
     
-    private(set) var selectedCategory: String?
+    private var existingModel: DisambiguatedFeedbackModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,12 +55,19 @@ class CategorizedFeedbackViewController: UITableViewController {
         options = categories.map { $0.rawValue }
     }
     
-    func configureForSubcategories(with category: DisambiguatedFeedbackCategory) {
-        supplementaryText.text = category.subcategoryCaption
+    func configureForSubcategories(with model: DisambiguatedFeedbackModel) {
+        guard let category = model.category else {
+            fatalError("Feedback model has empty category")
+        }
+        
+        existingModel = model
+        
+        headerText.text = category.caption
+        supplementaryText.text = category.subcategoriesCaption
         options = category.subcategories
     }
     
-    func setSelectionHandler(_ handler: @escaping (String) -> Void) {
+    func setSelectionHandler(_ handler: @escaping (DisambiguatedFeedbackModel) -> Void) {
         self.selectionHandler = handler
     }
     
@@ -73,8 +80,20 @@ class CategorizedFeedbackViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        selectedCategory = options[indexPath.row]
-        selectionHandler(options[indexPath.row])
+        var model: DisambiguatedFeedbackModel
+        if let existingModel = existingModel {
+            model = existingModel
+        } else {
+            model = DisambiguatedFeedbackModel()
+        }
+        
+        if model.category == nil {
+            model.category = DisambiguatedFeedbackCategory(rawValue: options[indexPath.row])
+        } else {
+            model.subcategory = options[indexPath.row]
+        }
+        
+        selectionHandler(model)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,17 +119,28 @@ class CategorizedFeedbackViewController: UITableViewController {
 
 extension CategorizedFeedbackViewController {
     
-    func presentSubmitFeedbackScreen(a: String, b: String) {
-        performSegue(withIdentifier: "PresentSubmitFeedback", sender: nil)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? SubmitFeedbackViewController else {
+        if let controller = segue.destination as? SubmitFeedbackViewController,
+            let model = sender as? DisambiguatedFeedbackModel {
+            controller.loadViewIfNeeded()
+            
+            let detailsText: String
+            if let subcategory = model.subcategory,
+                subcategory != DisambiguatedFeedbackCategory.otherIssues.rawValue {
+                detailsText = subcategory
+            } else {
+                detailsText = "Please tell us what we can improve"
+            }
+            
+            controller.configureForNegativeSentiment(headerText: model.category?.caption ?? "",
+                                                     detailsText: detailsText)
             return
         }
         
-        controller.loadViewIfNeeded()
-        controller.configureForNegativeSentiment(headerText: "aaa", detailsText: "bbb")
+        if let controller = segue.destination as? SiteFeedbackViewController {
+            controller.prepareForSegue(isBrokenSite: true, url: nil)
+            return
+        }
     }
 }
 

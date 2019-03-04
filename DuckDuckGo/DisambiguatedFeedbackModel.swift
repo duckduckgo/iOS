@@ -19,6 +19,11 @@
 
 import Foundation
 
+struct DisambiguatedFeedbackModel {
+    var category: DisambiguatedFeedbackCategory?
+    var subcategory: String?
+}
+
 enum DisambiguatedFeedbackCategory: String, CaseIterable {
     
     case browserFeatureIssues = "Browsing features are missing or frustrating"
@@ -69,7 +74,24 @@ enum DisambiguatedFeedbackCategory: String, CaseIterable {
         }
     }
     
-    var subcategoryCaption: String {
+    var caption: String {
+        switch self {
+        case .browserFeatureIssues:
+            return "Browser feature issues"
+        case .websiteLoadingIssues:
+            return "Website loading issues"
+        case .ddgSearchIssues:
+            return "Search issues"
+        case .customizationIssues:
+            return "Customization issues"
+        case .performanceIssues:
+            return "Performance issues"
+        case .otherIssues:
+            return "Other issues"
+        }
+    }
+    
+    var subcategoriesCaption: String {
         switch self {
         case .browserFeatureIssues:
             return "Which browsing features should be added or improved to make you more likely to continue using DuckDuckGo?"

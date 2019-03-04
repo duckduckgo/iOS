@@ -55,33 +55,17 @@ class AppFeedbackViewController: UIViewController {
         if isNavigatingToCategories {
             controller.loadViewIfNeeded()
             controller.configure(with: DisambiguatedFeedbackCategory.allCases)
-            controller.setSelectionHandler { [weak self, controller] categoryString in
-                if let category = DisambiguatedFeedbackCategory(rawValue: categoryString) {
-                    if category == .otherIssues {
-                        controller.performSegue(withIdentifier: "PresentSubmitFeedback", sender: nil)
-                        return
-                    }
-                    
-                    if category == .websiteLoadingIssues {
-                        return
-                    }
-                }
-                
-                self?.performSegue(withIdentifier: "PresentCategories", sender: controller)
+            controller.setSelectionHandler { [weak self, controller] model in
+                self?.categoriesScreen(controller, didFinishSelection: model)
             }
             return
         }
         
-        if let senderVC = sender as? CategorizedFeedbackViewController {
-            guard let selectedCategoryString = senderVC.selectedCategory,
-                let category = DisambiguatedFeedbackCategory(rawValue: selectedCategoryString) else {
-                return
-            }
-
+        if let model = sender as? DisambiguatedFeedbackModel {
             controller.loadViewIfNeeded()
-            controller.configureForSubcategories(with: category)
-            controller.setSelectionHandler { [weak controller] _ in
-                controller?.performSegue(withIdentifier: "PresentSubmitFeedback", sender: nil)
+            controller.configureForSubcategories(with: model)
+            controller.setSelectionHandler { [weak controller] model in
+                controller?.performSegue(withIdentifier: "PresentSubmitFeedback", sender: model)
             }
         }
         
@@ -90,13 +74,20 @@ class AppFeedbackViewController: UIViewController {
 
 extension AppFeedbackViewController {
     
-    func presentSubcategories(for category: DisambiguatedFeedbackCategory) {
+    func categoriesScreen(_ controller: UIViewController, didFinishSelection model: DisambiguatedFeedbackModel) {
+        if model.category == .otherIssues {
+            controller.performSegue(withIdentifier: "PresentSubmitFeedback", sender: model)
+            return
+        }
         
+        if model.category == .websiteLoadingIssues {
+            controller.performSegue(withIdentifier: "PresentBrokenSiteForm", sender: model)
+            return
+        }
+        
+        performSegue(withIdentifier: "PresentCategories", sender: model)
     }
     
-    func presentFeedbackForm(for category: DisambiguatedFeedbackCategory, subcategory: String) {
-        
-    }
 }
 
 extension AppFeedbackViewController: Themable {

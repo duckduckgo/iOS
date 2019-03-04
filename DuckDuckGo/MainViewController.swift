@@ -180,7 +180,7 @@ class MainViewController: UIViewController {
             return
         }
 
-        if let controller = segue.destination as? FeedbackViewController {
+        if let controller = segue.destination as? SiteFeedbackViewController {
             controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
             return
         }

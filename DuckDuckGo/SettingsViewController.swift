@@ -63,6 +63,12 @@ class SettingsViewController: UITableViewController {
         if segue.destination is AutoClearSettingsViewController {
             Pixel.fire(pixel: .autoClearSettingsShown)
         }
+        
+        if segue.destination is AppFeedbackViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+        }
     }
 
     private func configureMargins() {
@@ -150,9 +156,9 @@ extension SettingsViewController: Themable {
         autoClearAccessoryText.textColor = theme.tableCellAccessoryTextColor
         versionText.textColor = theme.tableCellTintColor
         
-        lightThemeToggle.onTintColor = theme.toggleSwitchColor
-        autocompleteToggle.onTintColor = theme.toggleSwitchColor
-        authenticationToggle.onTintColor = theme.toggleSwitchColor
+        lightThemeToggle.onTintColor = theme.buttonTintColor
+        autocompleteToggle.onTintColor = theme.buttonTintColor
+        authenticationToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

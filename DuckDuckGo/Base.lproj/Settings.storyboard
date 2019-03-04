@@ -297,7 +297,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="Hvb-oi-0lX" kind="presentation" modalPresentationStyle="overFullScreen" id="ufT-Pc-RCL"/>
+                                            <segue destination="Hvb-oi-0lX" kind="presentation" modalPresentationStyle="fullScreen" id="ufT-Pc-RCL"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleSubtitle" id="TYF-GX-a3j">
@@ -412,10 +412,10 @@
             </objects>
             <point key="canvasLocation" x="1945" y="605"/>
         </scene>
-        <!--Feedback-->
+        <!--AppFeedback-->
         <scene sceneID="AdS-SO-faF">
             <objects>
-                <viewControllerPlaceholder storyboardName="Feedback" id="Hvb-oi-0lX" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Feedback" referencedIdentifier="AppFeedback" id="Hvb-oi-0lX" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TVx-JL-4ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2418" y="612"/>

@@ -1,5 +1,5 @@
 //
-//  FeedbackViewController.swift
+//  SiteFeedbackViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -23,7 +23,7 @@ import UIKit
 import Core
 import ToastSwiftFramework
 
-class FeedbackViewController: UIViewController {
+class SiteFeedbackViewController: UIViewController {
 
     private struct ViewConstants {
         static let urlTextHeight: CGFloat = 38
@@ -185,7 +185,7 @@ class FeedbackViewController: UIViewController {
     }
 }
 
-extension FeedbackViewController: UITextViewDelegate {
+extension SiteFeedbackViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         messagePlaceholderText.isHidden = !textView.text.isEmpty
@@ -194,7 +194,7 @@ extension FeedbackViewController: UITextViewDelegate {
     }
 }
 
-extension FeedbackViewController: UITextFieldDelegate {
+extension SiteFeedbackViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         messageTextView.becomeFirstResponder()
@@ -202,7 +202,7 @@ extension FeedbackViewController: UITextFieldDelegate {
     }
 }
 
-extension FeedbackViewController: Themable {
+extension SiteFeedbackViewController: Themable {
     
     func decorate(with theme: Theme) {
         urlTextField.keyboardAppearance = theme.keyboardAppearance

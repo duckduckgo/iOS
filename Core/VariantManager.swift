@@ -43,7 +43,7 @@ public struct Variant {
         
         // Improve app onboarding experiment 1
         Variant(name: "mq", weight: 1, features: [.onboardingSummary]),
-        Variant(name: "mr", weight: 1, features: [.onboardingContextual])
+        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingContextual])
     ]
     
     public let name: String

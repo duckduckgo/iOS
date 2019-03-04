@@ -37,23 +37,27 @@ class HomeScreenTips {
         static let all = [ privateSearch, showCustomize ]
         
     }
-    
+
     private weak var delegate: HomeScreenTipsDelegate?
+    private var tutorialSettings: TutorialSettings
     private var storage: ContextualTipsStorage
 
     init?(delegate: HomeScreenTipsDelegate,
+          tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
           storage: ContextualTipsStorage = DefaultContextualTipsStorage(),
           variantManager: VariantManager = DefaultVariantManager()) {
         
         guard (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual) else {
             return nil
         }
-        
+
+        self.tutorialSettings = tutorialSettings
         self.delegate = delegate
         self.storage = storage
     }
     
     func trigger() {
+        guard tutorialSettings.hasSeenOnboarding else { return }
         guard let tip = Tips(rawValue: storage.nextHomeScreenTip) else { return }
         
         switch tip {

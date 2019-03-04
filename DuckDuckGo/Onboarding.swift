@@ -41,16 +41,14 @@ extension MainViewController {
     
     func startOnboardingFlowIfNotSeenBefore() {
         
-        let settings = TutorialSettings()
+        let settings = DefaultTutorialSettings()
         guard !settings.hasSeenOnboarding else { return }
         
         let onboardingFlow: String
         let modalTransitionStyle: UIModalTransitionStyle
         
         let variant = DefaultVariantManager().currentVariant
-        if variant?.features.contains(.onboardingContextual) ?? false {
-            return
-        } else if variant?.features.contains(.onboardingSummary) ?? false {
+        if variant?.features.contains(.onboardingSummary) ?? false {
             modalTransitionStyle = .coverVertical
             onboardingFlow = isPad ? "OnboardingSummary-iPad" : "OnboardingSummary"
         } else {
@@ -77,7 +75,7 @@ extension MainViewController: OnboardingDelegate {
     
     func onboardingCompleted(controller: UIViewController) {
         
-        var settings = TutorialSettings()
+        var settings = DefaultTutorialSettings()
         settings.hasSeenOnboarding = true
         
         let variant = DefaultVariantManager().currentVariant

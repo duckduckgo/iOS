@@ -23,23 +23,40 @@ import XCTest
 
 class HomeScreenTipsTests: XCTestCase {
 
+    // swiftlint:disable weak_delegate
+    let delegate = MockHomeScreenTipsDelegate()
+    // swiftlint:enable weak_delegate
+
+    var storage = MockContextualTipsStorage()
+    var tutorialSettings = MockTutorialSettings()
+    var variantManager = MockVariantManager()
+
+    func testWhenFeatureEnabledButOnboardingNotShownThenTriggerDoesNothing() {
+
+        variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
+        XCTAssertEqual(0, delegate.showCustomizeTipCounter)
+        XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
+
+        tips?.trigger()
+        XCTAssertEqual(0, delegate.showCustomizeTipCounter)
+        XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
+
+    }
+
     func testWhenFeatureNotEnabledThenInstanciationFails() {
         
-        let delegate = MockHomeScreenTipsDelegate()
-        let storage = MockContextualTipsStorage()
-        let variantManager = MockVariantManager()
-        let tips = HomeScreenTips(delegate: delegate, storage: storage, variantManager: variantManager)
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
         XCTAssertNil(tips)
         
     }
     
-    func testWhenTipsTriggeredThenDelegateCalledCorrectNumberOfTimes() {
+    func testWhenFeatureEnabledAndOnboardingShownAndTipsTriggeredThenDelegateCalledCorrectNumberOfTimes() {
 
-        let delegate = MockHomeScreenTipsDelegate()
-        let storage = MockContextualTipsStorage()
-        var variantManager = MockVariantManager()
         variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
-        let tips = HomeScreenTips(delegate: delegate, storage: storage, variantManager: variantManager)
+        tutorialSettings.hasSeenOnboarding = true
+
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
 
@@ -71,4 +88,16 @@ class MockHomeScreenTipsDelegate: NSObject, HomeScreenTipsDelegate {
         showCustomizeTipCounter += 1
     }
     
+}
+
+class MockTutorialSettings: TutorialSettings {
+
+    var lastVersionSeen: Int = 0
+
+    var hasSeenOnboarding: Bool
+
+    init(hasSeenOnboarding: Bool = false) {
+        self.hasSeenOnboarding = hasSeenOnboarding
+    }
+
 }

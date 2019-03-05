@@ -22,10 +22,10 @@ import Swifter
 
 class AtbIntegrationTests: XCTestCase {
 
-    // 5 should be good enough
-    let defaultTimeout = 10
-
     struct Constants {
+        // 5 should be good enough. 10 for some padding
+        static let defaultTimeout: Double = 10
+
         static let initialAtb = "v100-1"
         static let retentionAtb = "v102-7"
         static let devmode = "test"
@@ -160,7 +160,7 @@ class AtbIntegrationTests: XCTestCase {
     
     private func dismissAddToDockDialog() {
         let noThanksButton = app.buttons["No Thanks"]
-        guard noThanksButton.waitForExistence(timeout: defaultTimeout) else {
+        guard noThanksButton.waitForExistence(timeout: Constants.defaultTimeout) else {
             fatalError("No 'add to dock' view present")
         }
         noThanksButton.tap()
@@ -169,11 +169,11 @@ class AtbIntegrationTests: XCTestCase {
     private func search(forText text: String) {
         let searchentrySearchField = app.searchFields["searchEntry"]
         
-        if !searchentrySearchField.waitForExistence(timeout: defaultTimeout) {
+        if !searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout) {
             // Centered home screen variant
             app.collectionViews.otherElements["activateSearch"].tap()
             
-            if !searchentrySearchField.waitForExistence(timeout: defaultTimeout) {
+            if !searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout) {
                 fatalError("Search field could not be activated")
             }
         } else {
@@ -181,9 +181,9 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         let keyboard = app.keyboards.element
-        if keyboard.waitForExistence(timeout: defaultTimeout) {
+        if keyboard.waitForExistence(timeout: Constants.defaultTimeout) {
             searchentrySearchField.typeText("\(text)\r")
-            Snapshot.waitForLoadingIndicatorToDisappear(within: defaultTimeout)
+            Snapshot.waitForLoadingIndicatorToDisappear(within: Constants.defaultTimeout)
         } else {
             XCTFail("No keyboard present after tapping search field")
         }
@@ -212,7 +212,7 @@ class AtbIntegrationTests: XCTestCase {
     
     private func skipOnboarding() {
         let continueButton = app.buttons["Continue"]
-        guard continueButton.waitForExistence(timeout: defaultTimeout) else {
+        guard continueButton.waitForExistence(timeout: Constants.defaultTimeout) else {
             fatalError("Cound not skip onboarding")
         }
         
@@ -257,7 +257,7 @@ class Springboard {
                                                                   dy: (iconFrame.minY + 3) / springboardFrame.maxY)).tap()
             
             let deleteButton = springboard.alerts.buttons["Delete"]
-            _ = deleteButton.waitForExistence(timeout: defaultTimeout)
+            _ = deleteButton.waitForExistence(timeout: AtbIntegrationTests.Constants.defaultTimeout)
             deleteButton.tap()
         }
     }

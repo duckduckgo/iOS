@@ -45,8 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-        
-        installTouchWindow()
+
+        if DefaultVariantManager().isSupported(feature: .onboardingContextual) {
+            // This breaks the ATB tests on BitRise
+            installTouchWindow()
+        }
 
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()

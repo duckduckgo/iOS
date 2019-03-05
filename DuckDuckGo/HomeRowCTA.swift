@@ -30,18 +30,25 @@ class HomeRowCTA {
     private let storage: HomeRowCTAStorage
     private let variantManager: VariantManager
     private let tipsStorage: ContextualTipsStorage
+    private let tutorialSettings: TutorialSettings
 
     init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(),
          variantManager: VariantManager = DefaultVariantManager(),
-         tipsStorage: ContextualTipsStorage = DefaultContextualTipsStorage()) {
+         tipsStorage: ContextualTipsStorage = DefaultContextualTipsStorage(),
+         tutorialSettings: TutorialSettings = DefaultTutorialSettings()) {
         self.storage = storage
         self.variantManager = variantManager
         self.tipsStorage = tipsStorage
+        self.tutorialSettings = tutorialSettings
     }
 
     func shouldShow() -> Bool {
-        
-        if (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual) &&
+
+        guard tutorialSettings.hasSeenOnboarding else {
+            return false
+        }
+
+        if variantManager.isSupported(feature: .onboardingContextual) &&
              tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.allCases.count {
             return false
         }

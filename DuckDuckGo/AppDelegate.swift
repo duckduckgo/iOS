@@ -28,13 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let clipboard = "com.duckduckgo.mobile.ios.clipboard"
     }
     
-    static var shared: AppDelegate {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError()
-        }
-        return delegate
-    }
-    
     private var testing = false
     private var appIsLaunching = false
     var overlayWindow: UIWindow?

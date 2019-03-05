@@ -22,6 +22,9 @@ import Swifter
 
 class AtbIntegrationTests: XCTestCase {
 
+    // 5 should be good enough
+    let defaultTimeout = 10
+
     struct Constants {
         static let initialAtb = "v100-1"
         static let retentionAtb = "v102-7"
@@ -157,7 +160,7 @@ class AtbIntegrationTests: XCTestCase {
     
     private func dismissAddToDockDialog() {
         let noThanksButton = app.buttons["No Thanks"]
-        guard noThanksButton.waitForExistence(timeout: 2) else {
+        guard noThanksButton.waitForExistence(timeout: defaultTimeout) else {
             fatalError("No 'add to dock' view present")
         }
         noThanksButton.tap()
@@ -166,11 +169,11 @@ class AtbIntegrationTests: XCTestCase {
     private func search(forText text: String) {
         let searchentrySearchField = app.searchFields["searchEntry"]
         
-        if !searchentrySearchField.waitForExistence(timeout: 2) {
+        if !searchentrySearchField.waitForExistence(timeout: defaultTimeout) {
             // Centered home screen variant
             app.collectionViews.otherElements["activateSearch"].tap()
             
-            if !searchentrySearchField.waitForExistence(timeout: 2) {
+            if !searchentrySearchField.waitForExistence(timeout: defaultTimeout) {
                 fatalError("Search field could not be activated")
             }
         } else {
@@ -178,9 +181,9 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         let keyboard = app.keyboards.element
-        if keyboard.waitForExistence(timeout: 2) {
+        if keyboard.waitForExistence(timeout: defaultTimeout) {
             searchentrySearchField.typeText("\(text)\r")
-            Snapshot.waitForLoadingIndicatorToDisappear(within: 5.0)
+            Snapshot.waitForLoadingIndicatorToDisappear(within: defaultTimeout)
         } else {
             XCTFail("No keyboard present after tapping search field")
         }
@@ -209,7 +212,7 @@ class AtbIntegrationTests: XCTestCase {
     
     private func skipOnboarding() {
         let continueButton = app.buttons["Continue"]
-        guard continueButton.waitForExistence(timeout: 2) else {
+        guard continueButton.waitForExistence(timeout: defaultTimeout) else {
             fatalError("Cound not skip onboarding")
         }
         
@@ -254,7 +257,7 @@ class Springboard {
                                                                   dy: (iconFrame.minY + 3) / springboardFrame.maxY)).tap()
             
             let deleteButton = springboard.alerts.buttons["Delete"]
-            _ = deleteButton.waitForExistence(timeout: 5.0)
+            _ = deleteButton.waitForExistence(timeout: defaultTimeout)
             deleteButton.tap()
         }
     }

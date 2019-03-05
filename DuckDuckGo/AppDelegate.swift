@@ -46,14 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
-        // only replace an existing window in case starting up for background mode
-        if window != nil {
-            let window = TouchWindow()
-            window.makeKey()
-            window.rootViewController = self.window?.rootViewController
-            self.window = window
-        }
-        
+        installTouchWindow()
+
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         
@@ -70,6 +64,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appIsLaunching = true
         return true
+    }
+
+    func installTouchWindow() {
+        let window = TouchWindow()
+        window.makeKey()
+        window.rootViewController = self.window?.rootViewController
+        self.window = window
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

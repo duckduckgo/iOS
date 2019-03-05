@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Onboarding Summary Pad-->
+        <!--Onboarding Summary Pad View Controller-->
         <scene sceneID="GGA-ca-Iyg">
             <objects>
-                <viewController id="uxh-8t-sdw" customClass="OnboardingSummaryPad" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="uxh-8t-sdw" customClass="OnboardingSummaryPadViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JxG-H7-Eic">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -47,8 +47,7 @@ extension MainViewController {
         let onboardingFlow: String
         let modalTransitionStyle: UIModalTransitionStyle
         
-        let variant = DefaultVariantManager().currentVariant
-        if variant?.features.contains(.onboardingSummary) ?? false {
+        if DefaultVariantManager().isSupported(feature: .onboardingSummary) {
             modalTransitionStyle = .coverVertical
             onboardingFlow = isPad ? "OnboardingSummary-iPad" : "OnboardingSummary"
         } else {
@@ -78,9 +77,7 @@ extension MainViewController: OnboardingDelegate {
         var settings = DefaultTutorialSettings()
         settings.hasSeenOnboarding = true
         
-        let variant = DefaultVariantManager().currentVariant
-        
-        if variant?.features.contains(.onboardingSummary) ?? false {
+        if DefaultVariantManager().isSupported(feature: .onboardingSummary) {
             controller.modalTransitionStyle = .crossDissolve
         } else {
             controller.modalTransitionStyle = .flipHorizontal

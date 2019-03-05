@@ -30,7 +30,7 @@ protocol BrowsingTipsDelegate: NSObjectProtocol {
 
 class BrowsingTips {
     
-    enum Tips: Int {
+    enum Tips: Int, CaseIterable {
         case privacyGrade
         case fireButton
     }
@@ -44,7 +44,7 @@ class BrowsingTips {
           storage: ContextualTipsStorage = DefaultContextualTipsStorage(),
           variantManager: VariantManager = DefaultVariantManager()) {
         
-        guard (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual) else {
+        guard variantManager.isSupported(feature: .onboardingContextual) else {
             return nil
         }
         

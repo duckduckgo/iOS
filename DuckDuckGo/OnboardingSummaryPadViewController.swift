@@ -1,5 +1,5 @@
 //
-//  OnboardingSummaryPad.swift
+//  OnboardingSummaryPadController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import UIKit
 
-class OnboardingSummaryPad: UIViewController, Onboarding, OnboardingDelegate {
+class OnboardingSummaryPadViewController: UIViewController, Onboarding, OnboardingDelegate {
 
     weak var delegate: OnboardingDelegate?
 

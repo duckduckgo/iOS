@@ -29,6 +29,21 @@ class VariantManagerTests: XCTestCase {
         Variant(name: "md", weight: 25, features: [])
     ]
 
+    func testWhenCurrentVariantSupportsFeatureThenIsSupportedReturnsTrue() {
+
+        let testVariants = [
+            Variant(name: "test", weight: 50, features: [ .homeScreen ])
+        ]
+
+        let mockStore = MockStatisticsStore()
+        mockStore.variant = "test"
+        let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
+
+        // temporarily use this feature name
+        XCTAssertTrue(subject.isSupported(feature: .homeScreen))
+
+    }
+
     func testWhenVariantIsMarkedDoNotAllocateThenItIsNotAllocated() {
 
         let mockStore = MockStatisticsStore()

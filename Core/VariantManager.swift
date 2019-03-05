@@ -49,7 +49,7 @@ public struct Variant {
     public let name: String
     public let weight: Int
     public let features: [FeatureName]
-    
+
 }
 
 public protocol VariantRNG {
@@ -62,6 +62,7 @@ public protocol VariantManager {
     
     var currentVariant: Variant? { get }
     func assignVariantIfNeeded()
+    func isSupported(feature: FeatureName) -> Bool
     
 }
 
@@ -85,6 +86,10 @@ public class DefaultVariantManager: VariantManager {
         self.storage = storage
         self.rng = rng
         self.uiIdiom = uiIdiom
+    }
+
+    public func isSupported(feature: FeatureName) -> Bool {
+        return currentVariant?.features.contains(feature) ?? false
     }
     
     public func assignVariantIfNeeded() {

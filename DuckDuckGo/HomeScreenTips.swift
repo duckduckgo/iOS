@@ -30,12 +30,9 @@ protocol HomeScreenTipsDelegate: NSObjectProtocol {
 
 class HomeScreenTips {
     
-    enum Tips: Int {
+    enum Tips: Int, CaseIterable {
         case privateSearch
         case showCustomize
-        
-        static let all = [ privateSearch, showCustomize ]
-        
     }
 
     private weak var delegate: HomeScreenTipsDelegate?
@@ -47,7 +44,7 @@ class HomeScreenTips {
           storage: ContextualTipsStorage = DefaultContextualTipsStorage(),
           variantManager: VariantManager = DefaultVariantManager()) {
         
-        guard (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual) else {
+        guard variantManager.isSupported(feature: .onboardingContextual) else {
             return nil
         }
 

@@ -53,10 +53,13 @@ class HomeScreenTipsTests: XCTestCase {
     
     func testWhenFeatureEnabledAndOnboardingShownAndTipsTriggeredThenDelegateCalledCorrectNumberOfTimes() {
 
-        variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
+        variantManager.isSupportedReturns = true
         tutorialSettings.hasSeenOnboarding = true
 
         let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
+
+        XCTAssertNotNil(tips)
+
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
 

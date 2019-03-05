@@ -42,7 +42,7 @@ class HomeRowCTA {
     func shouldShow() -> Bool {
         
         if (variantManager.currentVariant?.features ?? []).contains(.onboardingContextual) &&
-             tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.all.count {
+             tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.allCases.count {
             return false
         }
         

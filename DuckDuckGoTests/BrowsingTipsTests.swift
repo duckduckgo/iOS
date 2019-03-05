@@ -73,7 +73,7 @@ class BrowsingTipsTests: XCTestCase {
         let delegate = MockBrowsingTipsDelegate()
         let storage = MockContextualTipsStorage()
         var variantManager = MockVariantManager()
-        variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
+        variantManager.isSupportedReturns = true
         let tips = BrowsingTips(delegate: delegate, storage: storage, variantManager: variantManager)
         XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
         XCTAssertEqual(0, delegate.showFireButtonTipCounter)

@@ -181,7 +181,7 @@
 		857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570656F1F6ABFA40044DCB1 /* APIRequest.swift */; };
 		857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065751F6ADCF70044DCB1 /* EasylistStore.swift */; };
 		8577B0AC2225C778009CCC71 /* OnboardingSummary-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8577B0AB2225C778009CCC71 /* OnboardingSummary-iPad.storyboard */; };
-		8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPad.swift */; };
+		8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */; };
 		857EEB7120934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB7020934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
@@ -715,7 +715,7 @@
 		8570656F1F6ABFA40044DCB1 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		857065751F6ADCF70044DCB1 /* EasylistStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasylistStore.swift; sourceTree = "<group>"; };
 		8577B0AB2225C778009CCC71 /* OnboardingSummary-iPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "OnboardingSummary-iPad.storyboard"; sourceTree = "<group>"; };
-		8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryPad.swift; sourceTree = "<group>"; };
+		8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryPadViewController.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
 		857EEB7020934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHomeRowCTAStorageTests.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
@@ -2281,7 +2281,7 @@
 				F1BE544B1E69DDE000FCF649 /* OnboardingDataSource.swift */,
 				8577B0AB2225C778009CCC71 /* OnboardingSummary-iPad.storyboard */,
 				851B128922204800004781BC /* OnboardingSummary.storyboard */,
-				8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPad.swift */,
+				8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */,
 				851B128B2220483A004781BC /* OnboardingSummaryViewController.swift */,
 				F1BE545D1E69FB9900FCF649 /* OnboardingTutorialPageViewController.swift */,
 				F1BE544D1E69DDE000FCF649 /* OnboardingViewController.swift */,
@@ -3182,7 +3182,7 @@
 				851B129622242D94004781BC /* HomeScreenTips.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				85B9CB8721AEBDB7009001F1 /* CenteredSearchHomeCell.swift in Sources */,
-				8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPad.swift in Sources */,
+				8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */,

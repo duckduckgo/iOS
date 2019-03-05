@@ -62,8 +62,14 @@ class CategorizedFeedbackViewController: UITableViewController {
         
         existingModel = model
         
-        headerText.text = category.caption
-        supplementaryText.text = category.subcategoriesCaption
+        let headerString = headerText.attributedText?.mutableCopy() as? NSMutableAttributedString
+        headerString?.mutableString.setString(category.caption)
+        headerText.attributedText = headerString
+        
+        let supplementaryString = supplementaryText.attributedText?.mutableCopy() as? NSMutableAttributedString
+        supplementaryString?.mutableString.setString(category.subcategoriesCaption)
+        supplementaryText.attributedText = supplementaryString
+        
         options = category.subcategories
     }
     
@@ -110,7 +116,10 @@ class CategorizedFeedbackViewController: UITableViewController {
         cell.contentView.backgroundColor = theme.tableCellBackgroundColor
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.textLabel?.textColor = theme.tableCellTintColor
-        cell.textLabel?.text = options[indexPath.row]
+        
+        let text = cell.textLabel?.attributedText?.mutableCopy() as? NSMutableAttributedString
+        text?.mutableString.setString(options[indexPath.row])
+        cell.textLabel?.attributedText = text
         
         return cell
     }

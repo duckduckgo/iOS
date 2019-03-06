@@ -26,8 +26,6 @@ lane :release do
     submit_for_review: true,
     automatic_release: true, 
     phased_release: true,
-    screenshots_path: "fastlane/screenshots",
-    metadata_path: "fastlane/metadata",
     username: "office@duckduckgo.com",
     force: true
   )

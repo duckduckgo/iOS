@@ -22,11 +22,10 @@ import XCTest
 
 class VariantTests: XCTestCase {
 
-    func testSerpVariants() {
-        let variants = Variant.defaultVariants.compactMap({ [ "sc", "sd" ].contains($0.name) ? $0 : nil })
-        XCTAssertEqual(2, variants.count)
-        XCTAssertEqual(1, variants[0].weight)
-        XCTAssertEqual(1, variants[1].weight)
+    func testSharedControlGroupIsDefined() {
+        
+        XCTAssertTrue(Variant.defaultVariants.map { $0.name }.contains("sc"))
+        
     }
-
+    
 }

@@ -20,7 +20,14 @@
 import Foundation
 import Core
 
-struct TutorialSettings {
+protocol TutorialSettings {
+
+    var lastVersionSeen: Int { get }
+    var hasSeenOnboarding: Bool { get set }
+
+}
+
+struct DefaultTutorialSettings: TutorialSettings {
 
     private struct Constants {
         // Set the build number of the last build that didn't force them to appear to force them to appear.

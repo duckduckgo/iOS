@@ -22,6 +22,8 @@ lane :release do
     export_method: "app-store"
   )
 
+  upload_to_testflight
+
   deliver(
     submit_for_review: true,
     automatic_release: true, 

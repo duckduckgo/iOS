@@ -25,9 +25,21 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) {
         self.controller = controller
+
+        controller.collectionView.contentInset = UIEdgeInsets.zero
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(rotated),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true
+    }
+
+    @objc func rotated() {
+        controller.collectionView.invalidateIntrinsicContentSize()
+        controller.collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func openedAsNewTab() {

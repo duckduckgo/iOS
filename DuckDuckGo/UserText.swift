@@ -170,4 +170,9 @@ public struct UserText {
     public static let keyCommandClose = NSLocalizedString("keyCommandClose", comment: "Close")
     public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", comment: "Select")
 
+    public static let contextualOnboardingSearchPrivately = NSLocalizedString("contextualOnboardingSearchPrivately", comment: "Searching with DuckDuckGo means your searches are never tracked. Ever.")
+    public static let contextualOnboardingCustomize = NSLocalizedString("contextualOnboardingCustomize", comment: "Pick a theme to make the DuckDuckGo Privacy browser yours.")
+    public static let contextualOnboardingPrivacyGrade = NSLocalizedString("contextualOnboardingPrivacyGrade", comment: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.")
+    public static let contextualOnboardingFireButton = NSLocalizedString("contextualOnboardingFireButton", comment: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.")
+
 }

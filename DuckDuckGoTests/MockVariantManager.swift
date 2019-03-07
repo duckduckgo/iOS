@@ -22,9 +22,20 @@ import Core
 
 struct MockVariantManager: VariantManager {
 
+    var isSupportedReturns = false
+
     var currentVariant: Variant?
 
+    init(isSupportedReturns: Bool = false, currentVariant: Variant? = nil) {
+        self.isSupportedReturns = isSupportedReturns
+        self.currentVariant = currentVariant
+    }
+
     func assignVariantIfNeeded() {
+    }
+
+    func isSupported(feature: FeatureName) -> Bool {
+        return isSupportedReturns
     }
 
 }

@@ -21,85 +21,16 @@ import XCTest
 @testable import Core
 
 class EnhancedHomePageVariantManagerTests: XCTestCase {
-    
-    func testWhenControlGroupAndNotOnPadThenVariantNotSelected() {
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: 2)
-        
-        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .phone)
-        variantManager.assignVariantIfNeeded()
-        
-        XCTAssertEqual("mk", variantManager.currentVariant?.name)
-    }
 
-    func testWhenControlGroupAndOnPadThenVariantIsNotSelected() {
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: 2)
-        
-        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .pad)
-        variantManager.assignVariantIfNeeded()
-        
-        XCTAssertNil(variantManager.currentVariant)
-    }
-    
-    func testWhenSerpVariantAndOnPadThenVariantIsSelected() {
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: 0)
-        
-        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .pad)
-        variantManager.assignVariantIfNeeded()
-        
-        XCTAssertNotNil(mockStatisticsStore.variant)
-    }
+    func testWhenVariantIsEnhancedHomePageThenDoNotAllocate() {
 
-    func testWhenSerpVariantAndNotOnPadThenVariantIsSelected() {
+        let variantNames = [ "mk", "ml", "mm", "mn" ]
         
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: 0)
-        
-        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .phone)
-        variantManager.assignVariantIfNeeded()
-        
-        XCTAssertNotNil(mockStatisticsStore.variant)
-    }
-    
-    func testWhenEnhancedHomePageVariantAndNotOnPadThenVariantIsSelected() {
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: 3)
-        
-        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .phone)
-        variantManager.assignVariantIfNeeded()
-        
-        XCTAssertNotNil(mockStatisticsStore.variant)
-    }
-
-    func testWhenEnhancedHomePageVariantAndOnPadThenNoVariantIsSelected() {
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockRng = MockVariantRNG(returnValue: Variant.defaultVariants.count)
-        
-        let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .pad)
-        variantManager.assignVariantIfNeeded()
-        
-        XCTAssertNil(mockStatisticsStore.variant)
-    }
-
-    func testWhenAssigningVariantThenOnHoldVariantsAreNotSelected() {
-
-        for i in 0 ..< Variant.defaultVariants.count {
-
-            let mockStatisticsStore = MockStatisticsStore()
-            let mockRng = MockVariantRNG(returnValue: i)
-
-            let variantManager = DefaultVariantManager(storage: mockStatisticsStore, rng: mockRng, uiIdiom: .pad)
-            variantManager.assignVariantIfNeeded()
-
-            XCTAssertNotEqual("ml", variantManager.currentVariant?.name)
-            XCTAssertNotEqual("mm", variantManager.currentVariant?.name)
+        for variant in Variant.defaultVariants {
+            guard variantNames.contains(variant.name) else { continue }
+            XCTAssertEqual(variant.weight, Variant.doNotAllocate)
         }
-
+        
     }
     
 }

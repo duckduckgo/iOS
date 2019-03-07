@@ -23,6 +23,8 @@ import WebKit
 
 class TabSwitcherViewController: UIViewController {
 
+    typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
+    
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
@@ -34,8 +36,6 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     
-    typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
-
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
 
@@ -77,11 +77,11 @@ class TabSwitcherViewController: UIViewController {
     
     fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {
         if openTabsCount == results.newBookmarksCount + results.existingBookmarksCount {
-            self.view.showBottomToast(UserText.bookmarkAllTabsSaved)
+            view.showBottomToast(UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
             Logger.log(text: "Failed to save \(failedToSaveCount) tabs")
-            self.view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
+            view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
         }
     }
     
@@ -109,7 +109,7 @@ class TabSwitcherViewController: UIViewController {
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
         
         guard tabsModel.tabs.count > 0 else {
-            self.view.showBottomToast(UserText.bookmarkAllTabsNotFound)
+            view.showBottomToast(UserText.bookmarkAllTabsNotFound)
             return
         }
         

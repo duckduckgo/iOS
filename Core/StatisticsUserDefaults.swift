@@ -25,6 +25,7 @@ public class StatisticsUserDefaults: StatisticsStore {
 
     private struct Keys {
         static let atb = "com.duckduckgo.statistics.atb.key"
+        static let installDate = "com.duckduckgo.statistics.installdate.key"
         static let retentionAtb = "com.duckduckgo.statistics.retentionatb.key"
         static let variant = "com.duckduckgo.statistics.variant.key"
         static let httpsUpgradesTotal = "com.duckduckgo.statistics.httpsupgradestotal.key"
@@ -49,6 +50,18 @@ public class StatisticsUserDefaults: StatisticsStore {
         }
         set {
             userDefaults?.setValue(newValue, forKey: Keys.atb)
+        }
+    }
+    
+    public var installDate: Date? {
+        get {
+            guard let interval = userDefaults?.double(forKey: Keys.installDate), interval > 0 else {
+                return nil
+            }
+            return Date(timeIntervalSince1970: interval)
+        }
+        set {
+            userDefaults?.setValue(newValue?.timeIntervalSince1970, forKey: Keys.installDate)
         }
     }
 

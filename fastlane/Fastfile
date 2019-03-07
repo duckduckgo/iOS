@@ -24,44 +24,11 @@ lane :release do
 
   deliver(
     submit_for_review: true,
-    automatic_release: false, 
-    phased_release: false,
-    screenshots_path: "fastlane/screenshots",
-    metadata_path: "fastlane/metadata",
+    automatic_release: true, 
+    phased_release: true,
     username: "office@duckduckgo.com",
     force: true
   )
 
 end
 
-lane :beta do 
-
-  version_number = get_version_number(
-    target: "DuckDuckGo"
-  )
-
-  increment_version_number(
-    version_number: version_number,
-  )
-
-  gym(
-    scheme: "DuckDuckGo",
-    export_method: "app-store"
-  )
-
-  deliver(
-    submit_for_review: false,
-    automatic_release: false, 
-    phased_release: false,
-    username: "office@duckduckgo.com",
-    force: true
-  )
-
-end
-
-lane :screenshots do 
-
-  reset_simulators
-  capture_screenshots
-
-end

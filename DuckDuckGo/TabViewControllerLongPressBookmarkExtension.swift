@@ -26,7 +26,7 @@ extension TabViewController {
         if let link = link, !isError {
             let bookmarksManager = BookmarksManager()
             guard !bookmarksManager.contains(url: link.url) else {
-                self.view.showBottomToast(UserText.webBookmarkAlreadySaved)
+                view.showBottomToast(UserText.webBookmarkAlreadySaved)
                 return
             }
             
@@ -38,7 +38,7 @@ extension TabViewController {
                 title: UserText.alertSaveBookmark,
                 bookmark: link,
                 saveCompletion: saveCompletion)
-            self.present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         } else {
             Logger.log(text: "Invalid bookmark link found on bookmark long press")
         }

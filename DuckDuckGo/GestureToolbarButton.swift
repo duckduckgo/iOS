@@ -19,18 +19,19 @@
 
 import UIKit
 
-protocol GestureToolBarButtonDelegate: NSObjectProtocol {
+protocol GestureToolbarButtonDelegate: NSObjectProtocol {
     
-    func singleTapHandler()
-    func longPressHandler()
+    func singleTapDetected(in sender: GestureToolbarButton)
+    func longPressDetected(in sender: GestureToolbarButton)
     
 }
 
-class GestureToolBarButton: UIView {
+class GestureToolbarButton: UIView {
     
     struct Constants {
         static let minLongPressDuration = 0.8
         static let maxTouchDeviationPoints = 20.0
+        static let animationDuration = 0.3
     }
     
     // UIToolBarButton size would be 29X44 and it's imageview size would be 24X24
@@ -41,7 +42,7 @@ class GestureToolBarButton: UIView {
         static let ImageHeight = 24.0
     }
     
-    weak var delegate: GestureToolBarButtonDelegate?
+    weak var delegate: GestureToolbarButtonDelegate?
 
     let iconImageView = UIImageView(frame: CGRect(x: 2.5, y: 10, width: ToolbarButton.ImageWidth, height: ToolbarButton.ImageHeight))
     
@@ -56,17 +57,17 @@ class GestureToolBarButton: UIView {
         
         addSubview(iconImageView)
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressHandler))
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressHandler(_:)))
         longPressRecognizer.minimumPressDuration = Constants.minLongPressDuration
         longPressRecognizer.allowableMovement = CGFloat(Constants.maxTouchDeviationPoints)
-        self.addGestureRecognizer(longPressRecognizer)
+        addGestureRecognizer(longPressRecognizer)
 
     }
     
     @objc func longPressHandler(_ sender: UIGestureRecognizer) {
         
         if sender.state == .began {
-            delegate?.longPressHandler()
+            delegate?.longPressDetected(in: self)
         }
     }
     
@@ -79,11 +80,15 @@ class GestureToolBarButton: UIView {
     }
     
     fileprivate func imposePressAnimation() {
-        iconImageView.alpha = 0.2
+        UIView.animate(withDuration: Constants.animationDuration) {
+            self.iconImageView.alpha = 0.2
+        }
     }
     
     fileprivate func imposeReleaseAnimation() {
-        iconImageView.alpha = 1.0
+        UIView.animate(withDuration: Constants.animationDuration) {
+            self.iconImageView.alpha = 1.0
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -91,9 +96,15 @@ class GestureToolBarButton: UIView {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        guard point(inside: touch.location(in: self), with: event) else { return }
-        delegate?.singleTapHandler()
+        guard let touch = touches.first else {
+            imposeReleaseAnimation()
+            return
+        }
+        guard point(inside: touch.location(in: self), with: event) else {
+            imposeReleaseAnimation()
+            return
+        }
+        delegate?.singleTapDetected(in: self)
         imposeReleaseAnimation()
     }
 
@@ -103,7 +114,7 @@ class GestureToolBarButton: UIView {
     
 }
 
-extension GestureToolBarButton: Themable {
+extension GestureToolbarButton: Themable {
     
     func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor

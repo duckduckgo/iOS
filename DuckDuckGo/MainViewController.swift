@@ -75,7 +75,7 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
-    let gestureBookmarksButton = GestureToolBarButton()
+    let gestureBookmarksButton = GestureToolbarButton()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
@@ -277,11 +277,6 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
     }
-    
-//    @IBAction func onTabBarBookmarksPressed() {
-//        Pixel.fire(pixel: .tabBarBookmarksPressed)
-//        onBookmarksPressed()
-//    }
 
     public var siteRating: SiteRating? {
         return currentTab?.siteRating
@@ -798,17 +793,16 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
 }
 
-extension MainViewController: GestureToolBarButtonDelegate {
+extension MainViewController: GestureToolbarButtonDelegate {
     
-    func singleTapHandler() {
+    func singleTapDetected(in sender: GestureToolbarButton) {
         Pixel.fire(pixel: .tabBarBookmarksPressed)
         onBookmarksPressed()
     }
     
-    func longPressHandler() {
-        
+    func longPressDetected(in sender: GestureToolbarButton) {
         guard currentTab != nil else {
-            self.view.showBottomToast(UserText.webSaveBookmarkNone)
+            view.showBottomToast(UserText.webSaveBookmarkNone)
             return
         }
         currentTab!.promptSaveBookmarkAction()

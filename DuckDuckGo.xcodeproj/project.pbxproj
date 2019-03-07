@@ -270,7 +270,7 @@
 		85FAAE63214EFD37006AD5DA /* PrevalenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */; };
 		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
 		8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */; };
-		8C4838B5221C8F7F008A6739 /* GestureToolBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4838B4221C8F7F008A6739 /* GestureToolBarButton.swift */; };
+		8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */; };
 		9817C9C321EF594700884F65 /* AutoClear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClear.swift */; };
 		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
@@ -808,7 +808,7 @@
 		85FAAE62214EFD37006AD5DA /* PrevalenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrevalenceStore.swift; sourceTree = "<group>"; };
 		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
 		8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerLongPressBookmarkExtension.swift; sourceTree = "<group>"; };
-		8C4838B4221C8F7F008A6739 /* GestureToolBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureToolBarButton.swift; sourceTree = "<group>"; };
+		8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureToolbarButton.swift; sourceTree = "<group>"; };
 		9817C9C221EF594700884F65 /* AutoClear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClear.swift; sourceTree = "<group>"; };
 		981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsScreenTests.swift; sourceTree = "<group>"; };
 		981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSnapshotViewController.swift; sourceTree = "<group>"; };
@@ -2332,7 +2332,7 @@
 				98EF177C21837E35006750C1 /* new_tab_dark.json */,
 				85371D232121B9D400920548 /* new_tab.json */,
 				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
-				8C4838B4221C8F7F008A6739 /* GestureToolBarButton.swift */,
+				8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -3141,7 +3141,7 @@
 				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
-				8C4838B5221C8F7F008A6739 /* GestureToolBarButton.swift in Sources */,
+				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				F163C1641F3CC20A00EE350D /* ContentBlockerSettingsChangeDelegate.swift in Sources */,
 				851B129C22243178004781BC /* BrowsingTips.swift in Sources */,
 				851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */,

@@ -47,6 +47,8 @@ class TabViewController: UIViewController {
     
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     var longPressGestureRecognizer: UILongPressGestureRecognizer?
+    
+    private let instrumentation = TabInstrumentation()
    
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -162,6 +164,7 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
+        controller.add(self, name: MessageHandlerNames.signpost)
         controller.add(self, name: MessageHandlerNames.cache)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
@@ -529,6 +532,7 @@ extension TabViewController: WKScriptMessageHandler {
 
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
+        static let signpost = "signpostMessage"
         static let cache = "cacheMessage"
         static let log = "log"
         static let findInPageHandler = "findInPageHandler"
@@ -541,6 +545,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.cache:
             handleCache(message: message)
 
+        case MessageHandlerNames.signpost:
+            handleSignpost(message: message)
+            
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
@@ -572,6 +579,22 @@ extension TabViewController: WKScriptMessageHandler {
         guard let name = dict["name"] as? String else { return }
         guard let data = dict["data"] as? String else { return }
         ContentBlockerStringCache().put(name: name, value: data)
+    }
+    
+    private func handleSignpost(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any],
+        let eventName = dict["event"] as? String else { return }
+        
+        if eventName == "Request Allowed" {
+            if let elapsedTime = dict["time"] as? TimeInterval {
+                Instruments.shared.requestAllowed(in: elapsedTime/1000)
+            }
+        } else if eventName == "Request Blocked" {
+            if let elapsedTime = dict["time"] as? TimeInterval {
+                Instruments.shared.requestBlocked(in: elapsedTime/1000)
+            }
+        }
+
     }
 
     private func handleTrackerDetected(message: WKScriptMessage) {
@@ -612,6 +635,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        print("--> " + #function)
         
         completionHandler(.performDefaultHandling, nil)
         guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
@@ -619,7 +643,12 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        if let url = webView.url {
+            instrumentation.willLoad(url: url)
+        }
+        
         url = webView.url
+        
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
         
@@ -661,10 +690,14 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
+        print("--> " + #function)
+        let spid = instrumentation.willDecidePolicyForNavigationResponse()
         url = webView.url
+        instrumentation.didDecidePolicyForNavigationResponse(spid: spid)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        print("--> " + #function)
         lastError = nil
         shouldReloadOnError = false
         hideErrorMessage()
@@ -672,8 +705,10 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("--> " + #function)
         hideProgressIndicator()
         onWebpageDidFinishLoading()
+        instrumentation.didLoadURL()
     }
     
     private func onWebpageDidFinishLoading() {
@@ -686,6 +721,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("--> " + #function)
         hideProgressIndicator()
         webpageDidFailToLoad()
         
@@ -709,6 +745,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("--> " + #function)
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
@@ -731,6 +768,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        print("--> " + #function)
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = SiteRating(url: url, httpsForced: httpsForced)
@@ -740,6 +778,8 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        print("--> " + #function)
+        let spid = instrumentation.willDecidePolicyForNavigationAction()
         
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
@@ -753,6 +793,7 @@ extension TabViewController: WKNavigationDelegate {
             findInPage?.done()
         }
         
+        instrumentation.didDecidePolicyForNavigationAction(spid: spid)
         decisionHandler(decision)
     }
     

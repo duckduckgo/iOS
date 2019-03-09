@@ -258,6 +258,8 @@
 		981FED7422046017008488D7 /* AutoClearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearTests.swift */; };
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
+		9875E00722316B8400B1373F /* Instruments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9875E00622316B8400B1373F /* Instruments.swift */; };
+		9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B75D2232B36900D81D9F /* TabInstrumentation.swift */; };
 		98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */; };
 		98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */; };
 		98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DA6EC92181E41F00E65433 /* ThemeManager.swift */; };
@@ -776,6 +778,8 @@
 		981FED7322046017008488D7 /* AutoClearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearTests.swift; sourceTree = "<group>"; };
 		981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsModel.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
+		9875E00622316B8400B1373F /* Instruments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruments.swift; sourceTree = "<group>"; };
+		9876B75D2232B36900D81D9F /* TabInstrumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabInstrumentation.swift; sourceTree = "<group>"; };
 		98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyProvider.swift; sourceTree = "<group>"; };
 		98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyProvider.swift; sourceTree = "<group>"; };
 		98DA6EC92181E41F00E65433 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -1931,6 +1935,8 @@
 			isa = PBXGroup;
 			children = (
 				F143C3231E4A9A0E00CFDE3A /* Logger.swift */,
+				9875E00622316B8400B1373F /* Instruments.swift */,
+				9876B75D2232B36900D81D9F /* TabInstrumentation.swift */,
 				F1134ED91F40FC3F00B73467 /* InfoBundle.swift */,
 				8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */,
 				8328AAB7212A3DF200293140 /* BloomFilterWrapper.mm */,
@@ -3299,6 +3305,7 @@
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,
+				9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */,
 				F16394071ECE01E400DDD653 /* DisconnectMeTrackersParser.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
@@ -3347,6 +3354,7 @@
 				85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */,
 				F1D477CB1F2149C40031ED49 /* Type.swift in Sources */,
 				F1134EC61F40E3B400B73467 /* AppVersion.swift in Sources */,
+				9875E00722316B8400B1373F /* Instruments.swift in Sources */,
 				85C271D81FD0311A007216B4 /* HTTPSUpgradeParser.swift in Sources */,
 				8328AAAF212A3AE900293140 /* DataChecksumExtension.swift in Sources */,
 				F1134EA61F3E2AF400B73467 /* StatisticsStore.swift in Sources */,

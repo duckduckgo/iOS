@@ -22,7 +22,9 @@
 "search.hint.duckduckgo" = "Search or enter address";
 "web.session.clear" = "Session cleared";
 "web.url.save.bookmark.done" = "Bookmark saved";
+"web.url.save.bookmark.exists" = "Bookmark already saved";
 "web.url.save.favorite.done" = "Favorite saved";
+"web.url.save.bookmark.none" = "No webpage to bookmark";
 
 "tabswitcher.title.tabs" = "Private Tabs";
 "tabswitcher.title.notabs" = "No Tabs";

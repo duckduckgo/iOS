@@ -30,7 +30,9 @@ public struct UserText {
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or enter address")
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Session cleared")
     public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", comment: "Bookmark saved")
+    public static let webBookmarkAlreadySaved = NSLocalizedString("web.url.save.bookmark.exists", comment: "Bookmark already saved")
     public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", comment: "Favorite saved")
+    public static let webSaveBookmarkNone = NSLocalizedString("web.url.save.bookmark.none", comment: "No webpage to bookmark")
 
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")

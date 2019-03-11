@@ -72,9 +72,9 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
                                     <barButtonItem image="Bookmarks" id="M7u-mw-fly">
-                                        <connections>
-                                            <action selector="onTabBarBookmarksPressed" destination="C1X-Zd-UbA" id="vSg-Ua-w22"/>
-                                        </connections>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Bookmarks"/>
+                                        </userDefinedRuntimeAttributes>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
                                     <barButtonItem title="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
@@ -244,6 +244,7 @@
                     <navigationItem key="navigationItem" id="4Us-57-SWd"/>
                     <connections>
                         <outlet property="backButton" destination="Kc6-IR-lKx" id="eo5-dT-718"/>
+                        <outlet property="bookmarksButton" destination="M7u-mw-fly" id="Uq1-c0-osl"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
                         <outlet property="containerViewTop" destination="h5k-Sy-jb2" id="def-Jc-VHg"/>
                         <outlet property="customNavigationBar" destination="nQT-PV-ULm" id="OGt-AV-tQb"/>

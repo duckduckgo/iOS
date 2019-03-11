@@ -18,19 +18,30 @@
 //
 
 import Foundation
+import Core
 
 public class AtbAndVariantCleanup {
 
-    public static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(),
-                               variantManager: VariantManager = DefaultVariantManager()) {
+    static func cleanup(statisticsStorage: StatisticsStore = StatisticsUserDefaults(),
+                        variantManager: VariantManager = DefaultVariantManager(),
+                        settings: AppSettings = AppUserDefaults()) {
+        
         guard let variant = statisticsStorage.variant else { return }
 
         // clean up ATB
         if let atb = statisticsStorage.atb, atb.hasSuffix(variant) {
             statisticsStorage.atb = String(atb.dropLast(variant.count))
         }
-
-        // remove existing variant if not in an experiment
+        
+        // Home page experiment migration
+        var mutableSettings = settings
+        if "mn" == variant {
+            mutableSettings.homePageType = 1
+        } else if ["ml", "mm"].contains(variant) {
+            mutableSettings.homePageType = 2
+        }
+        
+        // remove existing variant if not in an active experiment
         if variantManager.currentVariant == nil {
             statisticsStorage.variant = nil
         }

@@ -61,7 +61,6 @@ class BlankSnapshotViewController: UIViewController {
             omniBar = OmniBar.loadFromXib()
             omniBar.frame = customNavigationBar.bounds
             customNavigationBar.addSubview(omniBar)
-            HomePageConfiguration.configureOmniBar(omniBar)
         }
     }
 }

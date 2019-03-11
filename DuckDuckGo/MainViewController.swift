@@ -230,7 +230,6 @@ class MainViewController: UIViewController {
         omniBar.omniDelegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
-        HomePageConfiguration.configureOmniBar(omniBar)
     }
 
     fileprivate func attachHomeScreen() {

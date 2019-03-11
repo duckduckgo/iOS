@@ -57,27 +57,5 @@ class AppUserDefaultsTests: XCTestCase {
         XCTAssert(appUserDefaults.currentThemeName == .dark)
         
     }
-
-    func testWhenThemeSettingIsEmptyThenWeCanSetInitialValue() {
-        
-        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        
-        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
-        XCTAssert(appUserDefaults.currentThemeName == .dark)
-        
-        UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
-        
-        appUserDefaults.setInitialThemeNameIfNeeded(name: .light)
-        XCTAssert(appUserDefaults.currentThemeName == .light)
-    }
     
-    func testWhenThemeSettingIsNotEmptyThenInitialValueCannotBeSet() {
-        
-        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.currentThemeName = .light
-        
-        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
-        XCTAssert(appUserDefaults.currentThemeName == .light)
-        
-    }
 }

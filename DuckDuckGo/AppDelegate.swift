@@ -55,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
-        HomePageConfiguration.installNewUserFavorites()
 
         if let main = mainViewController {
             autoClear = AutoClear(worker: main)

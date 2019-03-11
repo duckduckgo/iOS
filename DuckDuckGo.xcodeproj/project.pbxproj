@@ -73,7 +73,6 @@
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
-		850250B320D803F4002199C7 /* AtbAndVariantCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */; };
 		850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */; };
 		85047B821F6827AD002A95D8 /* blockerdata.js in Resources */ = {isa = PBXBuildFile; fileRef = 85047B811F6827AD002A95D8 /* blockerdata.js */; };
 		85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */; };
@@ -116,6 +115,7 @@
 		851B12AF2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */; };
 		851B12B12226BEE3004781BC /* HomeScreenTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B02226BEE3004781BC /* HomeScreenTipsTests.swift */; };
 		851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B22226D062004781BC /* BrowsingTipsTests.swift */; };
+		851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -615,7 +615,7 @@
 		84E341A11E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtbAndVariantCleanup.swift; sourceTree = "<group>"; };
+		850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtbAndVariantCleanup.swift; path = ../Core/AtbAndVariantCleanup.swift; sourceTree = "<group>"; };
 		850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbAndVariantCleanupTests.swift; sourceTree = "<group>"; };
 		85047B811F6827AD002A95D8 /* blockerdata.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = blockerdata.js; sourceTree = "<group>"; };
 		85047B851F6887D2002A95D8 /* ContentBlockerLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoader.swift; sourceTree = "<group>"; };
@@ -1731,7 +1731,6 @@
 		F1134EA71F3E2B3500B73467 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */,
 				85C11E3D20904B8400BFFEB4 /* VariantManager.swift */,
 				F1134EB41F40AEEA00B73467 /* StatisticsLoader.swift */,
 				F1134EB11F40AC6A00B73467 /* Domain */,
@@ -2318,6 +2317,7 @@
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				853C5F6021C277C7001F7A05 /* global.swift */,
 				851B12A522246625004781BC /* TouchWindow.swift */,
+				850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -3166,6 +3166,7 @@
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
+				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
@@ -3432,7 +3433,6 @@
 				85BA79911F6FF75000F59015 /* ContentBlockerStoreConstants.swift in Sources */,
 				85047B861F6887D2002A95D8 /* ContentBlockerLoader.swift in Sources */,
 				F1134EDA1F40FC3F00B73467 /* InfoBundle.swift in Sources */,
-				850250B320D803F4002199C7 /* AtbAndVariantCleanup.swift in Sources */,
 				85F21DC621145DD5002631A6 /* global.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				8364F7101F95FA7600562989 /* DisconnectMeStore.swift in Sources */,

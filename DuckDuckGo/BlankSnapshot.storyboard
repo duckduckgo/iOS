@@ -44,7 +44,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cdf-UJ-20k"/>
                                     <barButtonItem image="Bookmarks" id="qFR-DU-0Fv"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cDh-Sj-6rg"/>
-                                    <barButtonItem image="Tabs" id="yvy-9J-P6F" userLabel="Tabs Button">
+                                    <barButtonItem title="Tabs" id="yvy-9J-P6F" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
@@ -90,6 +90,5 @@
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
-        <image name="Tabs" width="16" height="16"/>
     </resources>
 </document>

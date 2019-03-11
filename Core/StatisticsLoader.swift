@@ -70,6 +70,7 @@ public class StatisticsLoader {
                 return
             }
             self.statisticsStore.atb = atb.version
+            self.statisticsStore.installDate = Date()
             self.statisticsStore.retentionAtb = retentionAtb
             completion()
         }

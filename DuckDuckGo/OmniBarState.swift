@@ -27,6 +27,7 @@ protocol OmniBarState {
     var showSiteRating: Bool { get }
     var showBackground: Bool { get }
     var showClear: Bool { get }
+    var showRefresh: Bool { get }
     var showMenu: Bool { get }
     var showBookmarks: Bool { get }
     var showSettings: Bool { get }
@@ -45,6 +46,7 @@ struct HomeEmptyEditingState: OmniBarState {
     let showSiteRating = false
     let showBackground = false
     let showClear = false
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
@@ -64,6 +66,7 @@ struct HomeTextEditingState: OmniBarState {
     let showSiteRating = false
     let showBackground = false
     let showClear = true
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
@@ -83,6 +86,7 @@ struct HomeNonEditingState: OmniBarState {
     let showSiteRating = false
     let showBackground = true
     let showClear = false
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = true
@@ -102,6 +106,7 @@ struct BrowsingEmptyEditingState: OmniBarState {
     let showSiteRating = false
     let showBackground = false
     let showClear = false
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
@@ -121,6 +126,7 @@ struct BrowsingTextEditingState: OmniBarState {
     let showSiteRating = false
     let showBackground = false
     let showClear = true
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
@@ -140,6 +146,7 @@ struct BrowsingNonEditingState: OmniBarState {
     let showSiteRating = true
     let showBackground = true
     let showClear = false
+    let showRefresh = true
     let showMenu = true
     let showBookmarks = false
     let showSettings = false

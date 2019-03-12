@@ -36,6 +36,7 @@ class OmniBar: UIView {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var refreshButton: UIButton!
 
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
@@ -109,6 +110,7 @@ class OmniBar: UIView {
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
+        setVisibility(refreshButton, hidden: !state.showRefresh)
     }
 
     /*
@@ -223,6 +225,10 @@ class OmniBar: UIView {
     
     @IBAction func onCancelPressed(_ sender: Any) {
         omniDelegate?.onCancelPressed()
+    }
+    
+    @IBAction func onRefreshPressed(_ sender: Any) {
+        omniDelegate?.onRefreshPressed()
     }
 }
 

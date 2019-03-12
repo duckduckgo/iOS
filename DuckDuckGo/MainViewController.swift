@@ -650,6 +650,10 @@ extension MainViewController: OmniBarDelegate {
         homeController?.launchNewSearch()
     }
     
+    func onRefreshPressed() {
+        currentTab?.reload(scripts: false)
+    }
+    
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {

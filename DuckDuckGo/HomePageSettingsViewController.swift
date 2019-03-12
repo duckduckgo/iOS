@@ -21,6 +21,8 @@ class HomePageSettingsViewController: UITableViewController {
 
     weak var delegate: HomePageSettingsDelegate?
     
+    private lazy var appSettings = AppDependencyProvider.shared.appSettings
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,15 +36,13 @@ class HomePageSettingsViewController: UITableViewController {
         // Checkmark color
         cell.tintColor = theme.toggleSwitchColor
         
-        let settings = AppDependencyProvider.shared.appSettings
-        cell.accessoryType = indexPath.row == settings.homePage.rawValue ? .checkmark : .none
+        cell.accessoryType = indexPath.row == appSettings.homePage.rawValue ? .checkmark : .none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        var settings = AppDependencyProvider.shared.appSettings
-        guard settings.homePage.rawValue != indexPath.row else { return }
+        guard appSettings.homePage.rawValue != indexPath.row else { return }
         let config = HomePageConfiguration.ConfigName(rawValue: indexPath.row)!
         
         switch config {
@@ -56,7 +56,7 @@ class HomePageSettingsViewController: UITableViewController {
             Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
         }
         
-        settings.homePage = config
+        appSettings.homePage = config
         delegate?.homePageChanged(toConfigName: config)
         tableView.reloadData()
     }

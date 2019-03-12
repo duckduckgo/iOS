@@ -55,10 +55,6 @@ class OmniBar: UIView {
         refreshState(state)
     }
     
-    public func useCancellableState() {
-        refreshState(state.supportingCancelButtonState)
-    }
-    
     private func configureTextField() {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.greyish])

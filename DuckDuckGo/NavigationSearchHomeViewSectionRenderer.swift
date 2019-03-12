@@ -32,6 +32,8 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
 
+        controller.searchHeaderTransition = 1.0
+        controller.allowContentUnderflow = false
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true

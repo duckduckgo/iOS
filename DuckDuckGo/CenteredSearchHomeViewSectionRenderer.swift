@@ -56,7 +56,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
         controller.collectionView.isScrollEnabled = !fixed
 
-        controller.allowContentUnderflow()
+        controller.allowContentUnderflow = true
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
 
@@ -137,7 +137,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func omniBarCancelPressed() {
         guard let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        controller.allowContentUnderflow()
+        controller.allowContentUnderflow = true
     }
     
     func launchNewSearch() {

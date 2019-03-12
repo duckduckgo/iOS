@@ -80,10 +80,12 @@ class HomeViewController: UIViewController {
         collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
         applyTheme(ThemeManager.shared.currentTheme)
     }
-
-    func allowContentUnderflow() {
-        if let parent = parent as? MainViewController {
-            parent.allowContentUnderflow = true
+    
+    var allowContentUnderflow: Bool = false {
+        didSet {
+            if let parent = parent as? MainViewController {
+                parent.allowContentUnderflow = allowContentUnderflow
+            }
         }
     }
     

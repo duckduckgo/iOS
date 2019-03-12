@@ -7,11 +7,20 @@
 //
 
 import UIKit
+import Core
+
+protocol HomePageSettingsDelegate: NSObjectProtocol {
+    
+    func homePageChanged(toConfigName config: HomePageConfiguration.ConfigName)
+    
+}
 
 class HomePageSettingsViewController: UITableViewController {
     
     @IBOutlet var labels: [UILabel]!
 
+    weak var delegate: HomePageSettingsDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,10 +28,37 @@ class HomePageSettingsViewController: UITableViewController {
     }
  
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
         
+        // Checkmark color
+        cell.tintColor = theme.toggleSwitchColor
+        
+        let settings = AppDependencyProvider.shared.appSettings
+        cell.accessoryType = indexPath.row == settings.homePage.rawValue ? .checkmark : .none
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        var settings = AppDependencyProvider.shared.appSettings
+        guard settings.homePage.rawValue != indexPath.row else { return }
+        let config = HomePageConfiguration.ConfigName(rawValue: indexPath.row)!
+        
+        switch config {
+        case .simple:
+            Pixel.fire(pixel: .settingsHomePageSimple)
+
+        case .centerSearch:
+            Pixel.fire(pixel: .settingsHomePageCenterSearch)
+            
+        case .centerSearchAndFavorites:
+            Pixel.fire(pixel: .settingsHomePageCenterSearchAndFavorites)
+        }
+        
+        settings.homePage = config
+        delegate?.homePageChanged(toConfigName: config)
+        tableView.reloadData()
     }
     
 }

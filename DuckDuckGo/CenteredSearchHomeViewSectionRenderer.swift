@@ -60,7 +60,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
 
-        Pixel.fire(pixel: .homeScreenShown)
     }
     
     @objc func rotated() {
@@ -124,7 +123,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
 
     func tapped(view: CenteredSearchHomeCell) {
-        Pixel.fire(pixel: .homeScreenSearchTapped)
         activateSearch()
         controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }

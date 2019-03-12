@@ -194,6 +194,12 @@ class MainViewController: UIViewController {
             controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
             return
         }
+        
+        if let navigationController = segue.destination as? UINavigationController,
+            let controller = navigationController.topViewController as? SettingsViewController {
+            controller.homePageSettingsDelegate = self
+        }
+        
     }
 
     private func configureTabManager() {
@@ -869,6 +875,15 @@ extension MainViewController: Themable {
         tabManager.decorate(with: theme)
 
         findInPageView.decorate(with: theme)
+    }
+    
+}
+
+extension MainViewController: HomePageSettingsDelegate {
+    
+    func homePageChanged(toConfigName config: HomePageConfiguration.ConfigName) {
+        removeHomeScreen()
+        attachHomeScreen()
     }
     
 }

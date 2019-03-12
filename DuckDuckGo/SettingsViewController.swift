@@ -34,6 +34,8 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
+    
+    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
 
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
@@ -59,11 +61,27 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureAutoClearCellAccessory()
+        configureHomePageCellAccessory()
+        migrateFavoritesIfNeeded()
+    }
+    
+    private func migrateFavoritesIfNeeded() {
+        // This ensures the user does not loose access to their favorites if they change the home page setting
+        if appSettings.homePage != .centerSearchAndFavorites {
+            BookmarksManager().migrateFavoritesToBookmarks()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is AutoClearSettingsViewController {
             Pixel.fire(pixel: .autoClearSettingsShown)
+            return
+        }
+        
+        if let controller = segue.destination as? HomePageSettingsViewController {
+            Pixel.fire(pixel: .settingsHomePageShown)
+            controller.delegate = homePageSettingsDelegate
+            return
         }
     }
 

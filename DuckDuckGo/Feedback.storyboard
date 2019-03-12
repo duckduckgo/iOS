@@ -52,17 +52,17 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjr-ca-FDA">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="160"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HeartIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QbI-di-eSr">
-                                                        <rect key="frame" x="162" y="26" width="26" height="26"/>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ReportIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QbI-di-eSr">
+                                                        <rect key="frame" x="159" y="26" width="32" height="32"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a Broken Site" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cum-ec-gq1">
-                                                        <rect key="frame" x="16" y="62.999999999999993" width="318" height="24.666666666666664"/>
+                                                        <rect key="frame" x="16" y="69" width="318" height="24.666666666666671"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="21"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Broken site reporting is completely anonymous and helps us to improve the app!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82c-Hv-K8w">
-                                                        <rect key="frame" x="25" y="98.666666666666657" width="300" height="32.666666666666657"/>
+                                                        <rect key="frame" x="25" y="104.66666666666666" width="300" height="32.666666666666657"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -855,8 +855,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HeartIcon" width="26" height="26"/>
         <image name="Remove" width="24" height="24"/>
+        <image name="ReportIcon" width="32" height="32"/>
         <image name="happyFace" width="48" height="48"/>
         <image name="sadFace" width="48" height="48"/>
     </resources>

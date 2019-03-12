@@ -74,6 +74,13 @@ extension UserText {
                                                                     comment: "Certain websites don't load correctly")
     public static let websiteLoadingIssuesDescription = NSLocalizedString("feedback.websiteLoading.description",
                                                                           comment: "Website loading issues")
+    public static let websiteLoadingIssuesFormSupplementary = NSLocalizedString("feedback.websiteLoading.form.supplementary",
+                                                                          comment: "Where are you seeing these issues?")
+    public static let websiteLoadingIssuesFormWebsitePlaceholder = NSLocalizedString("feedback.websiteLoading.form.websitePlaceholder",
+                                                                              comment: "Which website has issues?")
+    public static let websiteLoadingIssuesFormPlaceholder = NSLocalizedString("feedback.websiteLoading.form.placeholder",
+                                                                                comment: "What content seems to be affected?")
+    
     
     public static let ddgSearchIssuesEntry = NSLocalizedString("feedback.ddgSearch.entry",
                                                                comment: "DuckDuckGo search isn't good enough")

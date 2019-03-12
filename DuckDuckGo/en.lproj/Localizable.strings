@@ -192,6 +192,9 @@
 
 "feedback.websiteLoading.entry" = "Certain websites don't load correctly";
 "feedback.websiteLoading.description" = "Website loading issues";
+"feedback.websiteLoading.form.supplementary" = "Where are you seeing these issues?";
+"feedback.websiteLoading.form.websitePlaceholder" = "Which website has issues?";
+"feedback.websiteLoading.form.placeholder" = "What content seems to be affected?";
 
 "feedback.ddgSearch.entry" = "DuckDuckGo search isn't good enough";
 "feedback.ddgSearch.description" = "DuckDuckGo search issues";

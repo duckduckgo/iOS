@@ -64,6 +64,14 @@ class PositiveFeedbackViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let feedbackForm = segue.destination as? FeedbackFormViewController else {
+            return
+        }
+        
+        feedbackForm.configureForPositiveSentiment()
+    }
+    
 }
 
 extension PositiveFeedbackViewController: Themable {

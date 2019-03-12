@@ -60,7 +60,7 @@ class FeedbackFormViewController: UIViewController {
         headerImage.image = UIImage(named: "happyFace")
         
         headerText.setAttributedTextString(UserText.feedbackPositiveFormHeader)
-        supplementaryText.setAttributedTextString(UserText.feedbackPositiveFormPlaceholder)
+        supplementaryText.setAttributedTextString(UserText.feedbackPositiveFormSupplementary)
         messagePlaceholderText.setAttributedTextString(UserText.feedbackPositiveFormPlaceholder)
         
         submitFeedbackButton.setTitle(UserText.feedbackFormSubmit, for: .normal)
@@ -74,24 +74,26 @@ class FeedbackFormViewController: UIViewController {
         
         loadViewIfNeeded()
         
-        switch type {
-        case .regular:
-            hideWebsiteField()
-        case .brokenWebsite:
-            break
-        }
-
         headerImage.image = UIImage(named: "sadFace")
         self.headerText.text = FeedbackPresenter.title(for: category)
         
-        if let subcategory = model.subcategory {
-            if subcategory.isGeneric {
-                supplementaryText.text = UserText.feedbackFormCaption
+        switch type {
+        case .regular:
+            hideWebsiteField()
+            
+            if let subcategory = model.subcategory {
+                if subcategory.isGeneric {
+                    supplementaryText.text = UserText.feedbackFormCaption
+                } else {
+                    supplementaryText.text = subcategory.userText
+                }
             } else {
-                supplementaryText.text = subcategory.userText
+                supplementaryText.text = FeedbackPresenter.subtitle(for: category)
             }
-        } else {
-            supplementaryText.text = FeedbackPresenter.subtitle(for: category)
+        case .brokenWebsite:
+            supplementaryText.text = UserText.websiteLoadingIssuesFormSupplementary
+            websiteTextField.placeholder = UserText.websiteLoadingIssuesFormWebsitePlaceholder
+            messagePlaceholderText.setAttributedTextString(UserText.websiteLoadingIssuesFormPlaceholder)
         }
     }
     

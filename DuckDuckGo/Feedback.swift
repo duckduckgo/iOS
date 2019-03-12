@@ -21,7 +21,11 @@ import Foundation
 
 protocol FeedbackEntry {
     var nextStep: Feedback.NextStep { get }
+    
     var userText: String { get }
+    
+    // Generic entries are not used to populate details on last fedback form, as they do not provide a concrete example of what to improve
+    var isGeneric: Bool { get }
 }
 
 class Feedback {
@@ -44,10 +48,12 @@ class Feedback {
     struct Subcategory: FeedbackEntry {
         var nextStep: NextStep
         var userText: String
+        var isGeneric: Bool
         
-        init(userText: String) {
+        init(userText: String, isGeneric: Bool = false) {
             nextStep = .presentForm(.regular)
             self.userText = userText
+            self.isGeneric = isGeneric
         }
     }
 
@@ -69,7 +75,7 @@ class Feedback {
                                Subcategory(userText: UserText.browserFeatureIssuesVideos),
                                Subcategory(userText: UserText.browserFeatureIssuesImages),
                                Subcategory(userText: UserText.browserFeatureIssuesBookmarks),
-                               Subcategory(userText: UserText.browserFeatureIssuesOther)]
+                               Subcategory(userText: UserText.browserFeatureIssuesOther, isGeneric: true)]
                 return .presentEntries(entries)
             case .websiteLoadingIssues:
                 return .presentForm(.brokenWebsite)
@@ -79,7 +85,7 @@ class Feedback {
                                Subcategory(userText: UserText.ddgSearchIssuesLoadTime),
                                Subcategory(userText: UserText.ddgSearchIssuesLanguageOrReason),
                                Subcategory(userText: UserText.ddgSearchIssuesAutocomplete),
-                               Subcategory(userText: UserText.ddgSearchIssuesOther)]
+                               Subcategory(userText: UserText.ddgSearchIssuesOther, isGeneric: true)]
                 return .presentEntries(entries)
             case .customizationIssues:
                 let entries = [Subcategory(userText: UserText.customizationIssuesHomeScreen),
@@ -88,13 +94,13 @@ class Feedback {
                                Subcategory(userText: UserText.customizationIssuesWhatIsCleared),
                                Subcategory(userText: UserText.customizationIssuesWhenIsCleared),
                                Subcategory(userText: UserText.customizationIssuesBookmarks),
-                               Subcategory(userText: UserText.customizationIssuesOther)]
+                               Subcategory(userText: UserText.customizationIssuesOther, isGeneric: true)]
                 return .presentEntries(entries)
             case .performanceIssues:
                 let entries = [Subcategory(userText: UserText.performanceIssuesSlowLoading),
                                Subcategory(userText: UserText.performanceIssuesCrashes),
                                Subcategory(userText: UserText.performanceIssuesPlayback),
-                               Subcategory(userText: UserText.performanceIssuesOther)]
+                               Subcategory(userText: UserText.performanceIssuesOther, isGeneric: true)]
                 return .presentEntries(entries)
             case .otherIssues:
                 return .presentForm(.regular)
@@ -115,6 +121,17 @@ class Feedback {
                 return UserText.performanceIssuesEntry
             case .otherIssues:
                 return UserText.otherIssuesEntry
+            }
+        }
+        
+        var isGeneric: Bool {
+            switch self {
+            case .websiteLoadingIssues:
+                return true
+            case .otherIssues:
+                return true
+            default:
+                return false
             }
         }
     }

@@ -21,11 +21,16 @@ import UIKit
 
 class FeedbackFormViewController: UIViewController {
     
+    @IBOutlet var headerToMessageView: NSLayoutConstraint!
+    @IBOutlet var websiteFieldToMessageView: NSLayoutConstraint!
+    
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var supplementaryText: UILabel!
+    
+    @IBOutlet weak var websiteTextField: UITextField!
     
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var messagePlaceholderText: UILabel!
@@ -50,25 +55,48 @@ class FeedbackFormViewController: UIViewController {
     
     func configureForPositiveSentiment() {
         loadViewIfNeeded()
+        hideWebsiteField()
+        
         headerImage.image = UIImage(named: "happyFace")
         headerText.text = "Share Feedback"
         supplementaryText.text = "Are there any details you’d like to share with the team?"
     }
     
-    func configureForNegativeSentiment(with model: Feedback.Model) {
+    func configureForNegativeSentiment(for type: Feedback.SubmitFormType,
+                                       with model: Feedback.Model) {
         guard let category = model.category else {
                 fatalError("Feedback model is incomplete!")
         }
         
         loadViewIfNeeded()
+        
+        switch type {
+        case .regular:
+            hideWebsiteField()
+        case .brokenWebsite:
+            break
+        }
+
         headerImage.image = UIImage(named: "sadFace")
         self.headerText.text = FeedbackPresenter.title(for: category)
         
         if let subcategory = model.subcategory {
-            supplementaryText.text = subcategory.userText
+            if subcategory.isGeneric {
+                supplementaryText.text = UserText.feedbackFormCaption
+            } else {
+                supplementaryText.text = subcategory.userText
+            }
         } else {
             supplementaryText.text = FeedbackPresenter.subtitle(for: category)
         }
+    }
+    
+    private func hideWebsiteField() {
+        websiteTextField.isHidden = true
+        websiteFieldToMessageView.isActive = false
+        headerToMessageView.isActive = true
+        
+        view.layoutIfNeeded()
     }
     
     @IBAction func submitFeedbackPressed() {

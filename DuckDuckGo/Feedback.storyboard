@@ -254,7 +254,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1467" y="1690"/>
+            <point key="canvasLocation" x="-659" y="1690"/>
         </scene>
         <!--Send feedback-->
         <scene sceneID="dQB-jL-THB">
@@ -629,8 +629,6 @@
                         <outlet property="headerText" destination="vDx-jp-OoH" id="oQK-93-4l1"/>
                         <outlet property="headerView" destination="h6D-eT-YCX" id="40i-6z-dYk"/>
                         <outlet property="supplementaryText" destination="1mR-xp-efA" id="rBl-XT-jbS"/>
-                        <segue destination="Rvx-dM-etJ" kind="show" identifier="PresentSubmitFeedback" id="hey-6b-mQh"/>
-                        <segue destination="LPY-wu-U34" kind="presentation" identifier="PresentBrokenSiteForm" id="1qq-EA-C2e"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i33-6G-JqT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -702,7 +700,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsB-Kq-U8p">
-                                                <rect key="frame" x="37" y="393" width="340" height="44"/>
+                                                <rect key="frame" x="37" y="444" width="340" height="44"/>
                                                 <color key="backgroundColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="05S-7A-LKg"/>
@@ -722,7 +720,7 @@
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iVe-E1-jAH">
-                                                <rect key="frame" x="37" y="223" width="340" height="150"/>
+                                                <rect key="frame" x="37" y="274" width="340" height="150"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="d7z-bj-sBD"/>
@@ -739,7 +737,7 @@
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJW-tG-IzU">
-                                                <rect key="frame" x="43" y="228" width="328" height="44.333333333333314"/>
+                                                <rect key="frame" x="43" y="279" width="328" height="44.333333333333314"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="How can the app be improved? What do you love? What's breaking? Please be as specific as possible.">
                                                         <attributes>
@@ -751,21 +749,40 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which website is broken?" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-NM-j3b">
+                                                <rect key="frame" x="37" y="213" width="340" height="38"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="bhe-AJ-LtA"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="url"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="width" secondItem="lsB-Kq-U8p" secondAttribute="width" id="3fc-TV-YF9"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="centerX" secondItem="4eZ-cg-8pJ" secondAttribute="centerX" id="5TD-rD-xN8"/>
                                             <constraint firstItem="lsB-Kq-U8p" firstAttribute="centerX" secondItem="4eZ-cg-8pJ" secondAttribute="centerX" id="6oL-6X-3hm"/>
+                                            <constraint firstItem="TMj-NM-j3b" firstAttribute="centerX" secondItem="4eZ-cg-8pJ" secondAttribute="centerX" id="7jY-0d-B3Y"/>
                                             <constraint firstAttribute="trailing" secondItem="iVe-E1-jAH" secondAttribute="trailing" priority="750" constant="20" id="8QW-By-8fe"/>
-                                            <constraint firstItem="iVe-E1-jAH" firstAttribute="top" secondItem="H8P-lM-IF2" secondAttribute="bottom" constant="23" id="Av6-bf-PnR"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lsB-Kq-U8p" secondAttribute="bottom" constant="40" id="DYT-ep-fNs"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="trailing" secondItem="sJW-tG-IzU" secondAttribute="trailing" constant="6" id="Dug-g4-WBQ"/>
+                                            <constraint firstItem="TMj-NM-j3b" firstAttribute="top" secondItem="H8P-lM-IF2" secondAttribute="bottom" constant="13" id="EAO-VL-S44"/>
                                             <constraint firstItem="H8P-lM-IF2" firstAttribute="centerX" secondItem="4eZ-cg-8pJ" secondAttribute="centerX" id="R3v-fr-Mgf"/>
+                                            <constraint firstItem="iVe-E1-jAH" firstAttribute="top" secondItem="H8P-lM-IF2" secondAttribute="bottom" priority="750" constant="13" id="T2T-Hq-Z0M"/>
                                             <constraint firstItem="sJW-tG-IzU" firstAttribute="leading" secondItem="iVe-E1-jAH" secondAttribute="leading" constant="6" id="XKc-Dq-ZbF"/>
                                             <constraint firstItem="sJW-tG-IzU" firstAttribute="top" secondItem="iVe-E1-jAH" secondAttribute="top" constant="5" id="bv7-m0-QHc"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="leading" secondItem="4eZ-cg-8pJ" secondAttribute="leading" priority="750" constant="20" id="dBQ-Ek-wWZ"/>
                                             <constraint firstItem="H8P-lM-IF2" firstAttribute="top" secondItem="4eZ-cg-8pJ" secondAttribute="top" constant="10" id="f60-WS-ixn"/>
+                                            <constraint firstItem="TMj-NM-j3b" firstAttribute="width" secondItem="iVe-E1-jAH" secondAttribute="width" id="qUG-vf-UG6"/>
+                                            <constraint firstItem="iVe-E1-jAH" firstAttribute="top" secondItem="TMj-NM-j3b" secondAttribute="bottom" constant="23" id="rYw-ft-MyX"/>
                                             <constraint firstItem="lsB-Kq-U8p" firstAttribute="top" secondItem="iVe-E1-jAH" secondAttribute="bottom" constant="20" id="w2L-us-oKy"/>
                                         </constraints>
                                     </view>
@@ -799,16 +816,19 @@
                     <connections>
                         <outlet property="headerImage" destination="KJu-DM-FUl" id="coa-4e-6pc"/>
                         <outlet property="headerText" destination="1Xu-fv-jb3" id="hTu-Nq-j6m"/>
+                        <outlet property="headerToMessageView" destination="T2T-Hq-Z0M" id="Exq-xp-hna"/>
                         <outlet property="messagePlaceholderText" destination="sJW-tG-IzU" id="QTd-Uq-zdg"/>
                         <outlet property="messageTextView" destination="iVe-E1-jAH" id="ADu-IK-iN8"/>
                         <outlet property="scrollView" destination="oa0-vA-RI7" id="eoL-bX-Cvd"/>
                         <outlet property="submitFeedbackButton" destination="lsB-Kq-U8p" id="SqU-lR-HVF"/>
                         <outlet property="supplementaryText" destination="cLS-dA-AJv" id="r6T-94-4fC"/>
+                        <outlet property="websiteFieldToMessageView" destination="rYw-ft-MyX" id="tbc-gc-5ml"/>
+                        <outlet property="websiteTextField" destination="TMj-NM-j3b" id="BC8-0T-Mw7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdQ-oa-msz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1467" y="924"/>
+            <point key="canvasLocation" x="1361" y="924"/>
         </scene>
     </scenes>
     <resources>
@@ -817,7 +837,4 @@
         <image name="happyFace" width="48" height="48"/>
         <image name="sadFace" width="48" height="48"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="hey-6b-mQh"/>
-    </inferredMetricsTieBreakers>
 </document>

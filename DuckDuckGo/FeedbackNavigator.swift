@@ -46,7 +46,7 @@ class FeedbackNavigator {
                                                from controller: UIViewController) {
         let formViewController = FeedbackFormViewController.loadFromStoryboard()
         
-        formViewController.configureForNegativeSentiment(with: model)
+        formViewController.configureForNegativeSentiment(for: type, with: model)
         controller.navigationController?.pushViewController(formViewController, animated: true)
     }
 }

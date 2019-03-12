@@ -93,6 +93,11 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
+    @IBAction func textFieldTapped() {
+        print(#function)
+        textField.becomeFirstResponder()
+    }
+
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
             Logger.log(text: "OmniBar entering \(newState.name) from \(state.name)")

@@ -80,6 +80,7 @@
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
+                                                <outletCollection property="gestureRecognizers" destination="xpX-Ub-pSL" appends="YES" id="LVj-rh-iOO"/>
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
@@ -216,9 +217,14 @@
             </connections>
             <point key="canvasLocation" x="-37.600000000000001" y="-52.173913043478265"/>
         </view>
-        <tapGestureRecognizer id="qXd-RO-1cS">
+        <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
             <connections>
                 <action selector="onSiteRatingPressed:" destination="ojX-nM-dyN" id="aWb-03-h7C"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="xpX-Ub-pSL" userLabel="Text Field Tap Recogniser">
+            <connections>
+                <action selector="textFieldTapped" destination="ojX-nM-dyN" id="rWo-vd-pnL"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

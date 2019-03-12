@@ -181,4 +181,11 @@ public struct UserText {
     public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", comment: "All open tabs are bookmarked")
     public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", comment: "Failed to bookmark %lu out of %lu tabs")
 
+    public static let autoClearAccessoryOn = NSLocalizedString("autoclear.on", comment: "On")
+    public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", comment: "Off")
+
+    public static let homePageSimple = NSLocalizedString("homepage.simple", comment: "Simple")
+    public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
+    public static let homePageCenterSearchAndFavorites = NSLocalizedString("homepage.centerSearchAndFavorites", comment: "Center Search and Favorites")
+
 }

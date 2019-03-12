@@ -47,15 +47,33 @@ class AppUserDefaultsTests: XCTestCase {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.currentThemeName = .light
-        XCTAssertTrue(appUserDefaults.currentThemeName == .light)
+        XCTAssertEqual(appUserDefaults.currentThemeName, .light)
         
     }
     
     func testWhenReadingCurrentThemeDefaultThenDarkIsReturned() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssert(appUserDefaults.currentThemeName == .dark)
+        XCTAssertEqual(appUserDefaults.currentThemeName, .dark)
         
+    }
+    
+    func testWhenNewThenDefaultHomePageIsSimple() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertEqual(appUserDefaults.homePage, .simple)
+        
+    }
+    
+    func testWhenHomePageSetThenSettingIsStored() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.homePage = .centerSearch
+        XCTAssertEqual(appUserDefaults.homePage, .centerSearch)
+        
+        let otherDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertEqual(otherDefaults.homePage, .centerSearch)
+
     }
     
 }

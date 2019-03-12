@@ -116,6 +116,7 @@
 		851B12B12226BEE3004781BC /* HomeScreenTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B02226BEE3004781BC /* HomeScreenTipsTests.swift */; };
 		851B12B32226D062004781BC /* BrowsingTipsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12B22226D062004781BC /* BrowsingTipsTests.swift */; };
 		851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */; };
+		851B12CE2236CAB2004781BC /* HomePageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */; };
 		851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */; };
 		851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */; };
 		85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */; };
@@ -653,6 +654,7 @@
 		851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultContextualTipsStorageTests.swift; sourceTree = "<group>"; };
 		851B12B02226BEE3004781BC /* HomeScreenTipsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenTipsTests.swift; sourceTree = "<group>"; };
 		851B12B22226D062004781BC /* BrowsingTipsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingTipsTests.swift; sourceTree = "<group>"; };
+		851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageSettingsViewController.swift; sourceTree = "<group>"; };
 		851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButton.swift; sourceTree = "<group>"; };
 		851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcherButtonTests.swift; sourceTree = "<group>"; };
 		85200F901FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionScoreCardController.swift; sourceTree = "<group>"; };
@@ -2258,6 +2260,7 @@
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
 				8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */,
 				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
+				851B12CD2236CAB2004781BC /* HomePageSettingsViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -3202,6 +3205,7 @@
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				85F6191B20D293AC003904D1 /* HomeRowCTA.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
+				851B12CE2236CAB2004781BC /* HomePageSettingsViewController.swift in Sources */,
 				8505836D219F424500ED4EDB /* Point.swift in Sources */,
 				F114C5611E67599C0018F95F /* UseDuckDuckGoInSafariViewController.swift in Sources */,
 				981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */,

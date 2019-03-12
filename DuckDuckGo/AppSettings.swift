@@ -24,6 +24,6 @@ protocol AppSettings {
     var autoClearAction: AutoClearSettingsModel.Action { get set }
     var autoClearTiming: AutoClearSettingsModel.Timing { get set }
 
-    var homePageType: Int { get set }
+    var homePage: HomePageConfiguration.ConfigName { get set }
     
 }

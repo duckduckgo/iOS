@@ -22,19 +22,26 @@ import Core
 
 class HomePageConfiguration {
     
-    struct TypeConfigurations {
+    enum ConfigName: Int {
+
+        var components: [Component] {
+            switch self {
+            case .simple:
+                return [ .navigationBarSearch ]
+                
+            case .centerSearch:
+                return [ .fixedCenteredSearch ]
+                
+            case .centerSearchAndFavorites:
+                return [ .centeredSearch, .favorites ]
+            }
+            
+        }
         
-        static let topSearchBar: [Component] = [ .navigationBarSearch ]
-        static let centerSearchBar: [Component] = [ .fixedCenteredSearch ]
-        static let favorites: [Component] = [ .centeredSearch, .favorites ]
-
-        // Keyed from the settings
-        static let all = [
-            TypeConfigurations.topSearchBar,
-            TypeConfigurations.centerSearchBar,
-            TypeConfigurations.favorites
-        ]
-
+        case simple
+        case centerSearch
+        case centerSearchAndFavorites
+        
     }
     
     enum Component {
@@ -47,11 +54,11 @@ class HomePageConfiguration {
     let settings: AppSettings
     
     var components: [Component] {
-        return TypeConfigurations.all[settings.homePageType]
+        return settings.homePage.components
     }
     
     init(settings: AppSettings = AppUserDefaults()) {
         self.settings = settings
     }
-        
+    
 }

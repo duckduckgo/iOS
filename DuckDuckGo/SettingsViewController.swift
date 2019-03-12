@@ -28,10 +28,12 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var lightThemeToggle: UISwitch!
     @IBOutlet weak var autocompleteToggle: UISwitch!
     @IBOutlet weak var authenticationToggle: UISwitch!
+    @IBOutlet weak var homePageAccessoryText: UILabel!
     @IBOutlet weak var autoClearAccessoryText: UILabel!
     @IBOutlet weak var versionText: UILabel!
     
     @IBOutlet var labels: [UILabel]!
+    @IBOutlet var accessoryLabels: [UILabel]!
 
     private lazy var versionProvider: AppVersion = AppVersion()
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
@@ -86,10 +88,27 @@ class SettingsViewController: UITableViewController {
     
     private func configureAutoClearCellAccessory() {
         if AutoClearSettingsModel(settings: appSettings) != nil {
-            autoClearAccessoryText.text = "On"
+            autoClearAccessoryText.text = UserText.autoClearAccessoryOn
         } else {
-            autoClearAccessoryText.text = "Off"
+            autoClearAccessoryText.text = UserText.autoClearAccessoryOff
         }
+    }
+    
+    private func configureHomePageCellAccessory() {
+
+        switch appSettings.homePage {
+            
+        case .simple:
+            homePageAccessoryText.text = UserText.homePageSimple
+            
+        case .centerSearch:
+            homePageAccessoryText.text = UserText.homePageCenterSearch
+
+        case .centerSearchAndFavorites:
+            homePageAccessoryText.text = UserText.homePageCenterSearchAndFavorites
+
+        }
+        
     }
 
     private func configureVersionText() {
@@ -147,7 +166,10 @@ extension SettingsViewController: Themable {
             label.textColor = theme.tableCellTintColor
         }
         
-        autoClearAccessoryText.textColor = theme.tableCellAccessoryTextColor
+        for label in accessoryLabels {
+            label.textColor = theme.tableCellAccessoryTextColor
+        }
+        
         versionText.textColor = theme.tableCellTintColor
         
         lightThemeToggle.onTintColor = theme.toggleSwitchColor

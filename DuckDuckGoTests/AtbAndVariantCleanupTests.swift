@@ -71,19 +71,18 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     func testWhenPreviousVariantIsHomePageExperimentThenSettingsAreUpdatedCorrectly() {
         
-        let cases = [ "": 0,
-                      "mk": 0,
-                      "ml": 2,
-                      "mm": 2,
-                      "mn": 1]
-        
-        let mockSettings = MockAppSettings()
-        
+        let cases: [String: HomePageConfiguration.ConfigName] = [
+            "": .simple,
+            "mk": .simple,
+            "ml": .centerSearchAndFavorites,
+            "mm": .centerSearchAndFavorites,
+            "mn": .centerSearch]
+
         for testCase in cases {
-            mockSettings.homePageType = 0
+            let mockSettings = MockAppSettings()
             mockStorage.variant = testCase.key
             AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager, settings: mockSettings)
-            XCTAssertEqual(mockSettings.homePageType, testCase.value)
+            XCTAssertEqual(mockSettings.homePage, testCase.value)
         }
         
     }

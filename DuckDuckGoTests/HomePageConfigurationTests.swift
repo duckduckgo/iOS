@@ -32,14 +32,14 @@ class HomePageConfigurationTests: XCTestCase {
     
     func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
         let settings = MockAppSettings()
-        settings.homePageType = 1
+        settings.homePage = .centerSearch
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual([ HomePageConfiguration.Component.fixedCenteredSearch ], config.components)
     }
 
     func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
         let settings = MockAppSettings()
-        settings.homePageType = 2
+        settings.homePage = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual([ HomePageConfiguration.Component.centeredSearch, HomePageConfiguration.Component.favorites ], config.components)
     }
@@ -52,6 +52,6 @@ class MockAppSettings: AppSettings {
     var currentThemeName: ThemeName = ThemeName.dark
     var autoClearTiming: AutoClearSettingsModel.Timing = .termination
     var autoClearAction: AutoClearSettingsModel.Action = []
-    var homePageType: Int = 0
+    var homePage: HomePageConfiguration.ConfigName = .simple
     
 }

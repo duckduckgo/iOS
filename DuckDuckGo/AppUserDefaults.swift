@@ -98,13 +98,14 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    var homePageType: Int {
+    var homePage: HomePageConfiguration.ConfigName {
         get {
-            return userDefaults?.integer(forKey: Keys.homePage) ?? 0
+            let index = userDefaults?.integer(forKey: Keys.homePage) ?? 0
+            return HomePageConfiguration.ConfigName(rawValue: index)!
         }
         
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.homePage)
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePage)
         }
     }
     

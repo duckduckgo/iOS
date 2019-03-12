@@ -1,5 +1,5 @@
 //
-//  CategorizedFeedbackViewController.swift
+//  FeedbackPickerViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,16 +19,24 @@
 
 import UIKit
 
-class CategorizedFeedbackViewController: UITableViewController {
+class FeedbackPickerViewController: UITableViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerText: UILabel!
     @IBOutlet weak var supplementaryText: UILabel!
     
-    private var options = [String]()
-    private var selectionHandler: (DisambiguatedFeedbackModel) -> Void = { _ in }
+    private var entries = [FeedbackEntry]()
+    private var selectionHandler: (Feedback.Model) -> Void = { _ in }
     
-    private var existingModel: DisambiguatedFeedbackModel?
+    private var feedbackModel: Feedback.Model?
+    
+    static func loadFromStoryboard() -> FeedbackPickerViewController {
+        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "FeedbackPicker") as? FeedbackPickerViewController else {
+            fatalError("Failed to load view controller for Feedback Picker")
+        }
+        return controller
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,29 +59,31 @@ class CategorizedFeedbackViewController: UITableViewController {
         }
     }
     
-    func configure(with categories: [DisambiguatedFeedbackCategory]) {
-        options = categories.map { $0.rawValue }
+    func configure(with categories: [Feedback.Category]) {
+        entries = categories
     }
     
-    func configureForSubcategories(with model: DisambiguatedFeedbackModel) {
+    func configureFor(entries: [FeedbackEntry], with model: Feedback.Model) {
         guard let category = model.category else {
             fatalError("Feedback model has empty category")
         }
         
-        existingModel = model
+        loadViewIfNeeded()
+        
+        feedbackModel = model
         
         let headerString = headerText.attributedText?.mutableCopy() as? NSMutableAttributedString
-        headerString?.mutableString.setString(category.caption)
+        headerString?.mutableString.setString(FeedbackPresenter.title(for: category))
         headerText.attributedText = headerString
         
         let supplementaryString = supplementaryText.attributedText?.mutableCopy() as? NSMutableAttributedString
-        supplementaryString?.mutableString.setString(category.subcategoriesCaption)
+        supplementaryString?.mutableString.setString(FeedbackPresenter.subtitle(for: category))
         supplementaryText.attributedText = supplementaryString
         
-        options = category.subcategories
+        self.entries = entries
     }
     
-    func setSelectionHandler(_ handler: @escaping (DisambiguatedFeedbackModel) -> Void) {
+    func setSelectionHandler(_ handler: @escaping (Feedback.Model) -> Void) {
         self.selectionHandler = handler
     }
     
@@ -85,25 +95,20 @@ class CategorizedFeedbackViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        var model: DisambiguatedFeedbackModel
-        if let existingModel = existingModel {
-            model = existingModel
-        } else {
-            model = DisambiguatedFeedbackModel()
-        }
-        
+        let selectedEntry = entries[indexPath.row]
+
+        var model = feedbackModel ?? Feedback.Model()
         if model.category == nil {
-            model.category = DisambiguatedFeedbackCategory(rawValue: options[indexPath.row])
+            model.category = selectedEntry as? Feedback.Category
         } else {
-            model.subcategory = options[indexPath.row]
+            model.subcategory = selectedEntry
         }
         
-        selectionHandler(model)
+        FeedbackNavigator.navigate(to: selectedEntry.nextStep, from: self, with: model)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return options.count
+        return entries.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,42 +123,14 @@ class CategorizedFeedbackViewController: UITableViewController {
         cell.textLabel?.textColor = theme.tableCellTintColor
         
         let text = cell.textLabel?.attributedText?.mutableCopy() as? NSMutableAttributedString
-        text?.mutableString.setString(options[indexPath.row])
+        text?.mutableString.setString(entries[indexPath.row].userText)
         cell.textLabel?.attributedText = text
         
         return cell
     }
-
 }
 
-extension CategorizedFeedbackViewController {
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? SubmitFeedbackViewController,
-            let model = sender as? DisambiguatedFeedbackModel {
-            controller.loadViewIfNeeded()
-            
-            let detailsText: String
-            if let subcategory = model.subcategory,
-                subcategory != DisambiguatedFeedbackCategory.otherIssues.rawValue {
-                detailsText = subcategory
-            } else {
-                detailsText = "Please tell us what we can improve"
-            }
-            
-            controller.configureForNegativeSentiment(headerText: model.category?.caption ?? "",
-                                                     detailsText: detailsText)
-            return
-        }
-        
-        if let controller = segue.destination as? SiteFeedbackViewController {
-            controller.prepareForSegue(isBrokenSite: true, url: nil)
-            return
-        }
-    }
-}
-
-extension CategorizedFeedbackViewController: Themable {
+extension FeedbackPickerViewController: Themable {
     
     func decorate(with theme: Theme) {
         tableView.separatorColor = theme.tableCellSeparatorColor

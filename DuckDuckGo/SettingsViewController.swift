@@ -64,7 +64,7 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .autoClearSettingsShown)
         }
         
-        if let navController = segue.destination as? UINavigationController, navController.topViewController is AppFeedbackViewController {
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is FeedbackViewController {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 segue.destination.modalPresentationStyle = .formSheet
             }

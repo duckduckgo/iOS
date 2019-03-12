@@ -259,25 +259,25 @@
         <!--Send feedback-->
         <scene sceneID="dQB-jL-THB">
             <objects>
-                <viewController id="xnZ-YI-mV7" customClass="AppFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xnZ-YI-mV7" customClass="FeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C2C-S7-btw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's get started!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yS1-TL-7Xx">
-                                <rect key="frame" x="132" y="89" width="150.33333333333337" height="20"/>
+                                <rect key="frame" x="132" y="89" width="150.33333333333337" height="23.333333333333329"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How would you catagorize your feedback?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Wp-6Y-fZj">
-                                <rect key="frame" x="67" y="129" width="280" height="15"/>
+                                <rect key="frame" x="63.666666666666657" y="132.33333333333334" width="286.66666666666674" height="17.666666666666657"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sVu-v0-c6J">
-                                <rect key="frame" x="93" y="177" width="228" height="100"/>
+                                <rect key="frame" x="93" y="183" width="228" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ze4-T7-OFN">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -305,7 +305,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your anonymous feedback is important to us." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sir-qo-Tef">
-                                <rect key="frame" x="69.333333333333343" y="697" width="275.33333333333326" height="14"/>
+                                <rect key="frame" x="65" y="694.66666666666663" width="284" height="16.333333333333371"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -360,25 +360,31 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VKd-6G-N6H" userLabel="Header Container">
-                                                <rect key="frame" x="66.666666666666686" y="10" width="281" height="190"/>
+                                                <rect key="frame" x="64" y="10" width="286" height="190"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="happyFace" translatesAutoresizingMaskIntoConstraints="NO" id="eqG-8P-M9E">
-                                                        <rect key="frame" x="90.333333333333314" y="20" width="100" height="60"/>
+                                                        <rect key="frame" x="93" y="20" width="100" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="aLK-4h-fCG"/>
                                                             <constraint firstAttribute="height" constant="60" id="j7Q-89-xeA"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Awesome to hear!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7v-x2-wc1">
-                                                        <rect key="frame" x="58.666666666666643" y="99" width="163.33333333333337" height="20"/>
+                                                        <rect key="frame" x="62.333333333333329" y="99" width="161.33333333333337" height="23.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please share the love by rating the app on the App Store." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTz-AA-F85">
-                                                        <rect key="frame" x="0.0" y="130" width="281" height="30"/>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
-                                                        <nil key="textColor"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTz-AA-F85">
+                                                        <rect key="frame" x="0.0" y="133.33333333333334" width="286" height="38"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="Please share the love by rating the app on the App Store.">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -524,7 +530,7 @@
         <!--Send Feedback-->
         <scene sceneID="pU2-w2-HSD">
             <objects>
-                <tableViewController storyboardIdentifier="CategorizedFeedbackScreen" title="Send Feedback" id="lY6-5c-iu4" customClass="CategorizedFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FeedbackPicker" title="Send Feedback" id="lY6-5c-iu4" customClass="FeedbackPickerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="r0Q-7K-kUf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -540,10 +546,17 @@
                                         <constraint firstAttribute="height" constant="60" id="m94-s0-TNe"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We’re sorry to hear that." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDx-jp-OoH">
-                                    <rect key="frame" x="99.666666666666686" y="98" width="215" height="23.333333333333329"/>
-                                    <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
-                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDx-jp-OoH">
+                                    <rect key="frame" x="102.33333333333333" y="98" width="209.33333333333337" height="23.333333333333329"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="We’re sorry to hear that">
+                                            <attributes>
+                                                <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="20" name="ProximaNova-Bold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mR-xp-efA">
@@ -627,7 +640,7 @@
         <!--Send Feedback-->
         <scene sceneID="KeI-Y1-Qzf">
             <objects>
-                <viewController title="Send Feedback" id="Rvx-dM-etJ" customClass="SubmitFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedbackForm" title="Send Feedback" id="Rvx-dM-etJ" customClass="FeedbackFormViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5c0-e6-FcW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -639,25 +652,39 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8P-lM-IF2" userLabel="Header Container">
-                                                <rect key="frame" x="59.333333333333343" y="10" width="295.33333333333326" height="190"/>
+                                                <rect key="frame" x="57.333333333333343" y="10" width="299.66666666666663" height="190"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="happyFace" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-DM-FUl">
-                                                        <rect key="frame" x="97.666666666666657" y="20" width="100" height="60"/>
+                                                        <rect key="frame" x="99.666666666666657" y="20" width="100" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="84r-Mv-qvi"/>
                                                             <constraint firstAttribute="height" constant="60" id="w3T-4t-C37"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share Feedback" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Xu-fv-jb3">
-                                                        <rect key="frame" x="74.666666666666657" y="99" width="146" height="20"/>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
-                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Xu-fv-jb3">
+                                                        <rect key="frame" x="76.666666666666657" y="99" width="146" height="23.333333333333329"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="Share Feedback">
+                                                                <attributes>
+                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <font key="NSFont" size="20" name="ProximaNova-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are there any details you’d like to share with the team?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLS-dA-AJv">
-                                                        <rect key="frame" x="0.0" y="130" width="295.33333333333331" height="30"/>
-                                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
-                                                        <nil key="textColor"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLS-dA-AJv">
+                                                        <rect key="frame" x="0.0" y="133.33333333333334" width="299.66666666666669" height="38"/>
+                                                        <attributedString key="attributedText">
+                                                            <fragment content="Are there any details you’d like to share with the team?">
+                                                                <attributes>
+                                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                    <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -712,7 +739,7 @@
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJW-tG-IzU">
-                                                <rect key="frame" x="43" y="228" width="328" height="38"/>
+                                                <rect key="frame" x="43" y="228" width="328" height="44.333333333333314"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="How can the app be improved? What do you love? What's breaking? Please be as specific as possible.">
                                                         <attributes>

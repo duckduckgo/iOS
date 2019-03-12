@@ -1,5 +1,5 @@
 //
-//  AppFeedbackViewController.swift
+//  FeedbackViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import UIKit
 
-class AppFeedbackViewController: UIViewController {
+class FeedbackViewController: UIViewController {
     
     @IBOutlet weak var closeButton: UIBarButtonItem!
     
@@ -56,50 +56,20 @@ class AppFeedbackViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let controller = segue.destination as? CategorizedFeedbackViewController else {
+        guard let controller = segue.destination as? FeedbackPickerViewController else {
             return
         }
         
         let isNavigatingToCategories = sender as? UIButton == negativeFeedbackButton
         if isNavigatingToCategories {
             controller.loadViewIfNeeded()
-            controller.configure(with: DisambiguatedFeedbackCategory.allCases)
-            controller.setSelectionHandler { [weak self, controller] model in
-                self?.categoriesScreen(controller, didFinishSelection: model)
-            }
+            controller.configure(with: Feedback.Category.allCases)
             return
         }
-        
-        if let model = sender as? DisambiguatedFeedbackModel {
-            controller.loadViewIfNeeded()
-            controller.configureForSubcategories(with: model)
-            controller.setSelectionHandler { [weak controller] model in
-                controller?.performSegue(withIdentifier: "PresentSubmitFeedback", sender: model)
-            }
-        }
-        
     }
 }
 
-extension AppFeedbackViewController {
-    
-    func categoriesScreen(_ controller: UIViewController, didFinishSelection model: DisambiguatedFeedbackModel) {
-        if model.category == .otherIssues {
-            controller.performSegue(withIdentifier: "PresentSubmitFeedback", sender: model)
-            return
-        }
-        
-        if model.category == .websiteLoadingIssues {
-            controller.performSegue(withIdentifier: "PresentBrokenSiteForm", sender: model)
-            return
-        }
-        
-        performSegue(withIdentifier: "PresentCategories", sender: model)
-    }
-    
-}
-
-extension AppFeedbackViewController: Themable {
+extension FeedbackViewController: Themable {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)

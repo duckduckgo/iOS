@@ -103,7 +103,6 @@
 		851B1286221FE756004781BC /* VariantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1284221FE716004781BC /* VariantTests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
 		851B128A22204800004781BC /* OnboardingSummary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 851B128922204800004781BC /* OnboardingSummary.storyboard */; };
-		851B128C2220483A004781BC /* OnboardingSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingSummaryViewController.swift */; };
 		851B129622242D94004781BC /* HomeScreenTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129522242D94004781BC /* HomeScreenTips.swift */; };
 		851B129822242E2D004781BC /* HomeViewController+HomeScreenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129722242E2D004781BC /* HomeViewController+HomeScreenDelegate.swift */; };
 		851B129A22242E89004781BC /* ContextualTipsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129922242E89004781BC /* ContextualTipsStorage.swift */; };
@@ -271,19 +270,22 @@
 		85FAAE66214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */; };
 		8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */; };
 		8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */; };
+		980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A122369ADB00313A70 /* FeedbackUserText.swift */; };
+		980891A32237146B00313A70 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562D222C39F8008D861B /* Feedback.swift */; };
+		980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A42237D4F500313A70 /* FeedbackNavigator.swift */; };
+		980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A62237D5D800313A70 /* FeedbackPresenter.swift */; };
 		9817C9C321EF594700884F65 /* AutoClear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClear.swift */; };
 		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
 		981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981FED702202519C008488D7 /* BlankSnapshot.storyboard */; };
 		981FED7422046017008488D7 /* AutoClearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearTests.swift */; };
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
-		982E562E222C39F8008D861B /* DisambiguatedFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562D222C39F8008D861B /* DisambiguatedFeedbackModel.swift */; };
-		982E5630222C3D5B008D861B /* CategorizedFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* CategorizedFeedbackViewController.swift */; };
+		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		98314735222D63E00062BDB1 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98314734222D63E00062BDB1 /* ThemableNavigationController.swift */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
-		984D60B2222A1284003B9E3B /* SubmitFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D60B1222A1284003B9E3B /* SubmitFeedbackViewController.swift */; };
+		984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
-		9888F77B2224980500C46159 /* AppFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* AppFeedbackViewController.swift */; };
+		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */; };
 		98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */; };
 		98DA6B3322243CC3006EA9EB /* Feedback.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98DA6B3222243CC3006EA9EB /* Feedback.xcassets */; };
@@ -816,19 +818,22 @@
 		85FAAE65214EFE59006AD5DA /* EmbeddedPrevalenceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedPrevalenceStoreTests.swift; sourceTree = "<group>"; };
 		8C47244F2217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewControllerLongPressBookmarkExtension.swift; sourceTree = "<group>"; };
 		8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureToolbarButton.swift; sourceTree = "<group>"; };
+		980891A122369ADB00313A70 /* FeedbackUserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackUserText.swift; sourceTree = "<group>"; };
+		980891A42237D4F500313A70 /* FeedbackNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackNavigator.swift; sourceTree = "<group>"; };
+		980891A62237D5D800313A70 /* FeedbackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPresenter.swift; sourceTree = "<group>"; };
 		9817C9C221EF594700884F65 /* AutoClear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClear.swift; sourceTree = "<group>"; };
 		981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsScreenTests.swift; sourceTree = "<group>"; };
 		981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSnapshotViewController.swift; sourceTree = "<group>"; };
 		981FED702202519C008488D7 /* BlankSnapshot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BlankSnapshot.storyboard; sourceTree = "<group>"; };
 		981FED7322046017008488D7 /* AutoClearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearTests.swift; sourceTree = "<group>"; };
 		981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsModel.swift; sourceTree = "<group>"; };
-		982E562D222C39F8008D861B /* DisambiguatedFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisambiguatedFeedbackModel.swift; sourceTree = "<group>"; };
-		982E562F222C3D5B008D861B /* CategorizedFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedFeedbackViewController.swift; sourceTree = "<group>"; };
+		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
 		98314734222D63E00062BDB1 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
-		984D60B1222A1284003B9E3B /* SubmitFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitFeedbackViewController.swift; sourceTree = "<group>"; };
+		984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
-		9888F77A2224980500C46159 /* AppFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeedbackViewController.swift; sourceTree = "<group>"; };
+		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyProvider.swift; sourceTree = "<group>"; };
 		98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyProvider.swift; sourceTree = "<group>"; };
 		98DA6B3222243CC3006EA9EB /* Feedback.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feedback.xcassets; sourceTree = "<group>"; };
@@ -1289,10 +1294,12 @@
 				83A23D6220DC330000051F39 /* Feedback.storyboard */,
 				839F46B520DD9D31003B8A66 /* SiteFeedbackViewController.swift */,
 				83D4A73620E1272F003A7A6D /* FeedbackModel.swift */,
-				9888F77A2224980500C46159 /* AppFeedbackViewController.swift */,
+				9888F77A2224980500C46159 /* FeedbackViewController.swift */,
 				9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */,
-				984D60B1222A1284003B9E3B /* SubmitFeedbackViewController.swift */,
-				982E562F222C3D5B008D861B /* CategorizedFeedbackViewController.swift */,
+				984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */,
+				982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */,
+				980891A42237D4F500313A70 /* FeedbackNavigator.swift */,
+				980891A62237D5D800313A70 /* FeedbackPresenter.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1714,7 +1721,7 @@
 		982E562C222C39E2008D861B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				982E562D222C39F8008D861B /* DisambiguatedFeedbackModel.swift */,
+				982E562D222C39F8008D861B /* Feedback.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2421,6 +2428,7 @@
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
+				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -3164,7 +3172,6 @@
 				85374D3521AC26E300FF5A1E /* BookmarksAndFavoritesDataSource.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
-
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				F1126E251EA749A30016A6C7 /* BlurAnimatedTransitioning.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
@@ -3185,10 +3192,11 @@
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* OnboardingTutorialPageViewController.swift in Sources */,
 				F1134EC11F40DD9300B73467 /* AppVersionExtension.swift in Sources */,
-				982E5630222C3D5B008D861B /* CategorizedFeedbackViewController.swift in Sources */,
+				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
+				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
 				851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */,
@@ -3215,9 +3223,10 @@
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
 				839F46B620DD9D31003B8A66 /* SiteFeedbackViewController.swift in Sources */,
-				9888F77B2224980500C46159 /* AppFeedbackViewController.swift in Sources */,
+				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
 				8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */,
+				980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */,
 				85F1E9AC1FB49C0F00A75AC1 /* DisplayableCertificateBuilder.swift in Sources */,
 				85B9CB8521AEBD92009001F1 /* NavigationSearchHomeCell.swift in Sources */,
 				85200F971FBB31E8001AF290 /* SiteRatingPrivacyProtectionExtension.swift in Sources */,
@@ -3245,12 +3254,14 @@
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85A9C37720DD2DC200073340 /* AddToHomeRowCTAViewController.swift in Sources */,
+				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				8505839421A841E400ED4EDB /* SupportingCancelButtonOmniBarState.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
 				851B12A622246625004781BC /* TouchWindow.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
+				980891A32237146B00313A70 /* Feedback.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,
 				85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */,
@@ -3287,7 +3298,7 @@
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
-				984D60B2222A1284003B9E3B /* SubmitFeedbackViewController.swift in Sources */,
+				984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */,
 				85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */,
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,

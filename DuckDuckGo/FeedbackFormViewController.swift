@@ -19,7 +19,7 @@
 
 import UIKit
 
-class SubmitFeedbackViewController: UIViewController {
+class FeedbackFormViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -32,6 +32,14 @@ class SubmitFeedbackViewController: UIViewController {
     
     @IBOutlet weak var submitFeedbackButton: UIButton!
     
+    static func loadFromStoryboard() -> FeedbackFormViewController {
+        let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "FeedbackForm") as? FeedbackFormViewController else {
+            fatalError("Failed to load view controller for Feedback Form")
+        }
+        return controller
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,15 +49,26 @@ class SubmitFeedbackViewController: UIViewController {
     }
     
     func configureForPositiveSentiment() {
+        loadViewIfNeeded()
         headerImage.image = UIImage(named: "happyFace")
         headerText.text = "Share Feedback"
         supplementaryText.text = "Are there any details you’d like to share with the team?"
     }
     
-    func configureForNegativeSentiment(headerText: String, detailsText: String) {
+    func configureForNegativeSentiment(with model: Feedback.Model) {
+        guard let category = model.category else {
+                fatalError("Feedback model is incomplete!")
+        }
+        
+        loadViewIfNeeded()
         headerImage.image = UIImage(named: "sadFace")
-        self.headerText.text = headerText
-        supplementaryText.text = detailsText
+        self.headerText.text = FeedbackPresenter.title(for: category)
+        
+        if let subcategory = model.subcategory {
+            supplementaryText.text = subcategory.userText
+        } else {
+            supplementaryText.text = FeedbackPresenter.subtitle(for: category)
+        }
     }
     
     @IBAction func submitFeedbackPressed() {
@@ -106,7 +125,7 @@ class SubmitFeedbackViewController: UIViewController {
     }
 }
 
-extension SubmitFeedbackViewController: UITextViewDelegate {
+extension FeedbackFormViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         messagePlaceholderText.isHidden = !textView.text.isEmpty
@@ -114,7 +133,7 @@ extension SubmitFeedbackViewController: UITextViewDelegate {
     }
 }
 
-extension SubmitFeedbackViewController: Themable {
+extension FeedbackFormViewController: Themable {
     
     func decorate(with theme: Theme) {
         view.backgroundColor = theme.backgroundColor

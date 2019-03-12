@@ -154,11 +154,60 @@
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
 
-"contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
+"contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo";
 "contextualOnboardingCustomize" = "Want a different look? Try the light theme!";
-"contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.";
-"contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.";
+"contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how";
+"contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings";
 
 "bookmarkAll.tabs.notfound" = "No tabs to bookmark";
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
+
+"feedback.browserFeatures.entry" = "Browsing features are missing or frustrating";
+"feedback.browserFeatures.description" = "Browser feature issues";
+"feedback.browserFeatures.caption" = "Which browsing feature can we add or improve?";
+"feedback.browserFeatures.navigation" = "Navigating forward, backward, and/or refreshing";
+"feedback.browserFeatures.tabs" = "Creating and managing tabs";
+"feedback.browserFeatures.ads" = "Ad and pop-up blocking";
+"feedback.browserFeatures.videos" = "Watching videos";
+"feedback.browserFeatures.images" = "Interacting with images";
+"feedback.browserFeatures.bookmarks" = "Creating and managing bookmarks";
+"feedback.browserFeatures.other" = "None of these";
+
+"feedback.websiteLoading.entry" = "Certain websites don't load correctly";
+"feedback.websiteLoading.description" = "Website loading issues";
+
+"feedback.ddgSearch.entry" = "DuckDuckGo search isn't good enough";
+"feedback.ddgSearch.description" = "DuckDuckGo search issues";
+"feedback.ddgSearch.caption" = "Which search feature can we add or improve?";
+"feedback.ddgSearch.technical" = "Programming/technical search";
+"feedback.ddgSearch.layout" = "The layout should be more like Google";
+"feedback.ddgSearch.loadTime" = "Faster load time";
+"feedback.ddgSearch.languageOrReason" = "Searching in a specific language or reason";
+"feedback.ddgSearch.autocomplete" = "Better autocomplete";
+"feedback.ddgSearch.other" = "None of these";
+
+"feedback.customization.entry" = "There aren't enough ways to customize the app";
+"feedback.customization.description" = "Customization issues";
+"feedback.customization.caption" = "Which customization option can we add or improve?";
+"feedback.customization.homeScreen" = "The home screen configuration";
+"feedback.customization.tabs" = "How tabs are displayed";
+"feedback.customization.ui" = "How the app looks";
+"feedback.customization.whatIsCleared" = "Which data is cleared";
+"feedback.customization.whenIsCleared" = "When data is cleared";
+"feedback.customization.bookmarks" = "How bookmarks are displayed";
+"feedback.customization.other" = "None of these";
+
+"feedback.performance.entry" = "The app is slow, buggy, or crashes";
+"feedback.performance.description" = "Performance issues";
+"feedback.performance.caption" = "Which issue are you experiencing?";
+"feedback.performance.slowLoading" = "Web pages or search results load slowly";
+"feedback.performance.crashes" = "The app crashes or freezes";
+"feedback.performance.playback" = "Video or media playback bugs";
+"feedback.performance.other" = "None of these";
+
+"feedback.other.entry" = "None of these";
+"feedback.other.description" = "Other issues";
+
+"feedback.form.caption" = "Please tell us what we can improve";
+

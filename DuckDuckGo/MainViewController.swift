@@ -184,6 +184,7 @@ class MainViewController: UIViewController {
 
         if let controller = segue.destination as? TabSwitcherViewController {
             controller.transitioningDelegate = blurTransition
+            controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
             tabSwitcherController = controller
@@ -198,6 +199,7 @@ class MainViewController: UIViewController {
         if let navigationController = segue.destination as? UINavigationController,
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self
+            return
         }
         
     }
@@ -882,6 +884,7 @@ extension MainViewController: Themable {
 extension MainViewController: HomePageSettingsDelegate {
     
     func homePageChanged(toConfigName config: HomePageConfiguration.ConfigName) {
+        guard homeController != nil else { return }
         removeHomeScreen()
         attachHomeScreen()
     }

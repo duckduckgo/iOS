@@ -25,9 +25,6 @@ extension TabViewController {
     func buildBrowsingMenu() -> UIAlertController {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(title: UserText.actionRefresh) { [weak self] in
-            self?.onRefreshAction()
-        }
         alert.addAction(title: UserText.actionNewTab) { [weak self] in
             self?.onNewTabAction()
         }
@@ -67,17 +64,6 @@ extension TabViewController {
         }
         alert.addAction(title: UserText.actionCancel, style: .cancel)
         return alert
-    }
-    
-    private func onRefreshAction() {
-        Pixel.fire(pixel: .browsingMenuRefresh)
-        if isError {
-            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
-                load(url: url)
-            }
-        } else {
-            reload(scripts: false)
-        }
     }
     
     private func onNewTabAction() {

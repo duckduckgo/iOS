@@ -49,7 +49,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
                                     <rect key="frame" x="6" y="0.0" width="219" height="40"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
                                             <rect key="frame" x="0.0" y="8" width="23" height="24"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">

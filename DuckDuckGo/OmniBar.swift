@@ -104,13 +104,26 @@ class OmniBar: UIView {
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
-        setVisibility(editingBackground, hidden: !state.showBackground)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
+
+        updateSearchBarBorder()
+    }
+
+    private func updateSearchBarBorder() {
+        let theme = ThemeManager.shared.currentTheme
+        if state.showBackground {
+            editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+            editingBackground?.borderColor = theme.searchBarBackgroundColor
+        } else {
+            editingBackground.borderWidth = 1.5
+            editingBackground.borderColor = theme.searchBarBorderColor
+            editingBackground.backgroundColor = UIColor.clear
+        }
     }
 
     /*
@@ -267,26 +280,25 @@ extension OmniBar: Themable {
     
     public func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor
-        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
-        
         tintColor = theme.barTintColor
+
+        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+        editingBackground?.borderColor = theme.searchBarBackgroundColor
+
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
         searchStackContainer?.tintColor = theme.barTintColor
-        
-        editingBackground?.borderColor = theme.searchBarBackgroundColor
-        textField.textColor = theme.searchBarTextColor
         
         if let url = textField.text?.punycodedUrl {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
-        
+        textField.textColor = theme.searchBarTextColor
         textField.tintColor = theme.searchBarTextColor
-        
         textField.keyboardAppearance = theme.keyboardAppearance
-        
+
         searchLoupe.tintColor = theme.barTintColor
-        
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
+
+        updateSearchBarBorder()
     }
 }
 

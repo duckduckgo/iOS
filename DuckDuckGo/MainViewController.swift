@@ -651,7 +651,7 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onRefreshPressed() {
-        currentTab?.reload(scripts: false)
+        currentTab?.refresh()
     }
     
 }

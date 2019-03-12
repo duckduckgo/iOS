@@ -47,7 +47,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                                    <rect key="frame" x="10" y="0.0" width="215" height="40"/>
+                                    <rect key="frame" x="6" y="0.0" width="219" height="40"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
                                             <rect key="frame" x="0.0" y="8" width="23" height="24"/>
@@ -64,8 +64,8 @@
                                                 <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="rMk-3Z-VLM"/>
                                             </connections>
                                         </view>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="53" y="0.0" width="102" height="40"/>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="14" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
+                                            <rect key="frame" x="53" y="0.0" width="106" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -83,7 +83,7 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                            <rect key="frame" x="155" y="0.0" width="30" height="40"/>
+                                            <rect key="frame" x="159" y="0.0" width="30" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
                                             </constraints>
@@ -93,7 +93,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                            <rect key="frame" x="185" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="189" y="8" width="30" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
                                             </constraints>
@@ -123,7 +123,7 @@
                                 <constraint firstAttribute="bottom" secondItem="Atk-JN-lv8" secondAttribute="bottom" id="9Vy-sw-am3"/>
                                 <constraint firstItem="N6K-Lj-Fn6" firstAttribute="top" secondItem="5D5-iT-bUk" secondAttribute="top" id="HJ5-s0-Q5X"/>
                                 <constraint firstItem="Atk-JN-lv8" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" id="Ykr-2D-nXh"/>
-                                <constraint firstItem="N6K-Lj-Fn6" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" constant="10" id="b5a-zA-VCZ"/>
+                                <constraint firstItem="N6K-Lj-Fn6" firstAttribute="leading" secondItem="5D5-iT-bUk" secondAttribute="leading" constant="6" id="b5a-zA-VCZ"/>
                                 <constraint firstAttribute="trailing" secondItem="N6K-Lj-Fn6" secondAttribute="trailing" constant="6" id="glC-XI-Ji8"/>
                                 <constraint firstItem="Atk-JN-lv8" firstAttribute="top" secondItem="5D5-iT-bUk" secondAttribute="top" id="yG5-th-424"/>
                                 <constraint firstAttribute="trailing" secondItem="Atk-JN-lv8" secondAttribute="trailing" id="zd7-6t-pTU"/>

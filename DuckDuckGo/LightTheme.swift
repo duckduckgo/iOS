@@ -54,7 +54,7 @@ struct LightTheme: Theme {
     var aboutScreenButtonColor = UIColor.cornflowerBlue
     
     var favoritesPlusTintColor = UIColor.greyish3
-    var favoritesPlusBackgroundColor = UIColor.mercury
+    var favoritesPlusBackgroundColor = UIColor.lightMercury
     
     var faviconBackgroundColor = UIColor.white
     var favoriteTextColor = UIColor.darkGreyish

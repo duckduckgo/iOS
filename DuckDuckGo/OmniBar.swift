@@ -94,7 +94,6 @@ class OmniBar: UIView {
     }
 
     @IBAction func textFieldTapped() {
-        print(#function)
         textField.becomeFirstResponder()
     }
 

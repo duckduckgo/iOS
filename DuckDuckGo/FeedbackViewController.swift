@@ -33,8 +33,15 @@ class FeedbackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureLabels()
         configureButtons()
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    private func configureLabels() {
+        headerText.setAttributedTextString(UserText.feedbackStartHeader)
+        supplementaryText.setAttributedTextString(UserText.feedbackStartSupplementary)
+        footerText.setAttributedTextString(UserText.feedbackStartFooter)
     }
     
     private func configureButtons() {

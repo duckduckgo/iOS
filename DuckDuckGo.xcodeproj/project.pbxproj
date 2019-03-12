@@ -274,6 +274,7 @@
 		980891A32237146B00313A70 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562D222C39F8008D861B /* Feedback.swift */; };
 		980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A42237D4F500313A70 /* FeedbackNavigator.swift */; };
 		980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A62237D5D800313A70 /* FeedbackPresenter.swift */; };
+		980891A92238504B00313A70 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A82238504B00313A70 /* UILabelExtension.swift */; };
 		9817C9C321EF594700884F65 /* AutoClear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClear.swift */; };
 		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
@@ -821,6 +822,7 @@
 		980891A122369ADB00313A70 /* FeedbackUserText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackUserText.swift; sourceTree = "<group>"; };
 		980891A42237D4F500313A70 /* FeedbackNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackNavigator.swift; sourceTree = "<group>"; };
 		980891A62237D5D800313A70 /* FeedbackPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPresenter.swift; sourceTree = "<group>"; };
+		980891A82238504B00313A70 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		9817C9C221EF594700884F65 /* AutoClear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClear.swift; sourceTree = "<group>"; };
 		981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsScreenTests.swift; sourceTree = "<group>"; };
 		981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankSnapshotViewController.swift; sourceTree = "<group>"; };
@@ -2424,6 +2426,7 @@
 				83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */,
 				F1B745211E549D550072547E /* UIColorExtension.swift */,
 				F194FAEC1F14E2B3009B4DF8 /* UIFontExtension.swift */,
+				980891A82238504B00313A70 /* UILabelExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */,
@@ -3233,6 +3236,7 @@
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				851B129622242D94004781BC /* HomeScreenTips.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
+				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
 				85B9CB8721AEBDB7009001F1 /* CenteredSearchHomeCell.swift in Sources */,
 				8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,

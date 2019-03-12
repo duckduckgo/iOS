@@ -58,8 +58,12 @@ class FeedbackFormViewController: UIViewController {
         hideWebsiteField()
         
         headerImage.image = UIImage(named: "happyFace")
-        headerText.text = "Share Feedback"
-        supplementaryText.text = "Are there any details you’d like to share with the team?"
+        
+        headerText.setAttributedTextString(UserText.feedbackPositiveFormHeader)
+        supplementaryText.setAttributedTextString(UserText.feedbackPositiveFormPlaceholder)
+        messagePlaceholderText.setAttributedTextString(UserText.feedbackPositiveFormPlaceholder)
+        
+        submitFeedbackButton.setTitle(UserText.feedbackFormSubmit, for: .normal)
     }
     
     func configureForNegativeSentiment(for type: Feedback.SubmitFormType,

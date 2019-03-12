@@ -21,6 +21,34 @@ import Foundation
 
 extension UserText {
     
+    public static let feedbackStartHeader = NSLocalizedString("feedback.start.header",
+                                                              comment: "Let's get started!")
+    public static let feedbackStartSupplementary = NSLocalizedString("feedback.start.supplementary",
+                                                                     comment: "How would you catagorize your feedback?")
+    public static let feedbackStartFooter = NSLocalizedString("feedback.start.footer",
+                                                              comment: "Your anonymous feedback is important to us")
+    
+    public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
+                                                                 comment: "Awesome to hear!")
+    public static let feedbackPositiveSupplementary = NSLocalizedString("feedback.positive.supplementary",
+                                                                        comment: "Please share the love by rating the app on the App Store")
+    public static let feedbackPositiveRate = NSLocalizedString("feedback.positive.rate",
+                                                               comment: "Rate the App")
+    public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
+                                                                comment: "Share Feedback")
+    public static let feedbackPositiveNoThanks = NSLocalizedString("feedback.positive.noThanks",
+                                                                   comment: "No thanks! I'm done")
+    
+    public static let feedbackFormSubmit = NSLocalizedString("feedback.form.submit",
+                                                             comment: "Submit Feedback")
+    
+    public static let feedbackPositiveFormHeader = NSLocalizedString("feedback.positive.form.header",
+                                                                     comment: "Share Feedback")
+    public static let feedbackPositiveFormSupplementary = NSLocalizedString("feedback.positive.form.supplementary",
+                                                                            comment: "Are there any details you’d like to share with the team?")
+    public static let feedbackPositiveFormPlaceholder = NSLocalizedString("feedback.positive.form.placeholder",
+                                                                          comment: "How can the app be improved? What do you love? What's breaking? Please be as specific as possible")
+    
     public static let browserFeatureIssuesEntry = NSLocalizedString("feedback.browserFeatures.entry",
                                                                     comment: "Browsing features are missing or frustrating")
     public static let browserFeatureIssuesDescription = NSLocalizedString("feedback.browserFeatures.description",

@@ -31,9 +31,19 @@ class PositiveFeedbackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureLabels()
         configureButtons()
 
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+    
+    private func configureLabels() {
+        headerText.setAttributedTextString(UserText.feedbackPositiveHeader)
+        supplementaryText.setAttributedTextString(UserText.feedbackPositiveSupplementary)
+        
+        rateAppButton.setTitle(UserText.feedbackPositiveRate, for: .normal)
+        leaveFeedbackButton.setTitle(UserText.feedbackPositiveShare, for: .normal)
+        dismissButton.setTitle(UserText.feedbackPositiveNoThanks, for: .normal)
     }
     
     private func configureButtons() {

@@ -163,6 +163,22 @@
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
 
+"feedback.start.header" = "Let's get started!";
+"feedback.start.supplementary" = "How would you catagorize your feedback?";
+"feedback.start.footer" = "Your anonymous feedback is important to us";
+
+"feedback.positive.header" = "Awesome to hear!";
+"feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
+"feedback.positive.rate" = "Rate the App";
+"feedback.positive.submit" = "Share Feedback";
+"feedback.positive.noThanks" = "No thanks! I'm done";
+
+"feedback.form.submit" = "Submit Feedback";
+
+"feedback.positive.form.header" = "Share Feedback";
+"feedback.positive.form.supplementary" = "Are there any details you’d like to share with the team?";
+"feedback.positive.form.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible";
+
 "feedback.browserFeatures.entry" = "Browsing features are missing or frustrating";
 "feedback.browserFeatures.description" = "Browser feature issues";
 "feedback.browserFeatures.caption" = "Which browsing feature can we add or improve?";

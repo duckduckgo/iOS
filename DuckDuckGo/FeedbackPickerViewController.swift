@@ -69,16 +69,10 @@ class FeedbackPickerViewController: UITableViewController {
         }
         
         loadViewIfNeeded()
-        
         feedbackModel = model
         
-        let headerString = headerText.attributedText?.mutableCopy() as? NSMutableAttributedString
-        headerString?.mutableString.setString(FeedbackPresenter.title(for: category))
-        headerText.attributedText = headerString
-        
-        let supplementaryString = supplementaryText.attributedText?.mutableCopy() as? NSMutableAttributedString
-        supplementaryString?.mutableString.setString(FeedbackPresenter.subtitle(for: category))
-        supplementaryText.attributedText = supplementaryString
+        headerText.attributedText = headerText.attributedText?.withText(FeedbackPresenter.title(for: category))
+        supplementaryText.attributedText = supplementaryText.attributedText?.withText(FeedbackPresenter.subtitle(for: category))
         
         self.entries = entries
     }

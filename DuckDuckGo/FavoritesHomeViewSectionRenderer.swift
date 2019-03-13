@@ -46,10 +46,16 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets? {
-        
-        let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
-        let landscapeMargin = (controller.collectionView.frame.width - 400 + defaultMargin) / 2
-        let margin = isPortrait ? defaultMargin : landscapeMargin
+
+        let margin: CGFloat
+        if isPad {
+            margin = (controller.collectionView.frame.width - 400) / 2
+        } else {
+            let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
+            let landscapeMargin = (controller.collectionView.frame.width - 400 + defaultMargin) / 2
+            margin = isPortrait ? defaultMargin : landscapeMargin
+        }
+
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
     

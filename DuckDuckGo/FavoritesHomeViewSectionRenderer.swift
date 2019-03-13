@@ -22,6 +22,13 @@ import Core
 
 class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
+    struct Constants {
+        
+        static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
+        static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
+        
+    }
+    
     private lazy var bookmarksManager = BookmarksManager()
 
     private weak var controller: HomeViewController!
@@ -49,10 +56,10 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
 
         let margin: CGFloat
         if isPad {
-            margin = (controller.collectionView.frame.width - 400) / 2
+            margin = (controller.collectionView.frame.width - Constants.searchWidthPad) / 2
         } else {
             let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
-            let landscapeMargin = (controller.collectionView.frame.width - 400 + defaultMargin) / 2
+            let landscapeMargin = (controller.collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
             margin = isPortrait ? defaultMargin : landscapeMargin
         }
 

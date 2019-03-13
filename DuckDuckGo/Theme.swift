@@ -54,6 +54,9 @@ protocol Theme {
     var buttonTintColor: UIColor { get }
     var placeholderColor: UIColor { get }
     
+    var textFieldBackgroundColor: UIColor { get }
+    var textFieldFontColor: UIColor { get }
+    
     var homeRowPrimaryTextColor: UIColor { get }
     var homeRowSecondaryTextColor: UIColor { get }
     var homeRowBackgroundColor: UIColor { get }

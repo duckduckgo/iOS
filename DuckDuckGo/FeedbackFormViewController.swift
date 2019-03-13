@@ -193,7 +193,7 @@ extension FeedbackFormViewController: UITextViewDelegate {
         let font = UIFont.appFont(ofSize: Constants.inputFieldFontSize)
         
         let attributes = [ NSAttributedString.Key.font: font,
-                                      NSAttributedString.Key.foregroundColor: UIColor.black,
+                                      NSAttributedString.Key.foregroundColor: ThemeManager.shared.currentTheme.textFieldFontColor,
                                       NSAttributedString.Key.paragraphStyle: paragraphStyle]
         textView.typingAttributes = attributes
     }
@@ -212,8 +212,14 @@ extension FeedbackFormViewController: Themable {
         headerText.textColor = theme.feedbackPrimaryTextColor
         supplementaryText.textColor = theme.feedbackSecondaryTextColor
         
-        configureWebsiteField(with: websiteTextField.placeholder ?? "")
         messagePlaceholderText.textColor = ThemeManager.shared.currentTheme.placeholderColor
+        
+        messageTextView.backgroundColor = theme.textFieldBackgroundColor
+        messageTextView.keyboardAppearance = theme.keyboardAppearance
+        websiteTextField.backgroundColor = theme.textFieldBackgroundColor
+        websiteTextField.textColor = theme.textFieldFontColor
+        websiteTextField.keyboardAppearance = theme.keyboardAppearance
+        configureWebsiteField(with: websiteTextField.placeholder ?? "")
         
         submitFeedbackButton.setTitleColor(UIColor.white, for: .normal)
         submitFeedbackButton.tintColor = theme.buttonTintColor

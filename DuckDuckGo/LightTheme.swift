@@ -47,6 +47,9 @@ struct LightTheme: Theme {
     var buttonTintColor = UIColor.cornflowerBlue
     var placeholderColor = UIColor.greyish3
     
+    var textFieldBackgroundColor = UIColor.white
+    var textFieldFontColor = UIColor.nearlyBlackLight
+    
     var homeRowPrimaryTextColor = UIColor.nearlyBlackLight
     var homeRowSecondaryTextColor = UIColor.greyishBrown2
     var homeRowBackgroundColor = UIColor.nearlyWhiteLight

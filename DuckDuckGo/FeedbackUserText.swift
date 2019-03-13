@@ -35,7 +35,7 @@ extension UserText {
     public static let feedbackPositiveRate = NSLocalizedString("feedback.positive.rate",
                                                                comment: "Rate the App")
     public static let feedbackPositiveShare = NSLocalizedString("feedback.positive.submit",
-                                                                comment: "Share Feedback")
+                                                                comment: "Share Details")
     public static let feedbackPositiveNoThanks = NSLocalizedString("feedback.positive.noThanks",
                                                                    comment: "No thanks! I'm done")
     
@@ -43,11 +43,20 @@ extension UserText {
                                                              comment: "Submit Feedback")
     
     public static let feedbackPositiveFormHeader = NSLocalizedString("feedback.positive.form.header",
-                                                                     comment: "Share Feedback")
+                                                                     comment: "Share Details")
     public static let feedbackPositiveFormSupplementary = NSLocalizedString("feedback.positive.form.supplementary",
-                                                                            comment: "Are there any details you’d like to share with the team?")
+                                                                            comment: "Is there anything specific you’d like to share with the team?")
     public static let feedbackPositiveFormPlaceholder = NSLocalizedString("feedback.positive.form.placeholder",
-                                                                          comment: "How can the app be improved? What do you love? What's breaking? Please be as specific as possible")
+                                                                          comment: "What have you been enjoying?")
+    
+    public static let feedbackNegativeHeader = NSLocalizedString("feedback.negative.header",
+                                                                 comment: "We’re sorry to hear that.")
+    public static let feedbackNegativeSupplementary = NSLocalizedString("feedback.negative.supplementary",
+                                                                            comment: "What is your frustration most related to?")
+    public static let feedbackNegativeFormPlaceholder = NSLocalizedString("feedback.negative.form.placeholder",
+                                                                          comment: "Are there any specifics you’d like to include?")
+    public static let feedbackNegativeFormGenericPlaceholder = NSLocalizedString("feedback.negative.form.genericPlaceholder",
+                                                                        comment: "Please be as specific as possible")
     
     public static let browserFeatureIssuesEntry = NSLocalizedString("feedback.browserFeatures.entry",
                                                                     comment: "Browsing features are missing or frustrating")
@@ -76,11 +85,10 @@ extension UserText {
                                                                           comment: "Website loading issues")
     public static let websiteLoadingIssuesFormSupplementary = NSLocalizedString("feedback.websiteLoading.form.supplementary",
                                                                           comment: "Where are you seeing these issues?")
-    public static let websiteLoadingIssuesFormWebsitePlaceholder = NSLocalizedString("feedback.websiteLoading.form.websitePlaceholder",
+    public static let websiteLoadingIssuesFormURLPlaceholder = NSLocalizedString("feedback.websiteLoading.form.urlPlaceholder",
                                                                               comment: "Which website has issues?")
     public static let websiteLoadingIssuesFormPlaceholder = NSLocalizedString("feedback.websiteLoading.form.placeholder",
                                                                                 comment: "What content seems to be affected?")
-    
     
     public static let ddgSearchIssuesEntry = NSLocalizedString("feedback.ddgSearch.entry",
                                                                comment: "DuckDuckGo search isn't good enough")

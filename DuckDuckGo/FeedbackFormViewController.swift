@@ -83,16 +83,19 @@ class FeedbackFormViewController: UIViewController {
             
             if let subcategory = model.subcategory {
                 if subcategory.isGeneric {
-                    supplementaryText.text = UserText.feedbackFormCaption
+                    supplementaryText.setAttributedTextString(UserText.feedbackFormCaption)
+                    messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormGenericPlaceholder)
                 } else {
-                    supplementaryText.text = subcategory.userText
+                    supplementaryText.setAttributedTextString(subcategory.userText)
+                    messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormPlaceholder)
                 }
             } else {
-                supplementaryText.text = FeedbackPresenter.subtitle(for: category)
+                supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: category))
+                messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormGenericPlaceholder)
             }
         case .brokenWebsite:
-            supplementaryText.text = UserText.websiteLoadingIssuesFormSupplementary
-            websiteTextField.placeholder = UserText.websiteLoadingIssuesFormWebsitePlaceholder
+            supplementaryText.setAttributedTextString(UserText.websiteLoadingIssuesFormSupplementary)
+            websiteTextField.placeholder = UserText.websiteLoadingIssuesFormURLPlaceholder
             messagePlaceholderText.setAttributedTextString(UserText.websiteLoadingIssuesFormPlaceholder)
         }
     }

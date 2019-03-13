@@ -170,14 +170,19 @@
 "feedback.positive.header" = "Awesome to hear!";
 "feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
 "feedback.positive.rate" = "Rate the App";
-"feedback.positive.submit" = "Share Feedback";
+"feedback.positive.submit" = "Share Details";
 "feedback.positive.noThanks" = "No thanks! I'm done";
 
 "feedback.form.submit" = "Submit Feedback";
 
-"feedback.positive.form.header" = "Share Feedback";
+"feedback.positive.form.header" = "Share Details";
 "feedback.positive.form.supplementary" = "Are there any details you’d like to share with the team?";
-"feedback.positive.form.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible";
+"feedback.positive.form.placeholder" = "What have you been enjoying?";
+
+"feedback.negative.header" = "We’re sorry to hear that";
+"feedback.negative.supplementary" = "What is your frustration most related to?";
+"feedback.negative.form.placeholder" = "Are there any specifics you’d like to include?";
+"feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";
 
 "feedback.browserFeatures.entry" = "Browsing features are missing or frustrating";
 "feedback.browserFeatures.description" = "Browser feature issues";
@@ -193,7 +198,7 @@
 "feedback.websiteLoading.entry" = "Certain websites don't load correctly";
 "feedback.websiteLoading.description" = "Website loading issues";
 "feedback.websiteLoading.form.supplementary" = "Where are you seeing these issues?";
-"feedback.websiteLoading.form.websitePlaceholder" = "Which website has issues?";
+"feedback.websiteLoading.form.urlPlaceholder" = "Which website has issues?";
 "feedback.websiteLoading.form.placeholder" = "What content seems to be affected?";
 
 "feedback.ddgSearch.entry" = "DuckDuckGo search isn't good enough";

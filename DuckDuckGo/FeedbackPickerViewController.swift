@@ -61,6 +61,9 @@ class FeedbackPickerViewController: UITableViewController {
     
     func configure(with categories: [Feedback.Category]) {
         entries = categories
+        
+        headerText.setAttributedTextString(UserText.feedbackNegativeHeader)
+        supplementaryText.setAttributedTextString(UserText.feedbackNegativeSupplementary)
     }
     
     func configureFor(entries: [FeedbackEntry], with model: Feedback.Model) {
@@ -71,8 +74,8 @@ class FeedbackPickerViewController: UITableViewController {
         loadViewIfNeeded()
         feedbackModel = model
         
-        headerText.attributedText = headerText.attributedText?.withText(FeedbackPresenter.title(for: category))
-        supplementaryText.attributedText = supplementaryText.attributedText?.withText(FeedbackPresenter.subtitle(for: category))
+        headerText.setAttributedTextString(FeedbackPresenter.title(for: category))
+        supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: category))
         
         self.entries = entries
     }

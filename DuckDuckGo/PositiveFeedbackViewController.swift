@@ -26,7 +26,7 @@ class PositiveFeedbackViewController: UIViewController {
     
     @IBOutlet weak var rateAppButton: UIButton!
     @IBOutlet weak var leaveFeedbackButton: UIButton!
-    @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class PositiveFeedbackViewController: UIViewController {
         
         rateAppButton.setTitle(UserText.feedbackPositiveRate, for: .normal)
         leaveFeedbackButton.setTitle(UserText.feedbackPositiveShare, for: .normal)
-        dismissButton.setTitle(UserText.feedbackPositiveNoThanks, for: .normal)
+        doneButton.setTitle(UserText.feedbackPositiveNoThanks, for: .normal)
     }
     
     private func configureButtons() {
@@ -58,6 +58,10 @@ class PositiveFeedbackViewController: UIViewController {
     
     @IBAction func leaveFeedbackPressed() {
 //        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func doneButtonPressed() {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func dismissButtonPressed() {
@@ -88,7 +92,7 @@ extension PositiveFeedbackViewController: Themable {
         leaveFeedbackButton.setTitleColor(theme.buttonTintColor, for: .normal)
         leaveFeedbackButton.layer.borderColor = theme.buttonTintColor.cgColor
         
-        dismissButton.setTitleColor(theme.buttonTintColor, for: .normal)
+        doneButton.setTitleColor(theme.buttonTintColor, for: .normal)
     }
     
 }

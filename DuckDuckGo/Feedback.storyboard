@@ -263,7 +263,7 @@
             </objects>
             <point key="canvasLocation" x="-659" y="1690"/>
         </scene>
-        <!--Send feedback-->
+        <!--Send Feedback-->
         <scene sceneID="dQB-jL-THB">
             <objects>
                 <viewController id="xnZ-YI-mV7" customClass="FeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -350,7 +350,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ni1-Id-O8s"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Send feedback" largeTitleDisplayMode="never" id="D8A-B7-Dqu">
+                    <navigationItem key="navigationItem" title="Send Feedback" largeTitleDisplayMode="never" id="D8A-B7-Dqu">
                         <barButtonItem key="backBarButtonItem" title="Back" id="m0a-EJ-h27"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="edY-he-cfA">
                             <connections>
@@ -541,6 +541,7 @@
                         <viewLayoutGuide key="safeArea" id="L1i-GJ-pQb"/>
                     </view>
                     <navigationItem key="navigationItem" title="Send Feedback" id="Xb0-Zu-opM">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="h2M-TW-0QG"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="0Oe-Mv-RrO">
                             <connections>
                                 <action selector="dismissButtonPressed" destination="rAY-cv-mjl" id="2sg-5p-79P"/>
@@ -842,6 +843,7 @@
                         <viewLayoutGuide key="safeArea" id="7yu-Cm-W5q"/>
                     </view>
                     <navigationItem key="navigationItem" title="Send Feedback" id="oHj-cX-c6z">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="epz-Ta-KQ7"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="VJT-0b-JSq">
                             <connections>
                                 <action selector="cancelButtonPressed" destination="Rvx-dM-etJ" id="h1Z-1J-POU"/>

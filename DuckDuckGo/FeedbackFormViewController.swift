@@ -157,15 +157,22 @@ class FeedbackFormViewController: UIViewController {
         scrollView.scrollIndicatorInsets = contentInsets
         
         guard messageTextView.isFirstResponder else { return }
-        var rect = self.view.frame
-        rect.size.height -= keyboardSize.height
         
-        let messageViewFrame = messageTextView.frame
-        let messageViewBottom = CGPoint(x: messageViewFrame.origin.x,
-                                        y: messageViewFrame.origin.y + messageViewFrame.size.height)
-        if !rect.contains(messageViewBottom) {
-            scrollView.scrollRectToVisible(messageTextView.frame, animated: true)
-        }
+        var visibleRect = scrollView.frame
+        visibleRect.size.height -= keyboardSize.height
+        
+        // Area that is the most relevant to the user typing the message
+        let upperLeftInteractionArea = messageTextView.frame.origin
+        var lowerRightInteractionArea = submitFeedbackButton.frame.origin
+        lowerRightInteractionArea.x += submitFeedbackButton.frame.size.width
+        lowerRightInteractionArea.y += submitFeedbackButton.frame.size.height + 20
+        
+        let scrollToRect = CGRect(x: upperLeftInteractionArea.x,
+                                  y: upperLeftInteractionArea.y,
+                                  width: lowerRightInteractionArea.x - upperLeftInteractionArea.x,
+                                  height: min(lowerRightInteractionArea.y - upperLeftInteractionArea.y, visibleRect.size.height))
+
+        scrollView.scrollRectToVisible(scrollToRect, animated: true)
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {

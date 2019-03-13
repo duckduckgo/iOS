@@ -27,8 +27,14 @@ public protocol StatisticsStore: class {
     var searchRetentionAtb: String? { get set }
     var appRetentionAtb: String? { get set }
     var variant: String? { get set }
-    var atbWithVariant: String? { get }
     
     var httpsUpgradesTotal: Int { get set }
     var httpsUpgradesFailures: Int { get set }
+}
+
+extension StatisticsStore {
+    public var atbWithVariant: String? {
+        guard let atb = atb else { return nil }
+        return atb + (variant ?? "")
+    }
 }

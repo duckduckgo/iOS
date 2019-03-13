@@ -93,11 +93,6 @@ public class StatisticsUserDefaults: StatisticsStore {
             userDefaults?.setValue(newValue, forKey: Keys.variant)
         }
     }
-
-    public var atbWithVariant: String? {
-        guard let atb = atb else { return nil }
-        return "\(atb)\(variant ?? "")"
-    }
     
     public var httpsUpgradesTotal: Int {
         get {

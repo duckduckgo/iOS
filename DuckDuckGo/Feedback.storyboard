@@ -112,7 +112,7 @@
                                                     <outletCollection property="gestureRecognizers" destination="mo1-It-jF6" appends="YES" id="i8G-nq-ZGt"/>
                                                 </connections>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which website is broken?" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Vcg-ur-bnB">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which website is broken?" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Vcg-ur-bnB" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="223" width="318" height="38"/>
                                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -124,6 +124,9 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                        <real key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
@@ -145,10 +148,17 @@
                                                     <outlet property="delegate" destination="LPY-wu-U34" id="ibT-lp-ZzS"/>
                                                 </connections>
                                             </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which content or functionality is breaking?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3D-p0-uDK">
-                                                <rect key="frame" x="22" y="272" width="306" height="14"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                                <color key="textColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3D-p0-uDK">
+                                                <rect key="frame" x="23" y="270" width="305" height="38"/>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="Which website content or functionality is breaking? Please be as specific as possible">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <font key="NSFont" size="14" name="ProximaNova-Regular"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3500000000000001" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pu-MH-Czk">
@@ -174,12 +184,12 @@
                                         <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="0pu-MH-Czk" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" constant="-32" id="2DB-gj-g10"/>
-                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="top" constant="5" id="50d-oo-uzz"/>
+                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="top" constant="3" id="50d-oo-uzz"/>
                                             <constraint firstItem="gSK-zf-19O" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="bottom" constant="28" id="BUn-DY-9lw"/>
                                             <constraint firstItem="2Mx-Am-aGe" firstAttribute="leading" secondItem="gSK-zf-19O" secondAttribute="trailing" constant="8" id="ESI-nY-45B"/>
                                             <constraint firstItem="qjr-ca-FDA" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" id="G20-hv-7eo"/>
                                             <constraint firstItem="2Mx-Am-aGe" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="bottom" constant="20" id="IaN-bH-LzP"/>
-                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="leading" secondItem="FyA-HP-yKI" secondAttribute="leading" constant="6" id="KnY-0D-ihu"/>
+                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="leading" secondItem="FyA-HP-yKI" secondAttribute="leading" constant="7" id="KnY-0D-ihu"/>
                                             <constraint firstItem="EJ2-Ly-fTI" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" constant="8" id="Kze-aw-ydI"/>
                                             <constraint firstItem="0pu-MH-Czk" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="bottom" constant="20" id="OkU-db-W1M"/>
                                             <constraint firstItem="qjr-ca-FDA" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" id="P1e-8F-oXp"/>
@@ -262,7 +272,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yS1-TL-7Xx">
-                                <rect key="frame" x="132" y="89" width="150.33333333333337" height="20"/>
+                                <rect key="frame" x="132" y="89" width="150.33333333333337" height="23.333333333333329"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Let's get started!">
                                         <attributes>
@@ -275,7 +285,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Wp-6Y-fZj">
-                                <rect key="frame" x="67" y="129" width="280" height="15"/>
+                                <rect key="frame" x="63.666666666666657" y="132.33333333333334" width="286.66666666666674" height="17.666666666666657"/>
                                 <attributedString key="attributedText">
                                     <fragment content="How would you catagorize your feedback?">
                                         <attributes>
@@ -287,7 +297,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sVu-v0-c6J">
-                                <rect key="frame" x="93" y="177" width="228" height="100"/>
+                                <rect key="frame" x="93" y="183" width="228" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ze4-T7-OFN">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -315,7 +325,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sir-qo-Tef">
-                                <rect key="frame" x="71" y="697" width="272.33333333333331" height="14"/>
+                                <rect key="frame" x="67" y="694.66666666666663" width="280" height="16.333333333333371"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Your anonymous feedback is important to us">
                                         <attributes>
@@ -376,17 +386,17 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VKd-6G-N6H" userLabel="Header Container">
-                                                <rect key="frame" x="66.666666666666686" y="10" width="281" height="190"/>
+                                                <rect key="frame" x="64" y="10" width="286" height="190"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="happyFace" translatesAutoresizingMaskIntoConstraints="NO" id="eqG-8P-M9E">
-                                                        <rect key="frame" x="90.333333333333314" y="20" width="100" height="60"/>
+                                                        <rect key="frame" x="93" y="20" width="100" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="100" id="aLK-4h-fCG"/>
                                                             <constraint firstAttribute="height" constant="60" id="j7Q-89-xeA"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7v-x2-wc1">
-                                                        <rect key="frame" x="58.666666666666643" y="99" width="163.33333333333337" height="20"/>
+                                                        <rect key="frame" x="62.333333333333329" y="99" width="161.33333333333337" height="23.333333333333329"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Awesome to hear!">
                                                                 <attributes>
@@ -399,7 +409,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTz-AA-F85">
-                                                        <rect key="frame" x="0.0" y="130" width="281" height="33"/>
+                                                        <rect key="frame" x="0.0" y="133.33333333333334" width="286" height="38"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Please share the love by rating the app on the App Store.">
                                                                 <attributes>
@@ -570,7 +580,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vDx-jp-OoH">
-                                    <rect key="frame" x="100.66666666666669" y="98" width="213" height="20"/>
+                                    <rect key="frame" x="102.33333333333333" y="98" width="209.33333333333337" height="23.333333333333329"/>
                                     <attributedString key="attributedText">
                                         <fragment content="We’re sorry to hear that">
                                             <attributes>
@@ -583,7 +593,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mR-xp-efA">
-                                    <rect key="frame" x="76.666666666666657" y="129" width="260.66666666666674" height="21"/>
+                                    <rect key="frame" x="72.333333333333343" y="132.33333333333334" width="269.66666666666663" height="17.666666666666657"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="fpG-MC-SHp"/>
                                     </constraints>
@@ -760,7 +770,7 @@
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJW-tG-IzU">
-                                                <rect key="frame" x="43" y="279" width="328" height="38"/>
+                                                <rect key="frame" x="45" y="277" width="326" height="38"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="How can the app be improved? What do you love? What's breaking? Please be as specific as possible.">
                                                         <attributes>
@@ -772,7 +782,7 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which website is broken?" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-NM-j3b">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Which website is broken?" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="TMj-NM-j3b" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
                                                 <rect key="frame" x="37" y="213" width="340" height="38"/>
                                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -784,6 +794,9 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                        <real key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
@@ -800,8 +813,8 @@
                                             <constraint firstItem="TMj-NM-j3b" firstAttribute="top" secondItem="H8P-lM-IF2" secondAttribute="bottom" constant="13" id="EAO-VL-S44"/>
                                             <constraint firstItem="H8P-lM-IF2" firstAttribute="centerX" secondItem="4eZ-cg-8pJ" secondAttribute="centerX" id="R3v-fr-Mgf"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="top" secondItem="H8P-lM-IF2" secondAttribute="bottom" priority="750" constant="13" id="T2T-Hq-Z0M"/>
-                                            <constraint firstItem="sJW-tG-IzU" firstAttribute="leading" secondItem="iVe-E1-jAH" secondAttribute="leading" constant="6" id="XKc-Dq-ZbF"/>
-                                            <constraint firstItem="sJW-tG-IzU" firstAttribute="top" secondItem="iVe-E1-jAH" secondAttribute="top" constant="5" id="bv7-m0-QHc"/>
+                                            <constraint firstItem="sJW-tG-IzU" firstAttribute="leading" secondItem="iVe-E1-jAH" secondAttribute="leading" constant="8" id="XKc-Dq-ZbF"/>
+                                            <constraint firstItem="sJW-tG-IzU" firstAttribute="top" secondItem="iVe-E1-jAH" secondAttribute="top" constant="3" id="bv7-m0-QHc"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="leading" secondItem="4eZ-cg-8pJ" secondAttribute="leading" priority="750" constant="20" id="dBQ-Ek-wWZ"/>
                                             <constraint firstItem="H8P-lM-IF2" firstAttribute="top" secondItem="4eZ-cg-8pJ" secondAttribute="top" constant="10" id="f60-WS-ixn"/>
                                             <constraint firstItem="TMj-NM-j3b" firstAttribute="width" secondItem="iVe-E1-jAH" secondAttribute="width" id="qUG-vf-UG6"/>

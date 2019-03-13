@@ -64,14 +64,18 @@ class SiteFeedbackViewController: UIViewController {
 
     private func loadModel() {
         brokenSiteSwitch.isOn = feedbackModel.isBrokenSite
-        messageTextView.text = feedbackModel.message
-        urlTextField.text = feedbackModel.url
+        if let message = feedbackModel.message {
+            messageTextView.attributedText = messageTextView.attributedText?.withText(message)
+        }
+        
+        if let url = feedbackModel.url {
+            urlTextField.attributedText = urlTextField.attributedText?.withText(url)
+        }
     }
 
     private func configureViews() {
         urlTextField.layer.borderWidth = 1
         urlTextField.layer.borderColor = UIColor.mercury.cgColor
-        urlTextField.layer.sublayerTransform = CATransform3DMakeTranslation(ViewConstants.urlTextPadding, 0, 0)
         messageTextView.layer.borderWidth = 1
         messageTextView.layer.borderColor = UIColor.mercury.cgColor
     }
@@ -152,8 +156,7 @@ class SiteFeedbackViewController: UIViewController {
     }
 
     private func updateMessagePlaceholder(withText text: String) {
-        let attributes = messagePlaceholderText!.attributedText!.attributes(at: 0, effectiveRange: nil)
-        messagePlaceholderText.attributedText = NSAttributedString(string: text, attributes: attributes)
+        messagePlaceholderText.setAttributedTextString(text)
     }
 
     @IBAction func onUrlChanged(_ sender: UITextField) {
@@ -186,6 +189,19 @@ class SiteFeedbackViewController: UIViewController {
 }
 
 extension SiteFeedbackViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.left
+        paragraphStyle.firstLineHeadIndent = 3
+        
+        let font = UIFont.appFont(ofSize: 14)
+        
+        let attributes = [ NSAttributedString.Key.font: font,
+                           NSAttributedString.Key.foregroundColor: UIColor.black,
+                           NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        textView.typingAttributes = attributes
+    }
 
     func textViewDidChange(_ textView: UITextView) {
         messagePlaceholderText.isHidden = !textView.text.isEmpty

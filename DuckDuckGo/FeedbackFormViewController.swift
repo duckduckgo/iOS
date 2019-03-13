@@ -21,6 +21,10 @@ import UIKit
 
 class FeedbackFormViewController: UIViewController {
     
+    private struct Constants {
+        static let inputFieldFontSize: CGFloat = 14
+    }
+    
     @IBOutlet var headerToMessageView: NSLayoutConstraint!
     @IBOutlet var websiteFieldToMessageView: NSLayoutConstraint!
     
@@ -95,7 +99,7 @@ class FeedbackFormViewController: UIViewController {
             }
         case .brokenWebsite:
             supplementaryText.setAttributedTextString(UserText.websiteLoadingIssuesFormSupplementary)
-            websiteTextField.placeholder = UserText.websiteLoadingIssuesFormURLPlaceholder
+            configureWebsiteField(with: UserText.websiteLoadingIssuesFormURLPlaceholder)
             messagePlaceholderText.setAttributedTextString(UserText.websiteLoadingIssuesFormPlaceholder)
         }
     }
@@ -106,6 +110,15 @@ class FeedbackFormViewController: UIViewController {
         headerToMessageView.isActive = true
         
         view.layoutIfNeeded()
+    }
+    
+    private func configureWebsiteField(with placeholder: String) {
+        let font = UIFont.appFont(ofSize: Constants.inputFieldFontSize)
+        let placeholderAttributes = [ NSAttributedString.Key.font: font,
+                           NSAttributedString.Key.foregroundColor: ThemeManager.shared.currentTheme.placeholderColor]
+
+        websiteTextField.attributedPlaceholder = NSAttributedString(string: placeholder,
+                                                                    attributes: placeholderAttributes)
     }
     
     @IBAction func submitFeedbackPressed() {
@@ -164,6 +177,19 @@ class FeedbackFormViewController: UIViewController {
 
 extension FeedbackFormViewController: UITextViewDelegate {
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = NSTextAlignment.left
+        paragraphStyle.firstLineHeadIndent = 3
+        
+        let font = UIFont.appFont(ofSize: Constants.inputFieldFontSize)
+        
+        let attributes = [ NSAttributedString.Key.font: font,
+                                      NSAttributedString.Key.foregroundColor: UIColor.black,
+                                      NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        textView.typingAttributes = attributes
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
         messagePlaceholderText.isHidden = !textView.text.isEmpty
         refreshSubmitFeedbackButton()
@@ -177,6 +203,9 @@ extension FeedbackFormViewController: Themable {
         
         headerText.textColor = theme.feedbackPrimaryTextColor
         supplementaryText.textColor = theme.feedbackSecondaryTextColor
+        
+        configureWebsiteField(with: websiteTextField.placeholder ?? "")
+        messagePlaceholderText.textColor = ThemeManager.shared.currentTheme.placeholderColor
         
         submitFeedbackButton.setTitleColor(UIColor.white, for: .normal)
         submitFeedbackButton.tintColor = theme.buttonTintColor

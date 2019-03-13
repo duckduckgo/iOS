@@ -52,6 +52,7 @@ protocol Theme {
     var tableHeaderTextColor: UIColor { get }
     
     var buttonTintColor: UIColor { get }
+    var placeholderColor: UIColor { get }
     
     var homeRowPrimaryTextColor: UIColor { get }
     var homeRowSecondaryTextColor: UIColor { get }

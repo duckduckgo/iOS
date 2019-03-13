@@ -45,6 +45,7 @@ struct DarkTheme: Theme {
     var tableHeaderTextColor = UIColor.lightGreyish
     
     var buttonTintColor = UIColor.cornflowerBlue
+    var placeholderColor = UIColor.greyish
     
     var homeRowPrimaryTextColor = UIColor.white
     var homeRowSecondaryTextColor = UIColor.lightMercury

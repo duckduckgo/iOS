@@ -149,7 +149,7 @@
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3D-p0-uDK">
-                                                <rect key="frame" x="23" y="270" width="305" height="38"/>
+                                                <rect key="frame" x="23" y="275" width="305" height="38"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Which website content or functionality is breaking? Please be as specific as possible">
                                                         <attributes>
@@ -184,7 +184,7 @@
                                         <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="0pu-MH-Czk" firstAttribute="width" secondItem="t35-hd-tUe" secondAttribute="width" constant="-32" id="2DB-gj-g10"/>
-                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="top" constant="3" id="50d-oo-uzz"/>
+                                            <constraint firstItem="m3D-p0-uDK" firstAttribute="top" secondItem="FyA-HP-yKI" secondAttribute="top" constant="8" id="50d-oo-uzz"/>
                                             <constraint firstItem="gSK-zf-19O" firstAttribute="top" secondItem="qjr-ca-FDA" secondAttribute="bottom" constant="28" id="BUn-DY-9lw"/>
                                             <constraint firstItem="2Mx-Am-aGe" firstAttribute="leading" secondItem="gSK-zf-19O" secondAttribute="trailing" constant="8" id="ESI-nY-45B"/>
                                             <constraint firstItem="qjr-ca-FDA" firstAttribute="top" secondItem="t35-hd-tUe" secondAttribute="top" id="G20-hv-7eo"/>
@@ -705,7 +705,7 @@
                                                         </attributedString>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLS-dA-AJv">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLS-dA-AJv">
                                                         <rect key="frame" x="0.0" y="130" width="295.33333333333331" height="33"/>
                                                         <attributedString key="attributedText">
                                                             <fragment content="Are there any details you’d like to share with the team?">
@@ -770,7 +770,7 @@
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJW-tG-IzU">
-                                                <rect key="frame" x="45" y="277" width="326" height="38"/>
+                                                <rect key="frame" x="45" y="282" width="326" height="38"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="How can the app be improved? What do you love? What's breaking? Please be as specific as possible.">
                                                         <attributes>
@@ -814,7 +814,7 @@
                                             <constraint firstItem="H8P-lM-IF2" firstAttribute="centerX" secondItem="4eZ-cg-8pJ" secondAttribute="centerX" id="R3v-fr-Mgf"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="top" secondItem="H8P-lM-IF2" secondAttribute="bottom" priority="750" constant="13" id="T2T-Hq-Z0M"/>
                                             <constraint firstItem="sJW-tG-IzU" firstAttribute="leading" secondItem="iVe-E1-jAH" secondAttribute="leading" constant="8" id="XKc-Dq-ZbF"/>
-                                            <constraint firstItem="sJW-tG-IzU" firstAttribute="top" secondItem="iVe-E1-jAH" secondAttribute="top" constant="3" id="bv7-m0-QHc"/>
+                                            <constraint firstItem="sJW-tG-IzU" firstAttribute="top" secondItem="iVe-E1-jAH" secondAttribute="top" constant="8" id="bv7-m0-QHc"/>
                                             <constraint firstItem="iVe-E1-jAH" firstAttribute="leading" secondItem="4eZ-cg-8pJ" secondAttribute="leading" priority="750" constant="20" id="dBQ-Ek-wWZ"/>
                                             <constraint firstItem="H8P-lM-IF2" firstAttribute="top" secondItem="4eZ-cg-8pJ" secondAttribute="top" constant="10" id="f60-WS-ixn"/>
                                             <constraint firstItem="TMj-NM-j3b" firstAttribute="width" secondItem="iVe-E1-jAH" secondAttribute="width" id="qUG-vf-UG6"/>

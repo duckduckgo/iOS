@@ -181,6 +181,7 @@ extension FeedbackFormViewController: UITextViewDelegate {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.left
         paragraphStyle.firstLineHeadIndent = 3
+        paragraphStyle.lineHeightMultiple = 1.35
         
         let font = UIFont.appFont(ofSize: Constants.inputFieldFontSize)
         

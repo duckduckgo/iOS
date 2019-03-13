@@ -399,8 +399,8 @@ class MainViewController: UIViewController {
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {
-            allowContentUnderflow = false
             let controller = AutocompleteViewController.loadFromStoryboard()
+            controller.shouldOffsetY = allowContentUnderflow
             controller.delegate = self
             addChild(controller)
             containerView.addSubview(controller.view)

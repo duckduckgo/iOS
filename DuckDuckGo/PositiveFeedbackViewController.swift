@@ -51,7 +51,7 @@ class PositiveFeedbackViewController: UIViewController {
     }
     
     @IBAction func rateAppButtonPressed() {
-        let urlStr = "itms://itunes.apple.com/us/app/duckduckgo-privacy-browser/id663592361"
+        let urlStr = "itms-apps://itunes.apple.com/us/app/duckduckgo-privacy-browser/id663592361?action=write-review"
 
         UIApplication.shared.open(URL(string: urlStr)!)
     }

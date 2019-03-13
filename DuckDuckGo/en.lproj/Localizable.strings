@@ -185,7 +185,7 @@
 "feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";
 
 "feedback.browserFeatures.entry" = "Browsing features are missing or frustrating";
-"feedback.browserFeatures.description" = "Browser feature issues";
+"feedback.browserFeatures.description" = "Browser Feature Issues";
 "feedback.browserFeatures.caption" = "Which browsing feature can we add or improve?";
 "feedback.browserFeatures.navigation" = "Navigating forward, backward, and/or refreshing";
 "feedback.browserFeatures.tabs" = "Creating and managing tabs";
@@ -196,13 +196,13 @@
 "feedback.browserFeatures.other" = "None of these";
 
 "feedback.websiteLoading.entry" = "Certain websites don't load correctly";
-"feedback.websiteLoading.description" = "Website loading issues";
+"feedback.websiteLoading.description" = "Website Loading Issues";
 "feedback.websiteLoading.form.supplementary" = "Where are you seeing these issues?";
 "feedback.websiteLoading.form.urlPlaceholder" = "Which website has issues?";
 "feedback.websiteLoading.form.placeholder" = "What content seems to be affected?";
 
 "feedback.ddgSearch.entry" = "DuckDuckGo search isn't good enough";
-"feedback.ddgSearch.description" = "DuckDuckGo search issues";
+"feedback.ddgSearch.description" = "DuckDuckGo Search Issues";
 "feedback.ddgSearch.caption" = "Which search feature can we add or improve?";
 "feedback.ddgSearch.technical" = "Programming/technical search";
 "feedback.ddgSearch.layout" = "The layout should be more like Google";
@@ -212,7 +212,7 @@
 "feedback.ddgSearch.other" = "None of these";
 
 "feedback.customization.entry" = "There aren't enough ways to customize the app";
-"feedback.customization.description" = "Customization issues";
+"feedback.customization.description" = "Customization Issues";
 "feedback.customization.caption" = "Which customization option can we add or improve?";
 "feedback.customization.homeScreen" = "The home screen configuration";
 "feedback.customization.tabs" = "How tabs are displayed";
@@ -223,7 +223,7 @@
 "feedback.customization.other" = "None of these";
 
 "feedback.performance.entry" = "The app is slow, buggy, or crashes";
-"feedback.performance.description" = "Performance issues";
+"feedback.performance.description" = "Performance Issues";
 "feedback.performance.caption" = "Which issue are you experiencing?";
 "feedback.performance.slowLoading" = "Web pages or search results load slowly";
 "feedback.performance.crashes" = "The app crashes or freezes";
@@ -231,7 +231,7 @@
 "feedback.performance.other" = "None of these";
 
 "feedback.other.entry" = "None of these";
-"feedback.other.description" = "Other issues";
+"feedback.other.description" = "Other Issues";
 
 "feedback.form.caption" = "Please tell us what we can improve";
 

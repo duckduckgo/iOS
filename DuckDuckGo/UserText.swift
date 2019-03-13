@@ -30,7 +30,9 @@ public struct UserText {
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or enter address")
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Session cleared")
     public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", comment: "Bookmark saved")
+    public static let webBookmarkAlreadySaved = NSLocalizedString("web.url.save.bookmark.exists", comment: "Bookmark already saved")
     public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", comment: "Favorite saved")
+    public static let webSaveBookmarkNone = NSLocalizedString("web.url.save.bookmark.none", comment: "No webpage to bookmark")
 
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
@@ -169,5 +171,14 @@ public struct UserText {
     public static let keyCommandFire = NSLocalizedString("keyCommandFire", comment: "Clear all tabs and data")
     public static let keyCommandClose = NSLocalizedString("keyCommandClose", comment: "Close")
     public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", comment: "Select")
+
+    public static let contextualOnboardingSearchPrivately = NSLocalizedString("contextualOnboardingSearchPrivately", comment: "Searching with DuckDuckGo means your searches are never tracked. Ever.")
+    public static let contextualOnboardingCustomize = NSLocalizedString("contextualOnboardingCustomize", comment: "Pick a theme to make the DuckDuckGo Privacy browser yours.")
+    public static let contextualOnboardingPrivacyGrade = NSLocalizedString("contextualOnboardingPrivacyGrade", comment: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.")
+    public static let contextualOnboardingFireButton = NSLocalizedString("contextualOnboardingFireButton", comment: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.")
+
+    public static let bookmarkAllTabsNotFound = NSLocalizedString("bookmarkAll.tabs.notfound", comment: "No open tabs found to bookmark")
+    public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", comment: "All open tabs are bookmarked")
+    public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", comment: "Failed to bookmark %lu out of %lu tabs")
 
 }

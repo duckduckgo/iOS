@@ -72,12 +72,12 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
                                     <barButtonItem image="Bookmarks" id="M7u-mw-fly">
-                                        <connections>
-                                            <action selector="onTabBarBookmarksPressed" destination="C1X-Zd-UbA" id="vSg-Ua-w22"/>
-                                        </connections>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Bookmarks"/>
+                                        </userDefinedRuntimeAttributes>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
-                                    <barButtonItem image="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
+                                    <barButtonItem title="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
@@ -244,6 +244,7 @@
                     <navigationItem key="navigationItem" id="4Us-57-SWd"/>
                     <connections>
                         <outlet property="backButton" destination="Kc6-IR-lKx" id="eo5-dT-718"/>
+                        <outlet property="bookmarksButton" destination="M7u-mw-fly" id="Uq1-c0-osl"/>
                         <outlet property="containerView" destination="Ylj-oJ-fqD" id="euu-c7-IYR"/>
                         <outlet property="containerViewTop" destination="h5k-Sy-jb2" id="def-Jc-VHg"/>
                         <outlet property="customNavigationBar" destination="nQT-PV-ULm" id="OGt-AV-tQb"/>
@@ -259,7 +260,6 @@
                         <outlet property="tabsButton" destination="K7o-WL-SC5" id="K5w-s3-8x3"/>
                         <outlet property="toolbar" destination="Krm-hA-s9u" id="JHv-PZ-ILs"/>
                         <outlet property="toolbarBottom" destination="UsQ-i7-pjr" id="nwd-gZ-QEh"/>
-                        <segue destination="454-th-ep1" kind="presentation" identifier="Onboarding" modalTransitionStyle="flipHorizontal" id="uIC-hz-aFs"/>
                         <segue destination="Lcg-P1-w26" kind="presentation" identifier="instructions" modalPresentationStyle="overCurrentContext" id="vjb-jn-qZe"/>
                         <segue destination="xj8-BF-A9c" kind="presentation" identifier="Settings" modalPresentationStyle="overCurrentContext" id="URp-Fv-PV5"/>
                         <segue destination="Idd-9P-bE6" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="overFullScreen" id="Igb-19-s0y"/>
@@ -284,15 +284,7 @@
                 <viewControllerPlaceholder storyboardName="HomeRow" id="Lcg-P1-w26" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymt-iC-XRD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="858" y="-100"/>
-        </scene>
-        <!--Onboarding-->
-        <scene sceneID="GLv-Ro-TT8">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Onboarding" id="454-th-ep1" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="q4G-t7-0CS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="859" y="99"/>
+            <point key="canvasLocation" x="826" y="-7"/>
         </scene>
         <!--Settings-->
         <scene sceneID="bSV-mo-fgW">
@@ -325,7 +317,6 @@
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
-        <image name="Tabs" width="24" height="24"/>
         <image name="find-next-dark" width="19" height="20"/>
         <image name="find-previous-dark" width="19" height="20"/>
     </resources>

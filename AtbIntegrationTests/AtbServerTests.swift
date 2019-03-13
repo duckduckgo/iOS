@@ -92,6 +92,8 @@ class MockStatisticsStore: StatisticsStore {
     
     var hasInstallStatistics: Bool = false
     
+    var installDate: Date?
+    
     var atb: String?
     
     var appRetentionAtb: String?

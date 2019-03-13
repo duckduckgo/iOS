@@ -22,6 +22,7 @@ import Foundation
 public protocol StatisticsStore: class {
 
     var hasInstallStatistics: Bool { get }
+    var installDate: Date? { get set }
     var atb: String? { get set }
     var searchRetentionAtb: String? { get set }
     var appRetentionAtb: String? { get set }

@@ -22,23 +22,62 @@ import XCTest
 @testable import DuckDuckGo
 
 class HomeRowCTATests: XCTestCase {
+
+    var variantManager = MockVariantManager()
+    var tipsStorage = MockContextualTipsStorage()
+    var storage = MockHomeRowOnboardingStorage(dismissed: false)
+    var tutorialSettings = MockTutorialSettings()
+
+    func testWhenOnboardingHasNotBeenShownThenShouldNotShow() {
+
+        tutorialSettings.hasSeenOnboarding = false
+        variantManager.isSupportedReturns = true
+        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
+
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        XCTAssertFalse(feature.shouldShow())
+
+    }
+
+    func testWhenContextualOnboardingFeatureEnabledAndAllHomeScreenTipsShownThenCanShowCTA() {
+        
+        tutorialSettings.hasSeenOnboarding = true
+        variantManager.isSupportedReturns = true
+        tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
+
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        XCTAssertTrue(feature.shouldShow())
+        
+    }
     
+    func testWhenContextualOnboardingFeatureEnabledAndNotAllHomeScreenTipsShownThenDontShowCTA() {
+        
+        tutorialSettings.hasSeenOnboarding = true
+        variantManager.isSupportedReturns = true
+        tipsStorage.nextHomeScreenTip = 0
+        
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        XCTAssertFalse(feature.shouldShow())
+
+    }
+
     func testWhenDismissedThenDismissedStateStored() {
-        let storage = MockHomeRowOnboardingStorage(dismissed: false)
-        let feature = HomeRowCTA(storage: storage)
+        tutorialSettings.hasSeenOnboarding = true
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
         feature.dismissed()
         XCTAssertTrue(storage.dismissed)
     }
 
     func testWhenDismissedThenShouldNotShow() {
-        let storage = MockHomeRowOnboardingStorage(dismissed: true)
-        let feature = HomeRowCTA(storage: storage)
+        tutorialSettings.hasSeenOnboarding = true
+        storage.dismissed = true
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
         XCTAssertFalse(feature.shouldShow())
     }
 
     func testWhenNotDismissedThenShouldShow() {
-        let storage = MockHomeRowOnboardingStorage(dismissed: false)
-        let feature = HomeRowCTA(storage: storage)
+        tutorialSettings.hasSeenOnboarding = true
+        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
         XCTAssertTrue(feature.shouldShow())
     }
     

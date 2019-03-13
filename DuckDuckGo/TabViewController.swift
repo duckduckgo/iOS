@@ -71,6 +71,7 @@ class TabViewController: UIViewController {
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     private var tearDownCount = 0
+    private var tips: BrowsingTips?
     
     public var url: URL? {
         didSet {
@@ -138,6 +139,7 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
+        tips = BrowsingTips(delegate: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -683,6 +685,7 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
+        tips?.onFinishedLoading(url: url, error: isError)
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

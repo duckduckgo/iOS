@@ -67,6 +67,7 @@ public class StatisticsLoader {
                 completion()
                 return
             }
+            self.statisticsStore.installDate = Date()
             self.statisticsStore.atb = atb.version
             completion()
         }

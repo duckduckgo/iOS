@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import EasyTipView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,8 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+            return true
         }
+        
+        installTouchWindow()
 
+        EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
@@ -51,14 +56,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded()
         HomePageConfiguration.installNewUserFavorites()
-        
-        if !testing {
-            autoClear = AutoClear(worker: mainViewController!)
+
+        if let main = mainViewController {
+            autoClear = AutoClear(worker: main)
             autoClear?.applicationDidLaunch()
         }
 
         appIsLaunching = true
         return true
+    }
+
+    func installTouchWindow() {
+        let window = TouchWindow()
+        window.makeKey()
+        window.rootViewController = self.window?.rootViewController
+        self.window = window
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -68,7 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StatisticsLoader.shared.refreshAppRetentionAtb()
             Pixel.fire(pixel: .appLaunch)
         }
-        startOnboardingFlowIfNotSeenBefore()
         
         if appIsLaunching {
             appIsLaunching = false
@@ -182,14 +193,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func removeOverlay() {
         window?.makeKeyAndVisible()
         overlayWindow = nil
-    }
-
-    private func startOnboardingFlowIfNotSeenBefore() {
-        guard let main = mainViewController else { return }
-        let settings = TutorialSettings()
-        if !settings.hasSeenOnboarding {
-            main.showOnboarding()
-        }
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

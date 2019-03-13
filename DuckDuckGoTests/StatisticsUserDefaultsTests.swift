@@ -37,6 +37,10 @@ class StatisticsUserDefaultsTests: XCTestCase {
         testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }
 
+    func testWhenNoInstallDateSetThenReturnsNil() {
+        XCTAssertNil(testee.installDate)
+    }
+
     func testWhenAtbAndVariantThenAtbWithVariantReturnsAtbWithVariant() {
         testee.atb = Constants.atb
         testee.variant = Constants.variant

@@ -21,6 +21,7 @@
 
 class MockStatisticsStore: StatisticsStore {
 
+    var installDate: Date?
     var atb: String?
     var searchRetentionAtb: String?
     var appRetentionAtb: String?

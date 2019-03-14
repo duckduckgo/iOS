@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         
-        // installTouchWindow()
+        installTouchWindow()
 
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()

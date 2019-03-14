@@ -38,6 +38,10 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private weak var controller: HomeViewController!
     private weak var cell: CenteredSearchHomeCell?
 
+    private var heightRatio: CGFloat {
+        return fixed ? 1.875 : 2.0
+    }
+    
     private var indexPath: IndexPath?
     
     private let fixed: Bool
@@ -54,7 +58,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
 
-        controller.collectionView.isScrollEnabled = !fixed
+        // controller.collectionView.isScrollEnabled = !fixed
 
         controller.allowContentUnderflow = true
         controller.searchHeaderTransition = 0.0
@@ -89,15 +93,15 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            let height = (collectionView.frame.height / 2) - searchCenterOffset
+            let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
             let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY: CGFloat = Constants.scrollUpAdjustment
-        
-        let targetHeight = (scrollView.frame.height / 2) - searchCenterOffset
+
+        let targetHeight = (scrollView.frame.height / heightRatio) - searchCenterOffset
         let y = scrollView.contentOffset.y
 
         let diff = targetHeight - y - offsetY

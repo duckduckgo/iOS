@@ -126,9 +126,7 @@ class Feedback {
         
         var isGeneric: Bool {
             switch self {
-            case .websiteLoadingIssues:
-                return true
-            case .otherIssues:
+            case .websiteLoadingIssues, .otherIssues:
                 return true
             default:
                 return false

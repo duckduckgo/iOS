@@ -21,7 +21,7 @@
         <!--Themable Navigation Controller-->
         <scene sceneID="3dJ-Ie-IKb">
             <objects>
-                <navigationController storyboardIdentifier="AppFeedback" id="c32-S5-kCk" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Feedback" id="c32-S5-kCk" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L1M-3G-dJe">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

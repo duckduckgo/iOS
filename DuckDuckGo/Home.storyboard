@@ -68,15 +68,15 @@
                                                     <rect key="frame" x="0.0" y="239" width="342" height="48"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
-                                                            <rect key="frame" x="15" y="12" width="24" height="24"/>
+                                                            <rect key="frame" x="15" y="12" width="30" height="24"/>
                                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="MeG-td-OLY"/>
-                                                                <constraint firstAttribute="width" constant="24" id="Nin-Am-qlx"/>
+                                                                <constraint firstAttribute="width" constant="30" id="Nin-Am-qlx"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
-                                                            <rect key="frame" x="47" y="17" width="150" height="14"/>
+                                                            <rect key="frame" x="53" y="17" width="150" height="14"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>

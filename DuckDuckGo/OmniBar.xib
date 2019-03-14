@@ -91,7 +91,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
                                             </constraints>
-                                            <state key="normal" image="Remove"/>
+                                            <state key="normal" image="ClearText"/>
                                             <connections>
                                                 <action selector="onClearButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="khX-3z-LQK"/>
                                             </connections>
@@ -233,9 +233,9 @@
     </objects>
     <resources>
         <image name="Bookmarks" width="24" height="24"/>
+        <image name="ClearText" width="24" height="24"/>
         <image name="Menu" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
-        <image name="Remove" width="24" height="24"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="Settings" width="24" height="24"/>
     </resources>

@@ -298,10 +298,11 @@ extension OmniBar: Themable {
         textField.textColor = theme.searchBarTextColor
         textField.tintColor = theme.searchBarTextColor
         textField.keyboardAppearance = theme.keyboardAppearance
+        clearButton.tintColor = theme.searchBarClearTextIconColor
 
         searchLoupe.tintColor = theme.barTintColor
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
-
+        
         updateSearchBarBorder()
     }
 }

@@ -45,13 +45,3 @@ class HomePageConfigurationTests: XCTestCase {
     }
 
 }
-
-class MockAppSettings: AppSettings {
-    
-    var autocomplete: Bool = true
-    var currentThemeName: ThemeName = ThemeName.dark
-    var autoClearTiming: AutoClearSettingsModel.Timing = .termination
-    var autoClearAction: AutoClearSettingsModel.Action = []
-    var homePage: HomePageConfiguration.ConfigName = .simple
-    
-}

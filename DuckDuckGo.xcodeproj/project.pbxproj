@@ -182,6 +182,7 @@
 		857065761F6ADCF70044DCB1 /* EasylistStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857065751F6ADCF70044DCB1 /* EasylistStore.swift */; };
 		8577B0AC2225C778009CCC71 /* OnboardingSummary-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8577B0AB2225C778009CCC71 /* OnboardingSummary-iPad.storyboard */; };
 		8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */; };
+		857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DC8223A9E7D00833940 /* MockAppSettings.swift */; };
 		857EEB7120934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB7020934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
@@ -719,6 +720,7 @@
 		8577B0AB2225C778009CCC71 /* OnboardingSummary-iPad.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "OnboardingSummary-iPad.storyboard"; sourceTree = "<group>"; };
 		8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryPadViewController.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
+		857D1DC8223A9E7D00833940 /* MockAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppSettings.swift; sourceTree = "<group>"; };
 		857EEB7020934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHomeRowCTAStorageTests.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
 		859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagiciOS.framework; path = Carthage/Build/iOS/SimulatorStatusMagiciOS.framework; sourceTree = "<group>"; };
@@ -2126,6 +2128,7 @@
 				8536A1C7209AF2410050739E /* MockVariantManager.swift */,
 				98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */,
 				851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */,
+				857D1DC8223A9E7D00833940 /* MockAppSettings.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -3125,6 +3128,7 @@
 				F1DE78581E5CAE350058895A /* TabViewCell.swift in Sources */,
 				85B9CB8B21AEBE22009001F1 /* AddFavoriteHomeCell.swift in Sources */,
 				F159BDB51F0C0D0D00B4A01D /* TabsFooter.swift in Sources */,
+				857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */,
 				F17922D71E717AF0006E3D97 /* AutocompleteParser.swift in Sources */,
 				83134D7D20E2D725006CE65D /* FeedbackSender.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* CompositeTransition.swift in Sources */,

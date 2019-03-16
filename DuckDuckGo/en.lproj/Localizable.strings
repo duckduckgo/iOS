@@ -33,6 +33,7 @@
 "action.title.add" = "Add";
 "action.title.save" = "Save";
 "action.title.cancel" = "Cancel";
+"action.title.bookmark" = "Bookmark";
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
 "action.title.newBackgroundTabForUrl" = "Open in Background Tab";
@@ -55,6 +56,8 @@
 "alert.title.save.bookmark" = "Save Bookmark";
 "alert.title.save.favorite" = "Save Favorite";
 "alert.title.edit.bookmark" = "Edit Bookmark";
+"alert.title.bookmarkAll" = "Bookmark All Tabs?";
+"alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
 "alert.title.add.to.whitelist" = "Add to Whitelist";
 "alert.title.add.to.whitelist.placeholder" = "www.example.com";

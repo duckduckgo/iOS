@@ -108,7 +108,6 @@
 		851B129C22243178004781BC /* BrowsingTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129B22243178004781BC /* BrowsingTips.swift */; };
 		851B129E222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129D222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift */; };
 		851B12A1222440D1004781BC /* EasyTipView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 851B129F222440B3004781BC /* EasyTipView.framework */; };
-		851B12A622246625004781BC /* TouchWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A522246625004781BC /* TouchWindow.swift */; };
 		851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A722246B84004781BC /* EasyTipViewExtension.swift */; };
 		851B12AB22259DDE004781BC /* MockContextualTipsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */; };
 		851B12AF2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */; };
@@ -647,7 +646,6 @@
 		851B129B22243178004781BC /* BrowsingTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingTips.swift; sourceTree = "<group>"; };
 		851B129D222432D4004781BC /* TabViewController+BrowsingTipsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabViewController+BrowsingTipsDelegate.swift"; sourceTree = "<group>"; };
 		851B129F222440B3004781BC /* EasyTipView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyTipView.framework; path = Carthage/Build/iOS/EasyTipView.framework; sourceTree = "<group>"; };
-		851B12A522246625004781BC /* TouchWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchWindow.swift; sourceTree = "<group>"; };
 		851B12A722246B84004781BC /* EasyTipViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTipViewExtension.swift; sourceTree = "<group>"; };
 		851B12A922259DAF004781BC /* MockContextualTipsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockContextualTipsStorage.swift; sourceTree = "<group>"; };
 		851B12AE2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultContextualTipsStorageTests.swift; sourceTree = "<group>"; };
@@ -2319,7 +2317,6 @@
 				F1134EC01F40DD9300B73467 /* AppVersionExtension.swift */,
 				83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */,
 				853C5F6021C277C7001F7A05 /* global.swift */,
-				851B12A522246625004781BC /* TouchWindow.swift */,
 				850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */,
 			);
 			name = Application;
@@ -3221,7 +3218,6 @@
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
-				851B12A622246625004781BC /* TouchWindow.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,

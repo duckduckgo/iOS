@@ -45,8 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
-        
-        installTouchWindow()
 
         EasyTipView.updateGlobalPreferences()
         HTTPSUpgrade.shared.loadDataAsync()
@@ -63,13 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appIsLaunching = true
         return true
-    }
-
-    func installTouchWindow() {
-        let window = TouchWindow()
-        window.makeKey()
-        window.rootViewController = self.window?.rootViewController
-        self.window = window
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

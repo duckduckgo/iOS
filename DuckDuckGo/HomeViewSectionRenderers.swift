@@ -75,6 +75,8 @@ protocol HomeViewSectionRenderer {
     
     func endReordering()
     
+    func viewWillLayoutSubviews()
+    
 }
 
 extension HomeViewSectionRenderer {
@@ -134,6 +136,8 @@ extension HomeViewSectionRenderer {
     
     func endReordering() { }
     
+    func viewWillLayoutSubviews() { }
+    
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -184,6 +188,12 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func endReordering() {
         renderers.forEach { renderer in
             renderer.endReordering()
+        }
+    }
+    
+    func viewWillLayoutSubviews() {
+        renderers.forEach { renderer in
+            renderer.viewWillLayoutSubviews()
         }
     }
     

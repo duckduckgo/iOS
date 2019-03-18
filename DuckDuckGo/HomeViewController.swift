@@ -89,6 +89,11 @@ class HomeViewController: UIViewController {
         }
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.viewWillLayoutSubviews()
+    }
+    
     func launch(_ link: Link) {
         delegate?.home(self, didRequestUrl: link.url)
     }

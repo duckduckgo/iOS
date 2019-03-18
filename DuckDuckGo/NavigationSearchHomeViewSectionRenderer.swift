@@ -27,10 +27,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         self.controller = controller
 
         controller.collectionView.contentInset = UIEdgeInsets.zero
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(rotated),
-                                               name: UIDevice.orientationDidChangeNotification,
-                                               object: nil)
 
         controller.searchHeaderTransition = 1.0
         controller.allowContentUnderflow = false
@@ -39,7 +35,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.settingsButton.isHidden = true
     }
 
-    @objc func rotated() {
+    func viewWillLayoutSubviews() {
         controller.collectionView.invalidateIntrinsicContentSize()
         controller.collectionView.collectionViewLayout.invalidateLayout()
     }

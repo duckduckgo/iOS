@@ -53,12 +53,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(CenteredSearchHomeViewSectionRenderer.rotated),
-                                               name: UIDevice.orientationDidChangeNotification,
-                                               object: nil)
-
-        // controller.collectionView.isScrollEnabled = !fixed
+        controller.collectionView.isScrollEnabled = !fixed
 
         controller.allowContentUnderflow = true
         controller.searchHeaderTransition = 0.0
@@ -66,10 +61,11 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     }
     
-    @objc func rotated() {
-        controller.collectionView.invalidateIntrinsicContentSize()
-        controller.collectionView.collectionViewLayout.invalidateLayout()
+    func viewWillLayoutSubviews() {
+        self.controller.collectionView.invalidateIntrinsicContentSize()
+        self.controller.collectionView.collectionViewLayout.invalidateLayout()
         
+        // Forces the search field to position correctly
         DispatchQueue.main.async {
             self.scrollViewDidScroll(self.controller.collectionView)
         }

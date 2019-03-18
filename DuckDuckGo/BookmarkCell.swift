@@ -52,7 +52,11 @@ class BookmarkCell: UITableViewCell {
 
         if let domain = domain {
             let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
-            linkImage.kf.setImage(with: faviconUrl, placeholder: placeholder)
+            linkImage.kf.setImage(with: faviconUrl,
+                                  placeholder: placeholder,
+                                  options: [.downloader(NotFoundCachingDownloader())],
+                                  progressBlock: nil,
+                                  completionHandler: nil)
         }
     }
 }

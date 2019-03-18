@@ -182,6 +182,7 @@
 		8577B0AC2225C778009CCC71 /* OnboardingSummary-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8577B0AB2225C778009CCC71 /* OnboardingSummary-iPad.storyboard */; };
 		8577B0AE2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */; };
 		857D1DC9223A9E7D00833940 /* MockAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DC8223A9E7D00833940 /* MockAppSettings.swift */; };
+		857D1DCD22401F0200833940 /* NotFoundCachingImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */; };
 		857EEB7120934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB7020934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift */; };
 		857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */; };
 		85923C401FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85923C3F1FD2F8D10097204B /* PrivacyProtectionTrackerNetworksTests.swift */; };
@@ -719,6 +720,7 @@
 		8577B0AD2225CA4F009CCC71 /* OnboardingSummaryPadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryPadViewController.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
 		857D1DC8223A9E7D00833940 /* MockAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppSettings.swift; sourceTree = "<group>"; };
+		857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotFoundCachingImageDownloader.swift; path = DuckDuckGoTests/NotFoundCachingImageDownloader.swift; sourceTree = SOURCE_ROOT; };
 		857EEB7020934BB0008A005C /* UserDefaultsHomeRowCTAStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHomeRowCTAStorageTests.swift; sourceTree = "<group>"; };
 		857EEB742095FFAC008A005C /* HomeRowInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRowInstructionsViewController.swift; sourceTree = "<group>"; };
 		859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimulatorStatusMagiciOS.framework; path = Carthage/Build/iOS/SimulatorStatusMagiciOS.framework; sourceTree = "<group>"; };
@@ -1997,20 +1999,20 @@
 		F143C3191E4A99DD00CFDE3A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F143C3231E4A9A0E00CFDE3A /* Logger.swift */,
-				F1134ED91F40FC3F00B73467 /* InfoBundle.swift */,
 				8328AAB6212A3DF200293140 /* BloomFilterWrapper.h */,
 				8328AAB7212A3DF200293140 /* BloomFilterWrapper.mm */,
+				8328AAAE212A3AE900293140 /* DataChecksumExtension.swift */,
+				85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */,
 				F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */,
-				F143C3241E4A9A0E00CFDE3A /* StringExtension.swift */,
-				F143C3251E4A9A0E00CFDE3A /* URLExtension.swift */,
+				F1134ED91F40FC3F00B73467 /* InfoBundle.swift */,
+				F143C3231E4A9A0E00CFDE3A /* Logger.swift */,
 				F10E522C1E946F8800CE1253 /* NSAttributedStringExtension.swift */,
-				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
+				F143C3241E4A9A0E00CFDE3A /* StringExtension.swift */,
 				F1DA2F6F1EBCEA8B00313F51 /* SupportedExternalURLScheme.swift */,
 				F1D477CA1F2149C40031ED49 /* Type.swift */,
-				85200FA01FBC5BB5001AF290 /* DDGPersistenceContainer.swift */,
-				8328AAAE212A3AE900293140 /* DataChecksumExtension.swift */,
 				85372446220DD103009D09CD /* UIKeyCommandExtension.swift */,
+				F143C3251E4A9A0E00CFDE3A /* URLExtension.swift */,
+				F1075C911E9EF827006BE8A8 /* UserDefaultsExtension.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2380,6 +2382,7 @@
 				855D914C2063EF6A00C4B448 /* CompositeTransition.swift */,
 				F1EEAC101EAF791F006128D9 /* DissolveAnimatedTransitioning.swift */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
+				857D1DCA22401DB900833940 /* NotFoundCachingImageDownloader.swift */,
 				F1D796F11E7C0EE00019D451 /* PartiallyRoundedRectangleView.swift */,
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
 				F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */,
@@ -3170,6 +3173,7 @@
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
+				857D1DCD22401F0200833940 /* NotFoundCachingImageDownloader.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,

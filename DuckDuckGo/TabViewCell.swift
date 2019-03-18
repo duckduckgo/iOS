@@ -95,7 +95,11 @@ class TabViewCell: UICollectionViewCell {
 
         if let domain = domain {
             let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
-            favicon.kf.setImage(with: faviconUrl, placeholder: placeholder)
+            favicon.kf.setImage(with: faviconUrl,
+                                  placeholder: placeholder,
+                                  options: [.downloader(NotFoundCachingDownloader())],
+                                  progressBlock: nil,
+                                  completionHandler: nil)
         }
     }
 }

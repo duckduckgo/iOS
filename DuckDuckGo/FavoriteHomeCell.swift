@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Kingfisher
 
 class FavoriteHomeCell: UICollectionViewCell {
 
@@ -92,9 +93,22 @@ class FavoriteHomeCell: UICollectionViewCell {
         
         if let domain = link.url.host {
             let resource = AppUrls().faviconUrl(forDomain: domain)
-            iconImage.kf.setImage(with: resource, placeholder: nil, options: nil, progressBlock: nil) { [weak self] image, error, _, _ in
-                guard error == nil else { return }
-                guard let image = image else { return }
+            iconImage.kf.setImage(with: resource,
+                                  placeholder: nil,
+                                  options: [
+                                    .downloader(NotFoundCachingDownloader(name: "hello"))
+                                    ],
+                                  progressBlock: nil) { [weak self] image, error, _, _ in
+                                    
+                guard error == nil else {
+                    NotFoundCachingDownloader.cacheNotFound(resource)
+                    return
+                }
+                guard let image = image else {
+                    NotFoundCachingDownloader.cacheNotFound(resource)
+                    return
+                }
+                                    
                 guard image.size.width > Constants.smallFaviconSize else { return }
                 self?.applyFavicon(image)
             }

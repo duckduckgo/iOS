@@ -19,11 +19,7 @@
 
 import Foundation
 
-public enum FeatureName {
-    case centeredSearchHomeScreen
-    case homeScreen
-    case singleFavorite
-    case additionalFavorites
+public enum FeatureName: String {
     case onboardingSummary
     case onboardingContextual
 }

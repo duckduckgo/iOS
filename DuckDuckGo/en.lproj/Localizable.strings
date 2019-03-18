@@ -167,5 +167,5 @@
 "autoclear.off" = "Off";
 
 "homepage.simple" = "Simple";
-"homepage.centerSearch" = "Center Search";
-"homepage.centerSearchAndFavorites" = "Center Search with Favorites";
+"homepage.centerSearch" = "Centered Search";
+"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";

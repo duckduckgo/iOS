@@ -113,8 +113,16 @@ class TabSwitcherViewController: UIViewController {
             return
         }
         
-        let savedState = bookmarkAll(tabsModel.tabs)
-        displayBookmarkAllStatusToast(with: savedState, openTabsCount: tabsModel.tabs.count)
+        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
+                                      message: UserText.alertBookmarkAllMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        alert.addAction(title: UserText.actionBookmark, style: .default) {
+            let savedState = self.bookmarkAll(self.tabsModel.tabs)
+            self.displayBookmarkAllStatusToast(with: savedState, openTabsCount: self.tabsModel.tabs.count)
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func onSettingsPressed(_ sender: UIButton) {

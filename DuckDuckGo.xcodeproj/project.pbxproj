@@ -291,6 +291,7 @@
 		98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */; };
 		98DA6B3322243CC3006EA9EB /* Feedback.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98DA6B3222243CC3006EA9EB /* Feedback.xcassets */; };
 		98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DA6EC92181E41F00E65433 /* ThemeManager.swift */; };
+		98E888F2223FCC4A00B608A4 /* OnboardingSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingSummaryViewController.swift */; };
 		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
 		98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */; };
 		98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EF177C21837E35006750C1 /* new_tab_dark.json */; };
@@ -3304,6 +3305,7 @@
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 				984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */,
 				85374D3821AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift in Sources */,
+				98E888F2223FCC4A00B608A4 /* OnboardingSummaryViewController.swift in Sources */,
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,

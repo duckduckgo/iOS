@@ -22,7 +22,7 @@ import Core
 
 protocol HomePageSettingsDelegate: NSObjectProtocol {
     
-    func homePageChanged(toConfigName config: HomePageConfiguration.ConfigName)
+    func homePageChanged(to config: HomePageConfiguration.ConfigName)
     
 }
 
@@ -68,7 +68,7 @@ class HomePageSettingsViewController: UITableViewController {
         }
         
         appSettings.homePage = config
-        delegate?.homePageChanged(toConfigName: config)
+        delegate?.homePageChanged(to: config)
         tableView.reloadData()
     }
     

@@ -68,7 +68,7 @@ class TabSwitcherViewController: UIViewController {
         
         if let nav = segue.destination as? UINavigationController,
             let controller = nav.topViewController as? SettingsViewController {
-            controller.homePageSettingsDelegate = self
+            controller.homePageSettingsDelegate = homePageSettingsDelegate
         }
         
     }
@@ -250,12 +250,4 @@ extension TabSwitcherViewController: Themable {
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor
     }
-}
-
-extension TabSwitcherViewController: HomePageSettingsDelegate {
-    
-    func homePageChanged(toConfigName config: HomePageConfiguration.ConfigName) {
-        homePageSettingsDelegate?.homePageChanged(toConfigName: config)
-    }
-    
 }

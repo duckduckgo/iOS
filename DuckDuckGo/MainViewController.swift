@@ -887,7 +887,7 @@ extension MainViewController: Themable {
 
 extension MainViewController: HomePageSettingsDelegate {
     
-    func homePageChanged(toConfigName config: HomePageConfiguration.ConfigName) {
+    func homePageChanged(to config: HomePageConfiguration.ConfigName) {
         guard homeController != nil else { return }
         removeHomeScreen()
         attachHomeScreen()

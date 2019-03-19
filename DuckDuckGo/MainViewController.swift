@@ -396,6 +396,11 @@ class MainViewController: UIViewController {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        dismissOmniBar()        
+    }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {

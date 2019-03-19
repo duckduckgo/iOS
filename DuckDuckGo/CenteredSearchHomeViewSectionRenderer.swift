@@ -58,7 +58,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.allowContentUnderflow = true
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
-
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

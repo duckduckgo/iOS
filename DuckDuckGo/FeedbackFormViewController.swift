@@ -23,10 +23,16 @@ class FeedbackFormViewController: UIViewController {
     
     private struct Constants {
         static let inputFieldFontSize: CGFloat = 14
+        static let scrollToMargin: CGFloat = 15
+        
+        static let minimumMessageViewHeight: CGFloat = 60
+        static let defaultMessageViewHeight: CGFloat = 150
     }
     
     @IBOutlet var headerToMessageView: NSLayoutConstraint!
     @IBOutlet var websiteFieldToMessageView: NSLayoutConstraint!
+    
+    @IBOutlet var messageViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -156,23 +162,78 @@ class FeedbackFormViewController: UIViewController {
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
         
-        guard messageTextView.isFirstResponder else { return }
+        messageViewHeight.constant = Constants.defaultMessageViewHeight
         
-        var visibleRect = scrollView.frame
-        visibleRect.size.height -= keyboardSize.height
-        
-        // Area that is the most relevant to the user typing the message
-        let upperLeftInteractionArea = messageTextView.frame.origin
+        // Area that is the most relevant to the user who's typing the message
+        let upperLeftInteractionArea: CGPoint
+        if websiteTextField.isHidden == false {
+            upperLeftInteractionArea = websiteTextField.frame.origin
+        } else {
+            upperLeftInteractionArea = messageTextView.frame.origin
+        }
         var lowerRightInteractionArea = submitFeedbackButton.frame.origin
         lowerRightInteractionArea.x += submitFeedbackButton.frame.size.width
-        lowerRightInteractionArea.y += submitFeedbackButton.frame.size.height + 20
+        lowerRightInteractionArea.y += submitFeedbackButton.frame.size.height
         
-        let scrollToRect = CGRect(x: upperLeftInteractionArea.x,
-                                  y: upperLeftInteractionArea.y,
-                                  width: lowerRightInteractionArea.x - upperLeftInteractionArea.x,
-                                  height: min(lowerRightInteractionArea.y - upperLeftInteractionArea.y, visibleRect.size.height))
-
-        scrollView.scrollRectToVisible(scrollToRect, animated: true)
+        let interactionRect = CGRect(x: upperLeftInteractionArea.x,
+                                     y: upperLeftInteractionArea.y,
+                                     width: lowerRightInteractionArea.x - upperLeftInteractionArea.x,
+                                     height: lowerRightInteractionArea.y - upperLeftInteractionArea.y)
+        
+        if let rect = desiredVisibleRect(forInteractionArea: interactionRect,
+                                         in: scrollView,
+                                         coveredBy: keyboardFrame) {
+            // Note: scrollRectToVisible is not working properly in Modal view on iPad
+            var offset = scrollView.contentOffset
+            offset.y = rect.origin.y
+            
+            // Shrink message view if needed
+            let visibleAreaBottom = rect.origin.y + rect.size.height
+            let messageTextViewBottom = messageTextView.frame.origin.y + messageTextView.frame.size.height
+            if visibleAreaBottom < messageTextViewBottom {
+                messageViewHeight.constant -= (messageTextViewBottom - visibleAreaBottom) + Constants.scrollToMargin
+                messageViewHeight.constant = max(Constants.minimumMessageViewHeight, messageViewHeight.constant)
+                
+                DispatchQueue.main.async {
+                    self.scrollView.setContentOffset(offset, animated: true)
+                    self.messageTextView.scrollRangeToVisible(self.messageTextView.selectedRange)
+                }
+            } else {
+                // This is async to override ScrollView automatic offset setting for UITextField.
+                // It caused inconsistency between how Message View and Website Text Field handled becoming a first responder.
+                DispatchQueue.main.async {
+                    self.scrollView.setContentOffset(offset, animated: true)
+                }
+            }
+            
+        }
+    }
+    
+    func desiredVisibleRect(forInteractionArea interactionArea: CGRect,
+                            in view: UIView,
+                            coveredBy keyboardRect: CGRect) -> CGRect? {
+        guard let window = UIApplication.shared.keyWindow else { return nil }
+        
+        let viewInWindow = view.convert(view.bounds, to: window)
+        let obscuredScrollViewArea = viewInWindow.intersection(keyboardRect)
+        
+        guard obscuredScrollViewArea.size.height > 0 else { return nil }
+        
+        let visibleScrollViewAreaHeight = view.bounds.height - obscuredScrollViewArea.size.height
+        
+        let offset: CGFloat
+        if interactionArea.height + Constants.scrollToMargin > visibleScrollViewAreaHeight {
+            offset = interactionArea.origin.y - Constants.scrollToMargin
+        } else {
+            offset = interactionArea.origin.y + Constants.scrollToMargin - (visibleScrollViewAreaHeight - interactionArea.size.height)
+        }
+        
+        guard offset > 0 else { return nil }
+        
+        return CGRect(x: interactionArea.origin.x,
+                      y: offset,
+                      width: interactionArea.size.width,
+                      height: visibleScrollViewAreaHeight)
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {

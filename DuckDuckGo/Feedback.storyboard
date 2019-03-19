@@ -856,6 +856,7 @@
                         <outlet property="headerToMessageView" destination="T2T-Hq-Z0M" id="Exq-xp-hna"/>
                         <outlet property="messagePlaceholderText" destination="sJW-tG-IzU" id="QTd-Uq-zdg"/>
                         <outlet property="messageTextView" destination="iVe-E1-jAH" id="ADu-IK-iN8"/>
+                        <outlet property="messageViewHeight" destination="d7z-bj-sBD" id="Wt3-KQ-lfD"/>
                         <outlet property="scrollView" destination="oa0-vA-RI7" id="eoL-bX-Cvd"/>
                         <outlet property="submitFeedbackButton" destination="lsB-Kq-U8p" id="SqU-lR-HVF"/>
                         <outlet property="supplementaryText" destination="cLS-dA-AJv" id="r6T-94-4fC"/>

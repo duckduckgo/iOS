@@ -120,9 +120,6 @@ class HomeCollectionView: UICollectionView {
         renderers.openedAsNewTab()
     }
     
-    func viewWillLayoutSubviews() {
-        renderers.viewWillLayoutSubviews()
-    }
 }
 
 extension HomeCollectionView: Themable {

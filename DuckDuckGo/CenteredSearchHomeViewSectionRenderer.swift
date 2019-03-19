@@ -60,17 +60,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         cell?.searchHeaderTransition = 0.0
 
     }
-    
-    func viewWillLayoutSubviews() {
-        self.controller.collectionView.invalidateIntrinsicContentSize()
-        self.controller.collectionView.collectionViewLayout.invalidateLayout()
         
-        // Forces the search field to position correctly
-        DispatchQueue.main.async {
-            self.scrollViewDidScroll(self.controller.collectionView)
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         indexPath = IndexPath(row: 0, section: section)
         return 1

@@ -34,11 +34,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true
     }
-
-    func viewWillLayoutSubviews() {
-        controller.collectionView.invalidateIntrinsicContentSize()
-        controller.collectionView.collectionViewLayout.invalidateLayout()
-    }
     
     func openedAsNewTab() {
         controller.chromeDelegate?.omniBar.becomeFirstResponder()

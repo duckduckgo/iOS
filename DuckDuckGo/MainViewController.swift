@@ -399,7 +399,7 @@ class MainViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        dismissOmniBar()        
+        dismissOmniBar()
     }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {

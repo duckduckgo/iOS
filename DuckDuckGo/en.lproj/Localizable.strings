@@ -175,7 +175,7 @@
 
 "feedback.start.header" = "Let's get started!";
 "feedback.start.supplementary" = "How would you catagorize your feedback?";
-"feedback.start.footer" = "Your anonymous feedback is important to us";
+"feedback.start.footer" = "Your anonymous feedback is important to us.";
 
 "feedback.positive.header" = "Awesome to hear!";
 "feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
@@ -189,7 +189,7 @@
 "feedback.positive.form.supplementary" = "Are there any details you’d like to share with the team?";
 "feedback.positive.form.placeholder" = "What have you been enjoying?";
 
-"feedback.negative.header" = "We’re sorry to hear that";
+"feedback.negative.header" = "We’re sorry to hear that.";
 "feedback.negative.supplementary" = "What is your frustration most related to?";
 "feedback.negative.form.placeholder" = "Are there any specifics you’d like to include?";
 "feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";

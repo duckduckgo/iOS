@@ -26,7 +26,7 @@ extension UserText {
     public static let feedbackStartSupplementary = NSLocalizedString("feedback.start.supplementary",
                                                                      comment: "How would you catagorize your feedback?")
     public static let feedbackStartFooter = NSLocalizedString("feedback.start.footer",
-                                                              comment: "Your anonymous feedback is important to us")
+                                                              comment: "Your anonymous feedback is important to us.")
     
     public static let feedbackPositiveHeader = NSLocalizedString("feedback.positive.header",
                                                                  comment: "Awesome to hear!")

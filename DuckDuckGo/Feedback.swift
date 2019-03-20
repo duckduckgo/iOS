@@ -28,6 +28,10 @@ protocol FeedbackEntry {
     var isGeneric: Bool { get }
 }
 
+extension FeedbackEntry {
+    var nextStep: Feedback.NextStep { return .presentForm(.regular) }
+}
+
 class Feedback {
     
     struct Model {
@@ -44,18 +48,6 @@ class Feedback {
         case presentEntries([FeedbackEntry])
         case presentForm(SubmitFormType)
     }
-    
-    struct Subcategory: FeedbackEntry {
-        var nextStep: NextStep
-        var userText: String
-        var isGeneric: Bool
-        
-        init(userText: String, isGeneric: Bool = false) {
-            nextStep = .presentForm(.regular)
-            self.userText = userText
-            self.isGeneric = isGeneric
-        }
-    }
 
     enum Category: FeedbackEntry, CaseIterable {
         
@@ -69,39 +61,15 @@ class Feedback {
         var nextStep: NextStep {
             switch self {
             case .browserFeatureIssues:
-                let entries = [Subcategory(userText: UserText.browserFeatureIssuesNavigation),
-                               Subcategory(userText: UserText.browserFeatureIssuesTabs),
-                               Subcategory(userText: UserText.browserFeatureIssuesAds),
-                               Subcategory(userText: UserText.browserFeatureIssuesVideos),
-                               Subcategory(userText: UserText.browserFeatureIssuesImages),
-                               Subcategory(userText: UserText.browserFeatureIssuesBookmarks),
-                               Subcategory(userText: UserText.browserFeatureIssuesOther, isGeneric: true)]
-                return .presentEntries(entries)
+                return .presentEntries(BrowserFeatureSubcategory.allCases)
             case .websiteLoadingIssues:
                 return .presentForm(.brokenWebsite)
             case .ddgSearchIssues:
-                let entries = [Subcategory(userText: UserText.ddgSearchIssuesTechnical),
-                               Subcategory(userText: UserText.ddgSearchIssuesLayout),
-                               Subcategory(userText: UserText.ddgSearchIssuesLoadTime),
-                               Subcategory(userText: UserText.ddgSearchIssuesLanguageOrReason),
-                               Subcategory(userText: UserText.ddgSearchIssuesAutocomplete),
-                               Subcategory(userText: UserText.ddgSearchIssuesOther, isGeneric: true)]
-                return .presentEntries(entries)
+                return .presentEntries(DDGSearchSubcategory.allCases)
             case .customizationIssues:
-                let entries = [Subcategory(userText: UserText.customizationIssuesHomeScreen),
-                               Subcategory(userText: UserText.customizationIssuesTabs),
-                               Subcategory(userText: UserText.customizationIssuesUI),
-                               Subcategory(userText: UserText.customizationIssuesWhatIsCleared),
-                               Subcategory(userText: UserText.customizationIssuesWhenIsCleared),
-                               Subcategory(userText: UserText.customizationIssuesBookmarks),
-                               Subcategory(userText: UserText.customizationIssuesOther, isGeneric: true)]
-                return .presentEntries(entries)
+                return .presentEntries(CustomizationSubcategory.allCases)
             case .performanceIssues:
-                let entries = [Subcategory(userText: UserText.performanceIssuesSlowLoading),
-                               Subcategory(userText: UserText.performanceIssuesCrashes),
-                               Subcategory(userText: UserText.performanceIssuesPlayback),
-                               Subcategory(userText: UserText.performanceIssuesOther, isGeneric: true)]
-                return .presentEntries(entries)
+                return .presentEntries(PerformanceSubcategory.allCases)
             case .otherIssues:
                 return .presentForm(.regular)
             }
@@ -127,6 +95,149 @@ class Feedback {
         var isGeneric: Bool {
             switch self {
             case .websiteLoadingIssues, .otherIssues:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
+    enum BrowserFeatureSubcategory: FeedbackEntry, CaseIterable {
+        
+        case navigation
+        case tabs
+        case ads
+        case videos
+        case images
+        case bookmarks
+        case other
+        
+        var userText: String {
+            switch self {
+            case .navigation:
+                return UserText.browserFeatureIssuesNavigation
+            case .tabs:
+                return UserText.browserFeatureIssuesTabs
+            case .ads:
+                return UserText.browserFeatureIssuesAds
+            case .videos:
+                return UserText.browserFeatureIssuesVideos
+            case .images:
+                return UserText.browserFeatureIssuesImages
+            case .bookmarks:
+                return UserText.browserFeatureIssuesBookmarks
+            case .other:
+                return UserText.browserFeatureIssuesOther
+            }
+        }
+        
+        var isGeneric: Bool {
+            switch self {
+            case .other:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
+    enum DDGSearchSubcategory: FeedbackEntry, CaseIterable {
+        
+        case technical
+        case layout
+        case loadTime
+        case languageOrReason
+        case autocomplete
+        case other
+        
+        var userText: String {
+            switch self {
+            case .technical:
+                return UserText.ddgSearchIssuesTechnical
+            case .layout:
+                return UserText.ddgSearchIssuesLayout
+            case .loadTime:
+                return UserText.ddgSearchIssuesLoadTime
+            case .languageOrReason:
+                return UserText.ddgSearchIssuesLanguageOrReason
+            case .autocomplete:
+                return UserText.ddgSearchIssuesAutocomplete
+            case .other:
+                return UserText.ddgSearchIssuesOther
+            }
+        }
+        
+        var isGeneric: Bool {
+            switch self {
+            case .other:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
+    enum CustomizationSubcategory: FeedbackEntry, CaseIterable {
+        
+        case homeScreen
+        case tabs
+        case ui
+        case whatIsCleared
+        case whenIsCleared
+        case bookmarks
+        case other
+        
+        var userText: String {
+            switch self {
+            case .homeScreen:
+                return UserText.customizationIssuesHomeScreen
+            case .tabs:
+                return UserText.customizationIssuesTabs
+            case .ui:
+                return UserText.customizationIssuesUI
+            case .whatIsCleared:
+                return UserText.customizationIssuesWhatIsCleared
+            case .whenIsCleared:
+                return UserText.customizationIssuesWhenIsCleared
+            case .bookmarks:
+                return UserText.customizationIssuesBookmarks
+            case .other:
+                return UserText.customizationIssuesOther
+            }
+        }
+        
+        var isGeneric: Bool {
+            switch self {
+            case .other:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
+    enum PerformanceSubcategory: FeedbackEntry, CaseIterable {
+        case slowLoading
+        case crashes
+        case playback
+        case other
+        
+        var userText: String {
+            switch self {
+            case .slowLoading:
+                return UserText.performanceIssuesSlowLoading
+            case .crashes:
+                return UserText.performanceIssuesCrashes
+            case .playback:
+                return UserText.performanceIssuesPlayback
+            case .other:
+                return UserText.performanceIssuesOther
+            }
+        }
+        
+        var isGeneric: Bool {
+            switch self {
+            case .other:
                 return true
             default:
                 return false

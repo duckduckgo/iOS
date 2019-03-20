@@ -189,6 +189,9 @@
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo - Paoli, PA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
                                                     <rect key="frame" x="0.0" y="72" width="134" height="26"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <bool key="isElement" value="NO"/>
+                                                    </accessibility>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -237,6 +240,9 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Add Favorite">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstItem="O5x-Qc-r6G" firstAttribute="centerY" secondItem="xFb-1e-ukI" secondAttribute="centerY" id="YUF-IN-Xoo"/>
                                                         <constraint firstAttribute="height" constant="64" id="gTp-Pg-ux9"/>
@@ -288,6 +294,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-YB-mZi">
                                 <rect key="frame" x="375" y="53" width="34" height="34"/>
+                                <accessibility key="accessibilityConfiguration" label="Settings"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="fcV-Gc-jkH"/>
                                     <constraint firstAttribute="height" constant="34" id="iTW-Ve-M8D"/>

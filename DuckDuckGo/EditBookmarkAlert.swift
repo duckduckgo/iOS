@@ -49,12 +49,15 @@ private class ValidatingAlert: UIAlertController {
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         addTextField { textField in
+            textField.accessibilityLabel = "Bookmark Title" // UserText.bookmarkTitleAccessibility
             textField.text = link?.title
             textField.placeholder = UserText.bookmarkTitlePlaceholder
             textField.keyboardAppearance = keyboardAppearance
             self.titleField = textField
         }
         addTextField { textField in
+            textField.accessibilityLabel = "Bookmark Address"
+//            textField.acc
             textField.text = link?.url.absoluteString
             textField.placeholder = UserText.bookmarkAddressPlaceholder
             textField.keyboardAppearance = keyboardAppearance

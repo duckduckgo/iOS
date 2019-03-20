@@ -77,13 +77,18 @@
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
                                                             <rect key="frame" x="50" y="17" width="150" height="14"/>
+                                                            <accessibility key="accessibilityConfiguration">
+                                                                <bool key="isElement" value="NO"/>
+                                                            </accessibility>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="activateSearch"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="activateSearch" label="Search or enter address">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstItem="73D-OT-n1K" firstAttribute="leading" secondItem="Cfx-pb-o8i" secondAttribute="trailing" constant="5" id="ACN-RO-pzc"/>
                                                         <constraint firstItem="Cfx-pb-o8i" firstAttribute="centerY" secondItem="7Jf-KE-oXj" secondAttribute="centerY" id="EhU-6m-xZh"/>

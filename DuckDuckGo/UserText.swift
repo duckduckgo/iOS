@@ -207,5 +207,7 @@ public struct UserText {
         let message = NSLocalizedString("open.tab.with.title.and.address", comment: "Open tab with address")
         return message.format(arguments: title, address)
     }
-    
+
+    public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
+
 }

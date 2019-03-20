@@ -1,5 +1,5 @@
 //
-//  TouchWindow.swift
+//  MockAppSettings.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -17,19 +17,14 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-class TouchWindow: UIWindow {
-
-    static let touchNotification = NSNotification.Name(rawValue: "com.duckduckgo.touchwindow.notifications.touch")
+class MockAppSettings: AppSettings {
     
-    convenience init() {
-        self.init(frame: UIScreen.main.bounds)
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        NotificationCenter.default.post(name: TouchWindow.touchNotification, object: self)
-        return super.hitTest(point, with: event)
-    }
+    var autocomplete: Bool = true
+    var currentThemeName: ThemeName = ThemeName.dark
+    var autoClearTiming: AutoClearSettingsModel.Timing = .termination
+    var autoClearAction: AutoClearSettingsModel.Action = []
+    var homePage: HomePageConfiguration.ConfigName = .simple
     
 }

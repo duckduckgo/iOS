@@ -165,3 +165,10 @@
 "bookmarkAll.tabs.notfound" = "No tabs to bookmark";
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
+
+"autoclear.on" = "On";
+"autoclear.off" = "Off";
+
+"homepage.simple" = "Simple";
+"homepage.centerSearch" = "Centered Search";
+"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";

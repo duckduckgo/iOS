@@ -29,6 +29,8 @@ public class AppUserDefaults: AppSettings {
         
         static let autoClearActionKey = "com.duckduckgo.app.autoClearActionKey"
         static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
+        
+        static let homePage = "com.duckduckgo.app.homePage"
     }
 
     private var userDefaults: UserDefaults? {
@@ -96,11 +98,15 @@ public class AppUserDefaults: AppSettings {
         
     }
     
-    // MARK: - For experiment, remove when not needed anymore
-    
-    func setInitialThemeNameIfNeeded(name: ThemeName) {
-        guard userDefaults?.string(forKey: Keys.currentThemeNameKey) == nil else { return }
+    var homePage: HomePageConfiguration.ConfigName {
+        get {
+            let index = userDefaults?.integer(forKey: Keys.homePage) ?? 0
+            return HomePageConfiguration.ConfigName(rawValue: index)!
+        }
         
-        currentThemeName = name
+        set {
+            userDefaults?.setValue(newValue.rawValue, forKey: Keys.homePage)
+        }
     }
+    
 }

@@ -22,6 +22,13 @@ import Core
 
 class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
+    struct Constants {
+        
+        static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
+        static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
+        
+    }
+    
     private lazy var bookmarksManager = BookmarksManager()
 
     private weak var controller: HomeViewController!
@@ -46,10 +53,16 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets? {
-        
-        let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
-        let landscapeMargin = (controller.collectionView.frame.width - 400 + defaultMargin) / 2
-        let margin = isPortrait ? defaultMargin : landscapeMargin
+
+        let margin: CGFloat
+        if isPad {
+            margin = (controller.collectionView.frame.width - Constants.searchWidthPad) / 2
+        } else {
+            let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
+            let landscapeMargin = (controller.collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
+            margin = isPortrait ? defaultMargin : landscapeMargin
+        }
+
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
     
@@ -84,7 +97,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
-        Pixel.fire(pixel: .homeScreenDeleteFavorite)
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         bookmarksManager.deleteFavorite(at: indexPath.row)
         collectionView.performBatchUpdates({
@@ -93,7 +105,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
-        Pixel.fire(pixel: .homeScreenEditFavorite)
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveFavorite,
@@ -126,7 +137,6 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        Pixel.fire(pixel: .homeScreenFavoriteMoved)
         bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
@@ -175,29 +185,23 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
-        Pixel.fire(pixel: .homeScreenFavoriteLaunched)
         guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
         controller.launch(link)
     }
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
-        Pixel.fire(pixel: .homeScreenAddFavorite)
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveFavorite,
             bookmark: nil,
             saveCompletion: { [weak self] newLink in
                 self?.saveNewFavorite(newLink, in: collectionView, at: indexPath)
-            },
-            cancelCompletion: {
-                Pixel.fire(pixel: .homeScreenAddFavoriteCancel)
             }
         )
         controller.present(alert, animated: true, completion: nil)
     }
     
     private func saveNewFavorite(_ link: Link, in collectionView: UICollectionView, at indexPath: IndexPath) {
-        Pixel.fire(pixel: .homeScreenAddFavoriteOk)
         bookmarksManager.save(favorite: link)
         collectionView.performBatchUpdates({
             collectionView.insertItems(at: [indexPath])

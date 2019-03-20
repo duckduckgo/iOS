@@ -47,37 +47,33 @@ class AppUserDefaultsTests: XCTestCase {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         appUserDefaults.currentThemeName = .light
-        XCTAssertTrue(appUserDefaults.currentThemeName == .light)
+        XCTAssertEqual(appUserDefaults.currentThemeName, .light)
         
     }
     
     func testWhenReadingCurrentThemeDefaultThenDarkIsReturned() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        XCTAssert(appUserDefaults.currentThemeName == .dark)
+        XCTAssertEqual(appUserDefaults.currentThemeName, .dark)
         
-    }
-
-    func testWhenThemeSettingIsEmptyThenWeCanSetInitialValue() {
-        
-        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        
-        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
-        XCTAssert(appUserDefaults.currentThemeName == .dark)
-        
-        UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
-        
-        appUserDefaults.setInitialThemeNameIfNeeded(name: .light)
-        XCTAssert(appUserDefaults.currentThemeName == .light)
     }
     
-    func testWhenThemeSettingIsNotEmptyThenInitialValueCannotBeSet() {
+    func testWhenNewThenDefaultHomePageIsSimple() {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
-        appUserDefaults.currentThemeName = .light
-        
-        appUserDefaults.setInitialThemeNameIfNeeded(name: .dark)
-        XCTAssert(appUserDefaults.currentThemeName == .light)
+        XCTAssertEqual(appUserDefaults.homePage, .simple)
         
     }
+    
+    func testWhenHomePageSetThenSettingIsStored() {
+        
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.homePage = .centerSearch
+        XCTAssertEqual(appUserDefaults.homePage, .centerSearch)
+        
+        let otherDefaults = AppUserDefaults(groupName: testGroupName)
+        XCTAssertEqual(otherDefaults.homePage, .centerSearch)
+
+    }
+    
 }

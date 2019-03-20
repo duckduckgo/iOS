@@ -171,7 +171,7 @@ been this easy.</string>
                                 <rect key="frame" x="16" y="674" width="382" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                        <rect key="frame" x="134" y="0.0" width="114" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Start Browsing"/>
@@ -184,6 +184,7 @@ been this easy.</string>
                                 <constraints>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
                                     <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="gpL-yi-tzk"/>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
                                     <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
                                 </constraints>

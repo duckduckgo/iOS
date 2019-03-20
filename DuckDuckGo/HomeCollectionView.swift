@@ -119,6 +119,12 @@ class HomeCollectionView: UICollectionView {
     func openedAsNewTab() {
         renderers.openedAsNewTab()
     }
+    
+    func viewDidTransition(to size: CGSize) {
+        controller.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        controller.collectionView.reloadData()
+    }
+    
 }
 
 extension HomeCollectionView: Themable {

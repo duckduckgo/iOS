@@ -25,13 +25,11 @@ class BookmarksViewController: UITableViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
 
     weak var delegate: BookmarksDelegate?
+    
+    private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        guard let currentVariant = DefaultVariantManager().currentVariant,
-                currentVariant.features.contains(.homeScreen) else {
-            return BookmarksDataSource()
-        }
-        return BookmarksAndFavoritesDataSource()
+        return appSettings.homePage == .centerSearchAndFavorites ? BookmarksAndFavoritesDataSource() : BookmarksDataSource()
     }()
     
     override func viewDidLoad() {

@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-Lb-veV">
-                                <rect key="frame" x="190.33333333333334" y="37.666666666666664" width="33.333333333333343" height="18.666666666666664"/>
+                                <rect key="frame" x="190.33333333333334" y="39" width="33.333333333333343" height="16"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-ek-lrC">
-                                <rect key="frame" x="0.0" y="74.333333333333314" width="414" height="617.66666666666674"/>
+                                <rect key="frame" x="0.0" y="73" width="414" height="619"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="bWt-k2-BEm">
                                     <size key="itemSize" width="327" height="70"/>
@@ -90,13 +90,13 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1GE-Nf-lKM">
-                                                            <rect key="frame" x="45" y="18" width="214" height="18.666666666666671"/>
+                                                            <rect key="frame" x="45" y="18" width="214" height="16"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="0.086260028180000003" green="0.086282856759999998" blue="0.086258567869999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caT-pD-5fn">
-                                                            <rect key="frame" x="45" y="38.666666666666664" width="214" height="16.333333333333336"/>
+                                                            <rect key="frame" x="45" y="41" width="214" height="14"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" red="0.63914442059999999" green="0.63925665620000005" blue="0.63913732769999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -155,16 +155,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="lX8-EZ-1qW">
-                                            <rect key="frame" x="122" y="16" width="170" height="18"/>
+                                            <rect key="frame" x="122.66666666666667" y="16" width="168.66666666666663" height="18"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap " textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="UDa-k3-lgX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="26.333333333333332" height="18"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Fire" translatesAutoresizingMaskIntoConstraints="NO" id="t4R-VK-c57">
-                                                    <rect key="frame" x="28.333333333333343" y="0.0" width="14" height="18"/>
+                                                    <rect key="frame" x="27.999999999999986" y="0.0" width="14" height="18"/>
                                                     <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="4tg-pv-RPr"/>
@@ -172,7 +172,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" to forget everything" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cf1-NJ-M9S">
-                                                    <rect key="frame" x="44.33333333333335" y="0.0" width="125.66666666666669" height="18"/>
+                                                    <rect key="frame" x="43.999999999999979" y="0.0" width="124.66666666666669" height="18"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -205,12 +205,14 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3E-Kk-DYK"/>
                                     <barButtonItem image="Fire" id="h1S-c2-Spf">
+                                        <inset key="imageInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <action selector="onFirePressed" destination="G9p-Sf-e96" id="nP6-t4-jHf"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="MHa-87-9H2"/>
                                     <barButtonItem image="NewTab" id="nYf-xs-PE7">
+                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Add"/>
                                         </userDefinedRuntimeAttributes>

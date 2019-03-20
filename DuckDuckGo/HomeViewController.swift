@@ -80,11 +80,20 @@ class HomeViewController: UIViewController {
         collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
         applyTheme(ThemeManager.shared.currentTheme)
     }
-
-    func allowContentUnderflow() {
-        if let parent = parent as? MainViewController {
-            parent.allowContentUnderflow = true
+    
+    var allowContentUnderflow: Bool = false {
+        didSet {
+            if let parent = parent as? MainViewController {
+                parent.allowContentUnderflow = allowContentUnderflow
+            }
         }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.collectionView.viewDidTransition(to: size)
+        })
     }
     
     func launch(_ link: Link) {

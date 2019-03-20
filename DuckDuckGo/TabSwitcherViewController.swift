@@ -36,6 +36,7 @@ class TabSwitcherViewController: UIViewController {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
     
+    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
 
@@ -63,6 +64,15 @@ class TabSwitcherViewController: UIViewController {
         scrollToInitialTab()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let nav = segue.destination as? UINavigationController,
+            let controller = nav.topViewController as? SettingsViewController {
+            controller.homePageSettingsDelegate = homePageSettingsDelegate
+        }
+        
+    }
+    
     private func scrollToInitialTab() {
         guard let index = tabsModel.currentIndex else { return }
         guard index < collectionView.numberOfItems(inSection: 0) else { return }

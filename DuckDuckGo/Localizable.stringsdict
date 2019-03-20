@@ -66,5 +66,23 @@
 			<string>%d Trackers Blocked</string>
 		</dict>
 	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Private Tab</string>
+			<key>zero</key>
+			<string>No Private Tabs</string>
+			<key>other</key>
+			<string>%d Private Tabs</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

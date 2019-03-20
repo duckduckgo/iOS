@@ -191,4 +191,21 @@ public struct UserText {
     public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
     public static let homePageCenterSearchAndFavorites = NSLocalizedString("homepage.centerSearchAndFavorites", comment: "Center Search and Favorites")
 
+    public static func privacyGrade(_ grade: String) -> String {
+        let message = NSLocalizedString("privacy.protection.site.grade", comment: "Privacy grade %@")
+        return message.format(arguments: grade)
+    }
+
+    public static func numberOfTabs(_ number: Int) -> String {
+        let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
+        return message.format(arguments: number)
+    }
+
+    public static let confirm = NSLocalizedString("confirm", comment: "Confirm clear tabs and data")
+    
+    public static func openTab(withTitle title: String, atAddress address: String) -> String {
+        let message = NSLocalizedString("open.tab.with.title.and.address", comment: "Open tab with address")
+        return message.format(arguments: title, address)
+    }
+    
 }

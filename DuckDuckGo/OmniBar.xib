@@ -58,7 +58,8 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="30" y="0.0" width="30" height="40"/>
                                             <accessibility key="accessibilityConfiguration" identifier="siteRating">
-                                                <bool key="isElement" value="YES"/>
+                                                <accessibilityTraits key="traits" notEnabled="YES"/>
+                                                <bool key="isElement" value="NO"/>
                                             </accessibility>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="vqc-wd-f2C"/>
@@ -72,6 +73,7 @@
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
+                                                <bool key="isElement" value="YES"/>
                                             </accessibility>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
@@ -87,7 +89,8 @@
                                             </connections>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                            <rect key="frame" x="123" y="0.0" width="30" height="40"/>
+                                            <rect key="frame" x="129" y="0.0" width="30" height="40"/>
+                                            <accessibility key="accessibilityConfiguration" label="Clear Text"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
                                             </constraints>
@@ -97,7 +100,8 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-QY-LVl">
-                                            <rect key="frame" x="153" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="159" y="8" width="30" height="24"/>
+                                            <accessibility key="accessibilityConfiguration" label="Refresh Page"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="PHR-dd-ThY"/>
                                             </constraints>
@@ -107,7 +111,8 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arc-SR-Ric">
-                                            <rect key="frame" x="183" y="8" width="30" height="24"/>
+                                            <rect key="frame" x="189" y="8" width="30" height="24"/>
+                                            <accessibility key="accessibilityConfiguration" label="Bookmarks"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="900" constant="30" id="vNH-AC-ORe"/>
                                             </constraints>

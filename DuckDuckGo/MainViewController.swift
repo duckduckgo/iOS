@@ -166,12 +166,14 @@ class MainViewController: UIViewController {
     private func initTabButton() {
         tabSwitcherButton.delegate = self
         tabsButton.customView = tabSwitcherButton
+        tabsButton.isAccessibilityElement = true
     }
     
     private func initBookmarksButton() {
         gestureBookmarksButton.delegate = self
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
         bookmarksButton.customView = gestureBookmarksButton
+        bookmarksButton.isAccessibilityElement = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -371,6 +373,7 @@ class MainViewController: UIViewController {
     }
 
     private func refreshTabIcon() {
+        tabsButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
         tabSwitcherButton.tabCount = tabManager.count
         tabSwitcherButton.hasUnread = tabManager.hasUnread
     }
@@ -431,9 +434,11 @@ class MainViewController: UIViewController {
     }
 
     private func forgetAllAction() -> UIAlertAction {
-        return UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
+        let action = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { [weak self] _ in
             self?.forgetAll {}
         }
+        action.accessibilityLabel = UserText.confirm
+        return action
     }
 
     fileprivate func launchReportBrokenSite() {

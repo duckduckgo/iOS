@@ -21,6 +21,10 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Indicator Unknown" translatesAutoresizingMaskIntoConstraints="NO" id="mCh-HM-ZVr">
                     <rect key="frame" x="2" y="2" width="22" height="22"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" button="YES"/>
+                        <bool key="isElement" value="YES"/>
+                    </accessibility>
                     <constraints>
                         <constraint firstAttribute="width" constant="22" id="gp1-HL-YXg"/>
                         <constraint firstAttribute="height" constant="22" id="xXn-ka-7hB"/>

@@ -172,3 +172,8 @@
 "homepage.simple" = "Simple";
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+
+"privacy.protection.site.grade" = "Privacy grade %@";
+"confirm" = "Confirm";
+
+"open.tab.with.title.and.address" = "Open \"%@\" at %s";

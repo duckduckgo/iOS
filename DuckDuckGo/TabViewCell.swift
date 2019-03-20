@@ -54,6 +54,8 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var unread: UIView!
 
     func update(withTab tab: Tab) {
+        accessibilityElements = [ title, link, removeButton, unread ]
+        
         removeTabObserver()
         tab.addObserver(self)
         self.tab = tab
@@ -65,7 +67,11 @@ class TabViewCell: UICollectionViewCell {
         background.layer.borderColor = UIColor.cornflowerBlue.cgColor
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
 
-        title.text = tab.link?.displayTitle
+        if let link = tab.link {
+            accessibilityLabel = UserText.openTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
+            title.text = tab.link?.displayTitle
+        }
+        
         unread.isHidden = tab.viewed
 
         link.text = tab.link?.url.absoluteString ?? ""

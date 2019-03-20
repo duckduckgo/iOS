@@ -74,8 +74,6 @@ class TrackerNetworkLeaderboardView: UIView {
 
     var leaderboard = NetworkLeaderboard.shared
 
-    var imageHeight: CGFloat!
-
     func didLoad() {
         firstPill.didLoad()
         secondPill.didLoad()

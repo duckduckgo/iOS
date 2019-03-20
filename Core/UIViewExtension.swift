@@ -21,11 +21,6 @@ import UIKit
 
 extension UIView {
 
-    public func addEqualSizeConstraints(subView: UIView) {
-        addEqualWidthConstraint(subView: subView)
-        addEqualHeightConstraint(subView: subView)
-    }
-
     public func addEqualHeightConstraint(subView: UIView) {
         addConstraint(NSLayoutConstraint(
             item: subView,
@@ -67,11 +62,5 @@ extension UIView {
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 1.5
         layer.shadowPath = UIBezierPath(rect: bounds).cgPath
-    }
-
-    public func clearSubviews() {
-        for view in subviews {
-            view.removeFromSuperview()
-        }
     }
 }

@@ -33,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var overlayWindow: UIWindow?
     var window: UIWindow?
 
-    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
 

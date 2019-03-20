@@ -22,13 +22,9 @@ import Core
 
 
 public struct UserText {
-    
-    public static let webPageFailedLoad = NSLocalizedString("web.page.load.failed", comment: "DuckDuckGo cannot load this page because...")
 
     public static let appUnlock = NSLocalizedString("app.authentication.unlock", comment: "Unlock DuckDuckGo")
-    public static let homeLinkTitle = NSLocalizedString("home.link.title", comment: "DuckDuckGo Home")
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or enter address")
-    public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Session cleared")
     public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", comment: "Bookmark saved")
     public static let webBookmarkAlreadySaved = NSLocalizedString("web.url.save.bookmark.exists", comment: "Bookmark already saved")
     public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", comment: "Favorite saved")
@@ -38,9 +34,7 @@ public struct UserText {
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
         
     public static let actionPasteAndGo = NSLocalizedString("action.title.pasteAndGo", comment: "Paste and Go action")
-    public static let actionRefresh = NSLocalizedString("action.title.refresh", comment: "Refresh action")
     public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
-    public static let actionSave = NSLocalizedString("action.title.save", comment: "Save action")
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
     public static let actionBookmark = NSLocalizedString("action.title.bookmark", comment: "Bookmark action")
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
@@ -58,7 +52,6 @@ public struct UserText {
     public static let actionRequestMobileSite = NSLocalizedString("action.title.request.mobile.site", comment: "Request Desktop Site")
     public static let actionSaveBookmark = NSLocalizedString("action.title.save.bookmark", comment: "Save Bookmark action")
     public static let actionSaveFavorite = NSLocalizedString("action.title.save.favorite", comment: "Save Favorite action")
-    public static let actionRemoveBookmark = NSLocalizedString("action.title.remove.bookmark", comment: "Remove Bookmark action")
     public static let actionReportBrokenSite = NSLocalizedString("action.title.reportBrokenSite", comment: "Report broken site action")
     public static let actionSettings = NSLocalizedString("action.title.settings", comment: "Settings action")
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", comment: "Save Bookmark action")
@@ -71,9 +64,6 @@ public struct UserText {
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
 
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", comment: "Navbar Edit button title")
-
-    public static let secureConnection = NSLocalizedString("monitoring.connection.secure", comment: "Secure conection")
-    public static let unsecuredConnection = NSLocalizedString("monitoring.connection.unsecured", comment: "Unsecured conection")
 
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Trackers blocked")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Trackers found")
@@ -122,11 +112,7 @@ public struct UserText {
     public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", comment:  "Mixed")
     public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", comment:  "Unencrypted")
 
-    public static let ppTrackerNetworksMajorMessage = NSLocalizedString("privacy.protection.tracker.networks.major.message", comment: "Major tracker networks are more harmful because they can track and target you across more of the internet.")
-
     public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment:  "Trackers networks were found on %@ of web sites you’ve visited since %@.")
-
-    public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
 
     public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", comment:  "Unknown error occurred")
     

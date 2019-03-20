@@ -25,7 +25,6 @@ enum ThemeName: String {
 }
 
 protocol Theme {
-    var name: ThemeName { get }
     
     var currentImageSet: ThemeManager.ImageSet { get }
     var statusBarStyle: UIStatusBarStyle { get }

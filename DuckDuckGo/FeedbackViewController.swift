@@ -161,14 +161,6 @@ class FeedbackViewController: UIViewController {
         refreshButton()
     }
 
-    private func showMessagePlaceholder() {
-        messagePlaceholderText.isHidden = false
-    }
-
-    private func hideMessagePlaceholder() {
-        messagePlaceholderText.isHidden = true
-    }
-
     private func refreshButton() {
         submitButton.isEnabled = feedbackModel.canSubmit()
         submitButton.backgroundColor = submitButton.isEnabled ? UIColor.cornflowerBlue : UIColor.mercury

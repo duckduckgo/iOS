@@ -440,7 +440,7 @@ class TabViewController: UIViewController {
         present(controller: alert, fromView: webView, atPoint: point)
     }
     
-    private func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
+    private func shouldLoad(url: URL) -> Bool {
         if shouldOpenExternally(url: url) {
             openExternally(url: url)
             return false
@@ -774,10 +774,6 @@ extension TabViewController: WKNavigationDelegate {
             return .cancel
         }
         
-        guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            return .allow
-        }
-        
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
             return .cancel
@@ -793,7 +789,7 @@ extension TabViewController: WKNavigationDelegate {
             return .cancel
         }
         
-        if shouldLoad(url: url, forDocument: documentUrl) {
+        if shouldLoad(url: url) {
             return .allow
         }
         
@@ -829,9 +825,7 @@ extension TabViewController: WKNavigationDelegate {
 }
 
 extension TabViewController: ContentBlockerSettingsChangeDelegate {
-    func contentBlockerSettingsDidChange() {
-        onContentBlockerConfigurationChanged()
-    }
+    
 }
 
 extension TabViewController: PrivacyProtectionDelegate {

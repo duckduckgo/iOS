@@ -30,10 +30,6 @@ extension TabsModel {
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? TabsModel
     }
 
-    public static func clear() {
-         UserDefaults.standard.removeObject(forKey: Constants.key)
-    }
-
     func save() {
         let data = NSKeyedArchiver.archivedData(withRootObject: self)
         UserDefaults.standard.set(data, forKey: Constants.key)

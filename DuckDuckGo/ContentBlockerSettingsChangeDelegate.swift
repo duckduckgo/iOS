@@ -21,6 +21,4 @@ import Foundation
 
 protocol ContentBlockerSettingsChangeDelegate: class {
 
-    func contentBlockerSettingsDidChange()
-
 }

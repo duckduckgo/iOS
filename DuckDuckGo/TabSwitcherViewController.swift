@@ -39,8 +39,6 @@ class TabSwitcherViewController: UIViewController {
     weak var homePageSettingsDelegate: HomePageSettingsDelegate?
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
-
-    fileprivate var hasSeenFooter = false
     
     override var canBecomeFirstResponder: Bool { return true }
     

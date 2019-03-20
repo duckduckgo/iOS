@@ -75,8 +75,4 @@ public class SiteRatingView: UIView {
         let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
         circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
     }
-
-    private func protecting() -> Bool {
-        return contentBlockerConfiguration.protecting(domain: siteRating?.domain)
-    }
 }

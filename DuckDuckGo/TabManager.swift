@@ -67,10 +67,6 @@ class TabManager {
             return controller
         }
     }
-
-    var isEmpty: Bool {
-        return tabControllerCache.isEmpty
-    }
     
     var hasUnread: Bool {
         return model.hasUnread
@@ -122,12 +118,6 @@ class TabManager {
         if let controller = cachedController(forTab: tab) {
             removeFromCache(controller)
         }
-        save()
-    }
-
-    func remove(tabController: TabViewController) {
-        model.remove(tab: tabController.tabModel)
-        removeFromCache(tabController)
         save()
     }
 

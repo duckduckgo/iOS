@@ -19,7 +19,6 @@
 import UIKit
 
 struct DarkTheme: Theme {
-    var name = ThemeName.dark
     
     var currentImageSet: ThemeManager.ImageSet = .dark
     var statusBarStyle: UIStatusBarStyle = .lightContent

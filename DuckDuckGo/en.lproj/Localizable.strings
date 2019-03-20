@@ -33,6 +33,7 @@
 "action.title.add" = "Add";
 "action.title.save" = "Save";
 "action.title.cancel" = "Cancel";
+"action.title.bookmark" = "Bookmark";
 "action.title.newTab" = "New Tab";
 "action.title.newTabForUrl" = "Open in New Tab";
 "action.title.newBackgroundTabForUrl" = "Open in Background Tab";
@@ -55,6 +56,8 @@
 "alert.title.save.bookmark" = "Save Bookmark";
 "alert.title.save.favorite" = "Save Favorite";
 "alert.title.edit.bookmark" = "Edit Bookmark";
+"alert.title.bookmarkAll" = "Bookmark All Tabs?";
+"alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
 "alert.title.add.to.whitelist" = "Add to Whitelist";
 "alert.title.add.to.whitelist.placeholder" = "www.example.com";
@@ -154,14 +157,21 @@
 "keyCommandClose" = "Close";
 "keyCommandSelect" = "Select";
 
-"contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo";
+"contextualOnboardingSearchPrivately" = "Your searches are always private on DuckDuckGo.";
 "contextualOnboardingCustomize" = "Want a different look? Try the light theme!";
-"contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how";
-"contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings";
+"contextualOnboardingPrivacyGrade" = "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.";
+"contextualOnboardingFireButton" = "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.";
 
 "bookmarkAll.tabs.notfound" = "No tabs to bookmark";
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
 "bookmarkAll.tabs.failed" = "Unable to bookmark some tabs";
+
+"autoclear.on" = "On";
+"autoclear.off" = "Off";
+
+"homepage.simple" = "Simple";
+"homepage.centerSearch" = "Centered Search";
+"homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
 
 "feedback.start.header" = "Let's get started!";
 "feedback.start.supplementary" = "How would you catagorize your feedback?";

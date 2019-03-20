@@ -34,6 +34,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
+    @IBOutlet weak var bookmarksButton: UIBarButtonItem!
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet weak var tabsButton: UIBarButtonItem!
@@ -74,6 +75,7 @@ class MainViewController: UIViewController {
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
+    let gestureBookmarksButton = GestureToolbarButton()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
@@ -87,6 +89,7 @@ class MainViewController: UIViewController {
         chromeManager = BrowserChromeManager()
         chromeManager.delegate = self
         initTabButton()
+        initBookmarksButton()
         attachOmniBar()
         configureTabManager()
         loadInitialView()
@@ -165,6 +168,12 @@ class MainViewController: UIViewController {
         tabsButton.customView = tabSwitcherButton
     }
     
+    private func initBookmarksButton() {
+        gestureBookmarksButton.delegate = self
+        gestureBookmarksButton.image = UIImage(named: "Bookmarks")
+        bookmarksButton.customView = gestureBookmarksButton
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.destination.children.count > 0,
@@ -175,6 +184,7 @@ class MainViewController: UIViewController {
 
         if let controller = segue.destination as? TabSwitcherViewController {
             controller.transitioningDelegate = blurTransition
+            controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
             tabSwitcherController = controller
@@ -185,6 +195,13 @@ class MainViewController: UIViewController {
             controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
             return
         }
+        
+        if let navigationController = segue.destination as? UINavigationController,
+            let controller = navigationController.topViewController as? SettingsViewController {
+            controller.homePageSettingsDelegate = self
+            return
+        }
+        
     }
 
     private func configureTabManager() {
@@ -221,7 +238,6 @@ class MainViewController: UIViewController {
         omniBar.omniDelegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
-        HomePageConfiguration.configureOmniBar(omniBar)
     }
 
     fileprivate func attachHomeScreen() {
@@ -267,11 +283,6 @@ class MainViewController: UIViewController {
     @IBAction func onForwardPressed() {
         Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
-    }
-    
-    @IBAction func onTabBarBookmarksPressed() {
-        Pixel.fire(pixel: .tabBarBookmarksPressed)
-        onBookmarksPressed()
     }
 
     public var siteRating: SiteRating? {
@@ -385,11 +396,16 @@ class MainViewController: UIViewController {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        dismissOmniBar()
+    }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {
-            allowContentUnderflow = false
             let controller = AutocompleteViewController.loadFromStoryboard()
+            controller.shouldOffsetY = allowContentUnderflow
             controller.delegate = self
             addChild(controller)
             containerView.addSubview(controller.view)
@@ -639,6 +655,10 @@ extension MainViewController: OmniBarDelegate {
         homeController?.launchNewSearch()
     }
     
+    func onRefreshPressed() {
+        currentTab?.refresh()
+    }
+    
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -789,6 +809,23 @@ extension MainViewController: TabSwitcherButtonDelegate {
 
 }
 
+extension MainViewController: GestureToolbarButtonDelegate {
+    
+    func singleTapDetected(in sender: GestureToolbarButton) {
+        Pixel.fire(pixel: .tabBarBookmarksPressed)
+        onBookmarksPressed()
+    }
+    
+    func longPressDetected(in sender: GestureToolbarButton) {
+        guard currentTab != nil else {
+            view.showBottomToast(UserText.webSaveBookmarkNone)
+            return
+        }
+        currentTab!.promptSaveBookmarkAction()
+    }
+    
+}
+
 extension MainViewController: AutoClearWorker {
     
     func clearNavigationStack() {
@@ -843,11 +880,22 @@ extension MainViewController: Themable {
         toolbar?.tintColor = theme.barTintColor
         
         tabSwitcherButton.decorate(with: theme)
+        gestureBookmarksButton.decorate(with: theme)
         tabsButton.tintColor = theme.barTintColor
         
         tabManager.decorate(with: theme)
 
         findInPageView.decorate(with: theme)
+    }
+    
+}
+
+extension MainViewController: HomePageSettingsDelegate {
+    
+    func homePageChanged(to config: HomePageConfiguration.ConfigName) {
+        guard homeController != nil else { return }
+        removeHomeScreen()
+        attachHomeScreen()
     }
     
 }

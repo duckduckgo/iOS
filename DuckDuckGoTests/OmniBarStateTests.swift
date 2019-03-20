@@ -26,12 +26,14 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeEmptyEditingState()
-        XCTAssertTrue(testee.showBackground)
+        XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
-        XCTAssertTrue(testee.showBookmarks)
-        XCTAssertTrue(testee.showSettings)
+        XCTAssertFalse(testee.showBookmarks)
+        XCTAssertFalse(testee.showSettings)
+        XCTAssertTrue(testee.showCancel)
+        XCTAssertTrue(testee.showSearchLoupe)
     }
 
     func testWhenEnteringHomeEmptyEditingStateThenTextIsCleared() {
@@ -71,12 +73,14 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInHomeTextEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeTextEditingState()
-        XCTAssertTrue(testee.showBackground)
+        XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+        XCTAssertTrue(testee.showCancel)
+        XCTAssertTrue(testee.showSearchLoupe)
     }
 
     func testWhenEnteringHomeTextEditingStateThenTextIsCleared() {
@@ -116,12 +120,14 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInHomeNonEditingStateThenCorrectButtonsAreShow() {
         let testee = HomeNonEditingState()
-        XCTAssertFalse(testee.showBackground)
+        XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertTrue(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertTrue(testee.showSearchLoupe)
     }
 
     func testWhenEnteringHomeNonEditingStateThenTextIsCleared() {
@@ -161,12 +167,14 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingEmptyEditingState()
-        XCTAssertTrue(testee.showBackground)
-        XCTAssertTrue(testee.showSiteRating)
+        XCTAssertFalse(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+        XCTAssertTrue(testee.showCancel)
+        XCTAssertTrue(testee.showSearchLoupe)
     }
 
     func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
@@ -206,12 +214,14 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingTextEditingState()
-        XCTAssertTrue(testee.showBackground)
-        XCTAssertTrue(testee.showSiteRating)
+        XCTAssertFalse(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
         XCTAssertFalse(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+        XCTAssertTrue(testee.showCancel)
+        XCTAssertTrue(testee.showSearchLoupe)
     }
 
     func testWhenEnteringBrowsingTextEditingStateThenTextIsMaintained() {
@@ -251,12 +261,14 @@ class OmniBarStateTests: XCTestCase {
 
     func testWhenInBrowsingNonEditingStateThenCorrectButtonsAreShow() {
         let testee = BrowsingNonEditingState()
-        XCTAssertFalse(testee.showBackground)
+        XCTAssertTrue(testee.showBackground)
         XCTAssertTrue(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
         XCTAssertTrue(testee.showMenu)
         XCTAssertFalse(testee.showBookmarks)
         XCTAssertFalse(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertFalse(testee.showSearchLoupe)
     }
 
     func testWhenEnteringBrowsingNonEditingStateThenTextIsMaintained() {

@@ -1,8 +1,8 @@
 //
-//  AddFavoriteHomeCell.swift
+//  CustomizedNavigationController.swift
 //  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -16,23 +16,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-
 import UIKit
 
-class AddFavoriteHomeCell: UICollectionViewCell {
+class ThemableNavigationController: UINavigationController {
     
-    @IBOutlet weak var plusImage: UIImageView!
-    @IBOutlet weak var plusBackground: UIView!
-    
-}
-
-extension AddFavoriteHomeCell: Themable {
-    func decorate(with theme: Theme) {
-        
-        plusImage.tintColor = theme.favoritesPlusTintColor
-        plusBackground.backgroundColor = UIColor.clear
-        plusBackground.layer.borderWidth = 1
-        plusBackground.layer.borderColor = theme.favoritesPlusBackgroundColor.cgColor
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ThemeManager.shared.currentTheme.statusBarStyle
     }
 }

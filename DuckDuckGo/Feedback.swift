@@ -106,7 +106,7 @@ class Feedback {
             case .browserFeatureIssues:
                 return "browserFeatures"
             case .websiteLoadingIssues:
-                return "brokenSites_submit"
+                return "brokenSites"
             case .ddgSearchIssues:
                 return "badResults"
             case .customizationIssues:
@@ -114,7 +114,7 @@ class Feedback {
             case .performanceIssues:
                 return "performance"
             case .otherIssues:
-                return "other_submit"
+                return "other"
             }
         }
     }

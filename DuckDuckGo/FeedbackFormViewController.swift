@@ -27,6 +27,8 @@ class FeedbackFormViewController: UIViewController {
     }
     
     private struct Constants {
+        static let maxMessageLength = 500
+        
         static let inputFieldFontSize: CGFloat = 14
         static let scrollToMargin: CGFloat = 15
         
@@ -140,17 +142,24 @@ class FeedbackFormViewController: UIViewController {
     @IBAction func submitFeedbackPressed() {
         view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
         
+        sendFeedback()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func sendFeedback() {
         if let model = model {
+            let message = String(messageTextView.text.prefix(Constants.maxMessageLength))
+            
             let feedbackSender = FeedbackSubmitter()
             switch model {
             case .positive:
-                feedbackSender.firePositiveSentimentPixel()
+                feedbackSender.submitPositiveSentiment(message: message)
             case .negative(let feedbackModel):
-                feedbackSender.fireNegativeSentimentPixel(with: feedbackModel)
+                feedbackSender.submitNegativeSentiment(message: message,
+                                                       url: websiteTextField.text,
+                                                       model: feedbackModel)
             }
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonPressed() {

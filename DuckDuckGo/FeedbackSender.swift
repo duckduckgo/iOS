@@ -29,7 +29,10 @@ protocol FeedbackComponent {
 
 protocol FeedbackSender {
     func submitBrokenSite(url: String, message: String)
-    func submitMessage(message: String)
+    func submitMessage(_ message: String)
+    
+    func submitPositiveSentiment(message: String)
+    func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model)
     
     func firePositiveSentimentPixel()
     func fireNegativeSentimentPixel(with model: Feedback.Model)
@@ -51,19 +54,34 @@ struct FeedbackSubmitter: FeedbackSender {
     }
 
     public func submitBrokenSite(url: String, message: String) {
-        submitFeedback(reason: .brokenSite, url: url, comment: message)
+        submitFeedback(reason: .brokenSite, rating: nil, url: url, comment: message)
     }
 
-    public func submitMessage(message: String) {
-        submitFeedback(reason: .general, url: nil, comment: message)
+    public func submitMessage(_ message: String) {
+        submitFeedback(reason: .general, rating: nil, url: nil, comment: message)
     }
 
-    private func submitFeedback(reason: Reason, url: String?, comment: String) {
+    func submitPositiveSentiment(message: String) {
+        submitFeedback(reason: .general, rating: "positive", url: nil, comment: message)
+    }
+    
+    func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {
+        submitFeedback(reason: .general, rating: "negative", url: url, comment: message, model: model)
+    }
+
+    private func submitFeedback(reason: Reason,
+                                rating: String?,
+                                url: String?,
+                                comment: String,
+                                model: Feedback.Model? = nil) {
 
         let parameters = [
             "reason": reason.rawValue,
+            "rating": rating ?? "",
             "url": url ?? "",
             "comment": comment,
+            "category": model?.category?.component ?? "",
+            "subcategory": model?.subcategory?.component ?? "",
             "platform": "iOS",
             "os": UIDevice.current.systemVersion,
             "manufacturer": "Apple",
@@ -92,9 +110,10 @@ struct FeedbackSubmitter: FeedbackSender {
         
         if let subcategory = model.subcategory {
             rawPixel += "_" + subcategory.component
+        } else {
+            rawPixel += "_submit"
         }
         
         Pixel.fire(rawPixel: rawPixel)
     }
 }
-

@@ -50,7 +50,7 @@ struct SiteFeedbackModel {
         if isBrokenSite {
             feedbackSender.submitBrokenSite(url: url!, message: message!)
         } else {
-            feedbackSender.submitMessage(message: message!)
+            feedbackSender.submitMessage(message!)
         }
     }
 }

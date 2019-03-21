@@ -551,7 +551,7 @@ extension MainViewController: FindInPageViewDelegate {
 extension MainViewController: BrowserChromeDelegate {
 
     struct ChromeAnimationConstants {
-        static let duration = 0.3
+        static let duration = 0.1
     }
 
     private func hideKeyboard() {

@@ -51,16 +51,19 @@ class PositiveFeedbackViewController: UIViewController {
     }
     
     @IBAction func rateAppButtonPressed() {
+        FeedbackSubmitter().firePositiveSentimentPixel()
+        
         let urlStr = "itms-apps://itunes.apple.com/us/app/duckduckgo-privacy-browser/id663592361?action=write-review"
 
         UIApplication.shared.open(URL(string: urlStr)!)
     }
     
     @IBAction func leaveFeedbackPressed() {
-//        dismiss(animated: true, completion: nil)
+
     }
     
     @IBAction func doneButtonPressed() {
+        FeedbackSubmitter().firePositiveSentimentPixel()
         dismiss(animated: true, completion: nil)
     }
     

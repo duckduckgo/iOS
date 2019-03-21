@@ -83,6 +83,9 @@ public enum PixelName: String {
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
     case tabBarTabSwitcherPressed = "mt_tb"
+    
+    case feedbackPositive = "mfbs_positive_submit"
+    case feedbackNegativePrefix = "mfbs_negative"
 
 }
 
@@ -113,14 +116,26 @@ public class Pixel {
                             withAdditionalParameters params: [String: String?] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
+        fire(rawPixel: pixel.rawValue,
+             forDeviceType: deviceType,
+             withAdditionalParameters: params,
+             withHeaders: headers,
+             onComplete: onComplete)
+    }
+    
+    public static func fire(rawPixel: String,
+                            forDeviceType deviceType: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom,
+                            withAdditionalParameters params: [String: String?] = [:],
+                            withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                            onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls
-            .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
+            .pixelUrl(forPixelNamed: rawPixel, formFactor: formFactor)
             .addParams(params)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
-            Logger.log(items: "Pixel fired \(pixel.rawValue)")
+            Logger.log(items: "Pixel fired \(rawPixel)")
             onComplete(response.error)
         }
     }

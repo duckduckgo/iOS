@@ -19,7 +19,7 @@
 
 import Foundation
 
-protocol FeedbackEntry {
+protocol FeedbackEntry: FeedbackComponent {
     var nextStep: Feedback.NextStep { get }
     
     var userText: String { get }
@@ -100,9 +100,26 @@ class Feedback {
                 return false
             }
         }
+        
+        var component: String {
+            switch self {
+            case .browserFeatureIssues:
+                return "browserFeatures"
+            case .websiteLoadingIssues:
+                return "brokenSites_submit"
+            case .ddgSearchIssues:
+                return "badResults"
+            case .customizationIssues:
+                return "customization"
+            case .performanceIssues:
+                return "performance"
+            case .otherIssues:
+                return "other_submit"
+            }
+        }
     }
     
-    enum BrowserFeatureSubcategory: FeedbackEntry, CaseIterable {
+    enum BrowserFeatureSubcategory: String, FeedbackEntry, CaseIterable {
         
         case navigation
         case tabs
@@ -139,14 +156,18 @@ class Feedback {
                 return false
             }
         }
+        
+        var component: String {
+            return rawValue
+        }
     }
     
-    enum DDGSearchSubcategory: FeedbackEntry, CaseIterable {
+    enum DDGSearchSubcategory: String, FeedbackEntry, CaseIterable {
         
         case technical
         case layout
-        case loadTime
-        case languageOrReason
+        case speed
+        case languageOrRegion
         case autocomplete
         case other
         
@@ -156,10 +177,10 @@ class Feedback {
                 return UserText.ddgSearchIssuesTechnical
             case .layout:
                 return UserText.ddgSearchIssuesLayout
-            case .loadTime:
-                return UserText.ddgSearchIssuesLoadTime
-            case .languageOrReason:
-                return UserText.ddgSearchIssuesLanguageOrReason
+            case .speed:
+                return UserText.ddgSearchIssuesSpeed
+            case .languageOrRegion:
+                return UserText.ddgSearchIssuesLanguageOrRegion
             case .autocomplete:
                 return UserText.ddgSearchIssuesAutocomplete
             case .other:
@@ -175,15 +196,24 @@ class Feedback {
                 return false
             }
         }
+        
+        var component: String {
+            switch self {
+            case .languageOrRegion:
+                return "langRegion"
+            default:
+                return rawValue
+            }
+        }
     }
     
-    enum CustomizationSubcategory: FeedbackEntry, CaseIterable {
+    enum CustomizationSubcategory: String, FeedbackEntry, CaseIterable {
         
         case homeScreen
         case tabs
         case ui
-        case whatIsCleared
-        case whenIsCleared
+        case whichDataIsCleared
+        case whenDataIsCleared
         case bookmarks
         case other
         
@@ -195,9 +225,9 @@ class Feedback {
                 return UserText.customizationIssuesTabs
             case .ui:
                 return UserText.customizationIssuesUI
-            case .whatIsCleared:
+            case .whichDataIsCleared:
                 return UserText.customizationIssuesWhatIsCleared
-            case .whenIsCleared:
+            case .whenDataIsCleared:
                 return UserText.customizationIssuesWhenIsCleared
             case .bookmarks:
                 return UserText.customizationIssuesBookmarks
@@ -212,6 +242,19 @@ class Feedback {
                 return true
             default:
                 return false
+            }
+        }
+        
+        var component: String {
+            switch self {
+            case .homeScreen:
+                return "home"
+            case .whichDataIsCleared:
+                return "whichDataCleared"
+            case .whenDataIsCleared:
+                return "whenDataCleared"
+            default:
+                return rawValue
             }
         }
     }
@@ -241,6 +284,19 @@ class Feedback {
                 return true
             default:
                 return false
+            }
+        }
+        
+        var component: String {
+            switch self {
+            case .slowLoading:
+                return "slow"
+            case .crashes:
+                return "crash"
+            case .playback:
+                return "video"
+            case .other:
+                return "other"
             }
         }
     }

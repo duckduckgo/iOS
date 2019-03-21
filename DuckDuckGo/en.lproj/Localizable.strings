@@ -217,7 +217,7 @@
 "feedback.ddgSearch.technical" = "Programming/technical search";
 "feedback.ddgSearch.layout" = "The layout should be more like Google";
 "feedback.ddgSearch.loadTime" = "Faster load time";
-"feedback.ddgSearch.languageOrReason" = "Searching in a specific language or reason";
+"feedback.ddgSearch.languageOrRegion" = "Searching in a specific language or region";
 "feedback.ddgSearch.autocomplete" = "Better autocomplete";
 "feedback.ddgSearch.other" = "None of these";
 

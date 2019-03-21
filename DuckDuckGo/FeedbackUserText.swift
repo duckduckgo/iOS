@@ -100,9 +100,9 @@ extension UserText {
                                                                    comment: "Programming/technical search")
     public static let ddgSearchIssuesLayout = NSLocalizedString("feedback.ddgSearch.layout",
                                                                 comment: "The layout should be more like Google")
-    public static let ddgSearchIssuesLoadTime = NSLocalizedString("feedback.ddgSearch.loadTime",
+    public static let ddgSearchIssuesSpeed = NSLocalizedString("feedback.ddgSearch.loadTime",
                                                                   comment: "Faster load time")
-    public static let ddgSearchIssuesLanguageOrReason = NSLocalizedString("feedback.ddgSearch.languageOrReason",
+    public static let ddgSearchIssuesLanguageOrRegion = NSLocalizedString("feedback.ddgSearch.languageOrRegion",
                                                                           comment: "Searching in a specific language or reason")
     public static let ddgSearchIssuesAutocomplete = NSLocalizedString("feedback.ddgSearch.autocomplete",
                                                                       comment: "Better autocomplete")

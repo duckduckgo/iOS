@@ -21,6 +21,11 @@ import UIKit
 
 class FeedbackFormViewController: UIViewController {
     
+    private enum FormModel {
+        case positive
+        case negative(Feedback.Model)
+    }
+    
     private struct Constants {
         static let inputFieldFontSize: CGFloat = 14
         static let scrollToMargin: CGFloat = 15
@@ -47,6 +52,8 @@ class FeedbackFormViewController: UIViewController {
     
     @IBOutlet weak var submitFeedbackButton: UIButton!
     
+    private var model: FormModel?
+    
     static func loadFromStoryboard() -> FeedbackFormViewController {
         let storyboard = UIStoryboard(name: "Feedback", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "FeedbackForm") as? FeedbackFormViewController else {
@@ -64,6 +71,8 @@ class FeedbackFormViewController: UIViewController {
     }
     
     func configureForPositiveSentiment() {
+        model = .positive
+        
         loadViewIfNeeded()
         hideWebsiteField()
         
@@ -77,10 +86,11 @@ class FeedbackFormViewController: UIViewController {
     }
     
     func configureForNegativeSentiment(for type: Feedback.SubmitFormType,
-                                       with model: Feedback.Model) {
-        guard let category = model.category else {
+                                       with feedbackModel: Feedback.Model) {
+        guard let category = feedbackModel.category else {
                 fatalError("Feedback model is incomplete!")
         }
+        model = .negative(feedbackModel)
         
         loadViewIfNeeded()
         
@@ -91,7 +101,7 @@ class FeedbackFormViewController: UIViewController {
         case .regular:
             hideWebsiteField()
             
-            if let subcategory = model.subcategory {
+            if let subcategory = feedbackModel.subcategory {
                 if subcategory.isGeneric {
                     supplementaryText.setAttributedTextString(UserText.feedbackFormCaption)
                     messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormGenericPlaceholder)
@@ -129,7 +139,17 @@ class FeedbackFormViewController: UIViewController {
     
     @IBAction func submitFeedbackPressed() {
         view.window?.makeToast(UserText.feedbackSumbittedConfirmation)
-        // TODO
+        
+        if let model = model {
+            let feedbackSender = FeedbackSubmitter()
+            switch model {
+            case .positive:
+                feedbackSender.firePositiveSentimentPixel()
+            case .negative(let feedbackModel):
+                feedbackSender.fireNegativeSentimentPixel(with: feedbackModel)
+            }
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     

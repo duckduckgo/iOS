@@ -20,9 +20,19 @@
 import Foundation
 import Core
 
+/// Represents single component that is being sent to the server.
+/// Feedback as a whole can consist of multiple components. These components are included both in
+/// message sent to the server and in pixels.
+protocol FeedbackComponent {
+    var component: String { get }
+}
+
 protocol FeedbackSender {
     func submitBrokenSite(url: String, message: String)
     func submitMessage(message: String)
+    
+    func firePositiveSentimentPixel()
+    func fireNegativeSentimentPixel(with model: Feedback.Model)
 }
 
 struct FeedbackSubmitter: FeedbackSender {
@@ -70,4 +80,21 @@ struct FeedbackSubmitter: FeedbackSender {
             }
         }
     }
+    
+    func firePositiveSentimentPixel() {
+        Pixel.fire(pixel: .feedbackPositive)
+    }
+    
+    func fireNegativeSentimentPixel(with model: Feedback.Model) {
+        guard let category = model.category else { return }
+        
+        var rawPixel = PixelName.feedbackNegativePrefix.rawValue + "_" + category.component
+        
+        if let subcategory = model.subcategory {
+            rawPixel += "_" + subcategory.component
+        }
+        
+        Pixel.fire(rawPixel: rawPixel)
+    }
 }
+

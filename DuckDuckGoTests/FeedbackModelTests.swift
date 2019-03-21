@@ -161,5 +161,13 @@ class FeedbackModelTests: XCTestCase {
             messageSubmitted = true
             self.message = message
         }
+        
+        func firePositiveSentimentPixel() {
+            
+        }
+        
+        func fireNegativeSentimentPixel(with model: Feedback.Model) {
+            
+        }
     }
 }

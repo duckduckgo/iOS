@@ -66,7 +66,7 @@
 		83C05D06212C77D80068712A /* BloomFilterWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C05D04212C74600068712A /* BloomFilterWrapperTest.swift */; };
 		83C389CC212D818500C11612 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328AABA212ADAD100293140 /* CommonCrypto.framework */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
-		83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4A73620E1272F003A7A6D /* FeedbackModel.swift */; };
+		83D4A73720E1272F003A7A6D /* SiteFeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D4A73620E1272F003A7A6D /* SiteFeedbackModel.swift */; };
 		83DBCA7B1F7BBB5000DFD170 /* TopSitesReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */; };
 		83DBCA841F7BBB7E00DFD170 /* top_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 83DBCA821F7BBB7E00DFD170 /* top_sites.json */; };
 		83EDCC411F86B89C005CDFCD /* StatisticsLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */; };
@@ -612,7 +612,7 @@
 		83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationFetch.swift; sourceTree = "<group>"; };
 		83C05D04212C74600068712A /* BloomFilterWrapperTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilterWrapperTest.swift; sourceTree = "<group>"; };
 		83D306A31F6D500B00ED7CE2 /* tosdr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tosdr.json; sourceTree = "<group>"; };
-		83D4A73620E1272F003A7A6D /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
+		83D4A73620E1272F003A7A6D /* SiteFeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteFeedbackModel.swift; sourceTree = "<group>"; };
 		83DBCA781F7BBB5000DFD170 /* TopSitesReport.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopSitesReport.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83DBCA7A1F7BBB5000DFD170 /* TopSitesReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSitesReport.swift; sourceTree = "<group>"; };
 		83DBCA7C1F7BBB5000DFD170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1298,7 +1298,7 @@
 				98DA6B3222243CC3006EA9EB /* Feedback.xcassets */,
 				83A23D6220DC330000051F39 /* Feedback.storyboard */,
 				839F46B520DD9D31003B8A66 /* SiteFeedbackViewController.swift */,
-				83D4A73620E1272F003A7A6D /* FeedbackModel.swift */,
+				83D4A73620E1272F003A7A6D /* SiteFeedbackModel.swift */,
 				9888F77A2224980500C46159 /* FeedbackViewController.swift */,
 				9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */,
 				984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */,
@@ -3205,7 +3205,7 @@
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				F1134EE21F4233A200B73467 /* UIViewToastExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
-				83D4A73720E1272F003A7A6D /* FeedbackModel.swift in Sources */,
+				83D4A73720E1272F003A7A6D /* SiteFeedbackModel.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
 				851B12A822246B84004781BC /* EasyTipViewExtension.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,

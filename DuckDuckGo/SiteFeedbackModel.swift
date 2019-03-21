@@ -1,5 +1,5 @@
 //
-//  FeedbackViewModel.swift
+//  SiteFeedbackViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 
 import Foundation
 
-struct FeedbackModel {
+struct SiteFeedbackModel {
 
     var url: String?
     var message: String?

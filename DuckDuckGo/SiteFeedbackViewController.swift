@@ -38,7 +38,7 @@ class SiteFeedbackViewController: UIViewController {
     @IBOutlet weak var messagePlaceholderText: UILabel!
     @IBOutlet weak var submitButton: UIButton!
 
-    private var feedbackModel = FeedbackModel()
+    private var feedbackModel = SiteFeedbackModel()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent

@@ -29,10 +29,10 @@ class FeedbackModelTests: XCTestCase {
     }
 
     private var feedbackSenderStub = FeedbackSenderStub()
-    private var testee: FeedbackModel!
+    private var testee: SiteFeedbackModel!
 
     override func setUp() {
-        testee = FeedbackModel(feedbackSender: feedbackSenderStub)
+        testee = SiteFeedbackModel(feedbackSender: feedbackSenderStub)
     }
 
     func testWhenInitThenDefaultValuesAreCorrect() {

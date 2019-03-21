@@ -24,8 +24,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="71" y="60" width="233" height="136"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
+                                <rect key="frame" x="71" y="48" width="233" height="136"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
                                         <rect key="frame" x="0.0" y="0.0" width="233" height="80"/>
@@ -58,18 +58,21 @@ been this easy.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="136" id="AgE-O3-AVM"/>
+                                </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU" userLabel="Bullets">
-                                <rect key="frame" x="24" y="208" width="327" height="274"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU" userLabel="Bullets">
+                                <rect key="frame" x="24" y="206.5" width="327" height="274"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
                                         <rect key="frame" x="0.0" y="0.0" width="327" height="64"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="vY4-c3-YLJ"/>
-                                                    <constraint firstAttribute="height" constant="64" id="wmx-bL-EOc"/>
+                                                    <constraint firstAttribute="height" priority="750" constant="64" id="wmx-bL-EOc"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
@@ -90,10 +93,10 @@ been this easy.</string>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
                                         <rect key="frame" x="0.0" y="70" width="327" height="64"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-dU-Ih3">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-dU-Ih3">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="64" id="fLV-FP-EpD"/>
+                                                    <constraint firstAttribute="height" priority="750" constant="64" id="fLV-FP-EpD"/>
                                                     <constraint firstAttribute="width" constant="64" id="gla-on-vsJ"/>
                                                 </constraints>
                                             </imageView>
@@ -115,11 +118,11 @@ been this easy.</string>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jMm-V2-J1P" userLabel="Clear your data">
                                         <rect key="frame" x="0.0" y="140" width="327" height="64"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="i66-EN-Pg4">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="i66-EN-Pg4">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="AYQ-6f-oL1"/>
-                                                    <constraint firstAttribute="height" constant="64" id="Jry-0u-6rm"/>
+                                                    <constraint firstAttribute="height" priority="750" constant="64" id="Jry-0u-6rm"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
@@ -140,11 +143,11 @@ been this easy.</string>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-CD-VRZ" userLabel="Customize">
                                         <rect key="frame" x="0.0" y="210" width="327" height="64"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="HtO-i5-Mle">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="HtO-i5-Mle">
                                                 <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="64" id="GMP-9t-0ZL"/>
-                                                    <constraint firstAttribute="height" constant="64" id="jPy-wT-mQZ"/>
+                                                    <constraint firstAttribute="height" priority="750" constant="64" id="jPy-wT-mQZ"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
@@ -164,45 +167,85 @@ been this easy.</string>
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Done BG" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="28" y="589" width="319" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-Dh-w8y" userLabel="Buttons">
+                                <rect key="frame" x="28" y="531" width="319" height="108"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Start Browsing" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="319" height="50"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Start Browsing"/>
-                                        <connections>
-                                            <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="JJe-pe-VGc"/>
-                                        </connections>
-                                    </button>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
+                                                <rect key="frame" x="0.0" y="0.0" width="319" height="50"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Start Browsing"/>
+                                                <connections>
+                                                    <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="JJe-pe-VGc"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
+                                            <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
+                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="gpL-yi-tzk"/>
+                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
+                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fy4-oE-dim" userLabel="More Info" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="58" width="319" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
+                                                <rect key="frame" x="0.0" y="0.0" width="319" height="50"/>
+                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="More Information">
+                                                    <color key="titleColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="UJ5-0U-Jcd"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="height" secondItem="fy4-oE-dim" secondAttribute="height" id="5tS-AY-qfe"/>
+                                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerX" secondItem="fy4-oE-dim" secondAttribute="centerX" id="SQx-Xk-0Ze"/>
+                                            <constraint firstAttribute="height" constant="50" id="Z1j-gt-SLj"/>
+                                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="width" secondItem="fy4-oE-dim" secondAttribute="width" id="bX1-3y-Bxt"/>
+                                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerY" secondItem="fy4-oE-dim" secondAttribute="centerY" id="kz3-D3-8y1"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
-                                    <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="gpL-yi-tzk"/>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
-                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="28" id="J2Q-45-Htn"/>
+                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-56" id="7mm-Zo-aG6"/>
+                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="GIt-fR-gFc"/>
                             <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="UmW-bW-Lc6"/>
-                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="40" id="VcY-9C-d73"/>
-                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-56" id="Wgk-Vu-uzj"/>
+                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="28" id="VcY-9C-d73"/>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ZZ1-JB-aZP"/>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="centerY" secondItem="2Fp-cs-AKH" secondAttribute="centerY" priority="250" id="j5V-ni-vc6"/>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="12" id="oUe-qc-pY4"/>
                             <constraint firstItem="d2U-SO-dZU" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-48" id="pNO-U8-ZD6"/>
-                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="ubw-iD-6Jr"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="8cl-Dh-w8y" secondAttribute="bottom" constant="28" id="r9i-SL-UdX"/>
+                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="top" relation="greaterThanOrEqual" secondItem="d2U-SO-dZU" secondAttribute="bottom" constant="12" id="zCt-EY-gmB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                     </view>

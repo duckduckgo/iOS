@@ -58,10 +58,6 @@ class PositiveFeedbackViewController: UIViewController {
         UIApplication.shared.open(URL(string: urlStr)!)
     }
     
-    @IBAction func leaveFeedbackPressed() {
-
-    }
-    
     @IBAction func doneButtonPressed() {
         FeedbackSubmitter().firePositiveSentimentPixel()
         dismiss(animated: true, completion: nil)

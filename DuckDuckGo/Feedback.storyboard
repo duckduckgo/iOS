@@ -371,10 +371,10 @@
             </objects>
             <point key="canvasLocation" x="-659.4202898550725" y="923.64130434782612"/>
         </scene>
-        <!--Send Feedback-->
+        <!--Positive Feedback-->
         <scene sceneID="qEU-ow-iaP">
             <objects>
-                <viewController title="Send Feedback" id="rAY-cv-mjl" customClass="PositiveFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Send Feedback" id="rAY-cv-mjl" userLabel="Positive Feedback" customClass="PositiveFeedbackViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zgc-vi-YZO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -560,10 +560,10 @@
             </objects>
             <point key="canvasLocation" x="267" y="924"/>
         </scene>
-        <!--Send Feedback-->
+        <!--Feedback Picker-->
         <scene sceneID="pU2-w2-HSD">
             <objects>
-                <tableViewController storyboardIdentifier="FeedbackPicker" title="Send Feedback" id="lY6-5c-iu4" customClass="FeedbackPickerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FeedbackPicker" title="Send Feedback" id="lY6-5c-iu4" userLabel="Feedback Picker" customClass="FeedbackPickerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="r0Q-7K-kUf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -668,10 +668,10 @@
             </objects>
             <point key="canvasLocation" x="267" y="1690"/>
         </scene>
-        <!--Send Feedback-->
+        <!--Feedback Form-->
         <scene sceneID="KeI-Y1-Qzf">
             <objects>
-                <viewController storyboardIdentifier="FeedbackForm" title="Send Feedback" id="Rvx-dM-etJ" customClass="FeedbackFormViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedbackForm" title="Send Feedback" id="Rvx-dM-etJ" userLabel="Feedback Form" customClass="FeedbackFormViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5c0-e6-FcW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

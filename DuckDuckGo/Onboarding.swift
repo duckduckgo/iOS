@@ -83,8 +83,12 @@ extension MainViewController: OnboardingDelegate {
             Pixel.fire(pixel: .onboardingCustomizeSettings)
             MainViewController.onboardingSettingsPixelFired = true
         }
-        let settings = SettingsViewController.loadFromStoryboard()
-        controller.present(settings, animated: true)
+        let settingsContainer = SettingsViewController.loadFromStoryboard()
+        guard let settings = settingsContainer.children[0] as? SettingsViewController else {
+            fatalError("Failed to find \(SettingsViewController.self)")
+        }
+        settings.homePageSettingsDelegate = self
+        controller.present(settingsContainer, animated: true)
     }
     
     func explorePrivacyFeatures(controller: UIViewController) {

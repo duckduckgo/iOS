@@ -32,7 +32,7 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // Shared control group
-        // Variant(name: "sc", weight: 1, features: []),
+        Variant(name: "sc", weight: 1, features: []),
         
         // Improve app onboarding experiment 1
         Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),

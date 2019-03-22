@@ -19,18 +19,14 @@
 
 import UIKit
 
-class OnboardingSummaryPadViewController: UIViewController, Onboarding, OnboardingDelegate {
+class OnboardingSummaryPadViewController: UIViewController, Onboarding {
 
     weak var delegate: OnboardingDelegate?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if var onboarding = segue.destination as? Onboarding {
-            onboarding.delegate = self
+            onboarding.delegate = delegate
         }
-    }
-
-    func onboardingCompleted(controller: UIViewController) {
-        delegate?.onboardingCompleted(controller: self)
     }
 
 }

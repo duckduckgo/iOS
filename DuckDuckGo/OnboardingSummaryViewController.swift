@@ -18,10 +18,47 @@
 //
 
 import UIKit
+import Core
 
 class OnboardingSummaryViewController: UIViewController, Onboarding {
     
+    @IBOutlet weak var secondaryButton: UIButton!
+    
     weak var delegate: OnboardingDelegate?
+    
+    var variant: Variant {
+        guard let variant = DefaultVariantManager().currentVariant else {
+            fatalError("No variant")
+        }
+
+        return variant
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        Pixel.fire(pixel: .onboardingShown)
+        updateSecondaryButton()
+    }
+    
+    private func updateSecondaryButton() {
+        if variant.features.contains(.onboardingCustomizeSettings) {
+            secondaryButton.setTitle("Customize Your Settings", for: .normal)
+        } else if variant.features.contains(.onboardingExplorePrivacy) {
+            secondaryButton.setTitle("Explore Privacy Features", for: .normal)
+        } else {
+            fatalError("Unexpected variant \(variant.name)")
+        }
+    }
+    
+    @IBAction func secondaryButtonAction() {
+        if variant.features.contains(.onboardingCustomizeSettings) {
+            delegate?.customizeSettings(controller: self)
+        } else if variant.features.contains(.onboardingExplorePrivacy) {
+            delegate?.explorePrivacyFeatures(controller: self)
+        } else {
+            fatalError("Unexpected variant \(variant.name)")
+        }
+    }
     
     @IBAction func done() {
         delegate?.onboardingCompleted(controller: self)

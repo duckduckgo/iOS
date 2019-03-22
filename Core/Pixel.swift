@@ -84,6 +84,10 @@ public enum PixelName: String {
     case tabBarBookmarksPressed = "mt_bm"
     case tabBarTabSwitcherPressed = "mt_tb"
 
+    case onboardingShown = "mo"
+    case onboardingCustomizeSettings = "mo_s"
+    case onboardingExplorePrivacy = "mo_e"
+
 }
 
 public class Pixel {

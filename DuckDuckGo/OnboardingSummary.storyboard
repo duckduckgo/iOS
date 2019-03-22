@@ -221,7 +221,7 @@ been this easy.</string>
                                                     <color key="titleColor" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="done" destination="X59-2u-JR5" eventType="touchUpInside" id="UJ5-0U-Jcd"/>
+                                                    <action selector="secondaryButtonAction" destination="X59-2u-JR5" eventType="touchUpInside" id="Pm7-Xf-zAd"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -262,6 +262,9 @@ been this easy.</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                     </view>
+                    <connections>
+                        <outlet property="secondaryButton" destination="J1y-Qk-FSX" id="W3L-vv-Nno"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

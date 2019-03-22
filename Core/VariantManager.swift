@@ -22,6 +22,8 @@ import Foundation
 public enum FeatureName: String {
     case onboardingSummary
     case onboardingContextual
+    case onboardingCustomizeSettings
+    case onboardingExplorePrivacy
 }
 
 public struct Variant {
@@ -30,11 +32,11 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // Shared control group
-        Variant(name: "sc", weight: 1, features: []),
+        // Variant(name: "sc", weight: 1, features: []),
         
         // Improve app onboarding experiment 1
-        Variant(name: "mq", weight: 1, features: [.onboardingSummary]),
-        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingContextual])
+        Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),
+        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingExplorePrivacy])
     ]
     
     public let name: String

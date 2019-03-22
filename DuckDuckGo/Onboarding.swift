@@ -23,6 +23,10 @@ import Core
 protocol OnboardingDelegate: NSObjectProtocol {
     
     func onboardingCompleted(controller: UIViewController)
+ 
+    func customizeSettings(controller: UIViewController)
+    
+    func explorePrivacyFeatures(controller: UIViewController)
     
 }
 
@@ -72,19 +76,39 @@ extension MainViewController {
 
 extension MainViewController: OnboardingDelegate {
     
+    static var onboardingSettingsPixelFired = false
+    
+    func customizeSettings(controller: UIViewController) {
+        if !MainViewController.onboardingSettingsPixelFired {
+            Pixel.fire(pixel: .onboardingCustomizeSettings)
+            MainViewController.onboardingSettingsPixelFired = true
+        }
+        let settings = SettingsViewController.loadFromStoryboard()
+        controller.present(settings, animated: true)
+    }
+    
+    func explorePrivacyFeatures(controller: UIViewController) {
+        Pixel.fire(pixel: .onboardingExplorePrivacy)
+        markOnboardingSeen()
+        controller.dismiss(animated: true) {
+            self.loadUrl(URL(string: "https://duckduckgo.com/app#scrollpos")!)
+        }
+    }
+    
     func onboardingCompleted(controller: UIViewController) {
-        
-        var settings = DefaultTutorialSettings()
-        settings.hasSeenOnboarding = true
-        
+        markOnboardingSeen()
         if DefaultVariantManager().isSupported(feature: .onboardingSummary) {
             controller.modalTransitionStyle = .crossDissolve
         } else {
             controller.modalTransitionStyle = .flipHorizontal
         }
-        
         controller.dismiss(animated: true)
         homeController?.resetHomeRowCTAAnimations()
+    }
+    
+    func markOnboardingSeen() {
+        var settings = DefaultTutorialSettings()
+        settings.hasSeenOnboarding = true
     }
     
 }

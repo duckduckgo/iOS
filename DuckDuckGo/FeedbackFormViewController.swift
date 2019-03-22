@@ -21,6 +21,11 @@ import UIKit
 
 class FeedbackFormViewController: UIViewController {
     
+    enum FormType {
+        case regular
+        case brokenWebsite
+    }
+    
     private enum FormModel {
         case positive
         case negative(Feedback.Model)
@@ -87,7 +92,7 @@ class FeedbackFormViewController: UIViewController {
         submitFeedbackButton.setTitle(UserText.feedbackFormSubmit, for: .normal)
     }
     
-    func configureForNegativeSentiment(for type: Feedback.SubmitFormType,
+    func configureForNegativeSentiment(for type: FormType,
                                        with feedbackModel: Feedback.Model) {
         guard let category = feedbackModel.category else {
                 fatalError("Feedback model is incomplete!")
@@ -197,28 +202,12 @@ class FeedbackFormViewController: UIViewController {
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-        
         messageViewHeight.constant = Constants.defaultMessageViewHeight
         
-        // Area that is the most relevant to the user who's typing the message
-        let upperLeftInteractionArea: CGPoint
-        if websiteTextField.isHidden == false {
-            upperLeftInteractionArea = websiteTextField.frame.origin
-        } else {
-            upperLeftInteractionArea = messageTextView.frame.origin
-        }
-        var lowerRightInteractionArea = submitFeedbackButton.frame.origin
-        lowerRightInteractionArea.x += submitFeedbackButton.frame.size.width
-        lowerRightInteractionArea.y += submitFeedbackButton.frame.size.height
+        let interactionRect = interactionAreaForEditingMode()
         
-        let interactionRect = CGRect(x: upperLeftInteractionArea.x,
-                                     y: upperLeftInteractionArea.y,
-                                     width: lowerRightInteractionArea.x - upperLeftInteractionArea.x,
-                                     height: lowerRightInteractionArea.y - upperLeftInteractionArea.y)
-        
-        if let rect = desiredVisibleRect(forInteractionArea: interactionRect,
-                                         in: scrollView,
-                                         coveredBy: keyboardFrame) {
+        if let rect = scrollView.desiredVisibleRect(forInteractionArea: interactionRect,
+                                                    coveredBy: keyboardFrame) {
             // Note: scrollRectToVisible is not working properly in Modal view on iPad
             var offset = scrollView.contentOffset
             offset.y = rect.origin.y
@@ -245,37 +234,29 @@ class FeedbackFormViewController: UIViewController {
         }
     }
     
-    func desiredVisibleRect(forInteractionArea interactionArea: CGRect,
-                            in view: UIView,
-                            coveredBy keyboardRect: CGRect) -> CGRect? {
-        guard let window = UIApplication.shared.keyWindow else { return nil }
-        
-        let viewInWindow = view.convert(view.bounds, to: window)
-        let obscuredScrollViewArea = viewInWindow.intersection(keyboardRect)
-        
-        guard obscuredScrollViewArea.size.height > 0 else { return nil }
-        
-        let visibleScrollViewAreaHeight = view.bounds.height - obscuredScrollViewArea.size.height
-        
-        let offset: CGFloat
-        if interactionArea.height + Constants.scrollToMargin > visibleScrollViewAreaHeight {
-            offset = interactionArea.origin.y - Constants.scrollToMargin
+    /// Calculate the area that is most relevant to the user when typing a feedback message.
+    private func interactionAreaForEditingMode() -> CGRect {
+        let upperLeftInteractionArea: CGPoint
+        if websiteTextField.isHidden == false {
+            upperLeftInteractionArea = websiteTextField.frame.origin
         } else {
-            offset = interactionArea.origin.y + Constants.scrollToMargin - (visibleScrollViewAreaHeight - interactionArea.size.height)
+            upperLeftInteractionArea = messageTextView.frame.origin
         }
+        var lowerRightInteractionArea = submitFeedbackButton.frame.origin
+        lowerRightInteractionArea.x += submitFeedbackButton.frame.size.width
+        lowerRightInteractionArea.y += submitFeedbackButton.frame.size.height
         
-        guard offset > 0 else { return nil }
-        
-        return CGRect(x: interactionArea.origin.x,
-                      y: offset,
-                      width: interactionArea.size.width,
-                      height: visibleScrollViewAreaHeight)
+        return CGRect(x: upperLeftInteractionArea.x,
+                      y: upperLeftInteractionArea.y,
+                      width: lowerRightInteractionArea.x - upperLeftInteractionArea.x,
+                      height: lowerRightInteractionArea.y - upperLeftInteractionArea.y)
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
         let contentInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
+        messageViewHeight.constant = Constants.defaultMessageViewHeight
     }
 }
 

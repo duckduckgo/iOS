@@ -282,6 +282,7 @@
 		981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981FED702202519C008488D7 /* BlankSnapshot.storyboard */; };
 		981FED7422046017008488D7 /* AutoClearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED7322046017008488D7 /* AutoClearTests.swift */; };
 		981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */; };
+		9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
 		984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */; };
@@ -832,6 +833,7 @@
 		981FED702202519C008488D7 /* BlankSnapshot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BlankSnapshot.storyboard; sourceTree = "<group>"; };
 		981FED7322046017008488D7 /* AutoClearTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearTests.swift; sourceTree = "<group>"; };
 		981FED75220464EF008488D7 /* AutoClearSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClearSettingsModel.swift; sourceTree = "<group>"; };
+		9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
@@ -2432,6 +2434,7 @@
 				980891A82238504B00313A70 /* UILabelExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
+				9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */,
 				F1134EE11F4233A200B73467 /* UIViewToastExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
@@ -3164,6 +3167,7 @@
 			files = (
 				8528AE81212F15D600D0BD74 /* AppRatingPrompt.xcdatamodeld in Sources */,
 				853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */,
+				9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,

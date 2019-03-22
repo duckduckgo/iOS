@@ -41,7 +41,7 @@ class FeedbackNavigator {
         controller.navigationController?.pushViewController(pickerViewController, animated: true)
     }
     
-    private static func navigateToFeedbackForm(of type: Feedback.SubmitFormType,
+    private static func navigateToFeedbackForm(of type: FeedbackFormViewController.FormType,
                                                with model: Feedback.Model,
                                                from controller: UIViewController) {
         let formViewController = FeedbackFormViewController.loadFromStoryboard()

@@ -32,21 +32,16 @@ extension FeedbackEntry {
     var nextStep: Feedback.NextStep { return .presentForm(.regular) }
 }
 
-class Feedback {
+struct Feedback {
     
     struct Model {
-        var category: Feedback.Category?
+        var category: Category?
         var subcategory: FeedbackEntry?
-    }
-    
-    enum SubmitFormType {
-        case regular
-        case brokenWebsite
     }
     
     enum NextStep {
         case presentEntries([FeedbackEntry])
-        case presentForm(SubmitFormType)
+        case presentForm(FeedbackFormViewController.FormType)
     }
 
     enum Category: FeedbackEntry, CaseIterable {

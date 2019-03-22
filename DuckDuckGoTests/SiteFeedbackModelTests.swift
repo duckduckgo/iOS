@@ -1,5 +1,5 @@
 //
-//  FeedbackModelTests.swift
+//  SiteFeedbackModelTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 
-class FeedbackModelTests: XCTestCase {
+class SiteFeedbackModelTests: XCTestCase {
 
     struct Constants {
         static let url = "http://example.com"
@@ -162,20 +162,10 @@ class FeedbackModelTests: XCTestCase {
             self.message = message
         }
         
-        func submitPositiveSentiment(message: String) {
-            
-        }
+        func submitPositiveSentiment(message: String) {}
+        func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {}
         
-        func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {
-            
-        }
-        
-        func firePositiveSentimentPixel() {
-            
-        }
-        
-        func fireNegativeSentimentPixel(with model: Feedback.Model) {
-            
-        }
+        func firePositiveSentimentPixel() {}
+        func fireNegativeSentimentPixel(with model: Feedback.Model) {}
     }
 }

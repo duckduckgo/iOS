@@ -271,8 +271,8 @@ extension FeedbackFormViewController: UITextViewDelegate {
         let font = UIFont.appFont(ofSize: Constants.inputFieldFontSize)
         
         let attributes = [ NSAttributedString.Key.font: font,
-                                      NSAttributedString.Key.foregroundColor: ThemeManager.shared.currentTheme.textFieldFontColor,
-                                      NSAttributedString.Key.paragraphStyle: paragraphStyle]
+                           NSAttributedString.Key.foregroundColor: ThemeManager.shared.currentTheme.textFieldFontColor,
+                           NSAttributedString.Key.paragraphStyle: paragraphStyle]
         textView.typingAttributes = attributes
     }
     

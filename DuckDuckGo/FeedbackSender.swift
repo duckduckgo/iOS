@@ -44,6 +44,11 @@ struct FeedbackSubmitter: FeedbackSender {
         case general = "general"
         case brokenSite = "broken_site"
     }
+    
+    private enum Rating: String {
+        case positive
+        case negative
+    }
 
     private let statisticsStore: StatisticsStore
     private let versionProvider: AppVersion
@@ -61,23 +66,23 @@ struct FeedbackSubmitter: FeedbackSender {
         submitFeedback(reason: .general, rating: nil, url: nil, comment: message)
     }
 
-    func submitPositiveSentiment(message: String) {
-        submitFeedback(reason: .general, rating: "positive", url: nil, comment: message)
+    public func submitPositiveSentiment(message: String) {
+        submitFeedback(reason: .general, rating: .positive, url: nil, comment: message)
     }
     
-    func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {
-        submitFeedback(reason: .general, rating: "negative", url: url, comment: message, model: model)
+    public func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {
+        submitFeedback(reason: .general, rating: .negative, url: url, comment: message, model: model)
     }
 
     private func submitFeedback(reason: Reason,
-                                rating: String?,
+                                rating: Rating?,
                                 url: String?,
                                 comment: String,
                                 model: Feedback.Model? = nil) {
 
         let parameters = [
             "reason": reason.rawValue,
-            "rating": rating ?? "",
+            "rating": rating?.rawValue ?? "",
             "url": url ?? "",
             "comment": comment,
             "category": model?.category?.component ?? "",
@@ -99,11 +104,11 @@ struct FeedbackSubmitter: FeedbackSender {
         }
     }
     
-    func firePositiveSentimentPixel() {
+    public func firePositiveSentimentPixel() {
         Pixel.fire(pixel: .feedbackPositive)
     }
     
-    func fireNegativeSentimentPixel(with model: Feedback.Model) {
+    public func fireNegativeSentimentPixel(with model: Feedback.Model) {
         guard let category = model.category else { return }
         
         var rawPixel = PixelName.feedbackNegativePrefix.rawValue + "_" + category.component

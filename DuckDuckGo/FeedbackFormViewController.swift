@@ -152,24 +152,26 @@ class FeedbackFormViewController: UIViewController {
     }
     
     private func sendFeedback() {
-        if let model = model {
-            let message = String(messageTextView.text.prefix(Constants.maxMessageLength))
+        guard let model = model else {
+            fatalError("Feedback form is mising model!")
+        }
+        
+        let message = String(messageTextView.text.prefix(Constants.maxMessageLength))
+        
+        let feedbackSender = FeedbackSubmitter()
+        switch model {
+        case .positive:
+            feedbackSender.firePositiveSentimentPixel()
+            if message.trimWhitespace().isEmpty == false {
+                feedbackSender.submitPositiveSentiment(message: message)
+            }
             
-            let feedbackSender = FeedbackSubmitter()
-            switch model {
-            case .positive:
-                feedbackSender.firePositiveSentimentPixel()
-                if message.trimWhitespace().isEmpty == false {
-                    feedbackSender.submitPositiveSentiment(message: message)
-                }
-                
-            case .negative(let feedbackModel):
-                feedbackSender.fireNegativeSentimentPixel(with: feedbackModel)
-                if message.trimWhitespace().isEmpty == false {
-                    feedbackSender.submitNegativeSentiment(message: message,
-                                                           url: websiteTextField.text,
-                                                           model: feedbackModel)
-                }
+        case .negative(let feedbackModel):
+            feedbackSender.fireNegativeSentimentPixel(with: feedbackModel)
+            if message.trimWhitespace().isEmpty == false {
+                feedbackSender.submitNegativeSentiment(message: message,
+                                                       url: websiteTextField.text,
+                                                       model: feedbackModel)
             }
         }
     }

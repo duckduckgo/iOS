@@ -237,6 +237,9 @@
 		85CC936E203C402C00690089 /* SpeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC936D203C402C00690089 /* SpeedTests.swift */; };
 		85CC9376203C42A500690089 /* speed_test_sites.json in Resources */ = {isa = PBXBuildFile; fileRef = 85CC9375203C42A500690089 /* speed_test_sites.json */; };
 		85CE790721E8A9F600607B91 /* EmptySectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CE790621E8A9F600607B91 /* EmptySectionRenderer.swift */; };
+		85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85EE7F54224667DD000FE757 /* WebContainer.storyboard */; };
+		85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F562246685B000FE757 /* WebContainerViewController.swift */; };
+		85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */; };
 		85F1C3C61F7A4C7500161346 /* easylist-cached.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C31F7A4C7500161346 /* easylist-cached.js */; };
 		85F1C3C71F7A4C7500161346 /* easylist-parsing.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C41F7A4C7500161346 /* easylist-parsing.js */; };
 		85F1C3C81F7A4C7500161346 /* messaging.js in Resources */ = {isa = PBXBuildFile; fileRef = 85F1C3C51F7A4C7500161346 /* messaging.js */; };
@@ -779,6 +782,9 @@
 		85CC936F203C402C00690089 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85CC9375203C42A500690089 /* speed_test_sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = speed_test_sites.json; sourceTree = "<group>"; };
 		85CE790621E8A9F600607B91 /* EmptySectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySectionRenderer.swift; sourceTree = "<group>"; };
+		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
+		85EE7F562246685B000FE757 /* WebContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerViewController.swift; sourceTree = "<group>"; };
+		85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContainerNavigationController.swift; sourceTree = "<group>"; };
 		85F1C3C31F7A4C7500161346 /* easylist-cached.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "easylist-cached.js"; sourceTree = "<group>"; };
 		85F1C3C41F7A4C7500161346 /* easylist-parsing.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "easylist-parsing.js"; sourceTree = "<group>"; };
 		85F1C3C51F7A4C7500161346 /* messaging.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = messaging.js; sourceTree = "<group>"; };
@@ -1633,6 +1639,16 @@
 			path = SpeedTests;
 			sourceTree = "<group>";
 		};
+		85EE7F53224667C3000FE757 /* WebContainer */ = {
+			isa = PBXGroup;
+			children = (
+				85EE7F54224667DD000FE757 /* WebContainer.storyboard */,
+				85EE7F58224673C5000FE757 /* WebContainerNavigationController.swift */,
+				85EE7F562246685B000FE757 /* WebContainerViewController.swift */,
+			);
+			name = WebContainer;
+			sourceTree = "<group>";
+		};
 		85F1E9B11FB7C56A00A75AC1 /* PrivacyProtection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1813,6 +1829,7 @@
 		F11CEF581EBB66C80088E4D7 /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				85EE7F53224667C3000FE757 /* WebContainer */,
 				851B129422242CD2004781BC /* Contextual */,
 				85C11E4A209084DE00BFFEB4 /* HomeRow */,
 				F1BE54481E69DD5F00FCF649 /* Onboarding */,
@@ -2907,6 +2924,7 @@
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
+				85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */,
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				8577B0AC2225C778009CCC71 /* OnboardingSummary-iPad.storyboard in Resources */,
@@ -3179,6 +3197,7 @@
 				857D1DCD22401F0200833940 /* NotFoundCachingImageDownloader.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
+				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
@@ -3225,6 +3244,7 @@
 				85A9C37720DD2DC200073340 /* AddToHomeRowCTAViewController.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
+				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,

@@ -172,3 +172,5 @@
 "homepage.simple" = "Simple";
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+
+"privacy.features" = "Privacy Features";

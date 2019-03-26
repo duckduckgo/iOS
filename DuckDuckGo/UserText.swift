@@ -42,6 +42,7 @@ public struct UserText {
     public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
     public static let actionSave = NSLocalizedString("action.title.save", comment: "Save action")
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
+    public static let actionBookmark = NSLocalizedString("action.title.bookmark", comment: "Bookmark action")
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", comment: "Open in New Tab action")
     public static let actionNewBackgroundTabForUrl = NSLocalizedString("action.title.newBackgroundTabForUrl", comment: "Open in New Background Tab action")
@@ -63,6 +64,8 @@ public struct UserText {
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", comment: "Save Bookmark action")
     public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", comment: "Save Favorite action")
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
+    public static let alertBookmarkAllTitle = NSLocalizedString("alert.title.bookmarkAll", comment: "Bookmark All Tabs?")
+    public static let alertBookmarkAllMessage = NSLocalizedString("alert.message.bookmarkAll", comment: "Existing bookmarks will not be duplicated.")
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
@@ -180,5 +183,12 @@ public struct UserText {
     public static let bookmarkAllTabsNotFound = NSLocalizedString("bookmarkAll.tabs.notfound", comment: "No open tabs found to bookmark")
     public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", comment: "All open tabs are bookmarked")
     public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", comment: "Failed to bookmark %lu out of %lu tabs")
+
+    public static let autoClearAccessoryOn = NSLocalizedString("autoclear.on", comment: "On")
+    public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", comment: "Off")
+
+    public static let homePageSimple = NSLocalizedString("homepage.simple", comment: "Simple")
+    public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
+    public static let homePageCenterSearchAndFavorites = NSLocalizedString("homepage.centerSearchAndFavorites", comment: "Center Search and Favorites")
 
 }

@@ -23,7 +23,7 @@ protocol AppSettings {
     
     var autoClearAction: AutoClearSettingsModel.Action { get set }
     var autoClearTiming: AutoClearSettingsModel.Timing { get set }
+
+    var homePage: HomePageConfiguration.ConfigName { get set }
     
-    // Required for Light Theme experiment
-    func setInitialThemeNameIfNeeded(name: ThemeName)
 }

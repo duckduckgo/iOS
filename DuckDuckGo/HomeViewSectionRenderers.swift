@@ -133,7 +133,6 @@ extension HomeViewSectionRenderer {
     }
     
     func endReordering() { }
-    
 }
 
 class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

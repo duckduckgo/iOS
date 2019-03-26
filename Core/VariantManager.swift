@@ -19,11 +19,7 @@
 
 import Foundation
 
-public enum FeatureName {
-    case centeredSearchHomeScreen
-    case homeScreen
-    case singleFavorite
-    case additionalFavorites
+public enum FeatureName: String {
     case onboardingSummary
     case onboardingContextual
 }
@@ -35,11 +31,6 @@ public struct Variant {
     public static let defaultVariants: [Variant] = [
         // Shared control group
         Variant(name: "sc", weight: 1, features: []),
-        
-        // Enhanced home page experiment (DISABLED)
-        Variant(name: "ml", weight: doNotAllocate, features: [.homeScreen, .singleFavorite]),
-        Variant(name: "mm", weight: doNotAllocate, features: [.homeScreen, .singleFavorite, .additionalFavorites]),
-        Variant(name: "mn", weight: doNotAllocate, features: [.centeredSearchHomeScreen]),
         
         // Improve app onboarding experiment 1
         Variant(name: "mq", weight: 1, features: [.onboardingSummary]),
@@ -108,14 +99,7 @@ public class DefaultVariantManager: VariantManager {
             return
         }
         
-        if !isHomeScreenExperimentAndPad(variant) {
-            storage.variant = variant.name
-            Logger.log(text: "newly assigned variant: \(currentVariant as Any)")
-        }
-    }
-    
-    private func isHomeScreenExperimentAndPad(_ variant: Variant) -> Bool {
-        return ["mk", "ml", "mm", "mn"].contains(variant.name) && uiIdiom == .pad
+        storage.variant = variant.name
     }
     
     private func selectVariant() -> Variant? {

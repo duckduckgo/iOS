@@ -51,11 +51,32 @@ extension EasyTipView {
     }
     
     func handleGlobalTouch() {
+        
+        let view = TouchView()
+        UIApplication.shared.keyWindow?.addSubview(view)
+        
         var token: NSObjectProtocol?
-        token = NotificationCenter.default.addObserver(forName: TouchWindow.touchNotification, object: nil, queue: nil) { _ in
+        token = NotificationCenter.default.addObserver(forName: TouchView.touchNotification, object: nil, queue: nil) { _ in
+            view.removeFromSuperview()
             self.dismiss()
             NotificationCenter.default.removeObserver(token!)
         }
+    }
+    
+}
+
+class TouchView: UIView {
+
+    static let touchNotification = NSNotification.Name(rawValue: "com.duckduckgo.touchwindow.notifications.touch")
+    
+    // can be zero because the hit test still gets called and that's what we need
+    convenience init() {
+        self.init(frame: CGRect.zero)
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        NotificationCenter.default.post(name: TouchView.touchNotification, object: self)
+        return super.hitTest(point, with: event)
     }
     
 }

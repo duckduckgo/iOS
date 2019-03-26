@@ -19,6 +19,7 @@
 
 import Foundation
 import XCTest
+@testable import DuckDuckGo
 @testable import Core
 
 class AtbAndVariantCleanupTests: XCTestCase {
@@ -68,4 +69,22 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     }
 
+    func testWhenPreviousVariantIsHomePageExperimentThenSettingsAreUpdatedCorrectly() {
+        
+        let cases: [String: HomePageConfiguration.ConfigName] = [
+            "": .simple,
+            "mk": .simple,
+            "ml": .centerSearchAndFavorites,
+            "mm": .centerSearchAndFavorites,
+            "mn": .centerSearch]
+
+        for testCase in cases {
+            let mockSettings = MockAppSettings()
+            mockStorage.variant = testCase.key
+            AtbAndVariantCleanup.cleanup(statisticsStorage: mockStorage, variantManager: mockVariantManager, settings: mockSettings)
+            XCTAssertEqual(mockSettings.homePage, testCase.value)
+        }
+        
+    }
+    
 }

@@ -48,7 +48,12 @@ public enum PixelName: String {
     case settingsOpened = "ms"
     case settingsThemeToggledLight = "ms_tl"
     case settingsThemeToggledDark = "ms_td"
-    
+
+    case settingsHomePageShown = "ms_hp"
+    case settingsHomePageSimple = "ms_hp_s"
+    case settingsHomePageCenterSearch = "ms_hp_c"
+    case settingsHomePageCenterSearchAndFavorites = "ms_hp_f"
+
     case autoClearSettingsShown = "mac_s"
     case autoClearActionOptionNone = "macwhat_n"
     case autoClearActionOptionTabs = "macwhat_t"
@@ -79,16 +84,6 @@ public enum PixelName: String {
     case tabBarBookmarksPressed = "mt_bm"
     case tabBarTabSwitcherPressed = "mt_tb"
 
-    case homeScreenShown = "mh"
-    case homeScreenSearchTapped = "mh_st"
-    case homeScreenFavoriteLaunched = "mh_fl"
-    case homeScreenAddFavorite = "mh_af"
-    case homeScreenAddFavoriteOk = "mh_af_o"
-    case homeScreenAddFavoriteCancel = "mh_af_c"
-    case homeScreenEditFavorite = "mh_ef"
-    case homeScreenDeleteFavorite = "mh_df"
-    case homeScreenFavoriteMoved = "mh_fm"
-    
 }
 
 public class Pixel {

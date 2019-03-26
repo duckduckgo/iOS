@@ -43,6 +43,8 @@ protocol Theme {
     var searchBarBackgroundColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
     var searchBarTextDeemphasisColor: UIColor { get }
+    var searchBarBorderColor: UIColor { get }
+    var searchBarClearTextIconColor: UIColor { get }
     
     var tableCellBackgroundColor: UIColor { get }
     var tableCellSelectedColor: UIColor { get }

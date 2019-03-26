@@ -1,1 +1,1 @@
-• Fixes and improvements.
+• Fixes glitch when editing long URLs in the address bar.

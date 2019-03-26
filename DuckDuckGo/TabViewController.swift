@@ -894,5 +894,16 @@ extension TabViewController: UIGestureRecognizerDelegate {
         findInPage = FindInPage(webView: webView)
         delegate?.tabDidRequestFindInPage(tab: self)
     }
+
+    func refresh() {
+        if isError {
+            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
+                load(url: url)
+            }
+        } else {
+            reload(scripts: false)
+        }
+    }
+
 }
 // swiftlint:enable file_length

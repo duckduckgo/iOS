@@ -124,7 +124,7 @@ class MainViewController: UIViewController {
         }
 
         findInPageBottomLayoutConstraint.constant = 0
-        animateForKeyboard(userInfo: userInfo)
+        animateForKeyboard(userInfo: userInfo, y: view.frame.height)
     }
     
     /// Based on https://stackoverflow.com/a/46117073/73479
@@ -148,17 +148,18 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-        animateForKeyboard(userInfo: userInfo)
+        animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
     }
     
-    private func animateForKeyboard(userInfo: [AnyHashable: Any]) {
+    private func animateForKeyboard(userInfo: [AnyHashable: Any], y: CGFloat) {
         let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
         let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
-        
+
+        let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
-            self.view.layoutIfNeeded()
+            self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
         }, completion: nil)
 
     }
@@ -184,6 +185,7 @@ class MainViewController: UIViewController {
 
         if let controller = segue.destination as? TabSwitcherViewController {
             controller.transitioningDelegate = blurTransition
+            controller.homePageSettingsDelegate = self
             controller.delegate = self
             controller.tabsModel = tabManager.model
             tabSwitcherController = controller
@@ -194,6 +196,13 @@ class MainViewController: UIViewController {
             controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
             return
         }
+        
+        if let navigationController = segue.destination as? UINavigationController,
+            let controller = navigationController.topViewController as? SettingsViewController {
+            controller.homePageSettingsDelegate = self
+            return
+        }
+        
     }
 
     private func configureTabManager() {
@@ -230,7 +239,6 @@ class MainViewController: UIViewController {
         omniBar.omniDelegate = self
         omniBar.frame = customNavigationBar.bounds
         customNavigationBar.addSubview(omniBar)
-        HomePageConfiguration.configureOmniBar(omniBar)
     }
 
     fileprivate func attachHomeScreen() {
@@ -389,11 +397,16 @@ class MainViewController: UIViewController {
         backButton.isEnabled = currentTab?.canGoBack ?? false
         forwardButton.isEnabled = currentTab?.canGoForward ?? false
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        dismissOmniBar()
+    }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
         if autocompleteController == nil && appSettings.autocomplete {
-            allowContentUnderflow = false
             let controller = AutocompleteViewController.loadFromStoryboard()
+            controller.shouldOffsetY = allowContentUnderflow
             controller.delegate = self
             addChild(controller)
             containerView.addSubview(controller.view)
@@ -643,6 +656,10 @@ extension MainViewController: OmniBarDelegate {
         homeController?.launchNewSearch()
     }
     
+    func onRefreshPressed() {
+        currentTab?.refresh()
+    }
+    
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -870,6 +887,16 @@ extension MainViewController: Themable {
         tabManager.decorate(with: theme)
 
         findInPageView.decorate(with: theme)
+    }
+    
+}
+
+extension MainViewController: HomePageSettingsDelegate {
+    
+    func homePageChanged(to config: HomePageConfiguration.ConfigName) {
+        guard homeController != nil else { return }
+        removeHomeScreen()
+        attachHomeScreen()
     }
     
 }

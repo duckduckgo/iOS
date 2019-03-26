@@ -154,4 +154,10 @@ class BookmarksManager {
         return nil
     }
     
+    func migrateFavoritesToBookmarks() {
+        while favoritesCount > 0 {
+            moveFavorite(at: 0, toBookmark: 0)
+        }
+    }
+    
 }

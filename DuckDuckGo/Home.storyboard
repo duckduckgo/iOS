@@ -87,6 +87,7 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="activateSearch" label="Search or enter address">
+                                                        <accessibilityTraits key="traits" button="YES"/>
                                                         <bool key="isElement" value="YES"/>
                                                     </accessibility>
                                                     <constraints>
@@ -246,6 +247,7 @@
                                                     <color key="backgroundColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
                                                     <accessibility key="accessibilityConfiguration" label="Add Favorite">
+                                                        <accessibilityTraits key="traits" button="YES"/>
                                                         <bool key="isElement" value="YES"/>
                                                     </accessibility>
                                                     <constraints>

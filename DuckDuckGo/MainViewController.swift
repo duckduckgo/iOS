@@ -167,6 +167,7 @@ class MainViewController: UIViewController {
         tabSwitcherButton.delegate = self
         tabsButton.customView = tabSwitcherButton
         tabsButton.isAccessibilityElement = true
+        tabsButton.accessibilityTraits = .button
     }
     
     private func initBookmarksButton() {
@@ -174,6 +175,7 @@ class MainViewController: UIViewController {
         gestureBookmarksButton.image = UIImage(named: "Bookmarks")
         bookmarksButton.customView = gestureBookmarksButton
         bookmarksButton.isAccessibilityElement = true
+        bookmarksButton.accessibilityTraits = .button
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

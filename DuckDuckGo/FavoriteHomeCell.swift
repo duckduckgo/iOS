@@ -85,7 +85,8 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconLabel.text = "\(host.capitalized.first ?? " ")"
         
         isAccessibilityElement = true
-        accessibilityLabel = "\(UserText.favorite) \(link.title ?? ""))"
+        accessibilityTraits = .button
+        accessibilityLabel = "\(link.title ?? "")). \(UserText.favorite)"
         
         titleLabel.text = link.title
         

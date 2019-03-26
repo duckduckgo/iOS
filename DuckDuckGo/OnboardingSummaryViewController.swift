@@ -21,7 +21,8 @@ import UIKit
 import Core
 
 class OnboardingSummaryViewController: UIViewController, Onboarding {
-    
+
+    @IBOutlet weak var secondaryButtonContainer: UIView!
     @IBOutlet weak var secondaryButton: UIButton!
     
     weak var delegate: OnboardingDelegate?
@@ -46,7 +47,7 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
         } else if variant.features.contains(.onboardingExplorePrivacy) {
             secondaryButton.setTitle("Explore Privacy Features", for: .normal)
         } else {
-            fatalError("Unexpected variant \(variant.name)")
+            secondaryButtonContainer.isHidden = true
         }
     }
     

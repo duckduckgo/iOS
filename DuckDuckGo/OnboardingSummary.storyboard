@@ -264,6 +264,7 @@ been this easy.</string>
                     </view>
                     <connections>
                         <outlet property="secondaryButton" destination="J1y-Qk-FSX" id="W3L-vv-Nno"/>
+                        <outlet property="secondaryButtonContainer" destination="fy4-oE-dim" id="Hnt-Wq-iyo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>

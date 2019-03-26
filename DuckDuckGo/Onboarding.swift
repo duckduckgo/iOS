@@ -77,6 +77,7 @@ extension MainViewController {
 extension MainViewController: OnboardingDelegate {
     
     static var onboardingSettingsPixelFired = false
+    static var onboardingExplorePrivacyPixelFire = false
     
     func customizeSettings(controller: UIViewController) {
         if !MainViewController.onboardingSettingsPixelFired {
@@ -94,7 +95,10 @@ extension MainViewController: OnboardingDelegate {
     }
     
     func explorePrivacyFeatures(controller: UIViewController) {
-        Pixel.fire(pixel: .onboardingExplorePrivacy)
+        if !MainViewController.onboardingExplorePrivacyPixelFire {
+            Pixel.fire(pixel: .onboardingExplorePrivacy)
+            MainViewController.onboardingExplorePrivacyPixelFire = true
+        }
 
         let webContainer = WebContainerNavigationController.load(
             url: URL(string: "https://duckduckgo.com/app_info#scrollpos")!,

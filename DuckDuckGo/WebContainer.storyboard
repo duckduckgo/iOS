@@ -15,7 +15,6 @@
             <objects>
                 <navigationController id="Twn-ai-eBa" customClass="WebContainerNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DzA-0F-odj">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -48,7 +47,7 @@
                         <viewLayoutGuide key="safeArea" id="4eq-fE-ITV"/>
                     </view>
                     <navigationItem key="navigationItem" id="foG-NI-rq6">
-                        <barButtonItem key="rightBarButtonItem" title="Dismiss" style="done" id="NNA-ri-acS">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="NNA-ri-acS">
                             <connections>
                                 <action selector="dismiss" destination="dhR-A9-hN7" id="Ata-Pn-TSn"/>
                             </connections>

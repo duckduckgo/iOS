@@ -109,17 +109,12 @@ class FeedbackFormViewController: UIViewController {
             hideWebsiteField()
             
             if let subcategory = feedbackModel.subcategory {
-                if subcategory.isGeneric {
-                    supplementaryText.setAttributedTextString(UserText.feedbackFormCaption)
-                    messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormGenericPlaceholder)
-                } else {
-                    supplementaryText.setAttributedTextString(subcategory.userText)
-                    messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormPlaceholder)
-                }
+                supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: subcategory))
             } else {
                 supplementaryText.setAttributedTextString(FeedbackPresenter.subtitle(for: category))
-                messagePlaceholderText.setAttributedTextString(UserText.feedbackNegativeFormGenericPlaceholder)
             }
+            
+            messagePlaceholderText.setAttributedTextString(FeedbackPresenter.messagePlaceholder(for: feedbackModel.subcategory))
         case .brokenWebsite:
             supplementaryText.setAttributedTextString(UserText.websiteLoadingIssuesFormSupplementary)
             configureWebsiteField(with: UserText.websiteLoadingIssuesFormURLPlaceholder)
@@ -208,31 +203,31 @@ class FeedbackFormViewController: UIViewController {
         
         let interactionRect = interactionAreaForEditingMode()
         
-        if let rect = scrollView.desiredVisibleRect(forInteractionArea: interactionRect,
-                                                    coveredBy: keyboardFrame) {
-            // Note: scrollRectToVisible is not working properly in Modal view on iPad
-            var offset = scrollView.contentOffset
-            offset.y = rect.origin.y
+        guard let rect = scrollView.desiredVisibleRect(forInteractionArea: interactionRect,
+                                                       coveredBy: keyboardFrame) else {
+                                                        return
+        }
+        // Note: scrollRectToVisible is not working properly in Modal view on iPad
+        var offset = scrollView.contentOffset
+        offset.y = rect.origin.y
+        
+        // Shrink message view if needed
+        let visibleAreaBottom = rect.origin.y + rect.size.height
+        let messageTextViewBottom = messageTextView.frame.origin.y + messageTextView.frame.size.height
+        if visibleAreaBottom < messageTextViewBottom {
+            messageViewHeight.constant -= (messageTextViewBottom - visibleAreaBottom) + Constants.scrollToMargin
+            messageViewHeight.constant = max(Constants.minimumMessageViewHeight, messageViewHeight.constant)
             
-            // Shrink message view if needed
-            let visibleAreaBottom = rect.origin.y + rect.size.height
-            let messageTextViewBottom = messageTextView.frame.origin.y + messageTextView.frame.size.height
-            if visibleAreaBottom < messageTextViewBottom {
-                messageViewHeight.constant -= (messageTextViewBottom - visibleAreaBottom) + Constants.scrollToMargin
-                messageViewHeight.constant = max(Constants.minimumMessageViewHeight, messageViewHeight.constant)
-                
-                DispatchQueue.main.async {
-                    self.scrollView.setContentOffset(offset, animated: true)
-                    self.messageTextView.scrollRangeToVisible(self.messageTextView.selectedRange)
-                }
-            } else {
-                // This is async to override ScrollView automatic offset setting for UITextField.
-                // It caused inconsistency between how Message View and Website Text Field handled becoming a first responder.
-                DispatchQueue.main.async {
-                    self.scrollView.setContentOffset(offset, animated: true)
-                }
+            DispatchQueue.main.async {
+                self.scrollView.setContentOffset(offset, animated: true)
+                self.messageTextView.scrollRangeToVisible(self.messageTextView.selectedRange)
             }
-            
+        } else {
+            // This is async to override ScrollView automatic offset setting for UITextField.
+            // It caused inconsistency between how Message View and Website Text Field handled becoming a first responder.
+            DispatchQueue.main.async {
+                self.scrollView.setContentOffset(offset, animated: true)
+            }
         }
     }
     

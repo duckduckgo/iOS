@@ -45,17 +45,16 @@ class FeedbackViewController: UIViewController {
     }
     
     private func configureButtons() {
-        postitiveFeedbackButton.layer.cornerRadius = 8
-        postitiveFeedbackButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-        postitiveFeedbackButton.layer.shadowColor = UIColor.black.cgColor
-        postitiveFeedbackButton.layer.shadowOpacity = 0.12
-        postitiveFeedbackButton.layer.shadowRadius = 3
-        
-        negativeFeedbackButton.layer.cornerRadius = 8
-        negativeFeedbackButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-        negativeFeedbackButton.layer.shadowColor = UIColor.black.cgColor
-        negativeFeedbackButton.layer.shadowOpacity = 0.12
-        negativeFeedbackButton.layer.shadowRadius = 3
+        applyShadow(to: postitiveFeedbackButton)
+        applyShadow(to: negativeFeedbackButton)
+    }
+    
+    private func applyShadow(to button: UIButton) {
+        button.layer.cornerRadius = 8
+        button.layer.shadowOffset = CGSize(width: 0, height: 3)
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.12
+        button.layer.shadowRadius = 3
     }
     
     @IBAction func onClosePressed(_ sender: Any) {

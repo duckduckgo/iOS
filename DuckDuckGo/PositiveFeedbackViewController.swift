@@ -56,6 +56,7 @@ class PositiveFeedbackViewController: UIViewController {
         let urlStr = "itms-apps://itunes.apple.com/us/app/duckduckgo-privacy-browser/id663592361?action=write-review"
 
         UIApplication.shared.open(URL(string: urlStr)!)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func doneButtonPressed() {

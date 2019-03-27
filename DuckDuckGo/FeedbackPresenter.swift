@@ -54,4 +54,18 @@ struct FeedbackPresenter {
             return UserText.feedbackFormCaption
         }
     }
+    
+    public static func subtitle(for subcategory: FeedbackEntry) -> String {
+        if subcategory.isGeneric {
+            return UserText.feedbackFormCaption
+        }
+        return subcategory.userText
+    }
+    
+    public static func messagePlaceholder(for subcategory: FeedbackEntry?) -> String {
+        if subcategory?.isGeneric == false {
+            return UserText.feedbackNegativeFormPlaceholder
+        }
+        return UserText.feedbackNegativeFormGenericPlaceholder
+    }
 }

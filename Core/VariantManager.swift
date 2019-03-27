@@ -33,9 +33,9 @@ public struct Variant {
         // Shared control group
         Variant(name: "sc", weight: 1, features: [.onboardingSummary]),
         
-        // Improve app onboarding experiment 1
-        // Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),
-      //  Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingExplorePrivacy])
+        // Improve app onboarding experiment 2
+        Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),
+        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingExplorePrivacy])
     ]
     
     public let name: String

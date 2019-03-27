@@ -31,8 +31,6 @@ class SiteFeedbackViewController: UIViewController {
     }
 
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var brokenSiteSwitch: UISwitch!
-    @IBOutlet weak var urlTextFieldHeight: NSLayoutConstraint!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var messagePlaceholderText: UILabel!
@@ -52,18 +50,16 @@ class SiteFeedbackViewController: UIViewController {
         loadModel()
         configureViews()
         registerForKeyboardNotifications()
-        refreshMode()
+        refreshButton()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
-    func prepareForSegue(isBrokenSite: Bool, url: String?) {
-        feedbackModel.isBrokenSite = isBrokenSite
+    func prepareForSegue(url: String?) {
         feedbackModel.url = url
     }
 
     private func loadModel() {
-        brokenSiteSwitch.isOn = feedbackModel.isBrokenSite
         if let message = feedbackModel.message {
             messageTextView.attributedText = messageTextView.attributedText?.withText(message)
         }
@@ -125,34 +121,6 @@ class SiteFeedbackViewController: UIViewController {
             return messageTextView
         }
         return nil
-    }
-
-    @IBAction func onBrokenSiteChanged(_ sender: UISwitch) {
-        feedbackModel.isBrokenSite = sender.isOn
-        refreshMode()
-    }
-
-    private func refreshMode() {
-        feedbackModel.isBrokenSite ? showBrokenSite() : hideBrokenSite()
-        refreshButton()
-    }
-
-    private func showBrokenSite() {
-        urlTextFieldHeight.constant = ViewConstants.urlTextHeight
-        urlTextField.isHidden = false
-        if messageTextView.isFirstResponder && urlTextField.text?.isEmpty ?? true {
-            urlTextField.becomeFirstResponder()
-        }
-        updateMessagePlaceholder(withText: UserText.feedbackBrokenSitePlaceholder)
-    }
-
-    private func hideBrokenSite() {
-        urlTextFieldHeight.constant = 0
-        urlTextField.isHidden = true
-        updateMessagePlaceholder(withText: UserText.feedbackGeneralPlaceholder)
-        if urlTextField.isFirstResponder {
-            messageTextView.becomeFirstResponder()
-        }
     }
 
     private func updateMessagePlaceholder(withText text: String) {

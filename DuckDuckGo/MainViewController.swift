@@ -193,7 +193,7 @@ class MainViewController: UIViewController {
         }
 
         if let controller = segue.destination as? SiteFeedbackViewController {
-            controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
+            controller.prepareForSegue(url: currentTab?.url?.absoluteString)
             return
         }
         

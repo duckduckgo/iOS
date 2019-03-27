@@ -29,7 +29,6 @@ protocol FeedbackComponent {
 
 protocol FeedbackSender {
     func submitBrokenSite(url: String, message: String)
-    func submitMessage(_ message: String)
     
     func submitPositiveSentiment(message: String)
     func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model)
@@ -60,10 +59,6 @@ struct FeedbackSubmitter: FeedbackSender {
 
     public func submitBrokenSite(url: String, message: String) {
         submitFeedback(reason: .brokenSite, rating: nil, url: url, comment: message)
-    }
-
-    public func submitMessage(_ message: String) {
-        submitFeedback(reason: .general, rating: nil, url: nil, comment: message)
     }
 
     public func submitPositiveSentiment(message: String) {

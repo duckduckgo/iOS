@@ -217,7 +217,10 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         continueButton.tap()
-        continueButton.tap()
+        
+        if continueButton.exists {
+            continueButton.tap()
+        }
     }
     
 }

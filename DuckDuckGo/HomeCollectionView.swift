@@ -34,6 +34,11 @@ class HomeCollectionView: UICollectionView {
     
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
 
+    var centeredSearch: UIView? {
+        guard let renderer = renderers.rendererFor(section: 0) as? CenteredSearchHomeViewSectionRenderer else { return nil }
+        return renderer.centeredSearch
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

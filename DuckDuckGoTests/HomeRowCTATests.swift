@@ -23,7 +23,6 @@ import XCTest
 
 class HomeRowCTATests: XCTestCase {
 
-    var variantManager = MockVariantManager()
     var tipsStorage = MockContextualTipsStorage()
     var storage = MockHomeRowOnboardingStorage(dismissed: false)
     var tutorialSettings = MockTutorialSettings()
@@ -31,10 +30,10 @@ class HomeRowCTATests: XCTestCase {
     func testWhenOnboardingHasNotBeenShownThenShouldNotShow() {
 
         tutorialSettings.hasSeenOnboarding = false
-        variantManager.isSupportedReturns = true
+        tipsStorage.isEnabled = true
         tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
 
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
         XCTAssertFalse(feature.shouldShow())
 
     }
@@ -42,10 +41,10 @@ class HomeRowCTATests: XCTestCase {
     func testWhenContextualOnboardingFeatureEnabledAndAllHomeScreenTipsShownThenCanShowCTA() {
         
         tutorialSettings.hasSeenOnboarding = true
-        variantManager.isSupportedReturns = true
+        tipsStorage.isEnabled = true
         tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
 
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
         XCTAssertTrue(feature.shouldShow())
         
     }
@@ -53,31 +52,33 @@ class HomeRowCTATests: XCTestCase {
     func testWhenContextualOnboardingFeatureEnabledAndNotAllHomeScreenTipsShownThenDontShowCTA() {
         
         tutorialSettings.hasSeenOnboarding = true
-        variantManager.isSupportedReturns = true
         tipsStorage.nextHomeScreenTip = 0
+        tipsStorage.isEnabled = true
         
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
         XCTAssertFalse(feature.shouldShow())
 
     }
 
     func testWhenDismissedThenDismissedStateStored() {
         tutorialSettings.hasSeenOnboarding = true
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tutorialSettings: tutorialSettings)
         feature.dismissed()
         XCTAssertTrue(storage.dismissed)
     }
 
     func testWhenDismissedThenShouldNotShow() {
         tutorialSettings.hasSeenOnboarding = true
+        tipsStorage.isEnabled = true
         storage.dismissed = true
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tutorialSettings: tutorialSettings)
         XCTAssertFalse(feature.shouldShow())
     }
 
     func testWhenNotDismissedThenShouldShow() {
+        tipsStorage.isEnabled = false
         tutorialSettings.hasSeenOnboarding = true
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tutorialSettings: tutorialSettings)
         XCTAssertTrue(feature.shouldShow())
     }
     

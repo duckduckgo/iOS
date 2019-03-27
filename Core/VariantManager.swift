@@ -21,7 +21,6 @@ import Foundation
 
 public enum FeatureName: String {
     case onboardingSummary
-    case onboardingContextual
     case onboardingCustomizeSettings
     case onboardingExplorePrivacy
 }
@@ -35,8 +34,8 @@ public struct Variant {
         Variant(name: "sc", weight: 1, features: [.onboardingSummary]),
         
         // Improve app onboarding experiment 1
-        Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),
-        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingExplorePrivacy])
+        // Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),
+      //  Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingExplorePrivacy])
     ]
     
     public let name: String

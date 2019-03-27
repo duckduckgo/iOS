@@ -25,9 +25,17 @@ extension HomeViewController: HomeScreenTipsDelegate {
     func showPrivateSearchTip() {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let view = self?.chromeDelegate?.omniBar else { return }
             guard let superView = self?.parent?.view else { return }
 
+            let view: UIView!
+            if HomePageConfiguration().components.contains(.centeredSearch) {
+                view = self?.collectionView.centeredSearch
+            } else {
+                view = self?.chromeDelegate?.omniBar
+            }
+            
+            guard view != nil else { return }
+            
             var preferences = EasyTipView.globalPreferences
             preferences.positioning.bubbleVInset = 8
 

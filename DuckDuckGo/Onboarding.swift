@@ -48,6 +48,9 @@ extension MainViewController {
         let settings = DefaultTutorialSettings()
         guard !settings.hasSeenOnboarding else { return }
         
+        // Only show tips if the user is a new one, ie they've not seen onboarding yet
+        DefaultContextualTipsStorage().isEnabled = true
+        
         let onboardingFlow: String
         let modalTransitionStyle: UIModalTransitionStyle
         

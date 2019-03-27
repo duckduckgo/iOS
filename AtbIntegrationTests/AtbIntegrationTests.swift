@@ -32,7 +32,7 @@ class AtbIntegrationTests: XCTestCase {
         static let devmode = "test"
         static let atbParam = "atb"
         static let setAtbParam = "set_atb"
-        static let activityType = "type"
+        static let activityType = "at"
     }
     
     let app = XCUIApplication()

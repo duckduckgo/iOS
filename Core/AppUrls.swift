@@ -54,7 +54,7 @@ public struct AppUrls {
         static let source = "t"
         static let atb = "atb"
         static let setAtb = "set_atb"
-        static let activityType = "type"
+        static let activityType = "at"
     }
 
     private struct ParamValue {

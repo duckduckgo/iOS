@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,11 +23,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="43.5" y="46" width="233" height="133"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
+                                <rect key="frame" x="48" y="33" width="224" height="80"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="0.0" y="0.0" width="233" height="80"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
+                                        <rect key="frame" x="0.0" y="0.0" width="224" height="80"/>
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">Welcome to
@@ -42,16 +41,17 @@ DuckDuckGo!</string>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                        <rect key="frame" x="0.0" y="85" width="233" height="48"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
+                                        <rect key="frame" x="0.0" y="0.0" width="224" height="0.0"/>
                                         <attributedString key="attributedText">
                                             <fragment>
-                                                <string key="content">Protecting your data has never 
-been this easy.</string>
+                                                <string key="content">Protecting your data has 
+never been this easy.</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="17" name="ProximaNova-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="24" tighteningFactorForTruncation="0.0"/>
+                                                    <font key="NSOriginalFont" size="17" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -59,115 +59,336 @@ been this easy.</string>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="133" id="AgE-O3-AVM"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="58A-l3-7qY"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKB-C3-6Fs">
-                                <rect key="frame" x="28" y="190" width="264" height="214"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKB-C3-6Fs" userLabel="Bullet Container">
+                                <rect key="frame" x="26" y="136" width="268" height="328"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU" userLabel="Bullets">
-                                        <rect key="frame" x="-5" y="0.0" width="264" height="214"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU" userLabel="Bullets">
+                                        <rect key="frame" x="-5" y="0.0" width="268" height="328"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
-                                                <rect key="frame" x="0.0" y="0.0" width="264" height="47.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
+                                                <rect key="frame" x="0.0" y="0.0" width="268" height="64"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
-                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="47.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="64" id="vY4-c3-YLJ"/>
                                                             <constraint firstAttribute="height" priority="750" constant="64" id="wmx-bL-EOc"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
-                                                        <rect key="frame" x="76" y="0.0" width="188" height="47.5"/>
-                                                        <attributedString key="attributedText">
-                                                            <fragment content="Block trackers and browse securely by default.">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <font key="NSFont" size="15" name="ProximaNova-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-px-fEd" userLabel="Search Privately">
-                                                <rect key="frame" x="0.0" y="55.5" width="264" height="47.5"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="iO9-dU-Ih3">
-                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="47.5"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wPh-Bl-Bn9">
+                                                        <rect key="frame" x="82" y="0.0" width="186" height="64"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browsing Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OQ-gO-hTx">
+                                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="wFx-uV-55X"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
+                                                                <rect key="frame" x="0.0" y="30" width="186" height="35"/>
+                                                                <attributedString key="attributedText">
+                                                                    <fragment content="Block trackers and browse securely by default.">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                                                            <font key="NSOriginalFont" size="15" name="ProximaNova-Regular"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" priority="750" constant="64" id="fLV-FP-EpD"/>
-                                                            <constraint firstAttribute="width" constant="64" id="gla-on-vsJ"/>
+                                                            <constraint firstItem="yRG-wD-KTv" firstAttribute="top" secondItem="7OQ-gO-hTx" secondAttribute="bottom" id="DYI-X1-O20"/>
+                                                            <constraint firstItem="yRG-wD-KTv" firstAttribute="width" secondItem="wPh-Bl-Bn9" secondAttribute="width" id="YxH-eI-EXp"/>
+                                                            <constraint firstItem="7OQ-gO-hTx" firstAttribute="width" secondItem="wPh-Bl-Bn9" secondAttribute="width" id="eMN-Sq-EdM"/>
+                                                            <constraint firstItem="yRG-wD-KTv" firstAttribute="centerX" secondItem="wPh-Bl-Bn9" secondAttribute="centerX" id="kh5-DL-yUj"/>
+                                                            <constraint firstItem="7OQ-gO-hTx" firstAttribute="centerX" secondItem="wPh-Bl-Bn9" secondAttribute="centerX" id="sHM-5k-uYc"/>
+                                                            <constraint firstItem="7OQ-gO-hTx" firstAttribute="top" secondItem="wPh-Bl-Bn9" secondAttribute="top" id="ypI-f5-xJ4"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="yRG-wD-KTv" firstAttribute="centerY" secondItem="jci-wu-GEh" secondAttribute="centerY" priority="750" id="fgI-tP-evl"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="k3Z-dz-kIX" userLabel="Private Search">
+                                                <rect key="frame" x="0.0" y="88" width="268" height="64"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="hiQ-di-foW">
+                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="750" constant="64" id="Brj-ym-GEg"/>
+                                                            <constraint firstAttribute="width" constant="64" id="qrE-ri-Rqd"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRR-EU-EPs">
-                                                        <rect key="frame" x="76" y="0.0" width="188" height="47.5"/>
-                                                        <attributedString key="attributedText">
-                                                            <fragment content="Keep your searches private.">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <font key="NSFont" size="15" name="ProximaNova-Semibold"/>
-                                                                    <font key="NSOriginalFont" size="15" name="ProximaNova-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="jMm-V2-J1P" userLabel="Clear your data">
-                                                <rect key="frame" x="0.0" y="111" width="264" height="47.5"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="i66-EN-Pg4">
-                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="47.5"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gwo-1k-c3F">
+                                                        <rect key="frame" x="82" y="0.0" width="186" height="64"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKA-Cl-Yzk">
+                                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="0F3-R6-7lX"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ek-ST-Ii7">
+                                                                <rect key="frame" x="0.0" y="30" width="186" height="35"/>
+                                                                <attributedString key="attributedText">
+                                                                    <fragment content="With DuckDuckGo your searches are always private.">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                                <tabStops>
+                                                                                    <textTab alignment="left" location="28">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="56">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="84">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="112">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="140">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="168">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="196">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="224">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="252">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="280">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="308">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="336">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                </tabStops>
+                                                                            </paragraphStyle>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="64" id="AYQ-6f-oL1"/>
-                                                            <constraint firstAttribute="height" priority="750" constant="64" id="Jry-0u-6rm"/>
+                                                            <constraint firstItem="8ek-ST-Ii7" firstAttribute="width" secondItem="gwo-1k-c3F" secondAttribute="width" id="4Uf-Kc-yh5"/>
+                                                            <constraint firstItem="NKA-Cl-Yzk" firstAttribute="width" secondItem="gwo-1k-c3F" secondAttribute="width" id="4xM-XO-5rF"/>
+                                                            <constraint firstItem="NKA-Cl-Yzk" firstAttribute="top" secondItem="gwo-1k-c3F" secondAttribute="top" id="K1C-yw-h51"/>
+                                                            <constraint firstItem="NKA-Cl-Yzk" firstAttribute="centerX" secondItem="gwo-1k-c3F" secondAttribute="centerX" id="RpZ-D9-5n0"/>
+                                                            <constraint firstItem="8ek-ST-Ii7" firstAttribute="centerX" secondItem="gwo-1k-c3F" secondAttribute="centerX" id="kcp-aL-DEc"/>
+                                                            <constraint firstItem="8ek-ST-Ii7" firstAttribute="top" secondItem="NKA-Cl-Yzk" secondAttribute="bottom" id="twv-32-swI"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="8ek-ST-Ii7" firstAttribute="centerY" secondItem="hiQ-di-foW" secondAttribute="centerY" priority="750" id="wZ1-dc-73z"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Vgb-Rf-v4I" userLabel="Data Clearing">
+                                                <rect key="frame" x="0.0" y="176" width="268" height="64"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="Epr-GU-lde">
+                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="750" constant="64" id="LzV-Na-MM2"/>
+                                                            <constraint firstAttribute="width" constant="64" id="rKj-dY-68U"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-Yy-Iyb">
-                                                        <rect key="frame" x="76" y="0.0" width="188" height="47.5"/>
-                                                        <attributedString key="attributedText">
-                                                            <fragment content="Erase your browsing data with the tap of a button.">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <font key="NSFont" size="15" name="ProximaNova-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-CD-VRZ" userLabel="Customize">
-                                                <rect key="frame" x="0.0" y="166.5" width="264" height="47.5"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="HtO-i5-Mle">
-                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="47.5"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P5h-n7-BrY">
+                                                        <rect key="frame" x="82" y="0.0" width="186" height="64"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data Clearing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oo3-RQ-lVF">
+                                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="xON-nl-oUt"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoh-bo-lyl">
+                                                                <rect key="frame" x="0.0" y="30" width="186" height="35"/>
+                                                                <attributedString key="attributedText">
+                                                                    <fragment content="Erase your browsing data with the tap of a button.">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                                <tabStops>
+                                                                                    <textTab alignment="left" location="28">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="56">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="84">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="112">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="140">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="168">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="196">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="224">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="252">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="280">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="308">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="336">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                </tabStops>
+                                                                            </paragraphStyle>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="64" id="GMP-9t-0ZL"/>
-                                                            <constraint firstAttribute="height" priority="750" constant="64" id="jPy-wT-mQZ"/>
+                                                            <constraint firstItem="xoh-bo-lyl" firstAttribute="centerX" secondItem="P5h-n7-BrY" secondAttribute="centerX" id="2EF-Zi-S71"/>
+                                                            <constraint firstItem="Oo3-RQ-lVF" firstAttribute="width" secondItem="P5h-n7-BrY" secondAttribute="width" id="DvX-Zw-tXo"/>
+                                                            <constraint firstItem="xoh-bo-lyl" firstAttribute="width" secondItem="P5h-n7-BrY" secondAttribute="width" id="I3i-iH-As4"/>
+                                                            <constraint firstItem="Oo3-RQ-lVF" firstAttribute="top" secondItem="P5h-n7-BrY" secondAttribute="top" id="lXW-Pm-rVi"/>
+                                                            <constraint firstItem="Oo3-RQ-lVF" firstAttribute="centerX" secondItem="P5h-n7-BrY" secondAttribute="centerX" id="pvy-YW-TXh"/>
+                                                            <constraint firstItem="xoh-bo-lyl" firstAttribute="top" secondItem="Oo3-RQ-lVF" secondAttribute="bottom" id="uHw-t7-Bzz"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="xoh-bo-lyl" firstAttribute="centerY" secondItem="Epr-GU-lde" secondAttribute="centerY" priority="750" id="xbJ-bJ-4Vt"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="e1z-hm-cGy" userLabel="Customization">
+                                                <rect key="frame" x="0.0" y="264" width="268" height="64"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="ksh-gI-SKd">
+                                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="750" constant="64" id="3xu-kz-sBl"/>
+                                                            <constraint firstAttribute="width" constant="64" id="imA-AE-sxP"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vtG-XD-UDW">
-                                                        <rect key="frame" x="76" y="0.0" width="188" height="47.5"/>
-                                                        <attributedString key="attributedText">
-                                                            <fragment content="Pick your theme and customize privacy features.">
-                                                                <attributes>
-                                                                    <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <font key="NSFont" size="15" name="ProximaNova-Semibold"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineSpacing="6" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NH7-An-lJj">
+                                                        <rect key="frame" x="80" y="0.0" width="188" height="64"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvh-Sc-GvO">
+                                                                <rect key="frame" x="0.0" y="0.0" width="188" height="30"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="UE4-vQ-J4s"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-ag-Cs6">
+                                                                <rect key="frame" x="0.0" y="30" width="188" height="35"/>
+                                                                <attributedString key="attributedText">
+                                                                    <fragment content="Pick a theme and customize privacy features.">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="5" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                                                <tabStops>
+                                                                                    <textTab alignment="left" location="28">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="56">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="84">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="112">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="140">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="168">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="196">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="224">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="252">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="280">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="308">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                    <textTab alignment="left" location="336">
+                                                                                        <options/>
+                                                                                    </textTab>
+                                                                                </tabStops>
+                                                                            </paragraphStyle>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="cOV-ag-Cs6" firstAttribute="centerX" secondItem="NH7-An-lJj" secondAttribute="centerX" id="2rw-sy-z4i"/>
+                                                            <constraint firstItem="xvh-Sc-GvO" firstAttribute="top" secondItem="NH7-An-lJj" secondAttribute="top" id="VMo-cM-izg"/>
+                                                            <constraint firstItem="cOV-ag-Cs6" firstAttribute="top" secondItem="xvh-Sc-GvO" secondAttribute="bottom" id="b8f-Nb-pBg"/>
+                                                            <constraint firstItem="xvh-Sc-GvO" firstAttribute="centerX" secondItem="NH7-An-lJj" secondAttribute="centerX" id="bs7-yp-5iY"/>
+                                                            <constraint firstItem="xvh-Sc-GvO" firstAttribute="width" secondItem="NH7-An-lJj" secondAttribute="width" id="f0i-j0-bB6"/>
+                                                            <constraint firstItem="cOV-ag-Cs6" firstAttribute="width" secondItem="NH7-An-lJj" secondAttribute="width" id="gSx-Sh-3LB"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="cOV-ag-Cs6" firstAttribute="centerY" secondItem="ksh-gI-SKd" secondAttribute="centerY" priority="750" id="Y4K-T8-Ti3"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -181,13 +402,13 @@ been this easy.</string>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-Dh-w8y" userLabel="Buttons">
-                                <rect key="frame" x="28" y="427" width="264" height="113"/>
+                                <rect key="frame" x="30" y="490" width="260" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Start Browsing" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="264" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                                <rect key="frame" x="0.0" y="0.0" width="264" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -207,15 +428,15 @@ been this easy.</string>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <integer key="value" value="8"/>
+                                                <real key="value" value="12"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fy4-oE-dim" userLabel="More Info" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="63" width="264" height="50"/>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fy4-oE-dim" userLabel="More Info" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                                <rect key="frame" x="0.0" y="0.0" width="264" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="More Information">
@@ -235,7 +456,7 @@ been this easy.</string>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <integer key="value" value="8"/>
+                                                <real key="value" value="12"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                 <color key="value" red="0.4039215686" green="0.56078431370000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -251,26 +472,28 @@ been this easy.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8cl-Dh-w8y" firstAttribute="centerX" secondItem="xKB-C3-6Fs" secondAttribute="centerX" id="6tz-wF-Nhf"/>
-                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-56" id="7mm-Zo-aG6"/>
+                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="7mm-Zo-aG6"/>
                             <constraint firstItem="8cl-Dh-w8y" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="GIt-fR-gFc"/>
                             <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="UmW-bW-Lc6"/>
-                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="26" id="VcY-9C-d73"/>
+                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" priority="250" constant="60" id="VcY-9C-d73"/>
                             <constraint firstItem="xKB-C3-6Fs" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="kUo-gL-2yD"/>
-                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="top" secondItem="xKB-C3-6Fs" secondAttribute="bottom" constant="23" id="kcw-g9-mK8"/>
-                            <constraint firstItem="xKB-C3-6Fs" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-56" id="lYo-Ty-IrF"/>
-                            <constraint firstItem="xKB-C3-6Fs" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="11" id="ozC-1f-xUP"/>
+                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="top" secondItem="xKB-C3-6Fs" secondAttribute="bottom" constant="26" id="kcw-g9-mK8"/>
+                            <constraint firstItem="xKB-C3-6Fs" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-52" id="lYo-Ty-IrF"/>
+                            <constraint firstItem="xKB-C3-6Fs" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="23" id="ozC-1f-xUP"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="8cl-Dh-w8y" secondAttribute="bottom" constant="28" id="r9i-SL-UdX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
                     </view>
                     <connections>
+                        <outlet property="bulletsWidth" destination="lYo-Ty-IrF" id="G6Q-ZR-kAx"/>
                         <outlet property="secondaryButton" destination="J1y-Qk-FSX" id="W3L-vv-Nno"/>
                         <outlet property="secondaryButtonContainer" destination="fy4-oE-dim" id="Hnt-Wq-iyo"/>
+                        <outlet property="subheader" destination="JgA-Kx-QGf" id="BZj-bu-Tvm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-482" y="186"/>
+            <point key="canvasLocation" x="-482.60869565217394" y="185.49107142857142"/>
         </scene>
     </scenes>
     <resources>

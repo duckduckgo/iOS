@@ -24,6 +24,8 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
 
     @IBOutlet weak var secondaryButtonContainer: UIView!
     @IBOutlet weak var secondaryButton: UIButton!
+    @IBOutlet weak var subheader: UIView!
+    @IBOutlet weak var bulletsWidth: NSLayoutConstraint!
     
     weak var delegate: OnboardingDelegate?
     
@@ -39,6 +41,13 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
         super.viewDidLoad()
         Pixel.fire(pixel: .onboardingShown)
         updateSecondaryButton()
+        updateForSmallScreens()
+    }
+    
+    private func updateForSmallScreens() {
+        let isSmall = view.frame.height <= 568
+        subheader.isHidden = isSmall
+        bulletsWidth.constant = isSmall ? -52 : -72
     }
     
     private func updateSecondaryButton() {

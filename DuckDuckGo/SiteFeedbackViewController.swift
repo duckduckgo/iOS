@@ -94,12 +94,19 @@ class SiteFeedbackViewController: UIViewController {
         let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-
-        guard let firstResponder = firstResponder() else { return }
-        var rect = self.view.frame
-        rect.size.height -= keyboardSize.height
-        if !rect.contains(firstResponder.frame.origin) {
-            scrollView.scrollRectToVisible(firstResponder.frame, animated: true)
+        
+        let interactionRect = interactionAreaForEditingMode()
+        guard let rect = scrollView.desiredVisibleRect(forInteractionArea: interactionRect,
+                                                       coveredBy: keyboardFrame) else {
+                                                        return
+        }
+        
+        // Note: scrollRectToVisible is not working properly in Modal view on iPad
+        var offset = scrollView.contentOffset
+        offset.y = rect.origin.y
+        
+        DispatchQueue.main.async {
+            self.scrollView.setContentOffset(offset, animated: true)
         }
     }
 
@@ -109,6 +116,21 @@ class SiteFeedbackViewController: UIViewController {
         scrollView.scrollIndicatorInsets = contentInsets
     }
 
+    /// Calculate the area that is most relevant to the user when typing a feedback message.
+    private func interactionAreaForEditingMode() -> CGRect {
+        let urlFieldOrigin = urlTextField.convert(CGPoint.zero, to: scrollView)
+        let submitButtonOrigin = submitButton.convert(CGPoint.zero, to: scrollView)
+        let upperLeftInteractionArea = urlFieldOrigin
+        var lowerRightInteractionArea = submitButtonOrigin
+        lowerRightInteractionArea.x += submitButton.frame.size.width
+        lowerRightInteractionArea.y += submitButton.frame.size.height
+        
+        return CGRect(x: upperLeftInteractionArea.x,
+                      y: upperLeftInteractionArea.y,
+                      width: lowerRightInteractionArea.x - upperLeftInteractionArea.x,
+                      height: lowerRightInteractionArea.y - upperLeftInteractionArea.y)
+    }
+    
     @IBAction func onTapped(_ sender: Any) {
         firstResponder()?.resignFirstResponder()
     }

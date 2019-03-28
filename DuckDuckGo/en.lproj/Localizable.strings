@@ -118,8 +118,6 @@
 "home.row.reminder.title" = "Take DuckDuckGo home";
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
-"feedback.comment.general.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible.";
-"feedback.comment.brokenSite.placeholder" = "Which website content or functionality is breaking? Please be as specific as possible.";
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
 "prompt.custom.url.scheme.title" = "Open in Another App?";
@@ -172,6 +170,13 @@
 "homepage.simple" = "Simple";
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+
+"siteFeedback.title" = "Report a Broken Site";
+"siteFeedback.subtitle" = "Broken site reporting is completely anonymous and helps us to improve the app!";
+"siteFeedback.domainInfo" = "Domain of Broken Site:";
+"siteFeedback.urlPlaceholder" = "Which website is broken?";
+"siteFeedback.messagePlaceholder" = "Which content or functionality is breaking?";
+"siteFeedback.buttonText" = "Submit Report";
 
 "feedback.start.header" = "Let's get started!";
 "feedback.start.supplementary" = "How would you catagorize your feedback?";

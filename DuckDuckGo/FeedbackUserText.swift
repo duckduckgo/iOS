@@ -21,6 +21,19 @@ import Foundation
 
 extension UserText {
     
+    public static let siteFeedbackTitle = NSLocalizedString("siteFeedback.title",
+                                                              comment: "Report a Broken Site")
+    public static let siteFeedbackSubtitle = NSLocalizedString("siteFeedback.subtitle",
+                                                            comment: "Broken site reporting is completely anonymous and helps us to improve the app!")
+    public static let siteFeedbackDomainInfo = NSLocalizedString("siteFeedback.domainInfo",
+                                                                         comment: "Domain of Broken Site:")
+    public static let siteFeedbackURLPlaceholder = NSLocalizedString("siteFeedback.urlPlaceholder",
+                                                               comment: "Which website is broken?")
+    public static let siteFeedbackMessagePlaceholder = NSLocalizedString("siteFeedback.messagePlaceholder",
+                                                                     comment: "Which content or functionality is breaking?")
+    public static let siteFeedbackButtonText = NSLocalizedString("siteFeedback.buttonText",
+                                                                         comment: "Submit Report")
+    
     public static let feedbackStartHeader = NSLocalizedString("feedback.start.header",
                                                               comment: "Let's get started!")
     public static let feedbackStartSupplementary = NSLocalizedString("feedback.start.supplementary",

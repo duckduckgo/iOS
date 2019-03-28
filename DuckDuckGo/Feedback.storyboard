@@ -95,8 +95,8 @@
                                                     <action selector="onClosePressed:" destination="LPY-wu-U34" eventType="touchUpInside" id="0bE-Gi-rKL"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include Domain in Report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSK-zf-19O">
-                                                <rect key="frame" x="16" y="188" width="169.33333333333334" height="15"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Domain of Broken Site:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSK-zf-19O">
+                                                <rect key="frame" x="16" y="188" width="154.33333333333334" height="15"/>
                                                 <gestureRecognizers/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                                 <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -234,10 +234,13 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="domainDescriptionLabel" destination="gSK-zf-19O" id="2cg-mf-bq0"/>
                         <outlet property="messagePlaceholderText" destination="m3D-p0-uDK" id="zKD-xw-gV8"/>
                         <outlet property="messageTextView" destination="FyA-HP-yKI" id="WGo-9I-MdR"/>
                         <outlet property="scrollView" destination="Ndo-C8-MVE" id="sob-ne-g5o"/>
                         <outlet property="submitButton" destination="0pu-MH-Czk" id="0p0-SZ-oaj"/>
+                        <outlet property="subtitleLabel" destination="82c-Hv-K8w" id="MRo-E1-FVC"/>
+                        <outlet property="titleLabel" destination="cum-ec-gq1" id="e0n-SV-1fb"/>
                         <outlet property="urlTextField" destination="Vcg-ur-bnB" id="A6n-hb-7f2"/>
                     </connections>
                 </viewController>

@@ -29,6 +29,10 @@ class SiteFeedbackViewController: UIViewController {
         static let urlTextHeight: CGFloat = 38
         static let urlTextPadding: CGFloat = 4
     }
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var domainDescriptionLabel: UILabel!
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var urlTextField: UITextField!
@@ -72,8 +76,16 @@ class SiteFeedbackViewController: UIViewController {
     private func configureViews() {
         urlTextField.layer.borderWidth = 1
         urlTextField.layer.borderColor = UIColor.mercury.cgColor
+        urlTextField.placeholder = UserText.siteFeedbackURLPlaceholder
+        
         messageTextView.layer.borderWidth = 1
         messageTextView.layer.borderColor = UIColor.mercury.cgColor
+        
+        messagePlaceholderText.setAttributedTextString(UserText.siteFeedbackMessagePlaceholder)
+        
+        titleLabel.text = UserText.siteFeedbackTitle
+        subtitleLabel.text = UserText.siteFeedbackSubtitle
+        domainDescriptionLabel.text = UserText.siteFeedbackDomainInfo
     }
 
     private func registerForKeyboardNotifications() {

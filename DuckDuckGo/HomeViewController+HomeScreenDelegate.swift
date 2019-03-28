@@ -26,12 +26,13 @@ extension HomeViewController: HomeScreenTipsDelegate {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let superView = self?.parent?.view else { return }
-
+            guard let self = self else { return }
+            
             let view: UIView!
-            if HomePageConfiguration().components.contains(.centeredSearch) {
-                view = self?.collectionView.centeredSearch
+            if self.isCenteredSearch {
+                view = self.collectionView.centeredSearch
             } else {
-                view = self?.chromeDelegate?.omniBar
+                view = self.chromeDelegate?.omniBar
             }
             
             guard view != nil else { return }
@@ -49,6 +50,13 @@ extension HomeViewController: HomeScreenTipsDelegate {
             }
         }
         
+    }
+    
+    private var isCenteredSearch: Bool {
+        return HomePageConfiguration().components.contains(where: {
+            if case .centeredSearch = $0 { return true }
+            return false
+        })
     }
     
     func showCustomizeTip() {

@@ -27,7 +27,8 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
     @IBOutlet weak var subheader: UIView!
     @IBOutlet weak var bulletsWidth: NSLayoutConstraint!
     @IBOutlet weak var bulletsStack: UIStackView!
-    
+    @IBOutlet weak var headerPadding: NSLayoutConstraint!
+
     weak var delegate: OnboardingDelegate?
     
     var variant: Variant {
@@ -49,7 +50,8 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
         let isSmall = view.frame.height <= 568
         subheader.isHidden = isSmall
         bulletsWidth.constant = isSmall ? -52 : -72
-        bulletsStack.spacing = isSmall ? 8 : 24
+        bulletsStack.spacing = isSmall ? 8 : 12
+        headerPadding.constant = isSmall ? 16 : 30
     }
     
     private func updateSecondaryButton() {

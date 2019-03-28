@@ -54,15 +54,16 @@ class HomeCollectionView: UICollectionView {
             case .navigationBarSearch:
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
                 
-            case .centeredSearch:
-                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer())
+            case .centeredSearch(let fixed):
+                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+                
+            case .padding:
                 renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer())
                 
-            case .fixedCenteredSearch:
-                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: true))
+            case .empty:
                 renderers.install(renderer: EmptySectionRenderer())
             }
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
-    <device id="retina5_9" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -21,14 +21,14 @@
             <objects>
                 <viewController id="X59-2u-JR5" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R3B-sO-IVB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="80.333333333333329" y="94" width="214.33333333333337" height="80"/>
+                                <rect key="frame" x="53" y="25" width="214.5" height="80"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="0.0" y="0.0" width="214.33333333333334" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="214.5" height="80"/>
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">Welcome to
@@ -43,7 +43,7 @@ DuckDuckGo!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                        <rect key="frame" x="0.0" y="0.0" width="214.33333333333334" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="214.5" height="0.0"/>
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">Protecting your data has 
@@ -64,13 +64,13 @@ never been this easy.</string>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKB-C3-6Fs" userLabel="Bullet Container">
-                                <rect key="frame" x="26" y="196" width="323" height="415"/>
+                                <rect key="frame" x="26" y="121" width="268" height="280"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="d2U-SO-dZU" userLabel="Bullets">
-                                        <rect key="frame" x="-5" y="67.666666666666686" width="323" height="280"/>
+                                        <rect key="frame" x="-5" y="0.0" width="268" height="280"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="PCI-BM-t0K" userLabel="Block Trackers">
-                                                <rect key="frame" x="0.0" y="0.0" width="323" height="64"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="268" height="64"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconBlockTrackers" translatesAutoresizingMaskIntoConstraints="NO" id="jci-wu-GEh">
                                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -80,10 +80,10 @@ never been this easy.</string>
                                                         </constraints>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wPh-Bl-Bn9">
-                                                        <rect key="frame" x="82" y="0.0" width="241" height="64"/>
+                                                        <rect key="frame" x="82" y="0.0" width="186" height="64"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browsing Protection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OQ-gO-hTx">
-                                                                <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="wFx-uV-55X"/>
                                                                 </constraints>
@@ -92,7 +92,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wD-KTv">
-                                                                <rect key="frame" x="0.0" y="30" width="241" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="186" height="35"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="Block trackers and browse securely by default.">
                                                                         <attributes>
@@ -119,7 +119,7 @@ never been this easy.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="k3Z-dz-kIX" userLabel="Private Search">
-                                                <rect key="frame" x="0.0" y="72" width="323" height="64"/>
+                                                <rect key="frame" x="0.0" y="72" width="268" height="64"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconSearchPrivately" translatesAutoresizingMaskIntoConstraints="NO" id="hiQ-di-foW">
                                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -129,10 +129,10 @@ never been this easy.</string>
                                                         </constraints>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gwo-1k-c3F">
-                                                        <rect key="frame" x="82" y="0.0" width="241" height="64"/>
+                                                        <rect key="frame" x="82" y="0.0" width="186" height="64"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKA-Cl-Yzk">
-                                                                <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="0F3-R6-7lX"/>
                                                                 </constraints>
@@ -141,9 +141,9 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ek-ST-Ii7">
-                                                                <rect key="frame" x="0.0" y="30" width="241" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="186" height="35"/>
                                                                 <attributedString key="attributedText">
-                                                                    <fragment content="With DuckDuckGo your searches are always private.">
+                                                                    <fragment content="With DuckDuckGo, your searches are always private.">
                                                                         <attributes>
                                                                             <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <font key="NSFont" size="15" name="ProximaNova-Regular"/>
@@ -167,7 +167,7 @@ never been this easy.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Vgb-Rf-v4I" userLabel="Data Clearing">
-                                                <rect key="frame" x="0.0" y="144" width="323" height="64"/>
+                                                <rect key="frame" x="0.0" y="144" width="268" height="64"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconFlame" translatesAutoresizingMaskIntoConstraints="NO" id="Epr-GU-lde">
                                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -177,10 +177,10 @@ never been this easy.</string>
                                                         </constraints>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P5h-n7-BrY">
-                                                        <rect key="frame" x="82" y="0.0" width="241" height="64"/>
+                                                        <rect key="frame" x="82" y="0.0" width="186" height="64"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data Clearing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oo3-RQ-lVF">
-                                                                <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="186" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="xON-nl-oUt"/>
                                                                 </constraints>
@@ -189,7 +189,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xoh-bo-lyl">
-                                                                <rect key="frame" x="0.0" y="30" width="241" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="186" height="35"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="Erase your browsing data with the tap of a button.">
                                                                         <attributes>
@@ -215,7 +215,7 @@ never been this easy.</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="e1z-hm-cGy" userLabel="Customization">
-                                                <rect key="frame" x="0.0" y="216" width="323" height="64"/>
+                                                <rect key="frame" x="0.0" y="216" width="268" height="64"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="OnboardingIconCustomize" translatesAutoresizingMaskIntoConstraints="NO" id="ksh-gI-SKd">
                                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -225,10 +225,10 @@ never been this easy.</string>
                                                         </constraints>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NH7-An-lJj">
-                                                        <rect key="frame" x="80" y="0.0" width="243" height="64"/>
+                                                        <rect key="frame" x="80" y="0.0" width="188" height="64"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customization" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvh-Sc-GvO">
-                                                                <rect key="frame" x="0.0" y="0.0" width="243" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="188" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="UE4-vQ-J4s"/>
                                                                 </constraints>
@@ -237,7 +237,7 @@ never been this easy.</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-ag-Cs6">
-                                                                <rect key="frame" x="0.0" y="30" width="243" height="35"/>
+                                                                <rect key="frame" x="0.0" y="30" width="188" height="35"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content="Pick a theme and customize privacy features.">
                                                                         <attributes>
@@ -274,13 +274,13 @@ never been this easy.</string>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-Dh-w8y" userLabel="Buttons">
-                                <rect key="frame" x="30" y="637" width="315" height="113"/>
+                                <rect key="frame" x="30" y="427" width="260" height="113"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Start Browsing" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                                <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -305,10 +305,10 @@ never been this easy.</string>
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fy4-oE-dim" userLabel="More Info" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="63" width="315" height="50"/>
+                                        <rect key="frame" x="0.0" y="63" width="260" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                                <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="More Information">
@@ -351,7 +351,7 @@ never been this easy.</string>
                             <constraint firstItem="xKB-C3-6Fs" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="kUo-gL-2yD"/>
                             <constraint firstItem="8cl-Dh-w8y" firstAttribute="top" secondItem="xKB-C3-6Fs" secondAttribute="bottom" constant="26" id="kcw-g9-mK8"/>
                             <constraint firstItem="xKB-C3-6Fs" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-52" id="lYo-Ty-IrF"/>
-                            <constraint firstItem="xKB-C3-6Fs" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="22" id="ozC-1f-xUP"/>
+                            <constraint firstItem="xKB-C3-6Fs" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="16" id="ozC-1f-xUP"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="8cl-Dh-w8y" secondAttribute="bottom" constant="28" id="r9i-SL-UdX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
@@ -359,6 +359,7 @@ never been this easy.</string>
                     <connections>
                         <outlet property="bulletsStack" destination="d2U-SO-dZU" id="pkY-5t-Fs5"/>
                         <outlet property="bulletsWidth" destination="lYo-Ty-IrF" id="G6Q-ZR-kAx"/>
+                        <outlet property="headerPadding" destination="ozC-1f-xUP" id="ust-mo-4Aa"/>
                         <outlet property="secondaryButton" destination="J1y-Qk-FSX" id="W3L-vv-Nno"/>
                         <outlet property="secondaryButtonContainer" destination="fy4-oE-dim" id="Hnt-Wq-iyo"/>
                         <outlet property="subheader" destination="JgA-Kx-QGf" id="BZj-bu-Tvm"/>

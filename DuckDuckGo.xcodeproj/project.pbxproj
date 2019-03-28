@@ -166,6 +166,7 @@
 		8563A0351F8E369400F04442 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0341F8E369400F04442 /* Home.storyboard */; };
 		8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8563A0371F8E54F100F04442 /* Tab.storyboard */; };
 		8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */; };
+		8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */; };
 		8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */; };
 		8565A33F1FC3B74400239327 /* PrivacyProtectionFooter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */; };
 		8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */; };
@@ -707,6 +708,7 @@
 		8563A0341F8E369400F04442 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		8563A0371F8E54F100F04442 /* Tab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tab.storyboard; sourceTree = "<group>"; };
 		8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserChromeManager.swift; sourceTree = "<group>"; };
+		8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "proximanova-extrabold.otf"; sourceTree = "<group>"; };
 		8565A33C1FC3B26E00239327 /* PrivacyProtectionFooterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionFooterController.swift; sourceTree = "<group>"; };
 		8565A33E1FC3B74400239327 /* PrivacyProtectionFooter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtectionFooter.storyboard; sourceTree = "<group>"; };
 		8565A3401FC4F78D00239327 /* PrivacyProtectionErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionErrorController.swift; sourceTree = "<group>"; };
@@ -2463,6 +2465,7 @@
 		F1EEAC531EAFC71D006128D9 /* Licensed */ = {
 			isa = PBXGroup;
 			children = (
+				8565419B224D304D00DF1FB2 /* proximanova-extrabold.otf */,
 				F1EEAC481EAFC708006128D9 /* proximanova-bold.otf */,
 				F1EEAC491EAFC708006128D9 /* proximanova-light.otf */,
 				F1EEAC4A1EAFC708006128D9 /* proximanova-regular.otf */,
@@ -2928,6 +2931,7 @@
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
 				850819DB1FDDE176006561FD /* SettingsTutorials.storyboard in Resources */,
 				8577B0AC2225C778009CCC71 /* OnboardingSummary-iPad.storyboard in Resources */,
+				8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */,
 				85081A051FE05D40006561FD /* Localizable.stringsdict in Resources */,

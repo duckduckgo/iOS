@@ -86,6 +86,19 @@ class BrowsingTipsTests: XCTestCase {
         XCTAssertEqual(1, delegate.showPrivacyGradeTipCounter)
     }
     
+    func testWhenTipsDisabledLaterThenTriggerDoesNothing() {
+        
+        storage.isEnabled = true
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
+        XCTAssertNotNil(tips)
+        
+        storage.isEnabled = false
+        tips?.onFinishedLoading(url: URLs.example, error: false)
+        XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
+        XCTAssertEqual(0, delegate.showFireButtonTipCounter)
+
+    }
+    
 }
 
 class MockBrowsingTipsDelegate: NSObject, BrowsingTipsDelegate {

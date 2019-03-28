@@ -42,6 +42,9 @@ class TabSwitcherViewController: UIViewController {
 
     fileprivate var hasSeenFooter = false
     
+    let tipsStorage = DefaultContextualTipsStorage()
+    fileprivate var tipsEnabled = false
+    
     override var canBecomeFirstResponder: Bool { return true }
     
     var currentSelection: Int?
@@ -52,10 +55,12 @@ class TabSwitcherViewController: UIViewController {
         currentSelection = tabsModel.currentIndex
         applyTheme(ThemeManager.shared.currentTheme)
         becomeFirstResponder()
+        tipsEnabled = tipsStorage.isEnabled
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tipsStorage.isEnabled = false
         collectionView.reloadData()
     }
 
@@ -173,6 +178,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     func dismiss() {
+        tipsStorage.isEnabled = tipsEnabled
         dismiss(animated: true, completion: nil)
     }
 }

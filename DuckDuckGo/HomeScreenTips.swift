@@ -53,6 +53,7 @@ class HomeScreenTips {
     }
     
     func trigger() {
+        guard storage.isEnabled else { return }
         guard tutorialSettings.hasSeenOnboarding else { return }
         guard let tip = Tips(rawValue: storage.nextHomeScreenTip) else { return }
         

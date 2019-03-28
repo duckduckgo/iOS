@@ -52,6 +52,7 @@ class BrowsingTips {
     }
     
     func onFinishedLoading(url: URL?, error: Bool) {
+        guard storage.isEnabled else { return }
         guard !error else { return }
         guard let url = url else { return }
         guard !appUrls.isDuckDuckGo(url: url) else { return }

@@ -139,12 +139,17 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
-        tips = BrowsingTips(delegate: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        tips = BrowsingTips(delegate: self)
         resetNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        tips = nil
     }
     
     @objc func onApplicationWillResignActive() {

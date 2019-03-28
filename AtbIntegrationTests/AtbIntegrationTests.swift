@@ -29,6 +29,7 @@ class AtbIntegrationTests: XCTestCase {
         static let initialAtb = "v100-1"
         static let searchRetentionAtb = "v102-7"
         static let appRetentionAtb = "v102-6"
+
         static let devmode = "test"
         static let atbParam = "atb"
         static let setAtbParam = "set_atb"
@@ -39,9 +40,8 @@ class AtbIntegrationTests: XCTestCase {
     let server = HttpServer()
     var searchRequests = [HttpRequest]()
     var extiRequests = [HttpRequest]()
-    var installAtbRequests = [HttpRequest]()
-    var appRetentionAtbRequests = [HttpRequest]()
-    var searchRetentionAtbRequests = [HttpRequest]()
+    var atbRequests = [HttpRequest]()
+    var atbToSet = Constants.initialAtb
     
     override func setUp() {
         super.setUp()
@@ -73,59 +73,67 @@ class AtbIntegrationTests: XCTestCase {
         
         searchRequests.removeAll()
         extiRequests.removeAll()
-        installAtbRequests.removeAll()
-        searchRetentionAtbRequests.removeAll()
-        appRetentionAtbRequests.removeAll()
+        atbRequests.removeAll()
     }
     
     func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
-        assertInstallAtbCalledOnce()
+        assertAtbCount(requests: 2)
+        assertAtb(requestIndex: 0, expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertAtb(requestIndex: 1, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertExtiCalledOnce()
     }
     
     func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
+        
         search(forText: "oranges")
         assertSearch(text: "oranges", atb: Constants.initialAtb)
-        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        
-        assertInstallAtbCalledOnce()
+
         assertExtiCalledOnce()
+        assertAtbCount(requests: 3)
+        assertAtb(requestIndex: 0, expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertAtb(requestIndex: 1, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(requestIndex: 2, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
 
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
+        atbToSet = Constants.searchRetentionAtb
+        
         search(forText: "lemons")
         assertSearch(text: "lemons", atb: Constants.initialAtb, numberOfRequests: 1)
-        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, numberOfRequests: 1)
 
         search(forText: "pears")
         assertSearch(text: "pears", atb: Constants.initialAtb, numberOfRequests: 2)
-        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, numberOfRequests: 2)
-        
-        assertInstallAtbCalledOnce()
+
         assertExtiCalledOnce()
+        assertAtbCount(requests: 4)
+        assertAtb(requestIndex: 0, expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertAtb(requestIndex: 1, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(requestIndex: 2, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
+        assertAtb(requestIndex: 3, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
     }
     
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         search(forText: "http://localhost:8080?q=beagles")
         assertSearch(text: "beagles", atb: Constants.initialAtb)
-        assertSearchRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        assertInstallAtbCalledOnce()
+    
         assertExtiCalledOnce()
+        assertAtbCount(requests: 3)
+        assertAtb(requestIndex: 0, expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertAtb(requestIndex: 1, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(requestIndex: 2, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
     
     func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
-        assertAppRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, numberOfRequests: 1)
-        app.launch()
-        assertAppRetentionAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, numberOfRequests: 2)
-        assertInstallAtbCalledOnce()
+        atbToSet = Constants.appRetentionAtb
+        app.launch() // this launch gets new atb
+        app.launch() // this launch sends it
+
         assertExtiCalledOnce()
-    }
-    
-    func assertInstallAtbCalledOnce() {
-        XCTAssertEqual(1, installAtbRequests.count)
-        guard let request = installAtbRequests.last else { fatalError() }
-        XCTAssertEqual(1, request.queryParams.count)
-        XCTAssertEqual("1", request.queryParam(Constants.devmode))
+        assertAtbCount(requests: 4)
+        assertAtb(requestIndex: 0, expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertAtb(requestIndex: 1, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(requestIndex: 2, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(requestIndex: 3, expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, expectedType: "app_use")
     }
     
     func assertSearch(text: String, atb: String, numberOfRequests: Int = 1) {
@@ -141,23 +149,15 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
     }
     
-    func assertSearchRetentionAtb(expectedAtb: String, expectedSetAtb: String, numberOfRequests: Int = 1) {
-        XCTAssertEqual(numberOfRequests, searchRetentionAtbRequests.count)
-        guard let request = searchRetentionAtbRequests.last else { fatalError() }
-        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
-                      "first.atb does not start with \(expectedSetAtb)")
-        XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
-        XCTAssertNil(request.queryParam(Constants.activityType))
-        XCTAssertEqual("1", request.queryParam(Constants.devmode))
+    func assertAtbCount(requests: Int) {
+        XCTAssertEqual(requests, atbRequests.count)
     }
-
-    func assertAppRetentionAtb(expectedAtb: String, expectedSetAtb: String, numberOfRequests: Int = 1) {
-        XCTAssertEqual(numberOfRequests, appRetentionAtbRequests.count)
-        guard let request = appRetentionAtbRequests.last else { fatalError() }
-        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
-                      "first.atb does not start with \(expectedSetAtb)")
+    
+    func assertAtb(requestIndex: Int = 0, expectedAtb: String? = nil, expectedSetAtb: String? = nil, expectedType: String? = nil) {
+        let request = atbRequests[requestIndex]
+        XCTAssertEqual(expectedAtb, request.queryParam(Constants.atbParam))
         XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
-        XCTAssertEqual("app_use", request.queryParam(Constants.activityType))
+        XCTAssertEqual(expectedType, request.queryParam(Constants.activityType))
         XCTAssertEqual("1", request.queryParam(Constants.devmode))
     }
     
@@ -205,20 +205,10 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         server["/atb.js"] = {
-            var atb = ""
-            if $0.queryParam(Constants.activityType)  != nil {
-                atb = Constants.appRetentionAtb
-                self.appRetentionAtbRequests.append($0)
-            } else if $0.queryParam(Constants.atbParam)  != nil {
-                atb = Constants.searchRetentionAtb
-                self.searchRetentionAtbRequests.append($0)
-            } else {
-                atb = Constants.initialAtb
-                self.installAtbRequests.append($0)
-            }
+            self.atbRequests.append($0)
             return .ok(.json([
-                "version": atb
-                ] as AnyObject))
+                "version": self.atbToSet
+            ] as AnyObject))
         }
     }
     

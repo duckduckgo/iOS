@@ -124,7 +124,7 @@ class MainViewController: UIViewController {
         }
 
         findInPageBottomLayoutConstraint.constant = 0
-        animateForKeyboard(userInfo: userInfo)
+        animateForKeyboard(userInfo: userInfo, y: view.frame.height)
     }
     
     /// Based on https://stackoverflow.com/a/46117073/73479
@@ -148,17 +148,18 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = height
         currentTab?.webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
-        animateForKeyboard(userInfo: userInfo)
+        animateForKeyboard(userInfo: userInfo, y: view.frame.height - height)
     }
     
-    private func animateForKeyboard(userInfo: [AnyHashable: Any]) {
+    private func animateForKeyboard(userInfo: [AnyHashable: Any], y: CGFloat) {
         let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
         let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
         let animationCurve = UIView.AnimationOptions(rawValue: animationCurveRaw)
-        
+
+        let frame = self.findInPageView.frame
         UIView.animate(withDuration: duration, delay: 0, options: animationCurve, animations: {
-            self.view.layoutIfNeeded()
+            self.findInPageView.frame = CGRect(x: 0, y: y - frame.height, width: frame.width, height: frame.height)
         }, completion: nil)
 
     }
@@ -191,8 +192,8 @@ class MainViewController: UIViewController {
             return
         }
 
-        if let controller = segue.destination as? FeedbackViewController {
-            controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
+        if let controller = segue.destination as? SiteFeedbackViewController {
+            controller.prepareForSegue(url: currentTab?.url?.absoluteString)
             return
         }
         
@@ -551,7 +552,7 @@ extension MainViewController: FindInPageViewDelegate {
 extension MainViewController: BrowserChromeDelegate {
 
     struct ChromeAnimationConstants {
-        static let duration = 0.3
+        static let duration = 0.1
     }
 
     private func hideKeyboard() {

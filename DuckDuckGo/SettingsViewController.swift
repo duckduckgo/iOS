@@ -83,6 +83,12 @@ class SettingsViewController: UITableViewController {
             controller.delegate = homePageSettingsDelegate
             return
         }
+        
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is FeedbackViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+        }
     }
 
     private func configureMargins() {
@@ -190,9 +196,9 @@ extension SettingsViewController: Themable {
         
         versionText.textColor = theme.tableCellTintColor
         
-        lightThemeToggle.onTintColor = theme.toggleSwitchColor
-        autocompleteToggle.onTintColor = theme.toggleSwitchColor
-        authenticationToggle.onTintColor = theme.toggleSwitchColor
+        lightThemeToggle.onTintColor = theme.buttonTintColor
+        autocompleteToggle.onTintColor = theme.buttonTintColor
+        authenticationToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

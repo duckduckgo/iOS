@@ -87,7 +87,41 @@ public enum PixelName: String {
     case onboardingShown = "mo"
     case onboardingCustomizeSettings = "mo_s"
     case onboardingExplorePrivacy = "mo_e"
-
+    
+    case feedbackPositive = "mfbs_positive_submit"
+    case feedbackNegativePrefix = "mfbs_negative_"
+    
+    case feedbackNegativeBrokenSites = "mfbs_negative_brokenSites_submit"
+    case feedbackNegativeOther = "mfbs_negative_other_submit"
+    
+    case feedbackNegativeBrowserFeaturesNav = "mfbs_negative_browserFeatures_navigation"
+    case feedbackNegativeBrowserFeaturesTabs = "mfbs_negative_browserFeatures_tabs"
+    case feedbackNegativeBrowserFeaturesAds = "mfbs_negative_browserFeatures_ads"
+    case feedbackNegativeBrowserFeaturesVideos = "mfbs_negative_browserFeatures_videos"
+    case feedbackNegativeBrowserFeaturesImages = "mfbs_negative_browserFeatures_images"
+    case feedbackNegativeBrowserFeaturesBookmarks = "mfbs_negative_browserFeatures_bookmarks"
+    case feedbackNegativeBrowserFeaturesOther = "mfbs_negative_browserFeatures_other"
+    
+    case feedbackNegativeBadResultsTechnical = "mfbs_negative_badResults_technical"
+    case feedbackNegativeBadResultsLayout = "mfbs_negative_badResults_layout"
+    case feedbackNegativeBadResultsSpeed = "mfbs_negative_badResults_speed"
+    case feedbackNegativeBadResultsLangOrRegion = "mfbs_negative_badResults_langRegion"
+    case feedbackNegativeBadResultsAutocomplete = "mfbs_negative_badResults_autocomplete"
+    case feedbackNegativeBadResultsOther = "mfbs_negative_badResults_other"
+    
+    case feedbackNegativeCustomizationHome = "mfbs_negative_customization_home"
+    case feedbackNegativeCustomizationTabs = "mfbs_negative_customization_tabs"
+    case feedbackNegativeCustomizationUI = "mfbs_negative_customization_ui"
+    case feedbackNegativeCustomizationWhatCleared = "mfbs_negative_customization_whichDataCleared"
+    case feedbackNegativeCustomizationWhenCleared = "mfbs_negative_customization_whenDataCleared"
+    case feedbackNegativeCustomizationBookmarks = "mfbs_negative_customization_bookmarks"
+    case feedbackNegativeCustomizationOther = "mfbs_negative_customization_other"
+    
+    case feedbackNegativePerformanceSlow = "mfbs_negative_performance_slow"
+    case feedbackNegativePerformanceCrash = "mfbs_negative_performance_crash"
+    case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
+    case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
+    
 }
 
 public class Pixel {
@@ -117,7 +151,6 @@ public class Pixel {
                             withAdditionalParameters params: [String: String?] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
-        
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls
             .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)

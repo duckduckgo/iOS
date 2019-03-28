@@ -20,9 +20,21 @@
 import Foundation
 import Core
 
+/// Represents single component that is being sent to the server.
+/// Feedback as a whole can consist of multiple components. These components are included both in
+/// message sent to the server and in pixels.
+protocol FeedbackComponent {
+    var component: String { get }
+}
+
 protocol FeedbackSender {
     func submitBrokenSite(url: String, message: String)
-    func submitMessage(message: String)
+    
+    func submitPositiveSentiment(message: String)
+    func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model)
+    
+    func firePositiveSentimentPixel()
+    func fireNegativeSentimentPixel(with model: Feedback.Model)
 }
 
 struct FeedbackSubmitter: FeedbackSender {
@@ -30,6 +42,11 @@ struct FeedbackSubmitter: FeedbackSender {
     private enum Reason: String {
         case general = "general"
         case brokenSite = "broken_site"
+    }
+    
+    private enum Rating: String {
+        case positive
+        case negative
     }
 
     private let statisticsStore: StatisticsStore
@@ -41,19 +58,30 @@ struct FeedbackSubmitter: FeedbackSender {
     }
 
     public func submitBrokenSite(url: String, message: String) {
-        submitFeedback(reason: .brokenSite, url: url, comment: message)
+        submitFeedback(reason: .brokenSite, rating: nil, url: url, comment: message)
     }
 
-    public func submitMessage(message: String) {
-        submitFeedback(reason: .general, url: nil, comment: message)
+    public func submitPositiveSentiment(message: String) {
+        submitFeedback(reason: .general, rating: .positive, url: nil, comment: message)
+    }
+    
+    public func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {
+        submitFeedback(reason: .general, rating: .negative, url: url, comment: message, model: model)
     }
 
-    private func submitFeedback(reason: Reason, url: String?, comment: String) {
+    private func submitFeedback(reason: Reason,
+                                rating: Rating?,
+                                url: String?,
+                                comment: String,
+                                model: Feedback.Model? = nil) {
 
         let parameters = [
             "reason": reason.rawValue,
+            "rating": rating?.rawValue ?? "",
             "url": url ?? "",
             "comment": comment,
+            "category": model?.category?.component ?? "",
+            "subcategory": model?.subcategory?.component ?? "",
             "platform": "iOS",
             "os": UIDevice.current.systemVersion,
             "manufacturer": "Apple",
@@ -69,5 +97,27 @@ struct FeedbackSubmitter: FeedbackSender {
                 Logger.log(text: "Feedback response successful")
             }
         }
+    }
+    
+    public func firePositiveSentimentPixel() {
+        Pixel.fire(pixel: .feedbackPositive)
+    }
+    
+    public func fireNegativeSentimentPixel(with model: Feedback.Model) {
+        guard let category = model.category else { return }
+        
+        var rawPixel = PixelName.feedbackNegativePrefix.rawValue + category.component
+        
+        if let subcategory = model.subcategory {
+            rawPixel += "_" + subcategory.component
+        } else {
+            rawPixel += "_submit"
+        }
+        
+        guard let pixel = PixelName(rawValue: rawPixel) else {
+            fatalError("Could not match feedback components with Pixel")
+        }
+        
+        Pixel.fire(pixel: pixel)
     }
 }

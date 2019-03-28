@@ -45,7 +45,7 @@ class HomePageSettingsViewController: UITableViewController {
         cell.backgroundColor = theme.tableCellBackgroundColor
         
         // Checkmark color
-        cell.tintColor = theme.toggleSwitchColor
+        cell.tintColor = theme.buttonTintColor
         
         cell.accessoryType = indexPath.row == appSettings.homePage.rawValue ? .checkmark : .none
     }

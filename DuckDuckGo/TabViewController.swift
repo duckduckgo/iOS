@@ -143,12 +143,20 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tips = BrowsingTips(delegate: self)
+        installBrowsingTips()
         resetNavigationBar()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        removeBrowsingTips()
+    }
+    
+    func installBrowsingTips() {
+        tips = BrowsingTips(delegate: self)
+    }
+    
+    func removeBrowsingTips() {
         tips = nil
     }
     

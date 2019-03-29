@@ -84,7 +84,8 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
-        assertRequestCount(count: 3)
+        assertSearchRequestCount(count: 0)
+        assertStatisticsRequestCount(count: 3)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -93,9 +94,10 @@ class AtbIntegrationTests: XCTestCase {
     func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
         search(forText: "oranges")
 
-        assertRequestCount(count: 5)
+        assertSearchRequestCount(count: 1)
         assertSearch(text: "oranges", atb: Constants.initialAtb)
 
+        assertStatisticsRequestCount(count: 4)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -108,10 +110,11 @@ class AtbIntegrationTests: XCTestCase {
         search(forText: "lemons")
         search(forText: "pears")
 
-        assertRequestCount(count: 7)
+        assertSearchRequestCount(count: 2)
         assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertSearch(text: "pears", atb: Constants.initialAtb)
 
+        assertStatisticsRequestCount(count: 5)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -122,9 +125,10 @@ class AtbIntegrationTests: XCTestCase {
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         search(forText: "http://localhost:8080?q=beagles")
         
-        assertRequestCount(count: 5)
+        assertSearchRequestCount(count: 1)
         assertSearch(text: "beagles", atb: Constants.initialAtb)
 
+        assertStatisticsRequestCount(count: 4)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -137,7 +141,8 @@ class AtbIntegrationTests: XCTestCase {
         backgroundRelaunch() // this launch gets new atb
         backgroundRelaunch() // this launch sends it
 
-        assertRequestCount(count: 5)
+        assertSearchRequestCount(count: 0)
+        assertStatisticsRequestCount(count: 5)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -153,8 +158,8 @@ class AtbIntegrationTests: XCTestCase {
         }
     }
     
-    func assertRequestCount(count: Int) {
-        XCTAssertEqual(count, statisticsRequests.count + searchRequests.count)
+    func assertStatisticsRequestCount(count: Int) {
+        XCTAssertEqual(count, statisticsRequests.count)
     }
     
     func assertExti() {
@@ -172,6 +177,10 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertEqual(expectedSetAtb, httpRequest.queryParam(Constants.setAtbParam))
         XCTAssertEqual(expectedType, httpRequest.queryParam(Constants.activityType))
         XCTAssertEqual("1", httpRequest.queryParam(Constants.devmode))
+    }
+    
+    func assertSearchRequestCount(count: Int) {
+        XCTAssertEqual(count, searchRequests.count)
     }
     
     func assertSearch(text: String, atb: String) {

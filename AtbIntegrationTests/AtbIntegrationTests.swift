@@ -36,20 +36,20 @@ class AtbIntegrationTests: XCTestCase {
         static let activityType = "at"
     }
     
-    enum RequestType {
+    enum StatisticsRequestType {
         case atb
         case exti
-        case search
     }
     
-    struct Request {
-        let type: RequestType
+    struct StatisticsRequest {
+        let type: StatisticsRequestType
         let httpRequest: HttpRequest
     }
     
     let app = XCUIApplication()
     let server = HttpServer()
-    var requests = [Request]()
+    var statisticsRequests = [StatisticsRequest]()
+    var searchRequests = [HttpRequest]()
     var atbToSet = Constants.initialAtb
     
     override func setUp() {
@@ -78,11 +78,13 @@ class AtbIntegrationTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         server.stop()
-        requests.removeAll()
+        statisticsRequests.removeAll()
+        searchRequests.removeAll()
     }
     
     func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
-        assertRequestCount(count: 3)
+        assertSearchRequestCount(count: 0)
+        assertStatisticsRequestCount(count: 3)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -91,46 +93,55 @@ class AtbIntegrationTests: XCTestCase {
     func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
         search(forText: "oranges")
 
-        assertRequestCount(count: 5)
+        assertSearchRequestCount(count: 1)
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+
+        assertStatisticsRequestCount(count: 4)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
-        assertSearch(text: "oranges", atb: Constants.initialAtb)
     }
 
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
         atbToSet = Constants.searchRetentionAtb
+
         search(forText: "lemons")
         search(forText: "pears")
 
-        assertRequestCount(count: 7)
+        assertSearchRequestCount(count: 2)
+        assertSearch(text: "lemons", atb: Constants.initialAtb)
+        assertSearch(text: "pears", atb: Constants.initialAtb)
+
+        assertStatisticsRequestCount(count: 5)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
-        assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
-        assertSearch(text: "pears", atb: Constants.initialAtb)
     }
     
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         search(forText: "http://localhost:8080?q=beagles")
-    
-        assertRequestCount(count: 5)
+        
+        assertSearchRequestCount(count: 1)
+        assertSearch(text: "beagles", atb: Constants.initialAtb)
+
+        assertStatisticsRequestCount(count: 4)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
-        assertSearch(text: "beagles", atb: Constants.initialAtb)
     }
     
     func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
         atbToSet = Constants.appRetentionAtb
-        app.launch() // this launch gets new atb
-        app.launch() // this launch sends it
+        
+        backgroundRelaunch() // this launch gets new atb
+        backgroundRelaunch() // this launch sends it
 
-        assertRequestCount(count: 5)
+        assertSearchRequestCount(count: 0)
+        assertStatisticsRequestCount(count: 5)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
@@ -138,19 +149,27 @@ class AtbIntegrationTests: XCTestCase {
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, expectedType: "app_use")
     }
     
-    func assertRequestCount(count: Int) {
-        XCTAssertEqual(count, requests.count)
+    func backgroundRelaunch() {
+        XCUIDevice().press(.home)
+        app.activate()
+        if !app.searchFields["searchEntry"].waitForExistence(timeout: Constants.defaultTimeout) {
+            fatalError("Can not find search field. Has the app launched?")
+        }
+    }
+    
+    func assertStatisticsRequestCount(count: Int) {
+        XCTAssertEqual(count, statisticsRequests.count)
     }
     
     func assertExti() {
-        let request = requests.removeFirst()
-        XCTAssertEqual(RequestType.exti, request.type)
+        let request = statisticsRequests.removeFirst()
+        XCTAssertEqual(StatisticsRequestType.exti, request.type)
         XCTAssertEqual(Constants.initialAtb, request.httpRequest.queryParam(Constants.atbParam))
     }
     
     func assertAtb(expectedAtb: String? = nil, expectedSetAtb: String? = nil, expectedType: String? = nil) {
-        let request = requests.removeFirst()
-        XCTAssertEqual(RequestType.atb, request.type)
+        let request = statisticsRequests.removeFirst()
+        XCTAssertEqual(StatisticsRequestType.atb, request.type)
         
         let httpRequest = request.httpRequest
         XCTAssertEqual(expectedAtb, httpRequest.queryParam(Constants.atbParam))
@@ -159,13 +178,15 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertEqual("1", httpRequest.queryParam(Constants.devmode))
     }
     
+    func assertSearchRequestCount(count: Int) {
+        XCTAssertEqual(count, searchRequests.count)
+    }
+    
     func assertSearch(text: String, atb: String) {
-        let request = requests.removeFirst()
-        XCTAssertEqual(RequestType.search, request.type)
+        let request = searchRequests.removeFirst()
 
-        let httpRequest = request.httpRequest
-        XCTAssertEqual(text, httpRequest.queryParam("q"))
-        XCTAssertEqual(atb, httpRequest.queryParam(Constants.atbParam))
+        XCTAssertEqual(text, request.queryParam("q"))
+        XCTAssertEqual(atb, request.queryParam(Constants.atbParam))
     }
     
     private func search(forText text: String) {
@@ -194,17 +215,17 @@ class AtbIntegrationTests: XCTestCase {
     private func addRequestHandlers() {
         
         server["/"] = {
-            self.requests.append(Request(type: RequestType.search, httpRequest: $0))
+            self.searchRequests.append($0)
             return .accepted
         }
         
         server["/exti/"] = {
-            self.requests.append(Request(type: RequestType.exti, httpRequest: $0))
+            self.statisticsRequests.append(StatisticsRequest(type: StatisticsRequestType.exti, httpRequest: $0))
             return .accepted
         }
         
         server["/atb.js"] = {
-            self.requests.append(Request(type: RequestType.atb, httpRequest: $0))
+            self.statisticsRequests.append(StatisticsRequest(type: StatisticsRequestType.atb, httpRequest: $0))
             return .ok(.json([
                 "version": self.atbToSet
             ] as AnyObject))

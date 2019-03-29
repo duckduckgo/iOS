@@ -27,24 +27,34 @@ class AtbIntegrationTests: XCTestCase {
         static let defaultTimeout: Double = 10
 
         static let initialAtb = "v100-1"
-        static let retentionAtb = "v102-7"
+        static let searchRetentionAtb = "v102-7"
+        static let appRetentionAtb = "v102-6"
+
         static let devmode = "test"
         static let atbParam = "atb"
         static let setAtbParam = "set_atb"
+        static let activityType = "at"
+    }
+    
+    enum RequestType {
+        case atb
+        case exti
+        case search
+    }
+    
+    struct Request {
+        let type: RequestType
+        let httpRequest: HttpRequest
     }
     
     let app = XCUIApplication()
     let server = HttpServer()
-    var searchRequests = [HttpRequest]()
-    var extiRequests = [HttpRequest]()
-    var atbRequests = [HttpRequest]()
+    var requests = [Request]()
     var atbToSet = Constants.initialAtb
     
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
-        
-        atbToSet = Constants.initialAtb
         
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
@@ -69,93 +79,94 @@ class AtbIntegrationTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         server.stop()
-        
-        searchRequests.removeAll()
-        extiRequests.removeAll()
-        atbRequests.removeAll()
-
+        requests.removeAll()
     }
     
-    func testWhenAppIsInstalledThenInitialAtbIsRetrieved() throws {
-
-        assertGetAtbCalled()
-        assertExtiCalledOnce()
-
+    func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
+        assertRequestCount(count: 3)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
     }
     
     func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
-        
         search(forText: "oranges")
+
+        assertRequestCount(count: 5)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
         assertSearch(text: "oranges", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        
-        assertExtiCalledOnce()
     }
-    
+
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
-        atbToSet = Constants.retentionAtb
-
+        atbToSet = Constants.searchRetentionAtb
         search(forText: "lemons")
-        assertSearch(text: "lemons", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        searchRequests.removeAll()
-        atbRequests.removeAll()
-
         search(forText: "pears")
+
+        assertRequestCount(count: 7)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
+        assertSearch(text: "lemons", atb: Constants.initialAtb)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
         assertSearch(text: "pears", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb, expectedRequestCount: 1)
-        
-        assertExtiCalledOnce()
     }
     
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
-        
         search(forText: "http://localhost:8080?q=beagles")
+    
+        assertRequestCount(count: 5)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
         assertSearch(text: "beagles", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-
-        assertExtiCalledOnce()
     }
     
-    func assertGetAtbCalled() {
-        XCTAssertEqual(1, atbRequests.count)
-        guard let request = atbRequests.first else { fatalError() }
+    func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
+        atbToSet = Constants.appRetentionAtb
+        app.launch() // this launch gets new atb
+        app.launch() // this launch sends it
+
+        assertRequestCount(count: 5)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, expectedType: "app_use")
+    }
+    
+    func assertRequestCount(count: Int) {
+        XCTAssertEqual(count, requests.count)
+    }
+    
+    func assertExti() {
+        let request = requests.removeFirst()
+        XCTAssertEqual(RequestType.exti, request.type)
+        XCTAssertEqual(Constants.initialAtb, request.httpRequest.queryParam(Constants.atbParam))
+    }
+    
+    func assertAtb(expectedAtb: String? = nil, expectedSetAtb: String? = nil, expectedType: String? = nil) {
+        let request = requests.removeFirst()
+        XCTAssertEqual(RequestType.atb, request.type)
         
-        XCTAssertEqual(1, request.queryParams.count)
-        XCTAssertEqual("1", request.queryParam(Constants.devmode))
+        let httpRequest = request.httpRequest
+        XCTAssertEqual(expectedAtb, httpRequest.queryParam(Constants.atbParam))
+        XCTAssertEqual(expectedSetAtb, httpRequest.queryParam(Constants.setAtbParam))
+        XCTAssertEqual(expectedType, httpRequest.queryParam(Constants.activityType))
+        XCTAssertEqual("1", httpRequest.queryParam(Constants.devmode))
     }
     
     func assertSearch(text: String, atb: String) {
-        XCTAssertEqual(1, searchRequests.count)
+        let request = requests.removeFirst()
+        XCTAssertEqual(RequestType.search, request.type)
 
-        guard let request = searchRequests.last else {
-            XCTFail("No search request")
-            return
-        }
-        XCTAssertEqual(text, request.queryParam("q"))
-        XCTAssertTrue(request.queryParam(Constants.atbParam)?.hasPrefix(atb) ?? false)
-    }
-    
-    func assertExtiCalledOnce() {
-        XCTAssertEqual(1, extiRequests.count)
-        let atbParam = extiRequests.first?.queryParam(Constants.atbParam)
-        XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
-    }
-    
-    // by default expects 2 atb requests, the initial get atb and the one being asserted
-    func assertAtb(expectedAtb: String, expectedSetAtb: String, expectedRequestCount: Int = 2) {
-        XCTAssertEqual(expectedRequestCount, atbRequests.count)
-        guard let request = atbRequests.last else {
-            XCTFail("No atb request")
-            return
-        }
-        
-        XCTAssertEqual(3, request.queryParams.count)
-        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
-                      "first.atb does not start with \(expectedSetAtb)")
-        XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
-        XCTAssertEqual("1", request.queryParam(Constants.devmode))
-
+        let httpRequest = request.httpRequest
+        XCTAssertEqual(text, httpRequest.queryParam("q"))
+        XCTAssertEqual(atb, httpRequest.queryParam(Constants.atbParam))
     }
     
     private func dismissAddToDockDialog() {
@@ -192,22 +203,21 @@ class AtbIntegrationTests: XCTestCase {
     private func addRequestHandlers() {
         
         server["/"] = {
-            self.searchRequests.append($0)
+            self.requests.append(Request(type: RequestType.search, httpRequest: $0))
             return .accepted
         }
         
         server["/exti/"] = {
-            self.extiRequests.append($0)
+            self.requests.append(Request(type: RequestType.exti, httpRequest: $0))
             return .accepted
         }
         
         server["/atb.js"] = {
-            self.atbRequests.append($0)
+            self.requests.append(Request(type: RequestType.atb, httpRequest: $0))
             return .ok(.json([
                 "version": self.atbToSet
-                ] as AnyObject))
+            ] as AnyObject))
         }
-        
     }
     
     private func skipOnboarding() {

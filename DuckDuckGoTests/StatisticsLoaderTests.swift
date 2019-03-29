@@ -39,16 +39,13 @@ class StatisticsLoaderTests: XCTestCase {
 
     func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {
 
-        mockStatisticsStore.variant = "x1"
-
         loadSuccessfulAtbStub()
         loadSuccessfulExiStub()
 
         let expect = expectation(description: "Successfult atb and exti updates store")
-        testee.load { () in
+        testee.load {
             XCTAssertTrue(self.mockStatisticsStore.hasInstallStatistics)
             XCTAssertEqual(self.mockStatisticsStore.atb, "v77-5")
-            XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "v77-5")
             expect.fulfill()
         }
 
@@ -61,10 +58,9 @@ class StatisticsLoaderTests: XCTestCase {
         loadSuccessfulExiStub()
 
         let expect = expectation(description: "Unsuccessfult atb does not update store")
-        testee.load { () in
+        testee.load {
             XCTAssertFalse(self.mockStatisticsStore.hasInstallStatistics)
             XCTAssertNil(self.mockStatisticsStore.atb)
-            XCTAssertNil(self.mockStatisticsStore.retentionAtb)
             expect.fulfill()
         }
 
@@ -77,56 +73,86 @@ class StatisticsLoaderTests: XCTestCase {
         loadUnsuccessfulExiStub()
 
         let expect = expectation(description: "Unsuccessfult exti does not update store")
-        testee.load { () in
+        testee.load {
             XCTAssertFalse(self.mockStatisticsStore.hasInstallStatistics)
             XCTAssertNil(self.mockStatisticsStore.atb)
-            XCTAssertNil(self.mockStatisticsStore.retentionAtb)
             expect.fulfill()
         }
 
         waitForExpectations(timeout: 1, handler: nil)
     }
 
-    func testWhenRefreshHasSuccessfulAtbRequestThenRetentionAtbUpdated() {
+    func testWhenSearchRefreshHasSuccessfulAtbRequestThenSearchRetentionAtbUpdated() {
 
         mockStatisticsStore.atb = "atb"
-        mockStatisticsStore.retentionAtb = "retentionatb"
+        mockStatisticsStore.searchRetentionAtb = "retentionatb"
         loadSuccessfulAtbStub()
 
         let expect = expectation(description: "Successfult atb updates retention store")
-        testee.refreshRetentionAtb { () in
+        testee.refreshSearchRetentionAtb {
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
-            XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "v77-5")
+            XCTAssertEqual(self.mockStatisticsStore.searchRetentionAtb, "v77-5")
             expect.fulfill()
         }
 
         waitForExpectations(timeout: 1, handler: nil)
     }
-
-    func testWhenRefreshHasUnsuccessfulAtbRequestThenRetentionAtbNotUpdated() {
+    
+    func testWhenAppRefreshHasSuccessfulAtbRequestThenAppRetentionAtbUpdated() {
+        
         mockStatisticsStore.atb = "atb"
-        mockStatisticsStore.retentionAtb = "retentionAtb"
+        mockStatisticsStore.appRetentionAtb = "retentionatb"
+        loadSuccessfulAtbStub()
+        
+        let expect = expectation(description: "Successfult atb updates retention store")
+        testee.refreshAppRetentionAtb {
+            XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
+            XCTAssertEqual(self.mockStatisticsStore.appRetentionAtb, "v77-5")
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testWhenSearchRefreshHasUnsuccessfulAtbRequestThenSearchRetentionAtbNotUpdated() {
+        mockStatisticsStore.atb = "atb"
+        mockStatisticsStore.searchRetentionAtb = "retentionAtb"
         loadUnsuccessfulAtbStub()
 
         let expect = expectation(description: "Unsuccessfult atb does not update store")
-        testee.refreshRetentionAtb { () in
+        testee.refreshSearchRetentionAtb {
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
-            XCTAssertEqual(self.mockStatisticsStore.retentionAtb, "retentionAtb")
+            XCTAssertEqual(self.mockStatisticsStore.searchRetentionAtb, "retentionAtb")
             expect.fulfill()
         }
 
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testWhenAppRefreshHasUnsuccessfulAtbRequestThenSearchRetentionAtbNotUpdated() {
+        mockStatisticsStore.atb = "atb"
+        mockStatisticsStore.appRetentionAtb = "retentionAtb"
+        loadUnsuccessfulAtbStub()
+        
+        let expect = expectation(description: "Unsuccessfult atb does not update store")
+        testee.refreshAppRetentionAtb {
+            XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
+            XCTAssertEqual(self.mockStatisticsStore.appRetentionAtb, "retentionAtb")
+            expect.fulfill()
+        }
+        
         waitForExpectations(timeout: 1, handler: nil)
     }
 
     func loadSuccessfulAtbStub() {
-        stub(condition: isHost(appUrls.atb.host!)) { _ in
+        stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
             let path = OHPathForFile("MockFiles/atb.json", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }
 
     func loadUnsuccessfulAtbStub() {
-        stub(condition: isHost(appUrls.atb.host!)) { _ in
+        stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
             let path = OHPathForFile("MockFiles/invalid.json", type(of: self))!
             return fixture(filePath: path, status: 400, headers: nil)
         }

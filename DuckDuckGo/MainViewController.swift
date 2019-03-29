@@ -788,6 +788,15 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
+    
+    func tabSwitcherDidAppear(_ tabSwitcher: TabSwitcherViewController) {
+        currentTab?.removeBrowsingTips()
+    }
+    
+    func tabSwitcherDidDisappear(_ tabSwitcher: TabSwitcherViewController) {
+        currentTab?.installBrowsingTips()
+    }
+    
 }
 
 extension MainViewController: BookmarksDelegate {

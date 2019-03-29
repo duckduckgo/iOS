@@ -62,6 +62,12 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollToInitialTab()
+        delegate?.tabSwitcherDidAppear(self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.tabSwitcherDidDisappear(self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

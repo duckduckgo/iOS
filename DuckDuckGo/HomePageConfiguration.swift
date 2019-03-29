@@ -30,10 +30,10 @@ class HomePageConfiguration {
                 return [ .navigationBarSearch ]
                 
             case .centerSearch:
-                return [ .fixedCenteredSearch ]
+                return [ .centeredSearch(fixed: true), .empty ]
                 
             case .centerSearchAndFavorites:
-                return [ .centeredSearch, .favorites ]
+                return [ .centeredSearch(fixed: false), .favorites, .padding ]
             }
             
         }
@@ -44,11 +44,12 @@ class HomePageConfiguration {
         
     }
     
-    enum Component {
+    enum Component: Equatable {
         case navigationBarSearch
-        case centeredSearch
-        case fixedCenteredSearch
+        case centeredSearch(fixed: Bool)
         case favorites
+        case padding
+        case empty
     }
     
     let settings: AppSettings

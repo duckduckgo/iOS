@@ -28,7 +28,7 @@ extension EasyTipView {
         preferences.drawing.arrowWidth = 18
         preferences.drawing.arrowPosition = .any
         
-        preferences.drawing.font = UIFont(name: "ProximaNova-Semibold", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        preferences.drawing.font = UIFont.semiBoldAppFont(ofSize: 16)
         preferences.drawing.foregroundColor = UIColor.nearlyBlackLight
         preferences.drawing.backgroundColor = UIColor.white
 

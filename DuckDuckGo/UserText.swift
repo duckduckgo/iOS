@@ -189,4 +189,6 @@ public struct UserText {
     public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
     public static let homePageCenterSearchAndFavorites = NSLocalizedString("homepage.centerSearchAndFavorites", comment: "Center Search and Favorites")
 
+    public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
+
 }

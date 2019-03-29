@@ -73,7 +73,6 @@ class AtbIntegrationTests: XCTestCase {
         Springboard.deleteMyApp()
         app.launch()
         skipOnboarding()
-        dismissAddToDockDialog()
     }
     
     override func tearDown() {
@@ -169,14 +168,6 @@ class AtbIntegrationTests: XCTestCase {
         XCTAssertEqual(atb, httpRequest.queryParam(Constants.atbParam))
     }
     
-    private func dismissAddToDockDialog() {
-        let noThanksButton = app.buttons["No Thanks"]
-        guard noThanksButton.waitForExistence(timeout: Constants.defaultTimeout) else {
-            fatalError("No 'add to dock' view present")
-        }
-        noThanksButton.tap()
-    }
-    
     private func search(forText text: String) {
         let searchentrySearchField = app.searchFields["searchEntry"]
         
@@ -227,7 +218,10 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         continueButton.tap()
-        continueButton.tap()
+        
+        if continueButton.exists {
+            continueButton.tap()
+        }
     }
     
 }

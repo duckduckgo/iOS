@@ -34,12 +34,19 @@ public class APIHeaders {
     }
 
     public var defaultHeaders: HTTPHeaders {
-        let fullVersion = "\(appVersion.versionNumber).\(appVersion.buildNumber)"
-        let osVersion = UIDevice.current.systemVersion
-        let userAgent = "ddg_ios/\(fullVersion) (\(appVersion.identifier); iOS \(osVersion))"
         var headers = Alamofire.SessionManager.defaultHTTPHeaders
         headers[Name.userAgent] = userAgent
         return headers
+    }
+
+    public var userAgent: String {
+        let fullVersion = "\(appVersion.versionNumber).\(appVersion.buildNumber)"
+        let osVersion = UIDevice.current.systemVersion
+        return "ddg_ios/\(fullVersion) (\(appVersion.identifier); iOS \(osVersion))"
+    }
+
+    public func addHeaders(to request: inout URLRequest) {
+        request.addValue(Name.userAgent, forHTTPHeaderField: userAgent)
     }
 
 }

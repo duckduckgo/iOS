@@ -171,6 +171,8 @@
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
 
+"privacy.features" = "Privacy Features";
+
 "siteFeedback.title" = "Report a Broken Site";
 "siteFeedback.subtitle" = "Broken site reporting is completely anonymous and helps us to improve the app!";
 "siteFeedback.domainInfo" = "Domain of Broken Site:";
@@ -249,4 +251,3 @@
 "feedback.other.description" = "Other Issues";
 
 "feedback.form.caption" = "Please tell us what we can improve";
-

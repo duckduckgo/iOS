@@ -34,14 +34,14 @@ class HomePageConfigurationTests: XCTestCase {
         let settings = MockAppSettings()
         settings.homePage = .centerSearch
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual([ HomePageConfiguration.Component.fixedCenteredSearch ], config.components)
+        XCTAssertEqual(config.components, [ .centeredSearch(fixed: true), .empty ])
     }
 
     func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
         let settings = MockAppSettings()
         settings.homePage = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual([ HomePageConfiguration.Component.centeredSearch, HomePageConfiguration.Component.favorites ], config.components)
+        XCTAssertEqual(config.components, [ .centeredSearch(fixed: false), .favorites, .padding ])
     }
 
 }

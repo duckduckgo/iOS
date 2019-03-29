@@ -83,6 +83,10 @@ public enum PixelName: String {
     case tabBarForwardPressed = "mt_fw"
     case tabBarBookmarksPressed = "mt_bm"
     case tabBarTabSwitcherPressed = "mt_tb"
+
+    case onboardingShown = "mo"
+    case onboardingCustomizeSettings = "mo_s"
+    case onboardingExplorePrivacy = "mo_e"
     
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
@@ -117,6 +121,7 @@ public enum PixelName: String {
     case feedbackNegativePerformanceCrash = "mfbs_negative_performance_crash"
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
+    
 }
 
 public class Pixel {

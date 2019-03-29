@@ -94,36 +94,40 @@ class AtbIntegrationTests: XCTestCase {
         search(forText: "oranges")
 
         assertRequestCount(count: 5)
+        assertSearch(text: "oranges", atb: Constants.initialAtb)
+
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
-        assertSearch(text: "oranges", atb: Constants.initialAtb)
     }
 
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
         atbToSet = Constants.searchRetentionAtb
+
         search(forText: "lemons")
         search(forText: "pears")
 
         assertRequestCount(count: 7)
+        assertSearch(text: "lemons", atb: Constants.initialAtb)
+        assertSearch(text: "pears", atb: Constants.initialAtb)
+
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
-        assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
-        assertSearch(text: "pears", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
     }
     
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
         search(forText: "http://localhost:8080?q=beagles")
-
+        
         assertRequestCount(count: 5)
+        assertSearch(text: "beagles", atb: Constants.initialAtb)
+
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
         assertExti()
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
-        assertSearch(text: "beagles", atb: Constants.initialAtb)
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
     

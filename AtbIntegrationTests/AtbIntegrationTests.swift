@@ -128,8 +128,9 @@ class AtbIntegrationTests: XCTestCase {
     
     func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
         atbToSet = Constants.appRetentionAtb
-        app.launch() // this launch gets new atb
-        app.launch() // this launch sends it
+        
+        backgroundRelaunch() // this launch gets new atb
+        backgroundRelaunch() // this launch sends it
 
         assertRequestCount(count: 5)
         assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
@@ -137,6 +138,14 @@ class AtbIntegrationTests: XCTestCase {
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
         assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, expectedType: "app_use")
+    }
+    
+    func backgroundRelaunch() {
+        XCUIDevice().press(.home)
+        app.activate()
+        if !app.searchFields["searchEntry"].waitForExistence(timeout: Constants.defaultTimeout) {
+            fatalError("Can not find search field. Has the app launched?")
+        }
     }
     
     func assertRequestCount(count: Int) {

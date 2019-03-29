@@ -30,6 +30,9 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
     @IBOutlet weak var headerPadding: NSLayoutConstraint!
 
     weak var delegate: OnboardingDelegate?
+
+    var onboardingSettingsPixelFired = false
+    var onboardingExplorePrivacyPixelFire = false
     
     var variant: Variant {
         guard let variant = DefaultVariantManager().currentVariant else {
@@ -66,12 +69,30 @@ class OnboardingSummaryViewController: UIViewController, Onboarding {
     
     @IBAction func secondaryButtonAction() {
         if variant.features.contains(.onboardingCustomizeSettings) {
-            delegate?.customizeSettings(controller: self)
+            customizeSettings()
         } else if variant.features.contains(.onboardingExplorePrivacy) {
-            delegate?.explorePrivacyFeatures(controller: self)
+            explorePrivacy()
         } else {
             fatalError("Unexpected variant \(variant.name)")
         }
+    }
+    
+    private func customizeSettings() {
+        guard let delegate = delegate else { return }
+        if !onboardingSettingsPixelFired {
+            Pixel.fire(pixel: .onboardingCustomizeSettings)
+            onboardingSettingsPixelFired = true
+        }
+        delegate.customizeSettings(controller: self)
+    }
+    
+    private func explorePrivacy() {
+        guard let delegate = delegate else { return }
+        if !onboardingExplorePrivacyPixelFire {
+            Pixel.fire(pixel: .onboardingExplorePrivacy)
+            onboardingExplorePrivacyPixelFire = true
+        }
+        delegate.explorePrivacyFeatures(controller: self)
     }
     
     @IBAction func done() {

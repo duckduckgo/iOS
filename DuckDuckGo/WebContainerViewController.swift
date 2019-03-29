@@ -39,7 +39,6 @@ class WebContainerViewController: UIViewController {
         didSet {
             progressView.progress = progress
             progressView.isHidden = progress >= 1.0
-            print(#function, progress)
         }
     }
 

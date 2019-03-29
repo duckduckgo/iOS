@@ -79,15 +79,7 @@ extension MainViewController {
 
 extension MainViewController: OnboardingDelegate {
     
-    static var onboardingSettingsPixelFired = false
-    static var onboardingExplorePrivacyPixelFire = false
-    
     func customizeSettings(controller: UIViewController) {
-        if !MainViewController.onboardingSettingsPixelFired {
-            Pixel.fire(pixel: .onboardingCustomizeSettings)
-            MainViewController.onboardingSettingsPixelFired = true
-        }
-
         let settingsContainer = SettingsViewController.loadFromStoryboard()
         guard let settings = settingsContainer.children[0] as? SettingsViewController else {
             fatalError("Failed to find \(SettingsViewController.self)")
@@ -98,11 +90,6 @@ extension MainViewController: OnboardingDelegate {
     }
     
     func explorePrivacyFeatures(controller: UIViewController) {
-        if !MainViewController.onboardingExplorePrivacyPixelFire {
-            Pixel.fire(pixel: .onboardingExplorePrivacy)
-            MainViewController.onboardingExplorePrivacyPixelFire = true
-        }
-
         let webContainer = WebContainerNavigationController.load(
             url: URL(string: "https://duckduckgo.com/app_info#scrollpos")!,
             withTitle: UserText.privacyFeatures)

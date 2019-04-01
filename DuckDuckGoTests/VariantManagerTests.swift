@@ -48,8 +48,9 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         mockStore.atb = "atb"
-        mockStore.retentionAtb = "ratb"
-
+        mockStore.appRetentionAtb = "aatb"
+        mockStore.searchRetentionAtb = "satb"
+        
         for i in 0 ..< 100 {
             
             let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i))
@@ -64,7 +65,6 @@ class VariantManagerTests: XCTestCase {
 
         let mockStore = MockStatisticsStore()
         mockStore.atb = "atb"
-        mockStore.retentionAtb = "ratb"
 
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
         subject.assignVariantIfNeeded()

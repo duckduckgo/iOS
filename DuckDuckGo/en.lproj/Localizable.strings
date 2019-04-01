@@ -118,8 +118,6 @@
 "home.row.reminder.title" = "Take DuckDuckGo home";
 "home.row.reminder.message" = "Add DuckDuckGo to your dock for easy access!";
 
-"feedback.comment.general.placeholder" = "How can the app be improved? What do you love? What's breaking? Please be as specific as possible.";
-"feedback.comment.brokenSite.placeholder" = "Which website content or functionality is breaking? Please be as specific as possible.";
 "feedback.submitted.confirmation" = "Thank You! Feedback submitted.";
 
 "prompt.custom.url.scheme.title" = "Open in Another App?";
@@ -172,3 +170,84 @@
 "homepage.simple" = "Simple";
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
+
+"privacy.features" = "Privacy Features";
+
+"siteFeedback.title" = "Report a Broken Site";
+"siteFeedback.subtitle" = "Broken site reporting is completely anonymous and helps us to improve the app!";
+"siteFeedback.domainInfo" = "Domain of Broken Site:";
+"siteFeedback.urlPlaceholder" = "Which website is broken?";
+"siteFeedback.messagePlaceholder" = "Which content or functionality is breaking?";
+"siteFeedback.buttonText" = "Submit Report";
+
+"feedback.start.header" = "Let's get started!";
+"feedback.start.supplementary" = "How would you catagorize your feedback?";
+"feedback.start.footer" = "Your anonymous feedback is important to us.";
+
+"feedback.positive.header" = "Awesome to hear!";
+"feedback.positive.supplementary" = "Please share the love by rating the app on the App Store";
+"feedback.positive.rate" = "Rate the App";
+"feedback.positive.submit" = "Share Details";
+"feedback.positive.noThanks" = "No thanks! I'm done";
+
+"feedback.form.submit" = "Submit Feedback";
+
+"feedback.positive.form.header" = "Share Details";
+"feedback.positive.form.supplementary" = "Are there any details you’d like to share with the team?";
+"feedback.positive.form.placeholder" = "What have you been enjoying?";
+
+"feedback.negative.header" = "We’re sorry to hear that.";
+"feedback.negative.supplementary" = "What is your frustration most related to?";
+"feedback.negative.form.placeholder" = "Are there any specifics you’d like to include?";
+"feedback.negative.form.genericPlaceholder" = "Please be as specific as possible";
+
+"feedback.browserFeatures.entry" = "Browsing features are missing or frustrating";
+"feedback.browserFeatures.description" = "Browser Feature Issues";
+"feedback.browserFeatures.caption" = "Which browsing feature can we add or improve?";
+"feedback.browserFeatures.navigation" = "Navigating forward, backward, and/or refreshing";
+"feedback.browserFeatures.tabs" = "Creating and managing tabs";
+"feedback.browserFeatures.ads" = "Ad and pop-up blocking";
+"feedback.browserFeatures.videos" = "Watching videos";
+"feedback.browserFeatures.images" = "Interacting with images";
+"feedback.browserFeatures.bookmarks" = "Creating and managing bookmarks";
+"feedback.browserFeatures.other" = "None of these";
+
+"feedback.websiteLoading.entry" = "Certain websites don't load correctly";
+"feedback.websiteLoading.description" = "Website Loading Issues";
+"feedback.websiteLoading.form.supplementary" = "Where are you seeing these issues?";
+"feedback.websiteLoading.form.urlPlaceholder" = "Which website has issues?";
+"feedback.websiteLoading.form.placeholder" = "What content seems to be affected?";
+
+"feedback.ddgSearch.entry" = "DuckDuckGo search isn't good enough";
+"feedback.ddgSearch.description" = "DuckDuckGo Search Issues";
+"feedback.ddgSearch.caption" = "Which search feature can we add or improve?";
+"feedback.ddgSearch.technical" = "Programming/technical search";
+"feedback.ddgSearch.layout" = "The layout should be more like Google";
+"feedback.ddgSearch.loadTime" = "Faster load time";
+"feedback.ddgSearch.languageOrRegion" = "Searching in a specific language or region";
+"feedback.ddgSearch.autocomplete" = "Better autocomplete";
+"feedback.ddgSearch.other" = "None of these";
+
+"feedback.customization.entry" = "There aren't enough ways to customize the app";
+"feedback.customization.description" = "Customization Issues";
+"feedback.customization.caption" = "Which customization option can we add or improve?";
+"feedback.customization.homeScreen" = "The home screen configuration";
+"feedback.customization.tabs" = "How tabs are displayed";
+"feedback.customization.ui" = "How the app looks";
+"feedback.customization.whatIsCleared" = "Which data is cleared";
+"feedback.customization.whenIsCleared" = "When data is cleared";
+"feedback.customization.bookmarks" = "How bookmarks are displayed";
+"feedback.customization.other" = "None of these";
+
+"feedback.performance.entry" = "The app is slow, buggy, or crashes";
+"feedback.performance.description" = "Performance Issues";
+"feedback.performance.caption" = "Which issue are you experiencing?";
+"feedback.performance.slowLoading" = "Web pages or search results load slowly";
+"feedback.performance.crashes" = "The app crashes or freezes";
+"feedback.performance.playback" = "Video or media playback bugs";
+"feedback.performance.other" = "None of these";
+
+"feedback.other.entry" = "None of these";
+"feedback.other.description" = "Other Issues";
+
+"feedback.form.caption" = "Please tell us what we can improve";

@@ -21,6 +21,7 @@ import Foundation
 
 protocol ContextualTipsStorage {
     
+    var isEnabled: Bool { get set }
     var nextHomeScreenTip: Int { get set }
     var nextBrowsingTip: Int { get set }
     
@@ -29,10 +30,24 @@ protocol ContextualTipsStorage {
 class DefaultContextualTipsStorage: ContextualTipsStorage {
     
     struct Keys {
+        static let enabled = "com.duckduckgo.contextual.tips.enabled"
         static let homeScreen = "com.duckduckgo.contextual.tips.homescreen"
         static let browsing = "com.duckduckgo.contextual.tips.browsing"
     }
 
+    // Must be explicitly enabled to prevent existing users seeing it
+    var isEnabled: Bool {
+        
+        set {
+            userDefaults.set(newValue, forKey: Keys.enabled)
+        }
+        
+        get {
+            return userDefaults.bool(forKey: Keys.enabled, defaultValue: false)
+        }
+        
+    }
+    
     var nextHomeScreenTip: Int {
         
         set {

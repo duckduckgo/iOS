@@ -46,7 +46,11 @@ struct LightTheme: Theme {
     var tableCellAccessoryTextColor = UIColor.greyish3
     var tableHeaderTextColor = UIColor.greyish3
     
-    var toggleSwitchColor = UIColor.cornflowerBlue
+    var buttonTintColor = UIColor.cornflowerBlue
+    var placeholderColor = UIColor.greyish3
+    
+    var textFieldBackgroundColor = UIColor.white
+    var textFieldFontColor = UIColor.nearlyBlackLight
     
     var homeRowPrimaryTextColor = UIColor.nearlyBlackLight
     var homeRowSecondaryTextColor = UIColor.greyishBrown2
@@ -60,6 +64,10 @@ struct LightTheme: Theme {
     
     var faviconBackgroundColor = UIColor.white
     var favoriteTextColor = UIColor.darkGreyish
+    
+    var feedbackPrimaryTextColor = UIColor.nearlyBlackLight
+    var feedbackSecondaryTextColor = UIColor.nearlyBlackLight
+    var feedbackSentimentButtonBackgroundColor = UIColor.white
     
     var activityStyle: UIActivityIndicatorView.Style = .gray
 }

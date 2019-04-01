@@ -1,5 +1,5 @@
 //
-//  FeedbackViewModel.swift
+//  SiteFeedbackViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2018 DuckDuckGo. All rights reserved.
@@ -19,11 +19,10 @@
 
 import Foundation
 
-struct FeedbackModel {
+struct SiteFeedbackModel {
 
     var url: String?
     var message: String?
-    var isBrokenSite: Bool = false
 
     private let feedbackSender: FeedbackSender
 
@@ -36,7 +35,7 @@ struct FeedbackModel {
             return false
         }
 
-        if isBrokenSite && (url == nil || url!.trimWhitespace().isEmpty) {
+        if url == nil || url!.trimWhitespace().isEmpty {
             return false
         }
 
@@ -44,13 +43,8 @@ struct FeedbackModel {
     }
 
     public func submit() {
-
         guard canSubmit() else { return }
 
-        if isBrokenSite {
-            feedbackSender.submitBrokenSite(url: url!, message: message!)
-        } else {
-            feedbackSender.submitMessage(message: message!)
-        }
+        feedbackSender.submitBrokenSite(url: url!, message: message!)
     }
 }

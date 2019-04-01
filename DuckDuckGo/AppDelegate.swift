@@ -66,8 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         guard !testing else { return }
         
-        Pixel.fire(pixel: .appLaunch)
-        StatisticsLoader.shared.load()
+        StatisticsLoader.shared.load {
+            StatisticsLoader.shared.refreshAppRetentionAtb()
+            Pixel.fire(pixel: .appLaunch)
+        }
         
         if appIsLaunching {
             appIsLaunching = false
@@ -93,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             removeOverlay()
         }
         autoClear?.applicationWillMoveToForeground()
+        
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

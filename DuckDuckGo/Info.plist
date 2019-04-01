@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>7.17.2</string>
+	<string>7.18.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -31,7 +31,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>0</string>
+	<string>1</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -55,6 +55,7 @@
 	<string>Allows you to upload photographs and videos</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>proximanova-extrabold.otf</string>
 		<string>proximanova-light.otf</string>
 		<string>proximanova-regular.otf</string>
 		<string>proximanova-bold.otf</string>

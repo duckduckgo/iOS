@@ -133,8 +133,6 @@ public struct UserText {
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     
-    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment:  "General feedback comment placeholder")
-    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment:  "Broken site feedback comment placeholder")
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     
     public static let customUrlSchemeTitle = NSLocalizedString("prompt.custom.url.scheme.title", comment: "Switch apps?")
@@ -190,5 +188,7 @@ public struct UserText {
     public static let homePageSimple = NSLocalizedString("homepage.simple", comment: "Simple")
     public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
     public static let homePageCenterSearchAndFavorites = NSLocalizedString("homepage.centerSearchAndFavorites", comment: "Center Search and Favorites")
+
+    public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
 
 }

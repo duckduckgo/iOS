@@ -192,8 +192,8 @@ class MainViewController: UIViewController {
             return
         }
 
-        if let controller = segue.destination as? FeedbackViewController {
-            controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
+        if let controller = segue.destination as? SiteFeedbackViewController {
+            controller.prepareForSegue(url: currentTab?.url?.absoluteString)
             return
         }
         
@@ -552,7 +552,7 @@ extension MainViewController: FindInPageViewDelegate {
 extension MainViewController: BrowserChromeDelegate {
 
     struct ChromeAnimationConstants {
-        static let duration = 0.3
+        static let duration = 0.1
     }
 
     private func hideKeyboard() {
@@ -788,6 +788,15 @@ extension MainViewController: TabSwitcherDelegate {
             tabSwitcher.dismiss(animated: false, completion: nil)
         }
     }
+    
+    func tabSwitcherDidAppear(_ tabSwitcher: TabSwitcherViewController) {
+        currentTab?.removeBrowsingTips()
+    }
+    
+    func tabSwitcherDidDisappear(_ tabSwitcher: TabSwitcherViewController) {
+        currentTab?.installBrowsingTips()
+    }
+    
 }
 
 extension MainViewController: BookmarksDelegate {

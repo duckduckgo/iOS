@@ -53,7 +53,11 @@ protocol Theme {
     var tableCellAccessoryTextColor: UIColor { get }
     var tableHeaderTextColor: UIColor { get }
     
-    var toggleSwitchColor: UIColor { get }
+    var buttonTintColor: UIColor { get }
+    var placeholderColor: UIColor { get }
+    
+    var textFieldBackgroundColor: UIColor { get }
+    var textFieldFontColor: UIColor { get }
     
     var homeRowPrimaryTextColor: UIColor { get }
     var homeRowSecondaryTextColor: UIColor { get }
@@ -66,6 +70,10 @@ protocol Theme {
     var favoritesPlusBackgroundColor: UIColor { get }
     var faviconBackgroundColor: UIColor { get }
     var favoriteTextColor: UIColor { get }
+    
+    var feedbackPrimaryTextColor: UIColor { get }
+    var feedbackSecondaryTextColor: UIColor { get }
+    var feedbackSentimentButtonBackgroundColor: UIColor { get }
     
     var activityStyle: UIActivityIndicatorView.Style { get }
     

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Twn-ai-eBa">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Web Container Navigation Controller-->
+        <scene sceneID="0GB-fu-3bq">
+            <objects>
+                <navigationController id="Twn-ai-eBa" customClass="WebContainerNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DzA-0F-odj">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dhR-A9-hN7" kind="relationship" relationship="rootViewController" id="auS-I1-X4b"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YhZ-Pm-8ao" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1170" y="267"/>
+        </scene>
+        <!--Web Container View Controller-->
+        <scene sceneID="o9I-5t-l9I">
+            <objects>
+                <viewController id="dhR-A9-hN7" customClass="WebContainerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="A2S-Nk-boq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oh9-Ki-2p2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="2"/>
+                                <color key="progressTintColor" red="0.87058823529999996" green="0.34509803919999998" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="oh9-Ki-2p2" firstAttribute="width" secondItem="A2S-Nk-boq" secondAttribute="width" id="4K3-LO-vp9"/>
+                            <constraint firstItem="oh9-Ki-2p2" firstAttribute="centerX" secondItem="4eq-fE-ITV" secondAttribute="centerX" id="cb4-0S-uTh"/>
+                            <constraint firstItem="oh9-Ki-2p2" firstAttribute="top" secondItem="4eq-fE-ITV" secondAttribute="top" id="hKu-4O-141"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4eq-fE-ITV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="foG-NI-rq6">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="NNA-ri-acS">
+                            <connections>
+                                <action selector="dismiss" destination="dhR-A9-hN7" id="Ata-Pn-TSn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="progressView" destination="oh9-Ki-2p2" id="1zV-WI-OmM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q3D-sk-N0g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-180" y="267"/>
+        </scene>
+    </scenes>
+</document>

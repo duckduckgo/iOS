@@ -41,10 +41,9 @@ class BrowsingTips {
     private var storage: ContextualTipsStorage
     
     init?(delegate: BrowsingTipsDelegate,
-          storage: ContextualTipsStorage = DefaultContextualTipsStorage(),
-          variantManager: VariantManager = DefaultVariantManager()) {
+          storage: ContextualTipsStorage = DefaultContextualTipsStorage()) {
         
-        guard variantManager.isSupported(feature: .onboardingContextual) else {
+        guard storage.isEnabled else {
             return nil
         }
         
@@ -53,6 +52,7 @@ class BrowsingTips {
     }
     
     func onFinishedLoading(url: URL?, error: Bool) {
+        guard storage.isEnabled else { return }
         guard !error else { return }
         guard let url = url else { return }
         guard !appUrls.isDuckDuckGo(url: url) else { return }

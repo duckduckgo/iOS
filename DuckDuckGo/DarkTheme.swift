@@ -46,7 +46,11 @@ struct DarkTheme: Theme {
     var tableCellAccessoryTextColor = UIColor.greyish
     var tableHeaderTextColor = UIColor.lightGreyish
     
-    var toggleSwitchColor = UIColor.cornflowerBlue
+    var buttonTintColor = UIColor.cornflowerBlue
+    var placeholderColor = UIColor.greyish
+    
+    var textFieldBackgroundColor = UIColor.nearlyBlackLight
+    var textFieldFontColor = UIColor.white
     
     var homeRowPrimaryTextColor = UIColor.white
     var homeRowSecondaryTextColor = UIColor.lightMercury
@@ -60,6 +64,10 @@ struct DarkTheme: Theme {
 
     var faviconBackgroundColor = UIColor.charcoalGrey
     var favoriteTextColor = UIColor.greyish
+    
+    var feedbackPrimaryTextColor = UIColor.white
+    var feedbackSecondaryTextColor = UIColor.lightGreyish
+    var feedbackSentimentButtonBackgroundColor = UIColor.charcoalGrey
     
     var activityStyle: UIActivityIndicatorView.Style = .white
 }

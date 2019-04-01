@@ -54,10 +54,12 @@ public struct AppUrls {
         static let source = "t"
         static let atb = "atb"
         static let setAtb = "set_atb"
+        static let activityType = "at"
     }
 
     private struct ParamValue {
         static let source = "ddg_ios"
+        static let appUsage = "app_use"
     }
 
     let statisticsStore: StatisticsStore
@@ -107,13 +109,27 @@ public struct AppUrls {
         return URL(string: urlString)!
     }
 
-    public var atb: URL {
-        var url = URL(string: Url.atb)!
-        if let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.retentionAtb {
-            url = url.addParam(name: Param.atb, value: atbWithVariant)
-            url = url.addParam(name: Param.setAtb, value: setAtb)
+    public var initialAtb: URL {
+        return URL(string: Url.atb)!
+    }
+    
+    public var searchAtb: URL? {
+        guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
+            return nil
         }
-        return url
+        return URL(string: Url.atb)!
+            .addParam(name: Param.atb, value: atbWithVariant)
+            .addParam(name: Param.setAtb, value: setAtb)
+    }
+    
+    public var appAtb: URL? {
+        guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
+            return nil
+        }
+        return URL(string: Url.atb)!
+            .addParam(name: Param.activityType, value: ParamValue.appUsage)
+            .addParam(name: Param.atb, value: atbWithVariant)
+            .addParam(name: Param.setAtb, value: setAtb)
     }
 
     public func isDuckDuckGo(url: URL) -> Bool {

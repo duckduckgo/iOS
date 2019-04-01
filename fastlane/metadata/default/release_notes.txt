@@ -1,5 +1,1 @@
-• You can now choose how the home page looks by choosing from the options in settings.
-• You can now long press the bookmark icon to add the current page as a bookmark.
-• You can now add all open tabs as bookmarks by tapping the icon in the tab switcher.
-• You can now share bookmarks by swiping the bookmark to the right.
-• Fixes and improvements.
+• We made it easier to share a feedback about our app! Visit Settings to check that out.

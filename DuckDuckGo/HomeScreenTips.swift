@@ -41,10 +41,9 @@ class HomeScreenTips {
 
     init?(delegate: HomeScreenTipsDelegate,
           tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
-          storage: ContextualTipsStorage = DefaultContextualTipsStorage(),
-          variantManager: VariantManager = DefaultVariantManager()) {
+          storage: ContextualTipsStorage = DefaultContextualTipsStorage()) {
         
-        guard variantManager.isSupported(feature: .onboardingContextual) else {
+        guard storage.isEnabled else {
             return nil
         }
 
@@ -54,6 +53,7 @@ class HomeScreenTips {
     }
     
     func trigger() {
+        guard storage.isEnabled else { return }
         guard tutorialSettings.hasSeenOnboarding else { return }
         guard let tip = Tips(rawValue: storage.nextHomeScreenTip) else { return }
         

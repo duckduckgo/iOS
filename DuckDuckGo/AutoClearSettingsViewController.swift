@@ -142,7 +142,7 @@ class AutoClearSettingsViewController: UITableViewController {
         cell.backgroundColor = theme.tableCellBackgroundColor
         
         // Checkmark color
-        cell.tintColor = theme.toggleSwitchColor
+        cell.tintColor = theme.buttonTintColor
         
         if let settings = clearDataSettings,
             indexPathOf(action: settings.action) == indexPath || indexPathOf(timing: settings.timing) == indexPath {
@@ -185,7 +185,7 @@ extension AutoClearSettingsViewController: Themable {
             label.textColor = theme.tableCellTintColor
         }
         
-        clearDataToggle.onTintColor = theme.toggleSwitchColor
+        clearDataToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

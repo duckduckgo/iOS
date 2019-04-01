@@ -23,62 +23,85 @@ import XCTest
 
 class HomeRowCTATests: XCTestCase {
 
-    var variantManager = MockVariantManager()
     var tipsStorage = MockContextualTipsStorage()
     var storage = MockHomeRowOnboardingStorage(dismissed: false)
     var tutorialSettings = MockTutorialSettings()
+    var statistics = MockStatisticsStore()
 
     func testWhenOnboardingHasNotBeenShownThenShouldNotShow() {
-
+        statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = false
-        variantManager.isSupportedReturns = true
+        tipsStorage.isEnabled = true
         tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
 
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
+        
         XCTAssertFalse(feature.shouldShow())
-
     }
 
     func testWhenContextualOnboardingFeatureEnabledAndAllHomeScreenTipsShownThenCanShowCTA() {
-        
+        statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = true
-        variantManager.isSupportedReturns = true
+        tipsStorage.isEnabled = true
         tipsStorage.nextHomeScreenTip = HomeScreenTips.Tips.allCases.count
 
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
-        XCTAssertTrue(feature.shouldShow())
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
         
+        XCTAssertTrue(feature.shouldShow())
     }
     
     func testWhenContextualOnboardingFeatureEnabledAndNotAllHomeScreenTipsShownThenDontShowCTA() {
-        
+        statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = true
-        variantManager.isSupportedReturns = true
         tipsStorage.nextHomeScreenTip = 0
+        tipsStorage.isEnabled = true
         
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings)
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
+        
         XCTAssertFalse(feature.shouldShow())
-
     }
 
     func testWhenDismissedThenDismissedStateStored() {
+        statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = true
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
+        
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
         feature.dismissed()
+        
         XCTAssertTrue(storage.dismissed)
     }
 
     func testWhenDismissedThenShouldNotShow() {
+        statistics.installDate = Date.distantPast
         tutorialSettings.hasSeenOnboarding = true
+        tipsStorage.isEnabled = true
         storage.dismissed = true
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
+        
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
+        
         XCTAssertFalse(feature.shouldShow())
     }
 
     func testWhenNotDismissedThenShouldShow() {
+        statistics.installDate = Date.distantPast
+        tipsStorage.isEnabled = false
         tutorialSettings.hasSeenOnboarding = true
-        let feature = HomeRowCTA(storage: storage, variantManager: variantManager, tutorialSettings: tutorialSettings)
+        
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
+        
         XCTAssertTrue(feature.shouldShow())
+    }
+    
+    func testWhenOnInstallDayThenShouldNotShow() {
+        let installDate = Date()
+        
+        statistics.installDate = installDate
+        tipsStorage.isEnabled = false
+        tutorialSettings.hasSeenOnboarding = true
+        
+        let feature = HomeRowCTA(storage: storage, tipsStorage: tipsStorage, tutorialSettings: tutorialSettings, statistics: statistics)
+        
+        XCTAssertFalse(feature.shouldShow(currentDate: installDate))
     }
     
 }

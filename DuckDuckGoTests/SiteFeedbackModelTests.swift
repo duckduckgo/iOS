@@ -1,5 +1,5 @@
 //
-//  FeedbackModelTests.swift
+//  SiteFeedbackModelTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 
-class FeedbackModelTests: XCTestCase {
+class SiteFeedbackModelTests: XCTestCase {
 
     struct Constants {
         static let url = "http://example.com"
@@ -29,110 +29,65 @@ class FeedbackModelTests: XCTestCase {
     }
 
     private var feedbackSenderStub = FeedbackSenderStub()
-    private var testee: FeedbackModel!
+    private var testee: SiteFeedbackModel!
 
     override func setUp() {
-        testee = FeedbackModel(feedbackSender: feedbackSenderStub)
+        testee = SiteFeedbackModel(feedbackSender: feedbackSenderStub)
     }
 
     func testWhenInitThenDefaultValuesAreCorrect() {
-        XCTAssertFalse(testee.isBrokenSite)
         XCTAssertNil(testee.url)
         XCTAssertNil(testee.message)
     }
 
-    func testWhenSiteNotBrokenAndHasMessageThenCanSubmit() {
-        testee.isBrokenSite = false
-        testee.message = Constants.message
-        XCTAssertTrue(testee.canSubmit())
-    }
-
-    func testWhenSiteNotBrokenAndMessageIsNilThenCanNotSubmit() {
-        testee.isBrokenSite = false
-        testee.message = nil
-        XCTAssertFalse(testee.canSubmit())
-    }
-
-    func testWhenSiteNotBrokenAndMessageIsEmptyThenCanNotSubmit() {
-        testee.isBrokenSite = false
-        testee.message = ""
-        XCTAssertFalse(testee.canSubmit())
-    }
-
-    func testWhenSiteNotBrokenAndMessageIsWhitespaceThenCanNotSubmit() {
-        testee.isBrokenSite = false
-        testee.message = " "
-        XCTAssertFalse(testee.canSubmit())
-    }
-
     func testWhenSiteBrokenAndHasUrlAndMessageThenCanSubmit() {
-        testee.isBrokenSite = true
         testee.url = Constants.url
         testee.message = Constants.message
         XCTAssertTrue(testee.canSubmit())
     }
 
     func testWhenSiteBrokenAndUrlIsNilThenCanNotSubmit() {
-        testee.isBrokenSite = true
         testee.url = nil
         testee.message = Constants.message
         XCTAssertFalse(testee.canSubmit())
     }
 
     func testWhenSiteBrokenAndUrlIsEmptyThenCanNotSubmit() {
-        testee.isBrokenSite = true
         testee.url = ""
         testee.message = Constants.message
         XCTAssertFalse(testee.canSubmit())
     }
 
     func testWhenSiteBrokenAndUrlIsWhitespaceThenCanNotSubmit() {
-        testee.isBrokenSite = true
         testee.url = " "
         testee.message = Constants.message
         XCTAssertFalse(testee.canSubmit())
     }
 
     func testWhenSiteBrokenAndMessageIsNilThenCanNotSubmit() {
-        testee.isBrokenSite = true
         testee.url = Constants.url
         testee.message = nil
         XCTAssertFalse(testee.canSubmit())
     }
 
     func testWhenSiteBrokenAndMessageIsEmptyThenCanNotSubmit() {
-        testee.isBrokenSite = true
         testee.url = Constants.url
         testee.message = ""
         XCTAssertFalse(testee.canSubmit())
     }
 
     func testWhenSiteBrokenAndMessageIsWhitespaceThenCanNotSubmit() {
-        testee.isBrokenSite = true
         testee.url = Constants.url
         testee.message = " "
         XCTAssertFalse(testee.canSubmit())
     }
 
-    func testWhenGeneralFeedbackSubmittedThenCorrectSubmissionMade() {
-        testee.isBrokenSite = false
-        testee.message = Constants.message
-        testee.submit()
-
-        XCTAssertTrue(feedbackSenderStub.messageSubmitted)
-        XCTAssertFalse(feedbackSenderStub.brokenSiteSubmitted)
-        XCTAssertNil(feedbackSenderStub.url)
-        XCTAssertEqual(Constants.message, feedbackSenderStub.message)
-    }
-
     func testWhenBrokenSiteSubmittedThenCorrectSubmissionMade() {
-        testee.isBrokenSite = true
         testee.url = Constants.url
         testee.message = Constants.message
         testee.submit()
 
         XCTAssertTrue(feedbackSenderStub.brokenSiteSubmitted)
-        XCTAssertFalse(feedbackSenderStub.messageSubmitted)
         XCTAssertEqual(Constants.url, feedbackSenderStub.url)
         XCTAssertEqual(Constants.message, feedbackSenderStub.message)
     }
@@ -140,13 +95,11 @@ class FeedbackModelTests: XCTestCase {
     func testWhenCannotSubmitThenNoSubmissionMade() {
         testee.submit()
         XCTAssertFalse(feedbackSenderStub.brokenSiteSubmitted)
-        XCTAssertFalse(feedbackSenderStub.messageSubmitted)
     }
 
     class FeedbackSenderStub: FeedbackSender {
 
         var brokenSiteSubmitted = false
-        var messageSubmitted = false
 
         var url: String?
         var message: String?
@@ -156,10 +109,11 @@ class FeedbackModelTests: XCTestCase {
             self.url = url
             self.message = message
         }
-
-        func submitMessage(message: String) {
-            messageSubmitted = true
-            self.message = message
-        }
+        
+        func submitPositiveSentiment(message: String) {}
+        func submitNegativeSentiment(message: String, url: String?, model: Feedback.Model) {}
+        
+        func firePositiveSentimentPixel() {}
+        func fireNegativeSentimentPixel(with model: Feedback.Model) {}
     }
 }

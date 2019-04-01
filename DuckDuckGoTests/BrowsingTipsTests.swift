@@ -30,23 +30,23 @@ class BrowsingTipsTests: XCTestCase {
         
     }
     
+    // swiftlint:disable weak_delegate
+    let delegate = MockBrowsingTipsDelegate()
+    // swiftlint:enable weak_delegate
+    var storage = MockContextualTipsStorage()
+
     func testWhenFeatureNotEnabledThenInstanciationFails() {
         
-        let delegate = MockBrowsingTipsDelegate()
-        let storage = MockContextualTipsStorage()
-        let variantManager = MockVariantManager()
-        let tips = BrowsingTips(delegate: delegate, storage: storage, variantManager: variantManager)
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
         XCTAssertNil(tips)
         
     }
     
     func testWhenTipsTriggeredWithDDGURLAndNoErrorThenDelegateNotCalled() {
         
-        let delegate = MockBrowsingTipsDelegate()
-        let storage = MockContextualTipsStorage()
-        var variantManager = MockVariantManager()
-        variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
-        let tips = BrowsingTips(delegate: delegate, storage: storage, variantManager: variantManager)
+        storage.isEnabled = true
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
+        XCTAssertNotNil(tips)
         
         tips?.onFinishedLoading(url: URLs.ddg, error: false)
         XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
@@ -56,11 +56,9 @@ class BrowsingTipsTests: XCTestCase {
 
     func testWhenTipsTriggeredWithValidURLAndErrorThenDelegateNotCalled() {
         
-        let delegate = MockBrowsingTipsDelegate()
-        let storage = MockContextualTipsStorage()
-        var variantManager = MockVariantManager()
-        variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
-        let tips = BrowsingTips(delegate: delegate, storage: storage, variantManager: variantManager)
+        storage.isEnabled = true
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
+        XCTAssertNotNil(tips)
 
         tips?.onFinishedLoading(url: URLs.example, error: true)
         XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
@@ -70,11 +68,8 @@ class BrowsingTipsTests: XCTestCase {
 
     func testWhenTipsTriggeredWithValidURLAndNoErrorThenDelegateCalledCorrectNumberOfTimes() {
         
-        let delegate = MockBrowsingTipsDelegate()
-        let storage = MockContextualTipsStorage()
-        var variantManager = MockVariantManager()
-        variantManager.isSupportedReturns = true
-        let tips = BrowsingTips(delegate: delegate, storage: storage, variantManager: variantManager)
+        storage.isEnabled = true
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
         XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
         XCTAssertEqual(0, delegate.showFireButtonTipCounter)
         
@@ -89,6 +84,19 @@ class BrowsingTipsTests: XCTestCase {
         tips?.onFinishedLoading(url: URLs.example, error: false)
         XCTAssertEqual(1, delegate.showFireButtonTipCounter)
         XCTAssertEqual(1, delegate.showPrivacyGradeTipCounter)
+    }
+    
+    func testWhenTipsDisabledLaterThenTriggerDoesNothing() {
+        
+        storage.isEnabled = true
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
+        XCTAssertNotNil(tips)
+        
+        storage.isEnabled = false
+        tips?.onFinishedLoading(url: URLs.example, error: false)
+        XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
+        XCTAssertEqual(0, delegate.showFireButtonTipCounter)
+
     }
     
 }

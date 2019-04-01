@@ -29,12 +29,10 @@ class HomeScreenTipsTests: XCTestCase {
 
     var storage = MockContextualTipsStorage()
     var tutorialSettings = MockTutorialSettings()
-    var variantManager = MockVariantManager()
 
     func testWhenFeatureEnabledButOnboardingNotShownThenTriggerDoesNothing() {
 
-        variantManager.currentVariant = Variant(name: "", weight: 0, features: [ .onboardingContextual ])
-        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
 
@@ -46,17 +44,17 @@ class HomeScreenTipsTests: XCTestCase {
 
     func testWhenFeatureNotEnabledThenInstanciationFails() {
         
-        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
         XCTAssertNil(tips)
         
     }
     
     func testWhenFeatureEnabledAndOnboardingShownAndTipsTriggeredThenDelegateCalledCorrectNumberOfTimes() {
 
-        variantManager.isSupportedReturns = true
+        storage.isEnabled = true
         tutorialSettings.hasSeenOnboarding = true
 
-        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage, variantManager: variantManager)
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
 
         XCTAssertNotNil(tips)
 

@@ -46,6 +46,10 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private let fixed: Bool
     
+    var centeredSearch: UIView? {
+        return cell?.searchBackground
+    }
+    
     init(fixed: Bool = false) {
         self.fixed = fixed
     }

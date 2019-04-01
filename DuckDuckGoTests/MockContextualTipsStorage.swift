@@ -20,10 +20,10 @@
 import Foundation
 @testable import DuckDuckGo
 
-struct MockContextualTipsStorage: ContextualTipsStorage {
+class MockContextualTipsStorage: ContextualTipsStorage {
     
-    var nextHomeScreenTip: Int = 0
-    
-    var nextBrowsingTip: Int = 0
+    var isEnabled = false
+    var nextHomeScreenTip = 0
+    var nextBrowsingTip = 0
     
 }

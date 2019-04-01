@@ -34,6 +34,11 @@ class HomeCollectionView: UICollectionView {
     
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
 
+    var centeredSearch: UIView? {
+        guard let renderer = renderers.rendererFor(section: 0) as? CenteredSearchHomeViewSectionRenderer else { return nil }
+        return renderer.centeredSearch
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -49,15 +54,16 @@ class HomeCollectionView: UICollectionView {
             case .navigationBarSearch:
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
                 
-            case .centeredSearch:
-                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer())
+            case .centeredSearch(let fixed):
+                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+                
+            case .padding:
                 renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer())
                 
-            case .fixedCenteredSearch:
-                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: true))
+            case .empty:
                 renderers.install(renderer: EmptySectionRenderer())
             }
         }

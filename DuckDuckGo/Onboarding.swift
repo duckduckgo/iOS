@@ -23,6 +23,10 @@ import Core
 protocol OnboardingDelegate: NSObjectProtocol {
     
     func onboardingCompleted(controller: UIViewController)
+ 
+    func customizeSettings(controller: UIViewController)
+    
+    func explorePrivacyFeatures(controller: UIViewController)
     
 }
 
@@ -43,6 +47,9 @@ extension MainViewController {
         
         let settings = DefaultTutorialSettings()
         guard !settings.hasSeenOnboarding else { return }
+        
+        // Only show tips if the user is a new one, ie they've not seen onboarding yet
+        DefaultContextualTipsStorage().isEnabled = true
         
         let onboardingFlow: String
         let modalTransitionStyle: UIModalTransitionStyle
@@ -72,19 +79,38 @@ extension MainViewController {
 
 extension MainViewController: OnboardingDelegate {
     
+    func customizeSettings(controller: UIViewController) {
+        let settingsContainer = SettingsViewController.loadFromStoryboard()
+        guard let settings = settingsContainer.children[0] as? SettingsViewController else {
+            fatalError("Failed to find \(SettingsViewController.self)")
+        }
+        settings.homePageSettingsDelegate = self
+
+        controller.present(settingsContainer, animated: true)
+    }
+    
+    func explorePrivacyFeatures(controller: UIViewController) {
+        let webContainer = WebContainerNavigationController.load(
+            url: URL(string: "https://duckduckgo.com/app_info#scrollpos")!,
+            withTitle: UserText.privacyFeatures)
+
+        controller.present(webContainer, animated: true)
+    }
+    
     func onboardingCompleted(controller: UIViewController) {
-        
-        var settings = DefaultTutorialSettings()
-        settings.hasSeenOnboarding = true
-        
+        markOnboardingSeen()
         if DefaultVariantManager().isSupported(feature: .onboardingSummary) {
             controller.modalTransitionStyle = .crossDissolve
         } else {
             controller.modalTransitionStyle = .flipHorizontal
         }
-        
         controller.dismiss(animated: true)
         homeController?.resetHomeRowCTAAnimations()
+    }
+    
+    func markOnboardingSeen() {
+        var settings = DefaultTutorialSettings()
+        settings.hasSeenOnboarding = true
     }
     
 }

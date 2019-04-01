@@ -84,6 +84,10 @@ class FavoriteHomeCell: UICollectionViewCell {
         let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
         iconLabel.text = "\(host.capitalized.first ?? " ")"
         
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        accessibilityLabel = "\(link.title ?? "")). \(UserText.favorite)"
+        
         titleLabel.text = link.title
         
         iconImage.isHidden = true

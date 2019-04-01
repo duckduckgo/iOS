@@ -171,6 +171,13 @@
 "homepage.centerSearch" = "Centered Search";
 "homepage.centerSearchAndFavorites" = "Centered Search with Favorites";
 
+"privacy.protection.site.grade" = "Privacy grade %@";
+"confirm" = "Confirm";
+
+"tab.open.with.title.and.address" = "Open \"%@\" at %@";
+"tab.close.with.title.and.address" = "Close \"%@\" at %@";
+"favorite" = "Favorite";
+
 "privacy.features" = "Privacy Features";
 
 "siteFeedback.title" = "Report a Broken Site";

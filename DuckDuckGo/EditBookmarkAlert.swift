@@ -57,7 +57,6 @@ private class ValidatingAlert: UIAlertController {
         }
         addTextField { textField in
             textField.accessibilityLabel = "Bookmark Address"
-//            textField.acc
             textField.text = link?.url.absoluteString
             textField.placeholder = UserText.bookmarkAddressPlaceholder
             textField.keyboardAppearance = keyboardAppearance

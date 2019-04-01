@@ -1,1 +1,1 @@
-• Fixes glitch when editing long URLs in the address bar.
+• We made it easier to share a feedback about our app! Visit Settings to check that out.

@@ -202,7 +202,12 @@ public struct UserText {
     public static let confirm = NSLocalizedString("confirm", comment: "Confirm clear tabs and data")
     
     public static func openTab(withTitle title: String, atAddress address: String) -> String {
-        let message = NSLocalizedString("open.tab.with.title.and.address", comment: "Open tab with address")
+        let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")
+        return message.format(arguments: title, address)
+    }
+
+    public static func closeTab(withTitle title: String, atAddress address: String) -> String {
+        let message = NSLocalizedString("tab.close.with.title.and.address", comment: "Close tab with address")
         return message.format(arguments: title, address)
     }
 

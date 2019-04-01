@@ -68,7 +68,8 @@ class TabViewCell: UICollectionViewCell {
         background.alpha = isCurrent ? Constants.selectedAlpha : Constants.unselectedAlpha
 
         if let link = tab.link {
-            accessibilityLabel = UserText.openTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
+            removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
+            title.accessibilityLabel = UserText.openTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
             title.text = tab.link?.displayTitle
         }
         

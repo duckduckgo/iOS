@@ -174,7 +174,8 @@
 "privacy.protection.site.grade" = "Privacy grade %@";
 "confirm" = "Confirm";
 
-"open.tab.with.title.and.address" = "Open \"%@\" at %s";
+"tab.open.with.title.and.address" = "Open \"%@\" at %@";
+"tab.close.with.title.and.address" = "Close \"%@\" at %@";
 "favorite" = "Favorite";
 
 "privacy.features" = "Privacy Features";

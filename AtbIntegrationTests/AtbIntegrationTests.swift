@@ -150,7 +150,7 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     func backgroundRelaunch() {
-        XCUIDevice().press(.home)
+        XCUIDevice.shared.press(.home)
         app.activate()
         if !app.searchFields["searchEntry"].waitForExistence(timeout: Constants.defaultTimeout) {
             fatalError("Can not find search field. Has the app launched?")

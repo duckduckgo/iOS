@@ -37,14 +37,14 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if let current = pages.index(of: viewController), let previous = previousIndex(current) {
+        if let current = pages.firstIndex(of: viewController), let previous = previousIndex(current) {
             return pages[previous]
         }
         return nil
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if let current = pages.index(of: viewController), let next = nextIndex(current) {
+        if let current = pages.firstIndex(of: viewController), let next = nextIndex(current) {
             return pages[next]
         }
         return nil
@@ -55,7 +55,7 @@ class OnboardingDataSource: NSObject, UIPageViewControllerDataSource {
     }
 
     func index(of controller: UIViewController) -> Int? {
-        return pages.index(of: controller)
+        return pages.firstIndex(of: controller)
     }
 
     func previousIndex(_ index: Int) -> Int? {

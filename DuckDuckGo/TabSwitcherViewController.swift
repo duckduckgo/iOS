@@ -87,8 +87,7 @@ class TabSwitcherViewController: UIViewController {
     }
 
     private func refreshTitle() {
-        let count = tabsModel.count
-        titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
+        titleView.text = UserText.numberOfTabs(tabsModel.count)
     }
     
     fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {

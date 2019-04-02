@@ -50,8 +50,11 @@ public struct DetectedTracker {
 
 extension DetectedTracker: Hashable {
 
-    public var hashValue: Int {
-        return "\(url) \(blocked) \(String(describing: networkName)) \(String(describing: category))".hashValue
+    public func hash( into hasher: inout Hasher) {
+        hasher.combine(url)
+        hasher.combine(blocked)
+        hasher.combine(networkName)
+        hasher.combine(category)
     }
 
     public static func == (lhs: DetectedTracker, rhs: DetectedTracker) -> Bool {

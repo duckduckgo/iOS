@@ -50,19 +50,19 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Krm-hA-s9u">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem enabled="NO" image="BrowsePrevious" id="Kc6-IR-lKx">
+                                    <barButtonItem enabled="NO" title="Browse Back" image="BrowsePrevious" id="Kc6-IR-lKx">
                                         <connections>
                                             <action selector="onBackPressed" destination="C1X-Zd-UbA" id="W9t-r8-ei1"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Qhs-dl-WAQ"/>
-                                    <barButtonItem enabled="NO" image="BrowseNext" id="cUp-YP-aMf">
+                                    <barButtonItem enabled="NO" title="Browse Forward" image="BrowseNext" id="cUp-YP-aMf">
                                         <connections>
                                             <action selector="onForwardPressed" destination="C1X-Zd-UbA" id="Vwk-rf-1TA"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="C3T-24-oMr"/>
-                                    <barButtonItem image="Fire" id="ntb-c7-mjV">
+                                    <barButtonItem title="Clear Tabs and Data" image="Fire" id="ntb-c7-mjV">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Fire"/>
                                         </userDefinedRuntimeAttributes>
@@ -71,13 +71,13 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="d6z-g6-mo7"/>
-                                    <barButtonItem image="Bookmarks" id="M7u-mw-fly">
+                                    <barButtonItem title="Bookmarks" image="Bookmarks" id="M7u-mw-fly">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Bookmarks"/>
                                         </userDefinedRuntimeAttributes>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
-                                    <barButtonItem title="Tabs" id="K7o-WL-SC5" userLabel="Tabs Button">
+                                    <barButtonItem title="Tab Switcher" image="NewTab" id="K7o-WL-SC5" userLabel="Tabs Button">
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
@@ -316,6 +316,7 @@
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="Fire" width="19" height="24"/>
+        <image name="NewTab" width="24" height="24"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="find-next-dark" width="19" height="20"/>
         <image name="find-previous-dark" width="19" height="20"/>

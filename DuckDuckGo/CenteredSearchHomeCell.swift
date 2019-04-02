@@ -92,6 +92,8 @@ class CenteredSearchHomeCell: UICollectionViewCell {
 
         let searchLoupeDiff: CGFloat = Constants.targetSearchLoupeOffset
         searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
+        
+        searchBackground.isAccessibilityElement = searchHeaderTransition < 1.0
     }
     
 }

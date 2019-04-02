@@ -95,7 +95,7 @@ public class Tab: NSObject, NSCoding {
     
     private func indexOf(_ observer: TabObserver) -> Int? {
         pruneHolders()
-        return observersHolder.index(where: { $0.observer === observer })
+        return observersHolder.firstIndex(where: { $0.observer === observer })
     }
     
     private func notifyObservers() {

@@ -53,7 +53,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         
         let theme = ThemeManager.shared.currentTheme
         cell.contentView.backgroundColor = theme.tableCellBackgroundColor
-        cell.label.textColor = theme.tableCellTintColor
+        cell.label.textColor = theme.tableCellTextColor
         
         return cell
     }
@@ -69,7 +69,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         let theme = ThemeManager.shared.currentTheme
         cell.contentView.backgroundColor = theme.tableCellBackgroundColor
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTintColor
+        cell.title.textColor = theme.tableCellTextColor
         return cell
     }
 

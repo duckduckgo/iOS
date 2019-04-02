@@ -182,7 +182,7 @@ extension AutoClearSettingsViewController: Themable {
     func decorate(with theme: Theme) {
         
         for label in labels {
-            label.textColor = theme.tableCellTintColor
+            label.textColor = theme.tableCellTextColor
         }
         
         clearDataToggle.onTintColor = theme.buttonTintColor

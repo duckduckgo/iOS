@@ -106,7 +106,7 @@ class WhitelistViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         whitelistItemCell.contentView.backgroundColor = theme.tableCellBackgroundColor
-        whitelistItemCell.domainLabel.textColor = theme.tableCellTintColor
+        whitelistItemCell.domainLabel.textColor = theme.tableCellTextColor
         
         return whitelistItemCell
     }
@@ -118,7 +118,7 @@ class WhitelistViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         noWhitelistedSitesCell.contentView.backgroundColor = theme.tableCellBackgroundColor
-        noWhitelistedSitesCell.label.textColor = theme.tableCellTintColor
+        noWhitelistedSitesCell.label.textColor = theme.tableCellTextColor
         
         return noWhitelistedSitesCell
     }

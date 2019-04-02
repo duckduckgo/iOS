@@ -50,6 +50,7 @@ protocol Theme {
     var tableCellSelectedColor: UIColor { get }
     var tableCellTintColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
+    var tableCellTextColor: UIColor { get }
     var tableCellAccessoryTextColor: UIColor { get }
     var tableHeaderTextColor: UIColor { get }
     

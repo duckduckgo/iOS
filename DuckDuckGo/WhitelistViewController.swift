@@ -60,6 +60,10 @@ class WhitelistViewController: UITableViewController {
     }
 
     // MARK: actions
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     @IBAction func onAddPressed() {
 
@@ -95,20 +99,18 @@ class WhitelistViewController: UITableViewController {
     }
 
     private func createCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard whitelistManager.count > 0 else {
-            return createNoWhitelistedSitesCell(forRowAt: indexPath)
+        let cell: UITableViewCell
+        if whitelistManager.count > 0 {
+            cell = createWhitelistedSiteCell(forRowAt: indexPath)
+        } else {
+            cell = createNoWhitelistedSitesCell(forRowAt: indexPath)
         }
-        guard let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as? WhitelistItemCell else {
-            fatalError("Failed to dequeue cell as WhitelistItemCell")
-        }
-        
-        whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
         
         let theme = ThemeManager.shared.currentTheme
-        whitelistItemCell.contentView.backgroundColor = theme.tableCellBackgroundColor
-        whitelistItemCell.domainLabel.textColor = theme.tableCellTextColor
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
-        return whitelistItemCell
+        return cell
     }
     
     private func createNoWhitelistedSitesCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -117,10 +119,22 @@ class WhitelistViewController: UITableViewController {
         }
         
         let theme = ThemeManager.shared.currentTheme
-        noWhitelistedSitesCell.contentView.backgroundColor = theme.tableCellBackgroundColor
         noWhitelistedSitesCell.label.textColor = theme.tableCellTextColor
         
         return noWhitelistedSitesCell
+    }
+    
+    private func createWhitelistedSiteCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let whitelistItemCell = tableView.dequeueReusableCell(withIdentifier: "WhitelistItemCell") as? WhitelistItemCell else {
+            fatalError("Failed to dequeue cell as WhitelistItemCell")
+        }
+        
+        whitelistItemCell.domain = whitelistManager.domain(at: indexPath.row)
+        
+        let theme = ThemeManager.shared.currentTheme
+        whitelistItemCell.domainLabel.textColor = theme.tableCellTextColor
+        
+        return whitelistItemCell
     }
 
 }

@@ -147,6 +147,7 @@ class SettingsViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         if cell.accessoryType == .disclosureIndicator {
             let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))

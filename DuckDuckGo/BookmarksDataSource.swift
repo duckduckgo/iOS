@@ -52,8 +52,9 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         }
         
         let theme = ThemeManager.shared.currentTheme
-        cell.contentView.backgroundColor = theme.tableCellBackgroundColor
+        cell.backgroundColor = theme.tableCellBackgroundColor
         cell.label.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         return cell
     }
@@ -67,9 +68,10 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         cell.update(withLink: link)
         
         let theme = ThemeManager.shared.currentTheme
-        cell.contentView.backgroundColor = theme.tableCellBackgroundColor
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.title.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        
         return cell
     }
 

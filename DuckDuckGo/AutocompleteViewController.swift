@@ -156,9 +156,10 @@ extension AutocompleteViewController: UITableViewDataSource {
         let color = indexPath.row == selectedItem ? currentTheme.tableCellSelectedColor : currentTheme.tableCellBackgroundColor
         
         cell.backgroundColor = color
-        cell.contentView.backgroundColor = color
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
+        
         return cell
     }
 
@@ -170,9 +171,10 @@ extension AutocompleteViewController: UITableViewDataSource {
         
         let currentTheme = ThemeManager.shared.currentTheme
         cell.backgroundColor = currentTheme.tableCellBackgroundColor
-        cell.contentView.backgroundColor = currentTheme.tableCellBackgroundColor
         cell.tintColor = currentTheme.autocompleteCellAccessoryColor
         cell.label?.textColor = currentTheme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(currentTheme.tableCellHighlightedBackgroundColor)
+        
         return cell
     }
 

@@ -27,7 +27,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
         static let searchWidthPad: CGFloat = 455
         static let targetSearchLeadingOffset: CGFloat = -18
         static let targetSearchTrailingOffset: CGFloat = 16
-        static let targetSearchLoupeOffset: CGFloat = -6
+        static let targetSearchLoupeOffset: CGFloat = -9
         
     }
     

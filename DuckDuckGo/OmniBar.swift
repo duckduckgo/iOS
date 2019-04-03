@@ -286,6 +286,8 @@ extension OmniBar: Themable {
     public func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor
         tintColor = theme.barTintColor
+        
+        configureTextField()
 
         editingBackground?.backgroundColor = theme.searchBarBackgroundColor
         editingBackground?.borderColor = theme.searchBarBackgroundColor

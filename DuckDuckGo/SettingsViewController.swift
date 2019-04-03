@@ -149,9 +149,9 @@ class SettingsViewController: UITableViewController {
         cell.backgroundColor = theme.tableCellBackgroundColor
         
         if cell.accessoryType == .disclosureIndicator {
-            let accesoryImage = UIImageView(image: UIImage(named: "ArrowForward"))
+            let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
             accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
-            accesoryImage.tintColor = theme.tableCellAccessoryTextColor
+            accesoryImage.tintColor = theme.tableCellAccessoryColor
             cell.accessoryView = accesoryImage
         }
     }

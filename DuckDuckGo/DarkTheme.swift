@@ -38,7 +38,7 @@ struct DarkTheme: Theme {
     var searchBarTextPlaceholderColor = UIColor.lightMercury
     var searchBarTextDeemphasisColor = UIColor.lightMercury
     var searchBarBorderColor = UIColor.darkGreyish
-    var searchBarClearTextIconColor = UIColor.greyishBrown2
+    var searchBarClearTextIconColor = UIColor.greyish2
     
     var autocompleteCellAccessoryColor = UIColor.lightMercury
 

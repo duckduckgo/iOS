@@ -22,9 +22,9 @@ import Core
 
 protocol BrowsingTipsDelegate: NSObjectProtocol {
     
-    func showPrivacyGradeTip()
+    func showPrivacyGradeTip(didShow: @escaping (Bool) -> Void)
     
-    func showFireButtonTip()
+    func showFireButtonTip(didShow: @escaping (Bool) -> Void)
     
 }
 
@@ -61,13 +61,17 @@ class BrowsingTips {
         switch tip {
             
         case .privacyGrade:
-            delegate?.showPrivacyGradeTip()
+            delegate?.showPrivacyGradeTip(didShow: didShow(shown:))
             
         case .fireButton:
-            delegate?.showFireButtonTip()
+            delegate?.showFireButtonTip(didShow: didShow(shown:))
             
         }
         
+    }
+ 
+    private func didShow(shown: Bool) {
+        guard shown else { return }
         storage.nextBrowsingTip += 1
     }
     

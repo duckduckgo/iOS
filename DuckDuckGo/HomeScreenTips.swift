@@ -22,9 +22,9 @@ import Core
 
 protocol HomeScreenTipsDelegate: NSObjectProtocol {
     
-    func showPrivateSearchTip()
+    func showPrivateSearchTip(didShow: @escaping (Bool) -> Void)
     
-    func showCustomizeTip()
+    func showCustomizeTip(didShow: @escaping (Bool) -> Void)
     
 }
 
@@ -60,13 +60,16 @@ class HomeScreenTips {
         switch tip {
             
         case .privateSearch:
-            delegate?.showPrivateSearchTip()
+            delegate?.showPrivateSearchTip(didShow: didShow(shown:))
             
         case .showCustomize:
-            delegate?.showCustomizeTip()
-            
+            delegate?.showCustomizeTip(didShow: didShow(shown:))
         }
         
+    }
+    
+    private func didShow(shown: Bool) {
+        guard shown else { return }
         storage.nextHomeScreenTip += 1
     }
     

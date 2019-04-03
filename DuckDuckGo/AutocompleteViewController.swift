@@ -131,7 +131,6 @@ extension AutocompleteViewController: UITableViewDataSource {
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.clear
         footer.backgroundView = backgroundView
-        footer.backgroundColor = UIColor.clear
         
         footer.contentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         return footer

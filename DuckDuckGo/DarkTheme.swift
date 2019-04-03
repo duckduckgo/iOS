@@ -28,23 +28,27 @@ struct DarkTheme: Theme {
     var backgroundColor = UIColor.nearlyBlack
     
     var barBackgroundColor = UIColor.nearlyBlackLight
-    var barTintColor = UIColor.greyish
+    var barTintColor = UIColor.lightMercury
     var barTitleColor = UIColor.white
     
     var tintOnBlurColor = UIColor.white
     
     var searchBarBackgroundColor = UIColor.charcoalGrey
     var searchBarTextColor = UIColor.white
+    var searchBarTextPlaceholderColor = UIColor.greyish
     var searchBarTextDeemphasisColor = UIColor.lightMercury
     var searchBarBorderColor = UIColor.darkGreyish
     var searchBarClearTextIconColor = UIColor.greyishBrown2
+    
+    var autocompleteCellAccessoryColor = UIColor.lightMercury
 
     var tableCellBackgroundColor = UIColor.nearlyBlackLight
     var tableCellSelectedColor = UIColor.charcoalGrey
-    var tableCellTintColor = UIColor.greyish
     var tableCellSeparatorColor = UIColor.charcoalGrey
     var tableCellTextColor = UIColor.lightGreyish
     var tableCellAccessoryTextColor = UIColor.greyish
+    var tableCellAccessoryColor = UIColor.greyish3
+    var tableCellHighlightedBackgroundColor = UIColor.greyishBrown
     var tableHeaderTextColor = UIColor.greyish3
     
     var buttonTintColor = UIColor.cornflowerBlue

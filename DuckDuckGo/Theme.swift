@@ -42,16 +42,20 @@ protocol Theme {
     
     var searchBarBackgroundColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
+    var searchBarTextPlaceholderColor: UIColor { get }
     var searchBarTextDeemphasisColor: UIColor { get }
     var searchBarBorderColor: UIColor { get }
     var searchBarClearTextIconColor: UIColor { get }
     
+    var autocompleteCellAccessoryColor: UIColor { get }
+    
     var tableCellBackgroundColor: UIColor { get }
     var tableCellSelectedColor: UIColor { get }
-    var tableCellTintColor: UIColor { get }
     var tableCellSeparatorColor: UIColor { get }
     var tableCellTextColor: UIColor { get }
     var tableCellAccessoryTextColor: UIColor { get }
+    var tableCellAccessoryColor: UIColor { get }
+    var tableCellHighlightedBackgroundColor: UIColor { get }
     var tableHeaderTextColor: UIColor { get }
     
     var buttonTintColor: UIColor { get }

@@ -106,8 +106,7 @@ extension CenteredSearchHomeCell: Themable {
         searchBackground.backgroundColor = theme.searchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
         
-        // omnibar also uses this, maybe it should be themeable?
-        promptText.textColor = UIColor.greyish
+        promptText.textColor = theme.searchBarTextPlaceholderColor
         
         switch theme.currentImageSet {
         case .light:

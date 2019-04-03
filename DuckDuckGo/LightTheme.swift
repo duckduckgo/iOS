@@ -34,17 +34,21 @@ struct LightTheme: Theme {
     var tintOnBlurColor = UIColor.white
     
     var searchBarBackgroundColor = UIColor.mercury
-    var searchBarTextColor = UIColor.darkGreyish
+    var searchBarTextColor = UIColor.nearlyBlackLight
+    var searchBarTextPlaceholderColor = UIColor.greyish
     var searchBarTextDeemphasisColor = UIColor.greyish3
     var searchBarBorderColor = UIColor.lightGreyish
     var searchBarClearTextIconColor = UIColor.greyish
 
+    var autocompleteCellAccessoryColor = UIColor.darkGreyish
+    
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight
     var tableCellSelectedColor = UIColor.mercury
-    var tableCellTintColor = UIColor.darkGreyish
     var tableCellSeparatorColor = UIColor.mercury
     var tableCellTextColor = UIColor.darkGreyish
     var tableCellAccessoryTextColor = UIColor.greyish3
+    var tableCellAccessoryColor = UIColor.greyish
+    var tableCellHighlightedBackgroundColor = UIColor.mercury
     var tableHeaderTextColor = UIColor.greyish3
     
     var buttonTintColor = UIColor.cornflowerBlue

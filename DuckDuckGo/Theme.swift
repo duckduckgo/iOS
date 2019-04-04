@@ -35,7 +35,9 @@ protocol Theme {
     
     var barBackgroundColor: UIColor { get }
     var barTintColor: UIColor { get }
-    var barTitleColor: UIColor { get }
+    
+    var navigationBarTitleColor: UIColor { get }
+    var navigationBarTintColor: UIColor { get }
     
     // Color of the content that is directly placed over blurred background
     var tintOnBlurColor: UIColor { get }

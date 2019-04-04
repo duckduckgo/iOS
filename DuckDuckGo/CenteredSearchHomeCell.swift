@@ -103,7 +103,7 @@ extension CenteredSearchHomeCell: Themable {
         // called on rotation too, so ideal time to update
         updateForTransition()
         
-        searchBackground.backgroundColor = theme.searchBarBackgroundColor
+        searchBackground.backgroundColor = theme.centeredSearchBarBackgroundColor
         searchLoupe.tintColor = theme.barTintColor
         
         promptText.textColor = theme.searchBarTextPlaceholderColor

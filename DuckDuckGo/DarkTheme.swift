@@ -34,6 +34,7 @@ struct DarkTheme: Theme {
     var tintOnBlurColor = UIColor.white
     
     var searchBarBackgroundColor = UIColor.charcoalGrey
+    var centeredSearchBarBackgroundColor = UIColor.nearlyBlackLight
     var searchBarTextColor = UIColor.white
     var searchBarTextPlaceholderColor = UIColor.lightMercury
     var searchBarTextDeemphasisColor = UIColor.lightMercury

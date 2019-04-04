@@ -41,6 +41,7 @@ protocol Theme {
     var tintOnBlurColor: UIColor { get }
     
     var searchBarBackgroundColor: UIColor { get }
+    var centeredSearchBarBackgroundColor: UIColor { get }
     var searchBarTextColor: UIColor { get }
     var searchBarTextPlaceholderColor: UIColor { get }
     var searchBarTextDeemphasisColor: UIColor { get }

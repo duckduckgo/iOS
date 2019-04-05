@@ -36,7 +36,9 @@ struct DarkTheme: Theme {
     var searchBarBackgroundColor = UIColor.charcoalGrey
     var searchBarTextColor = UIColor.white
     var searchBarTextDeemphasisColor = UIColor.lightMercury
-    
+    var searchBarBorderColor = UIColor.darkGreyish
+    var searchBarClearTextIconColor = UIColor.greyishBrown2
+
     var tableCellBackgroundColor = UIColor.nearlyBlackLight
     var tableCellSelectedColor = UIColor.charcoalGrey
     var tableCellTintColor = UIColor.greyish
@@ -44,7 +46,11 @@ struct DarkTheme: Theme {
     var tableCellAccessoryTextColor = UIColor.greyish
     var tableHeaderTextColor = UIColor.lightGreyish
     
-    var toggleSwitchColor = UIColor.cornflowerBlue
+    var buttonTintColor = UIColor.cornflowerBlue
+    var placeholderColor = UIColor.greyish
+    
+    var textFieldBackgroundColor = UIColor.nearlyBlackLight
+    var textFieldFontColor = UIColor.white
     
     var homeRowPrimaryTextColor = UIColor.white
     var homeRowSecondaryTextColor = UIColor.lightMercury
@@ -53,11 +59,15 @@ struct DarkTheme: Theme {
     var aboutScreenTextColor = UIColor.white
     var aboutScreenButtonColor = UIColor.cornflowerBlue
     
-    var favoritesPlusTintColor = UIColor.greyishBrown2
-    var favoritesPlusBackgroundColor = UIColor.reallyBlack
+    var favoritesPlusTintColor = UIColor.greyish3
+    var favoritesPlusBackgroundColor = UIColor.greyishBrown2
 
     var faviconBackgroundColor = UIColor.charcoalGrey
     var favoriteTextColor = UIColor.greyish
+    
+    var feedbackPrimaryTextColor = UIColor.white
+    var feedbackSecondaryTextColor = UIColor.lightGreyish
+    var feedbackSentimentButtonBackgroundColor = UIColor.charcoalGrey
     
     var activityStyle: UIActivityIndicatorView.Style = .white
 }

@@ -74,6 +74,7 @@ public class SiteRatingView: UIView {
         let grades = siteRating.scores
         let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
         circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
+        circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
     }
 
     private func protecting() -> Bool {

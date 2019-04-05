@@ -68,24 +68,30 @@
                                                     <rect key="frame" x="0.0" y="239" width="342" height="48"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SearchLoupeMini" translatesAutoresizingMaskIntoConstraints="NO" id="Cfx-pb-o8i">
-                                                            <rect key="frame" x="15" y="12" width="24" height="24"/>
+                                                            <rect key="frame" x="15" y="12" width="30" height="24"/>
                                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="24" id="MeG-td-OLY"/>
-                                                                <constraint firstAttribute="width" constant="24" id="Nin-Am-qlx"/>
+                                                                <constraint firstAttribute="width" constant="30" id="Nin-Am-qlx"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search or enter address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73D-OT-n1K">
-                                                            <rect key="frame" x="47" y="15.999999999999998" width="150" height="16.333333333333329"/>
+                                                            <rect key="frame" x="50" y="17" width="150" height="14"/>
+                                                            <accessibility key="accessibilityConfiguration">
+                                                                <bool key="isElement" value="NO"/>
+                                                            </accessibility>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="activateSearch"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="activateSearch" label="Search or enter address">
+                                                        <accessibilityTraits key="traits" button="YES"/>
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
-                                                        <constraint firstItem="73D-OT-n1K" firstAttribute="leading" secondItem="Cfx-pb-o8i" secondAttribute="trailing" constant="8" id="ACN-RO-pzc"/>
+                                                        <constraint firstItem="73D-OT-n1K" firstAttribute="leading" secondItem="Cfx-pb-o8i" secondAttribute="trailing" constant="5" id="ACN-RO-pzc"/>
                                                         <constraint firstItem="Cfx-pb-o8i" firstAttribute="centerY" secondItem="7Jf-KE-oXj" secondAttribute="centerY" id="EhU-6m-xZh"/>
                                                         <constraint firstItem="73D-OT-n1K" firstAttribute="centerY" secondItem="7Jf-KE-oXj" secondAttribute="centerY" id="L29-pe-UIV"/>
                                                         <constraint firstAttribute="height" constant="48" id="lfy-OM-K4Q"/>
@@ -189,6 +195,9 @@
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo - Paoli, PA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
                                                     <rect key="frame" x="0.0" y="72" width="134" height="26"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <bool key="isElement" value="NO"/>
+                                                    </accessibility>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
                                                     <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -230,13 +239,17 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFb-1e-ukI" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="51.666666666666657" y="0.0" width="64" height="64"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AddFavorite" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-Qc-r6G">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add" translatesAutoresizingMaskIntoConstraints="NO" id="O5x-Qc-r6G">
                                                             <rect key="frame" x="20.000000000000007" y="20" width="24" height="24"/>
                                                             <color key="tintColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.87058823529411766" green="0.34509803921568627" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Add Favorite">
+                                                        <accessibilityTraits key="traits" button="YES"/>
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstItem="O5x-Qc-r6G" firstAttribute="centerY" secondItem="xFb-1e-ukI" secondAttribute="centerY" id="YUF-IN-Xoo"/>
                                                         <constraint firstAttribute="height" constant="64" id="gTp-Pg-ux9"/>
@@ -287,7 +300,12 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcN-YB-mZi">
-                                <rect key="frame" x="380" y="58" width="24" height="24"/>
+                                <rect key="frame" x="375" y="53" width="34" height="34"/>
+                                <accessibility key="accessibilityConfiguration" label="Settings"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="fcV-Gc-jkH"/>
+                                    <constraint firstAttribute="height" constant="34" id="iTW-Ve-M8D"/>
+                                </constraints>
                                 <state key="normal" image="Settings"/>
                                 <connections>
                                     <action selector="launchSettings" destination="LJ1-RN-ckE" eventType="primaryActionTriggered" id="ywh-FM-XNP"/>
@@ -300,9 +318,9 @@
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="height" secondItem="klK-ZJ-wmA" secondAttribute="height" id="1lu-2N-IOp"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="width" secondItem="ijV-Vn-w9w" secondAttribute="width" id="BjB-Gh-zsj"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="width" secondItem="klK-ZJ-wmA" secondAttribute="width" id="GIH-4s-2om"/>
-                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="10" id="R0H-sl-aBO"/>
+                            <constraint firstItem="ijV-Vn-w9w" firstAttribute="trailing" secondItem="kcN-YB-mZi" secondAttribute="trailing" constant="5" id="R0H-sl-aBO"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="ZUA-A0-82X"/>
-                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="14" id="h6x-yo-1bE"/>
+                            <constraint firstItem="kcN-YB-mZi" firstAttribute="top" secondItem="ijV-Vn-w9w" secondAttribute="top" constant="9" id="h6x-yo-1bE"/>
                             <constraint firstItem="5Rf-oV-2W5" firstAttribute="centerX" secondItem="ijV-Vn-w9w" secondAttribute="centerX" id="hb4-fK-0Fp"/>
                             <constraint firstItem="ijV-Vn-w9w" firstAttribute="bottom" secondItem="5Rf-oV-2W5" secondAttribute="bottom" id="iP8-nF-jOV"/>
                             <constraint firstItem="H74-G9-0WZ" firstAttribute="centerY" secondItem="ijV-Vn-w9w" secondAttribute="centerY" id="vdx-nG-nrB"/>
@@ -334,7 +352,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddFavorite" width="24" height="24"/>
+        <image name="Add" width="24" height="24"/>
         <image name="LogoDarkText" width="160" height="128"/>
         <image name="SearchLoupeMini" width="23" height="23"/>
         <image name="Settings" width="24" height="24"/>

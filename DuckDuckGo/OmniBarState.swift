@@ -2,7 +2,7 @@
 //  OmniBarState.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ protocol OmniBarState {
     var showSiteRating: Bool { get }
     var showBackground: Bool { get }
     var showClear: Bool { get }
+    var showRefresh: Bool { get }
     var showMenu: Bool { get }
     var showBookmarks: Bool { get }
     var showSettings: Bool { get }
@@ -37,19 +38,19 @@ protocol OmniBarState {
     var onTextEnteredState: OmniBarState { get }
     var onBrowsingStartedState: OmniBarState { get }
     var onBrowsingStoppedState: OmniBarState { get }
-    var supportingCancelButtonState: OmniBarState { get }
 }
 
 struct HomeEmptyEditingState: OmniBarState {
-    let clearTextOnStart = true
-    let showSearchLoupe = false
-    let showCancel = false
+    var clearTextOnStart = true
+    var showSearchLoupe = true
     let showSiteRating = false
-    let showBackground = true
+    let showBackground = false
     let showClear = false
+    let showRefresh = false
     let showMenu = false
-    let showBookmarks = true
-    let showSettings = true
+    let showBookmarks = false
+    let showSettings = false
+    let showCancel: Bool = true
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
@@ -57,19 +58,19 @@ struct HomeEmptyEditingState: OmniBarState {
     var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
     var onBrowsingStoppedState: OmniBarState { return self }
-    var supportingCancelButtonState: OmniBarState { return SupportingCancelButtonHomeEmptyEditingState() }
 }
 
 struct HomeTextEditingState: OmniBarState {
-    let clearTextOnStart = true
-    let showSearchLoupe = false
-    let showCancel = false
+    var clearTextOnStart = true
+    var showSearchLoupe = true
     let showSiteRating = false
-    let showBackground = true
+    let showBackground = false
     let showClear = true
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
+    let showCancel: Bool = true
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
@@ -77,19 +78,19 @@ struct HomeTextEditingState: OmniBarState {
     var onTextEnteredState: OmniBarState { return self }
     var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
     var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
-    var supportingCancelButtonState: OmniBarState { return SupportingCancelButtonHomeTextEditingState() }
 }
 
 struct HomeNonEditingState: OmniBarState {
-    let clearTextOnStart = true
-    let showSearchLoupe = false
-    let showCancel = false
+    var clearTextOnStart = true
+    var showSearchLoupe = true
     let showSiteRating = false
-    let showBackground = false
+    let showBackground = true
     let showClear = false
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = true
+    let showCancel: Bool = false
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return self }
     var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
@@ -97,19 +98,19 @@ struct HomeNonEditingState: OmniBarState {
     var onTextEnteredState: OmniBarState { return HomeTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return BrowsingNonEditingState() }
     var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
-    var supportingCancelButtonState: OmniBarState { return SupportingCancelButtonHomeNonEditingState() }
 }
 
 struct BrowsingEmptyEditingState: OmniBarState {
-    let clearTextOnStart = true
-    let showSearchLoupe = false
-    let showCancel = false
-    let showSiteRating = true
-    let showBackground = true
+    var clearTextOnStart = true
+    var showSearchLoupe = true
+    let showSiteRating = false
+    let showBackground = false
     let showClear = false
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
+    let showCancel: Bool = true
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
@@ -117,19 +118,19 @@ struct BrowsingEmptyEditingState: OmniBarState {
     var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return self }
     var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
-    var supportingCancelButtonState: OmniBarState { return SupportingCancelButtonBrowsingEmptyEditingState() }
 }
 
 struct BrowsingTextEditingState: OmniBarState {
-    let clearTextOnStart = false
-    let showSearchLoupe = false
-    let showCancel = false
-    let showSiteRating = true
-    let showBackground = true
+    var clearTextOnStart = false
+    var showSearchLoupe = true
+    let showSiteRating = false
+    let showBackground = false
     let showClear = true
+    let showRefresh = false
     let showMenu = false
     let showBookmarks = false
     let showSettings = false
+    let showCancel: Bool = true
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
     var onEditingStartedState: OmniBarState { return self }
@@ -137,19 +138,19 @@ struct BrowsingTextEditingState: OmniBarState {
     var onTextEnteredState: OmniBarState { return self }
     var onBrowsingStartedState: OmniBarState { return self }
     var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
-    var supportingCancelButtonState: OmniBarState { return SupportingCancelButtonBrowsingTextEditingState() }
 }
 
 struct BrowsingNonEditingState: OmniBarState {
-    let clearTextOnStart = false
-    let showSearchLoupe = false
-    let showCancel = false
+    var clearTextOnStart = false
+    var showSearchLoupe = false
     let showSiteRating = true
-    let showBackground = false
+    let showBackground = true
     let showClear = false
+    let showRefresh = true
     let showMenu = true
     let showBookmarks = false
     let showSettings = false
+    let showCancel: Bool = false
     var name: String { return Type.name(self) }
     var onEditingStoppedState: OmniBarState { return self }
     var onEditingStartedState: OmniBarState { return BrowsingTextEditingState() }
@@ -157,5 +158,4 @@ struct BrowsingNonEditingState: OmniBarState {
     var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
     var onBrowsingStartedState: OmniBarState { return self }
     var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
-    var supportingCancelButtonState: OmniBarState { return SupportingCancelButtonBrowsingNonEditingState() }
 }

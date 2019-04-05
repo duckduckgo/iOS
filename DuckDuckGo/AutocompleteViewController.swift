@@ -31,13 +31,13 @@ class AutocompleteViewController: UIViewController {
     fileprivate var suggestions = [Suggestion]()
     fileprivate let minItems = 1
     fileprivate let maxItems = 6
+    fileprivate var selectedItem = -1
 
     private var hidesBarsOnSwipeDefault = true
 
     @IBOutlet weak var tableView: UITableView!
+    var shouldOffsetY = false
     
-    var selectedItem = -1
-
     static func loadFromStoryboard() -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
@@ -67,7 +67,7 @@ class AutocompleteViewController: UIViewController {
     // If auto complete is used after the in-call banner is shown it has the wrong y position (should be zero)
     private func adjustForInCall() {
         let frame = self.view.frame
-        self.view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        self.view.frame = CGRect(x: 0, y: shouldOffsetY ? 45.5 : 0, width: frame.width, height: frame.height)
     }
 
     private func configureNavigationBar() {

@@ -21,15 +21,16 @@
 
 class MockStatisticsStore: StatisticsStore {
 
+    var installDate: Date?
     var atb: String?
-    var retentionAtb: String?
+    var searchRetentionAtb: String?
+    var appRetentionAtb: String?
 
     var hasInstallStatistics: Bool {
-        return atb != nil && retentionAtb != nil
+        return atb != nil
     }
 
     var variant: String?
-    var atbWithVariant: String?
     
     var httpsUpgradesTotal = 0
     var httpsUpgradesFailures = 0

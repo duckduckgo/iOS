@@ -25,9 +25,6 @@ extension TabViewController {
     func buildBrowsingMenu() -> UIAlertController {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(title: UserText.actionRefresh) { [weak self] in
-            self?.onRefreshAction()
-        }
         alert.addAction(title: UserText.actionNewTab) { [weak self] in
             self?.onNewTabAction()
         }
@@ -69,17 +66,6 @@ extension TabViewController {
         return alert
     }
     
-    private func onRefreshAction() {
-        Pixel.fire(pixel: .browsingMenuRefresh)
-        if isError {
-            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
-                load(url: url)
-            }
-        } else {
-            reload(scripts: false)
-        }
-    }
-    
     private func onNewTabAction() {
         Pixel.fire(pixel: .browsingMenuNewTab)
         delegate?.tabDidRequestNewTab(self)
@@ -111,10 +97,7 @@ extension TabViewController {
     }
     
     private func buildSaveFavoriteAction(forLink link: Link) -> UIAlertAction? {
-        guard let currentVariant = DefaultVariantManager().currentVariant,
-                currentVariant.features.contains(.homeScreen) else {
-            return nil
-        }
+        guard AppDependencyProvider.shared.appSettings.homePage == .centerSearchAndFavorites else { return nil }
         
         let bookmarksManager = BookmarksManager()
         guard !bookmarksManager.contains(url: link.url) else { return nil }

@@ -25,13 +25,11 @@ class BookmarksViewController: UITableViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
 
     weak var delegate: BookmarksDelegate?
+    
+    private lazy var appSettings = AppDependencyProvider.shared.appSettings
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        guard let currentVariant = DefaultVariantManager().currentVariant,
-                currentVariant.features.contains(.homeScreen) else {
-            return BookmarksDataSource()
-        }
-        return BookmarksAndFavoritesDataSource()
+        return appSettings.homePage == .centerSearchAndFavorites ? BookmarksAndFavoritesDataSource() : BookmarksDataSource()
     }()
     
     override func viewDidLoad() {
@@ -49,6 +47,16 @@ class BookmarksViewController: UITableViewController {
         } else if let link = dataSource.link(at: indexPath) {
             selectLink(link)
         }
+    }
+    
+    @available(iOS 11.0, *)
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let shareContextualAction = UIContextualAction(style: .normal, title: UserText.actionShare) { (_, _, completionHandler) in
+            self.showShareSheet(for: indexPath)
+            completionHandler(true)
+        }
+        shareContextualAction.backgroundColor = UIColor.cornflowerBlue
+        return UISwipeActionsConfiguration(actions: [shareContextualAction])
     }
 
     private func addAplicationActiveObserver() {
@@ -117,6 +125,17 @@ class BookmarksViewController: UITableViewController {
             }
         )
         present(alert, animated: true)
+    }
+    
+    fileprivate func showShareSheet(for indexPath: IndexPath) {
+
+        if let link = dataSource.link(at: indexPath) {
+            let appUrls: AppUrls = AppUrls()
+            let url = appUrls.removeATBAndSource(fromUrl: link.url)
+            presentShareSheet(withItems: [ url, link ], fromView: self.view)
+        } else {
+            Logger.log(text: "Invalid share link found")
+        }
     }
 
     fileprivate func selectLink(_ link: Link) {

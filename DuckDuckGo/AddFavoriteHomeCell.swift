@@ -30,7 +30,9 @@ extension AddFavoriteHomeCell: Themable {
     func decorate(with theme: Theme) {
         
         plusImage.tintColor = theme.favoritesPlusTintColor
-        plusBackground.backgroundColor = theme.favoritesPlusBackgroundColor
-        
+        plusBackground.backgroundColor = UIColor.clear
+        plusBackground.layer.borderWidth = 1
+        plusBackground.layer.borderColor = theme.favoritesPlusBackgroundColor.cgColor
+
     }
 }

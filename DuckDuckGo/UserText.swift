@@ -30,7 +30,9 @@ public struct UserText {
     public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", comment: "Search or enter address")
     public static let webSessionCleared = NSLocalizedString("web.session.clear", comment: "Session cleared")
     public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", comment: "Bookmark saved")
+    public static let webBookmarkAlreadySaved = NSLocalizedString("web.url.save.bookmark.exists", comment: "Bookmark already saved")
     public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", comment: "Favorite saved")
+    public static let webSaveBookmarkNone = NSLocalizedString("web.url.save.bookmark.none", comment: "No webpage to bookmark")
 
     public static let tabSwitcherTitleHasTabs = NSLocalizedString("tabswitcher.title.tabs", comment: "Private Tabs title")
     public static let tabSwitcherTitleNoTabs = NSLocalizedString("tabswitcher.title.notabs", comment: "No Tabs title")
@@ -40,6 +42,7 @@ public struct UserText {
     public static let actionAdd = NSLocalizedString("action.title.add", comment: "Add action")
     public static let actionSave = NSLocalizedString("action.title.save", comment: "Save action")
     public static let actionCancel = NSLocalizedString("action.title.cancel", comment: "Cancel action")
+    public static let actionBookmark = NSLocalizedString("action.title.bookmark", comment: "Bookmark action")
     public static let actionNewTab = NSLocalizedString("action.title.newTab", comment: "New Tab action")
     public static let actionNewTabForUrl = NSLocalizedString("action.title.newTabForUrl", comment: "Open in New Tab action")
     public static let actionNewBackgroundTabForUrl = NSLocalizedString("action.title.newBackgroundTabForUrl", comment: "Open in New Background Tab action")
@@ -61,6 +64,8 @@ public struct UserText {
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", comment: "Save Bookmark action")
     public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", comment: "Save Favorite action")
     public static let alertEditBookmark = NSLocalizedString("alert.title.edit.bookmark", comment: "Edit Bookmark action")
+    public static let alertBookmarkAllTitle = NSLocalizedString("alert.title.bookmarkAll", comment: "Bookmark All Tabs?")
+    public static let alertBookmarkAllMessage = NSLocalizedString("alert.message.bookmarkAll", comment: "Existing bookmarks will not be duplicated.")
 
     public static let alertAddToWhitelist = NSLocalizedString("alert.title.add.to.whitelist", comment: "Add to Whitelist action")
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
@@ -128,8 +133,6 @@ public struct UserText {
     public static let homeRowReminderTitle = NSLocalizedString("home.row.reminder.title", comment:  "Home Row Reminder Title")
     public static let homeRowReminderMessage = NSLocalizedString("home.row.reminder.message", comment:  "Home Row Reminder Message")
     
-    public static let feedbackGeneralPlaceholder = NSLocalizedString("feedback.comment.general.placeholder", comment:  "General feedback comment placeholder")
-    public static let feedbackBrokenSitePlaceholder = NSLocalizedString("feedback.comment.brokenSite.placeholder", comment:  "Broken site feedback comment placeholder")
     public static let feedbackSumbittedConfirmation = NSLocalizedString("feedback.submitted.confirmation", comment:  "Feedback submitted confirmation")
     
     public static let customUrlSchemeTitle = NSLocalizedString("prompt.custom.url.scheme.title", comment: "Switch apps?")
@@ -169,5 +172,46 @@ public struct UserText {
     public static let keyCommandFire = NSLocalizedString("keyCommandFire", comment: "Clear all tabs and data")
     public static let keyCommandClose = NSLocalizedString("keyCommandClose", comment: "Close")
     public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", comment: "Select")
+
+    public static let contextualOnboardingSearchPrivately = NSLocalizedString("contextualOnboardingSearchPrivately", comment: "Searching with DuckDuckGo means your searches are never tracked. Ever.")
+    public static let contextualOnboardingCustomize = NSLocalizedString("contextualOnboardingCustomize", comment: "Pick a theme to make the DuckDuckGo Privacy browser yours.")
+    public static let contextualOnboardingPrivacyGrade = NSLocalizedString("contextualOnboardingPrivacyGrade", comment: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.")
+    public static let contextualOnboardingFireButton = NSLocalizedString("contextualOnboardingFireButton", comment: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.")
+
+    public static let bookmarkAllTabsNotFound = NSLocalizedString("bookmarkAll.tabs.notfound", comment: "No open tabs found to bookmark")
+    public static let bookmarkAllTabsSaved = NSLocalizedString("bookmarkAll.tabs.saved", comment: "All open tabs are bookmarked")
+    public static let bookmarkAllTabsFailedToSave = NSLocalizedString("bookmarkAll.tabs.failed", comment: "Failed to bookmark %lu out of %lu tabs")
+
+    public static let autoClearAccessoryOn = NSLocalizedString("autoclear.on", comment: "On")
+    public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", comment: "Off")
+
+    public static let homePageSimple = NSLocalizedString("homepage.simple", comment: "Simple")
+    public static let homePageCenterSearch = NSLocalizedString("homepage.centerSearch", comment: "Center Search")
+    public static let homePageCenterSearchAndFavorites = NSLocalizedString("homepage.centerSearchAndFavorites", comment: "Center Search and Favorites")
+
+    public static func privacyGrade(_ grade: String) -> String {
+        let message = NSLocalizedString("privacy.protection.site.grade", comment: "Privacy grade %@")
+        return message.format(arguments: grade)
+    }
+
+    public static func numberOfTabs(_ number: Int) -> String {
+        let message = NSLocalizedString("number.of.tabs", comment: "%d Private Tabs")
+        return message.format(arguments: number)
+    }
+
+    public static let confirm = NSLocalizedString("confirm", comment: "Confirm clear tabs and data")
+    
+    public static func openTab(withTitle title: String, atAddress address: String) -> String {
+        let message = NSLocalizedString("tab.open.with.title.and.address", comment: "Open tab with address")
+        return message.format(arguments: title, address)
+    }
+
+    public static func closeTab(withTitle title: String, atAddress address: String) -> String {
+        let message = NSLocalizedString("tab.close.with.title.and.address", comment: "Close tab with address")
+        return message.format(arguments: title, address)
+    }
+
+    public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
+    public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
 
 }

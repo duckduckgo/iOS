@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
     
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
-
+    
     static func loadFromStoryboard() -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
@@ -70,7 +70,7 @@ class HomeViewController: UIViewController {
         }
         return controller
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,11 +80,20 @@ class HomeViewController: UIViewController {
         collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
         applyTheme(ThemeManager.shared.currentTheme)
     }
-
-    func allowContentUnderflow() {
-        if let parent = parent as? MainViewController {
-            parent.allowContentUnderflow = true
+    
+    var allowContentUnderflow: Bool = false {
+        didSet {
+            if let parent = parent as? MainViewController {
+                parent.allowContentUnderflow = allowContentUnderflow
+            }
         }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.collectionView.viewDidTransition(to: size)
+        })
     }
     
     func launch(_ link: Link) {
@@ -107,17 +116,15 @@ class HomeViewController: UIViewController {
         delegate?.showSettings(self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         if HomeRowCTA().shouldShow() {
             showHomeRowCTA()
         }
-
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
+        installHomeScreenTips()
+        
         viewHasAppeared = true
     }
     

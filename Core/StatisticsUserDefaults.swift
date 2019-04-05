@@ -24,8 +24,10 @@ public class StatisticsUserDefaults: StatisticsStore {
     private let groupName: String
 
     private struct Keys {
+        static let installDate = "com.duckduckgo.statistics.installdate.key"
         static let atb = "com.duckduckgo.statistics.atb.key"
-        static let retentionAtb = "com.duckduckgo.statistics.retentionatb.key"
+        static let searchRetentionAtb = "com.duckduckgo.statistics.retentionatb.key"
+        static let appRetentionAtb = "com.duckduckgo.statistics.appretentionatb.key"
         static let variant = "com.duckduckgo.statistics.variant.key"
         static let httpsUpgradesTotal = "com.duckduckgo.statistics.httpsupgradestotal.key"
         static let httpsUpgradesFailures = "com.duckduckgo.statistics.httpsupgradesfailures.key"
@@ -40,7 +42,7 @@ public class StatisticsUserDefaults: StatisticsStore {
     }
 
     public var hasInstallStatistics: Bool {
-        return atb != nil && retentionAtb != nil
+        return atb != nil
     }
 
     public var atb: String? {
@@ -51,13 +53,34 @@ public class StatisticsUserDefaults: StatisticsStore {
             userDefaults?.setValue(newValue, forKey: Keys.atb)
         }
     }
-
-    public var retentionAtb: String? {
+    
+    public var installDate: Date? {
         get {
-            return userDefaults?.string(forKey: Keys.retentionAtb)
+            guard let interval = userDefaults?.double(forKey: Keys.installDate), interval > 0 else {
+                return nil
+            }
+            return Date(timeIntervalSince1970: interval)
         }
         set {
-            userDefaults?.setValue(newValue, forKey: Keys.retentionAtb)
+            userDefaults?.setValue(newValue?.timeIntervalSince1970, forKey: Keys.installDate)
+        }
+    }
+
+    public var searchRetentionAtb: String? {
+        get {
+            return userDefaults?.string(forKey: Keys.searchRetentionAtb) ?? atb
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.searchRetentionAtb)
+        }
+    }
+    
+    public var appRetentionAtb: String? {
+        get {
+            return userDefaults?.string(forKey: Keys.appRetentionAtb) ?? atb
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.appRetentionAtb)
         }
     }
 
@@ -69,11 +92,6 @@ public class StatisticsUserDefaults: StatisticsStore {
         set {
             userDefaults?.setValue(newValue, forKey: Keys.variant)
         }
-    }
-
-    public var atbWithVariant: String? {
-        guard let atb = atb else { return nil }
-        return "\(atb)\(variant ?? "")"
     }
     
     public var httpsUpgradesTotal: Int {

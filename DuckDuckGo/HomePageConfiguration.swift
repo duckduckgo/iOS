@@ -22,88 +22,44 @@ import Core
 
 class HomePageConfiguration {
     
-    enum Component {
-        case navigationBarSearch
-        case centeredSearch
-        case fixedCenteredSearch
-        case favorites
+    enum ConfigName: Int {
+
+        var components: [Component] {
+            switch self {
+            case .simple:
+                return [ .navigationBarSearch ]
+                
+            case .centerSearch:
+                return [ .centeredSearch(fixed: true), .empty ]
+                
+            case .centerSearchAndFavorites:
+                return [ .centeredSearch(fixed: false), .favorites, .padding ]
+            }
+            
+        }
+        
+        case simple
+        case centerSearch
+        case centerSearchAndFavorites
+        
     }
     
-    let variantManager: VariantManager
+    enum Component: Equatable {
+        case navigationBarSearch
+        case centeredSearch(fixed: Bool)
+        case favorites
+        case padding
+        case empty
+    }
+    
+    let settings: AppSettings
     
     var components: [Component] {
-        guard let currentVariant = variantManager.currentVariant else {
-            return [ .navigationBarSearch ]
-        }
-
-        if currentVariant.features.contains(.homeScreen) {
-            return [
-                .centeredSearch,
-                .favorites
-            ]
-        }
-        
-        if currentVariant.features.contains(.centeredSearchHomeScreen) {
-            return [
-                .fixedCenteredSearch
-            ]
-        }
-        
-        return [ .navigationBarSearch ]
+        return settings.homePage.components
     }
     
-    init(variantManager: VariantManager = DefaultVariantManager()) {
-        self.variantManager = variantManager
-    }
- 
-    static func installNewUserFavorites(statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-                                        bookmarksManager: BookmarksManager = BookmarksManager(),
-                                        variantManager: VariantManager = DefaultVariantManager()) {
-        guard statisticsStore.atb == nil else {
-            Logger.log(text: "atb detected, not installing new user favorites")
-            return
-        }
-        
-        guard bookmarksManager.favoritesCount == 0 else {
-            Logger.log(text: "favorites detected, not installing new user favorites")
-            return
-        }
-
-        guard bookmarksManager.bookmarksCount == 0 else {
-            Logger.log(text: "bookmarks detected, not installing new user favorites")
-            return
-        }
-        
-        guard let currentVariant = variantManager.currentVariant else {
-            Logger.log(text: "no current variant, not installing new user favorites")
-            return
-        }
-
-        if currentVariant.features.contains(FeatureName.singleFavorite) {
-            bookmarksManager.save(favorite: Link(title: "Twitter", url: URL(string: "https://twitter.com/DuckDuckGo")!))
-        }
-        
-        if currentVariant.features.contains(FeatureName.additionalFavorites) {
-            bookmarksManager.save(favorite: Link(title: "Spread Privacy", url: URL(string: "https://spreadprivacy.com")!))
-            bookmarksManager.save(favorite: Link(title: "Quora", url:
-                URL(string: "https://www.quora.com/Why-should-I-use-DuckDuckGo-instead-of-Google/answer/Gabriel-Weinberg")!))
-        }
-
-    }
-    
-    static func configureOmniBar(_ omniBar: OmniBar, variantManager: VariantManager = DefaultVariantManager()) {
-        guard let currentVariant = variantManager.currentVariant else {
-            Logger.log(text: "no current variant, not configuring omnibar")
-            return
-        }
-        
-        let homeScreen = currentVariant.features.contains(.homeScreen) || currentVariant.features.contains(.centeredSearchHomeScreen)
-        guard homeScreen else {
-            Logger.log(text: "no home screen in variant, not configuring omnibar")
-            return
-        }
-
-        omniBar.useCancellableState()
+    init(settings: AppSettings = AppUserDefaults()) {
+        self.settings = settings
     }
     
 }

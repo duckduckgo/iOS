@@ -23,29 +23,43 @@ import Swifter
 class AtbIntegrationTests: XCTestCase {
 
     struct Constants {
+        // 5 should be good enough. 10 for some padding
+        static let defaultTimeout: Double = 10
+
         static let initialAtb = "v100-1"
-        static let retentionAtb = "v102-7"
+        static let searchRetentionAtb = "v102-7"
+        static let appRetentionAtb = "v102-6"
+
         static let devmode = "test"
         static let atbParam = "atb"
         static let setAtbParam = "set_atb"
+        static let activityType = "at"
+    }
+    
+    enum StatisticsRequestType {
+        case atb
+        case exti
+    }
+    
+    struct StatisticsRequest {
+        let type: StatisticsRequestType
+        let httpRequest: HttpRequest
     }
     
     let app = XCUIApplication()
     let server = HttpServer()
+    var statisticsRequests = [StatisticsRequest]()
     var searchRequests = [HttpRequest]()
-    var extiRequests = [HttpRequest]()
-    var atbRequests = [HttpRequest]()
     var atbToSet = Constants.initialAtb
     
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         
-        atbToSet = Constants.initialAtb
-        
         app.launchEnvironment = [
             "BASE_URL": "http://localhost:8080",
-            "BASE_PIXEL_URL": "http://localhost:8080"
+            "BASE_PIXEL_URL": "http://localhost:8080",
+            "VARIANT": "sc"
         ]
         
         addRequestHandlers()
@@ -59,117 +73,130 @@ class AtbIntegrationTests: XCTestCase {
         Springboard.deleteMyApp()
         app.launch()
         skipOnboarding()
-        dismissAddToDockDialog()
     }
     
     override func tearDown() {
         super.tearDown()
         server.stop()
-        
+        statisticsRequests.removeAll()
         searchRequests.removeAll()
-        extiRequests.removeAll()
-        atbRequests.removeAll()
-
     }
     
-    func testWhenAppIsInstalledThenInitialAtbIsRetrieved() throws {
-
-        assertGetAtbCalled()
-        assertExtiCalledOnce()
-
+    func testWhenAppIsInstalledThenExitIsCalledAndInitialAtbIsRetrieved() throws {
+        assertSearchRequestCount(count: 0)
+        assertStatisticsRequestCount(count: 3)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
     }
     
     func testWhenSearchPerformedThenAtbIsAddedToRequest() throws {
-        
         search(forText: "oranges")
+
+        assertSearchRequestCount(count: 1)
         assertSearch(text: "oranges", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        
-        assertExtiCalledOnce()
+
+        assertStatisticsRequestCount(count: 4)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
-    
+
     func testWhenUserSearchesWithOldAtbThenAtbIsUpdated() {
-        atbToSet = Constants.retentionAtb
+        atbToSet = Constants.searchRetentionAtb
 
         search(forText: "lemons")
-        assertSearch(text: "lemons", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
-        searchRequests.removeAll()
-        atbRequests.removeAll()
-
         search(forText: "pears")
+
+        assertSearchRequestCount(count: 2)
+        assertSearch(text: "lemons", atb: Constants.initialAtb)
         assertSearch(text: "pears", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.retentionAtb, expectedRequestCount: 1)
-        
-        assertExtiCalledOnce()
+
+        assertStatisticsRequestCount(count: 5)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.searchRetentionAtb, expectedType: nil)
     }
     
     func testWhenUserEntersSearchDirectlyThenAtbIsAddedToRequest() {
-        
         search(forText: "http://localhost:8080?q=beagles")
+        
+        assertSearchRequestCount(count: 1)
         assertSearch(text: "beagles", atb: Constants.initialAtb)
-        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb)
 
-        assertExtiCalledOnce()
+        assertStatisticsRequestCount(count: 4)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: nil)
     }
     
-    func assertGetAtbCalled() {
-        XCTAssertEqual(1, atbRequests.count)
-        guard let request = atbRequests.first else { fatalError() }
+    func testWhenAppLaunchedAgainThenAppAtbIsUpdated() {
+        atbToSet = Constants.appRetentionAtb
         
-        XCTAssertEqual(1, request.queryParams.count)
-        XCTAssertEqual("1", request.queryParam(Constants.devmode))
+        backgroundRelaunch() // this launch gets new atb
+        backgroundRelaunch() // this launch sends it
+
+        assertSearchRequestCount(count: 0)
+        assertStatisticsRequestCount(count: 5)
+        assertAtb(expectedAtb: nil, expectedSetAtb: nil, expectedType: nil)
+        assertExti()
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.initialAtb, expectedType: "app_use")
+        assertAtb(expectedAtb: Constants.initialAtb, expectedSetAtb: Constants.appRetentionAtb, expectedType: "app_use")
+    }
+    
+    func backgroundRelaunch() {
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        if !app.searchFields["searchEntry"].waitForExistence(timeout: Constants.defaultTimeout) {
+            fatalError("Can not find search field. Has the app launched?")
+        }
+    }
+    
+    func assertStatisticsRequestCount(count: Int) {
+        XCTAssertEqual(count, statisticsRequests.count)
+    }
+    
+    func assertExti() {
+        let request = statisticsRequests.removeFirst()
+        XCTAssertEqual(StatisticsRequestType.exti, request.type)
+        XCTAssertEqual(Constants.initialAtb, request.httpRequest.queryParam(Constants.atbParam))
+    }
+    
+    func assertAtb(expectedAtb: String? = nil, expectedSetAtb: String? = nil, expectedType: String? = nil) {
+        let request = statisticsRequests.removeFirst()
+        XCTAssertEqual(StatisticsRequestType.atb, request.type)
+        
+        let httpRequest = request.httpRequest
+        XCTAssertEqual(expectedAtb, httpRequest.queryParam(Constants.atbParam))
+        XCTAssertEqual(expectedSetAtb, httpRequest.queryParam(Constants.setAtbParam))
+        XCTAssertEqual(expectedType, httpRequest.queryParam(Constants.activityType))
+        XCTAssertEqual("1", httpRequest.queryParam(Constants.devmode))
+    }
+    
+    func assertSearchRequestCount(count: Int) {
+        XCTAssertEqual(count, searchRequests.count)
     }
     
     func assertSearch(text: String, atb: String) {
-        XCTAssertEqual(1, searchRequests.count)
+        let request = searchRequests.removeFirst()
 
-        guard let request = searchRequests.last else {
-            XCTFail("No search request")
-            return
-        }
         XCTAssertEqual(text, request.queryParam("q"))
-        XCTAssertTrue(request.queryParam(Constants.atbParam)?.hasPrefix(atb) ?? false)
-    }
-    
-    func assertExtiCalledOnce() {
-        XCTAssertEqual(1, extiRequests.count)
-        let atbParam = extiRequests.first?.queryParam(Constants.atbParam)
-        XCTAssertTrue(atbParam?.hasPrefix(Constants.initialAtb) ?? false)
-    }
-    
-    // by default expects 2 atb requests, the initial get atb and the one being asserted
-    func assertAtb(expectedAtb: String, expectedSetAtb: String, expectedRequestCount: Int = 2) {
-        XCTAssertEqual(expectedRequestCount, atbRequests.count)
-        guard let request = atbRequests.last else {
-            XCTFail("No atb request")
-            return
-        }
-        
-        XCTAssertEqual(3, request.queryParams.count)
-        XCTAssertTrue(request.queryParam("atb")?.hasPrefix(expectedAtb) ?? false,
-                      "first.atb does not start with \(expectedSetAtb)")
-        XCTAssertEqual(expectedSetAtb, request.queryParam(Constants.setAtbParam))
-        XCTAssertEqual("1", request.queryParam(Constants.devmode))
-
-    }
-    
-    private func dismissAddToDockDialog() {
-        let noThanksButton = app.buttons["No Thanks"]
-        guard noThanksButton.waitForExistence(timeout: 2) else {
-            fatalError("No 'add to dock' view present")
-        }
-        noThanksButton.tap()
+        XCTAssertEqual(atb, request.queryParam(Constants.atbParam))
     }
     
     private func search(forText text: String) {
         let searchentrySearchField = app.searchFields["searchEntry"]
         
-        if !searchentrySearchField.waitForExistence(timeout: 2) {
+        if !searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout) {
             // Centered home screen variant
             app.collectionViews.otherElements["activateSearch"].tap()
             
-            if !searchentrySearchField.waitForExistence(timeout: 2) {
+            if !searchentrySearchField.waitForExistence(timeout: Constants.defaultTimeout) {
                 fatalError("Search field could not be activated")
             }
         } else {
@@ -177,9 +204,9 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         let keyboard = app.keyboards.element
-        if keyboard.waitForExistence(timeout: 2) {
+        if keyboard.waitForExistence(timeout: Constants.defaultTimeout) {
             searchentrySearchField.typeText("\(text)\r")
-            Snapshot.waitForLoadingIndicatorToDisappear(within: 5.0)
+            Snapshot.waitForLoadingIndicatorToDisappear(within: Constants.defaultTimeout)
         } else {
             XCTFail("No keyboard present after tapping search field")
         }
@@ -193,27 +220,29 @@ class AtbIntegrationTests: XCTestCase {
         }
         
         server["/exti/"] = {
-            self.extiRequests.append($0)
+            self.statisticsRequests.append(StatisticsRequest(type: StatisticsRequestType.exti, httpRequest: $0))
             return .accepted
         }
         
         server["/atb.js"] = {
-            self.atbRequests.append($0)
+            self.statisticsRequests.append(StatisticsRequest(type: StatisticsRequestType.atb, httpRequest: $0))
             return .ok(.json([
                 "version": self.atbToSet
-                ] as AnyObject))
+            ] as AnyObject))
         }
-        
     }
     
     private func skipOnboarding() {
         let continueButton = app.buttons["Continue"]
-        guard continueButton.waitForExistence(timeout: 2) else {
+        guard continueButton.waitForExistence(timeout: Constants.defaultTimeout) else {
             fatalError("Cound not skip onboarding")
         }
         
         continueButton.tap()
-        continueButton.tap()
+        
+        if continueButton.exists {
+            continueButton.tap()
+        }
     }
     
 }
@@ -253,7 +282,7 @@ class Springboard {
                                                                   dy: (iconFrame.minY + 3) / springboardFrame.maxY)).tap()
             
             let deleteButton = springboard.alerts.buttons["Delete"]
-            _ = deleteButton.waitForExistence(timeout: 5.0)
+            _ = deleteButton.waitForExistence(timeout: AtbIntegrationTests.Constants.defaultTimeout)
             deleteButton.tap()
         }
     }

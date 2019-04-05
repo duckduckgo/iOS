@@ -24,6 +24,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     struct Constants {
         
         static let searchWidth: CGFloat = 380
+        static let searchWidthPad: CGFloat = 455
         static let targetSearchLeadingOffset: CGFloat = -18
         static let targetSearchTrailingOffset: CGFloat = 16
         static let targetSearchLoupeOffset: CGFloat = -6
@@ -50,6 +51,11 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     var defaultSearchRadius: CGFloat!
 
     var defaultSearchBackgroundMargin: CGFloat {
+
+        if isPad {
+            return (frame.width - Constants.searchWidthPad) / 2
+        }
+
         return isPortrait && !isPad ? 0 : (frame.width - Constants.searchWidth) / 2
     }
     
@@ -86,6 +92,8 @@ class CenteredSearchHomeCell: UICollectionViewCell {
 
         let searchLoupeDiff: CGFloat = Constants.targetSearchLoupeOffset
         searchLoupeLeadingConstraint.constant = defaultSearchLoupeOffset + (searchLoupeDiff * searchHeaderTransition)
+        
+        searchBackground.isAccessibilityElement = searchHeaderTransition < 1.0
     }
     
 }

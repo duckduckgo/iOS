@@ -177,6 +177,12 @@ extension PrivacyProtectionController: OmniBarDelegate {
             self.omniDelegate.onMenuPressed()
         }
     }
+    
+    func onRefreshPressed() {
+        dismiss(animated: true) {
+            self.omniDelegate.onRefreshPressed()
+        }
+    }
 
 }
 

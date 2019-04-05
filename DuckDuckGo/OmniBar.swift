@@ -36,6 +36,7 @@ class OmniBar: UIView {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var refreshButton: UIButton!
 
     @IBOutlet weak var separatorHeightConstraint: NSLayoutConstraint!
 
@@ -53,10 +54,6 @@ class OmniBar: UIView {
         configureSeparator()
         configureEditingMenu()
         refreshState(state)
-    }
-    
-    public func useCancellableState() {
-        refreshState(state.supportingCancelButtonState)
     }
     
     private func configureTextField() {
@@ -96,6 +93,10 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
+    @IBAction func textFieldTapped() {
+        textField.becomeFirstResponder()
+    }
+
     fileprivate func refreshState(_ newState: OmniBarState) {
         if state.name != newState.name {
             Logger.log(text: "OmniBar entering \(newState.name) from \(state.name)")
@@ -107,12 +108,26 @@ class OmniBar: UIView {
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(siteRatingView, hidden: !state.showSiteRating)
-        setVisibility(editingBackground, hidden: !state.showBackground)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
         setVisibility(bookmarksButton, hidden: !state.showBookmarks)
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
+        setVisibility(refreshButton, hidden: !state.showRefresh)
+
+        updateSearchBarBorder()
+    }
+
+    private func updateSearchBarBorder() {
+        let theme = ThemeManager.shared.currentTheme
+        if state.showBackground {
+            editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+            editingBackground?.borderColor = theme.searchBarBackgroundColor
+        } else {
+            editingBackground.borderWidth = 1.5
+            editingBackground.borderColor = theme.searchBarBorderColor
+            editingBackground.backgroundColor = UIColor.clear
+        }
     }
 
     /*
@@ -228,14 +243,18 @@ class OmniBar: UIView {
     @IBAction func onCancelPressed(_ sender: Any) {
         omniDelegate?.onCancelPressed()
     }
+    
+    @IBAction func onRefreshPressed(_ sender: Any) {
+        omniDelegate?.onRefreshPressed()
+    }
 }
 
 extension OmniBar: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        omniDelegate?.onTextFieldDidBeginEditing(self)
-        refreshState(state.onEditingStartedState)
         DispatchQueue.main.async {
+            self.omniDelegate?.onTextFieldDidBeginEditing(self)
+            self.refreshState(self.state.onEditingStartedState)
             self.textField.selectAll(nil)
         }
     }
@@ -265,26 +284,26 @@ extension OmniBar: Themable {
     
     public func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor
-        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
-        
         tintColor = theme.barTintColor
+
+        editingBackground?.backgroundColor = theme.searchBarBackgroundColor
+        editingBackground?.borderColor = theme.searchBarBackgroundColor
+
         siteRatingView.circleIndicator.tintColor = theme.barTintColor
         searchStackContainer?.tintColor = theme.barTintColor
-        
-        editingBackground?.borderColor = theme.searchBarBackgroundColor
-        textField.textColor = theme.searchBarTextColor
         
         if let url = textField.text?.punycodedUrl {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
-        
+        textField.textColor = theme.searchBarTextColor
         textField.tintColor = theme.searchBarTextColor
-        
         textField.keyboardAppearance = theme.keyboardAppearance
-        
+        clearButton.tintColor = theme.searchBarClearTextIconColor
+
         searchLoupe.tintColor = theme.barTintColor
-        
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
+        
+        updateSearchBarBorder()
     }
 }
 

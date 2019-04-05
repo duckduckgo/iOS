@@ -54,7 +54,8 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let itemsPerRow = collectionView.frame.width > 320 ? 4 : 3
+        let maxFavoritesPerRow = isPad ? 5 : 4
+        let itemsPerRow = collectionView.frame.width > 320 ? maxFavoritesPerRow : 3
         let rows = CGFloat((bookmarksManager.favoritesCount / itemsPerRow) + 1)
         let spaceUsedByCells = (rows * FavoriteHomeCell.Constants.height)
         let spaceUsedByLineSpacing = (rows - 2) * 10

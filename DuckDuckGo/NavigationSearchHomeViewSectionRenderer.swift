@@ -25,6 +25,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) {
         self.controller = controller
+
+        controller.collectionView.contentInset = UIEdgeInsets.zero
+
+        controller.searchHeaderTransition = 1.0
+        controller.allowContentUnderflow = false
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true

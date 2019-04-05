@@ -23,16 +23,20 @@ import WebKit
 
 class TabSwitcherViewController: UIViewController {
 
+    typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
+    
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var toolbar: UIToolbar!
     
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var bookmarkAllButton: UIButton!
     
     @IBOutlet weak var fireButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var plusButton: UIBarButtonItem!
-
+    
+    weak var homePageSettingsDelegate: HomePageSettingsDelegate?
     weak var delegate: TabSwitcherDelegate!
     weak var tabsModel: TabsModel!
 
@@ -58,8 +62,23 @@ class TabSwitcherViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         scrollToInitialTab()
+        delegate?.tabSwitcherDidAppear(self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.tabSwitcherDidDisappear(self)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let nav = segue.destination as? UINavigationController,
+            let controller = nav.topViewController as? SettingsViewController {
+            controller.homePageSettingsDelegate = homePageSettingsDelegate
+        }
+        
+    }
+    
     private func scrollToInitialTab() {
         guard let index = tabsModel.currentIndex else { return }
         guard index < collectionView.numberOfItems(inSection: 0) else { return }
@@ -68,8 +87,57 @@ class TabSwitcherViewController: UIViewController {
     }
 
     private func refreshTitle() {
-        let count = tabsModel.count
-        titleView.text = count == 0 ? UserText.tabSwitcherTitleNoTabs : UserText.tabSwitcherTitleHasTabs
+        titleView.text = UserText.numberOfTabs(tabsModel.count)
+    }
+    
+    fileprivate func displayBookmarkAllStatusToast(with results: BookmarkAllResult, openTabsCount: Int) {
+        if openTabsCount == results.newBookmarksCount + results.existingBookmarksCount {
+            view.showBottomToast(UserText.bookmarkAllTabsSaved)
+        } else {
+            let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
+            Logger.log(text: "Failed to save \(failedToSaveCount) tabs")
+            view.showBottomToast(UserText.bookmarkAllTabsFailedToSave)
+        }
+    }
+    
+    fileprivate func bookmarkAll(_ tabs: [Tab] ) -> BookmarkAllResult {
+        
+        let bookmarksManager = BookmarksManager()
+        var newBookmarksCount: Int = 0
+        var existingBookmarksCount: Int = 0
+        
+        for aTab in tabs {
+            if let link = aTab.link {
+                if bookmarksManager.contains(url: link.url) {
+                    existingBookmarksCount += 1
+                } else {
+                    bookmarksManager.save(bookmark: link)
+                    newBookmarksCount += 1
+                }
+            } else {
+                Logger.log(text: "no valid link found for tab \(aTab)")
+            }
+        }
+        return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
+    }
+    
+    @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
+        
+        guard tabsModel.tabs.count > 0 else {
+            view.showBottomToast(UserText.bookmarkAllTabsNotFound)
+            return
+        }
+        
+        let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
+                                      message: UserText.alertBookmarkAllMessage,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
+        alert.addAction(title: UserText.actionBookmark, style: .default) {
+            let savedState = self.bookmarkAll(self.tabsModel.tabs)
+            self.displayBookmarkAllStatusToast(with: savedState, openTabsCount: self.tabsModel.tabs.count)
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func onSettingsPressed(_ sender: UIButton) {
@@ -182,6 +250,7 @@ extension TabSwitcherViewController: Themable {
     func decorate(with theme: Theme) {
         titleView.textColor = theme.tintOnBlurColor
         settingsButton.tintColor = theme.tintOnBlurColor
+        bookmarkAllButton.tintColor = theme.tintOnBlurColor
         
         toolbar.barTintColor = theme.barBackgroundColor
         toolbar.tintColor = theme.barTintColor

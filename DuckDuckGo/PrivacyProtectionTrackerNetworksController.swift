@@ -191,7 +191,7 @@ class SiteRatingTrackerNetworkSectionBuilder {
 
             let row = PrivacyProtectionTrackerNetworksController.Row(name: domain, value: tracker.category ?? "")
 
-            if let sectionIndex = sections.index(where: { $0.name == networkName }) {
+            if let sectionIndex = sections.firstIndex(where: { $0.name == networkName }) {
                 if row.name != networkName {
                     let section = sections[sectionIndex]
                     sections[sectionIndex] = section.adding(row)

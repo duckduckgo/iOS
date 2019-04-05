@@ -23,85 +23,25 @@ import XCTest
 @testable import DuckDuckGo
 
 class HomePageConfigurationTests: XCTestCase {
-
-    func testWhenAtbAlreadySetThenInstallAddsNoFavorites() {
-        
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = Variant(name: "any", weight: 0, features: [ .singleFavorite, .additionalFavorites ])
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        mockStatisticsStore.atb = "atb"
-        
-        let mockBookmarksStore = MockBookmarkStore()
-        let bookmarksManager = BookmarksManager(dataStore: mockBookmarksStore)
-        HomePageConfiguration.installNewUserFavorites(statisticsStore: mockStatisticsStore,
-                                                      bookmarksManager: bookmarksManager,
-                                                      variantManager: mockVariantManager)
-        
-        XCTAssertEqual(0, mockBookmarksStore.addedFavorites.count)
-        XCTAssertEqual(0, mockBookmarksStore.addedBookmarks.count)
-    }
-
-    func testWhenVariantContainsSingleAndAdditionalFavoritesFeatureThenInstallAddsAllFavorites() {
-        
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = Variant(name: "any", weight: 0, features: [ .singleFavorite, .additionalFavorites ])
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockBookmarksStore = MockBookmarkStore()
-        let bookmarksManager = BookmarksManager(dataStore: mockBookmarksStore)
-        HomePageConfiguration.installNewUserFavorites(statisticsStore: mockStatisticsStore,
-                                                      bookmarksManager: bookmarksManager,
-                                                      variantManager: mockVariantManager)
-        
-        XCTAssertEqual(3, mockBookmarksStore.addedFavorites.count)
-        XCTAssertEqual(0, mockBookmarksStore.addedBookmarks.count)
-    }
-
-    func testWhenVariantContainsAdditionalFavoritesFeatureThenInstallAddsAdditionalFavorites() {
-        
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = Variant(name: "any", weight: 0, features: [ .additionalFavorites ])
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockBookmarksStore = MockBookmarkStore()
-        let bookmarksManager = BookmarksManager(dataStore: mockBookmarksStore)
-        HomePageConfiguration.installNewUserFavorites(statisticsStore: mockStatisticsStore,
-                                                      bookmarksManager: bookmarksManager,
-                                                      variantManager: mockVariantManager)
-        
-        XCTAssertEqual(2, mockBookmarksStore.addedFavorites.count)
-        XCTAssertEqual(0, mockBookmarksStore.addedBookmarks.count)
-    }
     
-    func testWhenVariantContainsSingleFavoriteFeatureThenInstallAddsSingleFavorite() {
-        
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = Variant(name: "any", weight: 0, features: [ .singleFavorite ])
-        
-        let mockStatisticsStore = MockStatisticsStore()
-        let mockBookmarksStore = MockBookmarkStore()
-        let bookmarksManager = BookmarksManager(dataStore: mockBookmarksStore)
-        HomePageConfiguration.installNewUserFavorites(statisticsStore: mockStatisticsStore,
-                                                      bookmarksManager: bookmarksManager,
-                                                      variantManager: mockVariantManager)
-        
-        XCTAssertEqual(1, mockBookmarksStore.addedFavorites.count)
-        XCTAssertEqual(0, mockBookmarksStore.addedBookmarks.count)
-    }
-    
-    func testWhenVariantContainsHomeScreenFeatureThenComponentsContainsCenteredSearch() {
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = Variant(name: "any", weight: 0, features: [ .homeScreen ])
-        let config = HomePageConfiguration(variantManager: mockVariantManager)
-        XCTAssertTrue(config.components.contains( .centeredSearch ))
-    }
-    
-    func testWhenVariantDoesNotContainHomeFeatureScreenThenOldHomeScreenShown() {
-        var mockVariantManager = MockVariantManager()
-        mockVariantManager.currentVariant = Variant(name: "any", weight: 0, features: [])
-        let config = HomePageConfiguration(variantManager: mockVariantManager)
+    func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
+        let settings = MockAppSettings()
+        let config = HomePageConfiguration(settings: settings)
         XCTAssertEqual([ HomePageConfiguration.Component.navigationBarSearch ], config.components)
     }
     
+    func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
+        let settings = MockAppSettings()
+        settings.homePage = .centerSearch
+        let config = HomePageConfiguration(settings: settings)
+        XCTAssertEqual(config.components, [ .centeredSearch(fixed: true), .empty ])
+    }
+
+    func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
+        let settings = MockAppSettings()
+        settings.homePage = .centerSearchAndFavorites
+        let config = HomePageConfiguration(settings: settings)
+        XCTAssertEqual(config.components, [ .centeredSearch(fixed: false), .favorites, .padding ])
+    }
+
 }

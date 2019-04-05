@@ -1,3 +1,1 @@
-• You can now find in page.
-• You can now see supported keyboard shortcuts by long holding command.
-• Fixes and improvements.
+• We made it easier to share a feedback about our app! Visit Settings to check that out.

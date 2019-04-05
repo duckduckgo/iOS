@@ -26,15 +26,43 @@ protocol HomeRowCTAStorage: class {
 }
 
 class HomeRowCTA {
-
+    
     private let storage: HomeRowCTAStorage
+    private let tipsStorage: ContextualTipsStorage
+    private let tutorialSettings: TutorialSettings
+    private let statistics: StatisticsStore
 
-    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage()) {
+    init(storage: HomeRowCTAStorage = UserDefaultsHomeRowCTAStorage(),
+         tipsStorage: ContextualTipsStorage = DefaultContextualTipsStorage(),
+         tutorialSettings: TutorialSettings = DefaultTutorialSettings(),
+         statistics: StatisticsStore = StatisticsUserDefaults()) {
         self.storage = storage
+        self.tipsStorage = tipsStorage
+        self.tutorialSettings = tutorialSettings
+        self.statistics = statistics
     }
 
-    func shouldShow() -> Bool {
-        return !storage.dismissed
+    func shouldShow(currentDate: Date = Date()) -> Bool {
+
+        guard tutorialSettings.hasSeenOnboarding else {
+            return false
+        }
+
+        if tipsStorage.isEnabled && tipsStorage.nextHomeScreenTip < HomeScreenTips.Tips.allCases.count {
+            return false
+        }
+        
+        if storage.dismissed {
+            return false
+        }
+        
+        guard let installDate = statistics.installDate else {
+            // no install date, then show it as they're upgrading
+            return true
+        }
+        
+        // only show if we're on a different day
+        return !Calendar.current.isDate(installDate, inSameDayAs: currentDate)
     }
 
     func dismissed() {

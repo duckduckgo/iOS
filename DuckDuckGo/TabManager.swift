@@ -132,7 +132,7 @@ class TabManager {
     }
 
     private func removeFromCache(_ controller: TabViewController) {
-        if let index = tabControllerCache.index(of: controller) {
+        if let index = tabControllerCache.firstIndex(of: controller) {
             tabControllerCache.remove(at: index)
         }
         controller.destroy()

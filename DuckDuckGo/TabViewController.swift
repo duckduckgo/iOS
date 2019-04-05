@@ -73,6 +73,7 @@ class TabViewController: UIViewController {
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     private var tearDownCount = 0
+    private var tips: BrowsingTips?
     
     public var url: URL? {
         didSet {
@@ -144,7 +145,21 @@ class TabViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        installBrowsingTips()
         resetNavigationBar()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeBrowsingTips()
+    }
+    
+    func installBrowsingTips() {
+        tips = BrowsingTips(delegate: self)
+    }
+    
+    func removeBrowsingTips() {
+        tips = nil
     }
     
     @objc func onApplicationWillResignActive() {
@@ -718,6 +733,7 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         delegate?.tabLoadingStateDidChange(tab: self)
+        tips?.onFinishedLoading(url: url, error: isError)
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -787,7 +803,7 @@ extension TabViewController: WKNavigationDelegate {
             decision == .allow {
 
             if appUrls.isDuckDuckGoSearch(url: url) {
-                StatisticsLoader.shared.refreshRetentionAtb()
+                StatisticsLoader.shared.refreshSearchRetentionAtb()
             }
 
             findInPage?.done()
@@ -932,5 +948,16 @@ extension TabViewController: UIGestureRecognizerDelegate {
         findInPage = FindInPage(webView: webView)
         delegate?.tabDidRequestFindInPage(tab: self)
     }
+
+    func refresh() {
+        if isError {
+            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
+                load(url: url)
+            }
+        } else {
+            reload(scripts: false)
+        }
+    }
+
 }
 // swiftlint:enable file_length

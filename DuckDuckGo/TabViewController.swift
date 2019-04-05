@@ -517,6 +517,7 @@ class TabViewController: UIViewController {
 
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)

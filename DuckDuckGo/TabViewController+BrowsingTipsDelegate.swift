@@ -21,14 +21,19 @@ import EasyTipView
 
 extension TabViewController: BrowsingTipsDelegate {
     
-    func showPrivacyGradeTip() {
+    func showPrivacyGradeTip(didShow: @escaping (Bool) -> Void) {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let omniBar = self?.chromeDelegate?.omniBar else { return }
-            guard let grade = omniBar.siteRatingView else { return }
-            guard let superView = self?.parent?.view else { return }
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let omniBar = self.chromeDelegate?.omniBar,
+                let grade = omniBar.siteRatingView,
+                let superView = self.parent?.view else {
+                didShow(false)
+                return
+            }
 
-            self?.delegate?.showBars()
+            self.delegate?.showBars()
 
             var preferences = EasyTipView.globalPreferences
             preferences.positioning.bubbleHInset = 8
@@ -39,6 +44,7 @@ extension TabViewController: BrowsingTipsDelegate {
                                   preferences: preferences)
 
             tip.show(animated: true, forView: grade, withinSuperview: superView)
+            didShow(true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 tip.handleGlobalTouch()
             }
@@ -46,14 +52,19 @@ extension TabViewController: BrowsingTipsDelegate {
 
     }
     
-    func showFireButtonTip() {
+    func showFireButtonTip(didShow: @escaping (Bool) -> Void) {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let mainViewController = self?.parent as? MainViewController else { return }
-            guard let button = mainViewController.fireButton else { return }
-            guard let superView = self?.parent?.view else { return }
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let mainViewController = self.parent as? MainViewController,
+                let button = mainViewController.fireButton,
+                let superView = self.parent?.view else {
+                didShow(false)
+                return
+            }
             
-            self?.delegate?.showBars()
+            self.delegate?.showBars()
             
             var preferences = EasyTipView.globalPreferences
             preferences.positioning.bubbleHInset = 8
@@ -63,10 +74,15 @@ extension TabViewController: BrowsingTipsDelegate {
                                   icon: icon,
                                   preferences: preferences)
             tip.show(forItem: button, withinSuperView: superView)            
+            didShow(true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 tip.handleGlobalTouch()
             }
         }
     }
-        
+    
+    private var omniBarTextFieldHasFocus: Bool {
+        return self.chromeDelegate?.omniBar.textField.isFirstResponder ?? false
+    }
+
 }

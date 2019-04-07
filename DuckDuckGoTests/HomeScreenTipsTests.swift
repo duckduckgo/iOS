@@ -30,6 +30,22 @@ class HomeScreenTipsTests: XCTestCase {
     var storage = MockContextualTipsStorage()
     var tutorialSettings = MockTutorialSettings()
 
+    func testWhenNotShownThenNextTipIsUnchanged() {
+
+        storage.isEnabled = true
+        tutorialSettings.hasSeenOnboarding = true
+        delegate.shown = false
+        
+        let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
+        XCTAssertNotNil(tips)
+
+        tips?.trigger()
+        XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
+        XCTAssertEqual(0, delegate.showCustomizeTipCounter)
+
+        XCTAssertEqual(0, storage.nextHomeScreenTip)
+    }
+    
     func testWhenFeatureEnabledButOnboardingNotShownThenTriggerDoesNothing() {
 
         let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
@@ -55,38 +71,44 @@ class HomeScreenTipsTests: XCTestCase {
         tutorialSettings.hasSeenOnboarding = true
 
         let tips = HomeScreenTips(delegate: delegate, tutorialSettings: tutorialSettings, storage: storage)
-
         XCTAssertNotNil(tips)
 
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(0, delegate.showPrivateSearchTipCounter)
+        XCTAssertEqual(0, storage.nextHomeScreenTip)
 
         tips?.trigger()
         XCTAssertEqual(0, delegate.showCustomizeTipCounter)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
+        XCTAssertEqual(1, storage.nextHomeScreenTip)
 
         tips?.trigger()
         XCTAssertEqual(1, delegate.showCustomizeTipCounter)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
+        XCTAssertEqual(2, storage.nextHomeScreenTip)
 
         tips?.trigger()
         XCTAssertEqual(1, delegate.showCustomizeTipCounter)
         XCTAssertEqual(1, delegate.showPrivateSearchTipCounter)
+        XCTAssertEqual(2, storage.nextHomeScreenTip)
     }
     
 }
 
 class MockHomeScreenTipsDelegate: NSObject, HomeScreenTipsDelegate {
 
+    var shown = true
     var showPrivateSearchTipCounter = 0
     var showCustomizeTipCounter = 0
     
-    func showPrivateSearchTip() {
+    func showPrivateSearchTip(didShow: (Bool) -> Void) {
         showPrivateSearchTipCounter += 1
+        didShow(shown)
     }
     
-    func showCustomizeTip() {
+    func showCustomizeTip(didShow: (Bool) -> Void) {
         showCustomizeTipCounter += 1
+        didShow(shown)
     }
     
 }

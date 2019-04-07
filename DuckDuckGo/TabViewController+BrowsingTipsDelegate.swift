@@ -24,27 +24,11 @@ extension TabViewController: BrowsingTipsDelegate {
     func showPrivacyGradeTip(didShow: @escaping (Bool) -> Void) {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let self = self else {
-                didShow(false)
-                return
-            }
-            
-            guard !self.omniBarTextFieldHasFocus else {
-                didShow(false)
-                return
-            }
-            
-            guard let omniBar = self.chromeDelegate?.omniBar else {
-                didShow(false)
-                return
-            }
-            
-            guard let grade = omniBar.siteRatingView else {
-                didShow(false)
-                return
-            }
-            
-            guard let superView = self.parent?.view else {
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let omniBar = self.chromeDelegate?.omniBar,
+                let grade = omniBar.siteRatingView,
+                let superView = self.parent?.view else {
                 didShow(false)
                 return
             }
@@ -71,26 +55,11 @@ extension TabViewController: BrowsingTipsDelegate {
     func showFireButtonTip(didShow: @escaping (Bool) -> Void) {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let self = self else {
-                didShow(false)
-                return
-            }
-            
-            guard !self.omniBarTextFieldHasFocus else {
-                didShow(false)
-                return
-            }
-            
-            guard let mainViewController = self.parent as? MainViewController else {
-                didShow(false)
-                return
-            }
-            
-            guard let button = mainViewController.fireButton else {
-                didShow(false)
-                return
-            }
-            guard let superView = self.parent?.view else {
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let mainViewController = self.parent as? MainViewController,
+                let button = mainViewController.fireButton,
+                let superView = self.parent?.view else {
                 didShow(false)
                 return
             }

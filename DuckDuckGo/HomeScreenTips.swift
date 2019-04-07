@@ -60,15 +60,15 @@ class HomeScreenTips {
         switch tip {
             
         case .privateSearch:
-            delegate?.showPrivateSearchTip(didShow: didShow(shown:))
+            delegate?.showPrivateSearchTip(didShow: didShow)
             
         case .showCustomize:
-            delegate?.showCustomizeTip(didShow: didShow(shown:))
+            delegate?.showCustomizeTip(didShow: didShow)
         }
         
     }
     
-    private func didShow(shown: Bool) {
+    private func didShow(_ shown: Bool) {
         guard shown else { return }
         storage.nextHomeScreenTip += 1
     }

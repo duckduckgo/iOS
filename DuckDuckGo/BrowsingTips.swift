@@ -61,16 +61,16 @@ class BrowsingTips {
         switch tip {
             
         case .privacyGrade:
-            delegate?.showPrivacyGradeTip(didShow: didShow(shown:))
+            delegate?.showPrivacyGradeTip(didShow: didShow)
             
         case .fireButton:
-            delegate?.showFireButtonTip(didShow: didShow(shown:))
+            delegate?.showFireButtonTip(didShow: didShow)
             
         }
         
     }
  
-    private func didShow(shown: Bool) {
+    private func didShow(_ shown: Bool) {
         guard shown else { return }
         storage.nextBrowsingTip += 1
     }

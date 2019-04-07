@@ -25,17 +25,9 @@ extension HomeViewController: HomeScreenTipsDelegate {
     func showPrivateSearchTip(didShow: @escaping (Bool) -> Void) {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let self = self else {
-                didShow(false)
-                return
-            }
-            
-            guard !self.omniBarTextFieldHasFocus else {
-                didShow(false)
-                return
-            }
-            
-            guard let superView = self.parent?.view else {
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let superView = self.parent?.view else {
                 didShow(false)
                 return
             }
@@ -82,27 +74,11 @@ extension HomeViewController: HomeScreenTipsDelegate {
     func showCustomizeTip(didShow: @escaping (Bool) -> Void) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let self = self else {
-                didShow(false)
-                return
-            }
-            
-            guard !self.omniBarTextFieldHasFocus else {
-                didShow(false)
-                return
-            }
-
-            guard let omniBar = self.chromeDelegate?.omniBar else {
-                didShow(false)
-                return
-            }
-            
-            guard let settings = omniBar.settingsButton.imageView else {
-                didShow(false)
-                return
-            }
-            
-            guard let superView = self.parent?.view else {
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let omniBar = self.chromeDelegate?.omniBar,
+                let settings = omniBar.settingsButton.imageView,
+                let superView = self.parent?.view else {
                 didShow(false)
                 return
             }

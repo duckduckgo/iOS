@@ -33,10 +33,10 @@ extension Themable where Self: UIViewController {
     func decorateNavigationBar(with theme: Theme) {
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.backgroundColor = theme.barBackgroundColor
-        navigationController?.navigationBar.tintColor = theme.barTintColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
         
         var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
-        titleAttrs[NSAttributedString.Key.foregroundColor] = theme.barTitleColor
+        titleAttrs[NSAttributedString.Key.foregroundColor] = theme.navigationBarTitleColor
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
     }
 }

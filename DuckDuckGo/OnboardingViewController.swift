@@ -24,6 +24,7 @@ class OnboardingViewController: UIViewController, Onboarding {
 
     var controllerNames = [ "Themes", "Summary" ]
     
+    @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var headerVerticalSpacing: NSLayoutConstraint!
@@ -34,20 +35,12 @@ class OnboardingViewController: UIViewController, Onboarding {
     var contentController: OnboardingContentViewController?
     
     weak var delegate: OnboardingDelegate?
-
-    var variant: Variant {
-        guard let variant = DefaultVariantManager().currentVariant else {
-            fatalError("No variant")
-        }
-
-        return variant
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Pixel.fire(pixel: .onboardingShown)
         updateForSmallScreens()
-        updateControllerNames()
+        updateControllerNamesAndSkipButton()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -61,48 +54,59 @@ class OnboardingViewController: UIViewController, Onboarding {
         controller.delegate = self
         continueButton.isEnabled = controller.canContinue
         contentController = controller
-        subheader.text = controller.subtitle
+        subheader.setAttributedTextString(controller.subtitle ?? "")
+        UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: header)
     }
     
     private func updateForSmallScreens() {
-        subheader.isHidden = isSmall
         headerVerticalSpacing.constant = isSmall ? 12 : 50
     }
     
-    @IBAction func next() {
+    @IBAction func next(sender: UIButton) {
         
-        if let nextController = controllerNames.first,
+        if let name = controllerNames.first,
             let oldController = contentController,
-            let newController = storyboard?.instantiateViewController(withIdentifier: nextController) as? OnboardingContentViewController {
+            let newController = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
+
+            transition(from: oldController, to: newController)
             
-            let frame = oldController.view.frame
-            
-            newController.view.frame = frame
-            newController.view.center.x += (frame.width * 2.5)
-            
-            oldController.willMove(toParent: nil)
-            addChild(newController)
-            transition(from: oldController, to: newController, duration: 0.6, options: [], animations: {
-                
-                self.subheader.alpha = 0.0
-                oldController.view.center.x -= (frame.width * 1.0)
-                newController.view.center.x = frame.midX
-                
-            }, completion: { _ in
-                
-                oldController.view.removeFromSuperview()
-                newController.didMove(toParent: self)
-                self.contentContainer.addSubview(newController.view)
-                self.updateContent(newController)
-                self.animateInSubtitle()
-                
-            })
-            
-            updateControllerNames()
         } else {
+            
             done()
+            
+        }
+
+        if sender == continueButton {
+            contentController?.finished()
         }
         
+    }
+    
+    private func transition(from oldController: OnboardingContentViewController, to newController: OnboardingContentViewController) {
+        let frame = oldController.view.frame
+        
+        newController.view.frame = frame
+        newController.view.center.x += (frame.width * 2.5)
+        
+        oldController.willMove(toParent: nil)
+        addChild(newController)
+        transition(from: oldController, to: newController, duration: 0.6, options: [], animations: {
+            
+            self.subheader.alpha = 0.0
+            oldController.view.center.x -= frame.width * 1.0
+            newController.view.center.x = frame.midX
+            
+        }, completion: { _ in
+            
+            oldController.view.removeFromSuperview()
+            newController.didMove(toParent: self)
+            self.contentContainer.addSubview(newController.view)
+            self.updateContent(newController)
+            self.animateInSubtitle()
+            
+        })
+        
+        updateControllerNamesAndSkipButton()
     }
     
     private func animateInSubtitle() {
@@ -111,9 +115,9 @@ class OnboardingViewController: UIViewController, Onboarding {
         }
     }
     
-    private func updateControllerNames() {
+    private func updateControllerNamesAndSkipButton() {
         controllerNames = [String](controllerNames.dropFirst())
-        controllerNames += [ "Themes", "Summary" ]
+        skipButton.isHidden = controllerNames.isEmpty
     }
     
     func done() {

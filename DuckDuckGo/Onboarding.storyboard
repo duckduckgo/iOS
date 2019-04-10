@@ -30,10 +30,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="30" y="32" width="260" height="143"/>
+                                <rect key="frame" x="50" y="32" width="220" height="136"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="220" height="80"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" staticText="YES" header="YES"/>
+                                        </accessibility>
                                         <attributedString key="attributedText">
                                             <fragment>
                                                 <string key="content">Welcome to
@@ -47,73 +50,86 @@ DuckDuckGo!</string>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a generic subheading.  It could be quite long so should span multiple lines." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                        <rect key="frame" x="0.0" y="92" width="260" height="51"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
-                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
+                                        <rect key="frame" x="0.0" y="92" width="220" height="44"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
+                                        </accessibility>
+                                        <attributedString key="attributedText">
+                                            <fragment>
+                                                <string key="content">This is a generic subheading 
+example.</string>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="17" name="ProximaNova-Regular"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bos-sp-j80">
-                                <rect key="frame" x="30" y="187" width="260" height="269"/>
+                                <rect key="frame" x="30" y="180" width="260" height="276"/>
                                 <connections>
                                     <segue destination="JqA-an-EOJ" kind="embed" id="fHq-ox-26y"/>
                                 </connections>
                             </containerView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="8cl-Dh-w8y" userLabel="Buttons">
-                                <rect key="frame" x="30" y="468" width="260" height="92"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Continue Button" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                <rect key="frame" x="30" y="468" width="260" height="50"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Start Browsing" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
                                         <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                                <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="Continue"/>
-                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Continue"/>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
-                                            <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
-                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="gpL-yi-tzk"/>
-                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
-                                            <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
-                                        </constraints>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="12"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                        <rect key="frame" x="0.0" y="63" width="260" height="29"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="SKIP">
-                                            <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
+                                        <state key="normal" title="Continue"/>
                                         <connections>
-                                            <action selector="next" destination="X59-2u-JR5" eventType="touchUpInside" id="kP3-zJ-CV5"/>
+                                            <action selector="nextWithSender:" destination="X59-2u-JR5" eventType="touchUpInside" id="kTk-d2-pSU"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                            </stackView>
+                                <color key="backgroundColor" red="0.40392156862745099" green="0.5607843137254902" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerX" secondItem="ZEn-eD-MPB" secondAttribute="centerX" id="CY6-lF-KZn"/>
+                                    <constraint firstAttribute="height" constant="50" id="ZTk-Ll-JZa"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="width" secondItem="ZEn-eD-MPB" secondAttribute="width" id="gpL-yi-tzk"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="centerY" secondItem="ZEn-eD-MPB" secondAttribute="centerY" id="iW9-BQ-e1H"/>
+                                    <constraint firstItem="ciS-pA-ovS" firstAttribute="height" secondItem="ZEn-eD-MPB" secondAttribute="height" id="wxs-qS-EGM"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
+                                <rect key="frame" x="30" y="531" width="260" height="29"/>
+                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="SKIP">
+                                    <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextWithSender:" destination="X59-2u-JR5" eventType="touchUpInside" id="FsS-4V-mDy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="B6M-IN-Pmr"/>
-                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="E7l-D9-hin"/>
+                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="E7x-g7-gBV"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="EKI-h0-VR8"/>
                             <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="12" id="HsS-nH-8Mg"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="50" id="IjJ-lD-c8z"/>
+                            <constraint firstItem="ciS-pA-ovS" firstAttribute="top" secondItem="bos-sp-j80" secondAttribute="bottom" constant="12" id="MxJ-BY-JmD"/>
                             <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="cNm-Ex-L76"/>
-                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="8cl-Dh-w8y" secondAttribute="bottom" constant="8" id="tEO-Ey-lfB"/>
-                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="wQd-uX-A9N"/>
+                            <constraint firstItem="J1y-Qk-FSX" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="piD-VT-cUm"/>
+                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="tQ7-Ks-K18"/>
+                            <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="J1y-Qk-FSX" secondAttribute="bottom" constant="8" id="tck-5q-i12"/>
+                            <constraint firstItem="ZEn-eD-MPB" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="v0N-37-UmX"/>
+                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-100" id="wQd-uX-A9N"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="12" id="xiB-7o-5e7"/>
-                            <constraint firstItem="8cl-Dh-w8y" firstAttribute="top" secondItem="bos-sp-j80" secondAttribute="bottom" constant="12" id="yCh-bZ-N2d"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="yd2-2T-gt7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Fp-cs-AKH"/>
@@ -122,6 +138,7 @@ DuckDuckGo!</string>
                         <outlet property="contentContainer" destination="bos-sp-j80" id="5Aw-TP-cka"/>
                         <outlet property="contentWidth" destination="EKI-h0-VR8" id="4gz-Z4-U2l"/>
                         <outlet property="continueButton" destination="ciS-pA-ovS" id="fli-79-bAt"/>
+                        <outlet property="header" destination="u7Q-MU-drX" id="sqo-IJ-qev"/>
                         <outlet property="headerVerticalSpacing" destination="HsS-nH-8Mg" id="PbH-OH-fJ1"/>
                         <outlet property="skipButton" destination="J1y-Qk-FSX" id="ScB-tm-3Uc"/>
                         <outlet property="subheader" destination="JgA-Kx-QGf" id="eGR-Va-uhA"/>
@@ -134,7 +151,9 @@ DuckDuckGo!</string>
         <!--Protecting your data has never been this easy.-->
         <scene sceneID="bMq-YW-WMP">
             <objects>
-                <viewController storyboardIdentifier="Summary" title="Protecting your data has never been this easy." id="BE3-5Z-b0k" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Summary" id="BE3-5Z-b0k" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <string key="title">Protecting your data has
+never been this easy.</string>
                     <view key="view" contentMode="scaleToFill" id="dL0-QB-QdX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="332"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -182,7 +201,6 @@ DuckDuckGo!</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="Fod-w3-gP6" firstAttribute="centerX" secondItem="Mow-RH-mkg" secondAttribute="centerX" id="JYZ-7t-fCG"/>
                                                             <constraint firstItem="SYV-nO-2Hh" firstAttribute="width" secondItem="Mow-RH-mkg" secondAttribute="width" id="S2A-iq-gh6"/>
@@ -230,7 +248,6 @@ DuckDuckGo!</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="fIl-pw-52S" firstAttribute="width" secondItem="4Eb-b9-WfS" secondAttribute="width" id="4AF-c9-l4H"/>
                                                             <constraint firstItem="bSm-34-3X7" firstAttribute="centerX" secondItem="4Eb-b9-WfS" secondAttribute="centerX" id="9nj-Kt-nLW"/>
@@ -278,7 +295,6 @@ DuckDuckGo!</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="GyY-fx-NQs" firstAttribute="width" secondItem="JFx-gd-76t" secondAttribute="width" id="4fZ-2j-Agh"/>
                                                             <constraint firstItem="GyY-fx-NQs" firstAttribute="centerX" secondItem="JFx-gd-76t" secondAttribute="centerX" id="4o5-qc-OIb"/>
@@ -326,7 +342,6 @@ DuckDuckGo!</string>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="2cp-CW-jNw" firstAttribute="centerX" secondItem="Jrc-ww-pvO" secondAttribute="centerX" id="21R-i8-e49"/>
                                                             <constraint firstItem="cxg-ml-jMc" firstAttribute="centerX" secondItem="Jrc-ww-pvO" secondAttribute="centerX" id="2zA-1D-9pK"/>
@@ -341,7 +356,6 @@ DuckDuckGo!</string>
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="kuT-2K-zr5" firstAttribute="centerX" secondItem="xBH-bs-18M" secondAttribute="centerX" constant="-5" id="GVT-Ki-6Vg"/>
                                     <constraint firstItem="kuT-2K-zr5" firstAttribute="width" secondItem="xBH-bs-18M" secondAttribute="width" id="ifH-Ef-h9r"/>
@@ -350,7 +364,6 @@ DuckDuckGo!</string>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xBH-bs-18M" firstAttribute="centerX" secondItem="dL0-QB-QdX" secondAttribute="centerX" id="2Ap-Et-alL"/>
                             <constraint firstItem="xBH-bs-18M" firstAttribute="height" secondItem="dL0-QB-QdX" secondAttribute="height" id="L7L-iY-9X7"/>
@@ -367,10 +380,12 @@ DuckDuckGo!</string>
             </objects>
             <point key="canvasLocation" x="1273" y="185"/>
         </scene>
-        <!--Before you begin, choose the theme that's right for you.-->
+        <!--Before you begin, choose  the theme that's right for you.-->
         <scene sceneID="ubo-Ix-pHZ">
             <objects>
-                <viewController storyboardIdentifier="Themes" title="Before you begin, choose the theme that's right for you." id="JqA-an-EOJ" customClass="OnboardingThemesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Themes" id="JqA-an-EOJ" customClass="OnboardingThemesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <string key="title">Before you begin, choose 
+the theme that's right for you.</string>
                     <view key="view" contentMode="scaleToFill" id="CPA-2a-UEP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="332"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -386,17 +401,31 @@ DuckDuckGo!</string>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="OnboardingLightThemePreview" translatesAutoresizingMaskIntoConstraints="NO" id="ZUb-TF-QyU">
                                                 <rect key="frame" x="0.0" y="0.0" width="160" height="194"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" button="YES"/>
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRadioUnselected" translatesAutoresizingMaskIntoConstraints="NO" id="kBq-Ji-x6H">
                                                 <rect key="frame" x="0.0" y="210" width="160" height="20"/>
+                                                <accessibility key="accessibilityConfiguration" label="Select Light Theme">
+                                                    <accessibilityTraits key="traits" button="YES"/>
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light theme" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44F-CK-8rG">
                                                 <rect key="frame" x="0.0" y="246" width="160" height="17"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Sp5-n1-aMc" appends="YES" id="EWZ-hB-Ow0"/>
+                                        </connections>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="egv-vI-wx9">
                                         <rect key="frame" x="160" y="0.0" width="160" height="263"/>
@@ -406,14 +435,24 @@ DuckDuckGo!</string>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRadioUnselected" translatesAutoresizingMaskIntoConstraints="NO" id="CNO-n7-8HC">
                                                 <rect key="frame" x="0.0" y="210" width="160" height="20"/>
+                                                <accessibility key="accessibilityConfiguration" label="Select Light Theme">
+                                                    <accessibilityTraits key="traits" button="YES"/>
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dark theme" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hv-z1-GP7">
                                                 <rect key="frame" x="0.0" y="246" width="160" height="17"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Kb9-IW-jd2" appends="YES" id="sk0-1g-t0e"/>
+                                        </connections>
                                     </stackView>
                                 </subviews>
                             </stackView>
@@ -424,7 +463,6 @@ DuckDuckGo!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EVs-dc-ZXj" secondAttribute="bottom" id="GTc-bg-fpl"/>
                             <constraint firstItem="EVs-dc-ZXj" firstAttribute="top" secondItem="Qb8-DN-Ldl" secondAttribute="bottom" constant="8" id="SgM-Qp-ArD"/>
@@ -438,13 +476,25 @@ DuckDuckGo!</string>
                             <constraint firstItem="KFb-gA-wGT" firstAttribute="top" secondItem="CPA-2a-UEP" secondAttribute="top" id="wZO-vQ-HKU"/>
                             <constraint firstItem="KFb-gA-wGT" firstAttribute="centerY" secondItem="ZUb-TF-QyU" secondAttribute="centerY" constant="-20" id="yjg-hd-h35"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="4Ug-Ry-3Fc"/>
                     </view>
                     <size key="freeformSize" width="320" height="332"/>
                     <connections>
-                        <segue destination="BE3-5Z-b0k" kind="show" identifier="next" id="nGY-96-gWk"/>
+                        <outlet property="darkThemeRadio" destination="CNO-n7-8HC" id="Qpr-bH-6PX"/>
+                        <outlet property="lightThemeRadio" destination="kBq-Ji-x6H" id="lm3-Tl-NG4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HKt-nJ-xDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Sp5-n1-aMc" userLabel="Light Theme Tap">
+                    <connections>
+                        <action selector="selectLightTheme" destination="JqA-an-EOJ" id="zMq-oH-rWF"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Kb9-IW-jd2" userLabel="Dark Theme Tap">
+                    <connections>
+                        <action selector="selectDarkTheme" destination="JqA-an-EOJ" id="fEc-fg-chN"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="413" y="185"/>
         </scene>

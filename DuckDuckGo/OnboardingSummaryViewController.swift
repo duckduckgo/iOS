@@ -15,6 +15,7 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bulletsStack.spacing = isSmall ? 8 : 12
+        self.canContinue = true
     }
     
 }

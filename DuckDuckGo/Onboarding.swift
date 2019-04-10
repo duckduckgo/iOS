@@ -20,12 +20,6 @@
 import Foundation
 import Core
 
-protocol OnboardingDelegate: NSObjectProtocol {
-    
-    func onboardingCompleted(controller: UIViewController)
-    
-}
-
 protocol Onboarding {
     
     var delegate: OnboardingDelegate? { get set }
@@ -37,6 +31,15 @@ protocol OnboardingContent {
     var subtitle: String? { get }
     var canContinue: Bool { get }
     var delegate: OnboardingContentDelegate? { get set }
+
+    /// Called when continue is pressed
+    func finished()
+    
+}
+
+protocol OnboardingDelegate: NSObjectProtocol {
+    
+    func onboardingCompleted(controller: UIViewController)
     
 }
 
@@ -48,21 +51,16 @@ protocol OnboardingContentDelegate: NSObjectProtocol {
 
 class OnboardingContentViewController: UIViewController, OnboardingContent {
 
-    var canContinue: Bool { return false }
+    var canContinue: Bool = false
     weak var delegate: OnboardingContentDelegate?
     
     var subtitle: String? {
         return title
     }
     
-}
-
-extension UIViewController {
-
-    var isSmall: Bool {
-        return view.frame.height <= 568
+    func finished() {        
     }
-
+    
 }
 
 extension MainViewController {
@@ -108,6 +106,11 @@ extension MainViewController: OnboardingDelegate {
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
         homeController?.resetHomeRowCTAAnimations()
+
+        if AppUserDefaults().currentThemeName != ThemeManager.shared.currentTheme.name {
+            reloadTheme()
+        }
+        
     }
     
     func markOnboardingSeen() {

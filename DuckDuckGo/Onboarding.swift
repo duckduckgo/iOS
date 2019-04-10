@@ -23,10 +23,6 @@ import Core
 protocol OnboardingDelegate: NSObjectProtocol {
     
     func onboardingCompleted(controller: UIViewController)
- 
-    func customizeSettings(controller: UIViewController)
-    
-    func explorePrivacyFeatures(controller: UIViewController)
     
 }
 
@@ -34,6 +30,39 @@ protocol Onboarding {
     
     var delegate: OnboardingDelegate? { get set }
     
+}
+
+protocol OnboardingContent {
+    
+    var subtitle: String? { get }
+    var canContinue: Bool { get }
+    var delegate: OnboardingContentDelegate? { get set }
+    
+}
+
+protocol OnboardingContentDelegate: NSObjectProtocol {
+    
+    func setContinueEnabled(_ enabled: Bool)
+    
+}
+
+class OnboardingContentViewController: UIViewController, OnboardingContent {
+
+    var canContinue: Bool { return false }
+    weak var delegate: OnboardingContentDelegate?
+    
+    var subtitle: String? {
+        return title
+    }
+    
+}
+
+extension UIViewController {
+
+    var isSmall: Bool {
+        return view.frame.height <= 568
+    }
+
 }
 
 extension MainViewController {
@@ -54,13 +83,8 @@ extension MainViewController {
         let onboardingFlow: String
         let modalTransitionStyle: UIModalTransitionStyle
         
-        if DefaultVariantManager().isSupported(feature: .onboardingSummary) {
-            modalTransitionStyle = .coverVertical
-            onboardingFlow = isPad ? "OnboardingSummary-iPad" : "OnboardingSummary"
-        } else {
-            modalTransitionStyle = .flipHorizontal
-            onboardingFlow = "Onboarding"
-        }
+        modalTransitionStyle = .coverVertical
+        onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
         
         guard let controller = UIStoryboard(name: onboardingFlow, bundle: nil).instantiateInitialViewController() else {
             fatalError("instantiateInitialViewController for \(onboardingFlow)")
@@ -78,32 +102,10 @@ extension MainViewController {
 }
 
 extension MainViewController: OnboardingDelegate {
-    
-    func customizeSettings(controller: UIViewController) {
-        let settingsContainer = SettingsViewController.loadFromStoryboard()
-        guard let settings = settingsContainer.children[0] as? SettingsViewController else {
-            fatalError("Failed to find \(SettingsViewController.self)")
-        }
-        settings.homePageSettingsDelegate = self
-
-        controller.present(settingsContainer, animated: true)
-    }
-    
-    func explorePrivacyFeatures(controller: UIViewController) {
-        let webContainer = WebContainerNavigationController.load(
-            url: URL(string: "https://duckduckgo.com/app_info#scrollpos")!,
-            withTitle: UserText.privacyFeatures)
-
-        controller.present(webContainer, animated: true)
-    }
-    
+        
     func onboardingCompleted(controller: UIViewController) {
         markOnboardingSeen()
-        if DefaultVariantManager().isSupported(feature: .onboardingSummary) {
-            controller.modalTransitionStyle = .crossDissolve
-        } else {
-            controller.modalTransitionStyle = .flipHorizontal
-        }
+        controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
         homeController?.resetHomeRowCTAAnimations()
     }

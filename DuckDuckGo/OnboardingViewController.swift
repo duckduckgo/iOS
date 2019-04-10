@@ -1,8 +1,8 @@
 //
-//  OnboardingViewController.swift
+//  OnboardingSummaryViewController.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,174 +20,124 @@
 import UIKit
 import Core
 
-class OnboardingViewController: UIViewController, UIPageViewControllerDelegate, Onboarding {
+class OnboardingViewController: UIViewController, Onboarding {
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    var controllerNames = [ "Themes", "Summary" ]
+    
+    @IBOutlet weak var subheader: UILabel!
+    @IBOutlet weak var contentWidth: NSLayoutConstraint!
+    @IBOutlet weak var headerVerticalSpacing: NSLayoutConstraint!
+    @IBOutlet weak var contentContainer: UIView!
+    @IBOutlet weak var skipButton: UIButton!
+    @IBOutlet weak var continueButton: UIButton!
 
-    @IBOutlet weak var swipeGestureRecogniser: UISwipeGestureRecognizer!
-    @IBOutlet weak var button: UIButton!
-
-    private weak var pageController: UIPageViewController!
-    private var transitioningToPage: OnboardingTutorialPageViewController?
-    fileprivate lazy var dataSource: OnboardingDataSource = OnboardingDataSource()
-
-    private var currentPageIndex = 0
+    var contentController: OnboardingContentViewController?
     
     weak var delegate: OnboardingDelegate?
 
-    static func loadFromStoryboard() -> OnboardingViewController {
-        let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
-        guard let controller = storyboard.instantiateInitialViewController() as? OnboardingViewController else {
-            fatalError("Failed to instantiate view controller as OnboardingViewController")
+    var variant: Variant {
+        guard let variant = DefaultVariantManager().currentVariant else {
+            fatalError("No variant")
         }
-        return controller
-    }
 
+        return variant
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureScrollView()
-        configureButton()
+        Pixel.fire(pixel: .onboardingShown)
+        updateForSmallScreens()
+        updateControllerNames()
     }
-
-    private func configureButton() {
-        button.layer.cornerRadius = 5
-    }
-
-    private func configureScrollView() {
-        let scrollView = pageController.view.subviews.filter { $0 is UIScrollView }.first as? UIScrollView
-        scrollView?.delegate = self
-    }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let controller = segue.destination as? UIPageViewController {
-            prepare(forPageControllerSegue: controller)
+        guard let controller = segue.destination as? OnboardingContentViewController else {
+            fatalError("destination controller is not \(OnboardingContentViewController.self)")
         }
+        updateContent(controller)
     }
-
-    @IBAction func onTapContinue() {
-        let page = currentPageIndex + 1
-        if page >= dataSource.count {
-            finishOnboardingFlow()
-        } else {
-            let currentColor = currentPage.preferredBackgroundColor
-
-            goToPage(index: page)
-
-            guard let controller = dataSource.controller(forIndex: page) as? OnboardingTutorialPageViewController else { return }
-            guard let nextColor = controller.preferredBackgroundColor else { return }
-            if let currentColor = currentColor {
-                animateBackgroundColor(from: currentColor, to: nextColor)
-            }
-        }
-    }
-
-    private func animateBackgroundColor(from: UIColor, to: UIColor) {
-        view.backgroundColor = from
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.backgroundColor = to
-        })
-    }
-
-    private func prepare(forPageControllerSegue controller: UIPageViewController) {
-        pageController = controller
-        controller.dataSource = dataSource
+    
+    private func updateContent(_ controller: OnboardingContentViewController) {
         controller.delegate = self
-        goToPage(index: 0)
+        continueButton.isEnabled = controller.canContinue
+        contentController = controller
+        subheader.text = controller.subtitle
     }
-
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        guard let next = pendingViewControllers.first as? OnboardingTutorialPageViewController else { return }
-        transitioningToPage = next
+    
+    private func updateForSmallScreens() {
+        subheader.isHidden = isSmall
+        headerVerticalSpacing.constant = isSmall ? 12 : 50
     }
-
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
-                            previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if !completed {
-            guard let previous = previousViewControllers.first else { return }
-            guard let index = dataSource.index(of: previous) else { return }
-            configureDisplay(forPage: index)
+    
+    @IBAction func next() {
+        
+        if let nextController = controllerNames.first,
+            let oldController = contentController,
+            let newController = storyboard?.instantiateViewController(withIdentifier: nextController) as? OnboardingContentViewController {
+            
+            let frame = oldController.view.frame
+            
+            newController.view.frame = frame
+            newController.view.center.x += (frame.width * 2.5)
+            
+            oldController.willMove(toParent: nil)
+            addChild(newController)
+            transition(from: oldController, to: newController, duration: 0.6, options: [], animations: {
+                
+                self.subheader.alpha = 0.0
+                oldController.view.center.x -= (frame.width * 1.0)
+                newController.view.center.x = frame.midX
+                
+            }, completion: { _ in
+                
+                oldController.view.removeFromSuperview()
+                newController.didMove(toParent: self)
+                self.contentContainer.addSubview(newController.view)
+                self.updateContent(newController)
+                self.animateInSubtitle()
+                
+            })
+            
+            updateControllerNames()
         } else {
-            guard let current = transitioningToPage else { return }
-            guard let index = dataSource.index(of: current) else { return }
-            configureDisplay(forPage: index)
+            done()
         }
-        transitioningToPage = nil
+        
     }
-
-    private func configureDisplay(forPage index: Int) {
-        currentPageIndex = index
-        currentPage.resetImage()
-        view.backgroundColor = currentPage.preferredBackgroundColor
+    
+    private func animateInSubtitle() {
+        UIView.animate(withDuration: 0.3) {
+            self.subheader.alpha = 1.0
+        }
     }
-
-    fileprivate func transition(withRatio ratio: CGFloat) {
-        transitionBackgroundColor(withRatio: ratio)
-        shrinkImages(withRatio: ratio)
+    
+    private func updateControllerNames() {
+        controllerNames = [String](controllerNames.dropFirst())
+        controllerNames += [ "Themes", "Summary" ]
     }
-
-    private func transitionBackgroundColor(withRatio ratio: CGFloat) {
-        guard let nextColor = transitioningToPage?.preferredBackgroundColor else { return }
-        guard let currentColor = currentPage.preferredBackgroundColor else { return }
-        view.backgroundColor = currentColor.combine(withColor: nextColor, ratio: ratio)
-    }
-
-    private func shrinkImages(withRatio ratio: CGFloat) {
-        guard let transitioningToPage = transitioningToPage else { return }
-        let currentImageScale = 1 - (0.3 * (1 - ratio))
-        currentPage.scaleImage(currentImageScale)
-
-        let nextImageScale = 1 - (0.3 * ratio)
-        transitioningToPage.scaleImage(nextImageScale)
-    }
-
-    private func goToPage(index: Int) {
-        let controllers = [dataSource.controller(forIndex: index)]
-        pageController.setViewControllers(controllers, direction: .forward, animated: true, completion: nil)
-        configureDisplay(forPage: index)
-    }
-
-    @IBAction func onLastPageSwiped(_ sender: Any) {
-        finishOnboardingFlow()
-    }
-
-    private func finishOnboardingFlow() {
+    
+    func done() {
         delegate?.onboardingCompleted(controller: self)
     }
 
-    fileprivate var currentController: UIViewController {
-        return dataSource.controller(forIndex: currentPageIndex)
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [ .portrait ]
     }
 
-    fileprivate var currentPage: OnboardingTutorialPageViewController {
-        guard let controller = currentController as? OnboardingTutorialPageViewController else {
-            fatalError("currentController is not OnboardingTutorialPageViewController")
-        }
-        return controller
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
     }
+
+    override var shouldAutorotate: Bool {
+        return true 
+    }
+    
 }
 
-extension OnboardingViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+extension OnboardingViewController: OnboardingContentDelegate {
+    
+    func setContinueEnabled(_ enabled: Bool) {
+        continueButton.isEnabled = enabled
     }
-
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                                  shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return dataSource.isLastPage(controller: currentController)
-    }
-}
-
-extension OnboardingViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let x = scrollView.contentOffset.x
-        var ratio = x / view.bounds.size.width
-        ratio = (ratio > 1) ? 2 - ratio : ratio
-        transition(withRatio: ratio)
-    }
+    
 }

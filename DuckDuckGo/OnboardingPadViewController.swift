@@ -1,8 +1,8 @@
 //
-//  FeaturesViewControllerTests.swift
+//  OnboardingSummaryPadController.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,18 +17,16 @@
 //  limitations under the License.
 //
 
-import XCTest
-@testable import DuckDuckGo
-@testable import Core
+import UIKit
 
-class TutorialPageViewControllerTests: XCTestCase {
-    func testLoadPage2() {
-        let testee = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page2")
-        XCTAssertNotNil(testee)
+class OnboardingPadViewController: UIViewController, Onboarding {
+
+    weak var delegate: OnboardingDelegate?
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if var onboarding = segue.destination as? Onboarding {
+            onboarding.delegate = delegate
+        }
     }
 
-    func testLoadPage1() {
-        let testee = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page1")
-        XCTAssertNotNil(testee)
-    }
 }

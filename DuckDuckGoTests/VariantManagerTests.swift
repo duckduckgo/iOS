@@ -32,7 +32,7 @@ class VariantManagerTests: XCTestCase {
     func testWhenCurrentVariantSupportsFeatureThenIsSupportedReturnsTrue() {
 
         let testVariants = [
-            Variant(name: "test", weight: 50, features: [ .onboardingSummary ])
+            Variant(name: "test", weight: 50, features: [ .dummy ])
         ]
 
         let mockStore = MockStatisticsStore()
@@ -40,7 +40,7 @@ class VariantManagerTests: XCTestCase {
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
 
         // temporarily use this feature name
-        XCTAssertTrue(subject.isSupported(feature: .onboardingSummary))
+        XCTAssertTrue(subject.isSupported(feature: .dummy))
 
     }
 

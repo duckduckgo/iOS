@@ -1,1 +1,2 @@
-• We made it easier to share a feedback about our app! Visit Settings to check that out.
+• Improved accessibility features.
+• Tweaked colors for better contrast.

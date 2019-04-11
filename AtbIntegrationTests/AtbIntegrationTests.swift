@@ -233,16 +233,16 @@ class AtbIntegrationTests: XCTestCase {
     }
     
     private func skipOnboarding() {
-        let continueButton = app.buttons["Continue"]
-        guard continueButton.waitForExistence(timeout: Constants.defaultTimeout) else {
-            fatalError("Cound not skip onboarding")
+        waitForButtonThenTap("Skip")
+        waitForButtonThenTap("Continue")
+    }
+    
+    private func waitForButtonThenTap(_ named: String) {
+        let button = app.buttons[named]
+        guard button.waitForExistence(timeout: Constants.defaultTimeout) else {
+            fatalError("Could not find button named \(named)")
         }
-        
-        continueButton.tap()
-        
-        if continueButton.exists {
-            continueButton.tap()
-        }
+        button.tap()
     }
     
 }

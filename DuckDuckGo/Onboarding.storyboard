@@ -106,6 +106,7 @@ example.</string>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
                                 <rect key="frame" x="30" y="531" width="260" height="29"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Skip"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="SKIP">
@@ -408,7 +409,7 @@ the theme that's right for you.</string>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingRadioUnselected" translatesAutoresizingMaskIntoConstraints="NO" id="kBq-Ji-x6H">
                                                 <rect key="frame" x="0.0" y="210" width="160" height="20"/>
-                                                <accessibility key="accessibilityConfiguration" label="Select Light Theme">
+                                                <accessibility key="accessibilityConfiguration" identifier="SelectLightTheme" label="Select Light Theme">
                                                     <accessibilityTraits key="traits" button="YES"/>
                                                     <bool key="isElement" value="YES"/>
                                                 </accessibility>

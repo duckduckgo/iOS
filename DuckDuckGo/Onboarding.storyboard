@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X59-2u-JR5">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -26,14 +26,14 @@
             <objects>
                 <viewController id="X59-2u-JR5" customClass="OnboardingViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R3B-sO-IVB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="50" y="32" width="220" height="136"/>
+                                <rect key="frame" x="50" y="94" width="314" height="136"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="0.0" y="0.0" width="220" height="80"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="80"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
@@ -50,8 +50,8 @@ DuckDuckGo!</string>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                        <rect key="frame" x="0.0" y="92" width="220" height="44"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
+                                        <rect key="frame" x="0.0" y="92" width="314" height="44"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                         </accessibility>
@@ -71,16 +71,19 @@ example.</string>
                                 </subviews>
                             </stackView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bos-sp-j80">
-                                <rect key="frame" x="30" y="180" width="260" height="276"/>
+                                <rect key="frame" x="30" y="242" width="354" height="508"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="276" id="poA-Sb-4vN"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="JqA-an-EOJ" kind="embed" id="fHq-ox-26y"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Continue Button" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="30" y="468" width="260" height="50"/>
+                                <rect key="frame" x="30" y="762" width="354" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-pA-ovS">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="50"/>
                                         <accessibility key="accessibilityConfiguration" identifier="Continue"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,7 +108,7 @@ example.</string>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                <rect key="frame" x="30" y="531" width="260" height="29"/>
+                                <rect key="frame" x="30" y="825" width="354" height="29"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Skip"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -121,7 +124,7 @@ example.</string>
                         <constraints>
                             <constraint firstItem="J1y-Qk-FSX" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="E7x-g7-gBV"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="EKI-h0-VR8"/>
-                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" constant="12" id="HsS-nH-8Mg"/>
+                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="top" secondItem="2Fp-cs-AKH" secondAttribute="top" priority="999" constant="50" id="HsS-nH-8Mg"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="ZEn-eD-MPB" secondAttribute="bottom" constant="50" id="IjJ-lD-c8z"/>
                             <constraint firstItem="ciS-pA-ovS" firstAttribute="top" secondItem="bos-sp-j80" secondAttribute="bottom" constant="12" id="MxJ-BY-JmD"/>
                             <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="cNm-Ex-L76"/>
@@ -140,7 +143,6 @@ example.</string>
                         <outlet property="contentWidth" destination="EKI-h0-VR8" id="4gz-Z4-U2l"/>
                         <outlet property="continueButton" destination="ciS-pA-ovS" id="fli-79-bAt"/>
                         <outlet property="header" destination="u7Q-MU-drX" id="sqo-IJ-qev"/>
-                        <outlet property="headerVerticalSpacing" destination="HsS-nH-8Mg" id="PbH-OH-fJ1"/>
                         <outlet property="skipButton" destination="J1y-Qk-FSX" id="ScB-tm-3Uc"/>
                         <outlet property="subheader" destination="JgA-Kx-QGf" id="eGR-Va-uhA"/>
                     </connections>

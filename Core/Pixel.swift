@@ -84,10 +84,13 @@ public enum PixelName: String {
     case tabBarBookmarksPressed = "mt_bm"
     case tabBarTabSwitcherPressed = "mt_tb"
 
-    case onboardingShown = "mo"
-    case onboardingCustomizeSettings = "mo_s"
-    case onboardingExplorePrivacy = "mo_e"
-    
+    case onboardingShown = "m_o"
+    case onboardingThemesFinished = "m_o_t"
+    case onboardingThemesDarkThemeSelected = "m_o_t_d"
+    case onboardingThemesLightThemeSelected = "m_o_t_l"
+    case onboardingThemesSkipped = "m_o_t_s"
+    case onboardingSummaryFinished = "m_o_s"
+
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     
@@ -128,6 +131,8 @@ public class Pixel {
 
     private static let appUrls = AppUrls()
     
+    private static var loaded = [PixelName: Date]()
+    
     public struct EhdParameters {
         public static let url = "url"
         public static let errorCode = "error_code"
@@ -151,14 +156,33 @@ public class Pixel {
                             withAdditionalParameters params: [String: String?] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
+        
+        var newParams = params
+        if let dateLoaded = loaded[pixel] {
+            newParams["dur"] = String(Date().timeIntervalSince(dateLoaded))
+            loaded[pixel] = nil
+        }
+        
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls
             .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
-            .addParams(params)
+            .addParams(newParams)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
             Logger.log(items: "Pixel fired \(pixel.rawValue)")
             onComplete(response.error)
         }
     }
+    
+    /// Don't load a pixel unless you intend to fire it!
+    public static func load(pixel: PixelName) {
+        loaded[pixel] = Date()
+    }
+    
+    private static func params(_ params: [String: String?], withKey key: String, andValue value: String) -> [String: String?] {
+        var newParams = params
+        newParams[key] = value
+        return newParams
+    }
+    
 }

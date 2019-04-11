@@ -27,7 +27,6 @@ class OnboardingViewController: UIViewController, Onboarding {
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
-    @IBOutlet weak var headerVerticalSpacing: NSLayoutConstraint!
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var continueButton: UIButton!
@@ -39,8 +38,12 @@ class OnboardingViewController: UIViewController, Onboarding {
     override func viewDidLoad() {
         super.viewDidLoad()
         Pixel.fire(pixel: .onboardingShown)
-        updateForSmallScreens()
         updateControllerNamesAndSkipButton()
+        updateForSmallerScreens()
+    }
+    
+    private func updateForSmallerScreens() {
+        contentWidth.constant = isSmall ? -52 : -72
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,10 +59,6 @@ class OnboardingViewController: UIViewController, Onboarding {
         contentController = controller
         subheader.setAttributedTextString(controller.subtitle ?? "")
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: header)
-    }
-    
-    private func updateForSmallScreens() {
-        headerVerticalSpacing.constant = isSmall ? 12 : 50
     }
     
     @IBAction func next(sender: UIButton) {

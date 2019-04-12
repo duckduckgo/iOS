@@ -33,6 +33,7 @@ class OnboardingThemesViewController: OnboardingContentViewController {
         super.viewDidLoad()
         feedback.prepare()
         Pixel.load(pixel: .onboardingThemesFinished)
+        canContinue = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {

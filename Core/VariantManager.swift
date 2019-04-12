@@ -21,6 +21,10 @@ import Foundation
 
 public enum FeatureName: String {
     
+    case onboardingSummary
+    case onboardingThemes
+    
+    // Used for unit tests
     case dummy
     
 }
@@ -31,7 +35,10 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         // Shared control group
-        Variant(name: "sc", weight: 1, features: [])
+        Variant(name: "sc", weight: 1, features: [.onboardingSummary]),
+        
+        // Experiment 3
+        Variant(name: "mr", weight: 1, features: [.onboardingThemes, .onboardingSummary])
     ]
     
     public let name: String

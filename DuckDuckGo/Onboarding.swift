@@ -51,7 +51,7 @@ protocol OnboardingContentDelegate: NSObjectProtocol {
 
 class OnboardingContentViewController: UIViewController, OnboardingContent {
 
-    var canContinue: Bool = false
+    var canContinue: Bool = true
     weak var delegate: OnboardingContentDelegate?
     
     var subtitle: String? {

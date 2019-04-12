@@ -50,7 +50,7 @@ DuckDuckGo!</string>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
                                         <rect key="frame" x="0.0" y="92" width="314" height="44"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
@@ -62,7 +62,7 @@ example.</string>
                                                 <attributes>
                                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <font key="NSFont" size="17" name="ProximaNova-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="22" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
@@ -75,9 +75,6 @@ example.</string>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="276" id="poA-Sb-4vN"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="JqA-an-EOJ" kind="embed" id="fHq-ox-26y"/>
-                                </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEn-eD-MPB" userLabel="Continue Button" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="30" y="762" width="354" height="50"/>
@@ -154,7 +151,7 @@ example.</string>
         <!--Protecting your data has never been this easy.-->
         <scene sceneID="bMq-YW-WMP">
             <objects>
-                <viewController storyboardIdentifier="Summary" id="BE3-5Z-b0k" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboardingSummary" id="BE3-5Z-b0k" customClass="OnboardingSummaryViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <string key="title">Protecting your data has
 never been this easy.</string>
                     <view key="view" contentMode="scaleToFill" id="dL0-QB-QdX">
@@ -385,11 +382,11 @@ never been this easy.</string>
             </objects>
             <point key="canvasLocation" x="1112" y="185"/>
         </scene>
-        <!--Before you begin, choose  the theme that's right for you.-->
+        <!--Before you get started, pick  the theme that's right for you.-->
         <scene sceneID="ubo-Ix-pHZ">
             <objects>
-                <viewController storyboardIdentifier="Themes" id="JqA-an-EOJ" customClass="OnboardingThemesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <string key="title">Before you begin, choose 
+                <viewController storyboardIdentifier="onboardingThemes" id="JqA-an-EOJ" customClass="OnboardingThemesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <string key="title">Before you get started, pick 
 the theme that's right for you.</string>
                     <view key="view" contentMode="scaleToFill" id="CPA-2a-UEP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>

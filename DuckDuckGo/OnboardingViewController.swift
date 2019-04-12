@@ -22,7 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
 
-    var controllerNames = [ "Themes", "Summary" ]
+    var controllerNames = DefaultVariantManager.init().currentVariant?.features.map({ $0.rawValue }) ?? []
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!
@@ -38,8 +38,21 @@ class OnboardingViewController: UIViewController, Onboarding {
     override func viewDidLoad() {
         super.viewDidLoad()
         Pixel.fire(pixel: .onboardingShown)
-        updateControllerNamesAndSkipButton()
+        loadInitialContent()
+        prepareForNextScreen()
         updateForSmallerScreens()
+    }
+    
+    private func loadInitialContent() {
+        guard let name = controllerNames.first,
+            let controller = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController else {
+                fatalError("Unable to load initial content")
+        }
+        updateContent(controller)
+        controller.view.frame = contentContainer.bounds
+        contentContainer.addSubview(controller.view)
+        addChild(controller)
+        controller.didMove(toParent: self)
     }
     
     private func updateForSmallerScreens() {
@@ -105,7 +118,7 @@ class OnboardingViewController: UIViewController, Onboarding {
             
         })
         
-        updateControllerNamesAndSkipButton()
+        prepareForNextScreen()
     }
     
     private func animateInSubtitle() {
@@ -114,9 +127,14 @@ class OnboardingViewController: UIViewController, Onboarding {
         }
     }
     
-    private func updateControllerNamesAndSkipButton() {
+    private func prepareForNextScreen() {
         controllerNames = [String](controllerNames.dropFirst())
         skipButton.isHidden = controllerNames.isEmpty
+        
+        let title = controllerNames.isEmpty ? UserText.onboardingStartBrowsing : UserText.onboardingContinue
+        continueButton.setTitle(title, for: .normal)
+        continueButton.setTitle(title, for: .disabled)
+        continueButton.isEnabled = contentController?.canContinue ?? true
     }
     
     func done() {

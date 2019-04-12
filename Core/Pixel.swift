@@ -158,6 +158,10 @@ public class Pixel {
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
         
         var newParams = params
+        if isDebugBuild {
+            newParams["test"] = "1"
+        }
+        
         if let dateLoaded = loaded[pixel] {
             newParams["dur"] = String(Date().timeIntervalSince(dateLoaded))
             loaded[pixel] = nil
@@ -177,12 +181,6 @@ public class Pixel {
     /// Don't load a pixel unless you intend to fire it!
     public static func load(pixel: PixelName) {
         loaded[pixel] = Date()
-    }
-    
-    private static func params(_ params: [String: String?], withKey key: String, andValue value: String) -> [String: String?] {
-        var newParams = params
-        newParams[key] = value
-        return newParams
     }
     
 }

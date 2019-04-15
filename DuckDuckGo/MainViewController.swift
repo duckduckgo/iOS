@@ -537,7 +537,7 @@ class MainViewController: UIViewController {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage)
     }
-    
+        
 }
 
 extension MainViewController: FindInPageDelegate {

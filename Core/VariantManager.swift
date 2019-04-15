@@ -20,9 +20,13 @@
 import Foundation
 
 public enum FeatureName: String {
+    
     case onboardingSummary
-    case onboardingCustomizeSettings
-    case onboardingExplorePrivacy
+    case onboardingThemes
+    
+    // Used for unit tests
+    case dummy
+    
 }
 
 public struct Variant {
@@ -33,9 +37,8 @@ public struct Variant {
         // Shared control group
         Variant(name: "sc", weight: 1, features: [.onboardingSummary]),
         
-        // Improve app onboarding experiment 2
-        Variant(name: "mq", weight: 1, features: [.onboardingSummary, .onboardingCustomizeSettings]),
-        Variant(name: "mr", weight: 1, features: [.onboardingSummary, .onboardingExplorePrivacy])
+        // Experiment 3
+        Variant(name: "mr", weight: 1, features: [.onboardingThemes, .onboardingSummary])
     ]
     
     public let name: String

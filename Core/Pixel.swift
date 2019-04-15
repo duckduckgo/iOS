@@ -84,10 +84,13 @@ public enum PixelName: String {
     case tabBarBookmarksPressed = "mt_bm"
     case tabBarTabSwitcherPressed = "mt_tb"
 
-    case onboardingShown = "mo"
-    case onboardingCustomizeSettings = "mo_s"
-    case onboardingExplorePrivacy = "mo_e"
-    
+    case onboardingShown = "m_o"
+    case onboardingThemesFinished = "m_o_t"
+    case onboardingThemesDarkThemeSelected = "m_o_t_d"
+    case onboardingThemesLightThemeSelected = "m_o_t_l"
+    case onboardingThemesSkipped = "m_o_t_s"
+    case onboardingSummaryFinished = "m_o_s"
+
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     
@@ -151,14 +154,38 @@ public class Pixel {
                             withAdditionalParameters params: [String: String?] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
                             onComplete: @escaping (Error?) -> Void = {_ in }) {
+        
+        var newParams = params
+        if isDebugBuild {
+            newParams["test"] = "1"
+        }
+        
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls
             .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
-            .addParams(params)
+            .addParams(newParams)
         
         Alamofire.request(url, headers: headers).validate(statusCode: 200..<300).response { response in
             Logger.log(items: "Pixel fired \(pixel.rawValue)")
             onComplete(response.error)
         }
     }
+    
+}
+
+public class TimedPixel {
+    
+    let pixel: PixelName
+    let date: Date
+    
+    public init(_ pixel: PixelName, date: Date = Date()) {
+        self.pixel = pixel
+        self.date = date
+    }
+    
+    public func fire(_ fireDate: Date = Date()) {
+        let duration = String(fireDate.timeIntervalSince(date))
+        Pixel.fire(pixel: pixel, withAdditionalParameters: ["dur": duration])
+    }
+    
 }

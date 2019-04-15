@@ -32,7 +32,7 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
         bulletsStack.spacing = isSmall ? 8 : 12
         offsetY.constant = isSmall ? -2 : -27
         self.canContinue = true
-        timedPixel = Pixel.load(pixel: .onboardingSummaryFinished)
+        timedPixel = TimedPixel(.onboardingSummaryFinished)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

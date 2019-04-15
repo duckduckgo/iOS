@@ -34,7 +34,7 @@ class OnboardingThemesViewController: OnboardingContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         feedback.prepare()
-        timedPixel = Pixel.load(pixel: .onboardingThemesFinished)
+        timedPixel = TimedPixel(.onboardingThemesFinished)
         canContinue = false
     }
     

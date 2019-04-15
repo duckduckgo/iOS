@@ -171,11 +171,6 @@ public class Pixel {
         }
     }
     
-    /// Don't load a pixel unless you intend to fire it!
-    public static func load(pixel: PixelName) -> TimedPixel {
-        return TimedPixel(pixel)
-    }
-    
 }
 
 public class TimedPixel {
@@ -183,7 +178,7 @@ public class TimedPixel {
     let pixel: PixelName
     let date: Date
     
-    init(_ pixel: PixelName, date: Date = Date()) {
+    public init(_ pixel: PixelName, date: Date = Date()) {
         self.pixel = pixel
         self.date = date
     }

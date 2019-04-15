@@ -537,12 +537,7 @@ class MainViewController: UIViewController {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage)
     }
-    
-    func reloadTheme() {
-        ThemeManager.shared.enableTheme(with: appSettings.currentThemeName)
-        decorate(with: ThemeManager.shared.currentTheme)
-    }
-    
+        
 }
 
 extension MainViewController: FindInPageDelegate {

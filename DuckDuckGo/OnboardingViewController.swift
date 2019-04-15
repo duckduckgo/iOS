@@ -89,7 +89,7 @@ class OnboardingViewController: UIViewController, Onboarding {
         }
 
         if sender == continueButton {
-            contentController?.finished()
+            contentController?.onContinuePressed()
         }
         
     }

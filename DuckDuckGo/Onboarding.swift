@@ -32,8 +32,7 @@ protocol OnboardingContent {
     var canContinue: Bool { get }
     var delegate: OnboardingContentDelegate? { get set }
 
-    /// Called when continue is pressed
-    func finished()
+    func onContinuePressed()
     
 }
 
@@ -58,7 +57,7 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
         return title
     }
     
-    func finished() {        
+    func onContinuePressed() {
     }
     
 }
@@ -106,11 +105,6 @@ extension MainViewController: OnboardingDelegate {
         controller.modalTransitionStyle = .crossDissolve
         controller.dismiss(animated: true)
         homeController?.resetHomeRowCTAAnimations()
-
-        if AppUserDefaults().currentThemeName != ThemeManager.shared.currentTheme.name {
-            reloadTheme()
-        }
-        
     }
     
     func markOnboardingSeen() {

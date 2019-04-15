@@ -24,6 +24,8 @@ class OnboardingThemesViewController: OnboardingContentViewController {
     @IBOutlet weak var lightThemeRadio: UIImageView!
     @IBOutlet weak var darkThemeRadio: UIImageView!
     
+    var timedPixel: TimedPixel?
+    
     var selectedTheme = ThemeName.dark
     var exitPixel = PixelName.onboardingThemesSkipped
     
@@ -32,13 +34,13 @@ class OnboardingThemesViewController: OnboardingContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         feedback.prepare()
-        Pixel.load(pixel: .onboardingThemesFinished)
+        timedPixel = Pixel.load(pixel: .onboardingThemesFinished)
         canContinue = false
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        Pixel.fire(pixel: .onboardingThemesFinished)
+        timedPixel?.fire()
         Pixel.fire(pixel: exitPixel)
     }
     
@@ -50,7 +52,6 @@ class OnboardingThemesViewController: OnboardingContentViewController {
         darkThemeRadio.accessibilityTraits.remove(.selected)
         feedback.selectionChanged()
         selectedTheme = .light
-        exitPixel = .onboardingThemesLightThemeSelected
     }
     
     @IBAction func selectDarkTheme() {
@@ -61,11 +62,11 @@ class OnboardingThemesViewController: OnboardingContentViewController {
         lightThemeRadio.accessibilityTraits.remove(.selected)
         feedback.selectionChanged()
         selectedTheme = .dark
-        exitPixel = .onboardingThemesDarkThemeSelected
     }
     
-    override func finished() {
-        AppUserDefaults().currentThemeName = selectedTheme
+    override func onContinuePressed() {
+        exitPixel = selectedTheme == .dark ? .onboardingThemesDarkThemeSelected : .onboardingThemesLightThemeSelected
+        ThemeManager.shared.enableTheme(with: selectedTheme)
     }
     
 }

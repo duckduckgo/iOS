@@ -25,17 +25,19 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
     @IBOutlet var bulletsStack: UIStackView!
     @IBOutlet var offsetY: NSLayoutConstraint!
     
+    private var timedPixel: TimedPixel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bulletsStack.spacing = isSmall ? 8 : 12
         offsetY.constant = isSmall ? -2 : -27
         self.canContinue = true
-        Pixel.load(pixel: .onboardingSummaryFinished)
+        timedPixel = Pixel.load(pixel: .onboardingSummaryFinished)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        Pixel.fire(pixel: .onboardingSummaryFinished)
+        timedPixel?.fire()
     }
     
 }

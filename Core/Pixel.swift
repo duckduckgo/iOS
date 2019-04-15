@@ -131,8 +131,6 @@ public class Pixel {
 
     private static let appUrls = AppUrls()
     
-    private static var loaded = [PixelName: Date]()
-    
     public struct EhdParameters {
         public static let url = "url"
         public static let errorCode = "error_code"
@@ -162,11 +160,6 @@ public class Pixel {
             newParams["test"] = "1"
         }
         
-        if let dateLoaded = loaded[pixel] {
-            newParams["dur"] = String(Date().timeIntervalSince(dateLoaded))
-            loaded[pixel] = nil
-        }
-        
         let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
         let url = appUrls
             .pixelUrl(forPixelNamed: pixel.rawValue, formFactor: formFactor)
@@ -179,8 +172,25 @@ public class Pixel {
     }
     
     /// Don't load a pixel unless you intend to fire it!
-    public static func load(pixel: PixelName) {
-        loaded[pixel] = Date()
+    public static func load(pixel: PixelName) -> TimedPixel {
+        return TimedPixel(pixel)
+    }
+    
+}
+
+public class TimedPixel {
+    
+    let pixel: PixelName
+    let date: Date
+    
+    init(_ pixel: PixelName, date: Date = Date()) {
+        self.pixel = pixel
+        self.date = date
+    }
+    
+    public func fire(_ fireDate: Date = Date()) {
+        let duration = String(fireDate.timeIntervalSince(date))
+        Pixel.fire(pixel: pixel, withAdditionalParameters: ["dur": duration])
     }
     
 }

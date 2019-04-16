@@ -21,6 +21,10 @@ import UIKit
 import Core
 
 extension UIViewController {
+    
+    var isSmall: Bool {
+        return view.frame.height <= 568
+    }
 
     public func presentShareSheet(withItems activityItems: [Any], fromButtonItem buttonItem: UIBarButtonItem) {
         let activities = [SaveBookmarkActivity()]

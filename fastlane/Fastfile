@@ -27,7 +27,8 @@ lane :release do
     automatic_release: true, 
     phased_release: true,
     username: "office@duckduckgo.com",
-    force: true
+    force: true,
+    skip_screenshots: true
   )
 
 end

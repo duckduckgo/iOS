@@ -1,2 +1,1 @@
-• Improved accessibility features.
-• Tweaked colors for better contrast.
+• Bug fixes and improvements.

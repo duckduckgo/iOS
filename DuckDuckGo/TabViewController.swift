@@ -31,14 +31,16 @@ class TabViewController: UIViewController {
         static let unsupportedUrlErrorCode = -1002
         static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
-        static let minimumProgress: Float = 0.1
+        static let minimumProgress: CGFloat = 0.1
     }
 
     private struct UserAgent {
         static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
     }
     
-    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var progressBar: ProgressView!
+    let progressWorker = WebProgressWorker()
+    
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
@@ -139,6 +141,9 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
+        
+        progressWorker.progressBar = progressBar
+        progressBar.alpha = 0
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -214,7 +219,7 @@ class TabViewController: UIViewController {
         }
         
         if url != nil {
-            progressBar.progress = Constants.minimumProgress
+            progressBar.updateProgress(Constants.minimumProgress)
             delegate?.tabLoadingStateDidChange(tab: self)
             onWebpageDidStartLoading(httpsForced: false)
         }
@@ -245,7 +250,7 @@ class TabViewController: UIViewController {
         switch keyPath {
             
         case WebViewKeyPaths.estimatedProgress:
-            progressBar.progress = max(Constants.minimumProgress, Float(webView.estimatedProgress))
+            progressWorker.progressDidChange(webView.estimatedProgress)
             
         case WebViewKeyPaths.hasOnlySecureContent:
             hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
@@ -292,14 +297,11 @@ class TabViewController: UIViewController {
     }
     
     private func showProgressIndicator() {
-        progressBar.alpha = 1
-        progressBar.progress = Constants.minimumProgress
+        progressWorker.didStartLoading()
     }
     
     private func hideProgressIndicator() {
-        UIView.animate(withDuration: 1) {
-            self.progressBar.alpha = 0
-        }
+        progressWorker.didFinishLoading()
     }
     
     public func reload(scripts: Bool) {
@@ -627,13 +629,14 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        
+        print("===> \(#function) url: \(webView.url)")
         completionHandler(.performDefaultHandling, nil)
         guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
         ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        print("===> \(#function) url: \(webView.url)")
         url = webView.url
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
@@ -644,6 +647,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
+        print("===> \(#function) url: \(webView.url)")
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         self.httpsForced = httpsForced
         delegate?.showBars()
@@ -676,10 +680,12 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
+        print("===> \(#function) url: \(webView.url)")
         url = webView.url
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        print("===> \(#function) url: \(webView.url)")
         lastError = nil
         shouldReloadOnError = false
         hideErrorMessage()
@@ -687,6 +693,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("===> \(#function) url: \(webView.url)")
         hideProgressIndicator()
         onWebpageDidFinishLoading()
     }
@@ -702,6 +709,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("===> \(#function) url: \(webView.url)")
         hideProgressIndicator()
         webpageDidFailToLoad()
         
@@ -725,6 +733,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("===> \(#function) url: \(webView.url)")
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
@@ -747,6 +756,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        print("===> \(#function) url: \(webView.url)")
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = SiteRating(url: url, httpsForced: httpsForced)
@@ -756,7 +766,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+        print("===> \(#function) url: \(webView.url)")
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,

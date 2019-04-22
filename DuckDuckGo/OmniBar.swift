@@ -43,7 +43,7 @@ class OmniBar: UIView {
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
-
+    
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
     }
@@ -308,6 +308,14 @@ extension OmniBar: Themable {
         
         updateSearchBarBorder()
     }
+}
+
+extension OmniBar: UIGestureRecognizerDelegate {
+ 
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return !textField.isFirstResponder
+    }
+    
 }
 
 extension String {

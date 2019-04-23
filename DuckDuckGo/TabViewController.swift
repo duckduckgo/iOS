@@ -629,14 +629,12 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        print("===> \(#function) url: \(webView.url)")
         completionHandler(.performDefaultHandling, nil)
         guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
         ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("===> \(#function) url: \(webView.url)")
         url = webView.url
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
@@ -647,7 +645,6 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
-        print("===> \(#function) url: \(webView.url)")
         Logger.log(items: "webpageLoading started:", Date().timeIntervalSince1970)
         self.httpsForced = httpsForced
         delegate?.showBars()
@@ -680,12 +677,10 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
-        print("===> \(#function) url: \(webView.url)")
         url = webView.url
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        print("===> \(#function) url: \(webView.url)")
         lastError = nil
         shouldReloadOnError = false
         hideErrorMessage()
@@ -693,7 +688,6 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("===> \(#function) url: \(webView.url)")
         hideProgressIndicator()
         onWebpageDidFinishLoading()
     }
@@ -709,7 +703,6 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print("===> \(#function) url: \(webView.url)")
         hideProgressIndicator()
         webpageDidFailToLoad()
         
@@ -733,7 +726,6 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        print("===> \(#function) url: \(webView.url)")
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
@@ -756,7 +748,6 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        print("===> \(#function) url: \(webView.url)")
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = SiteRating(url: url, httpsForced: httpsForced)
@@ -766,7 +757,6 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print("===> \(#function) url: \(webView.url)")
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,

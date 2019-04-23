@@ -85,10 +85,7 @@ class ProgressView: UIView, CAAnimationDelegate {
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        var frame = progressMask.frame
-        frame.origin.x = 0
-        frame.size.width = 0
-        progressMask.frame = frame
+        progressMask.bounds = calculateProgressMaskRect()
         progressMask.opacity = 1
         CATransaction.commit()
         CATransaction.flush()

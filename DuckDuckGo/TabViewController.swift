@@ -219,7 +219,7 @@ class TabViewController: UIViewController {
         }
         
         if url != nil {
-            progressBar.updateProgress(Constants.minimumProgress)
+            progressBar.increaseProgress(to: Constants.minimumProgress)
             delegate?.tabLoadingStateDidChange(tab: self)
             onWebpageDidStartLoading(httpsForced: false)
         }

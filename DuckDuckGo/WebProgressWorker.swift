@@ -20,36 +20,27 @@ class WebProgressWorker {
     private var currentProgress: CGFloat = 0.0
     
     func didStartLoading() {
-        guard let progressBar = progressBar,
-            isLoading == false else {
-                print("===> FAILED START")
-                return
-        }
-        
-        print("===> START")
+        guard isLoading == false else { return }
+
         isLoading = true
-        progressBar.show()
-        self.progressBar?.updateProgress(Constants.initialProgress, animated: true)
+        progressBar?.show()
+        progressBar?.increaseProgress(to: Constants.initialProgress, animated: true)
     }
     
     func progressDidChange(_ progress: Double) {
-        guard isLoading else {
-            print("==> FAILED update to \(progress)")
-            return
-        }
+        guard isLoading else { return }
         
         let progress = CGFloat(progress)
         guard progress > currentProgress else { return }
         currentProgress = progress
         
-        self.progressBar?.updateProgress(progress, animated: true)
+        progressBar?.increaseProgress(to: progress, animated: true)
     }
     
     func didFinishLoading() {
         guard isLoading else { return }
         isLoading = false
-        print("===> FINISH")
-        self.progressBar?.hide()
-        self.currentProgress = 0
+        progressBar?.finishAndHide()
+        currentProgress = 0
     }
 }

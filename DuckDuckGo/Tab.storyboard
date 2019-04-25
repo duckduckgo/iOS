@@ -108,21 +108,11 @@
                                     <constraint firstItem="09V-cw-B4O" firstAttribute="centerY" secondItem="Kd4-Oi-JP2" secondAttribute="centerY" id="xtF-Qe-4A7"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5O-6E-vLF" customClass="ProgressView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="17" width="768" height="6"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="6" id="s6j-Xo-V7O"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerY" secondItem="t0t-53-xVf" secondAttribute="centerY" id="3qe-NM-ikO"/>
-                            <constraint firstItem="d5O-6E-vLF" firstAttribute="leading" secondItem="t0t-53-xVf" secondAttribute="leading" id="4K2-Uj-zU1"/>
-                            <constraint firstItem="d5O-6E-vLF" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="bottom" constant="-3" id="Ke1-ii-OeP"/>
-                            <constraint firstItem="t0t-53-xVf" firstAttribute="trailing" secondItem="d5O-6E-vLF" secondAttribute="trailing" id="Rnp-ZL-s0a"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="WgD-oO-Ds7"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="top" secondItem="cfL-5d-Vrt" secondAttribute="bottom" constant="-80" id="Zyh-vQ-fMz"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
@@ -144,7 +134,6 @@
                         <outlet property="errorHeader" destination="6P7-7R-riV" id="IkB-Tc-Eat"/>
                         <outlet property="errorInfoImage" destination="TUO-E3-s7Q" id="ngN-8S-PwR"/>
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
-                        <outlet property="progressBar" destination="d5O-6E-vLF" id="fl9-Fl-Hp5"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
                         <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtectionTablet" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">

@@ -38,7 +38,6 @@ class TabViewController: UIViewController {
         static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
     }
     
-    @IBOutlet weak var progressBar: ProgressView!
     let progressWorker = WebProgressWorker()
     
     @IBOutlet private(set) weak var error: UIView!
@@ -141,9 +140,6 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
-        
-        progressWorker.progressBar = progressBar
-        progressBar.alpha = 0
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -219,7 +215,6 @@ class TabViewController: UIViewController {
         }
         
         if url != nil {
-            progressBar.increaseProgress(to: Constants.minimumProgress)
             delegate?.tabLoadingStateDidChange(tab: self)
             onWebpageDidStartLoading(httpsForced: false)
         }

@@ -25,7 +25,15 @@ class WebProgressWorker {
         static let initialProgress: CGFloat = 0.1
     }
     
-    weak var progressBar: ProgressView?
+    weak var progressBar: ProgressView? {
+        didSet {
+            if isLoading {
+                self.progressBar?.show(initialProgress: currentProgress)
+            } else {
+                self.progressBar?.hide()
+            }
+        }
+    }
     
     private var isLoading = false
     private var currentProgress: CGFloat = 0.0

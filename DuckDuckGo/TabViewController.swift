@@ -38,8 +38,6 @@ class TabViewController: UIViewController {
         static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
     }
     
-    let progressWorker = WebProgressWorker()
-    
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
@@ -52,6 +50,8 @@ class TabViewController: UIViewController {
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     var findInPage: FindInPage?
+    
+    let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()

@@ -31,9 +31,9 @@ class ProgressView: UIView, CAAnimationDelegate {
     private var progressLayer = CAGradientLayer()
     private var progressMask = CALayer()
     
-    // Actual progress
+    // Actual progress, as reported by WKWebView.
     private var currentProgress: CGFloat = 0.0
-    // Progress used to calculate last animation
+    // Currently displayed progress, used to prepare next animation.
     private var visibleProgress: CGFloat = 0.0
     
     override init(frame: CGRect) {
@@ -56,10 +56,6 @@ class ProgressView: UIView, CAAnimationDelegate {
         
         progressMask.anchorPoint = .zero
         progressMask.frame = progressFrame
-        if #available(iOS 11.0, *) {
-            progressMask.cornerRadius = 2
-            progressMask.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
-        }
         progressMask.backgroundColor = UIColor.white.cgColor
         
         progressLayer.frame = bounds
@@ -79,9 +75,11 @@ class ProgressView: UIView, CAAnimationDelegate {
         layer.insertSublayer(progressLayer, at: 0)
     }
     
-    func show() {
-        currentProgress = 0
-        visibleProgress = 0
+    func show(initialProgress: CGFloat = 0) {
+        currentProgress = initialProgress
+        visibleProgress = initialProgress
+        
+        progressMask.removeAllAnimations()
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
@@ -94,6 +92,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     }
     
     func increaseProgress(to progress: CGFloat, animated: Bool = false) {
+        guard progress > currentProgress else { return }
         currentProgress = progress
         updateProgressMask(animated: animated)
     }
@@ -112,7 +111,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     }
     
     private func updateProgressMask(animated: Bool) {
-        guard progressMask.animation(forKey: Constants.progressAnimationKey) == nil,
+        guard (progressMask.animationKeys() ?? []).isEmpty,
             currentProgress > visibleProgress else {
             return
         }
@@ -135,18 +134,17 @@ class ProgressView: UIView, CAAnimationDelegate {
         animation.duration = duration
         animation.isRemovedOnCompletion = true
         animation.delegate = self
+        progressMask.add(animation, forKey: Constants.progressAnimationKey)
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         progressMask.bounds = progressFrame
         CATransaction.commit()
-        
-        progressMask.add(animation, forKey: Constants.progressAnimationKey)
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if visibleProgress > 1 - CGFloat.ulpOfOne {
-            hideAndReset()
+            hide(animated: true)
         } else {
             updateProgressMask(animated: true)
         }
@@ -161,6 +159,8 @@ class ProgressView: UIView, CAAnimationDelegate {
     }
     
     private func startGradientAnimation() {
+        guard progressLayer.animation(forKey: Constants.gradientAnimationKey) == nil else { return }
+        
         let animation = CABasicAnimation(keyPath: "locations")
         animation.toValue = [-0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1]
         animation.duration = 0.4
@@ -172,28 +172,23 @@ class ProgressView: UIView, CAAnimationDelegate {
         progressLayer.removeAnimation(forKey: Constants.gradientAnimationKey)
     }
     
-    private func hideAndReset() {
-        let animation = CABasicAnimation(keyPath: "opacity")
-        animation.fromValue = 1
-        animation.toValue = 0
-        animation.duration = 0.4
+    func hide(animated: Bool = false) {
+        if animated {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.fromValue = 1
+            animation.toValue = 0
+            animation.duration = 0.4
+            progressMask.add(animation, forKey: Constants.fadeOutAnimationKey)
+        }
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         progressMask.opacity = 0
         CATransaction.commit()
-        
-        progressMask.add(animation, forKey: Constants.fadeOutAnimationKey)
-        
-        visibleProgress = 0
-        currentProgress = 0
     }
     
     // MARK: IB
     override func prepareForInterfaceBuilder() {
-        var progressFrame = bounds
-        progressFrame.size.width = 0
-        
-        progressMask.frame = progressFrame
+        backgroundColor = .cornflowerBlue
     }
 }

@@ -248,6 +248,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func attachHomeScreen() {
+        progressView.hide()
         findInPageView.isHidden = true
         removeHomeScreen()
 

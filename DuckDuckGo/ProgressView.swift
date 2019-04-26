@@ -174,11 +174,19 @@ class ProgressView: UIView, CAAnimationDelegate {
     
     func hide(animated: Bool = false) {
         if animated {
+            CATransaction.begin()
             let animation = CABasicAnimation(keyPath: "opacity")
             animation.fromValue = 1
             animation.toValue = 0
             animation.duration = 0.4
             progressMask.add(animation, forKey: Constants.fadeOutAnimationKey)
+            CATransaction.setCompletionBlock {
+                self.stopGradientAnimation()
+            }
+            CATransaction.commit()
+        } else {
+            progressMask.removeAllAnimations()
+            stopGradientAnimation()
         }
         
         CATransaction.begin()

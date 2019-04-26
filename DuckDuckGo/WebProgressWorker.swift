@@ -26,7 +26,9 @@ class WebProgressWorker {
     }
     
     weak var progressBar: ProgressView? {
-        didSet {
+        didSet(oldValue) {
+            oldValue?.hide()
+            
             if isLoading {
                 self.progressBar?.show(initialProgress: currentProgress)
             } else {

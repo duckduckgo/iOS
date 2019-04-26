@@ -494,6 +494,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
+        progressWorker.progressBar = nil
         chromeDelegate = nil
         webView.scrollView.delegate = nil
         willMove(toParent: nil)

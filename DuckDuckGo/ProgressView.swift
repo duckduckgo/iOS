@@ -94,6 +94,9 @@ class ProgressView: UIView, CAAnimationDelegate {
     func increaseProgress(to progress: CGFloat, animated: Bool = false) {
         guard progress > currentProgress else { return }
         currentProgress = progress
+        
+        // Workaround for the issue, when iOS removes all animations automatically (e.g. when putting app to the background)
+        startGradientAnimation()
         updateProgressMask(animated: animated)
     }
     

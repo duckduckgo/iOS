@@ -123,7 +123,7 @@ class ProgressView: UIView, CAAnimationDelegate {
         visibleProgress = currentProgress
         
         let duration: TimeInterval
-        if animated == false {
+        if !animated {
             duration = 0
         } else if currentProgress > 1 - CGFloat.ulpOfOne {
             duration = 0.2
@@ -183,9 +183,7 @@ class ProgressView: UIView, CAAnimationDelegate {
             animation.toValue = 0
             animation.duration = 0.4
             progressMask.add(animation, forKey: Constants.fadeOutAnimationKey)
-            CATransaction.setCompletionBlock {
-                self.stopGradientAnimation()
-            }
+            CATransaction.setCompletionBlock(stopGradientAnimation)
             CATransaction.commit()
         } else {
             progressMask.removeAllAnimations()

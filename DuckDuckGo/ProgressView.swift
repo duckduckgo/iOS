@@ -26,6 +26,8 @@ class ProgressView: UIView, CAAnimationDelegate {
         static let gradientAnimationKey = "animateGradient"
         static let progressAnimationKey = "animateProgress"
         static let fadeOutAnimationKey = "animateFadeOut"
+        
+        static let completionThreshold = 1 - CGFloat.ulpOfOne
     }
     
     private var progressLayer = CAGradientLayer()
@@ -125,7 +127,7 @@ class ProgressView: UIView, CAAnimationDelegate {
         let duration: TimeInterval
         if !animated {
             duration = 0
-        } else if currentProgress > 1 - CGFloat.ulpOfOne {
+        } else if currentProgress > Constants.completionThreshold {
             duration = 0.2
         } else {
             duration = 0.6
@@ -146,7 +148,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if visibleProgress > 1 - CGFloat.ulpOfOne {
+        if visibleProgress > Constants.completionThreshold {
             hide(animated: true)
         } else {
             updateProgressMask(animated: true)

@@ -30,6 +30,8 @@ class MainViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
+    
+    @IBOutlet weak var progressView: ProgressView!
 
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
@@ -346,8 +348,10 @@ class MainViewController: UIViewController {
     private func addToView(tab: TabViewController) {
         removeHomeScreen()
         updateFindInPage()
+        currentTab?.progressWorker.progressBar = nil
         currentTab?.chromeDelegate = nil
         addToView(controller: tab)
+        tab.progressWorker.progressBar = progressView
         tab.webView.scrollView.delegate = chromeManager
         tab.chromeDelegate = self
     }

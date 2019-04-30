@@ -115,9 +115,9 @@ class FeedbackPickerViewController: UITableViewController {
         }
         
         let theme = ThemeManager.shared.currentTheme
-        cell.contentView.backgroundColor = theme.tableCellBackgroundColor
         cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.textLabel?.textColor = theme.tableCellTintColor
+        cell.textLabel?.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         
         let text = cell.textLabel?.attributedText?.mutableCopy() as? NSMutableAttributedString
         text?.mutableString.setString(entries[indexPath.row].userText)

@@ -31,14 +31,13 @@ class TabViewController: UIViewController {
         static let unsupportedUrlErrorCode = -1002
         static let urlCouldNotBeLoaded = 101
         static let frameLoadInterruptedErrorCode = 102
-        static let minimumProgress: Float = 0.1
+        static let minimumProgress: CGFloat = 0.1
     }
 
     private struct UserAgent {
         static let desktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15"
     }
     
-    @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet private(set) weak var error: UIView!
     @IBOutlet private(set) weak var errorInfoImage: UIImageView!
     @IBOutlet private(set) weak var errorHeader: UILabel!
@@ -53,6 +52,8 @@ class TabViewController: UIViewController {
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
     var findInPage: FindInPage?
+    
+    let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
@@ -217,7 +218,6 @@ class TabViewController: UIViewController {
         }
         
         if url != nil {
-            progressBar.progress = Constants.minimumProgress
             delegate?.tabLoadingStateDidChange(tab: self)
             onWebpageDidStartLoading(httpsForced: false)
         }
@@ -248,7 +248,7 @@ class TabViewController: UIViewController {
         switch keyPath {
             
         case WebViewKeyPaths.estimatedProgress:
-            progressBar.progress = max(Constants.minimumProgress, Float(webView.estimatedProgress))
+            progressWorker.progressDidChange(webView.estimatedProgress)
             
         case WebViewKeyPaths.hasOnlySecureContent:
             hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
@@ -295,14 +295,11 @@ class TabViewController: UIViewController {
     }
     
     private func showProgressIndicator() {
-        progressBar.alpha = 1
-        progressBar.progress = Constants.minimumProgress
+        progressWorker.didStartLoading()
     }
     
     private func hideProgressIndicator() {
-        UIView.animate(withDuration: 1) {
-            self.progressBar.alpha = 0
-        }
+        progressWorker.didFinishLoading()
     }
     
     public func reload(scripts: Bool) {
@@ -500,6 +497,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
+        progressWorker.progressBar = nil
         chromeDelegate = nil
         webView.scrollView.delegate = nil
         willMove(toParent: nil)

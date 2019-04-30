@@ -57,8 +57,9 @@ class OmniBar: UIView {
     }
     
     private func configureTextField() {
+        let theme = ThemeManager.shared.currentTheme
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
-                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.greyish])
+                                                             attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
     }
     
@@ -285,6 +286,8 @@ extension OmniBar: Themable {
     public func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor
         tintColor = theme.barTintColor
+        
+        configureTextField()
 
         editingBackground?.backgroundColor = theme.searchBarBackgroundColor
         editingBackground?.borderColor = theme.searchBarBackgroundColor

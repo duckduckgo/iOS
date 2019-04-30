@@ -35,6 +35,21 @@ class BrowsingTipsTests: XCTestCase {
     // swiftlint:enable weak_delegate
     var storage = MockContextualTipsStorage()
 
+    func testWhenNotShownThenNextTipIsUnchanged() {
+        
+        storage.isEnabled = true
+        delegate.shown = false
+        
+        let tips = BrowsingTips(delegate: delegate, storage: storage)
+        XCTAssertNotNil(tips)
+        
+        tips?.onFinishedLoading(url: URLs.example, error: false)
+        XCTAssertEqual(1, delegate.showPrivacyGradeTipCounter)
+        XCTAssertEqual(0, delegate.showFireButtonTipCounter)
+        
+        XCTAssertEqual(0, storage.nextBrowsingTip)
+    }
+
     func testWhenFeatureNotEnabledThenInstanciationFails() {
         
         let tips = BrowsingTips(delegate: delegate, storage: storage)
@@ -72,18 +87,22 @@ class BrowsingTipsTests: XCTestCase {
         let tips = BrowsingTips(delegate: delegate, storage: storage)
         XCTAssertEqual(0, delegate.showPrivacyGradeTipCounter)
         XCTAssertEqual(0, delegate.showFireButtonTipCounter)
-        
+        XCTAssertEqual(0, storage.nextBrowsingTip)
+
         tips?.onFinishedLoading(url: URLs.example, error: false)
         XCTAssertEqual(0, delegate.showFireButtonTipCounter)
         XCTAssertEqual(1, delegate.showPrivacyGradeTipCounter)
-        
+        XCTAssertEqual(1, storage.nextBrowsingTip)
+
         tips?.onFinishedLoading(url: URLs.example, error: false)
         XCTAssertEqual(1, delegate.showFireButtonTipCounter)
         XCTAssertEqual(1, delegate.showPrivacyGradeTipCounter)
-        
+        XCTAssertEqual(2, storage.nextBrowsingTip)
+
         tips?.onFinishedLoading(url: URLs.example, error: false)
         XCTAssertEqual(1, delegate.showFireButtonTipCounter)
         XCTAssertEqual(1, delegate.showPrivacyGradeTipCounter)
+        XCTAssertEqual(2, storage.nextBrowsingTip)
     }
     
     func testWhenTipsDisabledLaterThenTriggerDoesNothing() {
@@ -103,15 +122,18 @@ class BrowsingTipsTests: XCTestCase {
 
 class MockBrowsingTipsDelegate: NSObject, BrowsingTipsDelegate {
     
+    var shown = true
     var showPrivacyGradeTipCounter = 0
     var showFireButtonTipCounter = 0
     
-    func showPrivacyGradeTip() {
+    func showPrivacyGradeTip(didShow: (Bool) -> Void) {
         showPrivacyGradeTipCounter += 1
+        didShow(shown)
     }
     
-    func showFireButtonTip() {
+    func showFireButtonTip(didShow: (Bool) -> Void) {
         showFireButtonTipCounter += 1
+        didShow(shown)
     }
     
 }

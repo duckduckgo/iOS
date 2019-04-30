@@ -28,22 +28,30 @@ struct LightTheme: Theme {
     var backgroundColor = UIColor.nearlyWhite
     
     var barBackgroundColor = UIColor.nearlyWhiteLight
-    var barTintColor = UIColor.darkGreyish
-    var barTitleColor = UIColor.darkGreyish
+    var barTintColor = UIColor.nearlyBlackLight
+    
+    var navigationBarTitleColor = UIColor.nearlyBlackLight
+    var navigationBarTintColor = UIColor.darkGreyish
     
     var tintOnBlurColor = UIColor.white
     
-    var searchBarBackgroundColor = UIColor.mercury
-    var searchBarTextColor = UIColor.darkGreyish
+    var searchBarBackgroundColor = UIColor.lightGreyish
+    var centeredSearchBarBackgroundColor = UIColor.mercury
+    var searchBarTextColor = UIColor.nearlyBlackLight
+    var searchBarTextPlaceholderColor = UIColor.greyish3
     var searchBarTextDeemphasisColor = UIColor.greyish3
     var searchBarBorderColor = UIColor.lightGreyish
-    var searchBarClearTextIconColor = UIColor.greyish
+    var searchBarClearTextIconColor = UIColor.greyish2
 
+    var autocompleteCellAccessoryColor = UIColor.darkGreyish
+    
     var tableCellBackgroundColor = UIColor.nearlyWhiteLight
     var tableCellSelectedColor = UIColor.mercury
-    var tableCellTintColor = UIColor.darkGreyish
     var tableCellSeparatorColor = UIColor.mercury
+    var tableCellTextColor = UIColor.darkGreyish
     var tableCellAccessoryTextColor = UIColor.greyish3
+    var tableCellAccessoryColor = UIColor.greyish
+    var tableCellHighlightedBackgroundColor = UIColor.mercury
     var tableHeaderTextColor = UIColor.greyish3
     
     var buttonTintColor = UIColor.cornflowerBlue

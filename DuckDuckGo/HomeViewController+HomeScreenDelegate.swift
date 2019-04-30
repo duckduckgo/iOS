@@ -22,11 +22,15 @@ import EasyTipView
 
 extension HomeViewController: HomeScreenTipsDelegate {
     
-    func showPrivateSearchTip() {
+    func showPrivateSearchTip(didShow: @escaping (Bool) -> Void) {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let superView = self?.parent?.view else { return }
-            guard let self = self else { return }
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let superView = self.parent?.view else {
+                didShow(false)
+                return
+            }
             
             let view: UIView!
             if self.isCenteredSearch {
@@ -35,7 +39,10 @@ extension HomeViewController: HomeScreenTipsDelegate {
                 view = self.chromeDelegate?.omniBar
             }
             
-            guard view != nil else { return }
+            guard view != nil else {
+                didShow(false)
+                return
+            }
             
             var preferences = EasyTipView.globalPreferences
             preferences.positioning.bubbleVInset = 8
@@ -45,11 +52,16 @@ extension HomeViewController: HomeScreenTipsDelegate {
                                   icon: icon,
                                   preferences: preferences)
             tip.show(animated: true, forView: view, withinSuperview: superView)
+            didShow(true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 tip.handleGlobalTouch()
             }
         }
         
+    }
+    
+    private var omniBarTextFieldHasFocus: Bool {
+        return self.chromeDelegate?.omniBar.textField.isFirstResponder ?? false
     }
     
     private var isCenteredSearch: Bool {
@@ -59,22 +71,37 @@ extension HomeViewController: HomeScreenTipsDelegate {
         })
     }
     
-    func showCustomizeTip() {
+    func showCustomizeTip(didShow: @escaping (Bool) -> Void) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let omniBar = self?.chromeDelegate?.omniBar else { return }
-            guard let settings = omniBar.settingsButton.imageView else { return }
-            guard let superView = self?.parent?.view else { return }
+            guard let self = self,
+                !self.omniBarTextFieldHasFocus,
+                let omniBar = self.chromeDelegate?.omniBar,
+                let settings = omniBar.settingsButton.imageView,
+                let superView = self.parent?.view else {
+                didShow(false)
+                return
+            }
 
             var preferences = EasyTipView.globalPreferences
             preferences.positioning.bubbleHInset = 8
             
+            let text: String
+            switch ThemeManager.shared.currentTheme.name {
+            case .dark:
+                text = UserText.contextualOnboardingCustomizeLight
+                
+            case .light:
+                text = UserText.contextualOnboardingCustomizeDark                
+            }
+            
             let icon = EasyTipView.Icon(image: UIImage(named: "OnboardingIconCustomize48")!, position: .left, alignment: .centerOrMiddle)
-            let tip = EasyTipView(text: UserText.contextualOnboardingCustomize,
+            let tip = EasyTipView(text: text,
                                   icon: icon,
                                   preferences: preferences)
 
             tip.show(animated: true, forView: settings, withinSuperview: superView)
+            didShow(true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 tip.handleGlobalTouch()
             }

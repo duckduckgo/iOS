@@ -1,8 +1,8 @@
 //
-//  FeaturesViewControllerTests.swift
+//  UITableViewCellExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,18 +17,14 @@
 //  limitations under the License.
 //
 
-import XCTest
-@testable import DuckDuckGo
-@testable import Core
+import UIKit
 
-class TutorialPageViewControllerTests: XCTestCase {
-    func testLoadPage2() {
-        let testee = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page2")
-        XCTAssertNotNil(testee)
-    }
-
-    func testLoadPage1() {
-        let testee = OnboardingTutorialPageViewController.loadFromStoryboard(name: "Page1")
-        XCTAssertNotNil(testee)
+extension UITableViewCell {
+    
+    /// Even if `selectedBackgroundView` exists, setting its background color does not work. Hence, this workaround.
+    func setHighlightedStateBackgroundColor(_ color: UIColor) {
+        let view = UIView()
+        view.backgroundColor = color
+        selectedBackgroundView = view
     }
 }

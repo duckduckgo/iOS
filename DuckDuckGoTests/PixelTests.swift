@@ -19,7 +19,7 @@
 
 import XCTest
 import OHHTTPStubs
-import Core
+@testable import Core
 import Alamofire
 
 class PixelTests: XCTestCase {
@@ -33,6 +33,31 @@ class PixelTests: XCTestCase {
         super.tearDown()
     }
 
+    func testWhenTimedPixelFiredThenCorrectDurationIsSet() {
+        let expectation = XCTestExpectation()
+        
+        let date = Date(timeIntervalSince1970: 0)
+        let now = Date(timeIntervalSince1970: 1)
+        
+        stub(condition: { request -> Bool in
+            if let url = request.url {
+                XCTAssertEqual("1.0", url.getParam(name: "dur"))
+                return true
+            }
+            
+            XCTFail("Did not found param dur")
+            return true
+        }, response: { _ -> OHHTTPStubsResponse in
+            expectation.fulfill()
+            return OHHTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
+        })
+        
+        let pixel = TimedPixel(.appLaunch, date: date)
+        pixel.fire(now)
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
     func testWhenPixelFiredThenAPIHeadersAreAdded() {
         let expectation = XCTestExpectation()
         

@@ -19,7 +19,7 @@
 
 import UIKit
 
-class OnboardingSummaryPadViewController: UIViewController, Onboarding {
+class OnboardingPadViewController: UIViewController, Onboarding {
 
     weak var delegate: OnboardingDelegate?
 

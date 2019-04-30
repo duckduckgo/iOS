@@ -147,6 +147,14 @@ class SettingsViewController: UITableViewController {
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        
+        if cell.accessoryType == .disclosureIndicator {
+            let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
+            accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
+            accesoryImage.tintColor = theme.tableCellAccessoryColor
+            cell.accessoryView = accesoryImage
+        }
     }
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection: Int) {
@@ -187,14 +195,14 @@ extension SettingsViewController: Themable {
     func decorate(with theme: Theme) {
         
         for label in labels {
-            label.textColor = theme.tableCellTintColor
+            label.textColor = theme.tableCellTextColor
         }
         
         for label in accessoryLabels {
             label.textColor = theme.tableCellAccessoryTextColor
         }
         
-        versionText.textColor = theme.tableCellTintColor
+        versionText.textColor = theme.tableCellTextColor
         
         lightThemeToggle.onTintColor = theme.buttonTintColor
         autocompleteToggle.onTintColor = theme.buttonTintColor

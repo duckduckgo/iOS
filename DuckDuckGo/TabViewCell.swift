@@ -54,7 +54,7 @@ class TabViewCell: UICollectionViewCell {
     @IBOutlet weak var unread: UIView!
 
     func update(withTab tab: Tab) {
-        accessibilityElements = [ title, link, removeButton, unread ]
+        accessibilityElements = [ title as Any, removeButton as Any ]
         
         removeTabObserver()
         tab.addObserver(self)

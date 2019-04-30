@@ -174,7 +174,8 @@ public struct UserText {
     public static let keyCommandSelect = NSLocalizedString("keyCommandSelect", comment: "Select")
 
     public static let contextualOnboardingSearchPrivately = NSLocalizedString("contextualOnboardingSearchPrivately", comment: "Searching with DuckDuckGo means your searches are never tracked. Ever.")
-    public static let contextualOnboardingCustomize = NSLocalizedString("contextualOnboardingCustomize", comment: "Pick a theme to make the DuckDuckGo Privacy browser yours.")
+    public static let contextualOnboardingCustomizeLight = NSLocalizedString("contextualOnboardingCustomizeLight", comment: "Want a different look? Try the light theme!")
+    public static let contextualOnboardingCustomizeDark = NSLocalizedString("contextualOnboardingCustomizeDark", comment: "Want a different look? Try the dark theme!")
     public static let contextualOnboardingPrivacyGrade = NSLocalizedString("contextualOnboardingPrivacyGrade", comment: "DuckDuckGo enhances your privacy as you browse. Tap the privacy grade icon to learn how.")
     public static let contextualOnboardingFireButton = NSLocalizedString("contextualOnboardingFireButton", comment: "Tap the flame icon to erase your tabs and browsing data, or make it automatic in settings.")
 
@@ -213,5 +214,8 @@ public struct UserText {
 
     public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
     public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
+
+    public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue button")
+    public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")
 
 }

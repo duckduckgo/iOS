@@ -42,6 +42,9 @@ struct LightTheme: Theme {
     var searchBarTextDeemphasisColor = UIColor.greyish3
     var searchBarBorderColor = UIColor.lightGreyish
     var searchBarClearTextIconColor = UIColor.greyish2
+    
+    var progressBarGradientDarkColor = UIColor.cornflowerBlue
+    var progressBarGradientLightColor = UIColor.skyBlueLight
 
     var autocompleteCellAccessoryColor = UIColor.darkGreyish
     

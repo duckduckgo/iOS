@@ -50,6 +50,9 @@ protocol Theme {
     var searchBarBorderColor: UIColor { get }
     var searchBarClearTextIconColor: UIColor { get }
     
+    var progressBarGradientDarkColor: UIColor { get }
+    var progressBarGradientLightColor: UIColor { get }
+    
     var autocompleteCellAccessoryColor: UIColor { get }
     
     var tableCellBackgroundColor: UIColor { get }

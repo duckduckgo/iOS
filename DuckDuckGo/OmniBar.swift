@@ -61,6 +61,10 @@ class OmniBar: UIView {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
                                                              attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
+        
+        if #available(iOS 11.0, *) {
+            textField.textDragInteraction?.isEnabled = false
+        }
     }
     
     private func configureSeparator() {

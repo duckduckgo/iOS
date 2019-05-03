@@ -896,6 +896,7 @@ extension MainViewController: Themable {
         customNavigationBar?.tintColor = theme.barTintColor
         
         omniBar?.decorate(with: theme)
+        progressView?.decorate(with: theme)
         
         toolbar?.barTintColor = theme.barBackgroundColor
         toolbar?.tintColor = theme.barTintColor

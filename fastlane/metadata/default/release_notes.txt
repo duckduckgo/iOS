@@ -1,1 +1,3 @@
-• Improvements to Progress Bar visibility.
+• Made the address bar more natural to interact with.
+• Added 'Print' option to the 'Share...' menu.
+• Further improvements to Progress Bar visibility.

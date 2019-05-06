@@ -43,6 +43,9 @@ struct DarkTheme: Theme {
     var searchBarBorderColor = UIColor.darkGreyish
     var searchBarClearTextIconColor = UIColor.greyish2
     
+    var progressBarGradientDarkColor = UIColor.orange
+    var progressBarGradientLightColor = UIColor.orangeLight
+    
     var autocompleteCellAccessoryColor = UIColor.lightMercury
 
     var tableCellBackgroundColor = UIColor.nearlyBlackLight

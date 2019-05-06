@@ -111,8 +111,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     
     private func updateProgressMask(animated: Bool) {
         let runningAnimations = progressMask.animationKeys() ?? []
-        let progressRelatedAnimations = runningAnimations.filter({ $0 == Constants.progressAnimationKey || $0 == Constants.fadeOutAnimationKey
-        })
+        let progressRelatedAnimations = runningAnimations.filter({ $0 == Constants.progressAnimationKey || $0 == Constants.fadeOutAnimationKey })
         
         guard progressRelatedAnimations.isEmpty,
             currentProgress > visibleProgress else {

@@ -35,6 +35,9 @@ extension UIViewController {
     public func presentShareSheet(withItems activityItems: [Any], fromView sourceView: UIView, atPoint point: Point? = nil) {
         let activities = [SaveBookmarkActivity()]
         let shareController = UIActivityViewController(activityItems: activityItems, applicationActivities: activities)
+        if #available(iOS 11.0, *) {
+            shareController.excludedActivityTypes = [.markupAsPDF]
+        }
         present(controller: shareController, fromView: sourceView, atPoint: point)
     }
 

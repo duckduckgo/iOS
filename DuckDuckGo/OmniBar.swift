@@ -43,7 +43,7 @@ class OmniBar: UIView {
     weak var omniDelegate: OmniBarDelegate?
     fileprivate var state: OmniBarState = HomeNonEditingState()
     private lazy var appUrls: AppUrls = AppUrls()
-
+    
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
     }
@@ -61,6 +61,10 @@ class OmniBar: UIView {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
                                                              attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
+        
+        if #available(iOS 11.0, *) {
+            textField.textDragInteraction?.isEnabled = false
+        }
     }
     
     private func configureSeparator() {
@@ -308,6 +312,14 @@ extension OmniBar: Themable {
         
         updateSearchBarBorder()
     }
+}
+
+extension OmniBar: UIGestureRecognizerDelegate {
+ 
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return !textField.isFirstResponder
+    }
+    
 }
 
 extension String {

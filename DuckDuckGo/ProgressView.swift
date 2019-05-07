@@ -47,6 +47,7 @@ class ProgressView: UIView, CAAnimationDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        decorate(with: ThemeManager.shared.currentTheme)
         configureLayers()
     }
     
@@ -64,13 +65,6 @@ class ProgressView: UIView, CAAnimationDelegate {
         progressLayer.anchorPoint = .zero
         progressLayer.mask = progressMask
         
-        var colors = [CGColor]()
-        for _ in 0...6 {
-            colors.append(UIColor.cornflowerBlue.cgColor)
-            colors.append(UIColor.skyBlueLight.cgColor)
-        }
-        
-        progressLayer.colors = colors
         progressLayer.locations = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3]
         progressLayer.startPoint = CGPoint(x: 0, y: 0.5)
         progressLayer.endPoint = CGPoint(x: 1, y: 0.5)
@@ -116,9 +110,12 @@ class ProgressView: UIView, CAAnimationDelegate {
     }
     
     private func updateProgressMask(animated: Bool) {
-        guard (progressMask.animationKeys() ?? []).isEmpty,
+        let runningAnimations = progressMask.animationKeys() ?? []
+        let progressRelatedAnimations = runningAnimations.filter({ $0 == Constants.progressAnimationKey || $0 == Constants.fadeOutAnimationKey })
+        
+        guard progressRelatedAnimations.isEmpty,
             currentProgress > visibleProgress else {
-            return
+                return
         }
         
         let progressFrame = calculateProgressMaskRect()
@@ -201,5 +198,18 @@ class ProgressView: UIView, CAAnimationDelegate {
     // MARK: IB
     override func prepareForInterfaceBuilder() {
         backgroundColor = .cornflowerBlue
+    }
+}
+
+extension ProgressView: Themable {
+    
+    func decorate(with theme: Theme) {
+        var colors = [CGColor]()
+        for _ in 0...6 {
+            colors.append(theme.progressBarGradientDarkColor.cgColor)
+            colors.append(theme.progressBarGradientLightColor.cgColor)
+        }
+        
+        progressLayer.colors = colors
     }
 }

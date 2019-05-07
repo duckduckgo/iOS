@@ -238,6 +238,7 @@
         <tapGestureRecognizer id="xpX-Ub-pSL" userLabel="Text Field Tap Recogniser">
             <connections>
                 <action selector="textFieldTapped" destination="ojX-nM-dyN" id="rWo-vd-pnL"/>
+                <outlet property="delegate" destination="ojX-nM-dyN" id="DQk-Hy-3f6"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

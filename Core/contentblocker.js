@@ -246,14 +246,15 @@ var duckduckgoContentBlocking = function() {
 
 	// public
 	function shouldBlock(trackerUrl, type, blockFunc) {
-        var startTime = new Date().getTime();
+        var startTime = performance.now()
         
 		if (trackerWhitelisted(trackerUrl, type)) {
 			blockFunc(trackerUrl, false)
             
-            var endTime = new Date().getTime();
+            var endTime = performance.now()
             var diff = endTime - startTime
             duckduckgoMessaging.signpostEvent({event: "Request Allowed",
+                                              url: trackerUrl,
                                               time: diff})
 			return false
 		}
@@ -275,9 +276,10 @@ var duckduckgoContentBlocking = function() {
 		if (result == null) {
 			blockFunc(trackerUrl, false)
             
-            var endTime = new Date().getTime();
+            var endTime = performance.now()
             var diff = endTime - startTime
             duckduckgoMessaging.signpostEvent({event: "Request Allowed",
+                                              url: trackerUrl,
                                               time: diff})
 			return false;
 		}
@@ -292,13 +294,15 @@ var duckduckgoContentBlocking = function() {
 	        type: type
         })
         
-        var endTime = new Date().getTime();
+        var endTime = performance.now()
         var diff = endTime - startTime
         if (result.block) {
             duckduckgoMessaging.signpostEvent({event: "Request Blocked",
+                                              url: trackerUrl,
                                               time: diff})
         } else {
             duckduckgoMessaging.signpostEvent({event: "Request Allowed",
+                                              url: trackerUrl,
                                               time: diff})
         }
 

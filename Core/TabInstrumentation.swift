@@ -22,14 +22,22 @@ import os.signpost
 
 public class TabInstrumentation {
     
-    static let tabsLog = OSLog(subsystem: "com.duckduckgo.tabs", category: "Tab")
+    static let tabsLog = OSLog(subsystem: "com.duckduckgo.instrumentation",
+                               category: "TabInstrumentation")
+    
+    static var tabMaxIdentifier: UInt64 = 0
     
     private var siteLoadingSPID: Any?
+    private var currentURL: String?
+    private var currentTabIdentifier: UInt64
     
     public init() {
+        type(of: self).tabMaxIdentifier += 1
+        currentTabIdentifier = type(of: self).tabMaxIdentifier
     }
     
     public func willLoad(url: URL) {
+        currentURL = url.absoluteString
         if #available(iOSApplicationExtension 12.0, *) {
             let id = OSSignpostID(log: type(of: self).tabsLog)
             siteLoadingSPID = id
@@ -37,7 +45,7 @@ public class TabInstrumentation {
                         log: type(of: self).tabsLog,
                         name: "Load Page",
                         signpostID: id,
-                        "%s", url.absoluteString)
+                        "Loading URL: %@ in %llu", url.absoluteString, currentTabIdentifier)
         }
     }
     
@@ -47,7 +55,22 @@ public class TabInstrumentation {
             os_signpost(.end,
                         log: type(of: self).tabsLog,
                         name: "Load Page",
-                        signpostID: id)
+                        signpostID: id,
+                        "Loading Finished: %{private}@", "T")
+        }
+    }
+    
+    public func request(url: String, allowedIn time: UInt64) {
+        if #available(iOSApplicationExtension 12.0, *) {
+            let currentURL = self.currentURL ?? "unknown"
+            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Allowed", time > 0 ? time : 1)
+        }
+    }
+    
+    public func request(url: String, blockedIn time: UInt64) {
+        if #available(iOSApplicationExtension 12.0, *) {
+            let currentURL = self.currentURL ?? "unknown"
+            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Blocked", time > 0 ? time : 1)
         }
     }
     

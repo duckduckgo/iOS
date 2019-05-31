@@ -28,28 +28,22 @@ public class Instruments {
 
     private init() {
         if #available(iOSApplicationExtension 12.0, *) {
-            eventsLog = OSLog(subsystem: "com.duckduckgo.eventsLog",
-                              category: .pointsOfInterest)
+            eventsLog = OSLog(subsystem: "com.duckduckgo.instrumentation",
+                              category: "Behavior")
         }
     }
     
-    public func requestAllowed(in time: TimeInterval) {
+    public func request(url: String, allowedIn time: TimeInterval) {
         if #available(iOSApplicationExtension 12.0, *),
             let log = eventsLog {
-            os_signpost(.event,
-                        log: log,
-                        name: "Request Allowed",
-                        "%.3f", time)
+            os_log(.debug, log: log, "Request %@ - %@ : %llu", url, "Allowed", UInt64(time * 1000 * 1000 * 1000))
         }
     }
     
-    public func requestBlocked(in time: TimeInterval) {
+    public func request(url: String, blockedIn time: TimeInterval) {
         if #available(iOSApplicationExtension 12.0, *),
             let log = eventsLog {
-            os_signpost(.event,
-                        log: log,
-                        name: "Request Blocked",
-                        "%.3f", time)
+            os_log(.debug, log: log, "Request %@ - %@ : %llu", url, "Blocked", UInt64(time * 1000 * 1000 * 1000))
         }
     }
     

@@ -600,12 +600,14 @@ extension TabViewController: WKScriptMessageHandler {
         let eventName = dict["event"] as? String else { return }
         
         if eventName == "Request Allowed" {
-            if let elapsedTime = dict["time"] as? TimeInterval {
-                Instruments.shared.requestAllowed(in: elapsedTime/1000)
+            if let elapsedTime = dict["time"] as? TimeInterval,
+                let url = dict["url"] as? String {
+                instrumentation.request(url: url, allowedIn: UInt64(elapsedTime * 1000 * 1000))
             }
         } else if eventName == "Request Blocked" {
-            if let elapsedTime = dict["time"] as? TimeInterval {
-                Instruments.shared.requestBlocked(in: elapsedTime/1000)
+            if let elapsedTime = dict["time"] as? TimeInterval,
+                let url = dict["url"] as? String {
+                instrumentation.request(url: url, blockedIn: UInt64(elapsedTime * 1000 * 1000))
             }
         }
 

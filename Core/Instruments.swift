@@ -22,6 +22,12 @@ import os.signpost
 
 public class Instruments {
     
+    public enum ContentBlockerFetchResult: String {
+        case error
+        case cached
+        case success
+    }
+    
     static public let shared = Instruments()
     
     private var eventsLog: OSLog?
@@ -29,21 +35,34 @@ public class Instruments {
     private init() {
         if #available(iOSApplicationExtension 12.0, *) {
             eventsLog = OSLog(subsystem: "com.duckduckgo.instrumentation",
-                              category: "Behavior")
+                              category: "Events")
         }
     }
     
-    public func request(url: String, allowedIn time: TimeInterval) {
+    public func willFetchContentBlockerData(for name: String) -> Any? {
         if #available(iOSApplicationExtension 12.0, *),
             let log = eventsLog {
-            os_log(.debug, log: log, "Request %@ - %@ : %llu", url, "Allowed", UInt64(time * 1000 * 1000 * 1000))
+            let id = OSSignpostID(log: log)
+
+            os_signpost(.begin,
+                        log: log,
+                        name: "Load Content Blocker Configuration",
+                        signpostID: id,
+                        "Loading: %@", name)
+            return id
         }
+        return nil
     }
     
-    public func request(url: String, blockedIn time: TimeInterval) {
+    public func didFetchContentBlockerData(for spid: Any?, result: ContentBlockerFetchResult) {
         if #available(iOSApplicationExtension 12.0, *),
-            let log = eventsLog {
-            os_log(.debug, log: log, "Request %@ - %@ : %llu", url, "Blocked", UInt64(time * 1000 * 1000 * 1000))
+            let log = eventsLog,
+            let id = spid as? OSSignpostID {
+            os_signpost(.end,
+                        log: log,
+                        name: "Load Content Blocker Configuration",
+                        signpostID: id,
+                        "Result: %@", result.rawValue)
         }
     }
     

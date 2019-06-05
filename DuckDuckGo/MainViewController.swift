@@ -66,6 +66,7 @@ class MainViewController: UIViewController {
     }
     
     var homeController: HomeViewController?
+    var favoritesOverlay: FavoritesOverlay?
     var autocompleteController: AutocompleteViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
@@ -398,6 +399,7 @@ class MainViewController: UIViewController {
 
     fileprivate func dismissOmniBar() {
         omniBar.resignFirstResponder()
+        dismissFavoritesOverlay()
         dismissAutcompleteSuggestions()
         refreshOmniBar()
     }
@@ -410,6 +412,25 @@ class MainViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         dismissOmniBar()
+    }
+    
+    fileprivate func displayFavoritesOverlay() {
+        if favoritesOverlay == nil && appSettings.homePage.components.contains(.favorites) {
+            let controller = FavoritesOverlay()
+            controller.install(into: self)
+            addChild(controller)
+            containerView.addSubview(controller.view)
+            controller.didMove(toParent: self)
+            favoritesOverlay = controller
+        }
+    }
+    
+    fileprivate func dismissFavoritesOverlay() {
+        guard let controller = favoritesOverlay else { return }
+        favoritesOverlay = nil
+        controller.willMove(toParent: nil)
+        controller.view.removeFromSuperview()
+        controller.removeFromParent()
     }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
@@ -633,6 +654,7 @@ extension MainViewController: OmniBarDelegate {
 
     func onOmniQuerySubmitted(_ query: String) {
         loadQuery(query)
+        dismissFavoritesOverlay()
         dismissAutcompleteSuggestions()
         showHomeRowReminder()
     }
@@ -659,18 +681,33 @@ extension MainViewController: OmniBarDelegate {
     
     func onCancelPressed() {
         dismissOmniBar()
+        dismissFavoritesOverlay()
         autocompleteController?.keyboardEscape()
         homeController?.omniBarCancelPressed()
     }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
-        homeController?.launchNewSearch()
+        if let homeController = homeController {
+            homeController.launchNewSearch()
+        } else {
+            displayFavoritesOverlay()
+        }
     }
     
     func onRefreshPressed() {
         currentTab?.refresh()
     }
     
+}
+
+extension MainViewController: FavoritesOverlayDelegate {
+    
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
+        homeController?.chromeDelegate = nil
+        dismissOmniBar()
+        loadUrl(link.url)
+        showHomeRowReminder()
+    }
 }
 
 extension MainViewController: AutocompleteViewControllerDelegate {
@@ -702,6 +739,7 @@ extension MainViewController: HomeControllerDelegate {
     }
 
     func homeDidDeactivateOmniBar(home: HomeViewController) {
+        dismissFavoritesOverlay()
         dismissAutcompleteSuggestions()
         omniBar.resignFirstResponder()
     }

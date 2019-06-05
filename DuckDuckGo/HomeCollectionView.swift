@@ -42,6 +42,9 @@ class HomeCollectionView: UICollectionView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        register(UINib(nibName: "FavoriteHomeCell", bundle: nil),
+                 forCellWithReuseIdentifier: "favorite")
+        
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     

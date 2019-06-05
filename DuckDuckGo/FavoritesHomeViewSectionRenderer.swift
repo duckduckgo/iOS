@@ -20,7 +20,13 @@
 import UIKit
 import Core
 
-class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
+protocol FavoritesHomeViewSectionRendererDelegate: class {
+    
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
+                           didSelect link: Link)
+}
+
+class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     struct Constants {
         
@@ -31,16 +37,25 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private lazy var bookmarksManager = BookmarksManager()
 
-    private weak var controller: HomeViewController!
+    private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)!
     
     private weak var reorderingCell: FavoriteHomeCell?
     
-    // Plus one for the add button
+    private let allowsEditing: Bool
+    
+    init(allowsEditing: Bool = true) {
+        self.allowsEditing = allowsEditing
+    }
+    
     private var numberOfItems: Int {
-        return bookmarksManager.favoritesCount + 1
+        return bookmarksManager.favoritesCount + (allowsEditing ? 1 : 0)
     }
     
     func install(into controller: HomeViewController) {
+        self.controller = controller
+    }
+    
+    func install(into controller: UIViewController & FavoritesHomeViewSectionRendererDelegate) {
         self.controller = controller
     }
     
@@ -56,10 +71,10 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
 
         let margin: CGFloat
         if isPad {
-            margin = (controller.collectionView.frame.width - Constants.searchWidthPad) / 2
+            margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
         } else {
             let defaultMargin = HomeViewSectionRenderers.Constants.sideInsets
-            let landscapeMargin = (controller.collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
+            let landscapeMargin = (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
             margin = isPortrait ? defaultMargin : landscapeMargin
         }
 
@@ -72,7 +87,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if isLastItem(indexPath) {
+        if isAddFavoriteItem(indexPath) {
             return collectionView.dequeueReusableCell(withReuseIdentifier: "addFavorite", for: indexPath)
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
@@ -129,11 +144,15 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        guard allowsEditing else {
+            return false
+        }
+        
         if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
             cell.isReordering = true
             reorderingCell = cell
         }
-        return !isLastItem(indexPath)
+        return !isAddFavoriteItem(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -143,7 +162,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
                         toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath? {
         guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
-        guard !isLastItem(proposedIndexPath) else { return originalIndexPath }
+        guard !isAddFavoriteItem(proposedIndexPath) else { return originalIndexPath }
         return proposedIndexPath
     }
 
@@ -168,7 +187,10 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
         ]
     }
     
-    private func isLastItem(_ indexPath: IndexPath) -> Bool {
+    private func isAddFavoriteItem(_ indexPath: IndexPath) -> Bool {
+        guard allowsEditing else {
+            return false
+        }
         return indexPath.row + 1 == numberOfItems
     }
     
@@ -177,7 +199,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isLastItem(indexPath) {
+        if isAddFavoriteItem(indexPath) {
             addNewFavorite(in: collectionView, at: indexPath)
         } else {
             launchFavorite(in: collectionView, at: indexPath)
@@ -187,7 +209,7 @@ class FavoritesHomeViewSectionRenderer: HomeViewSectionRenderer {
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
         guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
-        controller.launch(link)
+        controller.favoritesRenderer(self, didSelect: link)
     }
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {

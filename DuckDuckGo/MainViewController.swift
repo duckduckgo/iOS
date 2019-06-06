@@ -898,6 +898,8 @@ extension MainViewController: GestureToolbarButtonDelegate {
 extension MainViewController: AutoClearWorker {
     
     func clearNavigationStack() {
+        dismissOmniBar()
+        
         if let presented = presentedViewController {
             presented.dismiss(animated: false) { [weak self] in
                 self?.clearNavigationStack()

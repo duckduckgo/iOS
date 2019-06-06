@@ -415,7 +415,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        if favoritesOverlay == nil && appSettings.homePage.components.contains(.favorites) {
+        if favoritesOverlay == nil && appSettings.homePage.components.contains(.favorites) && BookmarksManager().favoritesCount > 0 {
             let controller = FavoritesOverlay()
             controller.install(into: self)
             controller.view.alpha = 0

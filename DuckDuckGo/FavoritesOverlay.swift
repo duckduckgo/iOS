@@ -1,5 +1,5 @@
 //
-//  BookmarksButton.swift
+//  FavoritesOverlay.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.

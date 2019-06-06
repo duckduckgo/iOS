@@ -418,9 +418,14 @@ class MainViewController: UIViewController {
         if favoritesOverlay == nil && appSettings.homePage.components.contains(.favorites) {
             let controller = FavoritesOverlay()
             controller.install(into: self)
+            controller.view.alpha = 0
             addChild(controller)
             containerView.addSubview(controller.view)
             controller.didMove(toParent: self)
+            
+            UIView.animate(withDuration: 0.2) {
+                controller.view.alpha = 1
+            }
             favoritesOverlay = controller
         }
     }
@@ -428,9 +433,14 @@ class MainViewController: UIViewController {
     fileprivate func dismissFavoritesOverlay() {
         guard let controller = favoritesOverlay else { return }
         favoritesOverlay = nil
-        controller.willMove(toParent: nil)
-        controller.view.removeFromSuperview()
-        controller.removeFromParent()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            controller.view.alpha = 0
+        }, completion: { _ in
+            controller.willMove(toParent: nil)
+            controller.view.removeFromSuperview()
+            controller.removeFromParent()
+        })
     }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {

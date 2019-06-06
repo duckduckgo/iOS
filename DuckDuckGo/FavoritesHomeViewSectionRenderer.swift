@@ -148,11 +148,15 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             return false
         }
         
-        if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
+        if isAddFavoriteItem(indexPath) {
+            addNewFavorite(in: collectionView, at: indexPath)
+            return false
+        } else if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
             cell.isReordering = true
             reorderingCell = cell
+            return true
         }
-        return !isAddFavoriteItem(indexPath)
+        return false
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {

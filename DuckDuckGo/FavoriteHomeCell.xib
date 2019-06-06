@@ -71,13 +71,33 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bW3-He-Unt" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                        <rect key="frame" x="35" y="0.0" width="64" height="64"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="0.3983304794520548" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="bW3-He-Unt" firstAttribute="height" secondItem="0FF-Ic-U0T" secondAttribute="height" id="6j2-Gj-J66"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="width" secondItem="ico-ty-UiT" secondAttribute="width" id="Dtk-7h-WnU"/>
+                <constraint firstItem="bW3-He-Unt" firstAttribute="width" secondItem="0FF-Ic-U0T" secondAttribute="width" id="H80-28-e1f"/>
                 <constraint firstItem="0FF-Ic-U0T" firstAttribute="centerX" secondItem="ico-ty-UiT" secondAttribute="centerX" id="HBE-64-SHx"/>
+                <constraint firstItem="bW3-He-Unt" firstAttribute="top" secondItem="0FF-Ic-U0T" secondAttribute="top" id="Rhd-cr-2JX"/>
                 <constraint firstItem="0FF-Ic-U0T" firstAttribute="top" secondItem="ico-ty-UiT" secondAttribute="top" id="RzA-6W-flZ"/>
                 <constraint firstItem="k9L-x7-zPq" firstAttribute="centerY" secondItem="0FF-Ic-U0T" secondAttribute="centerY" constant="1.5" id="Tcw-YD-3Kr"/>
+                <constraint firstItem="bW3-He-Unt" firstAttribute="leading" secondItem="0FF-Ic-U0T" secondAttribute="leading" id="W1u-6F-xWR"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="top" secondItem="0FF-Ic-U0T" secondAttribute="bottom" constant="8" id="bb8-RC-f4d"/>
                 <constraint firstItem="k9L-x7-zPq" firstAttribute="centerX" secondItem="0FF-Ic-U0T" secondAttribute="centerX" id="c6B-NM-xBL"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="centerX" secondItem="ico-ty-UiT" secondAttribute="centerX" id="liy-lM-Qld"/>
@@ -85,6 +105,7 @@
             <viewLayoutGuide key="safeArea" id="gCv-P6-JCK"/>
             <size key="customSize" width="134" height="110"/>
             <connections>
+                <outlet property="highlightMask" destination="bW3-He-Unt" id="S8k-yC-G19"/>
                 <outlet property="iconBackground" destination="0FF-Ic-U0T" id="NZd-EV-VJL"/>
                 <outlet property="iconImage" destination="SnK-Bc-1oh" id="YCV-0I-sqI"/>
                 <outlet property="iconLabel" destination="k9L-x7-zPq" id="9sN-5H-csC"/>

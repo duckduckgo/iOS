@@ -22,10 +22,11 @@ import os.signpost
 
 public class Instruments {
     
-    public enum ContentBlockerFetchResult: String {
-        case error
-        case cached
-        case success
+    public enum TimedEvent: String {
+        case fetchingContentBlockerData
+        case loadingDisconnectMeStore
+        case loadingEasylistStore
+        case tabInitialisation
     }
     
     static public let shared = Instruments()
@@ -39,30 +40,30 @@ public class Instruments {
         }
     }
     
-    public func willFetchContentBlockerData(for name: String) -> Any? {
+    public func startTimedEvent(_ event: TimedEvent, info: String? = nil) -> Any? {
         if #available(iOSApplicationExtension 12.0, *),
             let log = eventsLog {
             let id = OSSignpostID(log: log)
-
+            
             os_signpost(.begin,
                         log: log,
-                        name: "Load Content Blocker Configuration",
+                        name: "Timed Event",
                         signpostID: id,
-                        "Loading: %@", name)
+                        "Event: %@ info: %@", event.rawValue, info ?? "")
             return id
         }
         return nil
     }
     
-    public func didFetchContentBlockerData(for spid: Any?, result: ContentBlockerFetchResult) {
+    public func endTimedEvent(for spid: Any?, result: String? = nil) {
         if #available(iOSApplicationExtension 12.0, *),
             let log = eventsLog,
             let id = spid as? OSSignpostID {
             os_signpost(.end,
                         log: log,
-                        name: "Load Content Blocker Configuration",
+                        name: "Timed Event",
                         signpostID: id,
-                        "Result: %@", result.rawValue)
+                        "Result: %@", result ?? "")
         }
     }
     

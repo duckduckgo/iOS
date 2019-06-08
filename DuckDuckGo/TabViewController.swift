@@ -168,6 +168,7 @@ class TabViewController: UIViewController {
     }
     
     func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?, consumeCookies: Bool) {
+        instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
@@ -186,6 +187,8 @@ class TabViewController: UIViewController {
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
         reloadScripts()
         updateUserAgent()
+        
+        instrumentation.didPrepareWebView()
 
         if consumeCookies {
             consumeCookiesThenLoadUrl(url)

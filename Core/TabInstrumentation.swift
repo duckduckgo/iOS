@@ -36,6 +36,16 @@ public class TabInstrumentation {
         currentTabIdentifier = type(of: self).tabMaxIdentifier
     }
     
+    private var tabInitSPID: Any?
+    
+    public func willPrepareWebView() {
+        tabInitSPID = Instruments.shared.startTimedEvent(.tabInitialisation, info: "Tab-\(currentTabIdentifier)")
+    }
+    
+    public func didPrepareWebView() {
+        Instruments.shared.endTimedEvent(for: tabInitSPID)
+    }
+    
     public func willLoad(url: URL) {
         currentURL = url.absoluteString
         if #available(iOSApplicationExtension 12.0, *) {
@@ -63,14 +73,14 @@ public class TabInstrumentation {
     public func request(url: String, allowedIn time: UInt64) {
         if #available(iOSApplicationExtension 12.0, *) {
             let currentURL = self.currentURL ?? "unknown"
-            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Allowed", time > 0 ? time : 1)
+            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Allowed", time > 0 ? time : 1000000)
         }
     }
     
     public func request(url: String, blockedIn time: UInt64) {
         if #available(iOSApplicationExtension 12.0, *) {
             let currentURL = self.currentURL ?? "unknown"
-            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Blocked", time > 0 ? time : 1)
+            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Blocked", time > 0 ? time : 1000000)
         }
     }
     

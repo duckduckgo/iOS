@@ -415,19 +415,21 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
-        if favoritesOverlay == nil && appSettings.homePage.components.contains(.favorites) && BookmarksManager().favoritesCount > 0 {
-            let controller = FavoritesOverlay()
-            controller.install(into: self)
-            controller.view.alpha = 0
-            addChild(controller)
-            containerView.addSubview(controller.view)
-            controller.didMove(toParent: self)
-            
-            UIView.animate(withDuration: 0.2) {
-                controller.view.alpha = 1
-            }
-            favoritesOverlay = controller
+        guard favoritesOverlay == nil,
+            appSettings.homePage.components.contains(.favorites),
+            BookmarksManager().favoritesCount > 0 else { return }
+        
+        let controller = FavoritesOverlay()
+        controller.install(into: self)
+        controller.view.alpha = 0
+        addChild(controller)
+        containerView.addSubview(controller.view)
+        controller.didMove(toParent: self)
+        
+        UIView.animate(withDuration: 0.2) {
+            controller.view.alpha = 1
         }
+        favoritesOverlay = controller
     }
     
     fileprivate func dismissFavoritesOverlay() {

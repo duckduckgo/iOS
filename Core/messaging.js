@@ -37,14 +37,6 @@ var duckduckgoMessaging = function() {
 			// webkit might not be defined
 		}
 	}
-    
-    function signpostEvent(data) {
-        try {
-            webkit.messageHandlers.signpostMessage.postMessage(data);
-        } catch(error) {
-            // webkit might not be defined
-        }
-    }
 
 	function log() {
 		try {
@@ -58,8 +50,7 @@ var duckduckgoMessaging = function() {
 
 		cache: cache,
 		trackerDetected: trackerDetected,
-		log: log,
-        signpostEvent: signpostEvent
-
+		log: log
+        
 	}
 }()

@@ -31,6 +31,7 @@ public class JavascriptLoader {
         case apbfilterES2015 = "abp-filter-parser-packed-es2015"
         case tlds
         case messaging
+        case debugMessaging = "debug-messaging"
         case bloom = "bloom-filter-packed"
         case bloomES2015 = "bloom-filter-packed-es2015"
         case cachedEasylist = "easylist-cached"

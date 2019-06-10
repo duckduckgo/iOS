@@ -251,9 +251,9 @@ var duckduckgoContentBlocking = function() {
 		if (trackerWhitelisted(trackerUrl, type)) {
 			blockFunc(trackerUrl, false)
 
-            duckduckgoMessaging.signpostEvent({event: "Request Allowed",
-                                              url: trackerUrl,
-                                              time: performance.now() - startTime})
+            duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
+                                                   url: trackerUrl,
+                                                   time: performance.now() - startTime})
 			return false
 		}
 
@@ -274,9 +274,9 @@ var duckduckgoContentBlocking = function() {
 		if (result == null) {
 			blockFunc(trackerUrl, false)
 
-            duckduckgoMessaging.signpostEvent({event: "Request Allowed",
-                                              url: trackerUrl,
-                                              time: performance.now() - startTime})
+            duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
+                                                   url: trackerUrl,
+                                                   time: performance.now() - startTime})
 			return false;
 		}
 
@@ -291,13 +291,13 @@ var duckduckgoContentBlocking = function() {
         })
         
         if (result.block) {
-            duckduckgoMessaging.signpostEvent({event: "Request Blocked",
-                                              url: trackerUrl,
-                                              time: performance.now() - startTime})
+            duckduckgoDebugMessaging.signpostEvent({event: "Request Blocked",
+                                                   url: trackerUrl,
+                                                   time: performance.now() - startTime})
         } else {
-            duckduckgoMessaging.signpostEvent({event: "Request Allowed",
-                                              url: trackerUrl,
-                                              time: performance.now() - startTime})
+            duckduckgoDebugMessaging.signpostEvent({event: "Request Allowed",
+                                                   url: trackerUrl,
+                                                   time: performance.now() - startTime})
         }
 
 		return result.block

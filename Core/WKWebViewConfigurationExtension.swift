@@ -101,6 +101,19 @@ private class Loader {
         } else {
             load(scripts: [ .messaging, .apbfilterES2015 ], forMainFrameOnly: false)
         }
+        
+        if isDebugBuild {
+            let signpostMessaging = "try { webkit.messageHandlers.signpostMessage.postMessage(data); } catch(error) {}"
+            javascriptLoader.load(script: .debugMessaging,
+                                  withReplacements: [ "${debug_logging_enabled}": signpostMessaging],
+                                  into: userContentController,
+                                  forMainFrameOnly: false)
+        } else {
+            javascriptLoader.load(script: .debugMessaging,
+                                  withReplacements: [ "${debug_logging_enabled}": "return" ],
+                                  into: userContentController,
+                                  forMainFrameOnly: false)
+        }
 
         javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
     }

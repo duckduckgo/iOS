@@ -250,12 +250,10 @@ var duckduckgoContentBlocking = function() {
         
 		if (trackerWhitelisted(trackerUrl, type)) {
 			blockFunc(trackerUrl, false)
-            
-            var endTime = performance.now()
-            var diff = endTime - startTime
+
             duckduckgoMessaging.signpostEvent({event: "Request Allowed",
                                               url: trackerUrl,
-                                              time: diff})
+                                              time: performance.now() - startTime})
 			return false
 		}
 
@@ -275,12 +273,10 @@ var duckduckgoContentBlocking = function() {
 
 		if (result == null) {
 			blockFunc(trackerUrl, false)
-            
-            var endTime = performance.now()
-            var diff = endTime - startTime
+
             duckduckgoMessaging.signpostEvent({event: "Request Allowed",
                                               url: trackerUrl,
-                                              time: diff})
+                                              time: performance.now() - startTime})
 			return false;
 		}
 
@@ -294,16 +290,14 @@ var duckduckgoContentBlocking = function() {
 	        type: type
         })
         
-        var endTime = performance.now()
-        var diff = endTime - startTime
         if (result.block) {
             duckduckgoMessaging.signpostEvent({event: "Request Blocked",
                                               url: trackerUrl,
-                                              time: diff})
+                                              time: performance.now() - startTime})
         } else {
             duckduckgoMessaging.signpostEvent({event: "Request Allowed",
                                               url: trackerUrl,
-                                              time: diff})
+                                              time: performance.now() - startTime})
         }
 
 		return result.block

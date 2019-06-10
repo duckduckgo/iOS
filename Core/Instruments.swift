@@ -24,9 +24,13 @@ public class Instruments {
     
     public enum TimedEvent: String {
         case fetchingContentBlockerData
+        
         case loadingDisconnectMeStore
         case loadingEasylistStore
+        
         case tabInitialisation
+        
+        case clearingData
     }
     
     static public let shared = Instruments()
@@ -64,16 +68,6 @@ public class Instruments {
                         name: "Timed Event",
                         signpostID: id,
                         "Result: %@", result ?? "")
-        }
-    }
-    
-    public func dataCleared(in time: TimeInterval) {
-        if #available(iOSApplicationExtension 12.0, *),
-            let log = eventsLog {
-            os_signpost(.event,
-                        log: log,
-                        name: "Data cleared",
-                        "%.3f", time)
         }
     }
 }

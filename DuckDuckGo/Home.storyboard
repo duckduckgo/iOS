@@ -10,12 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="proximanova-light.otf">
-            <string>ProximaNova-Light</string>
-        </array>
-        <array key="proximanova-regular.otf">
-            <string>ProximaNova-Regular</string>
-        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -157,80 +151,8 @@
                                             <outlet property="imageView" destination="6KE-x7-bYQ" id="wys-xe-PcN"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="favorite" id="gUU-x4-9hP" customClass="FavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="280" y="391" width="134" height="110"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="134" height="110"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSk-Na-aIH" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="35" y="0.0" width="64" height="64"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l4L-qz-0fA">
-                                                            <rect key="frame" x="12" y="12" width="40" height="40"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstItem="l4L-qz-0fA" firstAttribute="height" secondItem="NSk-Na-aIH" secondAttribute="height" constant="-24" id="Hb8-wM-2tA"/>
-                                                        <constraint firstAttribute="width" constant="64" id="VgW-x7-Dhm"/>
-                                                        <constraint firstItem="l4L-qz-0fA" firstAttribute="width" secondItem="NSk-Na-aIH" secondAttribute="width" constant="-24" id="d0Z-o7-pMs"/>
-                                                        <constraint firstAttribute="height" constant="64" id="dvU-cO-Lzn"/>
-                                                        <constraint firstItem="l4L-qz-0fA" firstAttribute="centerX" secondItem="NSk-Na-aIH" secondAttribute="centerX" id="jFd-tY-eE6"/>
-                                                        <constraint firstItem="l4L-qz-0fA" firstAttribute="centerY" secondItem="NSk-Na-aIH" secondAttribute="centerY" id="xho-gw-gbh"/>
-                                                    </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="8"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="0.0"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo - Paoli, PA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ub9-Ui-UI5">
-                                                    <rect key="frame" x="0.0" y="72" width="134" height="26"/>
-                                                    <accessibility key="accessibilityConfiguration">
-                                                        <bool key="isElement" value="NO"/>
-                                                    </accessibility>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="13"/>
-                                                    <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37H-y3-Odu">
-                                                    <rect key="frame" x="58.666666666666657" y="18.666666666666671" width="17" height="30"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Light" family="Proxima Nova" pointSize="30"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="ub9-Ui-UI5" firstAttribute="width" secondItem="gUU-x4-9hP" secondAttribute="width" id="B3j-fd-KeV"/>
-                                            <constraint firstItem="ub9-Ui-UI5" firstAttribute="top" secondItem="NSk-Na-aIH" secondAttribute="bottom" constant="8" id="SAJ-Kl-EwG"/>
-                                            <constraint firstItem="NSk-Na-aIH" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="VO0-c5-12v"/>
-                                            <constraint firstItem="37H-y3-Odu" firstAttribute="centerY" secondItem="NSk-Na-aIH" secondAttribute="centerY" constant="1.5" id="Z6g-HY-CMG"/>
-                                            <constraint firstItem="ub9-Ui-UI5" firstAttribute="centerX" secondItem="gUU-x4-9hP" secondAttribute="centerX" id="cFf-co-zDT"/>
-                                            <constraint firstItem="37H-y3-Odu" firstAttribute="centerX" secondItem="NSk-Na-aIH" secondAttribute="centerX" id="raW-fO-Fna"/>
-                                            <constraint firstItem="NSk-Na-aIH" firstAttribute="top" secondItem="gUU-x4-9hP" secondAttribute="top" id="urI-QN-bAv"/>
-                                        </constraints>
-                                        <size key="customSize" width="134" height="110"/>
-                                        <connections>
-                                            <outlet property="iconBackground" destination="NSk-Na-aIH" id="qjE-eh-CQg"/>
-                                            <outlet property="iconImage" destination="l4L-qz-0fA" id="rO9-mr-h8C"/>
-                                            <outlet property="iconLabel" destination="37H-y3-Odu" id="xhr-13-f9i"/>
-                                            <outlet property="titleLabel" destination="ub9-Ui-UI5" id="ipc-Fc-slx"/>
-                                            <outletCollection property="iconConstraints" destination="Hb8-wM-2tA" collectionClass="NSMutableArray" id="Pu1-PR-zyA"/>
-                                            <outletCollection property="iconConstraints" destination="d0Z-o7-pMs" collectionClass="NSMutableArray" id="HBY-hM-6WY"/>
-                                        </connections>
-                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addFavorite" id="nQ3-Nq-pP3" customClass="AddFavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="605" width="167" height="86"/>
+                                        <rect key="frame" x="220" y="403" width="167" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="167" height="86"/>
@@ -269,14 +191,40 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EnF-D9-ba1" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="51.666666666666657" y="0.0" width="64" height="64"/>
+                                                    <color key="backgroundColor" white="0.67000000000000004" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Add Favorite">
+                                                        <accessibilityTraits key="traits" button="YES"/>
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="EnF-D9-ba1" firstAttribute="width" secondItem="xFb-1e-ukI" secondAttribute="width" id="0Pb-u5-4CV"/>
+                                            <constraint firstItem="EnF-D9-ba1" firstAttribute="leading" secondItem="xFb-1e-ukI" secondAttribute="leading" id="37b-yr-PIY"/>
                                             <constraint firstItem="xFb-1e-ukI" firstAttribute="top" secondItem="nQ3-Nq-pP3" secondAttribute="top" id="AiQ-1S-Foo"/>
+                                            <constraint firstItem="EnF-D9-ba1" firstAttribute="top" secondItem="xFb-1e-ukI" secondAttribute="top" id="LYh-Iz-xD0"/>
                                             <constraint firstItem="xFb-1e-ukI" firstAttribute="centerX" secondItem="nQ3-Nq-pP3" secondAttribute="centerX" id="YHB-fQ-Ziz"/>
+                                            <constraint firstItem="EnF-D9-ba1" firstAttribute="height" secondItem="xFb-1e-ukI" secondAttribute="height" id="xIW-Aq-Zgj"/>
                                         </constraints>
                                         <size key="customSize" width="167" height="86"/>
                                         <connections>
+                                            <outlet property="highlightMask" destination="EnF-D9-ba1" id="9t9-Ji-o03"/>
                                             <outlet property="plusBackground" destination="xFb-1e-ukI" id="go8-q4-Szx"/>
                                             <outlet property="plusImage" destination="O5x-Qc-r6G" id="wo2-BP-32F"/>
                                         </connections>

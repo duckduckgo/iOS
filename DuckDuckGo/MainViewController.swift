@@ -823,8 +823,16 @@ extension MainViewController: BookmarksDelegate {
 
 extension MainViewController: TabSwitcherButtonDelegate {
     
-    func showTabSwitcher() {
+    func launchNewTab(_ button: TabSwitcherButton) {
+        newTab()
+    }
+
+    func showTabSwitcher(_ button: TabSwitcherButton) {
         Pixel.fire(pixel: .tabBarTabSwitcherPressed)
+        showTabSwitcher()
+    }
+
+    func showTabSwitcher() {
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 

@@ -22,8 +22,7 @@ import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
 
-    // Use controller names based on the enabled features. If we somehow have an invalid variant default to the onboarding summary only.
-    var controllerNames = (DefaultVariantManager.init().currentVariant?.features ?? [ FeatureName.onboardingSummary ]).map({ $0.rawValue })
+    var controllerNames = ["onboardingThemes", "onboardingSummary"]
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!

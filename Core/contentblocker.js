@@ -282,7 +282,6 @@ var duckduckgoContentBlocking = function() {
 
 		blockFunc(trackerUrl, result.block)
 
-        
         duckduckgoMessaging.trackerDetected({
 	        url: trackerUrl,
 	        blocked: result.block,

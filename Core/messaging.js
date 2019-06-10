@@ -51,6 +51,6 @@ var duckduckgoMessaging = function() {
 		cache: cache,
 		trackerDetected: trackerDetected,
 		log: log
-        
+
 	}
 }()

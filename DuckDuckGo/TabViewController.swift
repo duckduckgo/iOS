@@ -708,9 +708,7 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         decisionHandler(.allow)
-        let spid = instrumentation.willDecidePolicyForNavigationResponse()
         url = webView.url
-        instrumentation.didDecidePolicyForNavigationResponse(spid: spid)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -791,8 +789,6 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        let spid = instrumentation.willDecidePolicyForNavigationAction()
-        
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,
@@ -804,8 +800,7 @@ extension TabViewController: WKNavigationDelegate {
 
             findInPage?.done()
         }
-        
-        instrumentation.didDecidePolicyForNavigationAction(spid: spid)
+
         decisionHandler(decision)
     }
     

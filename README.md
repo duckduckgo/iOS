@@ -37,6 +37,8 @@ In order to run it:
 4. From Library add 'DDG Timeline' instrument.
 5. Start recording.
 
+See [Instruments Developer Help](https://help.apple.com/instruments/developer/mac/current/) for reference how to create cutom instruments.
+
 ## Contribute
 
 Please refer to [contributing](CONTRIBUTING.md).

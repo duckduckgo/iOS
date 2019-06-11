@@ -3,7 +3,7 @@
 	<id>com.duckduckgo.Instruments</id>
 	<title>Instruments</title>
 	<owner>
-		<name>iOS Team</name>
+		<name>Mobile Team</name>
 	</owner>
 
     <!--  Website Loading events. Used to populate Tab graph lanes  -->
@@ -162,6 +162,7 @@
                 
                 <plot>
                     <value-from>event-name</value-from>
+                    <qualified-by>event-name</qualified-by>
                 </plot>
             </lane>
         </graph>

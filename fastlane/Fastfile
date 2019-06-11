@@ -26,7 +26,7 @@ lane :release do
     submit_for_review: true,
     automatic_release: true, 
     phased_release: true,
-    username: "office@duckduckgo.com",
+    username: "jenkins-itunes@duckduckgo.com",
     force: true,
     skip_screenshots: true
   )

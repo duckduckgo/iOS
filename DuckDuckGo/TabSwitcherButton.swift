@@ -22,7 +22,8 @@ import Lottie
 
 protocol TabSwitcherButtonDelegate: NSObjectProtocol {
     
-    func showTabSwitcher()
+    func showTabSwitcher(_ button: TabSwitcherButton)
+    func launchNewTab(_ button: TabSwitcherButton)
     
 }
 
@@ -40,9 +41,11 @@ class TabSwitcherButton: UIView {
     }
     
     weak var delegate: TabSwitcherButtonDelegate?
-    
+
+    var workItem: DispatchWorkItem?
+
+    let anim = LOTAnimationView(name: "new_tab")
     let tint = UIView(frame: .zero)
-    var anim = LOTAnimationView(name: "new_tab")
     let label = UILabel()
     
     var tabCount: Int = 0 {
@@ -116,14 +119,25 @@ class TabSwitcherButton: UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         tint(alpha: Constants.tintAlpha)
+        workItem?.cancel()
+        let workItem = DispatchWorkItem {
+            self.delegate?.launchNewTab(self)
+            self.workItem = nil
+        }
+        let longPressDelay = GestureToolbarButton.Constants.minLongPressDuration
+        DispatchQueue.main.asyncAfter(deadline: .now() + longPressDelay, execute: workItem)
+        self.workItem = workItem
     }
-    
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         tint(alpha: 0)
 
+        workItem?.cancel()
+        guard workItem != nil else { return }
+
         guard let touch = touches.first else { return }
         guard point(inside: touch.location(in: self), with: event) else { return }
-        delegate?.showTabSwitcher()
+        delegate?.showTabSwitcher(self)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -171,17 +185,14 @@ extension TabSwitcherButton: Themable {
     func decorate(with theme: Theme) {
         backgroundColor = theme.barBackgroundColor
         tintColor = theme.barTintColor
-        
-        let newAnimationView: LOTAnimationView
+
         switch theme.currentImageSet {
         case .light:
-            newAnimationView = LOTAnimationView(name: "new_tab_dark")
+            anim.setAnimation(named: "new_tab_dark")
         case .dark:
-            newAnimationView = LOTAnimationView(name: "new_tab")
+            anim.setAnimation(named: "new_tab")
         }
-        
-        anim.removeFromSuperview()
-        anim = newAnimationView
+
         addSubview(anim)
         configureAnimationView()
     }

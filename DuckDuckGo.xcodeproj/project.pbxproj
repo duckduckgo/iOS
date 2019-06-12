@@ -4313,6 +4313,7 @@
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Instruments/Packages";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "";
 			};
 			name = Debug;
@@ -4325,6 +4326,7 @@
 				DEVELOPMENT_TEAM = HKE973VLUW;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Instruments/Packages";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "";
 			};
 			name = Release;

@@ -361,10 +361,9 @@
             <column>website-url</column>
             <column>duration</column>
         </list>
-        
-
-        
-
-        
     </instrument>
+    
+    <template>
+        <import-from-file>DDG Trace.tracetemplate</import-from-file>
+    </template>
 </package>

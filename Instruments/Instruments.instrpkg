@@ -77,7 +77,41 @@
     </os-signpost-interval-schema>
     
     <!--  Tracks os_log messages that are logged to matching logger. -->
-    <!--  TODO: make this more generic, introduce event name and narrow down lists by implicit filter matching specified event name. -->
+    <os-log-point-schema>
+        <id>js-event</id>
+        <title>JS Event</title>
+        <message-type>"Debug"</message-type>
+        <!--  Only messages meant for this subsystem are tracked. -->
+        <subsystem>"com.duckduckgo.instrumentation"</subsystem>
+        
+        <pattern>
+            <message>"[" ?website-url "] JSEvent: " ?event-name " executedIn: " ?event-duration</message>
+        </pattern>
+        
+        <column>
+            <mnemonic>website-url</mnemonic>
+            <title>Site</title>
+            <type>raw-string</type>
+            <expression>?website-url</expression>
+        </column>
+        
+        <column>
+            <mnemonic>event-name</mnemonic>
+            <title>Name</title>
+            <type>raw-string</type>
+            <expression>?event-name</expression>
+        </column>
+        
+        <column>
+            <mnemonic>event-duration</mnemonic>
+            <title>Event duration</title>
+            <type>duration</type>
+            <expression>?event-duration</expression>
+        </column>
+    </os-log-point-schema>
+    
+    <!--  Tracker Blocking events. -->
+    <!--  TODO: Migrate this to generic JS Event, that can have meta info {url, status} provided -->
     <os-log-point-schema>
         <id>tracker-lookup-event</id>
         <title>Request Allowed</title>
@@ -86,7 +120,7 @@
         <subsystem>"com.duckduckgo.instrumentation"</subsystem>
         
         <pattern>
-            <message>"[" ?website-url "] Request " ?tracker-lookup-url " - " ?tracker-lookup-result " in " ?tracker-lookup-duration</message>
+            <message>"[" ?website-url "] Request: " ?tracker-lookup-url " - " ?tracker-lookup-result " in " ?tracker-lookup-duration</message>
         </pattern>
         
         <column>
@@ -129,6 +163,11 @@
         <create-table>
             <id>tracker-events-table</id>
             <schema-ref>tracker-lookup-event</schema-ref>
+        </create-table>
+        
+        <create-table>
+            <id>js-events-table</id>
+            <schema-ref>js-event</schema-ref>
         </create-table>
         
         <create-table>
@@ -184,6 +223,14 @@
             <column>tracker-lookup-url</column>
             <column>tracker-lookup-result</column>
             <column>tracker-lookup-duration</column>
+        </list>
+        
+        <list>
+            <title>JS Events</title>
+            <table-ref>js-events-table</table-ref>
+            <column>website-url</column>
+            <column>event-name</column>
+            <column>event-duration</column>
         </list>
         
         <list>

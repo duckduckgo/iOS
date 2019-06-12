@@ -600,17 +600,22 @@ extension TabViewController: WKScriptMessageHandler {
     
     private func handleSignpost(message: WKScriptMessage) {
         guard let dict = message.body as? [String: Any],
-        let eventName = dict["event"] as? String else { return }
+        let event = dict["event"] as? String else { return }
         
-        if eventName == "Request Allowed" {
-            if let elapsedTime = dict["time"] as? TimeInterval,
+        if event == "Request Allowed" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {
-                instrumentation.request(url: url, allowedIn: UInt64(elapsedTime * 1000 * 1000))
+                instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
             }
-        } else if eventName == "Request Blocked" {
-            if let elapsedTime = dict["time"] as? TimeInterval,
+        } else if event == "Request Blocked" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
                 let url = dict["url"] as? String {
-                instrumentation.request(url: url, blockedIn: UInt64(elapsedTime * 1000 * 1000))
+                instrumentation.request(url: url, blockedIn: elapsedTimeInMs)
+            }
+        } else if event == "Generic" {
+            if let name = dict["name"] as? String,
+                let elapsedTimeInMs = dict["time"] as? Double {
+                instrumentation.jsEvent(name: name, executedIn: elapsedTimeInMs)
             }
         }
 

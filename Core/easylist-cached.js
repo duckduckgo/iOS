@@ -38,6 +38,7 @@
     }
 
     function ddgRepair(parserData) {
+        var startTime = performance.now()
         parserData.bloomFilter = new BloomFilterModule.BloomFilter(parserData.bloomFilter)
         parserData.exceptionBloomFilter = new BloomFilterModule.BloomFilter(parserData.exceptionBloomFilter)
 
@@ -46,6 +47,10 @@
         ddgFixSets(parserData.exceptionFilters)
         ddgFixSets(parserData.htmlRuleFilters)
         ddgFixSets(parserData.noFingerprintFilters)
+ 
+         duckduckgoDebugMessaging.signpostEvent({event: "Generic",
+                                                name: "ddgRepair",
+                                                time: performance.now() - startTime})
     }
 
     if (Object.keys(duckduckgoBlockerData.easylist).length > 0) {

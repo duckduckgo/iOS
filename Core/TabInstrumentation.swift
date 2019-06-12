@@ -70,17 +70,38 @@ public class TabInstrumentation {
         }
     }
     
-    public func request(url: String, allowedIn time: UInt64) {
+    // MARK: - JS events
+    
+    public func request(url: String, allowedIn timeInMs: Double) {
+        request(url: url, blocked: false, in: timeInMs)
+    }
+    
+    public func request(url: String, blockedIn timeInMs: Double) {
+        request(url: url, blocked: true, in: timeInMs)
+    }
+    
+    private func request(url: String, blocked: Bool, in timeInMs: Double) {
         if #available(iOSApplicationExtension 12.0, *) {
             let currentURL = self.currentURL ?? "unknown"
-            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Allowed", time > 0 ? time : 1000000)
+            let status = blocked ? "Blocked" : "Allowed"
+            // 0 is treated as 1ms
+            let timeInNS: UInt64 = timeInMs > 0 ? UInt64(timeInMs * 1000 * 1000) : 1000000
+            
+            os_log(.debug,
+                   log: type(of: self).tabsLog,
+                   "[%@] Request: %@ - %@ in %llu", currentURL, url, status, timeInNS)
         }
     }
     
-    public func request(url: String, blockedIn time: UInt64) {
+    public func jsEvent(name: String, executedIn timeInMs: Double) {
         if #available(iOSApplicationExtension 12.0, *) {
             let currentURL = self.currentURL ?? "unknown"
-            os_log(.debug, log: type(of: self).tabsLog, "[%@] Request %@ - %@ in %llu", currentURL, url, "Blocked", time > 0 ? time : 1000000)
+            // 0 is treated as 1ms
+            let timeInNS: UInt64 = timeInMs > 0 ? UInt64(timeInMs * 1000 * 1000) : 1000000
+            
+            os_log(.debug,
+                   log: type(of: self).tabsLog,
+                   "[%@] JSEvent: %@ executedIn: %llu", currentURL, name, timeInNS)
         }
     }
 }

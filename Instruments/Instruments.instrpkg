@@ -242,5 +242,71 @@
             <column>duration</column>
         </list>
         
+        <aggregation>
+            <title>Core Events (aggregation)</title>
+            <table-ref>ddg-events-table</table-ref>
+            
+            <hierarchy>
+                <level>
+                    <column>event-name</column>
+                </level>
+                
+                <level>
+                    <column>event-info</column>
+                </level>
+            </hierarchy>
+            
+            <column>
+                <title>Count</title>
+                <count></count>
+            </column>
+            
+            <column>
+                <title>Average duration</title>
+                <average>duration</average>
+            </column>
+            
+            <column>
+                <title>Max duration</title>
+                <max>duration</max>
+            </column>
+            
+            <column>
+                <title>Total time</title>
+                <sum>duration</sum>
+            </column>
+        </aggregation>
+        
+        <aggregation>
+            <title>Tracker Blocking (aggregation)</title>
+            <table-ref>tracker-events-table</table-ref>
+            
+            <hierarchy>
+                <level>
+                    <column>website-url</column>
+                </level>
+            </hierarchy>
+            
+            <column>
+                <title>Trackers Blocked</title>
+                <count></count>
+            </column>
+            
+            <column>
+                <title>Average duration</title>
+                <average>tracker-lookup-duration</average>
+            </column>
+            
+            <column>
+                <title>Max duration</title>
+                <max>tracker-lookup-duration</max>
+            </column>
+            
+            <column>
+                <title>Total time</title>
+                <sum>tracker-lookup-duration</sum>
+            </column>
+        </aggregation>
+        
     </instrument>
 </package>

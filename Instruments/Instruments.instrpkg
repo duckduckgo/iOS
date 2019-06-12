@@ -216,32 +216,6 @@
             <column>event-result</column>
         </list>
         
-        <list>
-            <title>Tracker Blocking</title>
-            <table-ref>tracker-events-table</table-ref>
-            <column>website-url</column>
-            <column>tracker-lookup-url</column>
-            <column>tracker-lookup-result</column>
-            <column>tracker-lookup-duration</column>
-        </list>
-        
-        <list>
-            <title>JS Events</title>
-            <table-ref>js-events-table</table-ref>
-            <column>website-url</column>
-            <column>event-name</column>
-            <column>event-duration</column>
-        </list>
-        
-        <list>
-            <title>Website Loading</title>
-            <table-ref>website-events-table</table-ref>
-            <visit-on-focus>Tracker Blocking</visit-on-focus>
-            <column>tab-id</column>
-            <column>website-url</column>
-            <column>duration</column>
-        </list>
-        
         <aggregation>
             <title>Core Events (aggregation)</title>
             <table-ref>ddg-events-table</table-ref>
@@ -282,6 +256,15 @@
             </column>
         </aggregation>
         
+        <list>
+            <title>Tracker Blocking</title>
+            <table-ref>tracker-events-table</table-ref>
+            <column>website-url</column>
+            <column>tracker-lookup-url</column>
+            <column>tracker-lookup-result</column>
+            <column>tracker-lookup-duration</column>
+        </list>
+        
         <aggregation>
             <title>Tracker Blocking (aggregation)</title>
             <table-ref>tracker-events-table</table-ref>
@@ -321,6 +304,67 @@
                 <sum>tracker-lookup-duration</sum>
             </column>
         </aggregation>
+        
+        <list>
+            <title>JS Events</title>
+            <table-ref>js-events-table</table-ref>
+            <column>website-url</column>
+            <column>event-name</column>
+            <column>event-duration</column>
+        </list>
+        
+        <aggregation>
+            <title>JS Events (aggregation)</title>
+            <table-ref>js-events-table</table-ref>
+            
+            <hierarchy>
+                <level>
+                    <column>website-url</column>
+                </level>
+                
+                <level>
+                    <column>event-name</column>
+                </level>
+            </hierarchy>
+            
+            <column>
+                <title>Count</title>
+                <count></count>
+            </column>
+            
+            <column>
+                <title>Min duration</title>
+                <min>event-duration</min>
+            </column>
+            
+            <column>
+                <title>Max duration</title>
+                <max>event-duration</max>
+            </column>
+            
+            <column>
+                <title>Average duration</title>
+                <average>event-duration</average>
+            </column>
+            
+            <column>
+                <title>Total time</title>
+                <sum>event-duration</sum>
+            </column>
+        </aggregation>
+        
+        <list>
+            <title>Website Loading</title>
+            <table-ref>website-events-table</table-ref>
+            <visit-on-focus>Tracker Blocking</visit-on-focus>
+            <column>tab-id</column>
+            <column>website-url</column>
+            <column>duration</column>
+        </list>
+        
+
+        
+
         
     </instrument>
 </package>

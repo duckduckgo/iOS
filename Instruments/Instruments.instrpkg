@@ -300,6 +300,11 @@
             </column>
             
             <column>
+                <title>Standard deviation</title>
+                <std-dev>tracker-lookup-duration</std-dev>
+            </column>
+            
+            <column>
                 <title>Total time</title>
                 <sum>tracker-lookup-duration</sum>
             </column>

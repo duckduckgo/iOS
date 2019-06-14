@@ -56,7 +56,7 @@ class NetworkLeaderboard {
         _ = container.save()
     }
 
-    func pageVisited() {
+    func incrementPagesLoaded() {
         if let pageStats = pageStats {
             let count = (pageStats.pagesLoaded ?? 0).intValue
             pageStats.pagesLoaded = NSNumber(value: count + 1)
@@ -64,7 +64,7 @@ class NetworkLeaderboard {
         }
     }
     
-    func pageHasTrackers() {
+    func incrementPagesWithTrackers() {
         if let pageStats = pageStats {
             let count = (pageStats.pagesWithTrackers ?? 0).intValue
             pageStats.pagesWithTrackers = NSNumber(value: count + 1)

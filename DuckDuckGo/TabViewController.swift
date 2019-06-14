@@ -618,7 +618,7 @@ extension TabViewController: WKScriptMessageHandler {
         onSiteRatingChanged()
         
         if !pageHasTrackers {
-            NetworkLeaderboard.shared.pageHasTrackers()
+            NetworkLeaderboard.shared.incrementPagesLoaded()
             pageHasTrackers = true
         }
         
@@ -670,7 +670,7 @@ extension TabViewController: WKNavigationDelegate {
 
         trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
-        NetworkLeaderboard.shared.pageVisited()
+        NetworkLeaderboard.shared.incrementPagesLoaded()
         
         if #available(iOS 10.3, *) {
             appRatingPrompt.registerUsage()

@@ -41,7 +41,7 @@ class NetworkLeaderboardTests: XCTestCase {
     func testWhenPagesWithTrackersCalledThenCorrectNumberIsReturned() {
         let leaderboard = NetworkLeaderboard()
         for _ in 0 ..< 15 {
-            leaderboard.pageHasTrackers()
+            leaderboard.incrementPagesWithTrackers()
         }
         XCTAssertEqual(15, leaderboard.pagesWithTrackers())
     }
@@ -54,7 +54,7 @@ class NetworkLeaderboardTests: XCTestCase {
         }
 
         for _ in 0 ..< 30 {
-            leaderboard.pageVisited()
+            leaderboard.incrementPagesLoaded()
         }
         
         XCTAssertEqual(30, leaderboard.pagesVisited())
@@ -81,7 +81,7 @@ class NetworkLeaderboardTests: XCTestCase {
 
     func testWhenFirstSiteVisitedStartDateIsSet() {
         let leaderboard = NetworkLeaderboard()
-        leaderboard.pageVisited()
+        leaderboard.incrementPagesLoaded()
         XCTAssertNotNil(leaderboard.startDate)
     }
 

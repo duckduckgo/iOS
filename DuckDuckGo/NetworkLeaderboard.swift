@@ -27,43 +27,65 @@ class NetworkLeaderboard {
 
     struct EntityNames {
 
-        static let visitedSite = "PPVisitedSite"
+        static let pageStats = "PPPageStats"
         static let trackerNetwork = "PPTrackerNetwork"
 
     }
 
-    struct Constants {
-
-        static let startDateKey = "com.duckduckgo.network.leaderboard.start.date"
-
-    }
-
     private lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard", concurrencyType: .mainQueueConcurrencyType)!
-    private let userDefaults: UserDefaults
 
     var startDate: Date? {
-        let timeIntervalSince1970 = userDefaults.double(forKey: Constants.startDateKey)
-        guard timeIntervalSince1970 > 0.0 else { return nil }
-        return Date(timeIntervalSince1970: timeIntervalSince1970)
+        return pageStats?.startDate
     }
-
-    init(userDefaults: UserDefaults = UserDefaults()) {
-        self.userDefaults = userDefaults
+    
+    private var pageStats: PPPageStats? {
+        let request: NSFetchRequest<PPPageStats> = PPPageStats.fetchRequest()
+        return try? container.managedObjectContext.fetch(request).first
     }
-
+    
+    init() {
+        if pageStats == nil {
+            reset()
+        }
+    }
+    
     func reset() {
         container.deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
+        container.deleteAll(entities: try? container.managedObjectContext.fetch(PPPageStats.fetchRequest()))
+        createNewPageStatsEntity()
         _ = container.save()
-        userDefaults.removeObject(forKey: Constants.startDateKey)
     }
 
     func pageVisited() {
-        guard startDate == nil else { return }
-        userDefaults.set(Date().timeIntervalSince1970, forKey: Constants.startDateKey)
+        if let pageStats = pageStats {
+            let count = (pageStats.pagesLoaded ?? 0).intValue
+            pageStats.pagesLoaded = NSNumber(value: count + 1)
+            _ = container.save()
+        }
+    }
+    
+    func pageHasTrackers() {
+        if let pageStats = pageStats {
+            let count = (pageStats.pagesWithTrackers ?? 0).intValue
+            pageStats.pagesWithTrackers = NSNumber(value: count + 1)
+            _ = container.save()
+        }
+    }
+    
+    private func createNewPageStatsEntity() {
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.pageStats, into: container.managedObjectContext)
+        guard let stats = managedObject as? PPPageStats else { return }
+        stats.startDate = Date()
+        stats.pagesLoaded = NSNumber(value: 0)
+        _ = container.save()
     }
     
     func pagesVisited() -> Int {
-        return networksDetected().reduce(0, { $0 + ($1.detectedOnCount ?? 0).intValue })
+        return pageStats?.pagesLoaded?.intValue ?? 0
+    }
+    
+    func pagesWithTrackers() -> Int {
+        return pageStats?.pagesWithTrackers?.intValue ?? 0
     }
 
     func networksDetected() -> [PPTrackerNetwork] {
@@ -101,10 +123,6 @@ class NetworkLeaderboard {
         request.predicate = NSPredicate(format: "name LIKE %@", network)
         guard let results = try? container.managedObjectContext.fetch(request) else { return nil }
         return results.first
-    }
-
-    private func setStartDate() {
-        userDefaults.set(Date().timeIntervalSince1970, forKey: Constants.startDateKey)
     }
 
 }

@@ -26,17 +26,38 @@ class NetworkLeaderboardTests: XCTestCase {
     override func setUp() {
         NetworkLeaderboard().reset()
     }
+    
+    func testWhenFirstAccessingLeaderboardThenItHasAStartDateOfToday() {
+        let leaderboard = NetworkLeaderboard()
+        guard let startDate = leaderboard.startDate else {
+            XCTFail("No start date on leaderboard")
+            return
+        }
+
+        let calendar = Calendar.current
+        XCTAssertTrue(calendar.isDateInToday(startDate))
+    }
+    
+    func testWhenPagesWithTrackersCalledThenCorrectNumberIsReturned() {
+        let leaderboard = NetworkLeaderboard()
+        for _ in 0 ..< 15 {
+            leaderboard.pageHasTrackers()
+        }
+        XCTAssertEqual(15, leaderboard.pagesWithTrackers())
+    }
 
     func testWhenEnoughPagesVisitedAndEnoughNetworksDetectedThenShouldShow() {
         let leaderboard = NetworkLeaderboard()
-        
-        for _ in 0 ..< 11 {
-            for i in 0 ..< 3 {
-                leaderboard.incrementCount(forNetworkNamed: "google\(i).com")
-            }
+
+        for i in 0 ..< 3 {
+            leaderboard.incrementCount(forNetworkNamed: "google\(i).com")
+        }
+
+        for _ in 0 ..< 30 {
+            leaderboard.pageVisited()
         }
         
-        XCTAssertEqual(33, leaderboard.pagesVisited())
+        XCTAssertEqual(30, leaderboard.pagesVisited())
         XCTAssertEqual(3, leaderboard.networksDetected().count)
         XCTAssertTrue(leaderboard.shouldShow())
     }
@@ -62,19 +83,6 @@ class NetworkLeaderboardTests: XCTestCase {
         let leaderboard = NetworkLeaderboard()
         leaderboard.pageVisited()
         XCTAssertNotNil(leaderboard.startDate)
-    }
-
-    func testWhenNoSitesVisitedStartDateIsNil() {
-        let leaderboard = NetworkLeaderboard()
-        XCTAssertNil(leaderboard.startDate)
-    }
-
-    func testWhenSitesVisitedTotalSitesVistedReturnsCorrectNumber() {
-        let leaderboard = NetworkLeaderboard()
-        leaderboard.incrementCount(forNetworkNamed: "Network 1")
-        leaderboard.incrementCount(forNetworkNamed: "Network 2")
-        leaderboard.incrementCount(forNetworkNamed: "Network 1")
-        XCTAssertEqual(3, leaderboard.pagesVisited())
     }
 
     func testWhenSitesVisitedNetworksDetectedReturnsThemInOrderOfCountDescending() {

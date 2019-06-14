@@ -71,7 +71,10 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-    private var pageNetworkNames = Set<String>()    
+    
+    private var pageNetworkNames = Set<String>()
+    private var pageHasTrackers = false
+    
     private var tearDownCount = 0
     private var tips: BrowsingTips?
     
@@ -613,12 +616,18 @@ extension TabViewController: WKScriptMessageHandler {
         let tracker = DetectedTracker(url: urlString, networkName: networkName, category: category, blocked: blocked)
         siteRating.trackerDetected(tracker)
         onSiteRatingChanged()
-
+        
+        if !pageHasTrackers {
+            NetworkLeaderboard.shared.pageHasTrackers()
+            pageHasTrackers = true
+        }
+        
         if let networkName = networkName,
             !pageNetworkNames.contains(networkName) {
             pageNetworkNames.insert(networkName)
             NetworkLeaderboard.shared.incrementCount(forNetworkNamed: networkName)
         }
+
     }
 }
 
@@ -660,6 +669,7 @@ extension TabViewController: WKNavigationDelegate {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
         pageNetworkNames.removeAll()
+        pageHasTrackers = false
         NetworkLeaderboard.shared.pageVisited()
         
         if #available(iOS 10.3, *) {

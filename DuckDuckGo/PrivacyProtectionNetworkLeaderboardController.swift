@@ -40,6 +40,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     let leaderboard = NetworkLeaderboard.shared
     var networksDetected = [PPTrackerNetwork]()
     var pagesVisited = 0
+    var pagesWithTrackers = 0
     var drama = true
 
     override func viewDidLoad() {
@@ -91,6 +92,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
 
     private func initLeaderboard() {
         pagesVisited = leaderboard.pagesVisited()
+        pagesWithTrackers = leaderboard.pagesWithTrackers()
         networksDetected = leaderboard.networksDetected()
     }
 
@@ -107,8 +109,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let date = leaderboard.startDate ?? Date()
         let dateText = dateFormatter.string(from: date)
 
-        let detectedOn = networksDetected.count == 0 ? 0 : Int(truncating: networksDetected[0].detectedOnCount ?? 0)
-        let percent = pagesVisited == 0 ? 0 : 100 * detectedOn / pagesVisited
+        let percent = pagesVisited == 0 ? 0 : 100 * pagesWithTrackers / pagesVisited
         let percentText = "\(percent)%"
         let message = UserText.ppNetworkLeaderboard.format(arguments: percentText, dateText)
 

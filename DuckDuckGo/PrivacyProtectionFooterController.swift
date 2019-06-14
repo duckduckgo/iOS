@@ -89,10 +89,10 @@ class TrackerNetworkLeaderboardView: UIView {
         scoresView.isHidden = !shouldShow
 
         if shouldShow {
-            let sitesVisited = leaderboard.sitesVisited()
-            firstPill.update(network: networksDetected[0], sitesVisited: sitesVisited)
-            secondPill.update(network: networksDetected[1], sitesVisited: sitesVisited)
-            thirdPill.update(network: networksDetected[2], sitesVisited: sitesVisited)
+            let pagesVisited = leaderboard.pagesVisited()
+            firstPill.update(network: networksDetected[0], pagesVisited: pagesVisited)
+            secondPill.update(network: networksDetected[1], pagesVisited: pagesVisited)
+            thirdPill.update(network: networksDetected[2], pagesVisited: pagesVisited)
         }
     }
 
@@ -107,8 +107,8 @@ class TrackerNetworkPillView: UIView {
         layer.cornerRadius = frame.size.height / 2
     }
 
-    func update(network: PPTrackerNetwork, sitesVisited: Int) {
-        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / sitesVisited
+    func update(network: PPTrackerNetwork, pagesVisited: Int) {
+        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / pagesVisited
         let percentText = "\(percent)%"
         let image = network.image
 

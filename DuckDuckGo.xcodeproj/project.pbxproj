@@ -796,6 +796,7 @@
 		85CC936F203C402C00690089 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85CC9375203C42A500690089 /* speed_test_sites.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = speed_test_sites.json; sourceTree = "<group>"; };
 		85CE790621E8A9F600607B91 /* EmptySectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySectionRenderer.swift; sourceTree = "<group>"; };
+		85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NetworkLeaderboard 2.xcdatamodel"; sourceTree = "<group>"; };
 		85E00178225E0D4E00877BF6 /* OnboardingSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryViewController.swift; sourceTree = "<group>"; };
 		85E0017A225E0ED700877BF6 /* OnboardingThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingThemesViewController.swift; sourceTree = "<group>"; };
 		85EE7F54224667DD000FE757 /* WebContainer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebContainer.storyboard; sourceTree = "<group>"; };
@@ -4423,9 +4424,10 @@
 		85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */,
 				85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */,
 			);
-			currentVersion = 85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */;
+			currentVersion = 85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */;
 			path = NetworkLeaderboard.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

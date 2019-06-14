@@ -23,7 +23,13 @@ class AddFavoriteHomeCell: UICollectionViewCell {
     
     @IBOutlet weak var plusImage: UIImageView!
     @IBOutlet weak var plusBackground: UIView!
+    @IBOutlet weak var highlightMask: UIView!
     
+    override var isHighlighted: Bool {
+        didSet {
+            highlightMask.isHidden = !isHighlighted
+        }
+    }
 }
 
 extension AddFavoriteHomeCell: Themable {

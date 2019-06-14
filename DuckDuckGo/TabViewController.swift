@@ -73,6 +73,10 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
+    
+    private var trackerNetworksDetectedOnPage = Set<String>()
+    private var pageHasTrackers = false
+    
     private var tearDownCount = 0
     private var tips: BrowsingTips?
     
@@ -646,11 +650,18 @@ extension TabViewController: WKScriptMessageHandler {
         let tracker = DetectedTracker(url: urlString, networkName: networkName, category: category, blocked: blocked)
         siteRating.trackerDetected(tracker)
         onSiteRatingChanged()
-
-        if let networkName = networkName,
-            let browsingDomain = siteRating.domain {
-            NetworkLeaderboard.shared.network(named: networkName, detectedWhileVisitingDomain: browsingDomain)
+        
+        if !pageHasTrackers {
+            NetworkLeaderboard.shared.incrementPagesWithTrackers()
+            pageHasTrackers = true
         }
+        
+        if let networkName = networkName,
+            !trackerNetworksDetectedOnPage.contains(networkName) {
+            trackerNetworksDetectedOnPage.insert(networkName)
+            NetworkLeaderboard.shared.incrementCount(forNetworkNamed: networkName)
+        }
+
     }
 }
 
@@ -695,10 +706,10 @@ extension TabViewController: WKNavigationDelegate {
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        if let domain = siteRating?.domain {
-            NetworkLeaderboard.shared.visited(domain: domain)
-        }
+
+        trackerNetworksDetectedOnPage.removeAll()
+        pageHasTrackers = false
+        NetworkLeaderboard.shared.incrementPagesLoaded()
         
         if #available(iOS 10.3, *) {
             appRatingPrompt.registerUsage()

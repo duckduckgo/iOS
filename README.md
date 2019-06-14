@@ -17,7 +17,7 @@ Run `git submodule update --init --recursive`
 ### Dependencies
 We use Carthage for dependency management. If you don't have Carthage installed refer to [Installing Carthage](https://github.com/Carthage/Carthage#installing-carthage).
 
-Run `carthage bootstrap --platform iOS` before opening the project in XCode
+Run `carthage bootstrap --platform iOS` before opening the project in Xcode
 
 You can also run the unit tests to do the above and ensure everything seems in order: `./run_tests.sh`
 

@@ -34,6 +34,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var iconBackground: UIView!
     @IBOutlet weak var iconImage: UIImageView!
+    @IBOutlet weak var highlightMask: UIView!
     
     @IBOutlet var iconConstraints: [NSLayoutConstraint]!
     
@@ -54,6 +55,12 @@ class FavoriteHomeCell: UICollectionViewCell {
     struct Actions {
         static let delete = #selector(FavoriteHomeCell.doDelete(sender:))
         static let edit = #selector(FavoriteHomeCell.doEdit(sender:))
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            highlightMask.isHidden = !isHighlighted
+        }
     }
     
     override var canBecomeFirstResponder: Bool {

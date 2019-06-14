@@ -1,3 +1,2 @@
-• Made the address bar more natural to interact with.
-• Added 'Print' option to the 'Share...' menu.
-• Further improvements to Progress Bar visibility.
+• You can now long press the Tabs button to open a new Tab.
+• Favorites you've added will now also be shown when editing website URL.

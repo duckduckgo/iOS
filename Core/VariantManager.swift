@@ -20,10 +20,7 @@
 import Foundation
 
 public enum FeatureName: String {
-    
-    case onboardingSummary
-    case onboardingThemes
-    
+
     // Used for unit tests
     case dummy
     
@@ -34,11 +31,9 @@ public struct Variant {
     static let doNotAllocate = 0
     
     public static let defaultVariants: [Variant] = [
-        // Shared control group
-        Variant(name: "sc", weight: 1, features: [.onboardingSummary]),
-        
-        // Experiment 3
-        Variant(name: "mr", weight: 1, features: [.onboardingThemes, .onboardingSummary])
+        // SERP testing - check with Brad before removing
+        Variant(name: "sc", weight: 1, features: []),
+        Variant(name: "se", weight: 1, features: [])
     ]
     
     public let name: String

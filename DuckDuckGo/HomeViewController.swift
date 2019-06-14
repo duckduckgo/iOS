@@ -95,10 +95,6 @@ class HomeViewController: UIViewController {
             self.collectionView.viewDidTransition(to: size)
         })
     }
-    
-    func launch(_ link: Link) {
-        delegate?.home(self, didRequestUrl: link.url)
-    }
 
     func refresh() {
         collectionView.reloadData()
@@ -207,6 +203,13 @@ class HomeViewController: UIViewController {
     
     func launchNewSearch() {
         collectionView.launchNewSearch()
+    }
+}
+
+extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
+    
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
+        delegate?.home(self, didRequestUrl: link.url)
     }
 }
 

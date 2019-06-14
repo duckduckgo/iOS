@@ -72,7 +72,7 @@ class TabViewController: UIViewController {
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
     
-    private var pageNetworkNames = Set<String>()
+    private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
     
     private var tearDownCount = 0
@@ -623,8 +623,8 @@ extension TabViewController: WKScriptMessageHandler {
         }
         
         if let networkName = networkName,
-            !pageNetworkNames.contains(networkName) {
-            pageNetworkNames.insert(networkName)
+            !trackerNetworksDetectedOnPage.contains(networkName) {
+            trackerNetworksDetectedOnPage.insert(networkName)
             NetworkLeaderboard.shared.incrementCount(forNetworkNamed: networkName)
         }
 
@@ -668,7 +668,7 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.tabLoadingStateDidChange(tab: self)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
-        pageNetworkNames.removeAll()
+        trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
         NetworkLeaderboard.shared.pageVisited()
         

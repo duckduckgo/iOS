@@ -39,7 +39,7 @@ class NetworkLeaderboard {
     }
 
     private lazy var container = DDGPersistenceContainer(name: "NetworkLeaderboard", concurrencyType: .mainQueueConcurrencyType)!
-    private var userDefaults: UserDefaults!
+    private let userDefaults: UserDefaults
 
     var startDate: Date? {
         let timeIntervalSince1970 = userDefaults.double(forKey: Constants.startDateKey)
@@ -52,15 +52,18 @@ class NetworkLeaderboard {
     }
 
     func reset() {
-        container.deleteAll(entities: try? container.managedObjectContext.fetch(PPVisitedSite.fetchRequest()))
         container.deleteAll(entities: try? container.managedObjectContext.fetch(PPTrackerNetwork.fetchRequest()))
         _ = container.save()
         userDefaults.removeObject(forKey: Constants.startDateKey)
     }
 
-    func sitesVisited() -> Int {
-        let request: NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
-        return (try? container.managedObjectContext.count(for: request)) ?? 0
+    func pageVisited() {
+        guard startDate == nil else { return }
+        userDefaults.set(Date().timeIntervalSince1970, forKey: Constants.startDateKey)
+    }
+    
+    func pagesVisited() -> Int {
+        return networksDetected().reduce(0, { $0 + ($1.detectedOnCount ?? 0).intValue })
     }
 
     func networksDetected() -> [PPTrackerNetwork] {
@@ -71,57 +74,26 @@ class NetworkLeaderboard {
     }
 
     func shouldShow() -> Bool {
-        let visitedSitesThreshold = isDebugBuild ? 3 : 30
-        return sitesVisited() > visitedSitesThreshold && networksDetected().count >= 3
+        let pagesVisitedThreshold = isDebugBuild ? 3 : 30
+        return pagesVisited() > pagesVisitedThreshold && networksDetected().count >= 3
     }
-
-    func visited(domain: String) {
-        guard nil == findSite(byDomain: domain) else { return }
-
-        if nil == startDate {
-            setStartDate()
+    
+    func incrementCount(forNetworkNamed networkName: String) {
+        guard let network = findNetwork(byName: networkName) else {
+            createNewNetworkEntity(named: networkName)
+            return
         }
-
-        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.visitedSite, into: container.managedObjectContext)
-        if let visitedSite = managedObject as? PPVisitedSite {
-            visitedSite.domain = domain
-        }
+        let count = (network.detectedOnCount ?? 0).intValue
+        network.detectedOnCount = NSNumber(value: count + 1)
         _ = container.save()
     }
-
-    func network(named network: String, detectedWhileVisitingDomain domain: String) {
-        let byDomainAndNetworkRequest: NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
-        byDomainAndNetworkRequest.predicate = NSPredicate(format: "domain LIKE %@ AND ANY networksDetected.name LIKE %@", domain, network)
-
-        guard let results = try? container.managedObjectContext.fetch(byDomainAndNetworkRequest), results.isEmpty else { return }
-
-        var visitedSite = findSite(byDomain: domain)
-        if visitedSite == nil {
-            visited(domain: domain)
-            guard let newSite = findSite(byDomain: domain) else { return }
-            visitedSite = newSite
-        }
-
-        var trackerNetwork: PPTrackerNetwork? = findNetwork(byName: network)
-        if trackerNetwork == nil {
-            let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.trackerNetwork, into: container.managedObjectContext)
-            trackerNetwork = managedObject as? PPTrackerNetwork
-            trackerNetwork?.name = network
-            guard trackerNetwork != nil else { return }
-        }
-
-        trackerNetwork?.addToDetectedOn(visitedSite!)
-        trackerNetwork?.detectedOnCount = (trackerNetwork?.detectedOn?.count ?? 0) as NSNumber
-
-        visitedSite?.addToNetworksDetected(trackerNetwork!)
+    
+    private func createNewNetworkEntity(named networkName: String) {
+        let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.trackerNetwork, into: container.managedObjectContext)
+        guard let trackerNetwork = managedObject as? PPTrackerNetwork else { return }
+        trackerNetwork.name = networkName
+        trackerNetwork.detectedOnCount = 1
         _ = container.save()
-    }
-
-    private func findSite(byDomain domain: String) -> PPVisitedSite? {
-        let request: NSFetchRequest<PPVisitedSite> = PPVisitedSite.fetchRequest()
-        request.predicate = NSPredicate(format: "domain LIKE %@", domain)
-        guard let results = try? container.managedObjectContext.fetch(request) else { return nil }
-        return results.first
     }
 
     private func findNetwork(byName network: String) -> PPTrackerNetwork? {

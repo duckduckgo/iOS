@@ -39,7 +39,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
 
     let leaderboard = NetworkLeaderboard.shared
     var networksDetected = [PPTrackerNetwork]()
-    var sitesVisited = 0
+    var pagesVisited = 0
     var drama = true
 
     override func viewDidLoad() {
@@ -90,7 +90,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initLeaderboard() {
-        sitesVisited = leaderboard.sitesVisited()
+        pagesVisited = leaderboard.pagesVisited()
         networksDetected = leaderboard.networksDetected()
     }
 
@@ -108,7 +108,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
         let dateText = dateFormatter.string(from: date)
 
         let detectedOn = networksDetected.count == 0 ? 0 : Int(truncating: networksDetected[0].detectedOnCount ?? 0)
-        let percent = sitesVisited == 0 ? 0 : 100 * detectedOn / sitesVisited
+        let percent = pagesVisited == 0 ? 0 : 100 * detectedOn / pagesVisited
         let percentText = "\(percent)%"
         let message = UserText.ppNetworkLeaderboard.format(arguments: percentText, dateText)
 
@@ -179,7 +179,7 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
         }
 
         let network = networksDetected[indexPath.row]
-        let percent = drama ? 0 : 100 * Int(truncating: network.detectedOnCount!) / sitesVisited
+        let percent = drama ? 0 : 100 * Int(truncating: network.detectedOnCount!) / pagesVisited
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? PrivacyProtectionNetworkLeaderboardCell else {
             fatalError("Failed to dequeue cell as PrivacyProtectionNetworkLeaderboardCell")

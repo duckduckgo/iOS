@@ -618,7 +618,7 @@ extension TabViewController: WKScriptMessageHandler {
         onSiteRatingChanged()
         
         if !pageHasTrackers {
-            NetworkLeaderboard.shared.incrementPagesLoaded()
+            NetworkLeaderboard.shared.incrementPagesWithTrackers()
             pageHasTrackers = true
         }
         

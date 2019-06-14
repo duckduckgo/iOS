@@ -255,6 +255,11 @@ class OmniBar: UIView {
 }
 
 extension OmniBar: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        omniDelegate?.onTextFieldWillBeginEditing(self)
+        return true
+    }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         DispatchQueue.main.async {

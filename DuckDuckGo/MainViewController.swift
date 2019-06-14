@@ -421,14 +421,14 @@ class MainViewController: UIViewController {
         
         let controller = FavoritesOverlay()
         controller.install(into: self)
-        controller.view.alpha = 0
+//        controller.view.alpha = 0
         addChild(controller)
         containerView.addSubview(controller.view)
         controller.didMove(toParent: self)
         
-        UIView.animate(withDuration: 0.2) {
-            controller.view.alpha = 1
-        }
+//        UIView.animate(withDuration: 0.2) {
+//            controller.view.alpha = 1
+//        }
         favoritesOverlay = controller
     }
     
@@ -697,13 +697,17 @@ extension MainViewController: OmniBarDelegate {
         autocompleteController?.keyboardEscape()
         homeController?.omniBarCancelPressed()
     }
+    
+    func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        guard homeController == nil else { return }
+        
+        displayFavoritesOverlay()
+    }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
-        if let homeController = homeController {
-            homeController.launchNewSearch()
-        } else {
-            displayFavoritesOverlay()
-        }
+        guard let homeController = homeController else { return }
+        
+        homeController.launchNewSearch()
     }
     
     func onRefreshPressed() {

@@ -1,5 +1,5 @@
 //
-//  SiteRatingViewPerfTests.swift
+//  SiteRatingPerfTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -22,28 +22,15 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 
-class SiteRatingViewPerfTests: XCTestCase {
-    
-    private var mainController: MainViewController!
+class SiteRatingPerfTests: XCTestCase {
 
-    override func setUp() {
-        loadBlockingLists()
-        TabsModel.clear()
-        mainController = loadStoryboard()
-    }
-    
-    override func tearDown() {
-        TabsModel.clear()
-    }
-
-    func testSiteRatingViewRefreshPerformance() {
+    func testSiteRatingInitialization() {
         
-        mainController.loadUrl(URL(string: "https:/duckduckgo.com")!)
-        waitForPageLoad(in: mainController)
+        let url = URL(string: "https://google.com")!
+        _ = SiteRating(url: url)
         
         self.measure {
-            self.mainController.omniBar.siteRatingView.refresh()
+            _ = SiteRating(url: url)
         }
     }
-
 }

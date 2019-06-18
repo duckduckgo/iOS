@@ -24,6 +24,8 @@ public typealias AppConfigurationCompletion = (Bool) -> Void
 
 class AppConfigurationFetch {
     
+    private static let queue = DispatchQueue(label: "AppConfigurationFetch queue", qos: .utility)
+    
     private lazy var statisticsStore: StatisticsStore = StatisticsUserDefaults()
 
     func start(completion: AppConfigurationCompletion?) {
@@ -37,8 +39,8 @@ class AppConfigurationFetch {
                 newData = newData || newHttpsData
                 semaphore.signal()
             }
-
-            ContentBlockerLoader().start { newContentBlockingData in
+            
+            self.updateContentBlockerData { newContentBlockingData in
                 newData = newData || newContentBlockingData
                 semaphore.signal()
             }
@@ -52,7 +54,9 @@ class AppConfigurationFetch {
     private func sendHttpsSummaryPixel(completion: @escaping (Bool) -> Void) {
             
         if statisticsStore.httpsUpgradesTotal == 0 {
-            completion(false)
+            type(of: self).queue.async {
+                completion(false)
+            }
             return
         }
         
@@ -66,7 +70,17 @@ class AppConfigurationFetch {
                 self.statisticsStore.httpsUpgradesTotal = 0
                 self.statisticsStore.httpsUpgradesFailures = 0
             }
-            completion(true)
+            type(of: self).queue.async {
+                completion(true)
+            }
+        }
+    }
+    
+    private func updateContentBlockerData(completion: @escaping (Bool) -> Void) {
+        ContentBlockerLoader().start { newContentBlockingData in
+            type(of: self).queue.async {
+                completion(newContentBlockingData)
+            }
         }
     }
 }

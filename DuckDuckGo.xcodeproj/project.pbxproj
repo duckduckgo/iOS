@@ -293,6 +293,8 @@
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
+		9849942922B8FAF70019E4FA /* SiteRatingViewPerfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */; };
+		9849942B22B8FFED0019E4FA /* PerformanceTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */; };
 		984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */; };
 		985892522260B1B200EEB31B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985892512260B1B200EEB31B /* ProgressView.swift */; };
 		9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */; };
@@ -851,6 +853,8 @@
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
+		9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingViewPerfTests.swift; sourceTree = "<group>"; };
+		9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTestsHelper.swift; sourceTree = "<group>"; };
 		984D60B1222A1284003B9E3B /* FeedbackFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackFormViewController.swift; sourceTree = "<group>"; };
 		985892512260B1B200EEB31B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		9865DFF822A8220D00D27829 /* FavoritesOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesOverlay.swift; sourceTree = "<group>"; };
@@ -1667,7 +1671,9 @@
 		85CC936C203C402C00690089 /* SpeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */,
 				85CC936D203C402C00690089 /* SpeedTests.swift */,
+				9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */,
 				85CC936F203C402C00690089 /* Info.plist */,
 				85CC9375203C42A500690089 /* speed_test_sites.json */,
 				85393120203C5F1F009C0B12 /* main.swift */,
@@ -3451,7 +3457,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9849942B22B8FFED0019E4FA /* PerformanceTestsHelper.swift in Sources */,
 				85393121203C5F1F009C0B12 /* main.swift in Sources */,
+				9849942922B8FAF70019E4FA /* SiteRatingViewPerfTests.swift in Sources */,
 				85CC936E203C402C00690089 /* SpeedTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

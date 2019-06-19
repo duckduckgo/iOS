@@ -90,7 +90,16 @@ public enum PixelName: String {
     case onboardingThemesLightThemeSelected = "m_o_t_l"
     case onboardingThemesSkipped = "m_o_t_s"
     case onboardingSummaryFinished = "m_o_s"
-
+    
+    case homeScreenShown = "mh"
+    case homeScreenSearchTapped = "mh_st"
+    case homeScreenFavouriteLaunched = "mh_fl"
+    case homeScreenAddFavorite = "mh_af"
+    case homeScreenAddFavoriteOK = "mh_af_o"
+    case homeScreenAddFavoriteCancel = "mh_af_c"
+    case homeScreenEditFavorite = "mh_ef"
+    case homeScreenDeleteFavorite = "mh_df"
+    
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     

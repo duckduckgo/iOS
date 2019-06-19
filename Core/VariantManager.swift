@@ -24,6 +24,8 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
+    case favoritesByDefault
+    
 }
 
 public struct Variant {
@@ -31,9 +33,8 @@ public struct Variant {
     static let doNotAllocate = 0
     
     public static let defaultVariants: [Variant] = [
-        // SERP testing - check with Brad before removing
-        Variant(name: "sc", weight: 1, features: []),
-        Variant(name: "se", weight: 1, features: [])
+        Variant(name: "ma", weight: 1, features: []),
+        Variant(name: "mb", weight: 1, features: [ .favoritesByDefault ])
     ]
     
     public let name: String
@@ -51,7 +52,7 @@ public protocol VariantRNG {
 public protocol VariantManager {
     
     var currentVariant: Variant? { get }
-    func assignVariantIfNeeded()
+    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void)
     func isSupported(feature: FeatureName) -> Bool
     
 }
@@ -82,7 +83,7 @@ public class DefaultVariantManager: VariantManager {
         return currentVariant?.features.contains(feature) ?? false
     }
     
-    public func assignVariantIfNeeded() {
+    public func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void) {
         guard !storage.hasInstallStatistics else {
             Logger.log(text: "no new variant needed for existing user")
             return
@@ -99,6 +100,7 @@ public class DefaultVariantManager: VariantManager {
         }
         
         storage.variant = variant.name
+        newInstallCompletion(self)
     }
     
     private func selectVariant() -> Variant? {

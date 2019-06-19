@@ -1,2 +1,1 @@
-• You can now long press the Tabs button to open a new Tab.
-• Favorites you've added will now also be shown when editing website URL.
+We tweaked our privacy dashboard and squashed some bugs.

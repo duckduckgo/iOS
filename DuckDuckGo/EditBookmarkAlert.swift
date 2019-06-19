@@ -84,7 +84,7 @@ private class ValidatingAlert: UIAlertController {
         return addAction(title: "Save", style: .default) {
             guard var urlString = self.urlField?.text else { return }
             
-            let title: String = self.titleField?.text ?? self.urlField?.text ?? ""
+            let title: String = self.titleField?.text ?? self.urlBasedTitle(self.urlField?.text) ?? ""
             
             if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") {
                 urlString = "http://\(urlString)"
@@ -94,6 +94,11 @@ private class ValidatingAlert: UIAlertController {
             
             completion(Link(title: title, url: url))
         }
+    }
+    
+    private func urlBasedTitle(_ urlString: String?) -> String? {
+        guard let urlString = urlString else { return nil }
+        return URL.webUrl(fromText: urlString)?.host?.replacingOccurrences(of: "www.", with: "")
     }
     
     @objc func onTextChanged() {

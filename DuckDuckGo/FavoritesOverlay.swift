@@ -62,6 +62,7 @@ class FavoritesOverlay: UIViewController {
         
         delegate = controller
         collectionView.reloadData()
+        collectionView.layoutIfNeeded()
     }
     
     private func registerForKeyboardNotifications() {

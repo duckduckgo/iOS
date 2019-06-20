@@ -36,10 +36,9 @@ class EditBookmarkAlert {
 
 private class ValidatingAlert: UIAlertController {
     
-    var titleField: UITextField?
-    var urlField: UITextField?
-    var saveAction: UIAlertAction?
-    var link: Link?
+    var titleField: UITextField!
+    var urlField: UITextField!
+    var saveAction: UIAlertAction!
     
     convenience init(title: String,
                      link: Link?,
@@ -47,19 +46,14 @@ private class ValidatingAlert: UIAlertController {
                      cancelCompletion: EditBookmarkAlert.CancelCompletion?) {
         
         self.init(title: title, message: nil, preferredStyle: .alert)
-        self.link = link
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
-        
-        if nil != link {
-            // only show this when editing
-            addTextField { textField in
-                textField.accessibilityLabel = "Bookmark Title" // UserText.bookmarkTitleAccessibility
-                textField.text = link?.title
-                textField.placeholder = UserText.bookmarkTitlePlaceholder
-                textField.keyboardAppearance = keyboardAppearance
-                self.titleField = textField
-            }
+        addTextField { textField in
+            textField.accessibilityLabel = "Bookmark Title" // UserText.bookmarkTitleAccessibility
+            textField.text = link?.title
+            textField.placeholder = UserText.bookmarkTitlePlaceholder
+            textField.keyboardAppearance = keyboardAppearance
+            self.titleField = textField
         }
         addTextField { textField in
             textField.accessibilityLabel = "Bookmark Address"
@@ -70,8 +64,8 @@ private class ValidatingAlert: UIAlertController {
             self.urlField = textField
         }
         
-        titleField?.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
-        urlField?.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
+        titleField.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
+        urlField.addTarget(self, action: #selector(onTextChanged), for: .allEditingEvents)
         
         saveAction = createSaveAction(with: saveCompletion)
         addAction(title: UserText.actionCancel, style: .cancel) {
@@ -82,9 +76,8 @@ private class ValidatingAlert: UIAlertController {
     
     private func createSaveAction(with completion: @escaping EditBookmarkAlert.SaveCompletion) -> UIAlertAction {
         return addAction(title: "Save", style: .default) {
-            guard var urlString = self.urlField?.text else { return }
-            
-            let title: String = self.titleField?.text ?? self.urlBasedTitle(self.urlField?.text) ?? ""
+            guard let title = self.titleField.text else { return }
+            guard var urlString = self.urlField.text else { return }
             
             if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") {
                 urlString = "http://\(urlString)"
@@ -96,22 +89,15 @@ private class ValidatingAlert: UIAlertController {
         }
     }
     
-    private func urlBasedTitle(_ urlString: String?) -> String? {
-        guard let urlString = urlString else { return nil }
-        return URL.webUrl(fromText: urlString)?.host?.replacingOccurrences(of: "www.", with: "")
-    }
-    
     @objc func onTextChanged() {
         updateSave()
     }
     
     func updateSave() {
-        saveAction?.isEnabled = false
-        if link != nil {
-            guard let title = titleField?.text?.trimWhitespace(), !title.isEmpty else { return }
-        }
-        guard let url = urlField?.text?.trimWhitespace(), !url.isEmpty else { return }
-        saveAction?.isEnabled = true
+        saveAction.isEnabled = false
+        guard let title = titleField.text?.trimWhitespace(), !title.isEmpty else { return }
+        guard let url = urlField.text?.trimWhitespace(), !url.isEmpty else { return }
+        saveAction.isEnabled = true
     }
     
 }

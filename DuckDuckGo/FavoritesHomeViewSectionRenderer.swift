@@ -220,6 +220,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
+        Pixel.fire(pixel: .homeScreenAddFavorite)
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveFavorite,
             bookmark: nil,

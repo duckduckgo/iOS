@@ -59,8 +59,7 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private lazy var tld = TLD()
-    private lazy var disconnectMeStore = DisconnectMeStore()
-    //private var contentBlocker: ContentBlockerConfigurationStore!
+    private var contentBlocker: ContentBlocker?
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -125,12 +124,12 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
 
-    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlocker) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
             fatalError("Failed to instantiate controller as TabViewController")
         }
-        //controller.contentBlocker = contentBlocker
+        controller.contentBlocker = contentBlocker
         controller.tabModel = model
         return controller
     }
@@ -358,7 +357,7 @@ class TabViewController: UIViewController {
     
     private func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(contentBlocking: !isDuckDuckGoUrl())
+        webView.configuration.loadScripts(contentBlocker: contentBlocker!, contentBlockingEnabled: !isDuckDuckGoUrl())
     }
     
     private func isDuckDuckGoUrl() -> Bool {
@@ -378,6 +377,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
 
+            controller.contentBlocker = contentBlocker
             controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
@@ -421,11 +421,21 @@ class TabViewController: UIViewController {
 
     private func resetSiteRating() {
         if let url = url {
-            siteRating = SiteRating(url: url, httpsForced: httpsForced)
+            siteRating = makeSiteRating(url: url)
         } else {
             siteRating = nil
         }
         onSiteRatingChanged()
+    }
+    
+    private func makeSiteRating(url: URL) -> SiteRating {
+        let entityMapping = EntityMapping(store: contentBlocker!.entityMappingStore)
+        let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+        
+        return SiteRating(url: url,
+                          httpsForced: httpsForced,
+                          entityMapping: entityMapping,
+                          privacyPractices: privacyPractices)
     }
 
     private func updateSiteRating() {
@@ -606,8 +616,8 @@ extension TabViewController: WKScriptMessageHandler {
         let url = URL(string: urlString)
         var networkName: String?
         var category: String?
-        if let domain = url?.host {
-            let networkNameAndCategory = disconnectMeStore.networkNameAndCategory(forDomain: domain)
+        if let domain = url?.host,
+            let networkNameAndCategory = contentBlocker?.disconnectStore.networkNameAndCategory(forDomain: domain) {
             networkName = networkNameAndCategory.networkName
             category = networkNameAndCategory.category
         }
@@ -654,7 +664,7 @@ extension TabViewController: WKNavigationDelegate {
         
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
-            self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced)
+            self.siteRating = makeSiteRating(url: siteRating.url)
         } else {
             resetSiteRating()
         }
@@ -743,7 +753,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
-        self.siteRating = SiteRating(url: url, httpsForced: httpsForced)
+        self.siteRating = makeSiteRating(url: url)
         updateSiteRating()
     }
     

@@ -80,50 +80,6 @@ public class ContentBlockerLoader {
         }
     }
     
-    //////
-//
-//    fileprivate func requestEntityList(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-//        contentBlockerRequest.request(.entitylist) { data, isCached in
-//            if let data = data, !isCached {
-////                self.newDataItems += 1
-//                self.entityMappingStore.persist(data: data)
-//            }
-//            semaphore.signal()
-//        }
-//    }
-//
-//    fileprivate func requestDisconnectMe(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-//        contentBlockerRequest.request(.disconnectMe) { data, isCached in
-//            if let data = data, !isCached {
-////                self.newDataItems += 1
-//                try? self.disconnectStore.persist(data: data)
-//            }
-//            semaphore.signal()
-//        }
-//    }
-//
-//    fileprivate func requestTrackerWhitelist(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-//        contentBlockerRequest.request(.trackersWhitelist) { data, isCached in
-//            if let data = data, !isCached {
-////                self.newDataItems += 1
-//                self.easylistStore.persistEasylistWhitelist(data: data)
-//            }
-//            semaphore.signal()
-//        }
-//    }
-//
-//    fileprivate func requestSurrogates(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-//        contentBlockerRequest.request(.surrogates) { data, isCached in
-//            if let data = data, !isCached {
-////                self.newDataItems += 1
-//                self.surrogateStore.parseAndPersist(data: data)
-//            }
-//            semaphore.signal()
-//        }
-//    }
-    
-    //////
-    
     fileprivate func requestHttpsUpgrade(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.httpsBloomFilterSpec) { data, _ in
             guard let data = data, let specification = try? HTTPSUpgradeParser.convertBloomFilterSpecification(fromJSONData: data) else {
@@ -142,11 +98,6 @@ public class ContentBlockerLoader {
                     self.newData[.httpsBloomFilter] = (specification, data)
                 }
                 semaphore.signal()
-                
-//                let persisted = self.httpsUpgradeStore.persistBloomFilter(specification: specification, data: data)
-//                HTTPSUpgrade.shared.loadData()
-//                self.newDataItems += persisted ? 1 : 0
-//                semaphore.signal()
             }
         }
     }
@@ -155,7 +106,6 @@ public class ContentBlockerLoader {
         contentBlockerRequest.request(.httpsWhitelist) { data, isCached in
             if let data = data, !isCached, let whitelist = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data) {
                 self.newData[.httpsWhitelist] = whitelist
-//                self.httpsUpgradeStore.persistWhitelist(domains: whitelist)
             }
             semaphore.signal()
         }

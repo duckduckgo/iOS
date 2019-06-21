@@ -29,7 +29,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     private weak var siteRating: SiteRating!
-    private weak var contentBlocker: ContentBlockerConfigurationStore!
+    private weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
 
     struct Section {
 
@@ -77,7 +77,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func trackers() -> [DetectedTracker: Int] {
-        let protecting = siteRating.protecting(contentBlocker)
+        let protecting = siteRating.protecting(contentBlockerConfiguration)
         return protecting ? siteRating.trackersBlocked : siteRating.trackersDetected
     }
 
@@ -86,7 +86,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateSubtitle() {
-        subtitleLabel.text = siteRating.networksText(contentBlocker: contentBlocker).uppercased()
+        subtitleLabel.text = siteRating.networksText(contentBlocker: contentBlockerConfiguration).uppercased()
     }
 
     private func updateIcon() {
@@ -105,7 +105,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func protecting() -> Bool {
-        return siteRating.protecting(contentBlocker)
+        return siteRating.protecting(contentBlockerConfiguration)
     }
 
 }
@@ -148,9 +148,9 @@ extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
 
 extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
-        self.contentBlocker = contentBlocker
+        self.contentBlockerConfiguration = configuration
         update()
     }
 

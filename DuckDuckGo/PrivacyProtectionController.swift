@@ -49,7 +49,7 @@ class PrivacyProtectionController: UIViewController {
     var omniBarText: String?
     var errorText: String?
 
-    lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    var contentBlocker: ContentBlocker?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +97,7 @@ class PrivacyProtectionController: UIViewController {
         omniBar.frame = omniBarContainer.bounds
         omniBarContainer.addSubview(omniBar)
         omniBar.textField.text = omniBarText
-        omniBar.updateSiteRating(siteRating)
+        omniBar.updateSiteRating(siteRating, with: contentBlocker)
         omniBar.startBrowsing()
         omniBar.omniDelegate = self
         omniBar.textField.addTarget(self, action: #selector(onTextFieldTapped), for: .touchDown)
@@ -119,16 +119,17 @@ class PrivacyProtectionController: UIViewController {
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
         guard let siteRating = siteRating else { return }
-        omniBar.updateSiteRating(siteRating)
+        omniBar.updateSiteRating(siteRating, with: contentBlocker)
         omniBar.refreshText(forUrl: siteRating.url)
         updateViewControllers()
     }
 
     func updateViewControllers() {
         guard let siteRating = siteRating else { return }
+        guard let contentBlocker = contentBlocker else { return }
         for controller in embeddedController.viewControllers {
             guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
-            infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
+            infoDisplaying.using(siteRating: siteRating, configuration: contentBlocker.configuration)
         }
     }
 

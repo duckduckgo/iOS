@@ -216,6 +216,7 @@ private class MockEntityMapping: EntityMapping {
     
     init(entity: String?) {
         self.entity = entity
+        super.init(store: DownloadedEntityMappingStore())
     }
 
     override func findEntity(forHost host: String) -> String? {

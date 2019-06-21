@@ -36,7 +36,6 @@ public class SiteRatingView: UIView {
 
     @IBOutlet weak var circleIndicator: UIImageView!
 
-    private var contentBlockerConfiguration = ContentBlockerConfigurationUserDefaults()
     private var siteRating: SiteRating?
 
     public required init?(coder aDecoder: NSCoder) {
@@ -46,38 +45,26 @@ public class SiteRatingView: UIView {
         }
         self.addSubview(view)
         view.frame = self.bounds
-        addContentBlockerConfigurationObserver()
     }
+// TODO
+//    @objc func onContentBlockerConfigurationChanged() {
+//        refresh()
+//    }
 
-    private func addContentBlockerConfigurationObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onContentBlockerConfigurationChanged),
-                                               name: ContentBlockerConfigurationChangedNotification.name,
-                                               object: nil)
-    }
-
-    @objc func onContentBlockerConfigurationChanged() {
-        refresh()
-    }
-
-    public func update(siteRating: SiteRating?) {
+    public func update(siteRating: SiteRating?, with contentBlocker: ContentBlocker?) {
         self.siteRating = siteRating
-        refresh()
+        refresh(with: contentBlocker)
     }
 
-    public func refresh() {
+    public func refresh(with contentBlocker: ContentBlocker?) {
         circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
 
-        guard ContentBlockerLoader().hasData else { return }
+        guard let contentBlocker = contentBlocker, contentBlocker.hasData else { return }
         guard let siteRating = siteRating else { return }
 
         let grades = siteRating.scores
-        let grade = contentBlockerConfiguration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+        let grade = contentBlocker.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
         circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
         circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
-    }
-
-    private func protecting() -> Bool {
-        return contentBlockerConfiguration.protecting(domain: siteRating?.domain)
     }
 }

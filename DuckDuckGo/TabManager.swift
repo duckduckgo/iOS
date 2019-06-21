@@ -23,12 +23,15 @@ import WebKit
 class TabManager {
 
     private(set) var model: TabsModel
+    private var contentBlocker: ContentBlocker
+    
     private var tabControllerCache = [TabViewController]()
 
     private weak var delegate: TabDelegate?
 
-    init(model: TabsModel, delegate: TabDelegate) {
+    init(model: TabsModel, contentBlocker: ContentBlocker, delegate: TabDelegate) {
         self.model = model
+        self.contentBlocker = contentBlocker
         self.delegate = delegate
         if let index = model.currentIndex {
             let tab = model.tabs[index]
@@ -43,7 +46,6 @@ class TabManager {
     }
 
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
-        let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
         controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.isEmpty)

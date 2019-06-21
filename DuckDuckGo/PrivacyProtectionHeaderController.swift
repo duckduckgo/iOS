@@ -51,7 +51,7 @@ class PrivacyProtectionHeaderController: UIViewController {
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
 
     private weak var siteRating: SiteRating!
-    private weak var contentBlocker: ContentBlockerConfigurationStore!
+    private weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
 
     override func viewDidLoad() {
         update()
@@ -61,7 +61,7 @@ class PrivacyProtectionHeaderController: UIViewController {
         guard isViewLoaded else { return }
 
         let grades = siteRating.scores
-        let protecting = contentBlocker.protecting(domain: siteRating.domain)
+        let protecting = contentBlockerConfiguration.protecting(domain: siteRating.domain)
         let grade =  protecting ? grades.enhanced.grade : grades.site.grade
         gradeImage.image = protecting ? PrivacyProtectionHeaderController.gradesOn[grade] : PrivacyProtectionHeaderController.gradesOff[grade]
 
@@ -77,9 +77,9 @@ class PrivacyProtectionHeaderController: UIViewController {
         stackView.removeArrangedSubview(protectionDisabledLabel)
         stackView.removeArrangedSubview(protectionUpgraded)
 
-        if !contentBlocker.enabled {
+        if !contentBlockerConfiguration.enabled {
             stackView.addArrangedSubview(protectionDisabledLabel)
-        } else if contentBlocker.domainWhitelist.contains(siteRating.domain ?? "") {
+        } else if contentBlockerConfiguration.domainWhitelist.contains(siteRating.domain ?? "") {
             stackView.addArrangedSubview(protectionPausedLabel)
         } else if siteRating.scores.enhanced != siteRating.scores.site {
             protectionUpgraded.update(with: siteRating)
@@ -94,9 +94,9 @@ class PrivacyProtectionHeaderController: UIViewController {
 
 extension PrivacyProtectionHeaderController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
-        self.contentBlocker = contentBlocker
+        self.contentBlockerConfiguration = configuration
         update()
     }
 

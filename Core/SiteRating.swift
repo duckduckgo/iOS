@@ -51,10 +51,11 @@ public class SiteRating {
     private let grade = Grade()
     private let cache = GradeCache.shared
     
+    //
     public init(url: URL,
                 httpsForced: Bool = false,
-                entityMapping: EntityMapping = EntityMapping(),
-                privacyPractices: PrivacyPractices = PrivacyPractices(),
+                entityMapping: EntityMapping,
+                privacyPractices: PrivacyPractices? = nil,
                 prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()) {
 
         Logger.log(text: "new SiteRating(url: \(url), httpsForced: \(httpsForced))")
@@ -70,7 +71,13 @@ public class SiteRating {
         self.httpsForced = httpsForced
         self.prevalenceStore = prevalenceStore
         self.hasOnlySecureContent = url.isHttps()
-        self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
+        
+        if let privacyPractices = privacyPractices {
+            self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
+        } else {
+            let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+            self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
+        }
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.

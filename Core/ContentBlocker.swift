@@ -19,17 +19,24 @@
 
 import Foundation
 
-class ContentBlocker {
+public class ContentBlocker {
         
     let easylistStore = EasylistStore()
-    let disconnectStore = DisconnectMeStore()
-    let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     let surrogateStore = SurrogateStore()
-    let entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
     
-    let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    public let disconnectStore = DisconnectMeStore()
+    public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
+    public let entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
     
-    public static func update(with newData: ContentBlockerLoader.DataStore) {
+    public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    
+    public init() {}
+    
+    public var hasData: Bool {
+        return disconnectStore.hasData && easylistStore.hasData
+    }
+    
+    static func update(with newData: ContentBlockerLoader.DataStore) {
         let newBlocker = ContentBlocker()
         
         for (config, data) in newData {

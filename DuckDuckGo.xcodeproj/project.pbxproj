@@ -293,6 +293,7 @@
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
+		9846AA6722BD3BBF007DE48E /* InitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846AA6622BD3BBF007DE48E /* InitHelpers.swift */; };
 		9849942922B8FAF70019E4FA /* SiteRatingViewPerfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */; };
 		9849942B22B8FFED0019E4FA /* PerformanceTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */; };
 		9849942D22B9083A0019E4FA /* WebViewConfigurationPerfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9849942C22B9083A0019E4FA /* WebViewConfigurationPerfTests.swift */; };
@@ -855,6 +856,7 @@
 		982E562D222C39F8008D861B /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPickerViewController.swift; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
+		9846AA6622BD3BBF007DE48E /* InitHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitHelpers.swift; sourceTree = "<group>"; };
 		9849942822B8FAF70019E4FA /* SiteRatingViewPerfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingViewPerfTests.swift; sourceTree = "<group>"; };
 		9849942A22B8FFED0019E4FA /* PerformanceTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTestsHelper.swift; sourceTree = "<group>"; };
 		9849942C22B9083A0019E4FA /* WebViewConfigurationPerfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewConfigurationPerfTests.swift; sourceTree = "<group>"; };
@@ -1870,6 +1872,7 @@
 			isa = PBXGroup;
 			children = (
 				F1134ECF1F40EBE200B73467 /* JsonTestDataLoader.swift */,
+				9846AA6622BD3BBF007DE48E /* InitHelpers.swift */,
 			);
 			name = TestUtils;
 			sourceTree = "<group>";
@@ -3304,6 +3307,7 @@
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85A9C37720DD2DC200073340 /* AddToHomeRowCTAViewController.swift in Sources */,
+				9846AA6722BD3BBF007DE48E /* InitHelpers.swift in Sources */,
 				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,

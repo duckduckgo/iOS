@@ -46,8 +46,10 @@ extension WKWebViewConfiguration {
         return configuration
     }
 
-    public func loadScripts(contentBlocking: Bool) {
-        Loader(userContentController, contentBlocking).load()
+    public func loadScripts(contentBlocker: ContentBlocker, contentBlockingEnabled: Bool) {
+        Loader(contentController: userContentController,
+               contentBlocker: contentBlocker,
+               injectContentBlockingScripts: contentBlockingEnabled).load()
     }
 
 }
@@ -63,12 +65,14 @@ private class Loader {
     let tlds = TLD()
     let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
+    let contentBlocker: ContentBlocker
 
     let userContentController: WKUserContentController
     let injectContentBlockingScripts: Bool
 
-    init(_ userContentController: WKUserContentController, _ injectContentBlockingScripts: Bool) {
-        self.userContentController = userContentController
+    init(contentController: WKUserContentController, contentBlocker: ContentBlocker, injectContentBlockingScripts: Bool) {
+        self.contentBlocker = contentBlocker
+        self.userContentController = contentController
         self.injectContentBlockingScripts = injectContentBlockingScripts
     }
 
@@ -77,7 +81,7 @@ private class Loader {
         loadDocumentLevelScripts()
 
         if injectContentBlockingScripts {
-            loadContentBlockingScripts()
+            loadContentBlockingScripts(with: contentBlocker)
         }
     }
 
@@ -85,11 +89,9 @@ private class Loader {
         load(scripts: [ .document, .findinpage ] )
     }
 
-    private func loadContentBlockingScripts() {
-        let configuration = ContentBlockerConfigurationUserDefaults()
-        let whitelist = configuration.domainWhitelist.toJsonLookupString()
+    private func loadContentBlockingScripts(with contentBlocker: ContentBlocker) {
         loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelist, and: configuration.enabled)
+        loadBlockerData(with: contentBlocker)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
         load(scripts: [ .detection ], forMainFrameOnly: false)
     }
@@ -105,10 +107,12 @@ private class Loader {
         javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
     }
 
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+    private func loadBlockerData(with contentBlocker: ContentBlocker) {
 
-        let surrogates = loadSurrogateJson()
-        let disconnectMeStore = DisconnectMeStore()
+        let surrogates = loadSurrogateJson(contentBlocker.surrogateStore)
+        let blockingEnabled = contentBlocker.configuration.enabled
+        let whitelist = contentBlocker.configuration.domainWhitelist.toJsonLookupString()
+        let disconnectMeStore = contentBlocker.disconnectStore
 
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
@@ -120,17 +124,16 @@ private class Loader {
                               into: userContentController,
                               forMainFrameOnly: false)
 
-        loadEasylist()
+        loadEasylist(contentBlocker.easylistStore)
 
     }
 
-    private func loadSurrogateJson() -> String {
+    private func loadSurrogateJson(_ store: SurrogateStore) -> String {
         if let surrogateJson = cache.get(named: CacheNames.surrogateJson) {
             Logger.log(text: "Using cached surrogate json")
             return surrogateJson
         }
 
-        let store = SurrogateStore()
         guard let functions = store.jsFunctions else { return "{}" }
         let functionUris = functions.mapValues({ "data:application/javascript;base64,\($0.toBase64())" })
         guard let jsonData = try? JSONEncoder().encode(functionUris) else { return "{}" }
@@ -169,14 +172,13 @@ private class Loader {
 
     }
 
-    private func loadEasylist() {
+    private func loadEasylist(_ easylistStore: EasylistStore) {
 
         if let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
             injectCompiledEasylist(cachedEasylistWhitelist)
             return
         }
 
-        let easylistStore = EasylistStore()
         if let easylistWhitelist = easylistStore.easylistWhitelist {
             injectRawEasylist(easylistWhitelist)
         }

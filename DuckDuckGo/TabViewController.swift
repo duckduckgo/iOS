@@ -61,7 +61,7 @@ class TabViewController: UIViewController {
     private lazy var tld = TLD()
     private lazy var statisticsStore: StatisticsStore = StatisticsUserDefaults()
     private lazy var disconnectMeStore = DisconnectMeStore()
-    private var contentBlocker: ContentBlockerConfigurationStore!
+    //private var contentBlocker: ContentBlockerConfigurationStore!
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -131,7 +131,7 @@ class TabViewController: UIViewController {
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
             fatalError("Failed to instantiate controller as TabViewController")
         }
-        controller.contentBlocker = contentBlocker
+        //controller.contentBlocker = contentBlocker
         controller.tabModel = model
         return controller
     }

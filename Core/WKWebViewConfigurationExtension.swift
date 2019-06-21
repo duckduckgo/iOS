@@ -103,14 +103,11 @@ private class Loader {
         }
         
         if isDebugBuild {
-            let signpostMessaging = "try { webkit.messageHandlers.signpostMessage.postMessage(data); } catch(error) {}"
-            javascriptLoader.load(script: .debugMessaging,
-                                  withReplacements: [ "${debug_logging_enabled}": signpostMessaging],
+            javascriptLoader.load(script: .debugMessagingEnabled,
                                   into: userContentController,
                                   forMainFrameOnly: false)
         } else {
-            javascriptLoader.load(script: .debugMessaging,
-                                  withReplacements: [ "${debug_logging_enabled}": "return" ],
+            javascriptLoader.load(script: .debugMessagingDisabled,
                                   into: userContentController,
                                   forMainFrameOnly: false)
         }

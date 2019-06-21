@@ -19,7 +19,7 @@
 
 (function (){
 
-    duckduckgoMessaging.log("parsing adblock files")
+    duckduckgoDebugMessaging.log("parsing adblock files")
  
     // from https://stackoverflow.com/a/46491780/73479
     function Set_toJSON(key, value) {

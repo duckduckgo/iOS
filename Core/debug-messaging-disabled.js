@@ -1,5 +1,5 @@
 //
-//  debug-messaging.js
+//  debug-messaging-disabled.js
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,11 +19,12 @@
 
 var duckduckgoDebugMessaging = function() {
     
-    function signpostEvent(data) {
-        ${debug_logging_enabled}
-    }
+    function signpostEvent(data) {}
+    
+    function log() {}
     
     return {
-        signpostEvent: signpostEvent
+        signpostEvent: signpostEvent,
+        log: log
     }
 }()

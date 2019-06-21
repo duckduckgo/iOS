@@ -25,7 +25,7 @@ var duckduckgoContentBlocking = function() {
 	// private
 	function handleDetection(url, detectionMethod) {
 		if (isAssociatedFirstPartyDomain(url)) {
-			duckduckgoMessaging.log("first party url: " + url)
+			duckduckgoDebugMessaging.log("first party url: " + url)
 			return null
 		}
 
@@ -38,7 +38,7 @@ var duckduckgoContentBlocking = function() {
 		}
 
 		if (currentDomainIsWhitelisted()) {
-			duckduckgoMessaging.log("domain whitelisted: " + url)
+			duckduckgoDebugMessaging.log("domain whitelisted: " + url)
 			return {
 				method: detectionMethod,
 				block: false,
@@ -46,7 +46,7 @@ var duckduckgoContentBlocking = function() {
 			}
 		}
 
-		duckduckgoMessaging.log("blocking: " + url)
+		duckduckgoDebugMessaging.log("blocking: " + url)
 		return {
 			method: detectionMethod,
 			block: true,
@@ -167,7 +167,7 @@ var duckduckgoContentBlocking = function() {
 	function getParentEntityUrl() {
 		var parentEntity = DisconnectMe.parentTracker(topLevelUrl)
 		if (parentEntity) {
-			duckduckgoMessaging.log("topLevelUrl: " + topLevelUrl.protocol + " parentEntity: " + JSON.stringify(parentEntity))
+			duckduckgoDebugMessaging.log("topLevelUrl: " + topLevelUrl.protocol + " parentEntity: " + JSON.stringify(parentEntity))
 			return new URL(topLevelUrl.protocol + parentEntity.parent)
 		}
 		return null
@@ -224,7 +224,7 @@ var duckduckgoContentBlocking = function() {
 	// public 
 	function loadSurrogate(url) {
 		var withoutQueryString = url.split("?")[0]        	
-		duckduckgoMessaging.log("looking for surrogate for " + withoutQueryString)
+		duckduckgoDebugMessaging.log("looking for surrogate for " + withoutQueryString)
 
         var suggorateKeys = Object.keys(duckduckgoBlockerData.surrogates)
         for (var i = 0; i < suggorateKeys.length; i++) {
@@ -306,7 +306,7 @@ var duckduckgoContentBlocking = function() {
 	(function() {
 		topLevelUrl = getTopLevelURL()
 		parentEntityUrl = getParentEntityUrl()
-		duckduckgoMessaging.log("content blocking initialised")
+		duckduckgoDebugMessaging.log("content blocking initialised")
 	})()
 
 	return { 

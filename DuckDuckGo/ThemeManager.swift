@@ -56,10 +56,8 @@ class ThemeManager {
         }
     }
     
-    init(variantManager: VariantManager = DefaultVariantManager(),
-         settings: AppSettings = AppUserDefaults(),
+    init(settings: AppSettings = AppUserDefaults(),
          rootProvider: RootControllerProvider = UIApplicationRootControllerProvider()) {
-        variantManager.assignVariantIfNeeded()
         
         appSettings = settings
         currentTheme = ThemeManager.makeTheme(name: settings.currentThemeName)

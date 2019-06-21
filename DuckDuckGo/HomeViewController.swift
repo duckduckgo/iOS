@@ -115,6 +115,8 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        Pixel.fire(pixel: .homeScreenShown)
+        
         if HomeRowCTA().shouldShow() {
             showHomeRowCTA()
         }

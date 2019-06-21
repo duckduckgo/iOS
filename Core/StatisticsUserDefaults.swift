@@ -29,8 +29,6 @@ public class StatisticsUserDefaults: StatisticsStore {
         static let searchRetentionAtb = "com.duckduckgo.statistics.retentionatb.key"
         static let appRetentionAtb = "com.duckduckgo.statistics.appretentionatb.key"
         static let variant = "com.duckduckgo.statistics.variant.key"
-        static let httpsUpgradesTotal = "com.duckduckgo.statistics.httpsupgradestotal.key"
-        static let httpsUpgradesFailures = "com.duckduckgo.statistics.httpsupgradesfailures.key"
     }
 
     private var userDefaults: UserDefaults? {
@@ -91,24 +89,6 @@ public class StatisticsUserDefaults: StatisticsStore {
 
         set {
             userDefaults?.setValue(newValue, forKey: Keys.variant)
-        }
-    }
-    
-    public var httpsUpgradesTotal: Int {
-        get {
-            return userDefaults?.integer(forKey: Keys.httpsUpgradesTotal) ?? 0
-        }
-        set {
-            userDefaults?.set(newValue, forKey: Keys.httpsUpgradesTotal)
-        }
-    }
-    
-    public var httpsUpgradesFailures: Int {
-        get {
-            return userDefaults?.integer(forKey: Keys.httpsUpgradesFailures) ?? 0
-        }
-        set {
-            userDefaults?.set(newValue, forKey: Keys.httpsUpgradesFailures)
         }
     }
 }

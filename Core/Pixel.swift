@@ -64,9 +64,6 @@ public enum PixelName: String {
     case autoClearTimingOptionExitOr30Mins = "macwhen_30"
     case autoClearTimingOptionExitOr60Mins = "macwhen_60"
 
-    case httpsUpgradeSiteError = "ehd"
-    case httpsUpgradeSiteSummary = "ehs"
-
     case browsingMenuOpened = "mb"
     case browsingMenuRefresh = "mb_rf"
     case browsingMenuNewTab = "mb_tb"
@@ -130,16 +127,6 @@ public enum PixelName: String {
 public class Pixel {
 
     private static let appUrls = AppUrls()
-    
-    public struct EhdParameters {
-        public static let url = "url"
-        public static let errorCode = "error_code"
-    }
-    
-    public struct EhsParameters {
-        public static let totalCount = "total"
-        public static let failureCount = "failures"
-    }
     
     private struct Constants {
         static let tablet = "tablet"

@@ -31,7 +31,4 @@ class MockStatisticsStore: StatisticsStore {
     }
 
     var variant: String?
-    
-    var httpsUpgradesTotal = 0
-    var httpsUpgradesFailures = 0
 }

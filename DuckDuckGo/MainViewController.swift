@@ -697,13 +697,17 @@ extension MainViewController: OmniBarDelegate {
         autocompleteController?.keyboardEscape()
         homeController?.omniBarCancelPressed()
     }
+    
+    func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        guard homeController == nil else { return }
+        
+        displayFavoritesOverlay()
+    }
 
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) {
-        if let homeController = homeController {
-            homeController.launchNewSearch()
-        } else {
-            displayFavoritesOverlay()
-        }
+        guard let homeController = homeController else { return }
+        
+        homeController.launchNewSearch()
     }
     
     func onRefreshPressed() {

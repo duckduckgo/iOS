@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Core
 
 class CenteredSearchHomeCell: UICollectionViewCell {
     
@@ -74,6 +75,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
     }
 
     @objc func onTap() {
+        Pixel.fire(pixel: .homeScreenSearchTapped)
         tapped?(self)
     }
 

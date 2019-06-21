@@ -98,7 +98,6 @@
 		8512BCBE20615EB40085E862 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512BCBD20615EB30085E862 /* SnapshotHelper.swift */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
-		851B1286221FE756004781BC /* VariantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1284221FE716004781BC /* VariantTests.swift */; };
 		851B128822200575004781BC /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128722200575004781BC /* Onboarding.swift */; };
 		851B128A22204800004781BC /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 851B128922204800004781BC /* Onboarding.storyboard */; };
 		851B129622242D94004781BC /* HomeScreenTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B129522242D94004781BC /* HomeScreenTips.swift */; };
@@ -654,7 +653,6 @@
 		8512BCBF2061B6110085E862 /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
 		8517D98A221783A0006A8DD0 /* FindInPage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = FindInPage.xcassets; sourceTree = "<group>"; };
 		851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImproveOnboardingExperiment1Tests.swift; sourceTree = "<group>"; };
-		851B1284221FE716004781BC /* VariantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantTests.swift; sourceTree = "<group>"; };
 		851B128722200575004781BC /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		851B128922204800004781BC /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		851B128B2220483A004781BC /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -1841,7 +1839,6 @@
 				83EDCC3F1F86B895005CDFCD /* StatisticsLoaderTests.swift */,
 				F1134ED31F40F12B00B73467 /* Store */,
 				85C11E4020904BBE00BFFEB4 /* VariantManagerTests.swift */,
-				851B1284221FE716004781BC /* VariantTests.swift */,
 			);
 			name = Statistics;
 			sourceTree = "<group>";
@@ -3409,7 +3406,6 @@
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				853C5F6521C3E697001F7A05 /* MockBookmarkStore.swift in Sources */,
 				85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */,
-				851B1286221FE756004781BC /* VariantTests.swift in Sources */,
 				851B12AF2226B1C2004781BC /* DefaultContextualTipsStorageTests.swift in Sources */,
 				85F1C3D11F7BF30B00161346 /* EasylistStoreTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* OmniBarStateTests.swift in Sources */,

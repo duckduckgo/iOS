@@ -113,6 +113,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        Pixel.fire(pixel: .homeScreenDeleteFavorite)
         bookmarksManager.deleteFavorite(at: indexPath.row)
         collectionView.performBatchUpdates({
             collectionView.deleteItems(at: [indexPath])
@@ -121,6 +122,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        Pixel.fire(pixel: .homeScreenEditFavorite)
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveFavorite,
             bookmark: bookmarksManager.favorite(atIndex: indexPath.row),
@@ -212,16 +214,22 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
         guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         UISelectionFeedbackGenerator().selectionChanged()
         controller.favoritesRenderer(self, didSelect: link)
     }
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
+        Pixel.fire(pixel: .homeScreenAddFavorite)
         let alert = EditBookmarkAlert.buildAlert (
             title: UserText.alertSaveFavorite,
             bookmark: nil,
             saveCompletion: { [weak self] newLink in
+                Pixel.fire(pixel: .homeScreenAddFavoriteOK)
                 self?.saveNewFavorite(newLink, in: collectionView, at: indexPath)
+            },
+            cancelCompletion: {
+                Pixel.fire(pixel: .homeScreenAddFavoriteCancel)
             }
         )
         controller.present(alert, animated: true, completion: nil)

@@ -101,8 +101,4 @@ class MockStatisticsStore: StatisticsStore {
     var searchRetentionAtb: String?
 
     var variant: String?
-        
-    var httpsUpgradesTotal = 0
-    
-    var httpsUpgradesFailures = 0
 }

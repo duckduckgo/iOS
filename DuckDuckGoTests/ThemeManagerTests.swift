@@ -45,8 +45,7 @@ class ThemeManagerTests: XCTestCase {
         let mockRootControllerProvider = MockRootControllerProvider()
         mockRootControllerProvider.rootController = mockRootController
         
-        let manager = ThemeManager(variantManager: DefaultVariantManager(),
-                                   settings: AppUserDefaults(),
+        let manager = ThemeManager(settings: AppUserDefaults(),
                                    rootProvider: mockRootControllerProvider)
         manager.enableTheme(with: .light)
         manager.enableTheme(with: .dark)

@@ -24,63 +24,20 @@ public typealias AppConfigurationCompletion = (Bool) -> Void
 
 class AppConfigurationFetch {
     
-    private static let queue = DispatchQueue(label: "AppConfigurationFetch queue", qos: .utility)
-    
-    private lazy var statisticsStore: StatisticsStore = StatisticsUserDefaults()
-
     func start(completion: AppConfigurationCompletion?) {
 
         DispatchQueue.global(qos: .background).async {
 
             var newData = false
             let semaphore = DispatchSemaphore(value: 0)
-            
-            self.sendHttpsSummaryPixel { newHttpsData in
-                newData = newData || newHttpsData
-                semaphore.signal()
-            }
-            
-            self.updateContentBlockerData { newContentBlockingData in
+
+            ContentBlockerLoader().start { newContentBlockingData in
                 newData = newData || newContentBlockingData
                 semaphore.signal()
             }
             
             semaphore.wait()
-            semaphore.wait()
             completion?(newData)
-        }
-    }
-    
-    private func sendHttpsSummaryPixel(completion: @escaping (Bool) -> Void) {
-            
-        if statisticsStore.httpsUpgradesTotal == 0 {
-            type(of: self).queue.async {
-                completion(false)
-            }
-            return
-        }
-        
-        let params = [
-            Pixel.EhsParameters.totalCount: "\(statisticsStore.httpsUpgradesTotal)",
-            Pixel.EhsParameters.failureCount: "\(statisticsStore.httpsUpgradesFailures)"
-        ]
-        
-        Pixel.fire(pixel: .httpsUpgradeSiteSummary, withAdditionalParameters: params) { error in
-            if error == nil {
-                self.statisticsStore.httpsUpgradesTotal = 0
-                self.statisticsStore.httpsUpgradesFailures = 0
-            }
-            type(of: self).queue.async {
-                completion(true)
-            }
-        }
-    }
-    
-    private func updateContentBlockerData(completion: @escaping (Bool) -> Void) {
-        ContentBlockerLoader().start { newContentBlockingData in
-            type(of: self).queue.async {
-                completion(newContentBlockingData)
-            }
         }
     }
 }

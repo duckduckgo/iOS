@@ -64,9 +64,6 @@ public enum PixelName: String {
     case autoClearTimingOptionExitOr30Mins = "macwhen_30"
     case autoClearTimingOptionExitOr60Mins = "macwhen_60"
 
-    case httpsUpgradeSiteError = "ehd"
-    case httpsUpgradeSiteSummary = "ehs"
-
     case browsingMenuOpened = "mb"
     case browsingMenuRefresh = "mb_rf"
     case browsingMenuNewTab = "mb_tb"
@@ -90,7 +87,16 @@ public enum PixelName: String {
     case onboardingThemesLightThemeSelected = "m_o_t_l"
     case onboardingThemesSkipped = "m_o_t_s"
     case onboardingSummaryFinished = "m_o_s"
-
+    
+    case homeScreenShown = "mh"
+    case homeScreenSearchTapped = "mh_st"
+    case homeScreenFavouriteLaunched = "mh_fl"
+    case homeScreenAddFavorite = "mh_af"
+    case homeScreenAddFavoriteOK = "mh_af_o"
+    case homeScreenAddFavoriteCancel = "mh_af_c"
+    case homeScreenEditFavorite = "mh_ef"
+    case homeScreenDeleteFavorite = "mh_df"
+    
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"
     
@@ -130,16 +136,6 @@ public enum PixelName: String {
 public class Pixel {
 
     private static let appUrls = AppUrls()
-    
-    public struct EhdParameters {
-        public static let url = "url"
-        public static let errorCode = "error_code"
-    }
-    
-    public struct EhsParameters {
-        public static let totalCount = "total"
-        public static let failureCount = "failures"
-    }
     
     private struct Constants {
         static let tablet = "tablet"

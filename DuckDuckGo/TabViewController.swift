@@ -59,7 +59,6 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private lazy var tld = TLD()
-    private lazy var statisticsStore: StatisticsStore = StatisticsUserDefaults()
     private lazy var disconnectMeStore = DisconnectMeStore()
     private var contentBlocker: ContentBlockerConfigurationStore!
     private var httpsUpgrade = HTTPSUpgrade.shared
@@ -646,10 +645,6 @@ extension TabViewController: WKNavigationDelegate {
         url = webView.url
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
-        
-        if let url = webView.url, isHttpsUpgradeSite(url: url) {
-            statisticsStore.httpsUpgradesTotal += 1
-        }
     }
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
@@ -713,12 +708,6 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
         webpageDidFailToLoad()
-        
-        let error = error as NSError
-        if let url = webView.url, isHttpsUpgradeSite(url: url) {
-            reportHttpsUpgradeSiteError(url: url, error: "\(error.domain)_\(error.code)")
-        }
-        
         checkForReloadOnError()
     }
 
@@ -737,10 +726,6 @@ extension TabViewController: WKNavigationDelegate {
         hideProgressIndicator()
         lastError = error
         let error = error as NSError
-        
-        if let url = url, isHttpsUpgradeSite(url: url) {
-            reportHttpsUpgradeSiteError(url: url, error: "\(error.domain)_\(error.code)")
-        }
         
         // prevent loops where a site keeps redirecting to itself (e.g. bbc)
         if let url = url,
@@ -833,20 +818,6 @@ extension TabViewController: WKNavigationDelegate {
         
         webpageDidFailToLoad()
         checkForReloadOnError()
-    }
-    
-    private func isHttpsUpgradeSite(url: URL) -> Bool {
-        return url.isHttps() && HTTPSUpgrade.shared.isInUpgradeList(url: url)
-    }
-    
-    private func reportHttpsUpgradeSiteError(url: URL, error: String) {
-        guard let host = url.host else { return }
-        let params = [
-            Pixel.EhdParameters.errorCode: error,
-            Pixel.EhdParameters.url: "https://\(host)"
-        ]
-        Pixel.fire(pixel: .httpsUpgradeSiteError, withAdditionalParameters: params)
-        statisticsStore.httpsUpgradesFailures += 1
     }
 }
 

@@ -27,9 +27,6 @@ public protocol StatisticsStore: class {
     var searchRetentionAtb: String? { get set }
     var appRetentionAtb: String? { get set }
     var variant: String? { get set }
-    
-    var httpsUpgradesTotal: Int { get set }
-    var httpsUpgradesFailures: Int { get set }
 }
 
 extension StatisticsStore {

@@ -23,14 +23,26 @@ import XCTest
 @testable import Core
 
 class SiteRatingPerfTests: XCTestCase {
+    
+    override func setUp() {
+        loadBlockingLists()
+    }
 
     func testSiteRatingInitialization() {
         
         let url = URL(string: "https://google.com")!
         _ = SiteRating(url: url)
         
+        let contentBlocker = ContentBlocker()
+        
         self.measure {
-            _ = SiteRating(url: url)
+            let entityMapping = EntityMapping(store: contentBlocker.entityMappingStore)
+            let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+            
+            _ = SiteRating(url: url,
+                           httpsForced: false,
+                           entityMapping: entityMapping,
+                           privacyPractices: privacyPractices)
         }
     }
 }

@@ -24,18 +24,24 @@ import WebKit
 @testable import Core
 
 class WebViewConfigurationPerfTests: XCTestCase {
+    
+    override func setUp() {
+        loadBlockingLists()
+    }
 
     func testLoadingScriptsPerformance() {
         
+        let contentBlocker = ContentBlocker()
+        
         // Warm up
         let configuration = WKWebViewConfiguration.nonPersistent()
-        configuration.loadScripts(contentBlocking: true)
+        configuration.loadScripts(contentBlocker: contentBlocker, contentBlockingEnabled: true)
         
         measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
             let configuration = WKWebViewConfiguration.nonPersistent()
             
             startMeasuring()
-            configuration.loadScripts(contentBlocking: true)
+            configuration.loadScripts(contentBlocker: contentBlocker, contentBlockingEnabled: true)
             stopMeasuring()
         }
     }

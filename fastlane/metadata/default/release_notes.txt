@@ -1,1 +1,1 @@
-We tweaked our privacy dashboard and squashed some bugs.
+• Bug fixes and other improvements.

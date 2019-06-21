@@ -44,7 +44,8 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/bartek/Downloads/Xcode.app/Contents/Applications/Instruments.app">
+         BundleIdentifier = "com.apple.dt.Instruments"
+         FilePath = "/Applications/Xcode.app/Contents/Applications/Instruments.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference

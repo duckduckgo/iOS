@@ -148,10 +148,10 @@ class TabManager {
     }
 
     func removeAll() {
+        model.clearAll()
         for controller in tabControllerCache {
             removeFromCache(controller)
         }
-        model.clearAll()
         save()
     }
 

@@ -29,7 +29,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenNetworkNotKnownSectionHasNoRows() {
         let trackers = [DetectedTracker(url: "http://tracker1.com", networkName: nil, category: nil, blocked: false): 1]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: EmbeddedPrevalenceStore()).build()
 
         XCTAssertEqual(1, sections.count)
         XCTAssertEqual("tracker1.com", sections[0].name)
@@ -44,7 +44,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "http://tracker3.com", networkName: "Network 2", category: nil, blocked: false): 1
         ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: EmbeddedPrevalenceStore()).build()
 
         XCTAssertEqual(2, sections.count)
         XCTAssertEqual(2, sections[0].rows.count)
@@ -59,7 +59,7 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
             DetectedTracker(url: "http://tracker3.com", networkName: "Minor", category: "Category 3", blocked: true): 1
         ]
 
-        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
+        let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers, prevalenceStore: EmbeddedPrevalenceStore()).build()
 
         XCTAssertEqual(2, sections.count)
         XCTAssertEqual("Major 1", sections[0].name)

@@ -56,7 +56,7 @@ public class SiteRating {
                 httpsForced: Bool = false,
                 entityMapping: EntityMapping,
                 privacyPractices: PrivacyPractices? = nil,
-                prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()) {
+                prevalenceStore: PrevalenceStore) {
 
         Logger.log(text: "new SiteRating(url: \(url), httpsForced: \(httpsForced))")
 
@@ -75,7 +75,7 @@ public class SiteRating {
         if let privacyPractices = privacyPractices {
             self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
         } else {
-            let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+            let privacyPractices = PrivacyPractices(termsOfServiceStore: EmbeddedTermsOfServiceStore(), entityMapping: entityMapping)
             self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
         }
         

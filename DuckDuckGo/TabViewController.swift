@@ -430,7 +430,8 @@ class TabViewController: UIViewController {
     
     private func makeSiteRating(url: URL) -> SiteRating {
         let entityMapping = EntityMapping(store: contentBlocker!.entityMappingStore)
-        let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+        let privacyPractices = PrivacyPractices(termsOfServiceStore: contentBlocker!.termsOfServiceStore,
+                                                entityMapping: entityMapping)
         
         return SiteRating(url: url,
                           httpsForced: httpsForced,

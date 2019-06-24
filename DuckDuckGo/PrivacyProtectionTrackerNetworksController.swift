@@ -30,6 +30,9 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     private weak var siteRating: SiteRating!
     private weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    
+    // TODO
+    private var prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()
 
     struct Section {
 
@@ -69,7 +72,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     func update() {
         guard isViewLoaded else { return }
 
-        sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers()).build()
+        sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers(), prevalenceStore: prevalenceStore).build()
         updateDomain()
         updateSubtitle()
         updateIcon()
@@ -161,7 +164,7 @@ class SiteRatingTrackerNetworkSectionBuilder {
     let prevalenceStore: PrevalenceStore
     let trackers: [DetectedTracker: Int]
 
-    init(trackers: [DetectedTracker: Int], prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()) {
+    init(trackers: [DetectedTracker: Int], prevalenceStore: PrevalenceStore) {
         self.trackers = trackers
         self.prevalenceStore = prevalenceStore
     }

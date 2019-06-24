@@ -30,6 +30,10 @@ public class ContentBlocker {
     
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     
+    // TODO: TLDS
+    public let termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()
+    public let prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()
+    
     public init() {}
     
     public var hasData: Bool {
@@ -46,6 +50,7 @@ public class ContentBlocker {
         // TODO
     }
     
+    // swiftlint:disable cyclomatic_complexity
     private func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) {
         switch configuration {
             
@@ -78,4 +83,5 @@ public class ContentBlocker {
             return
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 }

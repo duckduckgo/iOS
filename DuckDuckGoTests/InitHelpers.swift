@@ -18,8 +18,13 @@ extension EntityMapping {
 
 extension PrivacyPractices {
     
-    public convenience init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()) {
-        self.init(termsOfServiceStore: termsOfServiceStore,
+    public convenience init(termsOfServiceStore: TermsOfServiceStore) {
+        self.init(termsOfServiceStore: EmbeddedTermsOfServiceStore(),
+                  entityMapping: EntityMapping())
+    }
+    
+    public convenience init(entityMapping: EntityMapping) {
+        self.init(termsOfServiceStore: EmbeddedTermsOfServiceStore(),
                   entityMapping: EntityMapping())
     }
 }

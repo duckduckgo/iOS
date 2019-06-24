@@ -45,13 +45,10 @@ extension SiteRating {
                             httpsForced: Bool = false,
                             entityMapping: EntityMapping = EntityMapping(),
                             privacyPractices: PrivacyPractices? = nil) {
-        
-        let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
-        
         self.init(url: url,
                   httpsForced: httpsForced,
                   entityMapping: entityMapping,
-                  privacyPractices: privacyPractices,
+                  privacyPractices: privacyPractices ?? PrivacyPractices(entityMapping: entityMapping),
                   prevalenceStore: EmbeddedPrevalenceStore())
     }
     

@@ -19,14 +19,24 @@ extension EntityMapping {
 extension PrivacyPractices {
     
     public convenience init(termsOfServiceStore: TermsOfServiceStore) {
-        self.init(termsOfServiceStore: EmbeddedTermsOfServiceStore(),
+        self.init(tld: TLD(),
+                  termsOfServiceStore: termsOfServiceStore,
                   entityMapping: EntityMapping())
     }
     
     public convenience init(entityMapping: EntityMapping) {
-        self.init(termsOfServiceStore: EmbeddedTermsOfServiceStore(),
-                  entityMapping: EntityMapping())
+        self.init(tld: TLD(),
+                  termsOfServiceStore: EmbeddedTermsOfServiceStore(),
+                  entityMapping: entityMapping)
     }
+
+    public convenience init(termsOfServiceStore: TermsOfServiceStore,
+                            entityMapping: EntityMapping) {
+        self.init(tld: TLD(),
+                  termsOfServiceStore: termsOfServiceStore,
+                  entityMapping: entityMapping)
+    }
+
 }
 
 extension SiteRating {
@@ -36,10 +46,26 @@ extension SiteRating {
                             entityMapping: EntityMapping = EntityMapping(),
                             privacyPractices: PrivacyPractices? = nil) {
         
+        let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+        
         self.init(url: url,
                   httpsForced: httpsForced,
                   entityMapping: entityMapping,
                   privacyPractices: privacyPractices,
                   prevalenceStore: EmbeddedPrevalenceStore())
+    }
+    
+    public convenience init(url: URL,
+                            httpsForced: Bool = false,
+                            entityMapping: EntityMapping = EntityMapping(),
+                            prevalenceStore: PrevalenceStore) {
+        
+        let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+        
+        self.init(url: url,
+                  httpsForced: httpsForced,
+                  entityMapping: entityMapping,
+                  privacyPractices: privacyPractices,
+                  prevalenceStore: prevalenceStore)
     }
 }

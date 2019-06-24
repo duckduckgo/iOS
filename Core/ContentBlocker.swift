@@ -27,14 +27,17 @@ public class ContentBlocker {
     public let disconnectStore = DisconnectMeStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     public let entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
+    public var entityMapping: EntityMapping
     
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     
-    // TODO: TLDS
+    public let tlds = TLD()
     public let termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()
     public let prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()
     
-    public init() {}
+    public init() {
+        entityMapping = EntityMapping(store: entityMappingStore)
+    }
     
     public var hasData: Bool {
         return disconnectStore.hasData && easylistStore.hasData
@@ -78,6 +81,7 @@ public class ContentBlocker {
         case .entitylist:
             guard let data = data as? Data else { return }
             entityMappingStore.persist(data: data)
+            entityMapping = EntityMapping(store: entityMappingStore)
             
         default:
             return

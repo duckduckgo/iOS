@@ -61,8 +61,7 @@ private class Loader {
         static let surrogateJson = "surrogateJson"
 
     }
-
-    let tlds = TLD()
+    
     let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
     let contentBlocker: ContentBlocker
@@ -90,13 +89,13 @@ private class Loader {
     }
 
     private func loadContentBlockingScripts(with contentBlocker: ContentBlocker) {
-        loadContentBlockerDependencyScripts()
+        loadContentBlockerDependencyScripts(tlds: contentBlocker.tlds)
         loadBlockerData(with: contentBlocker)
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
         load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
-    private func loadContentBlockerDependencyScripts() {
+    private func loadContentBlockerDependencyScripts(tlds: TLD) {
 
         if #available(iOS 10, *) {
             load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)

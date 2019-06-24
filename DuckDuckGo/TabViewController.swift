@@ -58,7 +58,6 @@ class TabViewController: UIViewController {
     private weak var privacyController: PrivacyProtectionController?
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
-    private lazy var tld = TLD()
     private var contentBlocker: ContentBlocker?
     private var httpsUpgrade = HTTPSUpgrade.shared
 
@@ -429,14 +428,16 @@ class TabViewController: UIViewController {
     }
     
     private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = EntityMapping(store: contentBlocker!.entityMappingStore)
-        let privacyPractices = PrivacyPractices(termsOfServiceStore: contentBlocker!.termsOfServiceStore,
+        let entityMapping = contentBlocker!.entityMapping
+        let privacyPractices = PrivacyPractices(tld: contentBlocker!.tlds,
+                                                termsOfServiceStore: contentBlocker!.termsOfServiceStore,
                                                 entityMapping: entityMapping)
         
         return SiteRating(url: url,
                           httpsForced: httpsForced,
                           entityMapping: entityMapping,
-                          privacyPractices: privacyPractices)
+                          privacyPractices: privacyPractices,
+                          prevalenceStore: contentBlocker!.prevalenceStore)
     }
 
     private func updateSiteRating() {
@@ -654,6 +655,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         url = webView.url
+        let tld = contentBlocker!.tlds
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
@@ -778,6 +780,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
+        let tld = contentBlocker!.tlds
         
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {

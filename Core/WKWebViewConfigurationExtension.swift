@@ -102,6 +102,16 @@ private class Loader {
         } else {
             load(scripts: [ .messaging, .apbfilterES2015 ], forMainFrameOnly: false)
         }
+        
+        if isDebugBuild {
+            javascriptLoader.load(script: .debugMessagingEnabled,
+                                  into: userContentController,
+                                  forMainFrameOnly: false)
+        } else {
+            javascriptLoader.load(script: .debugMessagingDisabled,
+                                  into: userContentController,
+                                  forMainFrameOnly: false)
+        }
 
         javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
     }

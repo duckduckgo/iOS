@@ -19,7 +19,7 @@
 
 (function() {
 
-    duckduckgoMessaging.log("installing beforeload detection")
+    duckduckgoDebugMessaging.log("installing beforeload detection")
 
     document.addEventListener("beforeload", function(event) {
 
@@ -33,16 +33,16 @@
             type = event.target.nodeName
         }
 
-        duckduckgoMessaging.log("checking " + event.url + " (" + type + ")");
+        duckduckgoDebugMessaging.log("checking " + event.url + " (" + type + ")");
         duckduckgoContentBlocking.shouldBlock(event.url, type, function(url, block) {
             if (!block) { 
-                duckduckgoMessaging.log("don't block " + url);
+                duckduckgoDebugMessaging.log("don't block " + url);
                 return 
             }
 
-            duckduckgoMessaging.log("blocking beforeload")
+            duckduckgoDebugMessaging.log("blocking beforeload")
             if (duckduckgoContentBlocking.loadSurrogate(event.url)) {                
-                duckduckgoMessaging.log("surrogate loaded for " + event.url)
+                duckduckgoDebugMessaging.log("surrogate loaded for " + event.url)
             }
             event.preventDefault()
             event.stopPropagation()
@@ -51,7 +51,7 @@
 
 
     try {
-        duckduckgoMessaging.log("installing image src detection")
+        duckduckgoDebugMessaging.log("installing image src detection")
 
         var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
         delete Image.prototype.src;
@@ -64,10 +64,10 @@
                 var instance = this
                 duckduckgoContentBlocking.shouldBlock(value, "image", function(url, block) {
                     if (block) {
-                        duckduckgoMessaging.log("blocking image src: " + url)
+                        duckduckgoDebugMessaging.log("blocking image src: " + url)
                     } else {
                         originalImageSrc.set.call(instance, value);
-                        duckduckgoMessaging.log("allowing image src: " + url)
+                        duckduckgoDebugMessaging.log("allowing image src: " + url)
                     }
                 })
                 
@@ -75,11 +75,11 @@
         })
 
     } catch(error) {
-        duckduckgoMessaging.log("failed to install image src detection")
+        duckduckgoDebugMessaging.log("failed to install image src detection")
     }
 
     try {
-        duckduckgoMessaging.log("installing xhr detection")
+        duckduckgoDebugMessaging.log("installing xhr detection")
 
         var xhr = XMLHttpRequest.prototype
         var originalOpen = xhr.open
@@ -90,12 +90,12 @@
             duckduckgoContentBlocking.shouldBlock(url, "xmlhttprequest", function(url, block) {                                                  
                 args[1] = block ? "about:blank" : url 
             })
-            duckduckgoMessaging.log("sending xhr " + url + " to " + args[1])
+            duckduckgoDebugMessaging.log("sending xhr " + url + " to " + args[1])
             return originalOpen.apply(this, args);
         }
 
     } catch(error) {
-        duckduckgoMessaging.log("failed to install xhr detection")
+        duckduckgoDebugMessaging.log("failed to install xhr detection")
     }
  
 }) ()

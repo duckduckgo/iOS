@@ -46,6 +46,8 @@ class TabViewController: UIViewController {
     
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
     var longPressGestureRecognizer: UILongPressGestureRecognizer?
+    
+    private let instrumentation = TabInstrumentation()
    
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
@@ -167,6 +169,7 @@ class TabViewController: UIViewController {
     }
     
     func attachWebView(configuration: WKWebViewConfiguration, andLoadUrl url: URL?, consumeCookies: Bool) {
+        instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         attachLongPressHandler(webView: webView)
@@ -179,11 +182,14 @@ class TabViewController: UIViewController {
         webViewContainer.addSubview(webView)
         let controller = webView.configuration.userContentController
         controller.add(self, name: MessageHandlerNames.trackerDetected)
+        controller.add(self, name: MessageHandlerNames.signpost)
         controller.add(self, name: MessageHandlerNames.cache)
         controller.add(self, name: MessageHandlerNames.log)
         controller.add(self, name: MessageHandlerNames.findInPageHandler)
         reloadScripts()
         updateUserAgent()
+        
+        instrumentation.didPrepareWebView()
 
         if consumeCookies {
             consumeCookiesThenLoadUrl(url)
@@ -527,6 +533,7 @@ class TabViewController: UIViewController {
 
         let controller = webView.configuration.userContentController
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
+        controller.removeScriptMessageHandler(forName: MessageHandlerNames.signpost)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.log)
         controller.removeScriptMessageHandler(forName: MessageHandlerNames.findInPageHandler)
@@ -557,6 +564,7 @@ extension TabViewController: WKScriptMessageHandler {
 
     private struct MessageHandlerNames {
         static let trackerDetected = "trackerDetectedMessage"
+        static let signpost = "signpostMessage"
         static let cache = "cacheMessage"
         static let log = "log"
         static let findInPageHandler = "findInPageHandler"
@@ -569,6 +577,9 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.cache:
             handleCache(message: message)
 
+        case MessageHandlerNames.signpost:
+            handleSignpost(message: message)
+            
         case MessageHandlerNames.trackerDetected:
             handleTrackerDetected(message: message)
 
@@ -602,6 +613,29 @@ extension TabViewController: WKScriptMessageHandler {
         ContentBlockerStringCache().put(name: name, value: data)
     }
     
+    private func handleSignpost(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any],
+        let event = dict["event"] as? String else { return }
+        
+        if event == "Request Allowed" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
+                let url = dict["url"] as? String {
+                instrumentation.request(url: url, allowedIn: elapsedTimeInMs)
+            }
+        } else if event == "Request Blocked" {
+            if let elapsedTimeInMs = dict["time"] as? Double,
+                let url = dict["url"] as? String {
+                instrumentation.request(url: url, blockedIn: elapsedTimeInMs)
+            }
+        } else if event == "Generic" {
+            if let name = dict["name"] as? String,
+                let elapsedTimeInMs = dict["time"] as? Double {
+                instrumentation.jsEvent(name: name, executedIn: elapsedTimeInMs)
+            }
+        }
+
+    }
+
     private func handleTrackerDetected(message: WKScriptMessage) {
         Logger.log(text: "\(MessageHandlerNames.trackerDetected) \(message.body)")
 
@@ -654,6 +688,10 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        if let url = webView.url {
+            instrumentation.willLoad(url: url)
+        }
+        
         url = webView.url
         let tld = contentBlocker!.tlds
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
@@ -706,6 +744,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         hideProgressIndicator()
         onWebpageDidFinishLoading()
+        instrumentation.didLoadURL()
     }
     
     private func onWebpageDidFinishLoading() {
@@ -763,7 +802,6 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
         let decision = decidePolicyFor(navigationAction: navigationAction)
         
         if let url = navigationAction.request.url,
@@ -775,7 +813,7 @@ extension TabViewController: WKNavigationDelegate {
 
             findInPage?.done()
         }
-        
+
         decisionHandler(decision)
     }
     

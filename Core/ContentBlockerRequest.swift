@@ -43,19 +43,15 @@ class ContentBlockerRequest {
     
     func request(_ configuration: Configuration, completion:@escaping (Data?, Bool) -> Void) {
         requestCount += 1
+        
+        let spid = Instruments.shared.startTimedEvent(.fetchingContentBlockerData, info: configuration.rawValue)
+        
         APIRequest.request(url: url(for: configuration)) { (response, error) in
             
-            guard error == nil else {
-                completion(nil, false)
-                return
-            }
-            
-            guard let response = response else {
-                completion(nil, false)
-                return
-            }
-            
-            guard let data = response.data else {
+            guard error == nil,
+                let response = response,
+                let data = response.data else {
+                    Instruments.shared.endTimedEvent(for: spid, result: "error")
                 completion(nil, false)
                 return
             }
@@ -63,9 +59,11 @@ class ContentBlockerRequest {
             let etag = self.etagStorage.etag(for: configuration)
             
             if etag == nil || etag != response.etag {
+                Instruments.shared.endTimedEvent(for: spid, result: "cached")
                 self.etagStorage.set(etag: response.etag, for: configuration)
                 completion(data, false)
             } else {
+                Instruments.shared.endTimedEvent(for: spid, result: "success")
                 completion(data, true)
             }
         }

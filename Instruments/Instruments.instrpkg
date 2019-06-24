@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package>
+	<id>com.duckduckgo.Instruments</id>
+	<title>Instruments</title>
+	<owner>
+		<name>Mobile Team</name>
+	</owner>
+
+    <!--  Website Loading events. Used to populate Tab graph lanes  -->
+    <os-signpost-interval-schema>
+        <id>website-loading-event</id>
+        <title>Website Loading</title>
+        <subsystem>"com.duckduckgo.instrumentation"</subsystem>
+        
+        <!--  Message pattern must match this.  -->
+        <start-pattern>
+            <message>"Loading URL: " ?website-url " in " ?tab-id</message>
+        </start-pattern>
+        <end-pattern>
+            <message>"Loading Finished: " ?loading-result</message>
+        </end-pattern>
+        
+        <!--  Note: for interval schema events, there are implicit columns like duration or start populated automatically.  -->
+        <column>
+            <mnemonic>tab-id</mnemonic>
+            <title>Tab ID</title>
+            <type>uint64</type>
+            <expression>?tab-id</expression>
+        </column>
+        <column>
+            <mnemonic>website-url</mnemonic>
+            <title>Website URL</title>
+            <type>string</type>
+            <expression>?website-url</expression>
+        </column>
+        <column>
+            <mnemonic>loading-result</mnemonic>
+            <title>Result</title>
+            <type>string</type>
+            <expression>?loading-result</expression>
+        </column>
+    </os-signpost-interval-schema>
+    
+    <!--  All events with duration tracked in a generic way using os_signpost begin/end API. -->
+    <os-signpost-interval-schema>
+        <id>ddg-events</id>
+        <title>Events</title>
+        <subsystem>"com.duckduckgo.instrumentation"</subsystem>
+        
+        <start-pattern>
+            <message>"Event: " ?event-name " info: " ?event-info</message>
+        </start-pattern>
+        <end-pattern>
+            <message>"Result: " ?event-result</message>
+        </end-pattern>
+        
+        <column>
+            <mnemonic>event-name</mnemonic>
+            <title>Name</title>
+            <type>string</type>
+            <expression>?event-name</expression>
+        </column>
+        
+        <column>
+            <mnemonic>event-info</mnemonic>
+            <title>Info</title>
+            <type>string</type>
+            <expression>?event-info</expression>
+        </column>
+        
+        <column>
+            <mnemonic>event-result</mnemonic>
+            <title>Result</title>
+            <type>string</type>
+            <expression>?event-result</expression>
+        </column>
+    </os-signpost-interval-schema>
+    
+    <!--  Tracks os_log messages that are logged to matching logger. -->
+    <os-log-point-schema>
+        <id>js-event</id>
+        <title>JS Event</title>
+        <message-type>"Debug"</message-type>
+        <!--  Only messages meant for this subsystem are tracked. -->
+        <subsystem>"com.duckduckgo.instrumentation"</subsystem>
+        
+        <pattern>
+            <message>"[" ?website-url "] JSEvent: " ?event-name " executedIn: " ?event-duration</message>
+        </pattern>
+        
+        <column>
+            <mnemonic>website-url</mnemonic>
+            <title>Site</title>
+            <type>raw-string</type>
+            <expression>?website-url</expression>
+        </column>
+        
+        <column>
+            <mnemonic>event-name</mnemonic>
+            <title>Name</title>
+            <type>raw-string</type>
+            <expression>?event-name</expression>
+        </column>
+        
+        <column>
+            <mnemonic>event-duration</mnemonic>
+            <title>Event duration</title>
+            <type>duration</type>
+            <expression>?event-duration</expression>
+        </column>
+    </os-log-point-schema>
+    
+    <!--  Tracker Blocking events. -->
+    <!--  TODO: Migrate this to generic JS Event, that can have meta info {url, status} provided -->
+    <os-log-point-schema>
+        <id>tracker-lookup-event</id>
+        <title>Request Allowed</title>
+        <message-type>"Debug"</message-type>
+        <!--  Only messages meant for this subsystem are tracked. -->
+        <subsystem>"com.duckduckgo.instrumentation"</subsystem>
+        
+        <pattern>
+            <message>"[" ?website-url "] Request: " ?tracker-lookup-url " - " ?tracker-lookup-result " in " ?tracker-lookup-duration</message>
+        </pattern>
+        
+        <column>
+            <mnemonic>website-url</mnemonic>
+            <title>Site</title>
+            <type>raw-string</type>
+            <expression>?website-url</expression>
+        </column>
+        
+        <column>
+            <mnemonic>tracker-lookup-url</mnemonic>
+            <title>URL</title>
+            <type>raw-string</type>
+            <expression>?tracker-lookup-url</expression>
+        </column>
+        
+        <column>
+            <mnemonic>tracker-lookup-duration</mnemonic>
+            <title>Lookup duration</title>
+            <type>duration</type>
+            <expression>?tracker-lookup-duration</expression>
+        </column>
+        
+        <column>
+            <mnemonic>tracker-lookup-result</mnemonic>
+            <title>Lookup result</title>
+            <type>raw-string</type>
+            <expression>?tracker-lookup-result</expression>
+        </column>
+    </os-log-point-schema>
+    
+    <!--  Instrument definition. -->
+    <instrument>
+        <id>com.duckduckgo.instrumentation.timeline</id>
+        <title>DDG Timeline</title>
+        <category>Behavior</category>
+        <purpose>Display Duck Duck Go app timeline</purpose>
+        <icon>Generic</icon>
+        
+        <create-table>
+            <id>tracker-events-table</id>
+            <schema-ref>tracker-lookup-event</schema-ref>
+        </create-table>
+        
+        <create-table>
+            <id>js-events-table</id>
+            <schema-ref>js-event</schema-ref>
+        </create-table>
+        
+        <create-table>
+            <id>ddg-events-table</id>
+            <schema-ref>ddg-events</schema-ref>
+        </create-table>
+        
+        <create-table>
+            <id>website-events-table</id>
+            <schema-ref>website-loading-event</schema-ref>
+        </create-table>
+        
+        <graph>
+            <title>DDG events</title>
+            
+            <lane>
+                <title>Website</title>
+                <table-ref>website-events-table</table-ref>
+                
+                <!-- Automatically creates new graph lanes based on 'instance-by' column-->
+                <plot-template>
+                    <instance-by>tab-id</instance-by>
+                    <label-format>Tab %s</label-format>
+                    <value-from>website-url</value-from>
+                </plot-template>
+            </lane>
+            
+            <lane>
+                <title>Events</title>
+                <table-ref>ddg-events-table</table-ref>
+                
+                <plot>
+                    <value-from>event-name</value-from>
+                    <qualified-by>event-name</qualified-by>
+                </plot>
+            </lane>
+        </graph>
+        
+        <list>
+            <title>Core Events</title>
+            <table-ref>ddg-events-table</table-ref>
+            <column>start</column>
+            <column>event-name</column>
+            <column>event-info</column>
+            <column>duration</column>
+            <column>event-result</column>
+        </list>
+        
+        <aggregation>
+            <title>Core Events (aggregation)</title>
+            <table-ref>ddg-events-table</table-ref>
+            
+            <hierarchy>
+                <level>
+                    <column>event-name</column>
+                </level>
+                
+                <level>
+                    <column>event-info</column>
+                </level>
+            </hierarchy>
+            
+            <column>
+                <title>Count</title>
+                <count></count>
+            </column>
+            
+            <column>
+                <title>Min duration</title>
+                <min>duration</min>
+            </column>
+            
+            <column>
+                <title>Max duration</title>
+                <max>duration</max>
+            </column>
+            
+            <column>
+                <title>Average duration</title>
+                <average>duration</average>
+            </column>
+            
+            <column>
+                <title>Total time</title>
+                <sum>duration</sum>
+            </column>
+        </aggregation>
+        
+        <list>
+            <title>Tracker Blocking</title>
+            <table-ref>tracker-events-table</table-ref>
+            <column>website-url</column>
+            <column>tracker-lookup-url</column>
+            <column>tracker-lookup-result</column>
+            <column>tracker-lookup-duration</column>
+        </list>
+        
+        <aggregation>
+            <title>Tracker Blocking (aggregation)</title>
+            <table-ref>tracker-events-table</table-ref>
+            
+            <hierarchy>
+                <level>
+                    <column>website-url</column>
+                </level>
+                
+                <level>
+                    <column>tracker-lookup-result</column>
+                </level>
+            </hierarchy>
+            
+            <column>
+                <title>Requests processed</title>
+                <count></count>
+            </column>
+            
+            <column>
+                <title>Min duration</title>
+                <min>tracker-lookup-duration</min>
+            </column>
+            
+            <column>
+                <title>Max duration</title>
+                <max>tracker-lookup-duration</max>
+            </column>
+            
+            <column>
+                <title>Average duration</title>
+                <average>tracker-lookup-duration</average>
+            </column>
+            
+            <column>
+                <title>Standard deviation</title>
+                <std-dev>tracker-lookup-duration</std-dev>
+            </column>
+            
+            <column>
+                <title>Total time</title>
+                <sum>tracker-lookup-duration</sum>
+            </column>
+        </aggregation>
+        
+        <list>
+            <title>JS Events</title>
+            <table-ref>js-events-table</table-ref>
+            <column>website-url</column>
+            <column>event-name</column>
+            <column>event-duration</column>
+        </list>
+        
+        <aggregation>
+            <title>JS Events (aggregation)</title>
+            <table-ref>js-events-table</table-ref>
+            
+            <hierarchy>
+                <level>
+                    <column>website-url</column>
+                </level>
+                
+                <level>
+                    <column>event-name</column>
+                </level>
+            </hierarchy>
+            
+            <column>
+                <title>Count</title>
+                <count></count>
+            </column>
+            
+            <column>
+                <title>Min duration</title>
+                <min>event-duration</min>
+            </column>
+            
+            <column>
+                <title>Max duration</title>
+                <max>event-duration</max>
+            </column>
+            
+            <column>
+                <title>Average duration</title>
+                <average>event-duration</average>
+            </column>
+            
+            <column>
+                <title>Total time</title>
+                <sum>event-duration</sum>
+            </column>
+        </aggregation>
+        
+        <list>
+            <title>Website Loading</title>
+            <table-ref>website-events-table</table-ref>
+            <visit-on-focus>Tracker Blocking</visit-on-focus>
+            <column>tab-id</column>
+            <column>website-url</column>
+            <column>duration</column>
+        </list>
+    </instrument>
+    
+    <template>
+        <import-from-file>DDG Trace.tracetemplate</import-from-file>
+    </template>
+</package>

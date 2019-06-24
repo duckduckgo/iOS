@@ -935,12 +935,14 @@ extension MainViewController: AutoClearWorker {
     }
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
+        let spid = Instruments.shared.startTimedEvent(.clearingData)
         findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()
             completion()
+            Instruments.shared.endTimedEvent(for: spid)
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)

@@ -36,13 +36,15 @@ class SiteRatingPerfTests: XCTestCase {
         let contentBlocker = ContentBlocker()
         
         self.measure {
-            let entityMapping = EntityMapping(store: contentBlocker.entityMappingStore)
-            let privacyPractices = PrivacyPractices(entityMapping: entityMapping)
+            let privacyPractices = PrivacyPractices(tld: contentBlocker.tlds,
+                                                    termsOfServiceStore: contentBlocker.termsOfServiceStore,
+                                                    entityMapping: contentBlocker.entityMapping)
             
             _ = SiteRating(url: url,
                            httpsForced: false,
-                           entityMapping: entityMapping,
-                           privacyPractices: privacyPractices)
+                           entityMapping: contentBlocker.entityMapping,
+                           privacyPractices: privacyPractices,
+                           prevalenceStore: contentBlocker.prevalenceStore)
         }
     }
 }

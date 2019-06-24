@@ -34,7 +34,7 @@ In order to run it:
 1. Build a Debug version and install it on Simulator/Device.
 2. Select Instruments target and run it on a Mac. New instance of Instruments app will be run that has a grayed out icon indicating that it works in debug mode with custom instruments attached.
 3. Select 'DDG Trace' template or setup a custom one by importing 'DDG Timeline' instrument from Library .
-5. Start recording.
+4. Start recording.
 
 See [Instruments Developer Help](https://help.apple.com/instruments/developer/mac/current/) for reference how to create custom instruments.
 

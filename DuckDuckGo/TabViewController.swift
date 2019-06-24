@@ -60,7 +60,7 @@ class TabViewController: UIViewController {
     private weak var privacyController: PrivacyProtectionController?
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
-    private var contentBlocker: ContentBlocker?
+    private var storageCache: StorageCache?
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -125,12 +125,12 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
 
-    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlocker) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, storageCache: StorageCache) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
             fatalError("Failed to instantiate controller as TabViewController")
         }
-        controller.contentBlocker = contentBlocker
+        controller.storageCache = storageCache
         controller.tabModel = model
         return controller
     }
@@ -362,7 +362,7 @@ class TabViewController: UIViewController {
     
     private func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(contentBlocker: contentBlocker!, contentBlockingEnabled: !isDuckDuckGoUrl())
+        webView.configuration.loadScripts(storageCache: storageCache!, contentBlockingEnabled: !isDuckDuckGoUrl())
     }
     
     private func isDuckDuckGoUrl() -> Bool {
@@ -382,7 +382,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
 
-            controller.contentBlocker = contentBlocker
+            controller.storageCache = storageCache
             controller.delegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
@@ -434,16 +434,16 @@ class TabViewController: UIViewController {
     }
     
     private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = contentBlocker!.entityMapping
-        let privacyPractices = PrivacyPractices(tld: contentBlocker!.tlds,
-                                                termsOfServiceStore: contentBlocker!.termsOfServiceStore,
+        let entityMapping = storageCache!.entityMapping
+        let privacyPractices = PrivacyPractices(tld: storageCache!.tlds,
+                                                termsOfServiceStore: storageCache!.termsOfServiceStore,
                                                 entityMapping: entityMapping)
         
         return SiteRating(url: url,
                           httpsForced: httpsForced,
                           entityMapping: entityMapping,
                           privacyPractices: privacyPractices,
-                          prevalenceStore: contentBlocker!.prevalenceStore)
+                          prevalenceStore: storageCache!.prevalenceStore)
     }
 
     private func updateSiteRating() {
@@ -653,7 +653,7 @@ extension TabViewController: WKScriptMessageHandler {
         var networkName: String?
         var category: String?
         if let domain = url?.host,
-            let networkNameAndCategory = contentBlocker?.disconnectStore.networkNameAndCategory(forDomain: domain) {
+            let networkNameAndCategory = storageCache?.disconnectStore.networkNameAndCategory(forDomain: domain) {
             networkName = networkNameAndCategory.networkName
             category = networkNameAndCategory.category
         }
@@ -693,7 +693,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         url = webView.url
-        let tld = contentBlocker!.tlds
+        let tld = storageCache!.tlds
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
@@ -818,7 +818,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
-        let tld = contentBlocker!.tlds
+        let tld = storageCache!.tlds
         
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {

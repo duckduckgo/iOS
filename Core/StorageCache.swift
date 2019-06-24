@@ -1,5 +1,5 @@
 //
-//  ContentBlocker.swift
+//  StorageCache.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -19,8 +19,8 @@
 
 import Foundation
 
-public class ContentBlocker {
-        
+public class StorageCache {
+    
     let easylistStore = EasylistStore()
     let surrogateStore = SurrogateStore()
     
@@ -31,12 +31,23 @@ public class ContentBlocker {
     
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     
-    public let tlds = TLD()
-    public let termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore()
-    public let prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()
+    // Read only
+    public let tlds: TLD
+    public let termsOfServiceStore: TermsOfServiceStore
+    public let prevalenceStore: PrevalenceStore
     
     public init() {
         entityMapping = EntityMapping(store: entityMappingStore)
+        tlds = TLD()
+        termsOfServiceStore = EmbeddedTermsOfServiceStore()
+        prevalenceStore = EmbeddedPrevalenceStore()
+    }
+    
+    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore, prevalenceStore: PrevalenceStore) {
+        entityMapping = EntityMapping(store: entityMappingStore)
+        self.tlds = tld
+        self.termsOfServiceStore = termsOfServiceStore
+        self.prevalenceStore = prevalenceStore
     }
     
     public var hasData: Bool {
@@ -44,7 +55,7 @@ public class ContentBlocker {
     }
     
     static func update(with newData: ContentBlockerLoader.DataStore) {
-        let newBlocker = ContentBlocker()
+        let newBlocker = StorageCache()
         
         for (config, data) in newData {
             newBlocker.update(config, with: data)

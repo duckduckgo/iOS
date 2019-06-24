@@ -49,7 +49,7 @@ class PrivacyProtectionController: UIViewController {
     var omniBarText: String?
     var errorText: String?
 
-    var contentBlocker: ContentBlocker?
+    var storageCache: StorageCache?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +97,7 @@ class PrivacyProtectionController: UIViewController {
         omniBar.frame = omniBarContainer.bounds
         omniBarContainer.addSubview(omniBar)
         omniBar.textField.text = omniBarText
-        omniBar.updateSiteRating(siteRating, with: contentBlocker)
+        omniBar.updateSiteRating(siteRating, with: storageCache)
         omniBar.startBrowsing()
         omniBar.omniDelegate = self
         omniBar.textField.addTarget(self, action: #selector(onTextFieldTapped), for: .touchDown)
@@ -119,17 +119,17 @@ class PrivacyProtectionController: UIViewController {
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
         guard let siteRating = siteRating else { return }
-        omniBar.updateSiteRating(siteRating, with: contentBlocker)
+        omniBar.updateSiteRating(siteRating, with: storageCache)
         omniBar.refreshText(forUrl: siteRating.url)
         updateViewControllers()
     }
 
     func updateViewControllers() {
         guard let siteRating = siteRating else { return }
-        guard let contentBlocker = contentBlocker else { return }
+        guard let storageCache = storageCache else { return }
         for controller in embeddedController.viewControllers {
             guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
-            infoDisplaying.using(siteRating: siteRating, configuration: contentBlocker.configuration)
+            infoDisplaying.using(siteRating: siteRating, configuration: storageCache.configuration)
         }
     }
 

@@ -51,19 +51,19 @@ public class SiteRatingView: UIView {
 //        refresh()
 //    }
 
-    public func update(siteRating: SiteRating?, with contentBlocker: ContentBlocker?) {
+    public func update(siteRating: SiteRating?, with storageCache: StorageCache?) {
         self.siteRating = siteRating
-        refresh(with: contentBlocker)
+        refresh(with: storageCache)
     }
 
-    public func refresh(with contentBlocker: ContentBlocker?) {
+    public func refresh(with storageCache: StorageCache?) {
         circleIndicator.image = #imageLiteral(resourceName: "PP Indicator Unknown")
 
-        guard let contentBlocker = contentBlocker, contentBlocker.hasData else { return }
+        guard let storageCache = storageCache, storageCache.hasData else { return }
         guard let siteRating = siteRating else { return }
 
         let grades = siteRating.scores
-        let grade = contentBlocker.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
+        let grade = storageCache.configuration.protecting(domain: siteRating.domain) ? grades.enhanced : grades.site
         circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
         circleIndicator.accessibilityHint = UserText.privacyGrade(grade.grade.rawValue.uppercased())
     }

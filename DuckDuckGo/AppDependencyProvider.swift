@@ -35,4 +35,7 @@ class AppDependencyProvider: DependencyProvider {
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     let homePageConfiguration: HomePageConfiguration = HomePageConfiguration()
+    //
+    // StorageCacheProvider
+    // AppDependencyProvider.shared.storageCache.current
 }

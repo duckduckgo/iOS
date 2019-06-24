@@ -80,7 +80,7 @@ class MainViewController: UIViewController {
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
     
-    var contentBlocker = ContentBlocker()
+    var storageCache = StorageCache()
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
@@ -223,7 +223,7 @@ class MainViewController: UIViewController {
         } else {
             tabsModel = TabsModel.get() ?? TabsModel()
         }
-        tabManager = TabManager(model: tabsModel, contentBlocker: contentBlocker, delegate: self)
+        tabManager = TabManager(model: tabsModel, storageCache: storageCache, delegate: self)
     }
 
     private func addLaunchTabNotificationObserver() {
@@ -395,7 +395,7 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        omniBar.updateSiteRating(tab.siteRating, with: contentBlocker)
+        omniBar.updateSiteRating(tab.siteRating, with: storageCache)
         omniBar.startBrowsing()
     }
 
@@ -800,7 +800,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         if currentTab == tab {
-            omniBar.updateSiteRating(siteRating, with: contentBlocker)
+            omniBar.updateSiteRating(siteRating, with: storageCache)
         }
     }
 

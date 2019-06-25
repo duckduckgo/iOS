@@ -77,9 +77,15 @@ public class ContentBlockerLoader {
     
     fileprivate func requestDisconnectMe(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.disconnectMe) { data, isCached in
-            if let data = data, !isCached {
-                self.newDataItems += 1
-                try? self.disconnectStore.persist(data: data)
+            if let data = data {
+                if isCached {
+                    if self.disconnectStore.hasData == false {
+                        Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
+                    }
+                } else {
+                    self.newDataItems += 1
+                    try? self.disconnectStore.persist(data: data)
+                }
             }
             semaphore.signal()
         }
@@ -87,9 +93,15 @@ public class ContentBlockerLoader {
     
     fileprivate func requestTrackerWhitelist(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.trackersWhitelist) { data, isCached in
-            if let data = data, !isCached {
-                self.newDataItems += 1
-                self.easylistStore.persistEasylistWhitelist(data: data)
+            if let data = data {
+                if isCached {
+                    if self.easylistStore.hasData == false {
+                        Pixel.fire(pixel: .etagStoreOOSWithEasylist)
+                    }
+                } else {
+                    self.newDataItems += 1
+                    self.easylistStore.persistEasylistWhitelist(data: data)
+                }
             }
             semaphore.signal()
         }

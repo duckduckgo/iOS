@@ -1,1 +1,2 @@
+• We've updated our data clearing logic to remove cached favicons for sites you've been browsing that are not stored as bookmarks or favorites to further improve your privacy.
 • Bug fixes and other improvements.

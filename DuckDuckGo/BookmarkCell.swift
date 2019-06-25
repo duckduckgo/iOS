@@ -24,7 +24,6 @@ import Kingfisher
 class BookmarkCell: UITableViewCell {
 
     static let reuseIdentifier = "BookmarkCell"
-    static let imageCacheName = "bookmarks"
 
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var title: UILabel!
@@ -58,7 +57,7 @@ class BookmarkCell: UITableViewCell {
                                   placeholder: placeholder,
                                   options: [
                                     .downloader(NotFoundCachingDownloader()),
-                                    .targetCache(ImageCache(name: BookmarkCell.imageCacheName))
+                                    .targetCache(ImageCache(name: BookmarksManager.imageCacheName))
                                     ],
                                   progressBlock: nil,
                                   completionHandler: nil)

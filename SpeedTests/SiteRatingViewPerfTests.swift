@@ -41,10 +41,11 @@ class SiteRatingViewPerfTests: XCTestCase {
         mainController.loadUrl(URL(string: "https:/duckduckgo.com")!)
         waitForPageLoad(in: mainController)
         
-        let contentBlocker = ContentBlocker()
+        let cache = StorageCache()
+        self.mainController.omniBar.siteRatingView.refresh(with: cache)
         
         self.measure {
-            self.mainController.omniBar.siteRatingView.refresh(with: contentBlocker)
+            self.mainController.omniBar.siteRatingView.refresh(with: cache)
         }
     }
 

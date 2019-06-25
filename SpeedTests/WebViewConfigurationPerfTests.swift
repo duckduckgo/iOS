@@ -31,17 +31,17 @@ class WebViewConfigurationPerfTests: XCTestCase {
 
     func testLoadingScriptsPerformance() {
         
-        let contentBlocker = ContentBlocker()
+        let cache = StorageCache()
         
         // Warm up
         let configuration = WKWebViewConfiguration.nonPersistent()
-        configuration.loadScripts(contentBlocker: contentBlocker, contentBlockingEnabled: true)
+        configuration.loadScripts(storageCache: cache, contentBlockingEnabled: true)
         
         measureMetrics([.wallClockTime], automaticallyStartMeasuring: false) {
             let configuration = WKWebViewConfiguration.nonPersistent()
             
             startMeasuring()
-            configuration.loadScripts(contentBlocker: contentBlocker, contentBlockingEnabled: true)
+            configuration.loadScripts(storageCache: cache, contentBlockingEnabled: true)
             stopMeasuring()
         }
     }

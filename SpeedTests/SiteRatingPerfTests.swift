@@ -31,20 +31,24 @@ class SiteRatingPerfTests: XCTestCase {
     func testSiteRatingInitialization() {
         
         let url = URL(string: "https://google.com")!
-        _ = SiteRating(url: url)
         
-        let contentBlocker = ContentBlocker()
+        let cache = StorageCache()
+        makeSiteRating(url: url, cache: cache)
         
         self.measure {
-            let privacyPractices = PrivacyPractices(tld: contentBlocker.tlds,
-                                                    termsOfServiceStore: contentBlocker.termsOfServiceStore,
-                                                    entityMapping: contentBlocker.entityMapping)
-            
-            _ = SiteRating(url: url,
-                           httpsForced: false,
-                           entityMapping: contentBlocker.entityMapping,
-                           privacyPractices: privacyPractices,
-                           prevalenceStore: contentBlocker.prevalenceStore)
+            self.makeSiteRating(url: url, cache: cache)
         }
+    }
+    
+    func makeSiteRating(url: URL, cache: StorageCache) {
+        let privacyPractices = PrivacyPractices(tld: cache.tlds,
+                                                termsOfServiceStore: cache.termsOfServiceStore,
+                                                entityMapping: cache.entityMapping)
+        
+        _ = SiteRating(url: url,
+                       httpsForced: false,
+                       entityMapping: cache.entityMapping,
+                       privacyPractices: privacyPractices,
+                       prevalenceStore: cache.prevalenceStore)
     }
 }

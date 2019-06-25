@@ -51,6 +51,11 @@
                BlueprintName = "SpeedTests"
                ReferencedContainer = "container:DuckDuckGo.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "SpeedTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

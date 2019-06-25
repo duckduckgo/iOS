@@ -1,2 +1,2 @@
-• To further improve your privacy, we've updated our data clearing logic to remove cached favicons for sites you've been browsing.
+• We've improved our data clearing logic to remove cached favicons.
 • Bug fixes and other improvements.

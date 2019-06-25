@@ -24,6 +24,7 @@ import Kingfisher
 class BookmarkCell: UITableViewCell {
 
     static let reuseIdentifier = "BookmarkCell"
+    static let imageCacheName = "bookmarks"
 
     @IBOutlet weak var linkImage: UIImageView!
     @IBOutlet weak var title: UILabel!
@@ -52,9 +53,13 @@ class BookmarkCell: UITableViewCell {
 
         if let domain = domain {
             let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
+
             linkImage.kf.setImage(with: faviconUrl,
                                   placeholder: placeholder,
-                                  options: [.downloader(NotFoundCachingDownloader())],
+                                  options: [
+                                    .downloader(NotFoundCachingDownloader()),
+                                    .targetCache(ImageCache(name: BookmarkCell.imageCacheName))
+                                    ],
                                   progressBlock: nil,
                                   completionHandler: nil)
         }

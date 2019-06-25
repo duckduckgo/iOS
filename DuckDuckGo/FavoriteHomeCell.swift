@@ -108,7 +108,7 @@ class FavoriteHomeCell: UICollectionViewCell {
                                   placeholder: nil,
                                   options: [
                                     .downloader(NotFoundCachingDownloader()),
-                                    .targetCache(ImageCache(name: BookmarkCell.imageCacheName))
+                                    .targetCache(ImageCache(name: BookmarksManager.imageCacheName))
                                     ],
                                   progressBlock: nil) { [weak self] image, error, _, _ in
                                     

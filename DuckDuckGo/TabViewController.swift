@@ -142,6 +142,7 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addContentBlockerConfigurationObserver()
         addStorageCacheProviderObserver()
     }
 
@@ -390,12 +391,23 @@ class TabViewController: UIViewController {
             controller.errorText = isError ? errorText : nil
         }
     }
+    
+    private func addContentBlockerConfigurationObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onContentBlockerConfigurationChanged),
+                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               object: nil)
+    }
 
     private func addStorageCacheProviderObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onStorageCacheChange),
                                                name: StorageCacheProvider.didUpdateStorageCacheNotification,
                                                object: nil)
+    }
+    
+    @objc func onContentBlockerConfigurationChanged() {
+        reload(scripts: true)
     }
 
     @objc func onStorageCacheChange() {

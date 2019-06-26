@@ -19,7 +19,6 @@
 
 import Foundation
 
-// TODO: remove
 public struct ContentBlockerConfigurationChangedNotification {
     public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
 }

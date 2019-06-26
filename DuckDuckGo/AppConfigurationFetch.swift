@@ -26,18 +26,18 @@ class AppConfigurationFetch {
     
     func start(completion: AppConfigurationCompletion?) {
 
-//        DispatchQueue.global(qos: .background).async {
-//
-//            var newData = false
-//            let semaphore = DispatchSemaphore(value: 0)
-//
-//            AppDependencyProvider.shared.storageCache.update { newCache in
-//                newData = newData || (newCache != nil)
-//                semaphore.signal()
-//            }
-//            
-//            semaphore.wait()
-//            completion?(newData)
-//        }
+        DispatchQueue.global(qos: .background).async {
+
+            var newData = false
+            let semaphore = DispatchSemaphore(value: 0)
+
+            AppDependencyProvider.shared.storageCache.update { newCache in
+                newData = newData || (newCache != nil)
+                semaphore.signal()
+            }
+
+            semaphore.wait()
+            completion?(newData)
+        }
     }
 }

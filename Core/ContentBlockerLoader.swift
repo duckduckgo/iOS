@@ -69,8 +69,25 @@ public class ContentBlockerLoader {
                              with contentBlockerRequest: ContentBlockerRequest,
                              _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(configuration) { data, isCached in
-            if let data = data, !isCached {
-                self.newData[configuration] = data
+            if let data = data {
+                if isCached {
+                    switch configuration {
+                    case .disconnectMe:
+                        break
+//                        if self.disconnectStore.hasData == false {
+//                            Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
+//                        }
+                    case .easylist:
+                        break
+//                        if self.easylistStore.hasData == false {
+//                            Pixel.fire(pixel: .etagStoreOOSWithEasylist)
+//                        }
+                    default:
+                        break
+                    }
+                } else {
+                    self.newData[configuration] = data
+                }
             }
             semaphore.signal()
         }

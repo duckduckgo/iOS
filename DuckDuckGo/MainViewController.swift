@@ -21,6 +21,7 @@ import UIKit
 import WebKit
 import Core
 import Lottie
+import Kingfisher
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -933,6 +934,7 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         ServerTrustCache.shared.clear()
+        KingfisherManager.shared.cache.clearDiskCache()
         WebCacheManager.clear()
     }
     

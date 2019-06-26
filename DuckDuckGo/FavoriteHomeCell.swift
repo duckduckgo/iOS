@@ -107,7 +107,8 @@ class FavoriteHomeCell: UICollectionViewCell {
             iconImage.kf.setImage(with: resource,
                                   placeholder: nil,
                                   options: [
-                                    .downloader(NotFoundCachingDownloader(name: "hello"))
+                                    .downloader(NotFoundCachingDownloader()),
+                                    .targetCache(ImageCache(name: BookmarksManager.imageCacheName))
                                     ],
                                   progressBlock: nil) { [weak self] image, error, _, _ in
                                     

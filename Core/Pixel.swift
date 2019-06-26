@@ -131,6 +131,8 @@ public enum PixelName: String {
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
+    case etagStoreOOSWithDisconnectMe = "m_dbg_dc_oos"
+    case etagStoreOOSWithEasylist = "m_dbg_el_oos"
 }
 
 public class Pixel {

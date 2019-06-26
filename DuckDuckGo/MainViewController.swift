@@ -21,6 +21,7 @@ import UIKit
 import WebKit
 import Core
 import Lottie
+import Kingfisher
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -931,16 +932,19 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         ServerTrustCache.shared.clear()
+        KingfisherManager.shared.cache.clearDiskCache()
         WebCacheManager.clear()
     }
     
     fileprivate func forgetAll(completion: @escaping () -> Void) {
+        let spid = Instruments.shared.startTimedEvent(.clearingData)
         findInPageView.done()
         Pixel.fire(pixel: .forgetAllExecuted)
         forgetData()
         FireAnimation.animate {
             self.forgetTabs()
             completion()
+            Instruments.shared.endTimedEvent(for: spid)
         }
         let window = UIApplication.shared.keyWindow
         window?.showBottomToast(UserText.actionForgetAllDone, duration: 1)

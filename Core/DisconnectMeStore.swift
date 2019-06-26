@@ -69,8 +69,10 @@ public class DisconnectMeStore {
     }
 
     public init() {
+        let spid = Instruments.shared.startTimedEvent(.loadingDisconnectMeStore)
         stringCache = ContentBlockerStringCache()
         loadTrackers()
+        Instruments.shared.endTimedEvent(for: spid)
     }
     
     private func loadTrackers() {

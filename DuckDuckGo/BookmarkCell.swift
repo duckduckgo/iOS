@@ -52,9 +52,13 @@ class BookmarkCell: UITableViewCell {
 
         if let domain = domain {
             let faviconUrl = AppUrls().faviconUrl(forDomain: domain)
+
             linkImage.kf.setImage(with: faviconUrl,
                                   placeholder: placeholder,
-                                  options: [.downloader(NotFoundCachingDownloader())],
+                                  options: [
+                                    .downloader(NotFoundCachingDownloader()),
+                                    .targetCache(ImageCache(name: BookmarksManager.imageCacheName))
+                                    ],
                                   progressBlock: nil,
                                   completionHandler: nil)
         }

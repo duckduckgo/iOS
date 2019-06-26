@@ -89,7 +89,8 @@ class TabViewCell: UICollectionViewCell {
         self.delegate?.deleteTab(tab: tab)
 
         UIView.animate(withDuration: 0.3, animations: {
-            self.transform.tx = -self.superview!.frame.width * 1.5
+            guard let superview = self.superview else { return }
+            self.transform.tx = -superview.frame.width * 1.5
         }, completion: { _ in
             self.transform.tx = 0
         })

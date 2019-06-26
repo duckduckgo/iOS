@@ -54,14 +54,10 @@ public class StorageCache {
         return disconnectStore.hasData && easylistStore.hasData
     }
     
-    static func update(with newData: ContentBlockerLoader.DataStore) {
-        let newBlocker = StorageCache()
-        
+    internal func update(with newData: ContentBlockerLoader.DataStore) {
         for (config, data) in newData {
-            newBlocker.update(config, with: data)
+            update(config, with: data)
         }
-        
-        // TODO
     }
     
     // swiftlint:disable cyclomatic_complexity

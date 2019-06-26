@@ -143,14 +143,15 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
     }
 
     func tryAgain(controller: PrivacyProtectionErrorController) {
-        ContentBlockerLoader().start { [weak self] newData in
-            self?.handleBlockerListsLoaderResult(controller, newData)
+        AppDependencyProvider.shared.storageCache.update { [weak self] newCache in
+            self?.handleBlockerListsLoaderResult(controller, newCache)
         }
     }
 
-    private func handleBlockerListsLoaderResult(_ controller: PrivacyProtectionErrorController, _ newData: Bool) {
+    private func handleBlockerListsLoaderResult(_ controller: PrivacyProtectionErrorController, _ newCache: StorageCache?) {
         DispatchQueue.main.async {
-            if newData {
+            if let newCache = newCache {
+                self.storageCache = newCache
                 controller.dismiss(animated: true)
                 self.delegate?.reload(scripts: true)
             } else {

@@ -21,7 +21,53 @@ import Foundation
 
 public class StorageCacheProvider {
     
-    public let current = StorageCache()
+    public static let didUpdateStorageCacheNotification = NSNotification.Name(rawValue: "com.duckduckgo.storageCacheProvider.notifications.didUpdate")
+    
+    public typealias StorageCacheUpdateCompletion = (StorageCache?) -> Void
+    
+    private static let updateQueue = DispatchQueue(label: "ContentBlocking update queue", qos: .utility)
+    
+    private let lock = NSLock()
+    
+    private var _current = StorageCache()
+    public private(set) var current: StorageCache {
+        get {
+            let current: StorageCache
+            lock.lock()
+            current = _current
+            lock.unlock()
+            return current
+        }
+        set {
+            lock.lock()
+            self._current = newValue
+            lock.unlock()
+        }
+    }
     
     public init() {}
+    
+    public func update(completion: @escaping StorageCacheUpdateCompletion) {
+    
+        type(of: self).updateQueue.async {
+            let loader = ContentBlockerLoader()
+            guard loader.checkForUpdates() else {
+                completion(nil)
+                return
+            }
+            
+            let currentCache = self.current
+            let newCache = StorageCache(tld: currentCache.tld,
+                                        termsOfServiceStore: currentCache.termsOfServiceStore,
+                                        prevalenceStore: currentCache.prevalenceStore)
+            loader.applyUpdate(to: newCache)
+            
+            self.current = newCache
+            
+            NotificationCenter.default.post(name: StorageCacheProvider.didUpdateStorageCacheNotification,
+                                            object: self)
+            
+            completion(newCache)
+        }
+    }
 }

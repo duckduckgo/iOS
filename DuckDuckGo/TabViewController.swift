@@ -125,12 +125,12 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
 
-    static func loadFromStoryboard(model: Tab, storageCache: StorageCache) -> TabViewController {
+    static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
             fatalError("Failed to instantiate controller as TabViewController")
         }
-        controller.storageCache = storageCache
+        controller.storageCache = AppDependencyProvider.shared.storageCache.current
         controller.tabModel = model
         return controller
     }
@@ -142,7 +142,7 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addContentBlockerConfigurationObserver()
+        addStorageCacheProviderObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -391,15 +391,17 @@ class TabViewController: UIViewController {
         }
     }
 
-    private func addContentBlockerConfigurationObserver() {
+    private func addStorageCacheProviderObserver() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onContentBlockerConfigurationChanged),
-                                               name: ContentBlockerConfigurationChangedNotification.name,
+                                               selector: #selector(onStorageCacheChange),
+                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
                                                object: nil)
     }
 
-    @objc func onContentBlockerConfigurationChanged() {
-        reload(scripts: true)
+    @objc func onStorageCacheChange() {
+        DispatchQueue.main.async {
+            self.reload(scripts: true)
+        }
     }
 
     private func resetNavigationBar() {
@@ -869,12 +871,6 @@ extension TabViewController: WKNavigationDelegate {
         
         webpageDidFailToLoad()
         checkForReloadOnError()
-    }
-}
-
-extension TabViewController: ContentBlockerSettingsChangeDelegate {
-    func contentBlockerSettingsDidChange() {
-        onContentBlockerConfigurationChanged()
     }
 }
 

@@ -81,7 +81,7 @@ class MainViewController: UIViewController {
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
     
-    var storageCache = StorageCache()
+    var storageCache = AppDependencyProvider.shared.storageCache.current
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
@@ -100,6 +100,7 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
+        addStorageCacheProviderObserver()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -120,6 +121,13 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
+    
+    private func addStorageCacheProviderObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onStorageCacheChange),
+                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
+                                               object: nil)
+    }
 
     /// This is only really for iOS 10 devices that don't properly support the change frame approach.
     @objc private func keyboardWillHide(_ notification: Notification) {
@@ -133,6 +141,12 @@ class MainViewController: UIViewController {
         animateForKeyboard(userInfo: userInfo, y: view.frame.height)
     }
     
+    @objc func onStorageCacheChange() {
+        DispatchQueue.main.async {
+            self.storageCache = AppDependencyProvider.shared.storageCache.current
+        }
+    }
+
     /// Based on https://stackoverflow.com/a/46117073/73479
     ///  Handles iPhone X devices properly.
     @objc private func keyboardWillChangeFrame(_ notification: Notification) {
@@ -224,7 +238,7 @@ class MainViewController: UIViewController {
         } else {
             tabsModel = TabsModel.get() ?? TabsModel()
         }
-        tabManager = TabManager(model: tabsModel, storageCache: storageCache, delegate: self)
+        tabManager = TabManager(model: tabsModel, delegate: self)
     }
 
     private func addLaunchTabNotificationObserver() {

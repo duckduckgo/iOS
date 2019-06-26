@@ -46,10 +46,6 @@ public class SiteRatingView: UIView {
         self.addSubview(view)
         view.frame = self.bounds
     }
-// TODO
-//    @objc func onContentBlockerConfigurationChanged() {
-//        refresh()
-//    }
 
     public func update(siteRating: SiteRating?, with storageCache: StorageCache?) {
         self.siteRating = siteRating

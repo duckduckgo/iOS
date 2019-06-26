@@ -22,9 +22,7 @@ import Foundation
 public typealias ContentBlockerLoaderCompletion = (Bool) -> Void
 
 public class ContentBlockerLoader {
-    typealias DataStore = [ContentBlockerRequest.Configuration: Any]
-    
-    private static let updateQueue = DispatchQueue(label: "ContentBlocking update queue", qos: .utility)
+    internal typealias DataStore = [ContentBlockerRequest.Configuration: Any]
 
     private var httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
 
@@ -32,24 +30,26 @@ public class ContentBlockerLoader {
 
     public init() { }
 
-    public func start(completion: ContentBlockerLoaderCompletion?) {
-
-        type(of: self).updateQueue.async {
-            self.newData.removeAll()
-
-            let semaphore = DispatchSemaphore(value: 0)
-            let numberOfRequests = self.startRequests(with: semaphore)
-
-            for _ in 0 ..< numberOfRequests {
-                semaphore.wait()
-            }
-
-            Logger.log(items: "ContentBlockerLoader", "completed", self.newData.count)
-            
-            // apply
-            completion?(!self.newData.isEmpty)
-        }
+    public func checkForUpdates() -> Bool {
+        
         EasylistStore.removeLegacyLists()
+
+        self.newData.removeAll()
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        let numberOfRequests = startRequests(with: semaphore)
+        
+        for _ in 0 ..< numberOfRequests {
+            semaphore.wait()
+        }
+        
+        Logger.log(items: "ContentBlockerLoader", "completed", self.newData.count)
+        
+        return !newData.isEmpty
+    }
+    
+    public func applyUpdate(to cache: StorageCache) {
+        cache.update(with: newData)
     }
     
     private func startRequests(with semaphore: DispatchSemaphore) -> Int {

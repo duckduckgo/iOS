@@ -59,7 +59,8 @@ class PrivacyProtectionController: UIViewController {
 
         initOmniBar()
 
-        if !ContentBlockerLoader().hasData {
+        let storageCache = AppDependencyProvider.shared.storageCache.current
+        if !storageCache.hasData {
             showBlockerListError()
         } else if let errorText = errorText {
             showError(withText: errorText)

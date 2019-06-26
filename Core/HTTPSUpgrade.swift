@@ -31,7 +31,6 @@ public class HTTPSUpgrade {
     private let store: HTTPSUpgradeStore
     private var bloomFilter: BloomFilterWrapper?
     
-    //
     init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence()) {
         self.store = store
     }

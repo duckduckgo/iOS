@@ -96,7 +96,7 @@ private class Loader {
     }
 
     private func loadContentBlockerDependencyScripts() {
-        let tlds = storageCache.tlds
+        let tlds = storageCache.tld
 
         if #available(iOS 10, *) {
             load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)

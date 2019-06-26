@@ -434,7 +434,7 @@ class TabViewController: UIViewController {
     
     private func makeSiteRating(url: URL) -> SiteRating {
         let entityMapping = storageCache.entityMapping
-        let privacyPractices = PrivacyPractices(tld: storageCache.tlds,
+        let privacyPractices = PrivacyPractices(tld: storageCache.tld,
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
                                                 entityMapping: entityMapping)
         
@@ -692,7 +692,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         url = webView.url
-        let tld = storageCache.tlds
+        let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
@@ -817,7 +817,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
-        let tld = storageCache.tlds
+        let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {

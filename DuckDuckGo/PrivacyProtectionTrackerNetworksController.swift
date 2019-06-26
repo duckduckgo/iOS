@@ -30,9 +30,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     private var siteRating: SiteRating!
     private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
-    
-    // TODO
-    private var prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()
+    private var prevalenceStore: PrevalenceStore = AppDependencyProvider.shared.storageCache.current.prevalenceStore
 
     struct Section {
 

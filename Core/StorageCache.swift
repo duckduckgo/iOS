@@ -32,20 +32,20 @@ public class StorageCache {
     public let configuration: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
     
     // Read only
-    public let tlds: TLD
+    public let tld: TLD
     public let termsOfServiceStore: TermsOfServiceStore
     public let prevalenceStore: PrevalenceStore
     
     public init() {
         entityMapping = EntityMapping(store: entityMappingStore)
-        tlds = TLD()
+        tld = TLD()
         termsOfServiceStore = EmbeddedTermsOfServiceStore()
         prevalenceStore = EmbeddedPrevalenceStore()
     }
     
     public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore, prevalenceStore: PrevalenceStore) {
         entityMapping = EntityMapping(store: entityMappingStore)
-        self.tlds = tld
+        self.tld = tld
         self.termsOfServiceStore = termsOfServiceStore
         self.prevalenceStore = prevalenceStore
     }

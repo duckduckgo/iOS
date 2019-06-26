@@ -28,10 +28,6 @@ public class ContentBlockerLoader {
 
     private var httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
 
-    public var hasData: Bool {
-        return true//disconnectStore.hasData && easylistStore.hasData
-    }
-
     private var newData = DataStore()
 
     public init() { }

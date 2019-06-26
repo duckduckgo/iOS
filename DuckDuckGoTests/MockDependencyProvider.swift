@@ -26,11 +26,13 @@ class MockDependencyProvider: DependencyProvider {
     var appSettings: AppSettings
     var variantManager: VariantManager
     var homePageConfiguration: HomePageConfiguration
+    var storageCache: StorageCacheProvider
     
     init() {
         let defaultProvider = AppDependencyProvider()
         appSettings = defaultProvider.appSettings
         variantManager = defaultProvider.variantManager
         homePageConfiguration = defaultProvider.homePageConfiguration
+        storageCache = defaultProvider.storageCache
     }
 }

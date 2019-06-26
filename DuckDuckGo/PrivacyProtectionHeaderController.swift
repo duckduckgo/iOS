@@ -50,8 +50,8 @@ class PrivacyProtectionHeaderController: UIViewController {
     @IBOutlet weak var protectionDisabledLabel: UIView!
     @IBOutlet weak var protectionUpgraded: ProtectionUpgradedView!
 
-    private weak var siteRating: SiteRating!
-    private weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    private var siteRating: SiteRating!
+    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
 
     override func viewDidLoad() {
         update()

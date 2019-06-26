@@ -27,7 +27,7 @@ class PrivacyProtectionFooterController: UIViewController {
     @IBOutlet weak var privacyProtectionSwitch: UISwitch!
     @IBOutlet weak var leaderboard: TrackerNetworkLeaderboardView!
 
-    var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    let configuration: ContentBlockerConfigurationStore = AppDependencyProvider.shared.storageCache.current.configuration
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class PrivacyProtectionFooterController: UIViewController {
 
     @IBAction func toggleProtection() {
         let contentBlockingOn = privacyProtectionSwitch.isOn
-        self.contentBlocker.enabled = contentBlockingOn
+        self.configuration.enabled = contentBlockingOn
         update()
     }
 
@@ -53,8 +53,8 @@ class PrivacyProtectionFooterController: UIViewController {
     }
 
     private func updateProtectionToggle() {
-        privacyProtectionSwitch.isOn = contentBlocker.enabled
-        privacyProtectionView.backgroundColor = contentBlocker.enabled ? UIColor.ppGreen : UIColor.ppGray
+        privacyProtectionSwitch.isOn = configuration.enabled
+        privacyProtectionView.backgroundColor = configuration.enabled ? UIColor.ppGreen : UIColor.ppGray
     }
 
 }

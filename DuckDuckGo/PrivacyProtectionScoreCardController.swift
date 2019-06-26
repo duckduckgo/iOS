@@ -30,8 +30,8 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var enhancedGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var isMajorNetworkCell: PrivacyProtectionScoreCardCell!
 
-    weak var siteRating: SiteRating!
-    weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    private var siteRating: SiteRating!
+    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
     weak var header: PrivacyProtectionHeaderController!
 
     override func viewDidLoad() {
@@ -81,13 +81,13 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     }
 
     private func updateNetworksCell() {
-        let success = siteRating.networksSuccess(contentBlocker: contentBlockerConfiguration)
-        networksCell.update(message: siteRating.networksText(contentBlocker: contentBlockerConfiguration), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.networksSuccess(configuration: contentBlockerConfiguration)
+        networksCell.update(message: siteRating.networksText(configuration: contentBlockerConfiguration), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updateMajorNetworksCell() {
-        let success = siteRating.majorNetworksSuccess(contentBlocker: contentBlockerConfiguration)
-        majorNetworksCell.update(message: siteRating.majorNetworksText(contentBlocker: contentBlockerConfiguration), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
+        let success = siteRating.majorNetworksSuccess(configuration: contentBlockerConfiguration)
+        majorNetworksCell.update(message: siteRating.majorNetworksText(configuration: contentBlockerConfiguration), image: success ? #imageLiteral(resourceName: "PP Icon Result Success") : #imageLiteral(resourceName: "PP Icon Result Fail"))
     }
 
     private func updatePrivacyPractices() {

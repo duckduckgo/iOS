@@ -42,8 +42,8 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
-    weak var siteRating: SiteRating!
-    weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    private var siteRating: SiteRating!
+    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
 
     var rows = [Row]()
 

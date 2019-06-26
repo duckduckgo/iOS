@@ -28,8 +28,8 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
-    private weak var siteRating: SiteRating!
-    private weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    private var siteRating: SiteRating!
+    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
     
     // TODO
     private var prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()
@@ -89,7 +89,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func updateSubtitle() {
-        subtitleLabel.text = siteRating.networksText(contentBlocker: contentBlockerConfiguration).uppercased()
+        subtitleLabel.text = siteRating.networksText(configuration: contentBlockerConfiguration).uppercased()
     }
 
     private func updateIcon() {

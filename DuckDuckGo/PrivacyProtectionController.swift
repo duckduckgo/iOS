@@ -49,7 +49,7 @@ class PrivacyProtectionController: UIViewController {
     var omniBarText: String?
     var errorText: String?
 
-    var storageCache: StorageCache?
+    private var storageCache = AppDependencyProvider.shared.storageCache.current
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,7 +126,6 @@ class PrivacyProtectionController: UIViewController {
 
     func updateViewControllers() {
         guard let siteRating = siteRating else { return }
-        guard let storageCache = storageCache else { return }
         for controller in embeddedController.viewControllers {
             guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
             infoDisplaying.using(siteRating: siteRating, configuration: storageCache.configuration)

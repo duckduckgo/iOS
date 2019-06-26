@@ -37,8 +37,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     fileprivate var popRecognizer: InteractivePopRecognizer!
     
-    private weak var siteRating: SiteRating!
-    private weak var contentBlockerConfiguration: ContentBlockerConfigurationStore!
+    private var siteRating: SiteRating!
+    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
     private weak var header: PrivacyProtectionHeaderController!
     private weak var footer: PrivacyProtectionFooterController!
     
@@ -158,7 +158,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     }
     
     private func updateTrackers() {
-        trackersCell.summaryLabel.text = siteRating.networksText(contentBlocker: contentBlockerConfiguration)
+        trackersCell.summaryLabel.text = siteRating.networksText(configuration: contentBlockerConfiguration)
         
         if protecting() || siteRating.uniqueTrackersDetected == 0 {
             trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")

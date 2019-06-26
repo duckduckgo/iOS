@@ -24,6 +24,7 @@ protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
     var homePageConfiguration: HomePageConfiguration { get }
+    var storageCache: StorageCacheProvider { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -35,7 +36,5 @@ class AppDependencyProvider: DependencyProvider {
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     let homePageConfiguration: HomePageConfiguration = HomePageConfiguration()
-    //
-    // StorageCacheProvider
-    // AppDependencyProvider.shared.storageCache.current
+    let storageCache = StorageCacheProvider()
 }

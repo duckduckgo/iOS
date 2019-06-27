@@ -51,12 +51,13 @@ public class StorageCacheProvider {
     
         type(of: self).updateQueue.async {
             let loader = ContentBlockerLoader()
-            guard loader.checkForUpdates() else {
+            let currentCache = self.current
+            
+            guard loader.checkForUpdates(with: currentCache) else {
                 completion(nil)
                 return
             }
             
-            let currentCache = self.current
             let newCache = StorageCache(tld: currentCache.tld,
                                         termsOfServiceStore: currentCache.termsOfServiceStore,
                                         prevalenceStore: currentCache.prevalenceStore)

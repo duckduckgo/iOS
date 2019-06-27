@@ -30,14 +30,14 @@ public class ContentBlockerLoader {
 
     public init() { }
 
-    public func checkForUpdates() -> Bool {
+    public func checkForUpdates(with currentCache: StorageCache) -> Bool {
         
         EasylistStore.removeLegacyLists()
 
         self.newData.removeAll()
         
         let semaphore = DispatchSemaphore(value: 0)
-        let numberOfRequests = startRequests(with: semaphore)
+        let numberOfRequests = startRequests(with: semaphore, currentCache: currentCache)
         
         for _ in 0 ..< numberOfRequests {
             semaphore.wait()
@@ -52,12 +52,13 @@ public class ContentBlockerLoader {
         cache.update(with: newData)
     }
     
-    private func startRequests(with semaphore: DispatchSemaphore) -> Int {
+    private func startRequests(with semaphore: DispatchSemaphore,
+                               currentCache: StorageCache) -> Int {
         let contentBlockerRequest = ContentBlockerRequest()
-        request(.entitylist, with: contentBlockerRequest, semaphore)
-        request(.disconnectMe, with: contentBlockerRequest, semaphore)
-        request(.trackersWhitelist, with: contentBlockerRequest, semaphore)
-        request(.surrogates, with: contentBlockerRequest, semaphore)
+        request(.entitylist, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        request(.disconnectMe, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        request(.trackersWhitelist, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        request(.surrogates, with: contentBlockerRequest, currentCache: currentCache, semaphore)
         
         requestHttpsUpgrade(contentBlockerRequest, semaphore)
         requestHttpsWhitelist(contentBlockerRequest, semaphore)
@@ -67,22 +68,20 @@ public class ContentBlockerLoader {
     
     fileprivate func request(_ configuration: ContentBlockerRequest.Configuration,
                              with contentBlockerRequest: ContentBlockerRequest,
+                             currentCache: StorageCache,
                              _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(configuration) { data, isCached in
             if let data = data {
                 if isCached {
                     switch configuration {
                     case .disconnectMe:
-                        break
-// TODO
-//                        if self.disconnectStore.hasData == false {
-//                            Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
-//                        }
+                        if currentCache.disconnectMeStore.hasData == false {
+                            Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
+                        }
                     case .easylist:
-                        break
-//                        if self.easylistStore.hasData == false {
-//                            Pixel.fire(pixel: .etagStoreOOSWithEasylist)
-//                        }
+                        if currentCache.easylistStore.hasData == false {
+                            Pixel.fire(pixel: .etagStoreOOSWithEasylist)
+                        }
                     default:
                         break
                     }

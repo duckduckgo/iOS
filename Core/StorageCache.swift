@@ -54,45 +54,46 @@ public class StorageCache {
         return disconnectMeStore.hasData && easylistStore.hasData
     }
     
-    internal func update(with newData: ContentBlockerLoader.DataStore) {
-        for (config, data) in newData {
-            update(config, with: data)
-        }
-    }
-    
     // swiftlint:disable cyclomatic_complexity
-    private func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) {
+    internal func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
+        
         switch configuration {
-            
         case .trackersWhitelist:
-            guard let data = data as? Data else { return }
-            easylistStore.persistEasylistWhitelist(data: data)
+            guard let data = data as? Data else { return false }
+            return easylistStore.persistEasylistWhitelist(data: data)
             
         case .disconnectMe:
-            guard let data = data as? Data else { return }
-            try? disconnectMeStore.persist(data: data)
+            guard let data = data as? Data else { return false }
+            do {
+                try disconnectMeStore.persist(data: data)
+                return true
+            } catch {}
             
         case .httpsWhitelist:
-            guard let whitelist = data as? [String] else { return }
-            httpsUpgradeStore.persistWhitelist(domains: whitelist)
+            guard let whitelist = data as? [String] else { return false }
+            return httpsUpgradeStore.persistWhitelist(domains: whitelist)
             
         case .httpsBloomFilter:
-            guard let bloomFilter = data as? (spec: HTTPSBloomFilterSpecification, data: Data) else { return }
-            _ = httpsUpgradeStore.persistBloomFilter(specification: bloomFilter.spec, data: bloomFilter.data)
+            guard let bloomFilter = data as? (spec: HTTPSBloomFilterSpecification, data: Data) else { return false }
+            let result = httpsUpgradeStore.persistBloomFilter(specification: bloomFilter.spec, data: bloomFilter.data)
             HTTPSUpgrade.shared.loadData()
+            return result
             
         case .surrogates:
-            guard let data = data as? Data else { return }
-            surrogateStore.parseAndPersist(data: data)
+            guard let data = data as? Data else { return false }
+            return surrogateStore.parseAndPersist(data: data)
             
         case .entitylist:
-            guard let data = data as? Data else { return }
-            entityMappingStore.persist(data: data)
+            guard let data = data as? Data else { return false }
+            let result = entityMappingStore.persist(data: data)
             entityMapping = EntityMapping(store: entityMappingStore)
+            return result
             
         default:
-            return
+            return false
         }
+        
+        return false
     }
     // swiftlint:enable cyclomatic_complexity
 }

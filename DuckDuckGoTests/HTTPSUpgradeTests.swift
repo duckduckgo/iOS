@@ -85,6 +85,7 @@ private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
         return hasWhitelistedDomain
     }
     
-    func persistWhitelist(domains: [String]) {
+    func persistWhitelist(domains: [String]) -> Bool {
+        return true
     }
 }

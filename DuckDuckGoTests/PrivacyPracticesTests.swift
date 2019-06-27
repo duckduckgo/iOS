@@ -105,7 +105,8 @@ private class MockEntityMappingStore: EntityMappingStore {
 """.data(using: .utf8)
     }
     
-    func persist(data: Data) {
+    func persist(data: Data) -> Bool {
+        return true
     }
     
 }

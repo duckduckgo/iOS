@@ -23,7 +23,7 @@ public protocol EntityMappingStore {
     
     func load() -> Data?
     
-    func persist(data: Data)
+    func persist(data: Data) -> Bool
     
 }
 
@@ -37,11 +37,13 @@ public class DownloadedEntityMappingStore: EntityMappingStore {
         return try? Data(contentsOf: persistenceLocation())
     }
     
-    public func persist(data: Data) {
+    public func persist(data: Data) -> Bool {
         do {
             try data.write(to: persistenceLocation(), options: .atomic)
+            return true
         } catch {
             Logger.log(items: error)
+            return false
         }
     }
     

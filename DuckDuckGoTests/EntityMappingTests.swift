@@ -106,8 +106,9 @@ private class MockEntityMappingStore: EntityMappingStore {
         return data
     }
     
-    func persist(data: Data) {
+    func persist(data: Data) -> Bool {
         self.data = data
+        return true
     }
 
 }

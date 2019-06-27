@@ -30,7 +30,7 @@ public protocol HTTPSUpgradeStore {
     
     func hasWhitelistedDomain(_ domain: String) -> Bool
     
-    func persistWhitelist(domains: [String])
+    func persistWhitelist(domains: [String]) -> Bool
 }
 
 public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
@@ -130,7 +130,9 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
         return result
     }
     
-    public func persistWhitelist(domains: [String]) {
+    @discardableResult
+    public func persistWhitelist(domains: [String]) -> Bool {
+        var result = false
         container.managedObjectContext.performAndWait {
             deleteWhitelist()
 
@@ -141,8 +143,9 @@ public class HTTPSUpgradePersistence: HTTPSUpgradeStore {
                     storedDomain.domain = domain.lowercased()
                 }
             }
-            _ = container.save()
+            result = container.save()
         }
+        return result
     }
     
     private func deleteWhitelist() {

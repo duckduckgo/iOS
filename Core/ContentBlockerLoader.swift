@@ -76,11 +76,11 @@ public class ContentBlockerLoader {
                     switch configuration {
                     case .disconnectMe:
                         if currentCache.disconnectMeStore.hasData == false {
-                            //Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
+                            Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
                         }
                     case .easylist:
                         if currentCache.easylistStore.hasData == false {
-                            //Pixel.fire(pixel: .etagStoreOOSWithEasylist)
+                            Pixel.fire(pixel: .etagStoreOOSWithEasylist)
                         }
                     default:
                         break

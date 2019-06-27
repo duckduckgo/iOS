@@ -21,8 +21,8 @@ import Foundation
 
 public class ContentBlockerLoader {
     
-    internal typealias DataDict = [ContentBlockerRequest.Configuration: Any]
-    internal typealias EtagDict = [ContentBlockerRequest.Configuration: String]
+    private typealias DataDict = [ContentBlockerRequest.Configuration: Any]
+    private typealias EtagDict = [ContentBlockerRequest.Configuration: String]
 
     private let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     private let etagStorage: BlockerListETagStorage

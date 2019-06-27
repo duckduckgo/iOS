@@ -24,7 +24,7 @@ public class StorageCache {
     let easylistStore = EasylistStore()
     let surrogateStore = SurrogateStore()
     
-    public let disconnectStore = DisconnectMeStore()
+    public let disconnectMeStore = DisconnectMeStore()
     public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
     public let entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
     public var entityMapping: EntityMapping
@@ -51,7 +51,7 @@ public class StorageCache {
     }
     
     public var hasData: Bool {
-        return disconnectStore.hasData && easylistStore.hasData
+        return disconnectMeStore.hasData && easylistStore.hasData
     }
     
     internal func update(with newData: ContentBlockerLoader.DataStore) {
@@ -70,7 +70,7 @@ public class StorageCache {
             
         case .disconnectMe:
             guard let data = data as? Data else { return }
-            try? disconnectStore.persist(data: data)
+            try? disconnectMeStore.persist(data: data)
             
         case .httpsWhitelist:
             guard let whitelist = data as? [String] else { return }

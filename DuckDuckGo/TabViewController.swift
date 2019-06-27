@@ -130,7 +130,6 @@ class TabViewController: UIViewController {
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
             fatalError("Failed to instantiate controller as TabViewController")
         }
-        controller.storageCache = AppDependencyProvider.shared.storageCache.current
         controller.tabModel = model
         return controller
     }
@@ -666,7 +665,7 @@ extension TabViewController: WKScriptMessageHandler {
         var networkName: String?
         var category: String?
         if let domain = url?.host {
-            let networkNameAndCategory = storageCache.disconnectStore.networkNameAndCategory(forDomain: domain)
+            let networkNameAndCategory = storageCache.disconnectMeStore.networkNameAndCategory(forDomain: domain)
             networkName = networkNameAndCategory.networkName
             category = networkNameAndCategory.category
         }

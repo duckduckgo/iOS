@@ -122,7 +122,7 @@ private class Loader {
         let surrogates = loadSurrogateJson(storageCache.surrogateStore)
         let blockingEnabled = storageCache.configuration.enabled
         let whitelist = storageCache.configuration.domainWhitelist.toJsonLookupString()
-        let disconnectMeStore = storageCache.disconnectStore
+        let disconnectMeStore = storageCache.disconnectMeStore
 
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",

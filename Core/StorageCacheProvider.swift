@@ -25,7 +25,7 @@ public class StorageCacheProvider {
     
     public typealias StorageCacheUpdateCompletion = (StorageCache?) -> Void
     
-    private static let updateQueue = DispatchQueue(label: "ContentBlocking update queue", qos: .utility)
+    private static let updateQueue = DispatchQueue(label: "StorageCache update queue", qos: .utility)
     
     private let lock = NSLock()
     

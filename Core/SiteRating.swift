@@ -51,7 +51,6 @@ public class SiteRating {
     private let grade = Grade()
     private let cache = GradeCache.shared
     
-    //
     public init(url: URL,
                 httpsForced: Bool = false,
                 entityMapping: EntityMapping,

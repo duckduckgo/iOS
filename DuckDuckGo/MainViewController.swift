@@ -80,8 +80,6 @@ class MainViewController: UIViewController {
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     let gestureBookmarksButton = GestureToolbarButton()
-    
-    var storageCache = AppDependencyProvider.shared.storageCache.current
 
     fileprivate lazy var blurTransition = CompositeTransition(presenting: BlurAnimatedTransitioning(), dismissing: DissolveAnimatedTransitioning())
 
@@ -100,7 +98,6 @@ class MainViewController: UIViewController {
         configureTabManager()
         loadInitialView()
         addLaunchTabNotificationObserver()
-        addStorageCacheProviderObserver()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -121,13 +118,6 @@ class MainViewController: UIViewController {
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
-    
-    private func addStorageCacheProviderObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onStorageCacheChange),
-                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
-                                               object: nil)
-    }
 
     /// This is only really for iOS 10 devices that don't properly support the change frame approach.
     @objc private func keyboardWillHide(_ notification: Notification) {
@@ -139,12 +129,6 @@ class MainViewController: UIViewController {
 
         findInPageBottomLayoutConstraint.constant = 0
         animateForKeyboard(userInfo: userInfo, y: view.frame.height)
-    }
-    
-    @objc func onStorageCacheChange() {
-        DispatchQueue.main.async {
-            self.storageCache = AppDependencyProvider.shared.storageCache.current
-        }
     }
 
     /// Based on https://stackoverflow.com/a/46117073/73479
@@ -410,8 +394,12 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        omniBar.updateSiteRating(tab.siteRating, with: storageCache)
+        updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
+    }
+    
+    private func updateSiteRating(_ siteRating: SiteRating?) {
+        omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
     }
 
     fileprivate func dismissOmniBar() {
@@ -815,7 +803,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         if currentTab == tab {
-            omniBar.updateSiteRating(siteRating, with: storageCache)
+            updateSiteRating(siteRating)
         }
     }
 

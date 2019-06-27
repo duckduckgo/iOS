@@ -411,6 +411,7 @@ class TabViewController: UIViewController {
 
     @objc func onStorageCacheChange() {
         DispatchQueue.main.async {
+            self.storageCache = AppDependencyProvider.shared.storageCache.current
             self.reload(scripts: true)
         }
     }

@@ -60,9 +60,7 @@ class TabViewController: UIViewController {
     private weak var privacyController: PrivacyProtectionController?
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
-    private lazy var tld = TLD()
-    private lazy var disconnectMeStore = DisconnectMeStore()
-    private var contentBlocker: ContentBlockerConfigurationStore!
+    private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private var httpsUpgrade = HTTPSUpgrade.shared
 
     private(set) var siteRating: SiteRating?
@@ -127,12 +125,11 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
 
-    static func loadFromStoryboard(model: Tab, contentBlocker: ContentBlockerConfigurationStore) -> TabViewController {
+    static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
             fatalError("Failed to instantiate controller as TabViewController")
         }
-        controller.contentBlocker = contentBlocker
         controller.tabModel = model
         return controller
     }
@@ -145,6 +142,7 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addContentBlockerConfigurationObserver()
+        addStorageCacheProviderObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -364,7 +362,7 @@ class TabViewController: UIViewController {
     
     private func reloadScripts() {
         webView.configuration.userContentController.removeAllUserScripts()
-        webView.configuration.loadScripts(contentBlocking: !isDuckDuckGoUrl())
+        webView.configuration.loadScripts(storageCache: storageCache, contentBlockingEnabled: !isDuckDuckGoUrl())
     }
     
     private func isDuckDuckGoUrl() -> Bool {
@@ -392,7 +390,7 @@ class TabViewController: UIViewController {
             controller.errorText = isError ? errorText : nil
         }
     }
-
+    
     private func addContentBlockerConfigurationObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onContentBlockerConfigurationChanged),
@@ -400,8 +398,22 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
 
+    private func addStorageCacheProviderObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onStorageCacheChange),
+                                               name: StorageCacheProvider.didUpdateStorageCacheNotification,
+                                               object: nil)
+    }
+    
     @objc func onContentBlockerConfigurationChanged() {
         reload(scripts: true)
+    }
+
+    @objc func onStorageCacheChange() {
+        DispatchQueue.main.async {
+            self.storageCache = AppDependencyProvider.shared.storageCache.current
+            self.reload(scripts: true)
+        }
     }
 
     private func resetNavigationBar() {
@@ -427,11 +439,24 @@ class TabViewController: UIViewController {
 
     private func resetSiteRating() {
         if let url = url {
-            siteRating = SiteRating(url: url, httpsForced: httpsForced)
+            siteRating = makeSiteRating(url: url)
         } else {
             siteRating = nil
         }
         onSiteRatingChanged()
+    }
+    
+    private func makeSiteRating(url: URL) -> SiteRating {
+        let entityMapping = storageCache.entityMapping
+        let privacyPractices = PrivacyPractices(tld: storageCache.tld,
+                                                termsOfServiceStore: storageCache.termsOfServiceStore,
+                                                entityMapping: entityMapping)
+        
+        return SiteRating(url: url,
+                          httpsForced: httpsForced,
+                          entityMapping: entityMapping,
+                          privacyPractices: privacyPractices,
+                          prevalenceStore: storageCache.prevalenceStore)
     }
 
     private func updateSiteRating() {
@@ -641,7 +666,7 @@ extension TabViewController: WKScriptMessageHandler {
         var networkName: String?
         var category: String?
         if let domain = url?.host {
-            let networkNameAndCategory = disconnectMeStore.networkNameAndCategory(forDomain: domain)
+            let networkNameAndCategory = storageCache.disconnectMeStore.networkNameAndCategory(forDomain: domain)
             networkName = networkNameAndCategory.networkName
             category = networkNameAndCategory.category
         }
@@ -681,7 +706,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         url = webView.url
-        
+        let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
@@ -693,7 +718,7 @@ extension TabViewController: WKNavigationDelegate {
         
         // if host and scheme are the same, don't inject scripts, otherwise, reset and reload
         if let siteRating = siteRating, siteRating.url.host == url?.host, siteRating.url.scheme == url?.scheme {
-            self.siteRating = SiteRating(url: siteRating.url, httpsForced: httpsForced)
+            self.siteRating = makeSiteRating(url: siteRating.url)
         } else {
             resetSiteRating()
         }
@@ -783,7 +808,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
-        self.siteRating = SiteRating(url: url, httpsForced: httpsForced)
+        self.siteRating = makeSiteRating(url: url)
         updateSiteRating()
     }
     
@@ -806,6 +831,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
+        let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {
@@ -857,12 +883,6 @@ extension TabViewController: WKNavigationDelegate {
         
         webpageDidFailToLoad()
         checkForReloadOnError()
-    }
-}
-
-extension TabViewController: ContentBlockerSettingsChangeDelegate {
-    func contentBlockerSettingsDidChange() {
-        onContentBlockerConfigurationChanged()
     }
 }
 

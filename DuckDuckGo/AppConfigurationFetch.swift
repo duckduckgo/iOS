@@ -31,11 +31,11 @@ class AppConfigurationFetch {
             var newData = false
             let semaphore = DispatchSemaphore(value: 0)
 
-            ContentBlockerLoader().start { newContentBlockingData in
-                newData = newData || newContentBlockingData
+            AppDependencyProvider.shared.storageCache.update { newCache in
+                newData = newData || (newCache != nil)
                 semaphore.signal()
             }
-            
+
             semaphore.wait()
             completion?(newData)
         }

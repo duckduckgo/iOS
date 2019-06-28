@@ -23,6 +23,7 @@ import WebKit
 class TabManager {
 
     private(set) var model: TabsModel
+    
     private var tabControllerCache = [TabViewController]()
 
     private weak var delegate: TabDelegate?
@@ -43,9 +44,8 @@ class TabManager {
     }
 
     private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
-        let contentBlocker = ContentBlockerConfigurationUserDefaults()
         let configuration =  WKWebViewConfiguration.persistent()
-        let controller = TabViewController.loadFromStoryboard(model: tab, contentBlocker: contentBlocker)
+        let controller = TabViewController.loadFromStoryboard(model: tab)
         controller.attachWebView(configuration: configuration, andLoadUrl: url, consumeCookies: model.isEmpty)
         controller.delegate = delegate
         controller.loadViewIfNeeded()

@@ -22,85 +22,71 @@ import Foundation
 public typealias ContentBlockerLoaderCompletion = (Bool) -> Void
 
 public class ContentBlockerLoader {
+    internal typealias DataStore = [ContentBlockerRequest.Configuration: Any]
 
-    private var easylistStore = EasylistStore()
-    private var disconnectStore = DisconnectMeStore()
     private var httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
-    private var surrogateStore = SurrogateStore()
-    private var entityMappingStore: EntityMappingStore = DownloadedEntityMappingStore()
 
-    public var hasData: Bool {
-        return disconnectStore.hasData && easylistStore.hasData
-    }
-
-    private var newDataItems = 0
+    private var newData = DataStore()
 
     public init() { }
 
-    public func start(completion: ContentBlockerLoaderCompletion?) {
+    public func checkForUpdates(with currentCache: StorageCache) -> Bool {
+        
+        EasylistStore.removeLegacyLists()
 
-        DispatchQueue.global(qos: .background).async {
-
-            let semaphore = DispatchSemaphore(value: 0)
-            let numberOfRequests = self.startRequests(with: semaphore)
-
-            for _ in 0 ..< numberOfRequests {
-                semaphore.wait()
-            }
-
-            Logger.log(items: "ContentBlockerLoader", "completed", self.newDataItems)
-            completion?(self.newDataItems > 0)
+        self.newData.removeAll()
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        let numberOfRequests = startRequests(with: semaphore, currentCache: currentCache)
+        
+        for _ in 0 ..< numberOfRequests {
+            semaphore.wait()
         }
-        easylistStore.removeLegacyLists()
+        
+        Logger.log(items: "ContentBlockerLoader", "completed", self.newData.count)
+        
+        return !newData.isEmpty
     }
     
-    private func startRequests(with semaphore: DispatchSemaphore) -> Int {
+    public func applyUpdate(to cache: StorageCache) {
+        cache.update(with: newData)
+    }
+    
+    private func startRequests(with semaphore: DispatchSemaphore,
+                               currentCache: StorageCache) -> Int {
         let contentBlockerRequest = ContentBlockerRequest()
-        requestEntityList(contentBlockerRequest, semaphore)
-        requestDisconnectMe(contentBlockerRequest, semaphore)
-        requestTrackerWhitelist(contentBlockerRequest, semaphore)
+        request(.entitylist, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        request(.disconnectMe, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        request(.trackersWhitelist, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        request(.surrogates, with: contentBlockerRequest, currentCache: currentCache, semaphore)
+        
         requestHttpsUpgrade(contentBlockerRequest, semaphore)
         requestHttpsWhitelist(contentBlockerRequest, semaphore)
-        requestSurrogates(contentBlockerRequest, semaphore)
+        
         return contentBlockerRequest.requestCount
     }
     
-    fileprivate func requestEntityList(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.entitylist) { data, isCached in
-            if let data = data, !isCached {
-                self.newDataItems += 1
-                self.entityMappingStore.persist(data: data)
-            }
-            semaphore.signal()
-        }
-    }
-    
-    fileprivate func requestDisconnectMe(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.disconnectMe) { data, isCached in
+    fileprivate func request(_ configuration: ContentBlockerRequest.Configuration,
+                             with contentBlockerRequest: ContentBlockerRequest,
+                             currentCache: StorageCache,
+                             _ semaphore: DispatchSemaphore) {
+        contentBlockerRequest.request(configuration) { data, isCached in
             if let data = data {
                 if isCached {
-                    if self.disconnectStore.hasData == false {
-                        Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
+                    switch configuration {
+                    case .disconnectMe:
+                        if !currentCache.disconnectMeStore.hasData {
+                            Pixel.fire(pixel: .etagStoreOOSWithDisconnectMe)
+                        }
+                    case .easylist:
+                        if !currentCache.easylistStore.hasData {
+                            Pixel.fire(pixel: .etagStoreOOSWithEasylist)
+                        }
+                    default:
+                        break
                     }
                 } else {
-                    self.newDataItems += 1
-                    try? self.disconnectStore.persist(data: data)
-                }
-            }
-            semaphore.signal()
-        }
-    }
-    
-    fileprivate func requestTrackerWhitelist(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.trackersWhitelist) { data, isCached in
-            if let data = data {
-                if isCached {
-                    if self.easylistStore.hasData == false {
-                        Pixel.fire(pixel: .etagStoreOOSWithEasylist)
-                    }
-                } else {
-                    self.newDataItems += 1
-                    self.easylistStore.persistEasylistWhitelist(data: data)
+                    self.newData[configuration] = data
                 }
             }
             semaphore.signal()
@@ -121,13 +107,9 @@ public class ContentBlockerLoader {
             }
             
             contentBlockerRequest.request(.httpsBloomFilter) { data, _ in
-                guard let data = data else {
-                    semaphore.signal()
-                    return
+                if let data = data {
+                    self.newData[.httpsBloomFilter] = (specification, data)
                 }
-                let persisted = self.httpsUpgradeStore.persistBloomFilter(specification: specification, data: data)
-                HTTPSUpgrade.shared.loadData()
-                self.newDataItems += persisted ? 1 : 0
                 semaphore.signal()
             }
         }
@@ -136,20 +118,10 @@ public class ContentBlockerLoader {
     fileprivate func requestHttpsWhitelist(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
         contentBlockerRequest.request(.httpsWhitelist) { data, isCached in
             if let data = data, !isCached, let whitelist = try? HTTPSUpgradeParser.convertWhitelist(fromJSONData: data) {
-                self.newDataItems += 1
-                self.httpsUpgradeStore.persistWhitelist(domains: whitelist)
+                self.newData[.httpsWhitelist] = whitelist
             }
             semaphore.signal()
         }
     }
     
-    fileprivate func requestSurrogates(_ contentBlockerRequest: ContentBlockerRequest, _ semaphore: DispatchSemaphore) {
-        contentBlockerRequest.request(.surrogates) { data, isCached in
-            if let data = data, !isCached {
-                self.newDataItems += 1
-                self.surrogateStore.parseAndPersist(data: data)
-            }
-            semaphore.signal()
-        }
-    }
 }

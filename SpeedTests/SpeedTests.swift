@@ -32,27 +32,15 @@ class SpeedTests: XCTestCase {
         static let report = "speed_test_results_\(SpeedTests.dateString()).json"
     }
 
-    struct Timeout {
-        static let pageLoad = 20.0
-    }
-
     override func setUp() {
         loadBlockingLists()
         TabsModel.clear()
-        loadStoryboard()
+        mainController = loadStoryboard()
     }
 
     override func tearDown() {
         saveResults()
         TabsModel.clear()
-    }
-
-    func loadBlockingLists() {
-        let blocker = DispatchSemaphore(value: 0)
-        ContentBlockerLoader().start { _ in
-            blocker.signal()
-        }
-        blocker.wait()
     }
 
     func test() {
@@ -84,10 +72,6 @@ class SpeedTests: XCTestCase {
         }
     }
 
-    func waitFor(seconds: TimeInterval) {
-        RunLoop.main.run(until: Date(timeIntervalSinceNow: seconds))
-    }
-
     func evalulate(_ url: String) -> TimeInterval {
         if let siteRating = mainController.siteRating {
             siteRating.finishedLoading = false
@@ -95,25 +79,8 @@ class SpeedTests: XCTestCase {
 
         mainController.loadUrl(URL(string: url)!)
         let start = Date()
-        waitForPageLoad()
+        waitForPageLoad(in: mainController)
         return Date().timeIntervalSince(start)
-    }
-
-    func waitForPageLoad() {
-        let pageTimeout = Date(timeIntervalSinceNow: Timeout.pageLoad)
-        while (mainController.siteRating == nil || !mainController.siteRating!.finishedLoading) && Date() < pageTimeout {
-            waitFor(seconds: 0.001)
-        }
-    }
-
-    func loadStoryboard() {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        guard let controller = storyboard.instantiateInitialViewController() as? MainViewController else {
-            fatalError("Failed to instantiate controller as MainViewController")
-        }
-        mainController = controller
-        UIApplication.shared.keyWindow!.rootViewController = mainController
-        XCTAssertNotNil(mainController.view)
     }
 
     func saveResults() {

@@ -130,7 +130,7 @@ class MainViewController: UIViewController {
         findInPageBottomLayoutConstraint.constant = 0
         animateForKeyboard(userInfo: userInfo, y: view.frame.height)
     }
-    
+
     /// Based on https://stackoverflow.com/a/46117073/73479
     ///  Handles iPhone X devices properly.
     @objc private func keyboardWillChangeFrame(_ notification: Notification) {
@@ -394,8 +394,12 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        omniBar.updateSiteRating(tab.siteRating)
+        updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
+    }
+    
+    private func updateSiteRating(_ siteRating: SiteRating?) {
+        omniBar.updateSiteRating(siteRating, with: AppDependencyProvider.shared.storageCache.current)
     }
 
     fileprivate func dismissOmniBar() {
@@ -799,7 +803,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         if currentTab == tab {
-            omniBar.updateSiteRating(siteRating)
+            updateSiteRating(siteRating)
         }
     }
 

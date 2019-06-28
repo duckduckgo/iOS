@@ -30,7 +30,7 @@ public class EntityMapping {
     
     private let entities: [String: String]
     
-    public init(store: EntityMappingStore = DownloadedEntityMappingStore()) {
+    public init(store: EntityMappingStore) {
         
         if let data = store.load(), let entities = try? EntityMapping.process(data) {
             self.entities = entities

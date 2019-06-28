@@ -49,7 +49,7 @@ class PrivacyProtectionController: UIViewController {
     var omniBarText: String?
     var errorText: String?
 
-    lazy var contentBlocker: ContentBlockerConfigurationStore = ContentBlockerConfigurationUserDefaults()
+    private var storageCache = AppDependencyProvider.shared.storageCache.current
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +59,7 @@ class PrivacyProtectionController: UIViewController {
 
         initOmniBar()
 
-        if !ContentBlockerLoader().hasData {
+        if !storageCache.hasData {
             showBlockerListError()
         } else if let errorText = errorText {
             showError(withText: errorText)
@@ -97,7 +97,7 @@ class PrivacyProtectionController: UIViewController {
         omniBar.frame = omniBarContainer.bounds
         omniBarContainer.addSubview(omniBar)
         omniBar.textField.text = omniBarText
-        omniBar.updateSiteRating(siteRating)
+        omniBar.updateSiteRating(siteRating, with: storageCache)
         omniBar.startBrowsing()
         omniBar.omniDelegate = self
         omniBar.textField.addTarget(self, action: #selector(onTextFieldTapped), for: .touchDown)
@@ -119,7 +119,7 @@ class PrivacyProtectionController: UIViewController {
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
         guard let siteRating = siteRating else { return }
-        omniBar.updateSiteRating(siteRating)
+        omniBar.updateSiteRating(siteRating, with: storageCache)
         omniBar.refreshText(forUrl: siteRating.url)
         updateViewControllers()
     }
@@ -128,7 +128,7 @@ class PrivacyProtectionController: UIViewController {
         guard let siteRating = siteRating else { return }
         for controller in embeddedController.viewControllers {
             guard let infoDisplaying = controller as? PrivacyProtectionInfoDisplaying else { continue }
-            infoDisplaying.using(siteRating: siteRating, contentBlocker: contentBlocker)
+            infoDisplaying.using(siteRating: siteRating, configuration: storageCache.configuration)
         }
     }
 
@@ -142,14 +142,15 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
     }
 
     func tryAgain(controller: PrivacyProtectionErrorController) {
-        ContentBlockerLoader().start { [weak self] newData in
-            self?.handleBlockerListsLoaderResult(controller, newData)
+        AppDependencyProvider.shared.storageCache.update { [weak self] newCache in
+            self?.handleBlockerListsLoaderResult(controller, newCache)
         }
     }
 
-    private func handleBlockerListsLoaderResult(_ controller: PrivacyProtectionErrorController, _ newData: Bool) {
+    private func handleBlockerListsLoaderResult(_ controller: PrivacyProtectionErrorController, _ newCache: StorageCache?) {
         DispatchQueue.main.async {
-            if newData {
+            if let newCache = newCache {
+                self.storageCache = newCache
                 controller.dismiss(animated: true)
                 self.delegate?.reload(scripts: true)
             } else {

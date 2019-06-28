@@ -79,7 +79,7 @@ class EasylistStore {
         guard let escapedEasylist = escapedString(from: data) else { return }
         do {
             try persist(escapedEasylist: escapedEasylist, to: persistenceLocation(type: type))
-            invalidateCache(named: cacheName)
+            EasylistStore.invalidateCache(named: cacheName)
         } catch {
             Logger.log(text: "failed to write \(type): \(error)")
         }
@@ -90,7 +90,7 @@ class EasylistStore {
         return path!.appendingPathComponent("\(type.rawValue).txt")
     }
 
-    private func invalidateCache(named name: String) {
+    private static func invalidateCache(named name: String) {
         ContentBlockerStringCache().remove(named: name)
     }
 
@@ -98,7 +98,7 @@ class EasylistStore {
         try escapedEasylist.write(to: to, atomically: true, encoding: .utf8)
     }
 
-    func removeLegacyLists() {
+    static func removeLegacyLists() {
         invalidateCache(named: CacheNames.easylist)
         invalidateCache(named: CacheNames.easylistPrivacy)
     }

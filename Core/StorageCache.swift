@@ -19,7 +19,18 @@
 
 import Foundation
 
-public class StorageCache {
+protocol EtagOOSCheckStore {
+    
+    var hasDisconnectMeData: Bool { get }
+    var hasEasylistData: Bool { get }
+}
+
+protocol StorageCacheUpdating {
+    
+    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool
+}
+
+public class StorageCache: StorageCacheUpdating {
     
     let easylistStore = EasylistStore()
     let surrogateStore = SurrogateStore()
@@ -96,4 +107,14 @@ public class StorageCache {
         return false
     }
     // swiftlint:enable cyclomatic_complexity
+}
+
+extension StorageCache: EtagOOSCheckStore {
+    
+    var hasDisconnectMeData: Bool {
+        return disconnectMeStore.hasData
+    }
+    var hasEasylistData: Bool {
+        return easylistStore.hasData
+    }
 }

@@ -19,7 +19,14 @@
 
 import Foundation
 
-class ContentBlockerRequest {
+protocol ContentBlockerRemoteDataSource {
+    
+    var requestCount: Int { get }
+    
+    func request(_ configuration: ContentBlockerRequest.Configuration, completion:@escaping (ContentBlockerRequest.Response) -> Void)
+}
+
+class ContentBlockerRequest: ContentBlockerRemoteDataSource {
     
     internal enum Response {
         case error

@@ -30,12 +30,12 @@ public class ContentBlockerLoader {
     private var newData = DataDict()
     private var etags = EtagDict()
 
-    internal init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
+    init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
         self.etagStorage = etagStorage
     }
 
-    internal func checkForUpdates(with store: EtagOOSCheckStore,
-                                  dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
+    func checkForUpdates(with store: EtagOOSCheckStore,
+                         dataSource: ContentBlockerRemoteDataSource = ContentBlockerRequest()) -> Bool {
         
         EasylistStore.removeLegacyLists()
 
@@ -54,7 +54,7 @@ public class ContentBlockerLoader {
         return !newData.isEmpty
     }
     
-    internal func applyUpdate(to cache: StorageCacheUpdating) {
+    func applyUpdate(to cache: StorageCacheUpdating) {
         
         for (config, info) in newData {
             if (cache.update(config, with: info)),

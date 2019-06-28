@@ -28,7 +28,7 @@ protocol ContentBlockerRemoteDataSource {
 
 class ContentBlockerRequest: ContentBlockerRemoteDataSource {
     
-    internal enum Response {
+    enum Response {
         case error
         case success(etag: String?, data: Data)
     }

@@ -66,7 +66,7 @@ public class StorageCache: StorageCacheUpdating {
     }
     
     // swiftlint:disable cyclomatic_complexity
-    internal func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
+    func update(_ configuration: ContentBlockerRequest.Configuration, with data: Any) -> Bool {
         
         switch configuration {
         case .trackersWhitelist:

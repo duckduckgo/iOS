@@ -78,8 +78,9 @@ public class StorageCache: StorageCacheUpdating {
             do {
                 try disconnectMeStore.persist(data: data)
                 return true
-            } catch {}
-            
+            } catch {
+                return false
+            }
         case .httpsWhitelist:
             guard let whitelist = data as? [String] else { return false }
             return httpsUpgradeStore.persistWhitelist(domains: whitelist)
@@ -103,8 +104,6 @@ public class StorageCache: StorageCacheUpdating {
         default:
             return false
         }
-        
-        return false
     }
     // swiftlint:enable cyclomatic_complexity
 }

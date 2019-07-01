@@ -133,6 +133,8 @@ public enum PixelName: String {
     
     case etagStoreOOSWithDisconnectMeFix = "m_dbg_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_dbg_elf_oos"
+    
+    case configurationFetchInfo = "m_cfg_fetch"
 }
 
 public class Pixel {

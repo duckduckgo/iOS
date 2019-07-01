@@ -127,7 +127,10 @@ class AppConfigurationFetch {
         let semaphore = DispatchSemaphore(value: 0)
         
         Pixel.fire(pixel: .configurationFetchInfo, withAdditionalParameters: parameters) { error in
-            guard error == nil else { return }
+            guard error == nil else {
+                semaphore.signal()
+                return
+            }
                 
             self.resetStatistics()
             semaphore.signal()

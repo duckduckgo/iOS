@@ -33,7 +33,7 @@ class DownloadedEntityMappingStoreTests: XCTestCase {
     
     func testWhenDataSavedThenDataCanBeLoaded() {
         let testee = DownloadedEntityMappingStore()
-        testee.persist(data: "test".data(using: .utf8)!)
+        _ = testee.persist(data: "test".data(using: .utf8)!)
         XCTAssertEqual("test", String(data: testee.load()!, encoding: .utf8))
     }
     

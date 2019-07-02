@@ -30,11 +30,16 @@ class SurrogateStore {
         jsFunctions = NSDictionary(contentsOf: persistenceLocation()) as? [String: String]
     }
 
-    func parseAndPersist(data: Data) {
-        guard let surrogateFile = String(data: data, encoding: .utf8) else { return }
-        jsFunctions = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
-        guard let plist = jsFunctions as NSDictionary? else { return }
-        plist.write(to: persistenceLocation(), atomically: true)
+    @discardableResult
+    func parseAndPersist(data: Data) -> Bool {
+        guard let surrogateFile = String(data: data, encoding: .utf8) else { return false }
+        let jsFunctions = SurrogateParser.parse(lines: surrogateFile.components(separatedBy: .newlines))
+        guard let plist = jsFunctions as NSDictionary? else { return false }
+        if plist.write(to: persistenceLocation(), atomically: true) {
+            self.jsFunctions = jsFunctions
+            return true
+        }
+        return false
     }
 
     private func persistenceLocation() -> URL {

@@ -131,8 +131,10 @@ public enum PixelName: String {
     case feedbackNegativePerformanceVideo = "mfbs_negative_performance_video"
     case feedbackNegativePerformanceOther = "mfbs_negative_performance_other"
     
-    case etagStoreOOSWithDisconnectMe = "m_dbg_dc_oos"
-    case etagStoreOOSWithEasylist = "m_dbg_el_oos"
+    case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
+    case etagStoreOOSWithEasylistFix = "m_d_elf_oos"
+    
+    case configurationFetchInfo = "m_d_cfgfetch"
 }
 
 public class Pixel {

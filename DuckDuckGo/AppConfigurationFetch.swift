@@ -22,11 +22,40 @@ import Core
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
+protocol AppConfigurationFetchStatistics {
+    
+    var foregroundStartCount: Int { get set }
+    var foregroundNoDataCount: Int { get set }
+    var foregroundNewDataCount: Int { get set }
+    
+    var backgroundStartCount: Int { get set }
+    var backgroundNoDataCount: Int { get set }
+    var backgroundNewDataCount: Int { get set }
+}
+
 class AppConfigurationFetch {
     
-    func start(completion: AppConfigurationCompletion?) {
+    private struct Constants {
+        static let backgroundTaskName = "Fetch Configuration Task"
+    }
+    
+    private struct Keys {
+        static let bgFetchStart = "bgfs"
+        static let bgFetchNoData = "bgnd"
+        static let bgFetchWithData = "bgwd"
+        static let fgFetchStart = "fgfs"
+        static let fgFetchNoData = "fgnd"
+        static let fgFetchWithData = "fgwd"
+    }
+    
+    private static let fetchQueue = DispatchQueue(label: "Config Fetch queue", qos: .utility)
+    
+    func start(isBackgroundFetch: Bool = false,
+               completion: AppConfigurationCompletion?) {
 
-        DispatchQueue.global(qos: .background).async {
+        type(of: self).fetchQueue.async {
+            let taskID = UIApplication.shared.beginBackgroundTask(withName: Constants.backgroundTaskName)
+            self.markFetchStarted(isBackground: isBackgroundFetch)
 
             var newData = false
             let semaphore = DispatchSemaphore(value: 0)
@@ -37,7 +66,88 @@ class AppConfigurationFetch {
             }
 
             semaphore.wait()
+            
+            self.markFetchCompleted(isBackground: isBackgroundFetch, hasNewData: newData)
+            
+            if !isBackgroundFetch {
+                type(of: self).fetchQueue.async {
+                    self.sendStatistics {
+                        UIApplication.shared.endBackgroundTask(taskID)
+                    }
+                }
+            } else {
+                UIApplication.shared.endBackgroundTask(taskID)
+            }
             completion?(newData)
         }
+    }
+    
+    private func markFetchStarted(isBackground: Bool) {
+        var store: AppConfigurationFetchStatistics = AppUserDefaults()
+        
+        if isBackground {
+            store.backgroundStartCount += 1
+        } else {
+            store.foregroundStartCount += 1
+        }
+    }
+    
+    private func markFetchCompleted(isBackground: Bool, hasNewData: Bool) {
+        var store: AppConfigurationFetchStatistics = AppUserDefaults()
+        
+        if isBackground {
+            if hasNewData {
+                store.backgroundNewDataCount += 1
+            } else {
+                store.backgroundNoDataCount += 1
+            }
+        } else {
+            if hasNewData {
+                store.foregroundNewDataCount += 1
+            } else {
+                store.foregroundNoDataCount += 1
+            }
+        }
+    }
+    
+    private func sendStatistics(completion: () -> Void ) {
+        let store: AppConfigurationFetchStatistics = AppUserDefaults()
+        guard store.foregroundStartCount > 0 || store.backgroundStartCount > 0 else {
+            completion()
+            return
+        }
+        
+        let parameters = [Keys.bgFetchStart: String(store.backgroundStartCount),
+                          Keys.bgFetchNoData: String(store.backgroundNoDataCount),
+                          Keys.bgFetchWithData: String(store.backgroundNewDataCount),
+                          Keys.fgFetchStart: String(store.foregroundStartCount),
+                          Keys.fgFetchNoData: String(store.foregroundNoDataCount),
+                          Keys.fgFetchWithData: String(store.foregroundNewDataCount)]
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        Pixel.fire(pixel: .configurationFetchInfo, withAdditionalParameters: parameters) { error in
+            guard error == nil else {
+                semaphore.signal()
+                return
+            }
+                
+            self.resetStatistics()
+            semaphore.signal()
+        }
+        
+        semaphore.wait()
+        completion()
+    }
+    
+    private func resetStatistics() {
+        var store: AppConfigurationFetchStatistics = AppUserDefaults()
+        
+        store.backgroundStartCount = 0
+        store.backgroundNoDataCount = 0
+        store.backgroundNewDataCount = 0
+        store.foregroundStartCount = 0
+        store.foregroundNoDataCount = 0
+        store.foregroundNewDataCount = 0
     }
 }

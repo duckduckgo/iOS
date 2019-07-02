@@ -1,2 +1,1 @@
-• We've improved our data clearing logic to remove cached favicons.
-• Bug fixes and other improvements.
+• Performance improvements and bug fixes.

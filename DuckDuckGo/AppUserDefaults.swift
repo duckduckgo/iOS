@@ -31,6 +31,14 @@ public class AppUserDefaults: AppSettings {
         static let autoClearTimingKey = "com.duckduckgo.app.autoClearTimingKey"
         
         static let homePage = "com.duckduckgo.app.homePage"
+        
+        static let foregroundFetchStartCount = "com.duckduckgo.app.fgFetchStartCount"
+        static let foregroundFetchNoDataCount = "com.duckduckgo.app.fgFetchNoDataCount"
+        static let foregroundFetchNewDataCount = "com.duckduckgo.app.fgFetchNewDataCount"
+        
+        static let backgroundFetchStartCount = "com.duckduckgo.app.bgFetchStartCount"
+        static let backgroundFetchNoDataCount = "com.duckduckgo.app.bgFetchNoDataCount"
+        static let backgroundFetchNewDataCount = "com.duckduckgo.app.bgFetchNewDataCount"
     }
 
     private var userDefaults: UserDefaults? {
@@ -109,4 +117,61 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
+}
+
+extension AppUserDefaults: AppConfigurationFetchStatistics {
+    
+    var foregroundStartCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.foregroundFetchStartCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.foregroundFetchStartCount)
+        }
+    }
+    
+    var foregroundNoDataCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.foregroundFetchNoDataCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.foregroundFetchNoDataCount)
+        }
+    }
+    
+    var foregroundNewDataCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.foregroundFetchNewDataCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.foregroundFetchNewDataCount)
+        }
+    }
+    
+    var backgroundStartCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.backgroundFetchStartCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchStartCount)
+        }
+    }
+    
+    var backgroundNoDataCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.backgroundFetchNoDataCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchNoDataCount)
+        }
+    }
+    
+    var backgroundNewDataCount: Int {
+        get {
+            return userDefaults?.integer(forKey: Keys.backgroundFetchNewDataCount) ?? 0
+        }
+        set {
+            userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchNewDataCount)
+        }
+    }
 }

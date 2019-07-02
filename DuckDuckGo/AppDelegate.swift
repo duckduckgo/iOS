@@ -136,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Logger.log(items: #function)
 
-        AppConfigurationFetch().start { newData in
+        AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
             completionHandler(newData ? .newData : .noData)
         }
     }

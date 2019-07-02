@@ -19,7 +19,19 @@
 
 import Foundation
 
-class ContentBlockerRequest {
+protocol ContentBlockerRemoteDataSource {
+    
+    var requestCount: Int { get }
+    
+    func request(_ configuration: ContentBlockerRequest.Configuration, completion:@escaping (ContentBlockerRequest.Response) -> Void)
+}
+
+class ContentBlockerRequest: ContentBlockerRemoteDataSource {
+    
+    enum Response {
+        case error
+        case success(etag: String?, data: Data)
+    }
     
     enum Configuration: String {
         case disconnectMe = "disconnectme"
@@ -35,13 +47,7 @@ class ContentBlockerRequest {
     
     var requestCount = 0
     
-    let etagStorage: BlockerListETagStorage
-    
-    init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
-        self.etagStorage = etagStorage
-    }
-    
-    func request(_ configuration: Configuration, completion:@escaping (Data?, Bool) -> Void) {
+    func request(_ configuration: Configuration, completion:@escaping (Response) -> Void) {
         requestCount += 1
         
         let spid = Instruments.shared.startTimedEvent(.fetchingContentBlockerData, info: configuration.rawValue)
@@ -52,20 +58,12 @@ class ContentBlockerRequest {
                 let response = response,
                 let data = response.data else {
                     Instruments.shared.endTimedEvent(for: spid, result: "error")
-                completion(nil, false)
+                completion(.error)
                 return
             }
 
-            let etag = self.etagStorage.etag(for: configuration)
-            
-            if etag == nil || etag != response.etag {
-                Instruments.shared.endTimedEvent(for: spid, result: "cached")
-                self.etagStorage.set(etag: response.etag, for: configuration)
-                completion(data, false)
-            } else {
-                Instruments.shared.endTimedEvent(for: spid, result: "success")
-                completion(data, true)
-            }
+            Instruments.shared.endTimedEvent(for: spid, result: "success")
+            completion(.success(etag: response.etag, data: data))
         }
     }
     
@@ -84,28 +82,4 @@ class ContentBlockerRequest {
         case .entitylist: return appUrls.entitylist
         }
     }
-}
-
-protocol BlockerListETagStorage {
-    
-    func set(etag: String?, for list: ContentBlockerRequest.Configuration)
-    
-    func etag(for list: ContentBlockerRequest.Configuration) -> String?
-    
-}
-
-class UserDefaultsETagStorage: BlockerListETagStorage {
-    
-    lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
-    
-    func etag(for list: ContentBlockerRequest.Configuration) -> String? {
-        let etag = defaults?.string(forKey: list.rawValue)
-        Logger.log(items: "stored etag for ", list.rawValue, etag as Any)
-        return etag
-    }
-    
-    func set(etag: String?, for list: ContentBlockerRequest.Configuration) {
-        defaults?.set(etag, forKey: list.rawValue)
-    }
-    
 }

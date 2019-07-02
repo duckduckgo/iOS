@@ -39,7 +39,6 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
 
     private weak var siteRating: SiteRating!
-    private weak var contentBlocker: ContentBlockerConfigurationStore!
 
     private let serverTrustCache = ServerTrustCache.shared
     private var sections = [Section]()
@@ -114,8 +113,7 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
 
 extension PrivacyProtectionEncryptionDetailController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
-        self.contentBlocker = contentBlocker
+    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
     }
 

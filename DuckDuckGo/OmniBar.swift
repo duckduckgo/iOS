@@ -154,8 +154,8 @@ class OmniBar: UIView {
         return textField.resignFirstResponder()
     }
 
-    func updateSiteRating(_ siteRating: SiteRating?) {
-        siteRatingView.update(siteRating: siteRating)
+    func updateSiteRating(_ siteRating: SiteRating?, with storageCache: StorageCache?) {
+        siteRatingView.update(siteRating: siteRating, with: storageCache)
     }
 
     private func clear() {

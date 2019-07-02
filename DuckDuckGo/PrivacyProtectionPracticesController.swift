@@ -42,8 +42,8 @@ class PrivacyProtectionPracticesController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
-    weak var siteRating: SiteRating!
-    weak var contentBlocker: ContentBlockerConfigurationStore!
+    private var siteRating: SiteRating!
+    private var contentBlockerConfiguration = AppDependencyProvider.shared.storageCache.current.configuration
 
     var rows = [Row]()
 
@@ -140,9 +140,9 @@ extension PrivacyProtectionPracticesController: UITableViewDelegate {
 
 extension PrivacyProtectionPracticesController: PrivacyProtectionInfoDisplaying {
 
-    func using(siteRating: SiteRating, contentBlocker: ContentBlockerConfigurationStore) {
+    func using(siteRating: SiteRating, configuration: ContentBlockerConfigurationStore) {
         self.siteRating = siteRating
-        self.contentBlocker = contentBlocker
+        self.contentBlockerConfiguration = configuration
         update()
     }
 

@@ -45,8 +45,7 @@ public class PrivacyPractices {
     private let termsOfServiceStore: TermsOfServiceStore
     private let entityMapping: EntityMapping
     
-    public init(termsOfServiceStore: TermsOfServiceStore = EmbeddedTermsOfServiceStore(), entityMapping: EntityMapping = EntityMapping()) {
-        let tld = TLD()
+    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore, entityMapping: EntityMapping) {
         var entityScores = [String: Int]()
         var siteScores = [String: Int]()
         

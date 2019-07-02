@@ -59,12 +59,12 @@ extension SiteRating {
         return privacyPractice.summary
     }
     
-    func majorNetworksText(contentBlocker: ContentBlockerConfigurationStore) -> String {
-        return protecting(contentBlocker) ? majorNetworksBlockedText() : majorNetworksDetectedText()
+    func majorNetworksText(configuration: ContentBlockerConfigurationStore) -> String {
+        return protecting(configuration) ? majorNetworksBlockedText() : majorNetworksDetectedText()
     }
     
-    func majorNetworksSuccess(contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(contentBlocker) ? uniqueMajorTrackerNetworksBlocked : uniqueMajorTrackerNetworksDetected) <= 0
+    func majorNetworksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
+        return (protecting(configuration) ? uniqueMajorTrackerNetworksBlocked : uniqueMajorTrackerNetworksDetected) <= 0
     }
     
     func majorNetworksBlockedText() -> String {
@@ -75,12 +75,12 @@ extension SiteRating {
         return String(format: UserText.privacyProtectionMajorTrackersFound, uniqueMajorTrackerNetworksDetected)
     }
     
-    func networksText(contentBlocker: ContentBlockerConfigurationStore) -> String {
-        return protecting(contentBlocker) ? networksBlockedText() : networksDetectedText()
+    func networksText(configuration: ContentBlockerConfigurationStore) -> String {
+        return protecting(configuration) ? networksBlockedText() : networksDetectedText()
     }
     
-    func networksSuccess(contentBlocker: ContentBlockerConfigurationStore) -> Bool {
-        return (protecting(contentBlocker) ? uniqueTrackersBlocked : uniqueTrackersDetected) <= 0
+    func networksSuccess(configuration: ContentBlockerConfigurationStore) -> Bool {
+        return (protecting(configuration) ? uniqueTrackersBlocked : uniqueTrackersDetected) <= 0
     }
     
     func networksBlockedText() -> String {

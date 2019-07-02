@@ -51,7 +51,10 @@ public class APIRequest {
                 if let error = response.error {
                     completion(nil, error)
                 } else {
-                    let etag = response.response?.headerValue(for: APIHeaders.Name.etag)
+                    var etag = response.response?.headerValue(for: APIHeaders.Name.etag)
+                    
+                    // Handle weak etags
+                    etag = etag?.dropPrefix(prefix: "W/")
                     completion(Response(data: response.data, etag: etag), nil)
                 }
         }

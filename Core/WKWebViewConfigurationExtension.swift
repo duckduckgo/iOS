@@ -46,8 +46,10 @@ extension WKWebViewConfiguration {
         return configuration
     }
 
-    public func loadScripts(contentBlocking: Bool) {
-        Loader(userContentController, contentBlocking).load()
+    public func loadScripts(storageCache: StorageCache, contentBlockingEnabled: Bool) {
+        Loader(contentController: userContentController,
+               storageCache: storageCache,
+               injectContentBlockingScripts: contentBlockingEnabled).load()
     }
 
 }
@@ -59,16 +61,17 @@ private class Loader {
         static let surrogateJson = "surrogateJson"
 
     }
-
-    let tlds = TLD()
+    
     let cache = ContentBlockerStringCache()
     let javascriptLoader = JavascriptLoader()
+    let storageCache: StorageCache
 
     let userContentController: WKUserContentController
     let injectContentBlockingScripts: Bool
 
-    init(_ userContentController: WKUserContentController, _ injectContentBlockingScripts: Bool) {
-        self.userContentController = userContentController
+    init(contentController: WKUserContentController, storageCache: StorageCache, injectContentBlockingScripts: Bool) {
+        self.storageCache = storageCache
+        self.userContentController = contentController
         self.injectContentBlockingScripts = injectContentBlockingScripts
     }
 
@@ -86,15 +89,14 @@ private class Loader {
     }
 
     private func loadContentBlockingScripts() {
-        let configuration = ContentBlockerConfigurationUserDefaults()
-        let whitelist = configuration.domainWhitelist.toJsonLookupString()
         loadContentBlockerDependencyScripts()
-        loadBlockerData(with: whitelist, and: configuration.enabled)
+        loadBlockerData()
         load(scripts: [ .disconnectme, .contentblocker ], forMainFrameOnly: false)
         load(scripts: [ .detection ], forMainFrameOnly: false)
     }
 
     private func loadContentBlockerDependencyScripts() {
+        let tlds = storageCache.tld
 
         if #available(iOS 10, *) {
             load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)
@@ -115,10 +117,12 @@ private class Loader {
         javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)
     }
 
-    private func loadBlockerData(with whitelist: String, and blockingEnabled: Bool) {
+    private func loadBlockerData() {
 
-        let surrogates = loadSurrogateJson()
-        let disconnectMeStore = DisconnectMeStore()
+        let surrogates = loadSurrogateJson(storageCache.surrogateStore)
+        let blockingEnabled = storageCache.configuration.enabled
+        let whitelist = storageCache.configuration.domainWhitelist.toJsonLookupString()
+        let disconnectMeStore = storageCache.disconnectMeStore
 
         javascriptLoader.load(script: .blockerData, withReplacements: [
             "${blocking_enabled}": "\(blockingEnabled)",
@@ -134,13 +138,12 @@ private class Loader {
 
     }
 
-    private func loadSurrogateJson() -> String {
+    private func loadSurrogateJson(_ store: SurrogateStore) -> String {
         if let surrogateJson = cache.get(named: CacheNames.surrogateJson) {
             Logger.log(text: "Using cached surrogate json")
             return surrogateJson
         }
 
-        let store = SurrogateStore()
         guard let functions = store.jsFunctions else { return "{}" }
         let functionUris = functions.mapValues({ "data:application/javascript;base64,\($0.toBase64())" })
         guard let jsonData = try? JSONEncoder().encode(functionUris) else { return "{}" }
@@ -180,13 +183,14 @@ private class Loader {
     }
 
     private func loadEasylist() {
-
+        
         if let cachedEasylistWhitelist = cache.get(named: EasylistStore.CacheNames.easylistWhitelist) {
             injectCompiledEasylist(cachedEasylistWhitelist)
             return
         }
+        
+        let easylistStore = storageCache.easylistStore
 
-        let easylistStore = EasylistStore()
         if let easylistWhitelist = easylistStore.easylistWhitelist {
             injectRawEasylist(easylistWhitelist)
         }

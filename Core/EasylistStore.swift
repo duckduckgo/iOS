@@ -67,21 +67,24 @@ class EasylistStore {
         persistAndPrepareForInjection(data: data, as: .easylistPrivacy, withCacheName: CacheNames.easylistPrivacy)
     }
 
-    func persistEasylistWhitelist(data: Data) {
-        persistAndPrepareForInjection(data: data, as: .easylistWhitelist, withCacheName: CacheNames.easylistWhitelist)
+    func persistEasylistWhitelist(data: Data) -> Bool {
+        return persistAndPrepareForInjection(data: data, as: .easylistWhitelist, withCacheName: CacheNames.easylistWhitelist)
     }
 
     private func exists(type: Easylist) -> Bool {
         return (try? persistenceLocation(type: type).checkResourceIsReachable()) ?? false
     }
 
-    private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) {
-        guard let escapedEasylist = escapedString(from: data) else { return }
+    @discardableResult
+    private func persistAndPrepareForInjection(data: Data, as type: Easylist, withCacheName cacheName: String) -> Bool {
+        guard let escapedEasylist = escapedString(from: data) else { return false }
         do {
             try persist(escapedEasylist: escapedEasylist, to: persistenceLocation(type: type))
-            invalidateCache(named: cacheName)
+            EasylistStore.invalidateCache(named: cacheName)
+            return true
         } catch {
             Logger.log(text: "failed to write \(type): \(error)")
+            return false
         }
     }
 
@@ -90,7 +93,7 @@ class EasylistStore {
         return path!.appendingPathComponent("\(type.rawValue).txt")
     }
 
-    private func invalidateCache(named name: String) {
+    private static func invalidateCache(named name: String) {
         ContentBlockerStringCache().remove(named: name)
     }
 
@@ -98,7 +101,7 @@ class EasylistStore {
         try escapedEasylist.write(to: to, atomically: true, encoding: .utf8)
     }
 
-    func removeLegacyLists() {
+    static func removeLegacyLists() {
         invalidateCache(named: CacheNames.easylist)
         invalidateCache(named: CacheNames.easylistPrivacy)
     }

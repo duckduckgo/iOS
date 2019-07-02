@@ -53,9 +53,9 @@ public class SiteRating {
     
     public init(url: URL,
                 httpsForced: Bool = false,
-                entityMapping: EntityMapping = EntityMapping(),
-                privacyPractices: PrivacyPractices = PrivacyPractices(),
-                prevalenceStore: PrevalenceStore = EmbeddedPrevalenceStore()) {
+                entityMapping: EntityMapping,
+                privacyPractices: PrivacyPractices,
+                prevalenceStore: PrevalenceStore) {
 
         Logger.log(text: "new SiteRating(url: \(url), httpsForced: \(httpsForced))")
 

@@ -21,6 +21,8 @@ import UIKit
 import Core
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
+    
+    let enablePP = true
 
     struct Constants {
         
@@ -34,6 +36,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var searchCenterOffset: CGFloat {
         return fixed && isPortrait ? Constants.fixedSearchCenterOffset : Constants.searchCenterOffset
     }
+    
+    private var overflowOffset: CGFloat = 0
     
     private weak var controller: HomeViewController!
     private weak var cell: CenteredSearchHomeCell?
@@ -57,19 +61,29 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         
-        controller.collectionView.isScrollEnabled = !fixed
+        //controller.collectionView.isScrollEnabled = !fixed
 
-        controller.allowContentUnderflow = true
+        overflowOffset = controller.enableContentUnderflow()
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         indexPath = IndexPath(row: 0, section: section)
-        return 1
+        return enablePP ? 2 : 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: UICollectionViewCell
+        if indexPath.row == 0 {
+            cell = centeredSearchCell(for: collectionView, at: indexPath)
+        } else {
+            cell = privacyProtectionCell(for: collectionView, at: indexPath)
+        }
+        return cell
+    }
+    
+    private func centeredSearchCell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath) as? CenteredSearchHomeCell else {
             fatalError("cell is not a CenteredSearchHomeCell")
         }
@@ -77,6 +91,13 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         cell.targetSearchHeight = controller.chromeDelegate?.omniBar.editingBackground.frame.height ?? 0
         cell.targetSearchRadius = controller.chromeDelegate?.omniBar.editingBackground.layer.cornerRadius ?? 0
         self.cell = cell
+        return cell
+    }
+    
+    private func privacyProtectionCell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PrivacyHomeCell", for: indexPath) as? PrivacyProtectionHomeCell else {
+            fatalError("cell is not a PrivacyProtectionCell")
+        }
         return cell
     }
 
@@ -94,6 +115,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         let y = scrollView.contentOffset.y
 
         let diff = targetHeight - y - offsetY
+        
+        print("Offset: \(y)")
 
         guard diff < offsetY else {
             // search bar is in the center
@@ -122,15 +145,24 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private func activateSearch() {
         guard let thisIndexPath = indexPath else { return }
-        let targetIndexPath = IndexPath(row: 0, section: thisIndexPath.section + 1)
-        controller.collectionView.scrollToItem(at: targetIndexPath, at: .top, animated: true)
+        
+        if enablePP {
+            var offset = controller.collectionView.contentOffset
+            // TODO - numbers should come from frames/contraints 
+            offset.y = 79 + (cell?.bounds.height ?? 0) + overflowOffset - 65
+            controller.collectionView.setContentOffset(offset, animated: true)
+        } else {
+            let targetIndexPath = IndexPath(row: 0, section: thisIndexPath.section + 1)
+            controller.collectionView.scrollToItem(at: targetIndexPath, at: .top, animated: true)
+        }
         controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
     func omniBarCancelPressed() {
         guard let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        controller.allowContentUnderflow = true
+        // TODO ?
+        overflowOffset = controller.enableContentUnderflow()
     }
     
     func launchNewSearch() {

@@ -29,7 +29,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.collectionView.contentInset = UIEdgeInsets.zero
 
         controller.searchHeaderTransition = 1.0
-        controller.allowContentUnderflow = false
+        controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true

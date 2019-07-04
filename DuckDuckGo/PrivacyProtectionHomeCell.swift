@@ -1,8 +1,8 @@
 //
-//  HomeControllerDelegate.swift
+//  PrivacyProtectionHomeCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,19 +18,17 @@
 //
 
 import UIKit
+import Core
 
-protocol HomeControllerDelegate: class {
-
-    func home(_ home: HomeViewController, didRequestUrl url: URL)
-
-    func home(_ home: HomeViewController, didRequestQuery query: String)
+class PrivacyProtectionHomeCell: UICollectionViewCell {
     
-    func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat
-
-    func homeDidDeactivateOmniBar(home: HomeViewController)
-
-    func showInstructions(_ home: HomeViewController)
-
-    func showSettings(_ home: HomeViewController)
-
+    struct Constants {
+    }
+    
+    @IBOutlet weak var protectionImage: UIImageView!
+    @IBOutlet weak var disclosureIndicator: UIImageView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var separator: UIView!
+    
 }

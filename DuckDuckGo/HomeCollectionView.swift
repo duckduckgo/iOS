@@ -44,6 +44,8 @@ class HomeCollectionView: UICollectionView {
         
         register(UINib(nibName: "FavoriteHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "favorite")
+        register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
+                 forCellWithReuseIdentifier: "PrivacyHomeCell")
         
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }

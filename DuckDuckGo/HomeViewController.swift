@@ -76,17 +76,18 @@ class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.onKeyboardChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
+
         collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
-    var allowContentUnderflow: Bool = false {
-        didSet {
-            if let parent = parent as? MainViewController {
-                parent.allowContentUnderflow = allowContentUnderflow
-            }
-        }
+    func enableContentUnderflow() -> CGFloat {
+        return delegate?.home(self, didRequestContentOverflow: true) ?? 0
+    }
+    
+    @discardableResult
+    func disableContentUnderflow() -> CGFloat {
+        return delegate?.home(self, didRequestContentOverflow: false) ?? 0
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

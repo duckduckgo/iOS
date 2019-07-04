@@ -66,6 +66,10 @@ class MainViewController: UIViewController {
         }
     }
     
+    var contentUnderflow: CGFloat {
+        return allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
+    }
+    
     var homeController: HomeViewController?
     var favoritesOverlay: FavoritesOverlay?
     var autocompleteController: AutocompleteViewController?
@@ -750,13 +754,18 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-
+    
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         loadUrlInNewTab(url)
+    }
+    
+    func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
+        allowContentUnderflow = shouldOverflow
+        return contentUnderflow
     }
 
     func homeDidDeactivateOmniBar(home: HomeViewController) {

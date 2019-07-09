@@ -25,10 +25,29 @@ class PrivacyProtectionHomeCell: UICollectionViewCell {
     struct Constants {
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        decorate(with: ThemeManager.shared.currentTheme)
+        
+        separatorHeight.constant = 1 / UIScreen.main.scale
+    }
+    
     @IBOutlet weak var protectionImage: UIImageView!
     @IBOutlet weak var disclosureIndicator: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var separator: UIView!
+    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
     
+}
+
+extension PrivacyProtectionHomeCell: Themable {
+    
+    func decorate(with theme: Theme) {
+        separator.backgroundColor = UIColor.lightGreyish
+        descriptionLabel.textColor = UIColor.charcoalGrey
+        detailLabel.textColor = UIColor.greyish3
+        
+        disclosureIndicator.tintColor = theme.tableCellAccessoryColor
+    }
 }

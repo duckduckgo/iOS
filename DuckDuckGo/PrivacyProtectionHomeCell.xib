@@ -20,10 +20,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="amo-i6-RnM">
-                        <rect key="frame" x="374" y="26" width="8" height="13"/>
+                        <rect key="frame" x="392" y="26" width="8" height="13"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pn2-Xw-ayq">
-                        <rect key="frame" x="73" y="22" width="154" height="21"/>
+                        <rect key="frame" x="32" y="22" width="154" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="PtD-ej-4GV"/>
                             <constraint firstAttribute="width" constant="154" id="cOh-x8-8rQ"/>
@@ -31,7 +31,8 @@
                         <attributedString key="attributedText">
                             <fragment content="Trackers Blocked">
                                 <attributes>
-                                    <font key="NSFont" size="16" name="ProximaNova-Bold"/>
+                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -39,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pg-kp-YX7">
-                        <rect key="frame" x="301" y="22" width="60" height="21"/>
+                        <rect key="frame" x="322" y="22" width="60" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="ZeU-Io-eaD"/>
                             <constraint firstAttribute="width" constant="60" id="rdU-Gr-MIm"/>
@@ -48,22 +49,22 @@
                             <fragment content="123">
                                 <attributes>
                                     <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <font key="NSFont" size="15" name="ProximaNova-Regular"/>
+                                    <font key="NSFont" size="16" name="ProximaNova-Regular"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Hero Connection On" translatesAutoresizingMaskIntoConstraints="NO" id="fMu-7c-UL7">
-                        <rect key="frame" x="30" y="15" width="35" height="35"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Shield" translatesAutoresizingMaskIntoConstraints="NO" id="fMu-7c-UL7">
+                        <rect key="frame" x="0.0" y="20.5" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="35" id="EaK-VC-IFl"/>
-                            <constraint firstAttribute="height" constant="35" id="yh7-6H-I6J"/>
+                            <constraint firstAttribute="width" constant="24" id="EaK-VC-IFl"/>
+                            <constraint firstAttribute="height" constant="24" id="yh7-6H-I6J"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qLW-Kn-VdY">
-                        <rect key="frame" x="20" y="69" width="360" height="1"/>
+                        <rect key="frame" x="0.0" y="63.5" width="400" height="1"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="WY5-kI-WvU"/>
@@ -74,14 +75,14 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="top" secondItem="amo-i6-RnM" secondAttribute="top" constant="-26" id="17g-0b-hVL"/>
-                <constraint firstItem="gCv-P6-JCK" firstAttribute="trailing" secondItem="amo-i6-RnM" secondAttribute="trailing" constant="18" id="CI2-nE-cck"/>
-                <constraint firstItem="fMu-7c-UL7" firstAttribute="leading" secondItem="ico-ty-UiT" secondAttribute="leading" constant="30" id="K4Q-JT-sXr"/>
-                <constraint firstItem="pn2-Xw-ayq" firstAttribute="leading" secondItem="fMu-7c-UL7" secondAttribute="trailing" constant="8" id="R8j-LY-TVF"/>
+                <constraint firstItem="gCv-P6-JCK" firstAttribute="trailing" secondItem="amo-i6-RnM" secondAttribute="trailing" id="CI2-nE-cck"/>
+                <constraint firstItem="fMu-7c-UL7" firstAttribute="leading" secondItem="ico-ty-UiT" secondAttribute="leading" id="K4Q-JT-sXr"/>
+                <constraint firstItem="pn2-Xw-ayq" firstAttribute="leading" secondItem="ico-ty-UiT" secondAttribute="leading" constant="32" id="R8j-LY-TVF"/>
                 <constraint firstItem="3pg-kp-YX7" firstAttribute="centerY" secondItem="amo-i6-RnM" secondAttribute="centerY" id="U2E-4e-qFe"/>
                 <constraint firstItem="qLW-Kn-VdY" firstAttribute="top" secondItem="fMu-7c-UL7" secondAttribute="bottom" constant="19" id="bt9-g0-DmT"/>
-                <constraint firstItem="amo-i6-RnM" firstAttribute="leading" secondItem="3pg-kp-YX7" secondAttribute="trailing" constant="13" id="k8e-oj-xJ0"/>
-                <constraint firstItem="qLW-Kn-VdY" firstAttribute="leading" secondItem="gCv-P6-JCK" secondAttribute="leading" constant="20" id="ogL-6G-U90"/>
-                <constraint firstItem="gCv-P6-JCK" firstAttribute="trailing" secondItem="qLW-Kn-VdY" secondAttribute="trailing" constant="20" id="qT1-fM-8ir"/>
+                <constraint firstAttribute="trailing" secondItem="3pg-kp-YX7" secondAttribute="trailing" constant="18" id="k8e-oj-xJ0"/>
+                <constraint firstItem="qLW-Kn-VdY" firstAttribute="leading" secondItem="gCv-P6-JCK" secondAttribute="leading" id="ogL-6G-U90"/>
+                <constraint firstItem="gCv-P6-JCK" firstAttribute="trailing" secondItem="qLW-Kn-VdY" secondAttribute="trailing" id="qT1-fM-8ir"/>
                 <constraint firstItem="pn2-Xw-ayq" firstAttribute="centerY" secondItem="fMu-7c-UL7" secondAttribute="centerY" id="qiT-GO-WaK"/>
                 <constraint firstItem="pn2-Xw-ayq" firstAttribute="centerY" secondItem="3pg-kp-YX7" secondAttribute="centerY" id="rWV-Ma-ZGu"/>
             </constraints>
@@ -93,12 +94,13 @@
                 <outlet property="disclosureIndicator" destination="amo-i6-RnM" id="wGG-jf-Q34"/>
                 <outlet property="protectionImage" destination="fMu-7c-UL7" id="Xpi-hL-JtU"/>
                 <outlet property="separator" destination="qLW-Kn-VdY" id="Ozd-4m-rly"/>
+                <outlet property="separatorHeight" destination="WY5-kI-WvU" id="gwB-U1-YuJ"/>
             </connections>
             <point key="canvasLocation" x="47.826086956521742" y="45.535714285714285"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="DisclosureIndicator" width="8" height="13"/>
-        <image name="PP Hero Connection On" width="43" height="65"/>
+        <image name="PP Shield" width="24" height="24"/>
     </resources>
 </document>

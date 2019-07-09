@@ -28,6 +28,8 @@ protocol FavoritesHomeViewSectionRendererDelegate: class {
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
+    let enablePP = true
+    
     struct Constants {
         
         static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth

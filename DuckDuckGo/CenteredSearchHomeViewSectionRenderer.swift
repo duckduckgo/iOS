@@ -31,6 +31,9 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         static let fixedSearchCenterOffset: CGFloat = 40
         
+        static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
+        static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
+        
     }
     
     private var searchCenterOffset: CGFloat {
@@ -103,9 +106,18 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
-            let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
-            return CGSize(width: width, height: height)
+            switch indexPath.row {
+            case 0:
+                let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
+                let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
+                return CGSize(width: width, height: height)
+            case 1:
+                let searchWidth = isPad ? Constants.searchWidthPad : Constants.searchWidth
+                let width: CGFloat = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), searchWidth)
+                return CGSize(width: width, height: 65)
+            default:
+                return .zero
+            }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

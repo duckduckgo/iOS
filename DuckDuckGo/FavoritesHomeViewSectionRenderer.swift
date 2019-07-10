@@ -68,9 +68,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
-        -> UIEdgeInsets? {
-
+    private func calculateMargin(_ collectionView: UICollectionView) -> CGFloat {
         let margin: CGFloat
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
@@ -79,12 +77,34 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             let landscapeMargin = (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
             margin = isPortrait ? defaultMargin : landscapeMargin
         }
+        
+        return margin
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
+        -> UIEdgeInsets? {
+
+        let margin = calculateMargin(collectionView)
 
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItems
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                     withReuseIdentifier: "favHeaderCell",
+                                                                     for: indexPath) as? FavoritesHeaderCell else {
+                                                                        fatalError("not a Header Cell")
+        }
+        let margin = calculateMargin(collectionView)
+        header.adjust(to: margin)
+        
+        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -178,7 +198,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
         
-        return CGSize(width: 1, height: 39)
+        return CGSize(width: 1, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView,

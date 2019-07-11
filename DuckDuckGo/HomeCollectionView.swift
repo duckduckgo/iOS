@@ -47,6 +47,10 @@ class HomeCollectionView: UICollectionView {
         register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "PrivacyHomeCell")
         
+        register(EmptyCollectionReusableView.self,
+                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                 withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
+        
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
     
@@ -59,8 +63,8 @@ class HomeCollectionView: UICollectionView {
             case .navigationBarSearch:
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
                 
-            case .centeredSearch(let fixed):
-                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
+            case .centeredSearch(let independent):
+                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(independent: independent))
                 
             case .favorites:
                 renderers.install(renderer: FavoritesHomeViewSectionRenderer())

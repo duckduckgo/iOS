@@ -101,20 +101,21 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
-                                                                     withReuseIdentifier: "favHeaderCell",
-                                                                     for: indexPath) as? FavoritesHeaderCell else {
-                                                                        fatalError("not a Header Cell")
-        }
-        
         if enablePP {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                               withReuseIdentifier: "favHeaderCell",
+                                                                               for: indexPath) as? FavoritesHeaderCell else {
+                                                                                fatalError("not a Header Cell")
+            }
             let margin = type(of: self).visibleMargin(in: collectionView)
             header.adjust(to: margin)
+            
+            return header
         } else {
-            header.makeInvisible()
+            return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                   withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
+                                                                   for: indexPath)
         }
-
-        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -52,13 +52,15 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var indexPath: IndexPath?
     
     private let fixed: Bool
+    private let adjustToFavorites: Bool
     
     var centeredSearch: UIView? {
         return cell?.searchBackground
     }
     
-    init(fixed: Bool = false) {
-        self.fixed = fixed
+    init(independent: Bool) {
+        self.fixed = independent
+        self.adjustToFavorites = !independent
     }
     
     func install(into controller: HomeViewController) {
@@ -97,8 +99,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         return cell
     }
     
-    private func privacyProtectionCell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PrivacyHomeCell", for: indexPath) as? PrivacyProtectionHomeCell else {
+    private func privacyProtectionCell(for collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PrivacyHomeCell", for: index) as? PrivacyProtectionHomeCell else {
             fatalError("cell is not a PrivacyProtectionCell")
         }
         return cell
@@ -112,8 +114,14 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                 let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
                 return CGSize(width: width, height: height)
             case 1:
-                let searchWidth = isPad ? Constants.searchWidthPad : Constants.searchWidth
-                let width: CGFloat = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), searchWidth)
+                
+                let width: CGFloat
+                if adjustToFavorites {
+                    width = collectionView.frame.width - FavoritesHomeViewSectionRenderer.sectionMargin(in: collectionView) * 2
+                } else {
+                    let searchWidth = isPad ? Constants.searchWidthPad : Constants.searchWidth
+                    width = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), searchWidth)
+                }
                 return CGSize(width: width, height: 65)
             default:
                 return .zero

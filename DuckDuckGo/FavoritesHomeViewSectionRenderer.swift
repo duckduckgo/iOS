@@ -28,7 +28,7 @@ protocol FavoritesHomeViewSectionRendererDelegate: class {
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
-    let enablePP = false
+    let enablePP = true
     
     struct Constants {
         
@@ -68,7 +68,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
     }
     
-    private func calculateMargin(_ collectionView: UICollectionView) -> CGFloat {
+    static func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
         let margin: CGFloat
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
@@ -81,10 +81,15 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return margin
     }
     
+    // Visible margin is adjusted for offset inside Favorite Cells
+    static func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
+        return sectionMargin(in: collectionView) + FavoriteHomeCell.Constants.horizontalMargin
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
         -> UIEdgeInsets? {
 
-        let margin = calculateMargin(collectionView)
+            let margin = type(of: self).sectionMargin(in: collectionView)
 
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
@@ -103,8 +108,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
         
         if enablePP {
-            var margin = calculateMargin(collectionView)
-            margin += FavoriteHomeCell.Constants.horizontalMargin
+            let margin = type(of: self).visibleMargin(in: collectionView)
             header.adjust(to: margin)
         } else {
             header.makeInvisible()

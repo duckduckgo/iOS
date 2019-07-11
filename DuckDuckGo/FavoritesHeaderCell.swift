@@ -21,10 +21,6 @@ import UIKit
 
 class FavoritesHeaderCell: UICollectionReusableView {
     
-    private struct Constants {
-        static let additionalMargin: CGFloat = 2
-    }
-    
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var leadingMargin: NSLayoutConstraint!
     @IBOutlet weak var trailingMargin: NSLayoutConstraint!
@@ -36,14 +32,18 @@ class FavoritesHeaderCell: UICollectionReusableView {
     }
 
     func adjust(to margin: CGFloat) {
-        leadingMargin.constant = margin + Constants.additionalMargin
-        trailingMargin.constant = margin + Constants.additionalMargin
+        leadingMargin.constant = margin
+        trailingMargin.constant = margin
+    }
+    
+    func makeInvisible() {
+        backgroundColor = .clear
+        headerLabel.isHidden = true
     }
 }
 
 extension FavoritesHeaderCell: Themable {
     func decorate(with theme: Theme) {
-        backgroundColor = .red
         headerLabel.textColor = .charcoalGrey
     }
 }

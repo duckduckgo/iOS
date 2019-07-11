@@ -28,7 +28,7 @@ protocol FavoritesHomeViewSectionRendererDelegate: class {
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
-    let enablePP = true
+    let enablePP = false
     
     struct Constants {
         
@@ -101,9 +101,15 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                                                                      for: indexPath) as? FavoritesHeaderCell else {
                                                                         fatalError("not a Header Cell")
         }
-        let margin = calculateMargin(collectionView)
-        header.adjust(to: margin)
         
+        if enablePP {
+            var margin = calculateMargin(collectionView)
+            margin += FavoriteHomeCell.Constants.horizontalMargin
+            header.adjust(to: margin)
+        } else {
+            header.makeInvisible()
+        }
+
         return header
     }
     
@@ -197,15 +203,17 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
-        
-        return CGSize(width: 1, height: 50)
+        if enablePP {
+            return CGSize(width: 1, height: 50)
+        }
+        return CGSize(width: 1, height: 39)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
         
-        return CGSize(width: 1, height: 10)
+        return .zero
     }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {

@@ -50,6 +50,9 @@ class HomeCollectionView: UICollectionView {
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                  withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
+        register(EmptyCollectionReusableView.self,
+                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                 withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
         
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
@@ -63,11 +66,14 @@ class HomeCollectionView: UICollectionView {
             case .navigationBarSearch:
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
                 
-            case .centeredSearch(let independent):
-                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(independent: independent))
+            case .centeredSearch(let fixed):
+                renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
                 
-            case .favorites:
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+            case .favorites(let withHeader):
+                renderers.install(renderer: FavoritesHomeViewSectionRenderer(headerEnabled: withHeader))
+                
+            case .privacyProtection:
+                renderers.install(renderer: PrivacyProtectionHomeViewSectionRenderer())
                 
             case .padding:
                 renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer())

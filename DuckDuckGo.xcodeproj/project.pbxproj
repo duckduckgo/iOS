@@ -313,6 +313,7 @@
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
 		989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B337422D7EF2100437824 /* EmptyCollectionReusableView.swift */; };
+		989B337722D88C9B00437824 /* PrivacyProtectionHomeViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B337622D88C9B00437824 /* PrivacyProtectionHomeViewSectionRenderer.swift */; };
 		989DF82922C628F80077AA55 /* ContentBlockerLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DF82822C628F80077AA55 /* ContentBlockerLoaderTests.swift */; };
 		98A54A8422AFCB2D00E541F4 /* Instruments.instrpkg in Sources */ = {isa = PBXBuildFile; fileRef = 98A54A8322AFCB2D00E541F4 /* Instruments.instrpkg */; };
 		98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */; };
@@ -889,6 +890,7 @@
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
 		989B337422D7EF2100437824 /* EmptyCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCollectionReusableView.swift; sourceTree = "<group>"; };
+		989B337622D88C9B00437824 /* PrivacyProtectionHomeViewSectionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionHomeViewSectionRenderer.swift; sourceTree = "<group>"; };
 		989DF82822C628F80077AA55 /* ContentBlockerLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoaderTests.swift; sourceTree = "<group>"; };
 		98A54A8122AFCB2C00E541F4 /* Instruments.instrdst */ = {isa = PBXFileReference; explicitFileType = com.apple.instruments.instrdst; includeInIndex = 0; path = Instruments.instrdst; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A54A8322AFCB2D00E541F4 /* Instruments.instrpkg */ = {isa = PBXFileReference; lastKnownFileType = "com.apple.instruments.package-definition"; path = Instruments.instrpkg; sourceTree = "<group>"; };
@@ -1619,6 +1621,7 @@
 				85374D3721AC419800FF5A1E /* NavigationSearchHomeViewSectionRenderer.swift */,
 				853C5F5C21C117A6001F7A05 /* PaddingSpaceHomeViewSectionRenderer.swift */,
 				85CE790621E8A9F600607B91 /* EmptySectionRenderer.swift */,
+				989B337622D88C9B00437824 /* PrivacyProtectionHomeViewSectionRenderer.swift */,
 			);
 			name = Renderers;
 			sourceTree = "<group>";
@@ -3334,6 +3337,7 @@
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				857D1DCD22401F0200833940 /* NotFoundCachingImageDownloader.swift in Sources */,
+				989B337722D88C9B00437824 /* PrivacyProtectionHomeViewSectionRenderer.swift in Sources */,
 				8565A33D1FC3B26E00239327 /* PrivacyProtectionFooterController.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,

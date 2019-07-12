@@ -28,8 +28,6 @@ protocol FavoritesHomeViewSectionRendererDelegate: class {
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
-    let enablePP = true
-    
     struct Constants {
         
         static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
@@ -44,9 +42,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private weak var reorderingCell: FavoriteHomeCell?
     
     private let allowsEditing: Bool
+    private let headerEnabled: Bool
     
-    init(allowsEditing: Bool = true) {
+    init(allowsEditing: Bool = true, headerEnabled: Bool = false) {
         self.allowsEditing = allowsEditing
+        self.headerEnabled = headerEnabled
     }
     
     private var numberOfItems: Int {
@@ -86,11 +86,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return sectionMargin(in: collectionView) + FavoriteHomeCell.Constants.horizontalMargin
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
-        -> UIEdgeInsets? {
-
-            let margin = type(of: self).sectionMargin(in: collectionView)
-
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets? {
+        let margin = type(of: self).sectionMargin(in: collectionView)
+        
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
     
@@ -101,21 +101,25 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        if enablePP {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
-                                                                               withReuseIdentifier: "favHeaderCell",
-                                                                               for: indexPath) as? FavoritesHeaderCell else {
-                                                                                fatalError("not a Header Cell")
-            }
-            let margin = type(of: self).visibleMargin(in: collectionView)
-            header.adjust(to: margin)
-            
-            return header
-        } else {
-            return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
-                                                                   withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
-                                                                   for: indexPath)
+        if headerEnabled && kind == UICollectionView.elementKindSectionHeader {
+            return headerView(collectionView, at: indexPath)
         }
+        
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                               withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
+                                                               for: indexPath)
+    }
+    
+    private func headerView(_  collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                           withReuseIdentifier: "favHeaderCell",
+                                                                           for: indexPath) as? FavoritesHeaderCell else {
+                                                                            fatalError("not a Header Cell")
+        }
+        let margin = type(of: self).visibleMargin(in: collectionView)
+        header.adjust(to: margin)
+        
+        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -208,7 +212,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
-        if enablePP {
+        if headerEnabled {
             return CGSize(width: 1, height: 50)
         }
         return CGSize(width: 1, height: 39)

@@ -41,7 +41,7 @@ class HomePageConfigurationTests: XCTestCase {
         let settings = MockAppSettings()
         settings.homePage = .centerSearchAndFavorites
         let config = HomePageConfiguration(settings: settings)
-        XCTAssertEqual(config.components, [ .centeredSearch(fixed: false), .favorites, .padding ])
+        XCTAssertEqual(config.components, [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ])
     }
 
 }

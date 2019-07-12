@@ -102,6 +102,7 @@ class CenteredSearchHomeCell: UICollectionViewCell {
 
 extension CenteredSearchHomeCell: Themable {
     func decorate(with theme: Theme) {
+        backgroundColor = .yellow
         // called on rotation too, so ideal time to update
         updateForTransition()
         

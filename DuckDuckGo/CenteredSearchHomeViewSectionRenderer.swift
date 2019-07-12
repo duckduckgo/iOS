@@ -22,17 +22,12 @@ import Core
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
-    let enablePP = true
-
     struct Constants {
         
         static let searchCenterOffset: CGFloat = 50
         static let scrollUpAdjustment: CGFloat = 46
         
         static let fixedSearchCenterOffset: CGFloat = 40
-        
-        static let searchWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
-        static let searchWidthPad: CGFloat = CenteredSearchHomeCell.Constants.searchWidthPad
         
     }
     
@@ -52,15 +47,13 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var indexPath: IndexPath?
     
     private let fixed: Bool
-    private let adjustToFavorites: Bool
     
     var centeredSearch: UIView? {
         return cell?.searchBackground
     }
     
-    init(independent: Bool) {
-        self.fixed = independent
-        self.adjustToFavorites = !independent
+    init(fixed: Bool) {
+        self.fixed = fixed
     }
     
     func install(into controller: HomeViewController) {
@@ -75,20 +68,10 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         indexPath = IndexPath(row: 0, section: section)
-        return enablePP ? 2 : 1
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
-        if indexPath.row == 0 {
-            cell = centeredSearchCell(for: collectionView, at: indexPath)
-        } else {
-            cell = privacyProtectionCell(for: collectionView, at: indexPath)
-        }
-        return cell
-    }
-    
-    private func centeredSearchCell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "centeredSearch", for: indexPath) as? CenteredSearchHomeCell else {
             fatalError("cell is not a CenteredSearchHomeCell")
         }
@@ -99,33 +82,18 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         return cell
     }
     
-    private func privacyProtectionCell(for collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PrivacyHomeCell", for: index) as? PrivacyProtectionHomeCell else {
-            fatalError("cell is not a PrivacyProtectionCell")
-        }
-        return cell
-    }
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
-            switch indexPath.row {
-            case 0:
-                let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
-                let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
-                return CGSize(width: width, height: height)
-            case 1:
-                
-                let width: CGFloat
-                if adjustToFavorites {
-                    width = collectionView.frame.width - FavoritesHomeViewSectionRenderer.sectionMargin(in: collectionView) * 2
-                } else {
-                    let searchWidth = isPad ? Constants.searchWidthPad : Constants.searchWidth
-                    width = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), searchWidth)
-                }
-                return CGSize(width: width, height: 65)
-            default:
-                return .zero
-            }
+            let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
+            let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
+            return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize? {
+        
+        return CGSize(width: 1, height: controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -135,8 +103,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         let y = scrollView.contentOffset.y
 
         let diff = targetHeight - y - offsetY
-        
-        print("Offset: \(y)")
 
         guard diff < offsetY else {
             // search bar is in the center
@@ -164,17 +130,10 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private func activateSearch() {
-        guard let thisIndexPath = indexPath else { return }
-        
-        if enablePP {
-            var offset = controller.collectionView.contentOffset
-            // TODO - numbers should come from frames/contraints 
-            offset.y = 79 + (cell?.bounds.height ?? 0) + overflowOffset - 65
-            controller.collectionView.setContentOffset(offset, animated: true)
-        } else {
-            let targetIndexPath = IndexPath(row: 0, section: thisIndexPath.section + 1)
-            controller.collectionView.scrollToItem(at: targetIndexPath, at: .top, animated: true)
-        }
+        var offset = controller.collectionView.contentOffset
+        let omniBarBottomSpacing = controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0
+        offset.y = (cell?.bounds.height ?? 0) + overflowOffset + omniBarBottomSpacing
+        controller.collectionView.setContentOffset(offset, animated: true)
         controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     

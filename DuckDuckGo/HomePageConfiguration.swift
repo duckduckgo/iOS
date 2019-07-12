@@ -27,13 +27,15 @@ class HomePageConfiguration {
         var components: [Component] {
             switch self {
             case .simple:
-                return [ .navigationBarSearch ]
+                return [ .privacyProtection, .navigationBarSearch ]
                 
             case .centerSearch:
-                return [ .centeredSearch(fixed: true), .empty ]
+//                return [ .centeredSearch(fixed: true), .empty ]
+                return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
                 
             case .centerSearchAndFavorites:
-                return [ .centeredSearch(fixed: false), .favorites, .padding ]
+//                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ]
+                return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding ]
             }
             
         }
@@ -45,9 +47,10 @@ class HomePageConfiguration {
     }
     
     enum Component: Equatable {
+        case privacyProtection
         case navigationBarSearch
         case centeredSearch(fixed: Bool)
-        case favorites
+        case favorites(withHeader: Bool)
         case padding
         case empty
     }

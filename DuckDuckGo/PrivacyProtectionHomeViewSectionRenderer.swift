@@ -41,6 +41,14 @@ class PrivacyProtectionHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets? {
+        let margin = FavoritesHomeViewSectionRenderer.sectionMargin(in: collectionView)
+        
+        return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
         
         return .zero

@@ -47,6 +47,10 @@ class HomeCollectionView: UICollectionView {
         register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "PrivacyHomeCell")
         
+        register(UINib(nibName: "FavoritesHeaderCell", bundle: nil),
+                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                 withReuseIdentifier: FavoritesHeaderCell.reuseIdentifier)
+        
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                  withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)

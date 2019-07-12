@@ -133,7 +133,7 @@ extension HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
                                                                for: indexPath)
     }

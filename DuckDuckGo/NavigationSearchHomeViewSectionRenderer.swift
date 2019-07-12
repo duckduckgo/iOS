@@ -21,8 +21,6 @@ import UIKit
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
-    let enablePP = false
-    
     struct Constants {
         static let privacyCellMaxWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
         static let itemSpacing: CGFloat = 10
@@ -47,21 +45,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return enablePP ? 2 : 1
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
-        if enablePP && indexPath.row == 0 {
-            cell = privacyProtectionCell(for: collectionView, at: indexPath)
-        } else {
-            cell = navigationSearchCell(for: collectionView, at: indexPath)
-        }
-        return cell
-    }
-    
-    private func navigationSearchCell(for collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: index)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "navigationSearch", for: indexPath)
             as? NavigationSearchHomeCell else {
                 fatalError("cell is not a NavigationSearchHomeCell")
         }
@@ -72,20 +60,13 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         } else {
             constant = 0
         }
-        
-        if enablePP {
-            constant -= (65 + Constants.itemSpacing) / 2
-        }
+// TODO
+//        if enablePP {
+//            constant -= (65 + Constants.itemSpacing) / 2
+//        }
         
         cell.verticalConstraint.constant = constant
         
-        return cell
-    }
-    
-    private func privacyProtectionCell(for collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PrivacyHomeCell", for: index) as? PrivacyProtectionHomeCell else {
-            fatalError("cell is not a PrivacyProtectionCell")
-        }
         return cell
     }
     
@@ -93,14 +74,15 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = collectionView.frame.size
-        if enablePP {
-            size.width = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), Constants.privacyCellMaxWidth)
-            if indexPath.row == 0 {
-                size.height = 65
-            } else {
-                size.height -= 65
-            }
-        }
+// TODO
+//        if enablePP {
+//            size.width = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), Constants.privacyCellMaxWidth)
+//            if indexPath.row == 0 {
+//                size.height = 65
+//            } else {
+//                size.height -= 65
+//            }
+//        }
         
         return size
     }

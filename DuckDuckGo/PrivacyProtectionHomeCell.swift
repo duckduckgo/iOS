@@ -22,9 +22,6 @@ import Core
 
 class PrivacyProtectionHomeCell: UICollectionViewCell {
     
-    struct Constants {
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         decorate(with: ThemeManager.shared.currentTheme)

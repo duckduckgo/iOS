@@ -25,7 +25,7 @@ class HomePageConfiguration {
     enum ConfigName: Int {
 
         var components: [Component] {
-            let enablePP = false
+            let enablePP = true
             switch self {
             case .simple:
                 if enablePP {

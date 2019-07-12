@@ -21,6 +21,8 @@ import UIKit
 
 class FavoritesHeaderCell: UICollectionReusableView {
     
+    static let reuseIdentifier = "favHeaderCell"
+    
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var leadingMargin: NSLayoutConstraint!
     @IBOutlet weak var trailingMargin: NSLayoutConstraint!

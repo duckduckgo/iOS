@@ -309,6 +309,7 @@
 		987613F622D53DBA00C54BFD /* FavoritesHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987613F422D53DBA00C54BFD /* FavoritesHeaderCell.swift */; };
 		9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B75D2232B36900D81D9F /* TabInstrumentation.swift */; };
 		987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */ = {isa = PBXBuildFile; fileRef = 987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */; };
+		987E7FAE22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987E7FAD22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib */; };
 		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
@@ -886,6 +887,7 @@
 		987613F422D53DBA00C54BFD /* FavoritesHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesHeaderCell.swift; sourceTree = "<group>"; };
 		9876B75D2232B36900D81D9F /* TabInstrumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabInstrumentation.swift; sourceTree = "<group>"; };
 		987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "debug-messaging-enabled.js"; sourceTree = "<group>"; };
+		987E7FAD22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoritesHeaderCell.xib; sourceTree = "<group>"; };
 		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
@@ -1667,6 +1669,7 @@
 				984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */,
 				984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */,
 				987613F422D53DBA00C54BFD /* FavoritesHeaderCell.swift */,
+				987E7FAD22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib */,
 				989B337422D7EF2100437824 /* EmptyCollectionReusableView.swift */,
 			);
 			name = Cells;
@@ -3059,6 +3062,7 @@
 				85200F951FBA5D6E001AF290 /* PrivacyProtectionHeader.storyboard in Resources */,
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
 				8563A0351F8E369400F04442 /* Home.storyboard in Resources */,
+				987E7FAE22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib in Resources */,
 				85AE668B209603840014CF04 /* HomeRow.storyboard in Resources */,
 				85EE7F55224667DD000FE757 /* WebContainer.storyboard in Resources */,
 				984E291B22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib in Resources */,

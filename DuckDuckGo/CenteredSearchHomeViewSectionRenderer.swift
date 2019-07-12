@@ -59,7 +59,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func install(into controller: HomeViewController) {
         self.controller = controller
         
-        //controller.collectionView.isScrollEnabled = !fixed
+        controller.collectionView.isScrollEnabled = !fixed
 
         overflowOffset = controller.enableContentUnderflow()
         controller.searchHeaderTransition = 0.0

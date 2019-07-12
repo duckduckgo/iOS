@@ -25,17 +25,25 @@ class HomePageConfiguration {
     enum ConfigName: Int {
 
         var components: [Component] {
+            let enablePP = false
             switch self {
             case .simple:
-                return [ .privacyProtection, .navigationBarSearch ]
+                if enablePP {
+                    return [ .privacyProtection, .navigationBarSearch ]
+                }
+                return [ .navigationBarSearch ]
                 
             case .centerSearch:
-//                return [ .centeredSearch(fixed: true), .empty ]
-                return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
+                if enablePP {
+                    return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
+                }
+                return [ .centeredSearch(fixed: true), .empty ]
                 
             case .centerSearchAndFavorites:
-//                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ]
-                return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding ]
+                if enablePP {
+                    return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding ]
+                }
+                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ]
             }
             
         }

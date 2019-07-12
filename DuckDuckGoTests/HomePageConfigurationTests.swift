@@ -22,6 +22,8 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
+// FIXME
+
 class HomePageConfigurationTests: XCTestCase {
     
     func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {

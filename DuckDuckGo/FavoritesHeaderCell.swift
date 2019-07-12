@@ -35,11 +35,6 @@ class FavoritesHeaderCell: UICollectionReusableView {
         leadingMargin.constant = margin
         trailingMargin.constant = margin
     }
-    
-    func makeInvisible() {
-        backgroundColor = .clear
-        headerLabel.isHidden = true
-    }
 }
 
 extension FavoritesHeaderCell: Themable {

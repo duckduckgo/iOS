@@ -36,7 +36,7 @@ class PrivacyProtectionHomeViewSectionRenderer: HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width - FavoritesHomeViewSectionRenderer.sectionMargin(in: collectionView) * 2
-        return CGSize(width: width, height: 65)
+        return CGSize(width: width, height: 55)
     }
     
     func collectionView(_ collectionView: UICollectionView,

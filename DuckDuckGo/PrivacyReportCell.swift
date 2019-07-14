@@ -1,5 +1,5 @@
 //
-//  PrivacyProtectionHomeCell.swift
+//  PrivacyReportCell.swift
 //  DuckDuckGo
 //
 //  Copyright © 2019 DuckDuckGo. All rights reserved.
@@ -18,32 +18,27 @@
 //
 
 import UIKit
-import Core
 
-class PrivacyProtectionHomeCell: UICollectionViewCell {
-    
-    @IBOutlet weak var protectionImage: UIImageView!
-    @IBOutlet weak var disclosureIndicator: UIImageView!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var separator: UIView!
-    @IBOutlet weak var separatorHeight: NSLayoutConstraint!
+class PrivacyReportCell: UICollectionViewCell {
+
+    @IBOutlet weak var roundedBackground: UIView!
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var count: UILabel!
+    @IBOutlet weak var date: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         decorate(with: ThemeManager.shared.currentTheme)
-        
-        separatorHeight.constant = 1 / UIScreen.main.scale
     }
+
 }
 
-extension PrivacyProtectionHomeCell: Themable {
+extension PrivacyReportCell: Themable {
     
     func decorate(with theme: Theme) {
-        separator.backgroundColor = UIColor.lightGreyish
-        descriptionLabel.textColor = UIColor.charcoalGrey
-        detailLabel.textColor = UIColor.greyish3
-        
-        disclosureIndicator.tintColor = theme.tableCellAccessoryColor
+        roundedBackground.backgroundColor = .white
+        title.textColor = theme.tableCellTextColor
+        date.textColor = theme.tableCellAccessoryTextColor
     }
 }

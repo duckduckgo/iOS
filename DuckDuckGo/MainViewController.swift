@@ -493,6 +493,10 @@ class MainViewController: UIViewController {
     fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
+    
+    fileprivate func launchPrivacyReport() {
+        performSegue(withIdentifier: "PrivacyReport", sender: self)
+    }
 
     fileprivate func launchSettings() {
         Pixel.fire(pixel: .settingsOpened)
@@ -754,6 +758,10 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
+    
+    func showPrivacyReport(_ home: HomeViewController) {
+        launchPrivacyReport()
+    }
     
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)

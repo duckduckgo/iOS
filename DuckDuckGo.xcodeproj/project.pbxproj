@@ -310,6 +310,10 @@
 		9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B75D2232B36900D81D9F /* TabInstrumentation.swift */; };
 		987AFB6C22AE83C2001B84CF /* debug-messaging-enabled.js in Resources */ = {isa = PBXBuildFile; fileRef = 987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */; };
 		987E7FAE22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 987E7FAD22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib */; };
+		987E7FB222D8F92700AD30A1 /* PrivacyReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FB022D8F92700AD30A1 /* PrivacyReportViewController.swift */; };
+		987E7FB722D8FDC600AD30A1 /* PrivacyReportViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 987E7FB622D8FDC600AD30A1 /* PrivacyReportViewController.storyboard */; };
+		987E7FB922D914B200AD30A1 /* PrivacyReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */; };
+		987E7FBB22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */; };
 		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
@@ -888,6 +892,10 @@
 		9876B75D2232B36900D81D9F /* TabInstrumentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabInstrumentation.swift; sourceTree = "<group>"; };
 		987AFB6B22AE83C2001B84CF /* debug-messaging-enabled.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "debug-messaging-enabled.js"; sourceTree = "<group>"; };
 		987E7FAD22D8DFBB00AD30A1 /* FavoritesHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoritesHeaderCell.xib; sourceTree = "<group>"; };
+		987E7FB022D8F92700AD30A1 /* PrivacyReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportViewController.swift; sourceTree = "<group>"; };
+		987E7FB622D8FDC600AD30A1 /* PrivacyReportViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyReportViewController.storyboard; sourceTree = "<group>"; };
+		987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportCell.swift; sourceTree = "<group>"; };
+		987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportFooterCell.swift; sourceTree = "<group>"; };
 		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
@@ -1462,6 +1470,7 @@
 				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
+				987E7FAF22D8F84200AD30A1 /* PrivacyReport */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				F1E249411EF2075C008C947A /* SiteMonitoring */,
@@ -1809,6 +1818,17 @@
 				982E562D222C39F8008D861B /* Feedback.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		987E7FAF22D8F84200AD30A1 /* PrivacyReport */ = {
+			isa = PBXGroup;
+			children = (
+				987E7FB022D8F92700AD30A1 /* PrivacyReportViewController.swift */,
+				987E7FB622D8FDC600AD30A1 /* PrivacyReportViewController.storyboard */,
+				987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */,
+				987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */,
+			);
+			name = PrivacyReport;
 			sourceTree = "<group>";
 		};
 		989DF82722C628DC0077AA55 /* API */ = {
@@ -3030,6 +3050,7 @@
 			files = (
 				F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */,
 				F1EEAC551EAFC783006128D9 /* proximanova-light.otf in Resources */,
+				987E7FB722D8FDC600AD30A1 /* PrivacyReportViewController.storyboard in Resources */,
 				F1EEAC561EAFC783006128D9 /* proximanova-regular.otf in Resources */,
 				F1EEAC571EAFC783006128D9 /* proximanova-semibold.otf in Resources */,
 				8563A0381F8E54F100F04442 /* Tab.storyboard in Resources */,
@@ -3290,6 +3311,7 @@
 				984E291922CD67B500EE7154 /* PrivacyProtectionHomeCell.swift in Sources */,
 				9820FF502244FECC008D4782 /* UIScrollViewExtension.swift in Sources */,
 				982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */,
+				987E7FBB22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift in Sources */,
 				F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				85E00179225E0D4E00877BF6 /* OnboardingSummaryViewController.swift in Sources */,
@@ -3387,6 +3409,7 @@
 				981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */,
 				83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */,
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
+				987E7FB922D914B200AD30A1 /* PrivacyReportCell.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
@@ -3422,6 +3445,7 @@
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
+				987E7FB222D8F92700AD30A1 /* PrivacyReportViewController.swift in Sources */,
 				F1EEAC111EAF791F006128D9 /* DissolveAnimatedTransitioning.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,

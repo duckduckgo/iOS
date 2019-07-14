@@ -21,6 +21,12 @@ import UIKit
 
 class PrivacyProtectionHomeViewSectionRenderer: HomeViewSectionRenderer {
     
+    weak var controller: HomeViewController?
+    
+    func install(into controller: HomeViewController) {
+        self.controller = controller
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
@@ -30,6 +36,14 @@ class PrivacyProtectionHomeViewSectionRenderer: HomeViewSectionRenderer {
             fatalError("cell is not a PrivacyProtectionCell")
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        controller?.launchPrivacyReport()
     }
     
     func collectionView(_ collectionView: UICollectionView,

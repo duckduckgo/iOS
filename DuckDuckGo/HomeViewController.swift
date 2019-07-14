@@ -113,6 +113,10 @@ class HomeViewController: UIViewController {
         delegate?.showSettings(self)
     }
     
+    func launchPrivacyReport() {
+        delegate?.showPrivacyReport(self)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

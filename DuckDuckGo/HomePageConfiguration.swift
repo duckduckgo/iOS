@@ -29,9 +29,9 @@ class HomePageConfiguration {
             switch self {
             case .simple:
                 if enablePP {
-                    return [ .privacyProtection, .navigationBarSearch ]
+                    return [ .privacyProtection, .navigationBarSearch(withOffset: true) ]
                 }
-                return [ .navigationBarSearch ]
+                return [ .navigationBarSearch(withOffset: false) ]
                 
             case .centerSearch:
                 if enablePP {
@@ -56,7 +56,7 @@ class HomePageConfiguration {
     
     enum Component: Equatable {
         case privacyProtection
-        case navigationBarSearch
+        case navigationBarSearch(withOffset: Bool)
         case centeredSearch(fixed: Bool)
         case favorites(withHeader: Bool)
         case padding

@@ -26,6 +26,12 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         static let itemSpacing: CGFloat = 10
     }
     
+    private let withOffset: Bool
+    
+    init(withOffset: Bool) {
+        self.withOffset = withOffset
+    }
+    
     weak var controller: HomeViewController!
     
     func install(into controller: HomeViewController) {
@@ -56,15 +62,16 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         var constant: CGFloat
         if collectionView.traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)) {
-            constant = -35
+            constant = -25
         } else {
             constant = 0
         }
-// TODO
-//        if enablePP {
-//            constant -= (65 + Constants.itemSpacing) / 2
-//        }
         
+        if withOffset {
+            constant -= (PrivacyProtectionHomeCell.Contants.cellHeight + Constants.itemSpacing) / 2
+        }
+        
+        print("-> cell constant: \(constant)")
         cell.verticalConstraint.constant = constant
         
         return cell
@@ -74,16 +81,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = collectionView.frame.size
-// TODO
-//        if enablePP {
-//            size.width = min(collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2), Constants.privacyCellMaxWidth)
-//            if indexPath.row == 0 {
-//                size.height = 65
-//            } else {
-//                size.height -= 65
-//            }
-//        }
         
+        if withOffset {
+            size.height -= (PrivacyProtectionHomeCell.Contants.cellHeight + Constants.itemSpacing)
+        }
+        print("-> cell size: \(size)")
         return size
     }
   

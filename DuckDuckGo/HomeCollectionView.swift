@@ -67,8 +67,8 @@ class HomeCollectionView: UICollectionView {
         
         homePageConfiguration.components.forEach { component in
             switch component {
-            case .navigationBarSearch:
-                renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
+            case .navigationBarSearch(let withOffset):
+                renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(withOffset: withOffset))
                 
             case .centeredSearch(let fixed):
                 renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))

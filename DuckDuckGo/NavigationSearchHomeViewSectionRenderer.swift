@@ -68,7 +68,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         }
         
         if withOffset {
-            constant -= (PrivacyProtectionHomeCell.Contants.cellHeight + Constants.itemSpacing) / 2
+            constant -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing) / 2
         }
         
         cell.verticalConstraint.constant = constant
@@ -82,7 +82,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         var size = collectionView.frame.size
         
         if withOffset {
-            size.height -= (PrivacyProtectionHomeCell.Contants.cellHeight + Constants.itemSpacing)
+            size.height -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing)
         }
         return size
     }

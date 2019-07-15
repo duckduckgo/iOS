@@ -22,7 +22,7 @@ import Core
 
 class PrivacyProtectionHomeCell: UICollectionViewCell {
     
-    struct Contants {
+    struct Constants {
         static let cellHeight: CGFloat = 73
     }
     
@@ -44,7 +44,7 @@ class PrivacyProtectionHomeCell: UICollectionViewCell {
 extension PrivacyProtectionHomeCell: Themable {
     
     func decorate(with theme: Theme) {
-        separator.backgroundColor = theme.homeRowBackgroundColor
+        separator.backgroundColor = theme.centeredSearchBarBackgroundColor
         
         descriptionLabel.textColor = theme.homePrivacyCellTextColor
         detailLabel.textColor = theme.homePrivacyCellSecondaryTextColor

@@ -79,8 +79,8 @@ class HomeCollectionView: UICollectionView {
             case .privacyProtection:
                 renderers.install(renderer: PrivacyProtectionHomeViewSectionRenderer())
                 
-            case .padding:
-                renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer())
+            case .padding(let withOffset):
+                renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer(withOffset: withOffset))
                 
             case .empty:
                 renderers.install(renderer: EmptySectionRenderer())

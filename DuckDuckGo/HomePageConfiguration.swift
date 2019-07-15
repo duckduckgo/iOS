@@ -42,9 +42,9 @@ class HomePageConfiguration {
                 
             case .centerSearchAndFavorites:
                 if includePrivacySection {
-                    return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding ]
+                    return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ]
                 }
-                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ]
+                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ]
             }
             
         }
@@ -60,7 +60,7 @@ class HomePageConfiguration {
         case navigationBarSearch(withOffset: Bool)
         case centeredSearch(fixed: Bool)
         case favorites(withHeader: Bool)
-        case padding
+        case padding(withOffset: Bool)
         case empty
     }
     

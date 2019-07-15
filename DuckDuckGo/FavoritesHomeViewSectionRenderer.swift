@@ -213,7 +213,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
         if headerEnabled {
-            return CGSize(width: 1, height: 50)
+            return CGSize(width: 1, height: 45)
         }
         return CGSize(width: 1, height: 20)
     }
@@ -222,6 +222,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
         
+        if headerEnabled {
+            return .zero
+        }
         return CGSize(width: 1, height: 20)
     }
 

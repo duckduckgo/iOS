@@ -859,6 +859,7 @@ extension TabViewController: WKNavigationDelegate {
             navigationAction.isTargetingMainFrame(),
             let upgradeUrl = httpsUpgrade.upgrade(url: url) {
             
+            NetworkLeaderboard.shared.incrementHttpsUpgrades()
             lastUpgradedDomain = upgradeUrl.host
             load(url: upgradeUrl)
             

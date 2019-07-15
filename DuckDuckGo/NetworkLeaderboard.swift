@@ -72,6 +72,14 @@ class NetworkLeaderboard {
         }
     }
     
+    func incrementHttpsUpgrades() {
+        if let pageStats = pageStats {
+            let count = pageStats.httpsUpgrades + 1
+            pageStats.httpsUpgrades = count
+            _ = container.save()
+        }
+    }
+    
     private func createNewPageStatsEntity() {
         let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.pageStats, into: container.managedObjectContext)
         guard let stats = managedObject as? PPPageStats else { return }
@@ -86,6 +94,10 @@ class NetworkLeaderboard {
     
     func pagesWithTrackers() -> Int {
         return pageStats?.pagesWithTrackers?.intValue ?? 0
+    }
+    
+    func httpsUpgrades() -> Int {
+        return Int(pageStats?.httpsUpgrades ?? 0)
     }
 
     func networksDetected() -> [PPTrackerNetwork] {

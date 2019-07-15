@@ -910,6 +910,7 @@
 		98DA6B3222243CC3006EA9EB /* Feedback.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feedback.xcassets; sourceTree = "<group>"; };
 		98DA6EC92181E41F00E65433 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		98DB8DCE22DC9F71001D6D6D /* PrivacyReportDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportDataSource.swift; sourceTree = "<group>"; };
+		98DB8DD022DCA543001D6D6D /* NetworkLeaderboard 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NetworkLeaderboard 3.xcdatamodel"; sourceTree = "<group>"; };
 		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
@@ -4609,10 +4610,11 @@
 		85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				98DB8DD022DCA543001D6D6D /* NetworkLeaderboard 3.xcdatamodel */,
 				85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */,
 				85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */,
 			);
-			currentVersion = 85D08E5722B3AB1C0085C93D /* NetworkLeaderboard 2.xcdatamodel */;
+			currentVersion = 98DB8DD022DCA543001D6D6D /* NetworkLeaderboard 3.xcdatamodel */;
 			path = NetworkLeaderboard.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

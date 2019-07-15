@@ -81,7 +81,7 @@ extension PrivacyReportViewController: UICollectionViewDataSource {
         default:
             cell.title.setAttributedTextString("Sites Encrypted")
             cell.count.textColor = .midGreen
-            cell.count.setAttributedTextString("12345")
+            cell.count.setAttributedTextString(String(dataSource.httpsUpgradesCount))
             cell.image.image = UIImage(named: "PP Report Encryption")
         }
         

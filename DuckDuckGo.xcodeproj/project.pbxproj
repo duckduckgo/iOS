@@ -325,6 +325,7 @@
 		98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */; };
 		98DA6B3322243CC3006EA9EB /* Feedback.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98DA6B3222243CC3006EA9EB /* Feedback.xcassets */; };
 		98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DA6EC92181E41F00E65433 /* ThemeManager.swift */; };
+		98DB8DCF22DC9F71001D6D6D /* PrivacyReportDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DB8DCE22DC9F71001D6D6D /* PrivacyReportDataSource.swift */; };
 		98DDF9F322C4029D00DE38DB /* InitHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846AA6622BD3BBF007DE48E /* InitHelpers.swift */; };
 		98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingViewController.swift */; };
 		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
@@ -908,6 +909,7 @@
 		98B31291218CCB8C00E54DE1 /* AppDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyProvider.swift; sourceTree = "<group>"; };
 		98DA6B3222243CC3006EA9EB /* Feedback.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feedback.xcassets; sourceTree = "<group>"; };
 		98DA6EC92181E41F00E65433 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		98DB8DCE22DC9F71001D6D6D /* PrivacyReportDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyReportDataSource.swift; sourceTree = "<group>"; };
 		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
@@ -1825,6 +1827,7 @@
 			children = (
 				987E7FB022D8F92700AD30A1 /* PrivacyReportViewController.swift */,
 				987E7FB622D8FDC600AD30A1 /* PrivacyReportViewController.storyboard */,
+				98DB8DCE22DC9F71001D6D6D /* PrivacyReportDataSource.swift */,
 				987E7FB822D914B200AD30A1 /* PrivacyReportCell.swift */,
 				987E7FBA22DA8E1100AD30A1 /* PrivacyReportFooterCell.swift */,
 			);
@@ -3374,6 +3377,7 @@
 				851B128822200575004781BC /* Onboarding.swift in Sources */,
 				851B129822242E2D004781BC /* HomeViewController+HomeScreenDelegate.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
+				98DB8DCF22DC9F71001D6D6D /* PrivacyReportDataSource.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */,
 				853C5F5D21C117A6001F7A05 /* PaddingSpaceHomeViewSectionRenderer.swift in Sources */,

@@ -25,22 +25,23 @@ class HomePageConfiguration {
     enum ConfigName: Int {
 
         var components: [Component] {
-            let enablePP = true
+            let variant = DefaultVariantManager().currentVariant
+            let includePrivacySection = variant?.features.contains(.privacyOnHomeScreen) ?? false
             switch self {
             case .simple:
-                if enablePP {
+                if includePrivacySection {
                     return [ .privacyProtection, .navigationBarSearch(withOffset: true) ]
                 }
                 return [ .navigationBarSearch(withOffset: false) ]
                 
             case .centerSearch:
-                if enablePP {
+                if includePrivacySection {
                     return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
                 }
                 return [ .centeredSearch(fixed: true), .empty ]
                 
             case .centerSearchAndFavorites:
-                if enablePP {
+                if includePrivacySection {
                     return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding ]
                 }
                 return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ]

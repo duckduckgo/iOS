@@ -23,6 +23,8 @@ class PrivacyProtectionHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     weak var controller: HomeViewController?
     
+    private let dataSource = PrivacyReportDataSource()
+    
     func install(into controller: HomeViewController) {
         self.controller = controller
     }
@@ -35,6 +37,8 @@ class PrivacyProtectionHomeViewSectionRenderer: HomeViewSectionRenderer {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PrivacyHomeCell", for: index) as? PrivacyProtectionHomeCell else {
             fatalError("cell is not a PrivacyProtectionCell")
         }
+        
+        cell.detailLabel.setAttributedTextString(String(dataSource.trackersCount))
         return cell
     }
     

@@ -71,7 +71,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             constant -= (PrivacyProtectionHomeCell.Contants.cellHeight + Constants.itemSpacing) / 2
         }
         
-        print("-> cell constant: \(constant)")
         cell.verticalConstraint.constant = constant
         
         return cell
@@ -85,7 +84,6 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         if withOffset {
             size.height -= (PrivacyProtectionHomeCell.Contants.cellHeight + Constants.itemSpacing)
         }
-        print("-> cell size: \(size)")
         return size
     }
   

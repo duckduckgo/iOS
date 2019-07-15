@@ -28,10 +28,15 @@ class PrivacyReportViewController: UIViewController {
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet weak var closeButton: UIBarButtonItem!
+    
+    private let dataSource = PrivacyReportDataSource()
+    
+    private let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        dateFormatter.dateStyle = .medium
         applyTheme(ThemeManager.shared.currentTheme)
     }
 
@@ -40,9 +45,7 @@ class PrivacyReportViewController: UIViewController {
     }
 }
 
-extension PrivacyReportViewController: UICollectionViewDelegate {
-    
-}
+extension PrivacyReportViewController: UICollectionViewDelegate {}
 
 extension PrivacyReportViewController: UICollectionViewDataSource {
     
@@ -68,18 +71,23 @@ extension PrivacyReportViewController: UICollectionViewDataSource {
             fatalError("not a PrivacyReportCell")
         }
         
-        cell.title.text = "aa"
-        
         switch indexPath.row {
         case 0:
             cell.title.setAttributedTextString("Trackers Blocked")
             cell.count.textColor = .cornflowerBlue
+            cell.count.setAttributedTextString(String(dataSource.trackersCount))
             cell.image.image = UIImage(named: "PP Report Trackers")
+            
         default:
             cell.title.setAttributedTextString("Sites Encrypted")
             cell.count.textColor = .midGreen
+            cell.count.setAttributedTextString("12345")
             cell.image.image = UIImage(named: "PP Report Encryption")
         }
+        
+        let date = dataSource.startDate ?? Date()
+        let dateText = dateFormatter.string(from: date)
+        cell.date.setAttributedTextString("Since " + dateText)
         
         return cell
     }

@@ -54,9 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { variantManager in
             // perform first time install logic here:
-            if variantManager.isSupported(feature: .favoritesByDefault) {
-                AppUserDefaults().homePage = .centerSearchAndFavorites
-            }
+            
+
         }
 
         if let main = mainViewController {

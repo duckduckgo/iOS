@@ -24,7 +24,7 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     
-    case favoritesByDefault
+    case privacyOnHomeScreen
     
 }
 
@@ -34,7 +34,7 @@ public struct Variant {
     
     public static let defaultVariants: [Variant] = [
         Variant(name: "ma", weight: 1, features: []),
-        Variant(name: "mb", weight: 1, features: [ .favoritesByDefault ])
+        Variant(name: "mphs", weight: 1, features: [ .privacyOnHomeScreen ])
     ]
     
     public let name: String

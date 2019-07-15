@@ -23,7 +23,7 @@ import Core
 class PrivacyProtectionHomeCell: UICollectionViewCell {
     
     struct Contants {
-        static let cellHeight: CGFloat = 65
+        static let cellHeight: CGFloat = 73
     }
     
     @IBOutlet weak var protectionImage: UIImageView!

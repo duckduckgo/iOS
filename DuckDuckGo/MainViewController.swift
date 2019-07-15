@@ -215,6 +215,12 @@ class MainViewController: UIViewController {
             return
         }
         
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is PrivacyReportViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
+        }
+        
     }
 
     private func configureTabManager() {

@@ -89,6 +89,9 @@ extension PrivacyReportViewController: UICollectionViewDataSource {
         let dateText = dateFormatter.string(from: date)
         cell.date.setAttributedTextString("Since " + dateText)
         
+        let theme = ThemeManager.shared.currentTheme
+        cell.roundedBackground.backgroundColor = theme.privacyReportCellBackgroundColor
+        
         return cell
     }
     

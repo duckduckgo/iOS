@@ -41,6 +41,6 @@ class FavoritesHeaderCell: UICollectionReusableView {
 
 extension FavoritesHeaderCell: Themable {
     func decorate(with theme: Theme) {
-        headerLabel.textColor = .charcoalGrey
+        headerLabel.textColor = theme.homePrivacyCellTextColor
     }
 }

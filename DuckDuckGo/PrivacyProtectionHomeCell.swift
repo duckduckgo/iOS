@@ -44,9 +44,10 @@ class PrivacyProtectionHomeCell: UICollectionViewCell {
 extension PrivacyProtectionHomeCell: Themable {
     
     func decorate(with theme: Theme) {
-        separator.backgroundColor = UIColor.lightGreyish
-        descriptionLabel.textColor = UIColor.charcoalGrey
-        detailLabel.textColor = UIColor.greyish3
+        separator.backgroundColor = theme.homeRowBackgroundColor
+        
+        descriptionLabel.textColor = theme.homePrivacyCellTextColor
+        detailLabel.textColor = theme.homePrivacyCellSecondaryTextColor
         
         disclosureIndicator.tintColor = theme.tableCellAccessoryColor
     }

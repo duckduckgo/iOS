@@ -54,8 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AtbAndVariantCleanup.cleanup()
         DefaultVariantManager().assignVariantIfNeeded { variantManager in
             // perform first time install logic here:
-            
-
         }
 
         if let main = mainViewController {

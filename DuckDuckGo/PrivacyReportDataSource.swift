@@ -29,7 +29,7 @@ class PrivacyReportDataSource {
     }
     
     var trackersCount: Int {
-        return networkLeaderboard.networksDetected().reduce(0, { $0 + ($1.detectedOnCount?.intValue ?? 0) })
+        return Int(networkLeaderboard.networksDetected().reduce(Int64(), { $0 + $1.trackersCount }))
     }
     
     var httpsUpgradesCount: Int {

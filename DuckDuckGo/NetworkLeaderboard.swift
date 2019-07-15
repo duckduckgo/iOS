@@ -112,13 +112,23 @@ class NetworkLeaderboard {
         return pagesVisited() > pagesVisitedThreshold && networksDetected().count >= 3
     }
     
-    func incrementCount(forNetworkNamed networkName: String) {
+    func incrementDetectionCount(forNetworkNamed networkName: String) {
         guard let network = findNetwork(byName: networkName) else {
             createNewNetworkEntity(named: networkName)
             return
         }
         let count = (network.detectedOnCount ?? 0).intValue
         network.detectedOnCount = NSNumber(value: count + 1)
+        _ = container.save()
+    }
+    
+    func incrementTrackersCount(forNetworkNamed networkName: String) {
+        guard let network = findNetwork(byName: networkName) else {
+            createNewNetworkEntity(named: networkName)
+            return
+        }
+        let count = network.trackersCount + 1
+        network.trackersCount = count
         _ = container.save()
     }
     

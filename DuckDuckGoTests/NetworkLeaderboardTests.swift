@@ -50,7 +50,7 @@ class NetworkLeaderboardTests: XCTestCase {
         let leaderboard = NetworkLeaderboard()
 
         for i in 0 ..< 3 {
-            leaderboard.incrementCount(forNetworkNamed: "google\(i).com")
+            leaderboard.incrementDetectionCount(forNetworkNamed: "google\(i).com")
         }
 
         for _ in 0 ..< 30 {
@@ -65,7 +65,7 @@ class NetworkLeaderboardTests: XCTestCase {
     func testWhenNotEnoughSitesVisitedButEnoughNetworksDetectedThenShouldNotShow() {
         let leaderboard = NetworkLeaderboard()
         for i in 0 ..< 3 {
-            leaderboard.incrementCount(forNetworkNamed: "google\(i).com")
+            leaderboard.incrementDetectionCount(forNetworkNamed: "google\(i).com")
         }
 
         XCTAssertEqual(3, leaderboard.networksDetected().count)
@@ -88,9 +88,9 @@ class NetworkLeaderboardTests: XCTestCase {
     func testWhenSitesVisitedNetworksDetectedReturnsThemInOrderOfCountDescending() {
         let leaderboard = NetworkLeaderboard()
         
-        leaderboard.incrementCount(forNetworkNamed: "google.com")
-        leaderboard.incrementCount(forNetworkNamed: "tracker.com")
-        leaderboard.incrementCount(forNetworkNamed: "google.com")
+        leaderboard.incrementDetectionCount(forNetworkNamed: "google.com")
+        leaderboard.incrementDetectionCount(forNetworkNamed: "tracker.com")
+        leaderboard.incrementDetectionCount(forNetworkNamed: "google.com")
 
         let networks = leaderboard.networksDetected()
         XCTAssertEqual("google.com", networks[0].name)
@@ -103,7 +103,7 @@ class NetworkLeaderboardTests: XCTestCase {
 
     func testWhenSingleSiteVisitedAndSingleNetworkDetectedNetworkIsReturned() {
         let leaderboard = NetworkLeaderboard()
-        leaderboard.incrementCount(forNetworkNamed: "google.com")
+        leaderboard.incrementDetectionCount(forNetworkNamed: "google.com")
         let networks = leaderboard.networksDetected()
         XCTAssertEqual(1, networks.count)
         XCTAssertEqual("google.com", networks[0].name)

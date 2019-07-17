@@ -22,29 +22,71 @@ import XCTest
 @testable import Core
 @testable import DuckDuckGo
 
-// FIXME
-
 class HomePageConfigurationTests: XCTestCase {
+    
+    var settings: MockAppSettings!
+    var variantManager: MockVariantManager!
+    
+    override func setUp() {
+        settings = MockAppSettings()
+        variantManager = MockVariantManager()
+    }
   
-// TODO
-//    func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
-//        let settings = MockAppSettings()
-//        let config = HomePageConfiguration(settings: settings)
-//        XCTAssertEqual([ HomePageConfiguration.Component.navigationBarSearch ], config.components)
-//    }
-//
-//    func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
-//        let settings = MockAppSettings()
-//        settings.homePage = .centerSearch
-//        let config = HomePageConfiguration(settings: settings)
-//        XCTAssertEqual(config.components, [ .centeredSearch(fixed: true), .empty ])
-//    }
-//
-//    func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
-//        let settings = MockAppSettings()
-//        settings.homePage = .centerSearchAndFavorites
-//        let config = HomePageConfiguration(settings: settings)
-//        XCTAssertEqual(config.components, [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding ])
-//    }
+    func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
+        let config = HomePageConfiguration(settings: settings)
+        
+        XCTAssertEqual(config.components(withVariantManger: variantManager),
+                       [ .navigationBarSearch(withOffset: false) ])
+    }
 
+    func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
+        settings.homePage = .centerSearch
+        let config = HomePageConfiguration(settings: settings)
+        XCTAssertEqual(config.components(withVariantManger: variantManager),
+                       [ .centeredSearch(fixed: true), .empty ])
+    }
+
+    func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
+        let settings = MockAppSettings()
+        settings.homePage = .centerSearchAndFavorites
+        let config = HomePageConfiguration(settings: settings)
+        XCTAssertEqual(config.components(withVariantManger: variantManager),
+                       [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ])
+    }
+
+}
+
+// MARK: Experiment
+class HomePageWithPrivacyStatsConfigurationTests: XCTestCase {
+    
+    var settings: MockAppSettings!
+    var variantManager: MockVariantManager!
+    
+    override func setUp() {
+        settings = MockAppSettings()
+        variantManager = MockVariantManager(isSupportedReturns: true)
+    }
+    
+    func testWhenHomePageIsDefaultThenNavigationBarSearchIsUsed() {
+        let config = HomePageConfiguration(settings: settings)
+        
+        XCTAssertEqual(config.components(withVariantManger: variantManager),
+                       [ .privacyProtection, .navigationBarSearch(withOffset: true) ])
+    }
+    
+    func testWhenHomePageIsType1ThenFixedCenteredSearchIsUsed() {
+        settings.homePage = .centerSearch
+        let config = HomePageConfiguration(settings: settings)
+        XCTAssertEqual(config.components(withVariantManger: variantManager),
+                       [ .centeredSearch(fixed: true), .privacyProtection, .empty ])
+    }
+    
+    func testWhenHomePageIsType2ThenCenteredSearchAndFavoritesAreUsed() {
+        let settings = MockAppSettings()
+        settings.homePage = .centerSearchAndFavorites
+        let config = HomePageConfiguration(settings: settings)
+        XCTAssertEqual(config.components(withVariantManger: variantManager),
+                       [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ])
+    }
+    
 }

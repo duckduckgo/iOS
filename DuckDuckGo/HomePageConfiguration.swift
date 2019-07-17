@@ -24,9 +24,9 @@ class HomePageConfiguration {
     
     enum ConfigName: Int {
 
-        var components: [Component] {
-            let variant = DefaultVariantManager().currentVariant
-            let includePrivacySection = variant?.features.contains(.privacyOnHomeScreen) ?? false
+        func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
+            let includePrivacySection = variantManger.isSupported(feature: .privacyOnHomeScreen)
+            
             switch self {
             case .simple:
                 if includePrivacySection {
@@ -66,8 +66,8 @@ class HomePageConfiguration {
     
     let settings: AppSettings
     
-    var components: [Component] {
-        return settings.homePage.components
+    func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
+        return settings.homePage.components(withVariantManger: variantManger)
     }
     
     init(settings: AppSettings = AppUserDefaults()) {

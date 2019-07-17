@@ -45,6 +45,14 @@ class NetworkLeaderboardTests: XCTestCase {
         }
         XCTAssertEqual(15, leaderboard.pagesWithTrackers())
     }
+    
+    func testWhenHttpsUpgradesCalledThenCorrectNumberIsReturned() {
+        let leaderboard = NetworkLeaderboard()
+        for _ in 0 ..< 15 {
+            leaderboard.incrementHttpsUpgrades()
+        }
+        XCTAssertEqual(15, leaderboard.httpsUpgrades())
+    }
 
     func testWhenEnoughPagesVisitedAndEnoughNetworksDetectedThenShouldShow() {
         let leaderboard = NetworkLeaderboard()
@@ -108,6 +116,21 @@ class NetworkLeaderboardTests: XCTestCase {
         XCTAssertEqual(1, networks.count)
         XCTAssertEqual("google.com", networks[0].name)
         XCTAssertEqual(1, networks[0].detectedOnCount)
+    }
+    
+    func testWhenSingleSiteVisitedAndMultipleTrackersDetectedNetworkIsReturned() {
+        let leaderboard = NetworkLeaderboard()
+        leaderboard.incrementDetectionCount(forNetworkNamed: "google.com")
+        
+        for _ in 0 ..< 10 {
+            leaderboard.incrementTrackersCount(forNetworkNamed: "google.com")
+        }
+        
+        let networks = leaderboard.networksDetected()
+        XCTAssertEqual(1, networks.count)
+        XCTAssertEqual("google.com", networks[0].name)
+        XCTAssertEqual(1, networks[0].detectedOnCount)
+        XCTAssertEqual(10, networks[0].trackersCount)
     }
 
     func testWhenLeaderboardIsNewNoNetworksDetected() {

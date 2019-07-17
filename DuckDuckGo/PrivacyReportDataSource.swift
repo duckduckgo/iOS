@@ -20,6 +20,11 @@
 import Foundation
 import Core
 
+protocol PrivacyStatsExperimentStore {
+    
+    var privacyStatsPixelFired: Bool { get set }
+}
+
 class PrivacyReportDataSource {
     
     private let networkLeaderboard = NetworkLeaderboard()

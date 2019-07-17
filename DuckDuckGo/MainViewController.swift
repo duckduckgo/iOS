@@ -78,7 +78,7 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
-    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate lazy var appSettings: AppSettings & PrivacyStatsExperimentStore = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -501,7 +501,17 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchPrivacyReport() {
+        sendPrivacyStatsTappedPixel()
         performSegue(withIdentifier: "PrivacyReport", sender: self)
+    }
+    
+    private func sendPrivacyStatsTappedPixel() {
+        guard !appSettings.privacyStatsPixelFired else {
+            return
+        }
+        
+        appSettings.privacyStatsPixelFired = true
+        Pixel.fire(pixel: .homeScreenPrivacyStatsTapped)
     }
 
     fileprivate func launchSettings() {

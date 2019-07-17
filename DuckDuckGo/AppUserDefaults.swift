@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 public class AppUserDefaults: AppSettings {
 
@@ -174,4 +175,16 @@ extension AppUserDefaults: AppConfigurationFetchStatistics {
             userDefaults?.setValue(newValue, forKey: Keys.backgroundFetchNewDataCount)
         }
     }
+}
+
+extension AppUserDefaults: PrivacyStatsExperimentStore {
+    var privacyStatsPixelFired: Bool {
+        get {
+            return userDefaults?.bool(forKey: PixelName.homeScreenPrivacyStatsTapped.rawValue) ?? false
+        }
+        set {
+            userDefaults?.set(newValue, forKey: PixelName.homeScreenPrivacyStatsTapped.rawValue)
+        }
+    }
+    
 }

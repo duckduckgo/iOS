@@ -140,7 +140,6 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     func omniBarCancelPressed() {
         guard let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        // TODO ?
         overflowOffset = controller.enableContentUnderflow()
     }
     

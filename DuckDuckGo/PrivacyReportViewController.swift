@@ -73,13 +73,13 @@ extension PrivacyReportViewController: UICollectionViewDataSource {
         
         switch indexPath.row {
         case 0:
-            cell.title.setAttributedTextString("Trackers Blocked")
+            cell.title.setAttributedTextString(UserText.privacyReportTrackersBlocked)
             cell.count.textColor = .midGreen
             cell.count.setAttributedTextString(String(dataSource.trackersCount))
             cell.image.image = UIImage(named: "PP Report Trackers")
             
         default:
-            cell.title.setAttributedTextString("Sites Encrypted")
+            cell.title.setAttributedTextString(UserText.privacyReportSitesEncrypted)
             cell.count.textColor = .cornflowerBlue
             cell.count.setAttributedTextString(String(dataSource.httpsUpgradesCount))
             cell.image.image = UIImage(named: "PP Report Encryption")
@@ -87,7 +87,7 @@ extension PrivacyReportViewController: UICollectionViewDataSource {
         
         let date = dataSource.startDate ?? Date()
         let dateText = dateFormatter.string(from: date)
-        cell.date.setAttributedTextString("Since " + dateText)
+        cell.date.setAttributedTextString(UserText.privacyReportDate.format(arguments: dateText))
         
         let theme = ThemeManager.shared.currentTheme
         cell.roundedBackground.backgroundColor = theme.privacyReportCellBackgroundColor

@@ -74,13 +74,13 @@ extension PrivacyReportViewController: UICollectionViewDataSource {
         switch indexPath.row {
         case 0:
             cell.title.setAttributedTextString("Trackers Blocked")
-            cell.count.textColor = .cornflowerBlue
+            cell.count.textColor = .midGreen
             cell.count.setAttributedTextString(String(dataSource.trackersCount))
             cell.image.image = UIImage(named: "PP Report Trackers")
             
         default:
             cell.title.setAttributedTextString("Sites Encrypted")
-            cell.count.textColor = .midGreen
+            cell.count.textColor = .cornflowerBlue
             cell.count.setAttributedTextString(String(dataSource.httpsUpgradesCount))
             cell.image.image = UIImage(named: "PP Report Encryption")
         }

@@ -142,7 +142,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerY" secondItem="YGf-2W-c2w" secondAttribute="centerY" priority="750" constant="-35" id="ItI-WJ-kn8"/>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YGf-2W-c2w" secondAttribute="top" id="O23-kd-uH8"/>
+                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YGf-2W-c2w" secondAttribute="top" constant="20" id="O23-kd-uH8"/>
                                             <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerX" secondItem="YGf-2W-c2w" secondAttribute="centerX" id="oGn-KV-u2p"/>
                                         </constraints>
                                         <size key="customSize" width="210" height="298"/>

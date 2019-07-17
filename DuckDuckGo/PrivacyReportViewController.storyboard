@@ -14,7 +14,7 @@
         <scene sceneID="Wdm-LF-8Nf">
             <objects>
                 <navigationController id="zMi-5H-sKJ" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="umY-Ty-GP5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="umY-Ty-GP5">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -31,11 +31,11 @@
             <objects>
                 <viewController id="upZ-Vg-la9" customClass="PrivacyReportViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vla-3Y-aM1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EmO-cM-Euj">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VJ7-Vl-I3i">
                                     <size key="itemSize" width="50" height="50"/>
@@ -69,46 +69,7 @@
                                                                 <fragment content="Title">
                                                                     <attributes>
                                                                         <font key="NSFont" size="16" name="ProximaNova-Semibold"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                            <tabStops>
-                                                                                <textTab alignment="left" location="28">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="56">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="84">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="112">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="140">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="168">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="196">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="224">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="252">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="280">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="308">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="336">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                            </tabStops>
-                                                                        </paragraphStyle>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                     </attributes>
                                                                 </fragment>
                                                             </attributedString>
@@ -123,46 +84,7 @@
                                                                 <fragment content="Detail">
                                                                     <attributes>
                                                                         <font key="NSFont" size="14" name="ProximaNova-Semibold"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                            <tabStops>
-                                                                                <textTab alignment="left" location="28">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="56">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="84">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="112">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="140">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="168">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="196">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="224">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="252">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="280">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="308">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="336">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                            </tabStops>
-                                                                        </paragraphStyle>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                     </attributes>
                                                                 </fragment>
                                                             </attributedString>
@@ -174,46 +96,7 @@
                                                                 <fragment content="123">
                                                                     <attributes>
                                                                         <font key="NSFont" size="40" name="ProximaNova-Semibold"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
-                                                                            <tabStops>
-                                                                                <textTab alignment="left" location="28">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="56">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="84">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="112">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="140">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="168">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="196">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="224">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="252">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="280">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="308">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                                <textTab alignment="left" location="336">
-                                                                                    <options/>
-                                                                                </textTab>
-                                                                            </tabStops>
-                                                                        </paragraphStyle>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                                     </attributes>
                                                                 </fragment>
                                                             </attributedString>
@@ -309,7 +192,7 @@
                         <viewLayoutGuide key="safeArea" id="tSG-Vt-vD3"/>
                     </view>
                     <navigationItem key="navigationItem" title="Privacy Report" id="Mhd-x7-Vw1">
-                        <barButtonItem key="rightBarButtonItem" title="Close" id="mln-TG-er1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="mln-TG-er1">
                             <connections>
                                 <action selector="onClosePressed:" destination="upZ-Vg-la9" id="XX1-08-4rh"/>
                             </connections>

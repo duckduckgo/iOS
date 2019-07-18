@@ -83,7 +83,7 @@ struct DarkTheme: Theme {
     var feedbackSecondaryTextColor = UIColor.lightGreyish
     var feedbackSentimentButtonBackgroundColor = UIColor.charcoalGrey
     
-    var privacyReportCellBackgroundColor = UIColor.charcoalGrey
+    var privacyReportCellBackgroundColor = UIColor.nearlyBlackLight
     
     var activityStyle: UIActivityIndicatorView.Style = .white
 }

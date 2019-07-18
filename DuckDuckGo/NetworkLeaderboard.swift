@@ -58,24 +58,21 @@ class NetworkLeaderboard {
 
     func incrementPagesLoaded() {
         if let pageStats = pageStats {
-            let count = (pageStats.pagesLoaded ?? 0).intValue
-            pageStats.pagesLoaded = NSNumber(value: count + 1)
+            pageStats.pagesLoaded += 1
             _ = container.save()
         }
     }
     
     func incrementPagesWithTrackers() {
         if let pageStats = pageStats {
-            let count = (pageStats.pagesWithTrackers ?? 0).intValue
-            pageStats.pagesWithTrackers = NSNumber(value: count + 1)
+            pageStats.pagesWithTrackers += 1
             _ = container.save()
         }
     }
     
     func incrementHttpsUpgrades() {
         if let pageStats = pageStats {
-            let count = pageStats.httpsUpgrades + 1
-            pageStats.httpsUpgrades = count
+            pageStats.httpsUpgrades += 1
             _ = container.save()
         }
     }
@@ -84,16 +81,16 @@ class NetworkLeaderboard {
         let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.pageStats, into: container.managedObjectContext)
         guard let stats = managedObject as? PPPageStats else { return }
         stats.startDate = Date()
-        stats.pagesLoaded = NSNumber(value: 0)
+        stats.pagesLoaded = 0
         _ = container.save()
     }
     
     func pagesVisited() -> Int {
-        return pageStats?.pagesLoaded?.intValue ?? 0
+        return Int(pageStats?.pagesLoaded ?? 0)
     }
     
     func pagesWithTrackers() -> Int {
-        return pageStats?.pagesWithTrackers?.intValue ?? 0
+        return Int(pageStats?.pagesWithTrackers ?? 0)
     }
     
     func httpsUpgrades() -> Int {
@@ -117,8 +114,7 @@ class NetworkLeaderboard {
             createNewNetworkEntity(named: networkName)
             return
         }
-        let count = (network.detectedOnCount ?? 0).intValue
-        network.detectedOnCount = NSNumber(value: count + 1)
+        network.detectedOnCount += 1
         _ = container.save()
     }
     
@@ -127,8 +123,7 @@ class NetworkLeaderboard {
             createNewNetworkEntity(named: networkName)
             return
         }
-        let count = network.trackersCount + 1
-        network.trackersCount = count
+        network.trackersCount += 1
         _ = container.save()
     }
     

@@ -96,6 +96,7 @@ public enum PixelName: String {
     case homeScreenAddFavoriteCancel = "mh_af_c"
     case homeScreenEditFavorite = "mh_ef"
     case homeScreenDeleteFavorite = "mh_df"
+    case homeScreenPrivacyStatsTapped = "mh_ps"
     
     case feedbackPositive = "mfbs_positive_submit"
     case feedbackNegativePrefix = "mfbs_negative_"

@@ -21,7 +21,7 @@ import UIKit
 import Core
 
 class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
-
+    
     struct Constants {
         
         static let searchCenterOffset: CGFloat = 50
@@ -34,6 +34,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     private var searchCenterOffset: CGFloat {
         return fixed && isPortrait ? Constants.fixedSearchCenterOffset : Constants.searchCenterOffset
     }
+    
+    private var overflowOffset: CGFloat = 0
     
     private weak var controller: HomeViewController!
     private weak var cell: CenteredSearchHomeCell?
@@ -50,7 +52,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         return cell?.searchBackground
     }
     
-    init(fixed: Bool = false) {
+    init(fixed: Bool) {
         self.fixed = fixed
     }
     
@@ -59,7 +61,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         
         controller.collectionView.isScrollEnabled = !fixed
 
-        controller.allowContentUnderflow = true
+        overflowOffset = controller.enableContentUnderflow()
         controller.searchHeaderTransition = 0.0
         cell?.searchHeaderTransition = 0.0
     }
@@ -79,12 +81,19 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         self.cell = cell
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)
         -> CGSize {
             let height = (collectionView.frame.height / heightRatio) - searchCenterOffset
             let width: CGFloat = collectionView.frame.width - (HomeViewSectionRenderers.Constants.sideInsets * 2)
             return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize? {
+        
+        return CGSize(width: 1, height: controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -121,16 +130,17 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     private func activateSearch() {
-        guard let thisIndexPath = indexPath else { return }
-        let targetIndexPath = IndexPath(row: 0, section: thisIndexPath.section + 1)
-        controller.collectionView.scrollToItem(at: targetIndexPath, at: .top, animated: true)
+        var offset = controller.collectionView.contentOffset
+        let omniBarBottomSpacing = controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0
+        offset.y = (cell?.bounds.height ?? 0) + overflowOffset + omniBarBottomSpacing
+        controller.collectionView.setContentOffset(offset, animated: true)
         controller.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
     func omniBarCancelPressed() {
         guard let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-        controller.allowContentUnderflow = true
+        overflowOffset = controller.enableContentUnderflow()
     }
     
     func launchNewSearch() {

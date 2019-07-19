@@ -25,6 +25,7 @@ public enum FeatureName: String {
     case dummy
     
     case favoritesByDefault
+    case privacyOnHomeScreen
     
 }
 
@@ -33,8 +34,11 @@ public struct Variant {
     static let doNotAllocate = 0
     
     public static let defaultVariants: [Variant] = [
-        Variant(name: "ma", weight: 1, features: []),
-        Variant(name: "mb", weight: 1, features: [ .favoritesByDefault ])
+        Variant(name: "ma", weight: 0, features: []),
+        Variant(name: "mb", weight: 0, features: [ .favoritesByDefault ]),
+        
+        Variant(name: "mi", weight: 1, features: []),
+        Variant(name: "mp", weight: 1, features: [ .privacyOnHomeScreen ])
     ]
     
     public let name: String

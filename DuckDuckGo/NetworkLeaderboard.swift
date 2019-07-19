@@ -58,16 +58,21 @@ class NetworkLeaderboard {
 
     func incrementPagesLoaded() {
         if let pageStats = pageStats {
-            let count = (pageStats.pagesLoaded ?? 0).intValue
-            pageStats.pagesLoaded = NSNumber(value: count + 1)
+            pageStats.pagesLoaded += 1
             _ = container.save()
         }
     }
     
     func incrementPagesWithTrackers() {
         if let pageStats = pageStats {
-            let count = (pageStats.pagesWithTrackers ?? 0).intValue
-            pageStats.pagesWithTrackers = NSNumber(value: count + 1)
+            pageStats.pagesWithTrackers += 1
+            _ = container.save()
+        }
+    }
+    
+    func incrementHttpsUpgrades() {
+        if let pageStats = pageStats {
+            pageStats.httpsUpgrades += 1
             _ = container.save()
         }
     }
@@ -76,16 +81,20 @@ class NetworkLeaderboard {
         let managedObject = NSEntityDescription.insertNewObject(forEntityName: EntityNames.pageStats, into: container.managedObjectContext)
         guard let stats = managedObject as? PPPageStats else { return }
         stats.startDate = Date()
-        stats.pagesLoaded = NSNumber(value: 0)
+        stats.pagesLoaded = 0
         _ = container.save()
     }
     
     func pagesVisited() -> Int {
-        return pageStats?.pagesLoaded?.intValue ?? 0
+        return Int(pageStats?.pagesLoaded ?? 0)
     }
     
     func pagesWithTrackers() -> Int {
-        return pageStats?.pagesWithTrackers?.intValue ?? 0
+        return Int(pageStats?.pagesWithTrackers ?? 0)
+    }
+    
+    func httpsUpgrades() -> Int {
+        return Int(pageStats?.httpsUpgrades ?? 0)
     }
 
     func networksDetected() -> [PPTrackerNetwork] {
@@ -100,13 +109,21 @@ class NetworkLeaderboard {
         return pagesVisited() > pagesVisitedThreshold && networksDetected().count >= 3
     }
     
-    func incrementCount(forNetworkNamed networkName: String) {
+    func incrementDetectionCount(forNetworkNamed networkName: String) {
         guard let network = findNetwork(byName: networkName) else {
             createNewNetworkEntity(named: networkName)
             return
         }
-        let count = (network.detectedOnCount ?? 0).intValue
-        network.detectedOnCount = NSNumber(value: count + 1)
+        network.detectedOnCount += 1
+        _ = container.save()
+    }
+    
+    func incrementTrackersCount(forNetworkNamed networkName: String) {
+        guard let network = findNetwork(byName: networkName) else {
+            createNewNetworkEntity(named: networkName)
+            return
+        }
+        network.trackersCount += 1
         _ = container.save()
     }
     

@@ -21,6 +21,17 @@ import UIKit
 
 class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
+    struct Constants {
+        static let privacyCellMaxWidth: CGFloat = CenteredSearchHomeCell.Constants.searchWidth
+        static let itemSpacing: CGFloat = 10
+    }
+    
+    private let withOffset: Bool
+    
+    init(withOffset: Bool) {
+        self.withOffset = withOffset
+    }
+    
     weak var controller: HomeViewController!
     
     func install(into controller: HomeViewController) {
@@ -29,7 +40,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         controller.collectionView.contentInset = UIEdgeInsets.zero
 
         controller.searchHeaderTransition = 1.0
-        controller.allowContentUnderflow = false
+        controller.disableContentUnderflow()
         controller.chromeDelegate?.setNavigationBarHidden(false)
         controller.collectionView.isScrollEnabled = false
         controller.settingsButton.isHidden = true
@@ -48,14 +59,32 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             as? NavigationSearchHomeCell else {
                 fatalError("cell is not a NavigationSearchHomeCell")
         }
-        cell.frame = collectionView.bounds
+        
+        var constant: CGFloat
+        if collectionView.traitCollection.containsTraits(in: .init(verticalSizeClass: .compact)) {
+            constant = -25
+        } else {
+            constant = 0
+        }
+        
+        if withOffset {
+            constant -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing) / 2
+        }
+        
+        cell.verticalConstraint.constant = constant
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.frame.size
+        var size = collectionView.frame.size
+        
+        if withOffset {
+            size.height -= (PrivacyProtectionHomeCell.Constants.cellHeight + Constants.itemSpacing)
+        }
+        return size
     }
   
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {

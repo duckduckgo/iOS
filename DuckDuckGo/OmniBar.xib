@@ -228,7 +228,7 @@
                 <outlet property="siteRatingView" destination="tlF-fr-tSl" id="rsI-WM-EkC"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
             </connections>
-            <point key="canvasLocation" x="-37.600000000000001" y="-52.173913043478265"/>
+            <point key="canvasLocation" x="-284" y="-72"/>
         </view>
         <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
             <connections>

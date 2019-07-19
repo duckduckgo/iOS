@@ -75,6 +75,10 @@ class OmniBar: UIView {
         let title = UserText.actionPasteAndGo
         UIMenuController.shared.menuItems = [UIMenuItem(title: title, action: #selector(pasteAndGo))]
     }
+    
+    var textFieldBottomSpacing: CGFloat {
+        return bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)
+    }
 
     @objc func pasteAndGo(sender: UIMenuItem) {
         guard let pastedText = UIPasteboard.general.string else { return }

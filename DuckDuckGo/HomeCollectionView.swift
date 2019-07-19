@@ -44,6 +44,19 @@ class HomeCollectionView: UICollectionView {
         
         register(UINib(nibName: "FavoriteHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "favorite")
+        register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
+                 forCellWithReuseIdentifier: "PrivacyHomeCell")
+        
+        register(UINib(nibName: "FavoritesHeaderCell", bundle: nil),
+                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                 withReuseIdentifier: FavoritesHeaderCell.reuseIdentifier)
+        
+        register(EmptyCollectionReusableView.self,
+                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                 withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
+        register(EmptyCollectionReusableView.self,
+                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                 withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
         
         contentInset = UIEdgeInsets(top: Constants.topInset, left: 0, bottom: 0, right: 0)
     }
@@ -52,19 +65,22 @@ class HomeCollectionView: UICollectionView {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller, theme: theme)
         
-        homePageConfiguration.components.forEach { component in
+        homePageConfiguration.components().forEach { component in
             switch component {
-            case .navigationBarSearch:
-                renderers.install(renderer: NavigationSearchHomeViewSectionRenderer())
+            case .navigationBarSearch(let withOffset):
+                renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(withOffset: withOffset))
                 
             case .centeredSearch(let fixed):
                 renderers.install(renderer: CenteredSearchHomeViewSectionRenderer(fixed: fixed))
                 
-            case .favorites:
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+            case .favorites(let withHeader):
+                renderers.install(renderer: FavoritesHomeViewSectionRenderer(headerEnabled: withHeader))
                 
-            case .padding:
-                renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer())
+            case .privacyProtection:
+                renderers.install(renderer: PrivacyProtectionHomeViewSectionRenderer())
+                
+            case .padding(let withOffset):
+                renderers.install(renderer: PaddingSpaceHomeViewSectionRenderer(withOffset: withOffset))
                 
             case .empty:
                 renderers.install(renderer: EmptySectionRenderer())

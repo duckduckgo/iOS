@@ -22,6 +22,8 @@ import UIKit
 class PrivacyReportViewController: UIViewController {
     
     struct Constants {
+        static let numberOfCells = 3
+        
         static let margin: CGFloat = 16
         static let maxCellWidth: CGFloat = 400
     }
@@ -50,7 +52,7 @@ extension PrivacyReportViewController: UICollectionViewDelegate {}
 extension PrivacyReportViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return Constants.numberOfCells
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -37,7 +37,7 @@ public struct Variant {
         Variant(name: "ma", weight: 0, features: []),
         Variant(name: "mb", weight: 0, features: [ .favoritesByDefault ]),
         
-        Variant(name: "mi", weight: 1, features: [ .favoritesByDefault ]),
+        Variant(name: "mi", weight: 1, features: []),
         Variant(name: "mp", weight: 1, features: [ .privacyOnHomeScreen ])
     ]
     

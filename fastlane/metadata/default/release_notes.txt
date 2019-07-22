@@ -1,1 +1,1 @@
-• Performance improvements and bug fixes.
+• Bug fixes and other improvements.

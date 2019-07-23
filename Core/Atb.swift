@@ -22,5 +22,6 @@ import Foundation
 public struct Atb: Decodable {
 
     let version: String
+    let updateVersion: String?
 
 }

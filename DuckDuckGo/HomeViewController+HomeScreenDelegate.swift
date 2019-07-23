@@ -65,7 +65,7 @@ extension HomeViewController: HomeScreenTipsDelegate {
     }
     
     private var isCenteredSearch: Bool {
-        return HomePageConfiguration().components.contains(where: {
+        return HomePageConfiguration().components().contains(where: {
             if case .centeredSearch = $0 { return true }
             return false
         })

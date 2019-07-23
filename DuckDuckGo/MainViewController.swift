@@ -66,6 +66,10 @@ class MainViewController: UIViewController {
         }
     }
     
+    var contentUnderflow: CGFloat {
+        return allowContentUnderflow ? -customNavigationBar.frame.size.height : 0
+    }
+    
     var homeController: HomeViewController?
     var favoritesOverlay: FavoritesOverlay?
     var autocompleteController: AutocompleteViewController?
@@ -74,7 +78,7 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
-    fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
+    fileprivate lazy var appSettings: AppSettings & PrivacyStatsExperimentStore = AppUserDefaults()
     private weak var launchTabObserver: LaunchTabNotification.Observer?
 
     weak var tabSwitcherController: TabSwitcherViewController?
@@ -209,6 +213,12 @@ class MainViewController: UIViewController {
             let controller = navigationController.topViewController as? SettingsViewController {
             controller.homePageSettingsDelegate = self
             return
+        }
+        
+        if let navController = segue.destination as? UINavigationController, navController.topViewController is PrivacyReportViewController {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                segue.destination.modalPresentationStyle = .formSheet
+            }
         }
         
     }
@@ -420,8 +430,12 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func displayFavoritesOverlay() {
+        guard appSettings.homePage.components().contains(where: {
+            if case .favorites = $0 { return true }
+            return false
+        }) else { return }
+        
         guard favoritesOverlay == nil,
-            appSettings.homePage.components.contains(.favorites),
             BookmarksManager().favoritesCount > 0 else { return }
         
         let controller = FavoritesOverlay()
@@ -488,6 +502,20 @@ class MainViewController: UIViewController {
 
     fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
+    }
+    
+    fileprivate func launchPrivacyReport() {
+        sendPrivacyStatsTappedPixel()
+        performSegue(withIdentifier: "PrivacyReport", sender: self)
+    }
+    
+    private func sendPrivacyStatsTappedPixel() {
+        guard !appSettings.privacyStatsPixelFired else {
+            return
+        }
+        
+        appSettings.privacyStatsPixelFired = true
+        Pixel.fire(pixel: .homeScreenPrivacyStatsTapped)
     }
 
     fileprivate func launchSettings() {
@@ -750,13 +778,22 @@ extension MainViewController: AutocompleteViewControllerDelegate {
 }
 
 extension MainViewController: HomeControllerDelegate {
-
+    
+    func showPrivacyReport(_ home: HomeViewController) {
+        launchPrivacyReport()
+    }
+    
     func home(_ home: HomeViewController, didRequestQuery query: String) {
         loadQueryInNewTab(query)
     }
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         loadUrlInNewTab(url)
+    }
+    
+    func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
+        allowContentUnderflow = shouldOverflow
+        return contentUnderflow
     }
 
     func homeDidDeactivateOmniBar(home: HomeViewController) {

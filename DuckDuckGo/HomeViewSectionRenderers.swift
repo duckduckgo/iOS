@@ -70,6 +70,10 @@ protocol HomeViewSectionRenderer {
                         referenceSizeForFooterInSection section: Int) -> CGSize?
     
     func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView
+    
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets?
     
@@ -124,6 +128,14 @@ extension HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
         return nil
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                               withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
+                                                               for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -206,6 +218,18 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = renderers[indexPath.section].collectionView(collectionView, cellForItemAt: indexPath)
+        if let themable = cell as? Themable {
+            themable.decorate(with: theme)
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        let cell = renderers[indexPath.section].collectionView(collectionView,
+                                                               viewForSupplementaryElementOfKind: kind,
+                                                               at: indexPath)
         if let themable = cell as? Themable {
             themable.decorate(with: theme)
         }

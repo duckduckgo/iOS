@@ -24,16 +24,27 @@ class HomePageConfiguration {
     
     enum ConfigName: Int {
 
-        var components: [Component] {
+        func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
+            let includePrivacySection = variantManger.isSupported(feature: .privacyOnHomeScreen)
+            
             switch self {
             case .simple:
-                return [ .navigationBarSearch ]
+                if includePrivacySection {
+                    return [ .privacyProtection, .navigationBarSearch(withOffset: true) ]
+                }
+                return [ .navigationBarSearch(withOffset: false) ]
                 
             case .centerSearch:
+                if includePrivacySection {
+                    return [ .centeredSearch(fixed: true), .privacyProtection, .empty ]
+                }
                 return [ .centeredSearch(fixed: true), .empty ]
                 
             case .centerSearchAndFavorites:
-                return [ .centeredSearch(fixed: false), .favorites, .padding ]
+                if includePrivacySection {
+                    return [ .centeredSearch(fixed: false), .privacyProtection, .favorites(withHeader: true), .padding(withOffset: true) ]
+                }
+                return [ .centeredSearch(fixed: false), .favorites(withHeader: false), .padding(withOffset: false) ]
             }
             
         }
@@ -45,17 +56,18 @@ class HomePageConfiguration {
     }
     
     enum Component: Equatable {
-        case navigationBarSearch
+        case privacyProtection
+        case navigationBarSearch(withOffset: Bool)
         case centeredSearch(fixed: Bool)
-        case favorites
-        case padding
+        case favorites(withHeader: Bool)
+        case padding(withOffset: Bool)
         case empty
     }
     
     let settings: AppSettings
     
-    var components: [Component] {
-        return settings.homePage.components
+    func components(withVariantManger variantManger: VariantManager = DefaultVariantManager()) -> [Component] {
+        return settings.homePage.components(withVariantManger: variantManger)
     }
     
     init(settings: AppSettings = AppUserDefaults()) {

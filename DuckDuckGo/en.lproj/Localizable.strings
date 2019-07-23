@@ -113,6 +113,10 @@
 "privacy.protection.network.leaderboard" = "Tracker networks were found on %@ of web sites you’ve visited since %@.";
 "privacy.protection.tracker.network.unknown" = "Tracker network unknown";
 
+"privacy.report.trackersBlocked" = "Trackers Blocked";
+"privacy.report.sitesEncrypted" = "Sites Encrypted";
+"privacy.report.date" = "Since %@";
+
 "unknown.error.occurred" = "An unknown error occured";
 
 "home.row.reminder.title" = "Take DuckDuckGo home";

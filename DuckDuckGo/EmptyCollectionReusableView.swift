@@ -1,8 +1,8 @@
 //
-//  HomeControllerDelegate.swift
+//  EmptyCollectionReusableView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,20 +19,13 @@
 
 import UIKit
 
-protocol HomeControllerDelegate: class {
-
-    func home(_ home: HomeViewController, didRequestUrl url: URL)
-
-    func home(_ home: HomeViewController, didRequestQuery query: String)
+class EmptyCollectionReusableView: UICollectionReusableView {
     
-    func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat
-
-    func homeDidDeactivateOmniBar(home: HomeViewController)
-
-    func showInstructions(_ home: HomeViewController)
-
-    func showSettings(_ home: HomeViewController)
+    static let reuseIdentifier = "EmptyCollectionReusableView"
     
-    func showPrivacyReport(_ home: HomeViewController)
-
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        backgroundColor = .clear
+    }
 }

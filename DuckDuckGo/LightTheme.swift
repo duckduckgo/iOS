@@ -67,6 +67,9 @@ struct LightTheme: Theme {
     var homeRowSecondaryTextColor = UIColor.greyishBrown2
     var homeRowBackgroundColor = UIColor.nearlyWhiteLight
     
+    var homePrivacyCellTextColor = UIColor.charcoalGrey
+    var homePrivacyCellSecondaryTextColor = UIColor.greyish3
+    
     var aboutScreenTextColor = UIColor.charcoalGrey
     var aboutScreenButtonColor = UIColor.cornflowerBlue
     
@@ -79,6 +82,8 @@ struct LightTheme: Theme {
     var feedbackPrimaryTextColor = UIColor.nearlyBlackLight
     var feedbackSecondaryTextColor = UIColor.nearlyBlackLight
     var feedbackSentimentButtonBackgroundColor = UIColor.white
+    
+    var privacyReportCellBackgroundColor = UIColor.white
     
     var activityStyle: UIActivityIndicatorView.Style = .gray
 }

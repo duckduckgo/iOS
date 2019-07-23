@@ -1,8 +1,8 @@
 //
-//  NavigationSearchHomeCell.swift
+//  PrivacyReportDataSource.swift
 //  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2019 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,23 +17,27 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
+import Core
 
-class NavigationSearchHomeCell: UICollectionViewCell {
+protocol PrivacyStatsExperimentStore {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var verticalConstraint: NSLayoutConstraint!
+    var privacyStatsPixelFired: Bool { get set }
 }
 
-extension NavigationSearchHomeCell: Themable {
+class PrivacyReportDataSource {
     
-    func decorate(with theme: Theme) {
-        switch theme.currentImageSet {
-        case .light:
-            imageView.image = UIImage(named: "LogoDarkText")
-        case .dark:
-            imageView.image = UIImage(named: "LogoLightText")
-        }
+    private let networkLeaderboard = NetworkLeaderboard()
+    
+    var startDate: Date? {
+        return networkLeaderboard.startDate
     }
     
+    var trackersCount: Int {
+        return Int(networkLeaderboard.networksDetected().reduce(Int64(), { $0 + $1.trackersCount }))
+    }
+    
+    var httpsUpgradesCount: Int {
+        return networkLeaderboard.httpsUpgrades()
+    }
 }

@@ -680,10 +680,12 @@ extension TabViewController: WKScriptMessageHandler {
             pageHasTrackers = true
         }
         
-        if let networkName = networkName,
-            !trackerNetworksDetectedOnPage.contains(networkName) {
-            trackerNetworksDetectedOnPage.insert(networkName)
-            NetworkLeaderboard.shared.incrementCount(forNetworkNamed: networkName)
+        if let networkName = networkName {
+            if !trackerNetworksDetectedOnPage.contains(networkName) {
+                trackerNetworksDetectedOnPage.insert(networkName)
+                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
+            }
+            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
         }
 
     }
@@ -859,6 +861,7 @@ extension TabViewController: WKNavigationDelegate {
             navigationAction.isTargetingMainFrame(),
             let upgradeUrl = httpsUpgrade.upgrade(url: url) {
             
+            NetworkLeaderboard.shared.incrementHttpsUpgrades()
             lastUpgradedDomain = upgradeUrl.host
             load(url: upgradeUrl)
             

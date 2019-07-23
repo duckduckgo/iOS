@@ -42,9 +42,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private weak var reorderingCell: FavoriteHomeCell?
     
     private let allowsEditing: Bool
+    private let headerEnabled: Bool
     
-    init(allowsEditing: Bool = true) {
+    init(allowsEditing: Bool = true, headerEnabled: Bool = false) {
         self.allowsEditing = allowsEditing
+        self.headerEnabled = headerEnabled
     }
     
     private var numberOfItems: Int {
@@ -66,9 +68,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int)
-        -> UIEdgeInsets? {
-
+    static func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
         let margin: CGFloat
         if isPad {
             margin = (collectionView.frame.width - Constants.searchWidthPad) / 2
@@ -77,12 +77,49 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             let landscapeMargin = (collectionView.frame.width - Constants.searchWidth + defaultMargin) / 2
             margin = isPortrait ? defaultMargin : landscapeMargin
         }
-
+        
+        return margin
+    }
+    
+    // Visible margin is adjusted for offset inside Favorite Cells
+    static func visibleMargin(in collectionView: UICollectionView) -> CGFloat {
+        return sectionMargin(in: collectionView) + FavoriteHomeCell.Constants.horizontalMargin
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets? {
+        let margin = type(of: self).sectionMargin(in: collectionView)
+        
         return UIEdgeInsets(top: 0, left: margin, bottom: 0, right: margin)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numberOfItems
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        if headerEnabled && kind == UICollectionView.elementKindSectionHeader {
+            return headerView(collectionView, at: indexPath)
+        }
+        
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                               withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
+                                                               for: indexPath)
+    }
+    
+    private func headerView(_  collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                           withReuseIdentifier: "favHeaderCell",
+                                                                           for: indexPath) as? FavoritesHeaderCell else {
+                                                                            fatalError("not a Header Cell")
+        }
+        let margin = type(of: self).visibleMargin(in: collectionView)
+        header.adjust(to: margin)
+        
+        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -175,15 +212,20 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize? {
-        
-        return CGSize(width: 1, height: 39)
+        if headerEnabled {
+            return CGSize(width: 1, height: 45)
+        }
+        return CGSize(width: 1, height: 20)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
         
-        return CGSize(width: 1, height: 10)
+        if headerEnabled {
+            return .zero
+        }
+        return CGSize(width: 1, height: 20)
     }
 
     func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {

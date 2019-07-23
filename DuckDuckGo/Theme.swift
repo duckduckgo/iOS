@@ -74,6 +74,9 @@ protocol Theme {
     var homeRowSecondaryTextColor: UIColor { get }
     var homeRowBackgroundColor: UIColor { get }
     
+    var homePrivacyCellTextColor: UIColor { get }
+    var homePrivacyCellSecondaryTextColor: UIColor { get }
+    
     var aboutScreenTextColor: UIColor { get }
     var aboutScreenButtonColor: UIColor { get }
 
@@ -85,6 +88,8 @@ protocol Theme {
     var feedbackPrimaryTextColor: UIColor { get }
     var feedbackSecondaryTextColor: UIColor { get }
     var feedbackSentimentButtonBackgroundColor: UIColor { get }
+    
+    var privacyReportCellBackgroundColor: UIColor { get }
     
     var activityStyle: UIActivityIndicatorView.Style { get }
     

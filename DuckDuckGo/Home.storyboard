@@ -141,14 +141,14 @@
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerY" secondItem="YGf-2W-c2w" secondAttribute="centerY" constant="-35" id="ItI-WJ-kn8">
-                                                <variation key="heightClass=compact" constant="0.0"/>
-                                            </constraint>
+                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerY" secondItem="YGf-2W-c2w" secondAttribute="centerY" priority="750" constant="-35" id="ItI-WJ-kn8"/>
+                                            <constraint firstItem="6KE-x7-bYQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YGf-2W-c2w" secondAttribute="top" constant="20" id="O23-kd-uH8"/>
                                             <constraint firstItem="6KE-x7-bYQ" firstAttribute="centerX" secondItem="YGf-2W-c2w" secondAttribute="centerX" id="oGn-KV-u2p"/>
                                         </constraints>
                                         <size key="customSize" width="210" height="298"/>
                                         <connections>
                                             <outlet property="imageView" destination="6KE-x7-bYQ" id="wys-xe-PcN"/>
+                                            <outlet property="verticalConstraint" destination="ItI-WJ-kn8" id="JBS-qJ-N3V"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="addFavorite" id="nQ3-Nq-pP3" customClass="AddFavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
@@ -296,7 +296,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1181.5999999999999" y="-331.48425787106447"/>
+            <point key="canvasLocation" x="1181.1594202898552" y="-332.14285714285711"/>
         </scene>
     </scenes>
     <resources>

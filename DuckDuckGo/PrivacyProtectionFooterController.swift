@@ -108,7 +108,7 @@ class TrackerNetworkPillView: UIView {
     }
 
     func update(network: PPTrackerNetwork, pagesVisited: Int) {
-        let percent = 100 * Int(truncating: network.detectedOnCount ?? 0) / pagesVisited
+        let percent = 100 * Int(network.detectedOnCount) / pagesVisited
         let percentText = "\(percent)%"
         let image = network.image
 

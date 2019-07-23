@@ -127,6 +127,12 @@ public struct UserText {
     public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", comment:  "Trackers networks were found on %@ of web sites you’ve visited since %@.")
 
     public static let ppTrackerNetworkUnknown = NSLocalizedString("privacy.protection.tracker.network.unknown", comment:  "Unknown tracker networks")
+    
+    public static let privacyReportTrackersBlocked = NSLocalizedString("privacy.report.trackersBlocked", comment: "Trackers Blocked")
+    
+    public static let privacyReportSitesEncrypted = NSLocalizedString("privacy.report.sitesEncrypted", comment: "Sites Encrypted")
+    
+    public static let privacyReportDate = NSLocalizedString("privacy.report.date", comment: "Since %@")
 
     public static let unknownErrorOccurred = NSLocalizedString("unknown.error.occurred", comment:  "Unknown error occurred")
     

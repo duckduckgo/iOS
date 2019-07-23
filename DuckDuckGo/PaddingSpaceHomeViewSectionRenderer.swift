@@ -26,6 +26,12 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
     var paddingHeight: CGFloat = 0
     var controller: HomeViewController!
     
+    private let withOffset: Bool
+    
+    init(withOffset: Bool) {
+        self.withOffset = withOffset
+    }
+    
     func install(into controller: HomeViewController) {
         
         self.controller = controller
@@ -59,7 +65,11 @@ class PaddingSpaceHomeViewSectionRenderer: HomeViewSectionRenderer {
         let rows = CGFloat((bookmarksManager.favoritesCount / itemsPerRow) + 1)
         let spaceUsedByCells = (rows * FavoriteHomeCell.Constants.height)
         let spaceUsedByLineSpacing = (rows - 2) * 10
-        let spaceUsedByFavorites = spaceUsedByCells + spaceUsedByLineSpacing
+        var spaceUsedByFavorites = spaceUsedByCells + spaceUsedByLineSpacing
+        
+        if withOffset {
+            spaceUsedByFavorites += 62
+        }
         paddingHeight = collectionView.frame.size.height - FavoriteHomeCell.Constants.height - spaceUsedByFavorites
         
         return CGSize(width: 1, height: max(0, paddingHeight))

@@ -54,4 +54,10 @@ class AtbParserTests: XCTestCase {
         XCTAssertEqual(result?.version, "v77-5")
     }
 
+    func testWhenJsonContainsUpdateVersionThenResultContainsUpdateVersion() {
+        let validJson = data.fromJsonFile("MockFiles/atb-with-update.json")
+        let result = try? testee.convert(fromJsonData: validJson)
+        XCTAssertEqual(result?.updateVersion, "v20-1")
+    }
+
 }

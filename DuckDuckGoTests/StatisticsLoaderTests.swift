@@ -37,6 +37,38 @@ class StatisticsLoaderTests: XCTestCase {
         super.tearDown()
     }
 
+    func testWhenSearchRefreshHasSuccessfulUpdateAtbRequestThenSearchRetentionAtbUpdated() {
+
+        mockStatisticsStore.atb = "atb"
+        mockStatisticsStore.searchRetentionAtb = "retentionatb"
+        loadSuccessfulUpdateAtbStub()
+
+        let expect = expectation(description: "Successful atb updates retention store")
+        testee.refreshSearchRetentionAtb {
+            XCTAssertEqual(self.mockStatisticsStore.atb, "v20-1")
+            XCTAssertEqual(self.mockStatisticsStore.searchRetentionAtb, "v77-5")
+            expect.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testWhenAppRefreshHasSuccessfulUpdateAtbRequestThenAppRetentionAtbUpdated() {
+
+        mockStatisticsStore.atb = "atb"
+        mockStatisticsStore.appRetentionAtb = "retentionatb"
+        loadSuccessfulUpdateAtbStub()
+
+        let expect = expectation(description: "Successful atb updates retention store")
+        testee.refreshAppRetentionAtb {
+            XCTAssertEqual(self.mockStatisticsStore.atb, "v20-1")
+            XCTAssertEqual(self.mockStatisticsStore.appRetentionAtb, "v77-5")
+            expect.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
     func testWhenLoadHasSuccessfulAtbAndExtiRequestsThenStoreUpdatedWithVariant() {
 
         loadSuccessfulAtbStub()
@@ -72,7 +104,7 @@ class StatisticsLoaderTests: XCTestCase {
         loadSuccessfulAtbStub()
         loadUnsuccessfulExiStub()
 
-        let expect = expectation(description: "Unsuccessfult exti does not update store")
+        let expect = expectation(description: "Unsuccessful exti does not update store")
         testee.load {
             XCTAssertFalse(self.mockStatisticsStore.hasInstallStatistics)
             XCTAssertNil(self.mockStatisticsStore.atb)
@@ -88,7 +120,7 @@ class StatisticsLoaderTests: XCTestCase {
         mockStatisticsStore.searchRetentionAtb = "retentionatb"
         loadSuccessfulAtbStub()
 
-        let expect = expectation(description: "Successfult atb updates retention store")
+        let expect = expectation(description: "Successful atb updates retention store")
         testee.refreshSearchRetentionAtb {
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
             XCTAssertEqual(self.mockStatisticsStore.searchRetentionAtb, "v77-5")
@@ -104,7 +136,7 @@ class StatisticsLoaderTests: XCTestCase {
         mockStatisticsStore.appRetentionAtb = "retentionatb"
         loadSuccessfulAtbStub()
         
-        let expect = expectation(description: "Successfult atb updates retention store")
+        let expect = expectation(description: "Successful atb updates retention store")
         testee.refreshAppRetentionAtb {
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
             XCTAssertEqual(self.mockStatisticsStore.appRetentionAtb, "v77-5")
@@ -119,7 +151,7 @@ class StatisticsLoaderTests: XCTestCase {
         mockStatisticsStore.searchRetentionAtb = "retentionAtb"
         loadUnsuccessfulAtbStub()
 
-        let expect = expectation(description: "Unsuccessfult atb does not update store")
+        let expect = expectation(description: "Unsuccessful atb does not update store")
         testee.refreshSearchRetentionAtb {
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
             XCTAssertEqual(self.mockStatisticsStore.searchRetentionAtb, "retentionAtb")
@@ -134,7 +166,7 @@ class StatisticsLoaderTests: XCTestCase {
         mockStatisticsStore.appRetentionAtb = "retentionAtb"
         loadUnsuccessfulAtbStub()
         
-        let expect = expectation(description: "Unsuccessfult atb does not update store")
+        let expect = expectation(description: "Unsuccessful atb does not update store")
         testee.refreshAppRetentionAtb {
             XCTAssertEqual(self.mockStatisticsStore.atb, "atb")
             XCTAssertEqual(self.mockStatisticsStore.appRetentionAtb, "retentionAtb")
@@ -147,6 +179,13 @@ class StatisticsLoaderTests: XCTestCase {
     func loadSuccessfulAtbStub() {
         stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
             let path = OHPathForFile("MockFiles/atb.json", type(of: self))!
+            return fixture(filePath: path, status: 200, headers: nil)
+        }
+    }
+
+    func loadSuccessfulUpdateAtbStub() {
+        stub(condition: isHost(appUrls.initialAtb.host!)) { _ in
+            let path = OHPathForFile("MockFiles/atb-with-update.json", type(of: self))!
             return fixture(filePath: path, status: 200, headers: nil)
         }
     }

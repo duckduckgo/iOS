@@ -83,9 +83,9 @@ class OmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSearchLoupe)
     }
 
-    func testWhenEnteringHomeTextEditingStateThenTextIsCleared() {
+    func testWhenEnteringHomeTextEditingStateThenTextIsNotCleared() {
         let testee = HomeTextEditingState()
-        XCTAssertTrue(testee.clearTextOnStart)
+        XCTAssertFalse(testee.clearTextOnStart)
     }
 
     func testWhenInHomeTextEditingStateThenEditingStartedMaintainsState() {

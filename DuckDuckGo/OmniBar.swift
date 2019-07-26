@@ -179,6 +179,7 @@ class OmniBar: UIView {
 
     private func clear() {
         textField.text = nil
+        omniDelegate?.onOmniQueryUpdated("")
     }
 
     func refreshText(forUrl url: URL?) {

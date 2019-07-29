@@ -37,7 +37,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private lazy var bookmarksManager = BookmarksManager()
 
-    private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)!
+    private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
     private weak var reorderingCell: FavoriteHomeCell?
     
@@ -166,7 +166,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             saveCompletion: { [weak self] newLink in
                 self?.updateFavorite(at: indexPath, in: collectionView, with: newLink)
             })
-        controller.present(alert, animated: true, completion: nil)
+        controller?.present(alert, animated: true, completion: nil)
     }
     
     private func updateFavorite(at indexPath: IndexPath, in collectionView: UICollectionView, with link: Link) {
@@ -258,7 +258,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         UISelectionFeedbackGenerator().selectionChanged()
-        controller.favoritesRenderer(self, didSelect: link)
+        controller?.favoritesRenderer(self, didSelect: link)
     }
     
     private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
@@ -274,7 +274,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                 Pixel.fire(pixel: .homeScreenAddFavoriteCancel)
             }
         )
-        controller.present(alert, animated: true, completion: nil)
+        controller?.present(alert, animated: true, completion: nil)
     }
     
     private func saveNewFavorite(_ link: Link, in collectionView: UICollectionView, at indexPath: IndexPath) {

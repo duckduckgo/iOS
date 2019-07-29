@@ -37,7 +37,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     
     private var overflowOffset: CGFloat = 0
     
-    private weak var controller: HomeViewController!
+    private weak var controller: HomeViewController?
     private weak var cell: CenteredSearchHomeCell?
 
     private var heightRatio: CGFloat {
@@ -76,8 +76,8 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
             fatalError("cell is not a CenteredSearchHomeCell")
         }
         cell.tapped = self.tapped
-        cell.targetSearchHeight = controller.chromeDelegate?.omniBar.editingBackground.frame.height ?? 0
-        cell.targetSearchRadius = controller.chromeDelegate?.omniBar.editingBackground.layer.cornerRadius ?? 0
+        cell.targetSearchHeight = controller?.chromeDelegate?.omniBar.editingBackground.frame.height ?? 0
+        cell.targetSearchRadius = controller?.chromeDelegate?.omniBar.editingBackground.layer.cornerRadius ?? 0
         self.cell = cell
         return cell
     }
@@ -93,7 +93,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize? {
         
-        return CGSize(width: 1, height: controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0)
+        return CGSize(width: 1, height: controller?.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -106,30 +106,34 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
 
         guard diff < offsetY else {
             // search bar is in the center
-            controller.searchHeaderTransition = 0.0
+            controller?.searchHeaderTransition = 0.0
             cell?.searchHeaderTransition = 0.0
             return
         }
         
         guard diff > 0 else {
             // search bar is in the navigation bar
-            controller.searchHeaderTransition = 1.0
+            controller?.searchHeaderTransition = 1.0
             cell?.searchHeaderTransition = 1.0
             return
         }
 
         // search bar is transitioning
         let percent = 1 - (diff / 46)
-        controller.searchHeaderTransition = percent
+        controller?.searchHeaderTransition = percent
         cell?.searchHeaderTransition = percent
     }
 
     func tapped(view: CenteredSearchHomeCell) {
         activateSearch()
-        controller.chromeDelegate?.omniBar.becomeFirstResponder()
+        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
     private func activateSearch() {
+        guard let controller = self.controller else {
+            return
+        }
+        
         var offset = controller.collectionView.contentOffset
         let omniBarBottomSpacing = controller.chromeDelegate?.omniBar.textFieldBottomSpacing ?? 0
         offset.y = (cell?.bounds.height ?? 0) + overflowOffset + omniBarBottomSpacing
@@ -138,7 +142,7 @@ class CenteredSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func omniBarCancelPressed() {
-        guard let indexPath = indexPath else { return }
+        guard let controller = self.controller, let indexPath = indexPath else { return }
         controller.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         overflowOffset = controller.enableContentUnderflow()
     }

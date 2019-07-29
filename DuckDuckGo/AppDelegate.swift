@@ -52,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
         AtbAndVariantCleanup.cleanup()
+        DefaultVariantManager().assignVariantIfNeeded { variantManager in
+            // perform first time install logic here
+        }
 
         if let main = mainViewController {
             autoClear = AutoClear(worker: main)

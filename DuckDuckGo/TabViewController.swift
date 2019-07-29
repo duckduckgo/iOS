@@ -66,7 +66,7 @@ class TabViewController: UIViewController {
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
     private var httpsForced: Bool = false
-    private var lastUpgradedDomain: String?
+    private var lastUpgradedURL: URL?
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
@@ -709,7 +709,7 @@ extension TabViewController: WKNavigationDelegate {
         
         url = webView.url
         let tld = storageCache.tld
-        let httpsForced = tld.domain(lastUpgradedDomain) == tld.domain(webView.url?.host)
+        let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
         onWebpageDidStartLoading(httpsForced: httpsForced)
     }
     
@@ -836,8 +836,8 @@ extension TabViewController: WKNavigationDelegate {
         let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
-            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedDomain) {
-            lastUpgradedDomain = nil
+            && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
+            lastUpgradedURL = nil
         }
         
         guard let url = navigationAction.request.url else {
@@ -859,12 +859,13 @@ extension TabViewController: WKNavigationDelegate {
         
         if !failingUrls.contains(url.host ?? ""),
             navigationAction.isTargetingMainFrame(),
-            let upgradeUrl = httpsUpgrade.upgrade(url: url) {
+            let upgradeUrl = httpsUpgrade.upgrade(url: url),
+            lastUpgradedURL != upgradeUrl {
             
             NetworkLeaderboard.shared.incrementHttpsUpgrades()
-            lastUpgradedDomain = upgradeUrl.host
-            load(url: upgradeUrl)
-            
+            lastUpgradedURL = upgradeUrl
+            self.load(url: upgradeUrl)
+
             return .cancel
         }
         

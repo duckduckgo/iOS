@@ -61,7 +61,7 @@ struct HomeEmptyEditingState: OmniBarState {
 }
 
 struct HomeTextEditingState: OmniBarState {
-    var clearTextOnStart = true
+    var clearTextOnStart = false
     var showSearchLoupe = true
     let showSiteRating = false
     let showBackground = false

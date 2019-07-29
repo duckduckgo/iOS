@@ -62,6 +62,11 @@ class OmniBar: UIView {
                                                              attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidChange),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: textField)
+        
         if #available(iOS 11.0, *) {
             textField.textDragInteraction?.isEnabled = false
         }
@@ -78,6 +83,16 @@ class OmniBar: UIView {
     
     var textFieldBottomSpacing: CGFloat {
         return bounds.size.height - (searchContainer.frame.origin.y + searchContainer.frame.size.height)
+    }
+    
+    @objc func textDidChange() {
+        let newQuery = textField.text ?? ""
+        omniDelegate?.onOmniQueryUpdated(newQuery)
+        if newQuery.isEmpty {
+            refreshState(state.onTextClearedState)
+        } else {
+            refreshState(state.onTextEnteredState)
+        }
     }
 
     @objc func pasteAndGo(sender: UIMenuItem) {
@@ -164,6 +179,7 @@ class OmniBar: UIView {
 
     private func clear() {
         textField.text = nil
+        omniDelegate?.onOmniQueryUpdated("")
     }
 
     func refreshText(forUrl url: URL?) {
@@ -271,19 +287,6 @@ extension OmniBar: UITextFieldDelegate {
             self.refreshState(self.state.onEditingStartedState)
             self.textField.selectAll(nil)
         }
-    }
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let oldQuery = textField.text else { return true }
-        guard let queryRange = oldQuery.range(from: range) else { return true }
-        let newQuery = oldQuery.replacingCharacters(in: queryRange, with: string)
-        omniDelegate?.onOmniQueryUpdated(newQuery)
-        if newQuery.isEmpty {
-            refreshState(state.onTextClearedState)
-        } else {
-            refreshState(state.onTextEnteredState)
-        }
-        return true
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {

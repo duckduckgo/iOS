@@ -465,7 +465,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func displayAutocompleteSuggestions(forQuery query: String) {
-        if autocompleteController == nil && appSettings.autocomplete {
+        if autocompleteController == nil && appSettings.autocomplete && !query.isEmpty {
             let controller = AutocompleteViewController.loadFromStoryboard()
             controller.shouldOffsetY = allowContentUnderflow
             controller.delegate = self

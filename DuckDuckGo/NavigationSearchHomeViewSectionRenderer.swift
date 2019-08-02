@@ -32,7 +32,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
         self.withOffset = withOffset
     }
     
-    weak var controller: HomeViewController!
+    weak var controller: HomeViewController?
     
     func install(into controller: HomeViewController) {
         self.controller = controller
@@ -47,7 +47,7 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func openedAsNewTab() {
-        controller.chromeDelegate?.omniBar.becomeFirstResponder()
+        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -92,11 +92,11 @@ class NavigationSearchHomeViewSectionRenderer: HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        controller.chromeDelegate?.omniBar.resignFirstResponder()
+        controller?.chromeDelegate?.omniBar.resignFirstResponder()
     }
     
     func launchNewSearch() {
-        controller.chromeDelegate?.omniBar.becomeFirstResponder()
+        controller?.chromeDelegate?.omniBar.becomeFirstResponder()
     }
     
 }

@@ -86,6 +86,38 @@ class AtbServerTests: XCTestCase {
         XCTAssertNotEqual(store.atb, store.searchRetentionAtb)
     }
 
+    func testWhenAtbIsOldThenCohortIsGeneralizedForAppRetention() {
+
+        store.atb = "v117-2"
+        store.appRetentionAtb = "v117-2"
+
+        let waitForCompletion = expectation(description: "wait for completion")
+        loader.refreshAppRetentionAtb {
+            waitForCompletion.fulfill()
+        }
+
+        wait(for: [waitForCompletion], timeout: 5.0)
+
+        XCTAssertNotNil(store.appRetentionAtb)
+        XCTAssertEqual(store.atb, "v117-1")
+    }
+
+    func testWhenAtbIsOldThenCohortIsGeneralizedForSearchRetention() {
+
+        store.atb = "v117-2"
+        store.searchRetentionAtb = "v117-2"
+
+        let waitForCompletion = expectation(description: "wait for completion")
+        loader.refreshSearchRetentionAtb {
+            waitForCompletion.fulfill()
+        }
+
+        wait(for: [waitForCompletion], timeout: 5.0)
+
+        XCTAssertNotNil(store.searchRetentionAtb)
+        XCTAssertEqual(store.atb, "v117-1")
+    }
+
 }
 
 class MockStatisticsStore: StatisticsStore {

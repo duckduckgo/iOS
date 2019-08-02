@@ -88,6 +88,7 @@ public class StatisticsLoader {
             }
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.searchRetentionAtb = atb.version
+                self.storeUpdateVersionIfPresent(atb)
             }
             completion()
         }
@@ -108,8 +109,15 @@ public class StatisticsLoader {
             }
             if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.appRetentionAtb = atb.version
+                self.storeUpdateVersionIfPresent(atb)
             }
             completion()
+        }
+    }
+
+    public func storeUpdateVersionIfPresent(_ atb: Atb) {
+        if let updateVersion = atb.updateVersion {
+            statisticsStore.atb = updateVersion
         }
     }
 }

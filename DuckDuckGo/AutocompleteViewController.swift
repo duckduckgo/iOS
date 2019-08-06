@@ -21,6 +21,10 @@ import UIKit
 import Core
 
 class AutocompleteViewController: UIViewController {
+    
+    struct Constants {
+        static let debounceDelay = 0.3
+    }
 
     weak var delegate: AutocompleteViewControllerDelegate?
 
@@ -34,6 +38,8 @@ class AutocompleteViewController: UIViewController {
     fileprivate var selectedItem = -1
 
     private var hidesBarsOnSwipeDefault = true
+    
+    private let debounce = Debounce(queue: .main, seconds: Constants.debounceDelay)
 
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
@@ -88,7 +94,9 @@ class AutocompleteViewController: UIViewController {
         self.query = query
         selectedItem = -1
         cancelInFlightRequests()
-        requestSuggestions(query: query)
+        debounce.schedule { [weak self] in
+            self?.requestSuggestions(query: query)
+        }
     }
 
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
@@ -99,6 +107,7 @@ class AutocompleteViewController: UIViewController {
     private func cancelInFlightRequests() {
         if let inFlightRequest = lastRequest {
             inFlightRequest.cancel()
+            lastRequest = nil
         }
     }
 

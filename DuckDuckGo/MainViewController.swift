@@ -705,7 +705,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
-        currentTab?.showPrivacyProtection()
+        currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {

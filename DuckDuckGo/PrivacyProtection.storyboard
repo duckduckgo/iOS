@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rnY-b4-XPk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,63 +21,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Dashboard-->
-        <scene sceneID="xtT-jh-F57">
-            <objects>
-                <viewController id="rnY-b4-XPk" userLabel="Dashboard" customClass="PrivacyProtectionController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ITH-Il-9PV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZv-0z-1Nb">
-                                <rect key="frame" x="0.0" y="72" width="414" height="664"/>
-                                <connections>
-                                    <segue destination="5UB-cE-Uy8" kind="embed" id="oOS-0o-so6"/>
-                                </connections>
-                            </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uki-jm-Mgt">
-                                <rect key="frame" x="0.0" y="-40" width="414" height="80"/>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="5EH-Ht-DNH"/>
-                                </constraints>
-                                <viewLayoutGuide key="safeArea" id="v6o-zV-ube"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hcq-TC-0vO" userLabel="OmniBar">
-                                <rect key="frame" x="0.0" y="20" width="414" height="52"/>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="MNP-vb-ClV"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="HZv-0z-1Nb" firstAttribute="width" secondItem="ITH-Il-9PV" secondAttribute="width" id="7Nt-b2-oDo"/>
-                            <constraint firstItem="iL3-Ku-sPE" firstAttribute="top" secondItem="Hcq-TC-0vO" secondAttribute="top" id="Akt-Ip-d6x"/>
-                            <constraint firstItem="HZv-0z-1Nb" firstAttribute="centerX" secondItem="iL3-Ku-sPE" secondAttribute="centerX" id="COL-z1-R62"/>
-                            <constraint firstItem="iL3-Ku-sPE" firstAttribute="bottom" secondItem="HZv-0z-1Nb" secondAttribute="bottom" id="GAh-HL-JxB"/>
-                            <constraint firstItem="iL3-Ku-sPE" firstAttribute="top" secondItem="uki-jm-Mgt" secondAttribute="top" constant="60" id="Hm4-Zl-TG6"/>
-                            <constraint firstItem="HZv-0z-1Nb" firstAttribute="top" secondItem="Hcq-TC-0vO" secondAttribute="bottom" id="KgA-Er-xvv"/>
-                            <constraint firstItem="Hcq-TC-0vO" firstAttribute="width" secondItem="ITH-Il-9PV" secondAttribute="width" id="Trf-vE-Fqs"/>
-                            <constraint firstItem="uki-jm-Mgt" firstAttribute="centerX" secondItem="iL3-Ku-sPE" secondAttribute="centerX" id="ajC-yx-HSw"/>
-                            <constraint firstItem="Hcq-TC-0vO" firstAttribute="centerX" secondItem="iL3-Ku-sPE" secondAttribute="centerX" id="gjx-Eq-jys"/>
-                            <constraint firstItem="uki-jm-Mgt" firstAttribute="width" secondItem="ITH-Il-9PV" secondAttribute="width" id="zeU-I6-sDb"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="iL3-Ku-sPE"/>
-                    </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="375" height="595"/>
-                    <connections>
-                        <outlet property="contentContainer" destination="HZv-0z-1Nb" id="CUZ-DE-TYa"/>
-                        <outlet property="headerConstraint" destination="KgA-Er-xvv" id="0xI-Ul-MIx"/>
-                        <outlet property="omniBarContainer" destination="Hcq-TC-0vO" id="csi-fF-7tX"/>
-                        <outlet property="statusBarBackground" destination="uki-jm-Mgt" id="77n-yU-nzn"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CKR-77-64g" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="775" y="409"/>
-        </scene>
         <!--Overview-->
         <scene sceneID="Uch-vi-4H4">
             <objects>
@@ -270,7 +213,6 @@
                             <outlet property="delegate" destination="7Z1-eg-OWQ" id="EfY-Cx-2EK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="lwf-bc-TtK"/>
                     <connections>
                         <outlet property="encryptionCell" destination="goO-wb-Nup" id="oyA-Bs-y4l"/>
                         <outlet property="privacyPracticesCell" destination="7tG-Dt-rZf" id="bRZ-1X-bt7"/>
@@ -1861,13 +1803,17 @@
             </objects>
             <point key="canvasLocation" x="774" y="1487"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Privacy Protection Controller-->
         <scene sceneID="bVE-dS-EIg">
             <objects>
-                <navigationController navigationBarHidden="YES" id="5UB-cE-Uy8" sceneMemberID="viewController">
+                <navigationController id="5UB-cE-Uy8" customClass="PrivacyProtectionController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4SZ-ST-AY7">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="feV-0E-u37">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bfQ-IQ-ptp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

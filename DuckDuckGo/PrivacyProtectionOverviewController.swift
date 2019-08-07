@@ -49,6 +49,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
         adjustMargins()
         
         update()
+
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -241,5 +243,13 @@ private class InteractivePopRecognizer: NSObject, UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+}
+
+extension PrivacyProtectionOverviewController: Themable {
+
+    func decorate(with theme: Theme) {
+        setNeedsStatusBarAppearanceUpdate()
+        decorateNavigationBar(with: theme)
     }
 }

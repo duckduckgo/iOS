@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public class HTTPSUpgrade {
     
@@ -29,49 +30,77 @@ public class HTTPSUpgrade {
     
     private let dataReloadLock = NSLock()
     private let store: HTTPSUpgradeStore
+    private let appUrls: AppUrls
     private var bloomFilter: BloomFilterWrapper?
     
-    init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence()) {
+    init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence(), appUrls: AppUrls = AppUrls()) {
         self.store = store
+        self.appUrls = appUrls
     }
     
     public func upgrade(url: URL) -> URL? {
         
-        guard url.scheme == "http" else { return nil }
-        
-        if !isInUpgradeList(url: url) {
+        guard url.scheme == "http" else {
+            Pixel.fire(pixel: .httpsNoLookup)
             return nil
         }
         
-        let urlString = url.absoluteString
-        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
-    }
-    
-    public func isInUpgradeList(url: URL) -> Bool {
-        
-        guard let host = url.host else { return false }
-
-        if store.hasWhitelistedDomain(host) {
-            Logger.log(text: "Site \(host) is in whitelist, not upgrading")
-            return false
+        guard let host = url.host else {
+            Pixel.fire(pixel: .httpsNoLookup)
+            return nil
         }
         
-        waitForAnyReloadsToComplete()
+        if store.hasWhitelistedDomain(host) {
+            Pixel.fire(pixel: .httpsNoLookup)
+            return nil
+        }
         
-        guard let bloomFilter = bloomFilter else { return false }
+        let isLocallyUpgradable = !isLocalListReloading() && isInLocalUpgradeList(host: host)
+        Logger.log(text: "\(host) is \(isLocallyUpgradable ? "" : "not") locally upgradable")
+        if  isLocallyUpgradable {
+            Pixel.fire(pixel: .httpsLocalLookup)
+            return url.upgradeToHttps()
+        }
         
-        let startTime = Date()
-        let result = bloomFilter.contains(host)
-        let lookupTimeMs = abs(startTime.timeIntervalSinceNow) * Constants.millisecondsPerSecond
-        Logger.log(text: "Site \(host) \(result ? "can" : "cannot") be upgraded. Lookup took \(lookupTimeMs)ms")
+        let httpsServiceResult = isInServiceUpgradeList(host: host)
+        Pixel.fire(pixel: httpsServiceResult.isCached ? .httpsServiceCacheLookup : .httpsServiceRequestLookup)
+        Logger.log(text: "\(host) is \(httpsServiceResult.isInList ? "" : "not") service upgradable")
+        if httpsServiceResult.isInList {
+            return url.upgradeToHttps()
+        }
         
-        return result
+        //TODO consider pixel param for hit versus miss
+        return nil
     }
     
-    private func waitForAnyReloadsToComplete() {
-        // wait for lock (by locking and unlocking) before continuing
-       dataReloadLock.lock()
-       dataReloadLock.unlock()
+    private func isInLocalUpgradeList(host: String) -> Bool {
+        guard let bloomFilter = bloomFilter else { return false }
+        return bloomFilter.contains(host)
+    }
+    
+    private func isInServiceUpgradeList(host: String, completion) -> (isInList: Bool, isCached: Bool) {
+    
+        let sha1Host = host.sha1
+        let partialSha1Host = String(sha1Host.prefix(4))
+        var serviceRequest = URLRequest(url: appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host))
+        serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
+        
+        var shouldUpgrade = false
+        let isCached = URLCache.shared.cachedResponse(for: serviceRequest) != nil
+        
+        Alamofire.request(serviceRequest).validate(statusCode: 200..<300).response { response in
+            
+            if let data = response.data {
+                let result = try? JSONDecoder().decode([String].self, from: data)
+                shouldUpgrade = result?.contains(sha1Host) ?? false
+            }
+            
+        }
+        return (shouldUpgrade, isCached)
+    }
+    
+    private func isLocalListReloading() -> Bool {
+        return dataReloadLock.try()
     }
     
     public func loadDataAsync() {
@@ -87,6 +116,12 @@ public class HTTPSUpgrade {
         }
         bloomFilter = store.bloomFilter()
         dataReloadLock.unlock()
-    
+    }
+}
+
+extension URL {
+    func upgradeToHttps() -> URL? {
+        let urlString = absoluteString
+        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
     }
 }

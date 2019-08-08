@@ -19,15 +19,160 @@
 
 import UIKit
 
+class BarsAnimator {
+    
+    weak var delegate: BrowserChromeDelegate?
+    
+    private var barsState: State = .revealed
+    
+    //private var cumulativeDistance: CGFloat = 0.0
+    
+    private var transitionProgress: CGFloat = 0.0
+    
+    var draggingStartPosY: CGFloat = 0
+    
+    var transitionStartPosY: CGFloat = 0
+    
+    
+    enum State: String {
+        case revealed
+        case transitioning
+//        case transitioned
+        case hidden
+    }
+    
+    func didStartScrolling(in scrollView: UIScrollView) {
+        draggingStartPosY = scrollView.contentOffset.y
+    }
+    
+    func calculateTransitionRatio(for contentOffset: CGFloat) -> CGFloat {
+        let distance = contentOffset - transitionStartPosY
+        let barsHeight = delegate?.barsMaxHeight ?? CGFloat.infinity
+        
+        let cumulativeDistance = (barsHeight * transitionProgress) + distance
+        
+        let normalizedDistance = max(cumulativeDistance, 0)
+        
+//        print("-> ratio: \(min(normalizedDistance / barsHeight, 1.0))")
+        return min(normalizedDistance / barsHeight, 1.0)
+    }
+    
+    func didScroll(in scrollView: UIScrollView) {
+        
+//        print("-----")
+//        print("-> state: \(barsState.rawValue)")
+//        print("-> progress: \(transitionProgress)")
+//        print("-> startPos Drag: \(draggingStartPosY)")
+//        print("-> startPos Trans: \(transitionStartPosY)")
+//        print("-> offset: \(scrollView.contentOffset.y)")
+        
+        switch barsState {
+        case .revealed:
+            if scrollView.contentOffset.y > draggingStartPosY {
+                transitionStartPosY = draggingStartPosY
+                barsState = .transitioning
+                
+                let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
+                delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+                transitionProgress = ratio
+                
+                var offset = scrollView.contentOffset
+                offset.y = draggingStartPosY
+                scrollView.contentOffset = offset
+            }
+            
+        case .transitioning:
+            let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
+            
+            if ratio == 1.0 {
+                barsState = .hidden
+            } else if ratio == 0 {
+                barsState = .revealed
+            }
+            
+            delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+            transitionProgress = ratio
+            
+            var offset = scrollView.contentOffset
+            offset.y = transitionStartPosY
+            scrollView.contentOffset = offset
+            
+//        case .transitioned:
+//            abort()
+//            if scrollView.contentOffset.y < transitionStartPosY {
+//                barsState = .transitioning
+//
+//                let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
+//                delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+//                transitionProgress = ratio
+//            }
+            
+        case .hidden:
+            if scrollView.contentOffset.y < 0 {
+                transitionStartPosY = 0
+                barsState = .transitioning
+                
+                let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
+                delegate?.setBarsVisibility(1.0 - ratio, animated: false)
+                transitionProgress = ratio
+            }
+            // if offset is 0 - reveal
+        }
+        
+//        print("-----")
+    }
+    
+    func didFinishScrolling(velocity: CGFloat) {
+        guard velocity >= 0 else {
+            barsState = .revealed
+            transitionProgress = 0
+            delegate?.setBarsVisibility(1, animated: true)
+            return
+        }
+        
+        guard velocity == 0 else {
+            barsState = .hidden
+            transitionProgress = 1
+            delegate?.setBarsVisibility(0, animated: true)
+            return
+        }
+        
+        switch barsState {
+        case .revealed, .hidden:
+            break
+//        case .transitioned:
+//            barsState = .hidden
+        case .transitioning:
+            
+            //todo: animate to revealed/hidden
+            if transitionProgress > 0.5 && transitionProgress < 1.0 {
+                barsState = .hidden
+                transitionProgress = 1.0
+                
+                delegate?.setBarsVisibility(0, animated: true)
+            } else if transitionProgress > 0 && transitionProgress  <= 0.5 {
+                barsState = .revealed
+                transitionProgress = 0
+                
+                delegate?.setBarsVisibility(1, animated: true)
+            }
+        }
+    }
+}
+
 protocol BrowserChromeDelegate: class {
 
     func setBarsHidden(_ hidden: Bool, animated: Bool)
+    
+    // Nav search home renderer
     func setNavigationBarHidden(_ hidden: Bool)
+    
+    func setBarsVisibility(_ percent: CGFloat, animated: Bool)
 
     var isToolbarHidden: Bool { get }
     var omniBar: OmniBar! { get }
     var toolbarHeight: CGFloat { get }
-
+    var barsMaxHeight: CGFloat { get }
 }
 
 class BrowserChromeManager: NSObject, UIScrollViewDelegate {
@@ -37,24 +182,33 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
         static let zoomThreshold: CGFloat = 0.1
     }
 
-    weak var delegate: BrowserChromeDelegate?
+    weak var delegate: BrowserChromeDelegate? {
+        didSet {
+            animator.delegate = delegate
+        }
+    }
+    
+    let animator = BarsAnimator()
 
     var hidden = false
     var dragging = false
-    var draggingStartPosY: CGFloat = 0
+    
+    //var draggingStartPosY: CGFloat = 0
+    
+    var currentOffset: CGFloat = 0
+    
     var startZoomScale: CGFloat = 0
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !scrollView.isZooming else { return }
+        guard !scrollView.isZooming else { return } //
+        
         guard dragging else { return }
-        guard canUpdateBars(for: scrollView) else { return }
+        guard canHideBars(for: scrollView) else { return }
         
         let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
         guard isInBottomBounceArea == false else { return }
 
-        if scrollView.contentOffset.y - draggingStartPosY > Constants.dragThreshold {
-            updateBars(shouldHide: true)
-        }
+        animator.didScroll(in: scrollView)
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
@@ -76,31 +230,34 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guard !scrollView.isZooming else { return }
         dragging = true
-        draggingStartPosY = scrollView.contentOffset.y
+        
+        animator.didStartScrolling(in: scrollView)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         guard !scrollView.isZooming else { return }
-        guard canUpdateBars(for: scrollView) else { return }
+        guard canHideBars(for: scrollView) else { return }
         
-        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
-        let startedFromVeryBottom = abs(draggingStartPosY - scrollView.contentOffsetYAtBottom) < 1
+        animator.didFinishScrolling(velocity: velocity.y)
         
-        if isInBottomBounceArea && startedFromVeryBottom {
-            updateBars(shouldHide: false)
-            // Fix for iPhone X issue: reaching bottom of the web page and then revealing
-            // bars by executing "bottom bounce" gesture, caused web view to re layout and
-            // cover bottom of the web page.
-            DispatchQueue.main.async { [weak scrollView] in
-                guard let scrollView = scrollView else { return }
-                scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffsetYAtBottom),
-                                            animated: true)
-            }
-        } else if velocity.y < 0 {
-            updateBars(shouldHide: false)
-        } else if velocity.y > 0 {
-            updateBars(shouldHide: true)
-        }
+//        let isInBottomBounceArea = scrollView.contentOffset.y > scrollView.contentOffsetYAtBottom
+//        let startedFromVeryBottom = abs(draggingStartPosY - scrollView.contentOffsetYAtBottom) < 1
+        
+//        if isInBottomBounceArea && startedFromVeryBottom {
+//            updateBars(shouldHide: false)
+//            // Fix for iPhone X issue: reaching bottom of the web page and then revealing
+//            // bars by executing "bottom bounce" gesture, caused web view to re layout and
+//            // cover bottom of the web page.
+//            DispatchQueue.main.async { [weak scrollView] in
+//                guard let scrollView = scrollView else { return }
+//                scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffsetYAtBottom),
+//                                            animated: true)
+//            }
+//        } else if velocity.y < 0 {
+//            updateBars(shouldHide: false)
+//        } else if velocity.y > 0 {
+//            updateBars(shouldHide: true)
+//        }
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -117,7 +274,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
     
     /// Bars should not be hidden in case ScrollView content is smaller than viewport.
-    private func canUpdateBars(for scrollView: UIScrollView) -> Bool {
+    private func canHideBars(for scrollView: UIScrollView) -> Bool {
         return hidden || scrollView.bounds.height < scrollView.contentSize.height
     }
 
@@ -129,7 +286,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
 
     func reset() {
         updateBars(shouldHide: false)
-        draggingStartPosY = 0
     }
 }
 

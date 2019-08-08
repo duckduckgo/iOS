@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +29,7 @@
                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="JbX-Lu-cAx">
-                            <rect key="frame" x="0.0" y="382" width="414" height="200"/>
+                            <rect key="frame" x="0.0" y="438" width="414" height="200"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <connections>
                                 <outletCollection property="gestureRecognizers" destination="uVQ-4K-5eS" appends="YES" id="nNa-rb-pZI"/>
@@ -42,20 +40,20 @@
                             <tableViewSection id="ria-wo-DGJ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PrivacyGrade" rowHeight="211" id="s9p-bO-Vdf">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="211"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="211"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="s9p-bO-Vdf" id="ihq-Kt-ABs">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="210.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="211"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6MD-aD-wYR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="210.66666666666666"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="211"/>
                                                     <connections>
                                                         <segue destination="ada-ki-oEG" kind="embed" id="qkI-6K-toZ"/>
                                                     </connections>
                                                 </containerView>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="wnW-sJ-EzI">
-                                                    <rect key="frame" x="380" y="97.333333333333329" width="10" height="16"/>
+                                                    <rect key="frame" x="380" y="97.666666666666671" width="10" height="16"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -73,27 +71,27 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="57" id="goO-wb-Nup" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="211" width="414" height="57"/>
+                                        <rect key="frame" x="0.0" y="239" width="414" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="goO-wb-Nup" id="afc-cI-Pc9">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Connection Off" translatesAutoresizingMaskIntoConstraints="NO" id="tQ2-6F-wmG">
-                                                    <rect key="frame" x="28" y="8.3333333333333357" width="40" height="40"/>
+                                                    <rect key="frame" x="28" y="8.6666666666666643" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="2sF-qt-Xmd"/>
                                                         <constraint firstAttribute="height" constant="40" id="WY0-xl-JrU"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Encrypted Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zz1-Q4-Fxr">
-                                                    <rect key="frame" x="78" y="20.333333333333332" width="292" height="15.999999999999996"/>
+                                                    <rect key="frame" x="78" y="20.666666666666668" width="292" height="16.000000000000004"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="D3Y-iL-Mke">
-                                                    <rect key="frame" x="380" y="20.333333333333332" width="10" height="15.999999999999996"/>
+                                                    <rect key="frame" x="380" y="20.666666666666668" width="10" height="16.000000000000004"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -117,28 +115,28 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="57" id="izo-7V-yei" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="268" width="414" height="57"/>
+                                        <rect key="frame" x="0.0" y="296" width="414" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="izo-7V-yei" id="uvS-6F-pqD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Major Networks Off" translatesAutoresizingMaskIntoConstraints="NO" id="ZoA-kS-Hsv">
-                                                    <rect key="frame" x="28" y="8.3333333333333357" width="40" height="40"/>
+                                                    <rect key="frame" x="28" y="8.6666666666666643" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="FtJ-RN-9NA"/>
                                                         <constraint firstAttribute="height" constant="40" id="ekT-N9-Oae"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="8 Trackers Blocked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GZ4-PW-wOG">
-                                                    <rect key="frame" x="78" y="20.333333333333332" width="308" height="15.999999999999996"/>
+                                                    <rect key="frame" x="78" y="20.666666666666668" width="308" height="16.000000000000004"/>
                                                     <accessibility key="accessibilityConfiguration" identifier="trackerCount"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="mNH-DH-vDm">
-                                                    <rect key="frame" x="380" y="20.333333333333332" width="10" height="15.999999999999996"/>
+                                                    <rect key="frame" x="380" y="20.666666666666668" width="10" height="16.000000000000004"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -162,27 +160,27 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="57" id="7tG-Dt-rZf" customClass="SummaryCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="325" width="414" height="57"/>
+                                        <rect key="frame" x="0.0" y="353" width="414" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7tG-Dt-rZf" id="REe-ji-zYW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Privacy Bad Off" translatesAutoresizingMaskIntoConstraints="NO" id="Uul-fb-r5K">
-                                                    <rect key="frame" x="28" y="8.3333333333333357" width="40" height="40"/>
+                                                    <rect key="frame" x="28" y="8.6666666666666643" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="7g5-nh-F4P"/>
                                                         <constraint firstAttribute="width" constant="40" id="aGW-h4-hwg"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Good Privacy Practices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyz-09-obQ">
-                                                    <rect key="frame" x="78" y="20.333333333333332" width="308" height="15.999999999999996"/>
+                                                    <rect key="frame" x="78" y="20.666666666666668" width="308" height="16.000000000000004"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="pR0-No-4WC">
-                                                    <rect key="frame" x="380" y="20.333333333333332" width="10" height="15.999999999999996"/>
+                                                    <rect key="frame" x="380" y="20.666666666666668" width="10" height="16.000000000000004"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -250,7 +248,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Gzv-fq-3Ld">
-                            <rect key="frame" x="0.0" y="351" width="414" height="200"/>
+                            <rect key="frame" x="0.0" y="407" width="414" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aUg-fY-lHk">
@@ -273,7 +271,7 @@
                             <tableViewSection id="AdE-kb-aJk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="157" id="nqm-IY-tmU">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="157"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="157"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nqm-IY-tmU" id="mZf-rW-9qr">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="157"/>
@@ -290,7 +288,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="7k3-Qj-oya" rowHeight="44" style="IBUITableViewCellStyleDefault" id="e0N-pm-mFb">
-                                        <rect key="frame" x="0.0" y="157" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="185" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e0N-pm-mFb" id="nsu-Ag-913">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -314,7 +312,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="3uo-s0-uRc" rowHeight="44" style="IBUITableViewCellStyleDefault" id="iZV-7A-J2y">
-                                        <rect key="frame" x="0.0" y="201" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="229" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iZV-7A-J2y" id="xuI-ON-z5v">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -338,7 +336,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="106" id="6ld-N9-NRF">
-                                        <rect key="frame" x="0.0" y="245" width="414" height="106"/>
+                                        <rect key="frame" x="0.0" y="273" width="414" height="106"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6ld-N9-NRF" id="ksZ-bY-p96">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="106"/>
@@ -410,11 +408,11 @@
             <objects>
                 <viewController id="FqV-mP-aQi" customClass="PrivacyProtectionEncryptionDetailController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ewv-Sc-Sqc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="22" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="deS-wD-kVs">
-                                <rect key="frame" x="0.0" y="10" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="XbD-tH-3K4" userLabel="Connection Status View">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
@@ -520,7 +518,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Header" rowHeight="54" id="oAv-be-F2Z" customClass="PrivacyProtectionEncryptionHeaderCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="295.33333333333331" width="414" height="54"/>
+                                        <rect key="frame" x="0.0" y="295.33333206176758" width="414" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oAv-be-F2Z" id="5dA-ue-WjX">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="54"/>
@@ -545,7 +543,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="14" id="QuS-cY-xoL" customClass="PrivacyProtectionEncryptionDetailCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="349.33333333333337" width="414" height="14"/>
+                                        <rect key="frame" x="0.0" y="349.33333206176758" width="414" height="14"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QuS-cY-xoL" id="ha0-1b-qhG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="14"/>
@@ -582,7 +580,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Unencrypted" rowHeight="180" id="U2L-Z5-GZd" customClass="PrivacyProtectionEncryptionDetailCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="363.33333333333337" width="414" height="180"/>
+                                        <rect key="frame" x="0.0" y="363.33333206176758" width="414" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U2L-Z5-GZd" id="8mk-HM-777">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
@@ -657,11 +655,11 @@
             <objects>
                 <viewController id="3wX-Uf-JRU" customClass="PrivacyProtectionNetworkLeaderboardController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xZj-C6-ZUR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T5n-2j-L8N">
-                                <rect key="frame" x="0.0" y="10" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="UAf-eb-tA7" userLabel="Header">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
@@ -755,7 +753,7 @@
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="43l-Zy-1B0" userLabel="Footer">
-                                    <rect key="frame" x="0.0" y="292" width="414" height="144"/>
+                                    <rect key="frame" x="0.0" y="320" width="414" height="144"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJQ-al-hPw" userLabel="Custom Divider">
@@ -832,7 +830,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKA-e0-nkA" userLabel="Hovering Reset">
-                                <rect key="frame" x="0.0" y="608" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="588" width="414" height="128"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFB-0r-HZW" userLabel="Hovering Reset Container">
                                         <rect key="frame" x="20" y="0.0" width="374" height="128"/>
@@ -942,11 +940,11 @@
             <objects>
                 <viewController id="7u1-pv-hRO" customClass="PrivacyProtectionTrackerNetworksController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H4Z-Ki-GJb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="22" estimatedRowHeight="-1" sectionHeaderHeight="46" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-Qt-dWn">
-                                <rect key="frame" x="0.0" y="10" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="e4V-2n-13h" userLabel="Header">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
@@ -1057,7 +1055,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Section" rowHeight="46" id="rBu-Hc-gjC" userLabel="Header Cell" customClass="PrivacyProtectionTrackerNetworksSectionCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="295.33333333333331" width="414" height="46"/>
+                                        <rect key="frame" x="0.0" y="295.33333206176758" width="414" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rBu-Hc-gjC" id="Wqt-kM-ZJG">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="46"/>
@@ -1092,7 +1090,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Row" rowHeight="21" id="UFd-fT-gX0" userLabel="Row Cell" customClass="PrivacyProtectionTrackerNetworksRowCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="341.33333333333337" width="414" height="21"/>
+                                        <rect key="frame" x="0.0" y="341.33333206176758" width="414" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UFd-fT-gX0" id="qJg-oa-ngh">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="21"/>
@@ -1161,11 +1159,11 @@
             <objects>
                 <viewController id="ASo-lP-j3Z" customClass="PrivacyProtectionPracticesController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CmA-8L-BSR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4vm-2D-njE">
-                                <rect key="frame" x="0.0" y="20" width="414" height="646"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="646"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="uDA-bS-Uwl" userLabel="Header">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
@@ -1273,14 +1271,14 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="72t-tQ-5SV" imageView="WRK-Wt-JyD" style="IBUITableViewCellStyleDefault" id="LK0-gl-KUB" customClass="PrivacyProtectionPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="268" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="268" width="414" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LK0-gl-KUB" id="2Vq-On-UQN">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="72t-tQ-5SV">
-                                                    <rect key="frame" x="57" y="0.0" width="337" height="44"/>
+                                                    <rect key="frame" x="59" y="0.0" width="335" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="This website will notify you before transferring your information in the event of a merger or acquisition">
@@ -1293,14 +1291,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="PP Icon Result Success" id="WRK-Wt-JyD">
-                                                    <rect key="frame" x="20" y="11" width="22" height="22"/>
+                                                    <rect key="frame" x="21" y="28.333333333333329" width="22" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoPractices" rowHeight="300" id="dTH-6q-tGo" customClass="PrivacyProtectionNoPracticesCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="312" width="414" height="300"/>
+                                        <rect key="frame" x="0.0" y="347" width="414" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dTH-6q-tGo" id="9KP-Lk-xIX">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
@@ -1347,7 +1345,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKK-U1-HtX">
-                                <rect key="frame" x="0.0" y="666" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="646" width="414" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NLZ-Bg-d8p">
                                         <rect key="frame" x="26" y="28" width="362" height="14"/>
@@ -1448,18 +1446,18 @@
             <objects>
                 <tableViewController id="inG-Uk-VH6" customClass="PrivacyProtectionScoreCardController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="WiU-gp-G3Y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="gVe-0B-edv">
-                            <rect key="frame" x="0.0" y="527" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="583" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </view>
                         <sections>
                             <tableViewSection id="bfD-Rs-VRV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="203" id="3Cz-vq-HtK" userLabel="Header Table View Cell">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="203"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="203"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3Cz-vq-HtK" id="ERP-CT-0SL">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="203"/>
@@ -1495,7 +1493,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="22" id="e0b-NU-2I0">
-                                        <rect key="frame" x="0.0" y="203" width="414" height="22"/>
+                                        <rect key="frame" x="0.0" y="231" width="414" height="22"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e0b-NU-2I0" id="4WC-O8-gQ0">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="22"/>
@@ -1517,7 +1515,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Bfa-LO-5TA" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="225" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="253" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Bfa-LO-5TA" id="hIo-y5-j4R">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1551,7 +1549,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="8qZ-Eh-VsF" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="263" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="291" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8qZ-Eh-VsF" id="DO1-wT-u3l">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1585,7 +1583,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="bLw-VQ-f8g" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="301" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="329" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bLw-VQ-f8g" id="fwt-6q-cSP">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1619,7 +1617,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="YWf-b0-9Jx" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="339" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="367" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YWf-b0-9Jx" id="AYe-df-fbR">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1653,7 +1651,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="Djq-pK-0ll" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="377" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="405" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Djq-pK-0ll" id="osH-0E-8uO">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1687,7 +1685,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="36" id="ll8-8B-YdJ" userLabel="Separator Table View Cell">
-                                        <rect key="frame" x="0.0" y="415" width="414" height="36"/>
+                                        <rect key="frame" x="0.0" y="443" width="414" height="36"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ll8-8B-YdJ" id="yhh-3S-00j">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
@@ -1709,7 +1707,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="THl-q3-0pd" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="451" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="479" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="THl-q3-0pd" id="lbt-f1-TYY">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1743,7 +1741,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="38" id="8L0-Nl-oii" customClass="PrivacyProtectionScoreCardCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="489" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="517" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8L0-Nl-oii" id="bvX-oz-Oip">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="38"/>
@@ -1807,8 +1805,9 @@
         <scene sceneID="bVE-dS-EIg">
             <objects>
                 <navigationController id="5UB-cE-Uy8" customClass="PrivacyProtectionController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <value key="contentSizeForViewInPopover" type="size" width="320" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4SZ-ST-AY7">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="feV-0E-u37">

@@ -275,7 +275,7 @@
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="Bookmarks" id="jTg-q6-spe"/>
                         <segue destination="Dgd-Ab-eVN" kind="presentation" identifier="PrivacyReport" id="qzu-1j-vOC"/>
                         <segue destination="9Vl-Oh-arA" kind="presentation" identifier="Onboarding" animates="NO" modalPresentationStyle="overFullScreen" id="lRm-1E-WkW"/>
-                        <segue destination="rGZ-0A-HjK" kind="presentation" identifier="Onboarding-Ipad" animates="NO" modalPresentationStyle="overFullScreen" id="Wtv-32-dHC"/>
+                        <segue destination="rGZ-0A-HjK" kind="presentation" identifier="Onboarding-iPad" animates="NO" modalPresentationStyle="overFullScreen" id="Wtv-32-dHC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>

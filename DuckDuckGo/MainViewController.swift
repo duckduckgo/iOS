@@ -220,7 +220,11 @@ class MainViewController: UIViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
-        
+
+        if var onboarding = segue.destination as? Onboarding {
+            onboarding.delegate = self
+        }
+
     }
 
     private func configureTabManager() {

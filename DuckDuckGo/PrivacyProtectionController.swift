@@ -28,7 +28,7 @@ protocol PrivacyProtectionDelegate: class {
 
 }
 
-class PrivacyProtectionController: ThemableNavigationController {
+class PrivacyProtectionController: UINavigationController {
 
     weak var privateProtectionDelegate: PrivacyProtectionDelegate?
 

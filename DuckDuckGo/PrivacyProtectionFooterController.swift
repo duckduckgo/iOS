@@ -49,7 +49,6 @@ class PrivacyProtectionFooterController: UIViewController {
         guard isViewLoaded else { return }
         leaderboard.update()
         updateProtectionToggle()
-        preferredContentSize = CGSize(width: view.frame.size.width, height: leaderboard.requiredHeight + privacyProtectionView.frame.height)
     }
 
     private func updateProtectionToggle() {
@@ -68,13 +67,7 @@ class TrackerNetworkLeaderboardView: UIView {
     @IBOutlet weak var secondPill: TrackerNetworkPillView!
     @IBOutlet weak var thirdPill: TrackerNetworkPillView!
 
-    var requiredHeight: CGFloat {
-        return gatheringView.isHidden ? scoresView.frame.size.height : gatheringView.frame.size.height
-    }
-
     var leaderboard = NetworkLeaderboard.shared
-
-    var imageHeight: CGFloat!
 
     func didLoad() {
         firstPill.didLoad()

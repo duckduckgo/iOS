@@ -52,20 +52,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
 
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        updateFooterHeight()
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate(alongsideTransition: nil) { _ in
-            self.updateFooterHeight()
-        }
-        
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let displayInfo = segue.destination as? PrivacyProtectionInfoDisplaying {
             displayInfo.using(siteRating: siteRating, configuration: contentBlockerConfiguration)
@@ -89,43 +76,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         
         return true
     }
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
-        
-        let scrollViewHeight = scrollView.frame.size.height
-        guard scrollViewHeight > 0 else { return }
-        
-        let frameHeight = tableView.frame.size.height
-        let contentHeight = tableView.contentSize.height
-        let height = frameHeight - contentHeight
-        let distance = height + scrollView.contentOffset.y
-        let percent = distance / scrollViewHeight * 100
-        
-        let dismissThreshold: CGFloat = 30
-        if percent > dismissThreshold && scrollView.isDragging {
-            dismiss(animated: true)
-        }
-        
-    }
-    
-    private func updateFooterHeight() {
-        guard let footerView = tableView.tableFooterView else { return }
-        
-        tableView.tableFooterView = nil
-        
-        let frameHeight = tableView.frame.size.height
-        let contentHeight = tableView.contentSize.height
-        
-        let minSize = footer.preferredContentSize.height
-        let height = max(minSize, frameHeight - contentHeight)
-        
-        let frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: height)
-        footerView.frame = frame
-        tableView.tableFooterView = footerView
-        footer.leaderboard.isHidden = false
-    }
-    
+
     private func update() {
         // not keen on this, but there seems to be a race condition when the site rating is updated and the controller hasn't be loaded yet
         guard isViewLoaded else { return }
@@ -134,8 +85,6 @@ class PrivacyProtectionOverviewController: UITableViewController {
         updateEncryption()
         updateTrackers()
         updatePrivacyPractices()
-        footer.leaderboard.isHidden = true
-        updateFooterHeight()
     }
     
     private func updateEncryption() {

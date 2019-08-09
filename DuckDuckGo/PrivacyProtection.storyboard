@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5UB-cE-Uy8">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,12 +28,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="JbX-Lu-cAx">
-                            <rect key="frame" x="0.0" y="438" width="414" height="200"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                        <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="GO3-WM-6Yh">
+                            <rect key="frame" x="0.0" y="438" width="414" height="248"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <connections>
-                                <outletCollection property="gestureRecognizers" destination="uVQ-4K-5eS" appends="YES" id="nNa-rb-pZI"/>
-                                <segue destination="CTQ-Ot-vex" kind="embed" id="Va6-aa-dCC"/>
+                                <segue destination="CTQ-Ot-vex" kind="embed" id="5JR-2I-KmJ"/>
                             </connections>
                         </containerView>
                         <sections>
@@ -209,6 +208,7 @@
                         <connections>
                             <outlet property="dataSource" destination="7Z1-eg-OWQ" id="Zb8-g3-ogK"/>
                             <outlet property="delegate" destination="7Z1-eg-OWQ" id="EfY-Cx-2EK"/>
+                            <outletCollection property="gestureRecognizers" destination="uVQ-4K-5eS" appends="YES" id="Rde-fC-arl"/>
                         </connections>
                     </tableView>
                     <connections>
@@ -225,7 +225,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoi-h2-ui9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="uVQ-4K-5eS" userLabel="Leaderboard Tap Gesture">
                     <connections>
-                        <segue destination="3wX-Uf-JRU" kind="show" identifier="Leaderboard" id="th7-lM-ier"/>
+                        <segue destination="3wX-Uf-JRU" kind="show" id="od3-rF-yzv"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

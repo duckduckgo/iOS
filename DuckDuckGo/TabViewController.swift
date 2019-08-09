@@ -696,10 +696,26 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic {
+            performBascHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
+        } else {
+            completionHandler(.performDefaultHandling, nil)
+            guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
+            ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
+        }
+    }
+    
+    func performBascHTTPAuthentication(protectionSpace: URLProtectionSpace,
+                                       completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let alert = BasicAuthenticationAlert(host: protectionSpace.host,
+                                             port: String(protectionSpace.port),
+                                             logInCompletion: { (login, password) in
+            completionHandler(.useCredential, URLCredential(user: login, password: password, persistence: .none))
+        }, cancelCompletion: {
+            completionHandler(.rejectProtectionSpace, nil)
+        })
         
-        completionHandler(.performDefaultHandling, nil)
-        guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
-        ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
+        present(alert, animated: true)
     }
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {

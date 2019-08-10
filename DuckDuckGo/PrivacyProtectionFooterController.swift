@@ -43,6 +43,7 @@ class PrivacyProtectionFooterController: UIViewController {
         let contentBlockingOn = privacyProtectionSwitch.isOn
         self.configuration.enabled = contentBlockingOn
         update()
+        Pixel.fire(pixel: contentBlockingOn ? .privacyDashboardToggleProtectionOn : .privacyDashboardToggleProtectionOff)
     }
 
     private func update() {

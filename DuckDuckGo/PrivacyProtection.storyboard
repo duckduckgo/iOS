@@ -32,6 +32,7 @@
                             <rect key="frame" x="0.0" y="438" width="414" height="248"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <connections>
+                                <outletCollection property="gestureRecognizers" destination="uVQ-4K-5eS" appends="YES" id="9Km-eu-cB4"/>
                                 <segue destination="CTQ-Ot-vex" kind="embed" id="5JR-2I-KmJ"/>
                             </connections>
                         </containerView>
@@ -103,7 +104,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="D3Y-iL-Mke" secondAttribute="trailing" constant="24" id="m7T-zn-y9E"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" red="1" green="0.99997597932815552" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <accessibility key="accessibilityConfiguration" identifier="encryption">
                                             <bool key="isElement" value="YES"/>
                                         </accessibility>
@@ -148,7 +149,7 @@
                                                 <constraint firstItem="GZ4-PW-wOG" firstAttribute="centerY" secondItem="uvS-6F-pqD" secondAttribute="centerY" id="qVC-KQ-gvn"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration" identifier="trackerCount">
                                             <bool key="isElement" value="YES"/>
                                         </accessibility>
@@ -192,7 +193,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="pR0-No-4WC" secondAttribute="trailing" constant="24" id="s4D-P3-kO7"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacyPractices">
                                             <bool key="isElement" value="YES"/>
                                         </accessibility>
@@ -208,7 +209,6 @@
                         <connections>
                             <outlet property="dataSource" destination="7Z1-eg-OWQ" id="Zb8-g3-ogK"/>
                             <outlet property="delegate" destination="7Z1-eg-OWQ" id="EfY-Cx-2EK"/>
-                            <outletCollection property="gestureRecognizers" destination="uVQ-4K-5eS" appends="YES" id="Rde-fC-arl"/>
                         </connections>
                     </tableView>
                     <connections>

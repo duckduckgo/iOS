@@ -283,7 +283,7 @@
                                             <accessibilityTraits key="traits" button="YES"/>
                                         </accessibility>
                                         <connections>
-                                            <segue destination="Hvb-oi-0lX" kind="presentation" modalPresentationStyle="overFullScreen" id="ufT-Pc-RCL"/>
+                                            <segue destination="Hvb-oi-0lX" kind="presentation" id="ufT-Pc-RCL"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -436,7 +436,7 @@
                 <viewControllerPlaceholder storyboardName="Feedback" referencedIdentifier="Feedback" id="Hvb-oi-0lX" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TVx-JL-4ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2524" y="4"/>
+            <point key="canvasLocation" x="2524" y="148"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="Z9e-Sp-3fR">

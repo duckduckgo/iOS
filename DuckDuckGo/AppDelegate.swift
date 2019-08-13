@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import EasyTipView
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

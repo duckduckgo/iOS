@@ -380,7 +380,7 @@ never been this easy.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M12-dB-i4I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1112" y="185"/>
+            <point key="canvasLocation" x="1136" y="185"/>
         </scene>
         <!--Before you get started, pick  the theme that's right for you.-->
         <scene sceneID="ubo-Ix-pHZ">
@@ -499,6 +499,51 @@ the theme that's right for you.</string>
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="413" y="185"/>
+        </scene>
+        <!--Enable Notifications-->
+        <scene sceneID="mnE-ri-bSO">
+            <objects>
+                <viewController storyboardIdentifier="onboardingNotifications" title="Enable Notifications" id="CKX-vY-82l" customClass="OnboardingNotificationsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zDS-dL-1cb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Gx-O6-b2x" userLabel="Bullet Container">
+                                <rect key="frame" x="-5" y="0.0" width="320" height="276"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qqr-sI-jPG" userLabel="Bullets">
+                                        <rect key="frame" x="0.0" y="127.99999999999999" width="320" height="20.333333333333329"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pretty please?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cf8-Gl-2c2">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="centerX" secondItem="4Gx-O6-b2x" secondAttribute="centerX" id="Ic0-su-Agv"/>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="width" secondItem="4Gx-O6-b2x" secondAttribute="width" id="c8g-kg-B4W"/>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="height" relation="lessThanOrEqual" secondItem="4Gx-O6-b2x" secondAttribute="height" id="p55-6L-Hzj"/>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="centerY" secondItem="4Gx-O6-b2x" secondAttribute="centerY" id="xeO-h1-m5H"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="height" secondItem="zDS-dL-1cb" secondAttribute="height" id="6V0-xG-gWH"/>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="centerX" secondItem="zDS-dL-1cb" secondAttribute="centerX" constant="-5" id="QKm-0y-sWk"/>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="centerY" secondItem="zDS-dL-1cb" secondAttribute="centerY" id="R42-bh-mU3"/>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="width" secondItem="zDS-dL-1cb" secondAttribute="width" id="k55-pm-0YB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0wl-um-YgP"/>
+                    </view>
+                    <size key="freeformSize" width="320" height="276"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="53S-Tw-az3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="775" y="458"/>
         </scene>
     </scenes>
     <resources>

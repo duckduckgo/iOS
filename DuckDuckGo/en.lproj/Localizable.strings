@@ -265,4 +265,7 @@
 "feedback.form.caption" = "Please tell us what we can improve";
 
 "onboardingContinue" = "Continue";
+"onboardingSkip" = "Skip";
 "onboardingStartBrowsing" = "Start Browsing";
+"onboardingNotificationsAccept" = "Turn on Notification";
+"onboardingNotificationsDeny" = "Not now";

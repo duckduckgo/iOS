@@ -35,6 +35,10 @@ class OnboardingSummaryViewController: OnboardingContentViewController {
         timedPixel = TimedPixel(.onboardingSummaryFinished)
     }
     
+    override var continueButtonTitle: String {
+        return UserText.onboardingStartBrowsing
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         timedPixel?.fire()

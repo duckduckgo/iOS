@@ -21,20 +21,19 @@ import Core
 
 class OnboardingNotificationsViewController: OnboardingContentViewController {
     
-    let feedback = UISelectionFeedbackGenerator()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override var continueButtonTitle: String {
+        return UserText.onboardingNotificationsAccept
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        timedPixel?.fire()
-        Pixel.fire(pixel: exitPixel)
+    override var skipButtonTitle: String {
+        return UserText.onboardingNotificationsDeny
     }
     
     override func onContinuePressed() {
         
+        LocalNotifications().requestPermission { (success) in
+            //
+        }
     }
     
 }

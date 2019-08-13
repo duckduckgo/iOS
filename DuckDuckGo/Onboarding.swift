@@ -58,6 +58,13 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
         return title
     }
     
+    var continueButtonTitle: String {
+        return UserText.onboardingContinue
+    }
+    var skipButtonTitle: String {
+        return UserText.onboardingSkip
+    }
+    
     func onContinuePressed() {
     }
     

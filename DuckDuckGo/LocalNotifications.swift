@@ -23,10 +23,10 @@ import UserNotifications
 
 class LocalNotifications {
     
-    func requestPermission() {
+    func requestPermission(completion: @escaping (Bool) -> Void) {
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (enabled, error) in
-            // pixel
+            completion(enabled)
         }
     }
     

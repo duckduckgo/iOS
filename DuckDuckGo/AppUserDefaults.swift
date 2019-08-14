@@ -188,3 +188,26 @@ extension AppUserDefaults: PrivacyStatsExperimentStore {
     }
     
 }
+
+extension AppUserDefaults: NotificationsStore {
+    func scheduleStatus(for notification: LocalNotificationsLogic.Notification) -> LocalNotificationsLogic.ScheduleStatus? {
+        
+        guard let data = userDefaults?.value(forKey: notification.settingsKey) as? Data else { return nil }
+        
+        return try? PropertyListDecoder().decode(LocalNotificationsLogic.ScheduleStatus.self, from: data)
+    }
+    
+    func didSchedule(notification: LocalNotificationsLogic.Notification, date: Date) {
+        let status = LocalNotificationsLogic.ScheduleStatus.scheduled(date)
+        userDefaults?.set(try? PropertyListEncoder().encode(status), forKey: notification.settingsKey)
+    }
+    
+    func didFire(notification: LocalNotificationsLogic.Notification) {
+        let status = LocalNotificationsLogic.ScheduleStatus.fired
+        userDefaults?.set(try? PropertyListEncoder().encode(status), forKey: notification.settingsKey)
+    }
+    
+    func didCancel(notification: LocalNotificationsLogic.Notification) {
+        userDefaults?.removeObject(forKey: notification.settingsKey)
+    }
+}

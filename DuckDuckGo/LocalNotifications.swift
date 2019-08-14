@@ -25,9 +25,21 @@ class LocalNotifications {
     
     func requestPermission(completion: @escaping (Bool) -> Void) {
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (enabled, error) in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ]) { (enabled, error) in
             completion(enabled)
         }
+    }
+    
+    func getScheduledNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+            DispatchQueue.main.async {
+                completion(requests)
+            }
+        }
+    }
+    
+    func cancelNotifications(withIdentifiers identifiers: [String]) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
     }
     
     func scheduleNotification(title: String,
@@ -43,7 +55,7 @@ class LocalNotifications {
     func scheduleNotification(title: String,
                               body: String = "",
                               identifier: String,
-                              date components: DateComponents) {
+                              dateComponents components: DateComponents) {
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: components,
                                                     repeats: false)

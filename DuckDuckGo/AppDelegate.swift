@@ -103,6 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         displayOverlay()
+        LocalNotificationsLogic().willLeaveApplication()
         autoClear?.applicationDidEnterBackground()
     }
 

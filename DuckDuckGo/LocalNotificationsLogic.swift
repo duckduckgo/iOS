@@ -33,7 +33,9 @@ protocol NotificationsStore {
 
 class LocalNotificationsLogic {
     
-    var store: NotificationsStore!
+    struct Constants {
+        static let privacyNotificationDelay: TimeInterval = 15 * 60
+    }
     
     enum Notification: String {
         case privacy = "privacyNotification"
@@ -46,9 +48,9 @@ class LocalNotificationsLogic {
         var settingsKey: String {
             switch self {
             case .privacy:
-                return "privacyNotification"
+                return "privacyNotificationSettingsKey"
             case .homeRow:
-                return "homeRowNotification"
+                return "homeRowNotificationSettingsKey"
             }
         }
     }
@@ -96,12 +98,10 @@ class LocalNotificationsLogic {
         }
     }
     
-    struct Constants {
-        static let privacyNotificationDelay: TimeInterval = 15 * 60
-    }
+    let store: NotificationsStore = AppUserDefaults()
     
-    func didEnterApplication() {
-        markOverdueNotificationsAsFired()
+    func didEnterApplication(currentDate: Date = Date()) {
+        markOverdueNotificationsAsFired(currentDate: currentDate)
         
         if let privacyStatus = store.scheduleStatus(for: .privacy),
             case ScheduleStatus.scheduled = privacyStatus {
@@ -109,7 +109,7 @@ class LocalNotificationsLogic {
         }
     }
     
-    func didEnterApplicationFromNotification(with identifier: String) {
+    func didEnterApplicationFromNotification(withIdentifier identifier: String) {
         if let notification = Notification(rawValue: identifier) {
             store.didFire(notification: notification)
         }
@@ -117,11 +117,11 @@ class LocalNotificationsLogic {
         didEnterApplication()
     }
 
-    private func markOverdueNotificationsAsFired() {
+    private func markOverdueNotificationsAsFired(currentDate: Date) {
         for notification in [Notification.privacy, Notification.homeRow] {
             if let status = store.scheduleStatus(for: notification),
                 case let ScheduleStatus.scheduled(date) = status,
-                date < Date() {
+                date < currentDate {
                 store.didFire(notification: notification)
             }
         }
@@ -155,12 +155,14 @@ class LocalNotificationsLogic {
     
     func fireDateForHomeRowNotification(currentDate: Date = Date()) -> (DateComponents, Date)? {
         var components = Calendar.current.dateComponents(in: .current, from: currentDate)
+        
+        if let hour = components.hour, hour > 3 {
+            components.day = (components.day ?? 0) + 1
+        }
+        
         components.hour = 10
         components.minute = 0
         components.second = 0
-        if let hour = components.hour, hour > 10 {
-            components.day = components.day ?? 0 + 1
-        }
 
         let earliestDate = currentDate.addingTimeInterval(12 * 60 * 60)
         
@@ -176,13 +178,14 @@ class LocalNotificationsLogic {
     
     private func scheduleHomeRowNotification() {
         
-        if let (components, date) = fireDateForHomeRowNotification() {
+        if let (_, date) = fireDateForHomeRowNotification() {
             let title = "Home row"
             let body = "I can has home row?"
+            
             LocalNotifications().scheduleNotification(title: title,
                                                       body: body,
                                                       identifier: Notification.homeRow.identifier,
-                                                      dateComponents: components)
+                                                      timeInterval: date.timeIntervalSinceNow)
             
             store.didSchedule(notification: .homeRow, date: date)
         }

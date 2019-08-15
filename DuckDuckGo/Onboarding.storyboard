@@ -30,10 +30,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="50" y="94" width="314" height="136"/>
+                                <rect key="frame" x="45" y="94" width="324" height="136"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="324" height="80"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
@@ -51,7 +51,7 @@ DuckDuckGo!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                        <rect key="frame" x="0.0" y="92" width="314" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="324" height="44"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                         </accessibility>
@@ -129,7 +129,7 @@ example.</string>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="tQ7-Ks-K18"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="J1y-Qk-FSX" secondAttribute="bottom" constant="8" id="tck-5q-i12"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="v0N-37-UmX"/>
-                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-100" id="wQd-uX-A9N"/>
+                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-90" id="wQd-uX-A9N"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="12" id="xiB-7o-5e7"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="yd2-2T-gt7"/>
                         </constraints>
@@ -500,10 +500,10 @@ the theme that's right for you.</string>
             </objects>
             <point key="canvasLocation" x="413" y="185"/>
         </scene>
-        <!--Turn on notifications to receive updates about tracker blocking.-->
+        <!--Turn on notifications to receive important updates about your privacy.-->
         <scene sceneID="mnE-ri-bSO">
             <objects>
-                <viewController storyboardIdentifier="onboardingNotifications" title="Turn on notifications to receive updates about tracker blocking." id="CKX-vY-82l" customClass="OnboardingNotificationsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboardingNotifications" title="Turn on notifications to receive important updates about your privacy." id="CKX-vY-82l" customClass="OnboardingNotificationsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zDS-dL-1cb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

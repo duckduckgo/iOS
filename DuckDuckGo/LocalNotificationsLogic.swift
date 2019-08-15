@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import UIKit
 import UserNotifications
 
 protocol NotificationsStore {
@@ -35,6 +36,7 @@ class LocalNotificationsLogic {
     
     struct Constants {
         static let privacyNotificationDelay: TimeInterval = 15 * 60
+        static let privacyNotificationInfoTreshold = 2
     }
     
     enum Notification: String {
@@ -101,6 +103,8 @@ class LocalNotificationsLogic {
     let store: NotificationsStore = AppUserDefaults()
     
     func didEnterApplication(currentDate: Date = Date()) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
         markOverdueNotificationsAsFired(currentDate: currentDate)
         
         if let privacyStatus = store.scheduleStatus(for: .privacy),
@@ -144,8 +148,18 @@ class LocalNotificationsLogic {
     }
         
     private func schedulePrivacyNotification() {
-        let title = "We're protecting your privacy."
-        let body = "Using the DuckDuckGo app protects your data by blocking trackers and encrypting connections."
+        let privacyData = PrivacyReportDataSource()
+        
+        let title: String
+        let body: String
+        if privacyData.trackersCount < Constants.privacyNotificationInfoTreshold {
+            title = "Ready to take back your privacy?"
+            body = "Keep browsing with DuckDuckGo to block trackers and encrypt connections."
+        } else {
+            title = "Success! The internet just got less creepy."
+            body = "You protected your data by blocking \(privacyData.trackersCount) trackers and securing \(privacyData.httpsUpgradesCount) unencrypted connections while using DuckDuckGo."
+        }
+        
         LocalNotifications().scheduleNotification(title: title,
                                                   body: body,
                                                   identifier: Notification.privacy.identifier,
@@ -179,8 +193,8 @@ class LocalNotificationsLogic {
     private func scheduleHomeRowNotification() {
         
         if let (_, date) = fireDateForHomeRowNotification() {
-            let title = "Home row"
-            let body = "I can has home row?"
+            let title = "Prioritize your privacy"
+            let body = "Move DuckDuckGo to your home row for easy access to private browsing."
             
             LocalNotifications().scheduleNotification(title: title,
                                                       body: body,

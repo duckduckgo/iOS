@@ -71,6 +71,7 @@ class LocalNotifications {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
+        content.badge = 1
         
         let request = UNNotificationRequest(identifier: identifier,
                                             content: content,

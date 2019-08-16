@@ -30,7 +30,7 @@ protocol PrivacyProtectionDelegate: class {
 
 class PrivacyProtectionController: ThemableNavigationController {
 
-    weak var privateProtectionDelegate: PrivacyProtectionDelegate?
+    weak var privacyProtectionDelegate: PrivacyProtectionDelegate?
 
     weak var omniDelegate: OmniBarDelegate!
     weak var siteRating: SiteRating?
@@ -43,7 +43,7 @@ class PrivacyProtectionController: ThemableNavigationController {
         super.viewDidLoad()
 
         navigationBar.isHidden = isPad
-        popoverPresentationController?.backgroundColor = UIColor(white: 240/255, alpha: 1.0)
+        popoverPresentationController?.backgroundColor = UIColor.nearlyWhite
 
         if !storageCache.hasData {
             showBlockerListError()
@@ -122,7 +122,7 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
             if let newCache = newCache {
                 self.storageCache = newCache
                 controller.dismiss(animated: true)
-                self.privateProtectionDelegate?.reload(scripts: true)
+                self.privacyProtectionDelegate?.reload(scripts: true)
             } else {
                 controller.resetTryAgain()
             }
@@ -131,9 +131,4 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
 
 }
 
-extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate {
-
-    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-    }
-
-}
+extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate { }

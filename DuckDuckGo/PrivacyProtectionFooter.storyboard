@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3n-LI-9p5">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F3n-LI-9p5">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -187,7 +189,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Arrow Forward" translatesAutoresizingMaskIntoConstraints="NO" id="5NM-vg-MQe">
-                                                        <rect key="frame" x="280" y="34" width="20" height="32"/>
+                                                        <rect key="frame" x="284" y="42" width="16" height="16"/>
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
@@ -206,7 +208,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Leaderboard No Stats" translatesAutoresizingMaskIntoConstraints="NO" id="gPE-Br-bJP">
-                                                        <rect key="frame" x="62" y="8" width="196" height="48"/>
+                                                        <rect key="frame" x="152" y="8" width="16" height="48"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="48" id="LPU-2C-SJH"/>
                                                         </constraints>
@@ -270,7 +272,9 @@ many trackers we've blocked.</string>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="top" secondItem="4jR-2G-yON" secondAttribute="top" constant="48" id="cuJ-uw-O3f"/>
+                                    <constraint firstItem="VHX-zw-YEZ" firstAttribute="top" secondItem="4jR-2G-yON" secondAttribute="top" priority="750" constant="48" id="cuJ-uw-O3f">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="16"/>
+                                    </constraint>
                                     <constraint firstItem="VHX-zw-YEZ" firstAttribute="width" secondItem="4jR-2G-yON" secondAttribute="width" id="uWy-k1-zGw"/>
                                     <constraint firstItem="VHX-zw-YEZ" firstAttribute="centerX" secondItem="4jR-2G-yON" secondAttribute="centerX" id="wgw-Qg-abz"/>
                                 </constraints>

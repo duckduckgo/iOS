@@ -80,7 +80,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         viewController.title = siteRating?.domain
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        viewController.navigationItem.leftBarButtonItem = doneButton
+        viewController.navigationItem.rightBarButtonItem = doneButton
         super.pushViewController(viewController, animated: animated)
     }
 

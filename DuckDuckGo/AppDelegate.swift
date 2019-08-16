@@ -97,8 +97,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             removeOverlay()
         }
-        autoClear?.applicationWillMoveToForeground()
         
+        LocalNotificationsLogic().didEnterApplication()
+        autoClear?.applicationWillMoveToForeground()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

@@ -32,12 +32,19 @@ protocol NotificationsStore {
 
 }
 
+protocol LocalNotificationsLogicDelegate: class {
+    
+    func displayHomeHowInstructions(for: LocalNotificationsLogic)
+}
+
 class LocalNotificationsLogic {
     
     struct Constants {
-        static let privacyNotificationDelay: TimeInterval = 15 * 60
+        static let privacyNotificationDelay: TimeInterval = 5
         static let privacyNotificationInfoTreshold = 2
     }
+    
+    weak var delegate: LocalNotificationsLogicDelegate?
     
     enum Notification: String {
         case privacy = "privacyNotification"
@@ -113,12 +120,17 @@ class LocalNotificationsLogic {
         }
     }
     
-    func didEnterApplicationFromNotification(withIdentifier identifier: String) {
+    func didSelectNotification(withIdentifier identifier: String) {
         if let notification = Notification(rawValue: identifier) {
             store.didFire(notification: notification)
+            
+            switch notification {
+            case .privacy:
+                break
+            case .homeRow:
+                delegate?.displayHomeHowInstructions(for: self)
+            }
         }
-        
-        didEnterApplication()
     }
 
     private func markOverdueNotificationsAsFired(currentDate: Date) {
@@ -132,15 +144,15 @@ class LocalNotificationsLogic {
     }
     
     private func cancelPrivacyNotification() {
-        LocalNotifications().cancelNotifications(withIdentifiers: [Notification.privacy.identifier])
+        LocalNotifications.shared.cancelNotifications(withIdentifiers: [Notification.privacy.identifier])
         store.didCancel(notification: .privacy)
     }
     
     func willLeaveApplication() {
         
-        if store.scheduleStatus(for: .privacy) == nil {
+        //if store.scheduleStatus(for: .privacy) == nil {
             schedulePrivacyNotification()
-        }
+        //}
         
         if store.scheduleStatus(for: .homeRow) == nil {
             scheduleHomeRowNotification()
@@ -160,10 +172,10 @@ class LocalNotificationsLogic {
             body = "You protected your data by blocking \(privacyData.trackersCount) trackers and securing \(privacyData.httpsUpgradesCount) unencrypted connections while using DuckDuckGo."
         }
         
-        LocalNotifications().scheduleNotification(title: title,
-                                                  body: body,
-                                                  identifier: Notification.privacy.identifier,
-                                                  timeInterval: Constants.privacyNotificationDelay)
+        LocalNotifications.shared.scheduleNotification(title: title,
+                                                       body: body,
+                                                       identifier: Notification.privacy.identifier,
+                                                       timeInterval: Constants.privacyNotificationDelay)
         store.didSchedule(notification: .privacy, date: Date().addingTimeInterval(Constants.privacyNotificationDelay))
     }
     
@@ -196,10 +208,10 @@ class LocalNotificationsLogic {
             let title = "Prioritize your privacy"
             let body = "Move DuckDuckGo to your home row for easy access to private browsing."
             
-            LocalNotifications().scheduleNotification(title: title,
-                                                      body: body,
-                                                      identifier: Notification.homeRow.identifier,
-                                                      timeInterval: date.timeIntervalSinceNow)
+            LocalNotifications.shared.scheduleNotification(title: title,
+                                                           body: body,
+                                                           identifier: Notification.homeRow.identifier,
+                                                           timeInterval: date.timeIntervalSinceNow)
             
             store.didSchedule(notification: .homeRow, date: date)
         }

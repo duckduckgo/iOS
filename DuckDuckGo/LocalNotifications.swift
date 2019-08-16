@@ -19,9 +19,20 @@
 
 import Foundation
 import UIKit
+import Core
 import UserNotifications
 
-class LocalNotifications {
+class LocalNotifications: NSObject {
+    
+    static let shared = LocalNotifications()
+    
+    let logic = LocalNotificationsLogic()
+    
+    override init() {
+        super.init()
+        
+        UNUserNotificationCenter.current().delegate = self
+    }
     
     func requestPermission(completion: @escaping (Bool) -> Void) {
         
@@ -30,16 +41,15 @@ class LocalNotifications {
         }
     }
     
-    func getScheduledNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
-        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-            DispatchQueue.main.async {
-                completion(requests)
-            }
-        }
-    }
+//    func getScheduledNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
+//        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+//            DispatchQueue.main.async {
+//                completion(requests)
+//            }
+//        }
+//    }
     
-    func cancelNotifications(withIdentifiers identifiers: [String]) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+    func cancelNotifications(withIdentifiers identifiers: [String]) { UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
     }
     
     func scheduleNotification(title: String,
@@ -80,8 +90,18 @@ class LocalNotifications {
         UNUserNotificationCenter.current().add(request) { error in
             
             if let error = error {
-                print(" => Failed to schedule notification. \(error.localizedDescription)")
+                Logger.log(items: "Failed to schedule notification. \(error.localizedDescription)")
             }
         }
+    }
+}
+
+extension LocalNotifications: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        logic.didSelectNotification(withIdentifier: response.notification.request.identifier)
+        
+        completionHandler()
     }
 }

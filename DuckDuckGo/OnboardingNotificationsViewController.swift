@@ -31,7 +31,7 @@ class OnboardingNotificationsViewController: OnboardingContentViewController {
     
     override func onContinuePressed() {
         
-        LocalNotifications().requestPermission { (success) in
+        LocalNotifications.shared.requestPermission { (success) in
             //
         }
     }

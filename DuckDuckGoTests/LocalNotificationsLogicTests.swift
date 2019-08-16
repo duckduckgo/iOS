@@ -145,7 +145,8 @@ class LocalNotificationsLogicTests: XCTestCase {
         let logic = LocalNotificationsLogic()
         
         logic.willLeaveApplication()
-        logic.didEnterApplicationFromNotification(withIdentifier: LocalNotificationsLogic.Notification.privacy.identifier)
+        logic.didEnterApplication()
+        logic.didSelectNotification(withIdentifier: LocalNotificationsLogic.Notification.privacy.identifier)
         
         switch store.scheduleStatus(for: .privacy) {
         case .some(.fired): break
@@ -157,7 +158,8 @@ class LocalNotificationsLogicTests: XCTestCase {
         default: XCTFail("Expected scheduled notification")
         }
         
-        logic.didEnterApplicationFromNotification(withIdentifier: LocalNotificationsLogic.Notification.homeRow.identifier)
+        logic.didEnterApplication()
+        logic.didSelectNotification(withIdentifier: LocalNotificationsLogic.Notification.homeRow.identifier)
         
         switch store.scheduleStatus(for: .homeRow) {
         case .some(.fired): break

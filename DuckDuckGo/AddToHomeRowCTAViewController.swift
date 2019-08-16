@@ -51,6 +51,10 @@ class AddToHomeRowCTAViewController: UIViewController {
         super.viewDidAppear(animated)
         animateOnFirstAppearance()
     }
+    
+    @IBAction func showMe() {
+        dismiss()
+    }
 
     @IBAction func noThanks() {
         dismiss()

@@ -77,22 +77,10 @@ extension MainViewController {
         // Only show tips if the user is a new one, ie they've not seen onboarding yet
         DefaultContextualTipsStorage().isEnabled = true
         
-        let onboardingFlow: String
-        let modalTransitionStyle: UIModalTransitionStyle
-        
-        modalTransitionStyle = .coverVertical
-        onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
-        
-        guard let controller = UIStoryboard(name: onboardingFlow, bundle: nil).instantiateInitialViewController() else {
-            fatalError("instantiateInitialViewController for \(onboardingFlow)")
-        }
+        let onboardingFlow = isPad ? "Onboarding-iPad" : "Onboarding"
 
-        if var onboarding = controller as? Onboarding {
-            onboarding.delegate = self
-        }
-        
-        controller.modalTransitionStyle = modalTransitionStyle
-        present(controller, animated: true)
+        performSegue(withIdentifier: onboardingFlow, sender: self)
+
         homeController?.resetHomeRowCTAAnimations()
     }
     

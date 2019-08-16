@@ -31,9 +31,9 @@ class SuggestionTableViewCell: UITableViewCell {
     func updateFor(query: String, suggestion: Suggestion) {
         let text = suggestion.suggestion
         if URL.isWebUrl(text: text) {
-            typeImage.image = #imageLiteral(resourceName: "GlobeSmall")
+            typeImage.image = UIImage(named: "SuggestGlobe")
         } else {
-            typeImage.image = #imageLiteral(resourceName: "SearchLoupeMini")
+            typeImage.image = UIImage(named: "SuggestLoupe")
         }
         styleText(query: query, text: suggestion.suggestion)
     }

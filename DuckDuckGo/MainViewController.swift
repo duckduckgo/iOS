@@ -220,7 +220,11 @@ class MainViewController: UIViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
-        
+
+        if var onboarding = segue.destination as? Onboarding {
+            onboarding.delegate = self
+        }
+
     }
 
     private func configureTabManager() {
@@ -705,7 +709,7 @@ extension MainViewController: OmniBarDelegate {
     }
 
     func onSiteRatingPressed() {
-        currentTab?.showPrivacyProtection()
+        currentTab?.showPrivacyDashboard()
     }
 
     func onMenuPressed() {

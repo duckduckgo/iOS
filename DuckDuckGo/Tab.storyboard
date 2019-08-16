@@ -136,10 +136,9 @@
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
-                        <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtectionTablet" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
+                        <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtection" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
                         </segue>
-                        <segue destination="PZd-l7-wUN" kind="presentation" identifier="PrivacyProtection" id="5y1-1B-eCa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xy9-lL-XjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -158,15 +157,7 @@
                 <viewControllerPlaceholder storyboardName="PrivacyProtection" id="5Os-y0-IaV" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuK-nd-xhd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1921" y="263"/>
-        </scene>
-        <!--PrivacyProtection-->
-        <scene sceneID="e4y-Pn-mAh">
-            <objects>
-                <viewControllerPlaceholder storyboardName="PrivacyProtection" id="PZd-l7-wUN" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4LD-Bk-ZMh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1921" y="575"/>
+            <point key="canvasLocation" x="1771" y="445"/>
         </scene>
     </scenes>
     <resources>

@@ -382,7 +382,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
 
-            controller.delegate = self
+            controller.privacyProtectionDelegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.omniBarText = chromeDelegate.omniBar.textField.text
@@ -428,13 +428,9 @@ class TabViewController: UIViewController {
         chromeDelegate?.setBarsHidden(false, animated: animated)
     }
 
-    func showPrivacyProtection() {
+    func showPrivacyDashboard() {
         Pixel.fire(pixel: .privacyDashboardOpened)
-        if UIUserInterfaceIdiom.pad == UIDevice.current.userInterfaceIdiom {
-            performSegue(withIdentifier: "PrivacyProtectionTablet", sender: self)
-        } else {
-            performSegue(withIdentifier: "PrivacyProtection", sender: self)
-        }
+        performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
 
     private func resetSiteRating() {

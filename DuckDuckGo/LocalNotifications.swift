@@ -36,20 +36,20 @@ class LocalNotifications: NSObject {
     
     func requestPermission(completion: @escaping (Bool) -> Void) {
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ]) { (enabled, error) in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ]) { (enabled, _) in
             completion(enabled)
         }
     }
     
-//    func getScheduledNotifications(completion: @escaping ([UNNotificationRequest]) -> Void) {
-//        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-//            DispatchQueue.main.async {
-//                completion(requests)
-//            }
-//        }
-//    }
+    func checkPermissions(completion: @escaping (UNAuthorizationStatus, UNNotificationSetting) -> Void) {
+        
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            completion(settings.authorizationStatus, settings.alertSetting)
+        }
+    }
     
-    func cancelNotifications(withIdentifiers identifiers: [String]) { UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+    func cancelNotifications(withIdentifiers identifiers: [String]) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
     }
     
     func scheduleNotification(title: String,
@@ -88,7 +88,6 @@ class LocalNotifications: NSObject {
                                             trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
-            
             if let error = error {
                 Logger.log(items: "Failed to schedule notification. \(error.localizedDescription)")
             }
@@ -98,7 +97,9 @@ class LocalNotifications: NSObject {
 
 extension LocalNotifications: UNUserNotificationCenterDelegate {
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
         
         logic.didSelectNotification(withIdentifier: response.notification.request.identifier)
         

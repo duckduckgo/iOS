@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import UIKit
 import UserNotifications
 
@@ -42,6 +43,11 @@ class LocalNotificationsLogic {
     struct Constants {
         static let privacyNotificationDelay: TimeInterval = 5
         static let privacyNotificationInfoTreshold = 2
+    }
+    
+    struct Keys {
+        static let authorization = "au"
+        static let alert = "al"
     }
     
     weak var delegate: LocalNotificationsLogicDelegate?
@@ -126,8 +132,9 @@ class LocalNotificationsLogic {
             
             switch notification {
             case .privacy:
-                break
+                Pixel.fire(pixel: .notificationD0Opened)
             case .homeRow:
+                Pixel.fire(pixel: .notificationD1Opened)
                 delegate?.displayHomeHowInstructions(for: self)
             }
         }
@@ -139,6 +146,20 @@ class LocalNotificationsLogic {
                 case let ScheduleStatus.scheduled(date) = status,
                 date < currentDate {
                 store.didFire(notification: notification)
+                
+                let pixel: PixelName
+                switch notification {
+                case .privacy:
+                    pixel = .notificationD0Fired
+                case .homeRow:
+                    pixel = .notificationD1Fired
+                }
+                
+                LocalNotifications.shared.checkPermissions { (authorization, alertSettings) in
+                    let parameters = [Keys.authorization: String(authorization.rawValue),
+                                      Keys.alert: String(alertSettings.rawValue)]
+                    Pixel.fire(pixel: pixel, withAdditionalParameters: parameters)
+                }
             }
         }
     }

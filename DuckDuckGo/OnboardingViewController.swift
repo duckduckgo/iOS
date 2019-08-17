@@ -77,22 +77,22 @@ class OnboardingViewController: UIViewController, Onboarding {
     
     @IBAction func next(sender: UIButton) {
         
-        if let name = controllerNames.first,
-            let oldController = contentController,
-            let newController = storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
-
-            transition(from: oldController, to: newController)
-            
-        } else {
-            
-            done()
-            
+        let navigationHandler = {
+            if let name = self.controllerNames.first,
+                let oldController = self.contentController,
+                let newController = self.storyboard?.instantiateViewController(withIdentifier: name) as? OnboardingContentViewController {
+                
+                self.transition(from: oldController, to: newController)
+            } else {
+                self.done()
+            }
         }
 
         if sender == continueButton {
-            contentController?.onContinuePressed()
+            contentController?.onContinuePressed(navigationHandler: navigationHandler)
+        } else {
+            contentController?.onSkipPressed(navigationHandler: navigationHandler)
         }
-        
     }
     
     private func transition(from oldController: OnboardingContentViewController, to newController: OnboardingContentViewController) {

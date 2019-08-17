@@ -29,11 +29,23 @@ class OnboardingNotificationsViewController: OnboardingContentViewController {
         return UserText.onboardingNotificationsDeny
     }
     
-    override func onContinuePressed() {
+    override func onContinuePressed(navigationHandler: @escaping () -> Void) {
         
-        LocalNotifications.shared.requestPermission { (success) in
-            //
+        LocalNotifications.shared.requestPermission { (enabled) in
+            if enabled {
+                Pixel.fire(pixel: .notificationOptIn)
+            } else {
+                Pixel.fire(pixel: .notificationOptOut)
+            }
+            
+            navigationHandler()
         }
+    }
+    
+    override func onSkipPressed(navigationHandler: @escaping () -> Void) {
+        Pixel.fire(pixel: .notificationOptOut)
+        
+        navigationHandler()
     }
     
 }

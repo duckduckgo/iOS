@@ -33,8 +33,8 @@ protocol OnboardingContent {
     var canContinue: Bool { get }
     var delegate: OnboardingContentDelegate? { get set }
 
-    func onContinuePressed()
-    
+    func onContinuePressed(navigationHandler: @escaping () -> Void)
+    func onSkipPressed(navigationHandler: @escaping () -> Void)
 }
 
 protocol OnboardingDelegate: NSObjectProtocol {
@@ -65,7 +65,12 @@ class OnboardingContentViewController: UIViewController, OnboardingContent {
         return UserText.onboardingSkip
     }
     
-    func onContinuePressed() {
+    func onContinuePressed(navigationHandler: @escaping () -> Void) {
+        navigationHandler()
+    }
+    
+    func onSkipPressed(navigationHandler: @escaping () -> Void) {
+        navigationHandler()
     }
     
 }

@@ -37,14 +37,18 @@ class LocalNotifications: NSObject {
     func requestPermission(completion: @escaping (Bool) -> Void) {
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ]) { (enabled, _) in
-            completion(enabled)
+            DispatchQueue.main.async {
+                completion(enabled)
+            }
         }
     }
     
     func checkPermissions(completion: @escaping (UNAuthorizationStatus, UNNotificationSetting) -> Void) {
         
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            completion(settings.authorizationStatus, settings.alertSetting)
+            DispatchQueue.main.async {
+                completion(settings.authorizationStatus, settings.alertSetting)
+            }
         }
     }
     

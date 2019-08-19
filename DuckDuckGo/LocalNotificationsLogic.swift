@@ -204,7 +204,7 @@ class LocalNotificationsLogic {
             body = "Keep browsing with DuckDuckGo to block trackers and encrypt connections."
         } else {
             title = "Success! The internet just got less creepy."
-            body = "You protected your data by blocking \(privacyData.trackersCount) trackers and securing \(privacyData.httpsUpgradesCount) unencrypted connections while using DuckDuckGo."
+            body = "While using on DuckDuckGo you blocked \(privacyData.trackersCount) trackers and secured \(privacyData.httpsUpgradesCount) unencrypted connections."
         }
         
         LocalNotifications.shared.scheduleNotification(title: title,
@@ -241,7 +241,7 @@ class LocalNotificationsLogic {
         
         if let (_, date) = fireDateForHomeRowNotification() {
             let title = "Prioritize your privacy"
-            let body = "Move DuckDuckGo to your home row for easy access to private browsing."
+            let body = "Move the DuckDuckGo app to your home dock for easy access to private browsing."
             
             LocalNotifications.shared.scheduleNotification(title: title,
                                                            body: body,

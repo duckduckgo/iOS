@@ -43,7 +43,7 @@ protocol LocalNotificationsLogicDelegate: class {
 class LocalNotificationsLogic {
     
     struct Constants {
-        static let privacyNotificationDelay: TimeInterval = 5
+        static let privacyNotificationDelay: TimeInterval = 15 * 60
         static let privacyNotificationInfoTreshold = 2
     }
     
@@ -246,7 +246,7 @@ class LocalNotificationsLogic {
             LocalNotifications.shared.scheduleNotification(title: title,
                                                            body: body,
                                                            identifier: Notification.homeRow.identifier,
-                                                           timeInterval: 30)
+                                                           timeInterval: date.timeIntervalSinceNow)
             
             store.didSchedule(notification: .homeRow, date: date)
         }

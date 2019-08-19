@@ -36,7 +36,7 @@ public struct Variant {
     static let doNotAllocate = 0
     
     public static let defaultVariants: [Variant] = [
-        //Variant(name: "mg", weight: 1, features: []),
+        Variant(name: "mg", weight: 1, features: []),
         Variant(name: "mt", weight: 1, features: [ .notificationsOnboarding, .dayZeroNotification, .dayOneNotification]),
         Variant(name: "my", weight: 1, features: [ .notificationsOnboarding, .dayOneNotification ]),
         

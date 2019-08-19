@@ -138,8 +138,6 @@ class LocalNotificationsLogic {
     
     func didSelectNotification(withIdentifier identifier: String) {
         if let notification = Notification(rawValue: identifier) {
-            store.didFire(notification: notification)
-            
             switch notification {
             case .privacy:
                 Pixel.fire(pixel: .notificationD0Opened)

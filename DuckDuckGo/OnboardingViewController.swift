@@ -21,8 +21,14 @@ import UIKit
 import Core
 
 class OnboardingViewController: UIViewController, Onboarding {
-
-    var controllerNames = ["onboardingThemes", "onboardingNotifications", "onboardingSummary"]
+    
+    var controllerNames: [String] = {
+        if DefaultVariantManager().isSupported(feature: .notificationsOnboarding) {
+            return ["onboardingThemes", "onboardingNotifications", "onboardingSummary"]
+        } else {
+            return ["onboardingThemes", "onboardingSummary"]
+        }
+    }()
     
     @IBOutlet weak var header: UILabel!
     @IBOutlet weak var subheader: UILabel!

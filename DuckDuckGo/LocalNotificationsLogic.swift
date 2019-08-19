@@ -50,8 +50,6 @@ class LocalNotificationsLogic {
         static let alert = "al"
     }
     
-    weak var delegate: LocalNotificationsLogicDelegate?
-    
     enum Notification: String {
         case privacy = "privacyNotification"
         case homeRow = "homeRowNotification"
@@ -113,7 +111,13 @@ class LocalNotificationsLogic {
         }
     }
     
+    weak var delegate: LocalNotificationsLogicDelegate?
     let store: NotificationsStore = AppUserDefaults()
+    let variantManager: VariantManager
+    
+    init(variantManager: VariantManager = DefaultVariantManager()) {
+        self.variantManager = variantManager
+    }
     
     func didEnterApplication(currentDate: Date = Date()) {
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -171,11 +175,12 @@ class LocalNotificationsLogic {
     
     func willLeaveApplication() {
         
-        //if store.scheduleStatus(for: .privacy) == nil {
+        if variantManager.isSupported(feature: .dayZeroNotification), store.scheduleStatus(for: .privacy) == nil {
             schedulePrivacyNotification()
-        //}
+        }
         
-        if store.scheduleStatus(for: .homeRow) == nil {
+        if variantManager.isSupported(feature: .dayOneNotification),
+            store.scheduleStatus(for: .homeRow) == nil {
             scheduleHomeRowNotification()
         }
     }

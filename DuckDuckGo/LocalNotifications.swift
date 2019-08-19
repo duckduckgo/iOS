@@ -65,17 +65,6 @@ class LocalNotifications: NSObject {
         
         scheduleNotification(title: title, body: body, identifier: identifier, trigger: trigger)
     }
-    
-    func scheduleNotification(title: String,
-                              body: String = "",
-                              identifier: String,
-                              dateComponents components: DateComponents) {
-        
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components,
-                                                    repeats: false)
-        
-        scheduleNotification(title: title, body: body, identifier: identifier, trigger: trigger)
-    }
         
     private func scheduleNotification(title: String,
                                       body: String = "",

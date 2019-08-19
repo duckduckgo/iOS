@@ -707,7 +707,7 @@ extension TabViewController: WKNavigationDelegate {
         let alert = BasicAuthenticationAlert(host: protectionSpace.host,
                                              isEncrypted: isHttps,
                                              logInCompletion: { (login, password) in
-            completionHandler(.useCredential, URLCredential(user: login, password: password, persistence: .none))
+            completionHandler(.useCredential, URLCredential(user: login, password: password, persistence: .forSession))
         }, cancelCompletion: {
             completionHandler(.rejectProtectionSpace, nil)
         })

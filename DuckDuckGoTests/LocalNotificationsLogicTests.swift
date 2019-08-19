@@ -195,33 +195,6 @@ class LocalNotificationsLogicTests: XCTestCase {
         }
     }
     
-    func testWhenAppIsOpenedFromNotificationThenItIsMarkedAsFired() {
-        
-        let logic = LocalNotificationsLogic(variantManager: mockManager)
-
-        logic.willLeaveApplication()
-        logic.didEnterApplication()
-        logic.didSelectNotification(withIdentifier: LocalNotificationsLogic.Notification.privacy.identifier)
-        
-        switch store.scheduleStatus(for: .privacy) {
-        case .some(.fired): break
-        default: XCTFail("Expected fired notification")
-        }
-        
-        switch store.scheduleStatus(for: .homeRow) {
-        case .some(.scheduled): break
-        default: XCTFail("Expected scheduled notification")
-        }
-        
-        logic.didEnterApplication()
-        logic.didSelectNotification(withIdentifier: LocalNotificationsLogic.Notification.homeRow.identifier)
-        
-        switch store.scheduleStatus(for: .homeRow) {
-        case .some(.fired): break
-        default: XCTFail("Expected fired notification")
-        }
-    }
-    
     func testWhenShedulingHomeRowNotificationThenTimeShouldMatchNextDay() {
         
         validateThat(month: 1, day: 1, hour: 10,

@@ -30,15 +30,21 @@ class BasicAuthenticationAlert: UIAlertController {
     var logInAction: UIAlertAction!
     
     convenience init(host: String,
-                     port: String,
+                     isEncrypted: Bool,
                      logInCompletion: @escaping LogInCompletion,
                      cancelCompletion: @escaping CancelCompletion = {}) {
-        let title = UserText.authAlertTitle.format(arguments: host, port)
-        self.init(title: title, message: nil, preferredStyle: .alert)
+        let message: String
+        if isEncrypted {
+            message = UserText.authAlertEncryptedConnectionMessage.format(arguments: host)
+        } else {
+            message = UserText.authAlertPlainConnectionMessage.format(arguments: host)
+        }
+        
+        self.init(title: UserText.authAlertTitle, message: message, preferredStyle: .alert)
         
         let keyboardAppearance = ThemeManager.shared.currentTheme.keyboardAppearance
         addTextField { textField in
-            textField.accessibilityLabel = "User Name"
+            textField.accessibilityLabel = "Username"
             textField.placeholder = UserText.authAlertUsernamePlaceholder
             textField.keyboardAppearance = keyboardAppearance
             textField.autocorrectionType = .no

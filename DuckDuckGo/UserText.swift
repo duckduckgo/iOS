@@ -71,6 +71,8 @@ public struct UserText {
     public static let alertAddToWhitelistPlaceholder = NSLocalizedString("alert.title.add.to.whitelist.placeholder", comment: "Add to Whitelist placeholder")
     
     public static let authAlertTitle = NSLocalizedString("auth.alert.title", comment: "Authentication Alert Title")
+    public static let authAlertEncryptedConnectionMessage = NSLocalizedString("auth.alert.message.encrypted", comment: "Authentication Alert Encrypted Connection Message")
+    public static let authAlertPlainConnectionMessage = NSLocalizedString("auth.alert.message.plain", comment: "Authentication Alert Plain Connection Message")
     public static let authAlertUsernamePlaceholder = NSLocalizedString("auth.alert.username.placeholder", comment: "Authentication User name Placeholder")
     public static let authAlertPasswordPlaceholder = NSLocalizedString("auth.alert.password.placeholder", comment: "Authentication Password Placeholder")
     public static let authAlertLogInButtonTitle = NSLocalizedString("auth.alert.login.button", comment: "Authentication Alert Log In Button")

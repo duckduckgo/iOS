@@ -40,6 +40,9 @@ protocol LocalNotificationsLogicDelegate: class {
     func displayHomeHowInstructions(for: LocalNotificationsLogic)
 }
 
+// swiftlint:disable nesting
+// swiftlint:disable line_length
+
 class LocalNotificationsLogic {
     
     struct Constants {
@@ -74,7 +77,6 @@ class LocalNotificationsLogic {
         case scheduled(Date)
         case fired
         
-        // swiftlint:disable nesting
         private enum CodingKeys: String, CodingKey {
             case first
             case second
@@ -83,7 +85,6 @@ class LocalNotificationsLogic {
         enum CodingError: Error {
             case unknownValue
         }
-        // swiftlint:enable nesting
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -249,5 +250,7 @@ class LocalNotificationsLogic {
             store.didSchedule(notification: .homeRow, date: date)
         }
     }
-    
 }
+
+// swiftlint:enable line_length
+// swiftlint:enable nesting

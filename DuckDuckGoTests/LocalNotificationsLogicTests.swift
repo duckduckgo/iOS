@@ -26,22 +26,28 @@ import XCTest
 class LocalNotificationsLogicTests: XCTestCase {
     
     let center = UNUserNotificationCenter.current()
-    let store: NotificationsStore = AppUserDefaults()
+    var store: NotificationsStore = AppUserDefaults()
+    
+    let mockManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
     
     override func setUp() {
-        center.removeAllPendingNotificationRequests()
-        store.didCancel(notification: .privacy)
-        store.didCancel(notification: .homeRow)
+        store.notificationsEnabled = true
+        cleanUp()
     }
     
     override func tearDown() {
+        cleanUp()
+        store.notificationsEnabled = false
+    }
+    
+    func cleanUp() {
         center.removeAllPendingNotificationRequests()
         store.didCancel(notification: .privacy)
         store.didCancel(notification: .homeRow)
     }
     
     func testWhenLeavingTheAppThenNotificationsAreScheduled() {
-        let logic = LocalNotificationsLogic()
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
         
         let noNotifications = expectation(description: "There are no notifications scheduled")
         center.getPendingNotificationRequests { (notifications) in
@@ -86,10 +92,59 @@ class LocalNotificationsLogicTests: XCTestCase {
         }
     }
     
-    func testWhenAppIsOpenedAndPrivacyNotificationIsScheduledThenItIsCancelled() {
-        let logic = LocalNotificationsLogic()
+    func testWhenPermissionsIsDeniedAndLeavingTheAppThenNotificationsAreNotScheduled() {
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+        let noNotifications = expectation(description: "There are no notifications scheduled")
+        center.getPendingNotificationRequests { (notifications) in
+            XCTAssertTrue(notifications.isEmpty)
+            noNotifications.fulfill()
+        }
         
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        switch store.scheduleStatus(for: .homeRow) {
+        case .some(.scheduled): XCTFail("No notification should be scheduled")
+        default: break
+        }
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .some(.scheduled): XCTFail("No notification should be scheduled")
+        default: break
+        }
+        
+        logic.didUpdateNotificationsPermissions(enabled: false)
         logic.willLeaveApplication()
+        
+        let notificationsScheduled = expectation(description: "There are no notifications scheduled")
+        center.getPendingNotificationRequests { (notifications) in
+            XCTAssertTrue(notifications.isEmpty)
+            notificationsScheduled.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        switch store.scheduleStatus(for: .homeRow) {
+        case .some(.scheduled): XCTFail("No notification should be scheduled")
+        default: break
+        }
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .some(.scheduled): XCTFail("No notification should be scheduled")
+        default: break
+        }
+    }
+    
+    func testWhenAppIsOpenedAndPrivacyNotificationIsScheduledThenItIsCancelled() {
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+
+        logic.willLeaveApplication()
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .some(.scheduled): break
+        case .some(.fired): XCTFail("Privacy notification should not be already fired")
+        default: XCTFail("Privacy notification should be scheduled")
+        }
+        
         logic.didEnterApplication()
         
         switch store.scheduleStatus(for: .privacy) {
@@ -117,8 +172,8 @@ class LocalNotificationsLogicTests: XCTestCase {
     
     func testWhenAppIsOpenedAndNotificationWasSupposedToBeFiredThenItIsMarkedAsFired() {
         
-        let logic = LocalNotificationsLogic()
-        
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+
         logic.willLeaveApplication()
         logic.didEnterApplication(currentDate: Date().addingTimeInterval(60 * 60))
         
@@ -142,8 +197,8 @@ class LocalNotificationsLogicTests: XCTestCase {
     
     func testWhenAppIsOpenedFromNotificationThenItIsMarkedAsFired() {
         
-        let logic = LocalNotificationsLogic()
-        
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+
         logic.willLeaveApplication()
         logic.didEnterApplication()
         logic.didSelectNotification(withIdentifier: LocalNotificationsLogic.Notification.privacy.identifier)
@@ -191,8 +246,8 @@ class LocalNotificationsLogicTests: XCTestCase {
     // swiftlint:disable function_parameter_count
     // swiftlint:disable line_length
     private func validateThat(year: Int = 2019, month: Int, day: Int, hour: Int, matchScheduledYear scheduledYear: Int = 2019, scheduledMonth: Int, scheduledDay: Int, scheduledHour: Int ) {
-        let logic = LocalNotificationsLogic()
-        
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+
         let calendar = Calendar.current
         
         let dateComponents = DateComponents(calendar: calendar, year: year, month: month, day: day, hour: hour, minute: 0, second: 0)

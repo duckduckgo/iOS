@@ -28,7 +28,7 @@ class LocalNotificationsLogicTests: XCTestCase {
     let center = UNUserNotificationCenter.current()
     var store: NotificationsStore = AppUserDefaults()
     
-    let mockManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
+    var mockManager = MockVariantManager(isSupportedReturns: true, currentVariant: nil)
     
     override func setUp() {
         store.notificationsEnabled = true
@@ -58,13 +58,13 @@ class LocalNotificationsLogicTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
         
         switch store.scheduleStatus(for: .homeRow) {
-        case .some(.scheduled): XCTFail("No notification should be scheduled")
-        default: break
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
         }
         
         switch store.scheduleStatus(for: .privacy) {
-        case .some(.scheduled): XCTFail("No notification should be scheduled")
-        default: break
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
         }
         
         logic.willLeaveApplication()
@@ -103,13 +103,13 @@ class LocalNotificationsLogicTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
         
         switch store.scheduleStatus(for: .homeRow) {
-        case .some(.scheduled): XCTFail("No notification should be scheduled")
-        default: break
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
         }
         
         switch store.scheduleStatus(for: .privacy) {
-        case .some(.scheduled): XCTFail("No notification should be scheduled")
-        default: break
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
         }
         
         logic.didUpdateNotificationsPermissions(enabled: false)
@@ -263,5 +263,103 @@ class LocalNotificationsLogicTests: XCTestCase {
     }
     // swiftlint:enable function_parameter_count
     // swiftlint:enable line_length
+    
+    func testWhenDay0EnabledThenItIsScheduled() {
+        mockManager.isSupportedBlock = { feature in
+            return feature == .dayZeroNotification
+        }
+        
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+        
+        let noNotifications = expectation(description: "There are no notifications scheduled")
+        center.getPendingNotificationRequests { (notifications) in
+            XCTAssertTrue(notifications.isEmpty)
+            noNotifications.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        switch store.scheduleStatus(for: .homeRow) {
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
+        }
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
+        }
+        
+        logic.willLeaveApplication()
+        
+        let notificationsScheduled = expectation(description: "There are notifications scheduled")
+        center.getPendingNotificationRequests { (notifications) in
+            
+            let identifiers = Set(notifications.map { $0.identifier })
+            XCTAssertEqual(identifiers, Set([LocalNotificationsLogic.Notification.privacy.identifier]))
+            
+            notificationsScheduled.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .some(.scheduled): break
+        default: XCTFail("Expected scheduled notification")
+        }
+        
+        switch store.scheduleStatus(for: .homeRow) {
+        case .none: break
+        default: XCTFail("Expected scheduled notification")
+        }
+    }
+    
+    func testWhenDay1EnabledThenItIsScheduled() {
+        mockManager.isSupportedBlock = { feature in
+            return feature == .dayOneNotification
+        }
+        
+        let logic = LocalNotificationsLogic(variantManager: mockManager)
+        
+        let noNotifications = expectation(description: "There are no notifications scheduled")
+        center.getPendingNotificationRequests { (notifications) in
+            XCTAssertTrue(notifications.isEmpty)
+            noNotifications.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        switch store.scheduleStatus(for: .homeRow) {
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
+        }
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .none: break
+        default: XCTFail("No notification should be scheduled")
+        }
+        
+        logic.willLeaveApplication()
+        
+        let notificationsScheduled = expectation(description: "There are notifications scheduled")
+        center.getPendingNotificationRequests { (notifications) in
+            
+            let identifiers = Set(notifications.map { $0.identifier })
+            XCTAssertEqual(identifiers, Set([LocalNotificationsLogic.Notification.homeRow.identifier]))
+            
+            notificationsScheduled.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
+        
+        switch store.scheduleStatus(for: .privacy) {
+        case .none: break
+        default: XCTFail("Expected scheduled notification")
+        }
+        
+        switch store.scheduleStatus(for: .homeRow) {
+        case .some(.scheduled): break
+        default: XCTFail("Expected scheduled notification")
+        }
+    }
 
 }

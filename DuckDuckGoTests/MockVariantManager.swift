@@ -22,12 +22,20 @@ import Core
 
 struct MockVariantManager: VariantManager {
 
-    var isSupportedReturns = false
+    var isSupportedReturns = false {
+        didSet {
+            let newValue = isSupportedReturns
+            isSupportedBlock = { _ in return newValue }
+        }
+    }
+    
+    var isSupportedBlock: (FeatureName) -> Bool
 
     var currentVariant: Variant?
 
     init(isSupportedReturns: Bool = false, currentVariant: Variant? = nil) {
         self.isSupportedReturns = isSupportedReturns
+        self.isSupportedBlock = { _ in return isSupportedReturns }
         self.currentVariant = currentVariant
     }
 
@@ -35,7 +43,7 @@ struct MockVariantManager: VariantManager {
     }
     
     func isSupported(feature: FeatureName) -> Bool {
-        return isSupportedReturns
+        return isSupportedBlock(feature)
     }
 
 }

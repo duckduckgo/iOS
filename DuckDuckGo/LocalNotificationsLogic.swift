@@ -24,6 +24,8 @@ import UserNotifications
 
 protocol NotificationsStore {
     
+    var notificationsEnabled: Bool { get set }
+    
     func scheduleStatus(for notification: LocalNotificationsLogic.Notification) -> LocalNotificationsLogic.ScheduleStatus?
     
     func didSchedule(notification: LocalNotificationsLogic.Notification, date: Date)
@@ -112,11 +114,15 @@ class LocalNotificationsLogic {
     }
     
     weak var delegate: LocalNotificationsLogicDelegate?
-    let store: NotificationsStore = AppUserDefaults()
-    let variantManager: VariantManager
+    private var store: NotificationsStore = AppUserDefaults()
+    private let variantManager: VariantManager
     
     init(variantManager: VariantManager = DefaultVariantManager()) {
         self.variantManager = variantManager
+    }
+    
+    func didUpdateNotificationsPermissions(enabled: Bool) {
+        store.notificationsEnabled = enabled
     }
     
     func didEnterApplication(currentDate: Date = Date()) {
@@ -175,11 +181,14 @@ class LocalNotificationsLogic {
     
     func willLeaveApplication() {
         
-        if variantManager.isSupported(feature: .dayZeroNotification), store.scheduleStatus(for: .privacy) == nil {
+        if variantManager.isSupported(feature: .dayZeroNotification),
+            store.notificationsEnabled,
+            store.scheduleStatus(for: .privacy) == nil {
             schedulePrivacyNotification()
         }
         
         if variantManager.isSupported(feature: .dayOneNotification),
+            store.notificationsEnabled,
             store.scheduleStatus(for: .homeRow) == nil {
             scheduleHomeRowNotification()
         }
@@ -237,7 +246,7 @@ class LocalNotificationsLogic {
             LocalNotifications.shared.scheduleNotification(title: title,
                                                            body: body,
                                                            identifier: Notification.homeRow.identifier,
-                                                           timeInterval: date.timeIntervalSinceNow)
+                                                           timeInterval: 30)
             
             store.didSchedule(notification: .homeRow, date: date)
         }

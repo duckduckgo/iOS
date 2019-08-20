@@ -203,7 +203,7 @@ class LocalNotificationsLogic {
             body = "Keep browsing with DuckDuckGo to block trackers and encrypt connections."
         } else {
             title = "Success! The internet just got less creepy."
-            body = "While using on DuckDuckGo you blocked \(privacyData.trackersCount) trackers and secured \(privacyData.httpsUpgradesCount) unencrypted connections."
+            body = "While using DuckDuckGo you blocked \(privacyData.trackersCount) trackers and secured \(privacyData.httpsUpgradesCount) unencrypted connections."
         }
         
         LocalNotifications.shared.scheduleNotification(title: title,

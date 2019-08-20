@@ -64,9 +64,11 @@ class OnboardingThemesViewController: OnboardingContentViewController {
         selectedTheme = .dark
     }
     
-    override func onContinuePressed() {
+    override func onContinuePressed(navigationHandler: @escaping () -> Void) {
         exitPixel = selectedTheme == .dark ? .onboardingThemesDarkThemeSelected : .onboardingThemesLightThemeSelected
         ThemeManager.shared.enableTheme(with: selectedTheme)
+        
+        navigationHandler()
     }
     
 }

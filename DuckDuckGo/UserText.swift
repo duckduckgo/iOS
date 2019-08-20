@@ -221,7 +221,9 @@ public struct UserText {
     public static let favorite = NSLocalizedString("favorite", comment: "Favorite")
     public static let privacyFeatures = NSLocalizedString("privacy.features", comment: "Privacy Features")
 
-    public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue button")
+    public static let onboardingContinue = NSLocalizedString("onboardingContinue", comment: "Continue")
+    public static let onboardingSkip = NSLocalizedString("onboardingSkip", comment: "Skip")
     public static let onboardingStartBrowsing = NSLocalizedString("onboardingStartBrowsing", comment: "Start browsing")
-
+    public static let onboardingNotificationsAccept = NSLocalizedString("onboardingNotificationsAccept", comment: "Turn on Notifications")
+    public static let onboardingNotificationsDeny = NSLocalizedString("onboardingNotificationsDeny", comment: "Not now")
 }

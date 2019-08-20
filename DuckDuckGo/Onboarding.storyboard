@@ -30,10 +30,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Oy8-Vm-Fwp" userLabel="Titles">
-                                <rect key="frame" x="50" y="94" width="314" height="136"/>
+                                <rect key="frame" x="45" y="94" width="324" height="136"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="324" height="80"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
@@ -51,7 +51,7 @@ DuckDuckGo!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-Kx-QGf">
-                                        <rect key="frame" x="0.0" y="92" width="314" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="324" height="44"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" summaryElement="YES"/>
                                         </accessibility>
@@ -129,7 +129,7 @@ example.</string>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="tQ7-Ks-K18"/>
                             <constraint firstItem="2Fp-cs-AKH" firstAttribute="bottom" secondItem="J1y-Qk-FSX" secondAttribute="bottom" constant="8" id="tck-5q-i12"/>
                             <constraint firstItem="ZEn-eD-MPB" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-60" id="v0N-37-UmX"/>
-                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-100" id="wQd-uX-A9N"/>
+                            <constraint firstItem="Oy8-Vm-Fwp" firstAttribute="width" secondItem="R3B-sO-IVB" secondAttribute="width" constant="-90" id="wQd-uX-A9N"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="top" secondItem="Oy8-Vm-Fwp" secondAttribute="bottom" constant="12" id="xiB-7o-5e7"/>
                             <constraint firstItem="bos-sp-j80" firstAttribute="centerX" secondItem="2Fp-cs-AKH" secondAttribute="centerX" id="yd2-2T-gt7"/>
                         </constraints>
@@ -380,7 +380,7 @@ never been this easy.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M12-dB-i4I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1112" y="185"/>
+            <point key="canvasLocation" x="1136" y="185"/>
         </scene>
         <!--Before you get started, pick  the theme that's right for you.-->
         <scene sceneID="ubo-Ix-pHZ">
@@ -500,6 +500,48 @@ the theme that's right for you.</string>
             </objects>
             <point key="canvasLocation" x="413" y="185"/>
         </scene>
+        <!--Turn on notifications to receive important updates about your privacy.-->
+        <scene sceneID="mnE-ri-bSO">
+            <objects>
+                <viewController storyboardIdentifier="onboardingNotifications" title="Turn on notifications to receive important updates about your privacy." id="CKX-vY-82l" customClass="OnboardingNotificationsViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zDS-dL-1cb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Gx-O6-b2x" userLabel="Bullet Container">
+                                <rect key="frame" x="-5" y="0.0" width="320" height="276"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qqr-sI-jPG" userLabel="Bullets">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingNotifications" translatesAutoresizingMaskIntoConstraints="NO" id="Pqz-z5-63U">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="centerX" secondItem="4Gx-O6-b2x" secondAttribute="centerX" id="Ic0-su-Agv"/>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="width" secondItem="4Gx-O6-b2x" secondAttribute="width" id="c8g-kg-B4W"/>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="height" relation="lessThanOrEqual" secondItem="4Gx-O6-b2x" secondAttribute="height" id="p55-6L-Hzj"/>
+                                    <constraint firstItem="qqr-sI-jPG" firstAttribute="centerY" secondItem="4Gx-O6-b2x" secondAttribute="centerY" id="xeO-h1-m5H"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="height" secondItem="zDS-dL-1cb" secondAttribute="height" id="6V0-xG-gWH"/>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="centerX" secondItem="zDS-dL-1cb" secondAttribute="centerX" constant="-5" id="QKm-0y-sWk"/>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="centerY" secondItem="zDS-dL-1cb" secondAttribute="centerY" id="R42-bh-mU3"/>
+                            <constraint firstItem="4Gx-O6-b2x" firstAttribute="width" secondItem="zDS-dL-1cb" secondAttribute="width" id="k55-pm-0YB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0wl-um-YgP"/>
+                    </view>
+                    <size key="freeformSize" width="320" height="276"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="53S-Tw-az3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="775" y="458"/>
+        </scene>
     </scenes>
     <resources>
         <image name="OnboardingDarkThemePreview" width="121" height="194"/>
@@ -508,6 +550,7 @@ the theme that's right for you.</string>
         <image name="OnboardingIconFlame" width="64" height="64"/>
         <image name="OnboardingIconSearchPrivately" width="64" height="64"/>
         <image name="OnboardingLightThemePreview" width="120" height="194"/>
+        <image name="OnboardingNotifications" width="375" height="300"/>
         <image name="OnboardingRadioUnselected" width="20" height="20"/>
         <image name="OnboardingThemeBackground" width="318" height="215"/>
     </resources>

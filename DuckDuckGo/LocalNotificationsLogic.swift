@@ -212,7 +212,7 @@ class LocalNotificationsLogic {
                                                        body: body,
                                                        identifier: Notification.privacy.identifier,
                                                        timeInterval: Constants.privacyNotificationDelay)
-        store.didSchedule(notification: .privacy, date: Date().addingTimeInterval(Constants.privacyNotificationDelay))
+        store.didSchedule(notification: .privacy, date: Date(timeIntervalSinceNow: Constants.privacyNotificationDelay))
     }
     
     func fireDateForHomeRowNotification(currentDate: Date = Date()) -> Date? {

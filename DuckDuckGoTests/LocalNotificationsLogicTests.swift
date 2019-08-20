@@ -175,7 +175,7 @@ class LocalNotificationsLogicTests: XCTestCase {
         let logic = LocalNotificationsLogic(variantManager: mockManager)
 
         logic.willLeaveApplication()
-        logic.didEnterApplication(currentDate: Date().addingTimeInterval(60 * 60))
+        logic.didEnterApplication(currentDate: Date(timeIntervalSinceNow: 60 * 60))
         
         switch store.scheduleStatus(for: .privacy) {
         case .some(.fired): break
@@ -187,7 +187,7 @@ class LocalNotificationsLogicTests: XCTestCase {
         default: XCTFail("Expected scheduled notification")
         }
         
-        logic.didEnterApplication(currentDate: Date().addingTimeInterval(25 * 60 * 60))
+        logic.didEnterApplication(currentDate: Date(timeIntervalSinceNow: 25 * 60 * 60))
         
         switch store.scheduleStatus(for: .homeRow) {
         case .some(.fired): break

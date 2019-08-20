@@ -136,10 +136,10 @@ public enum PixelName: String {
     
     case notificationOptIn = "m_ne"
     case notificationOptOut = "m_nd"
-    case notificationD0Fired = "m_nfi"
-    case notificationD1Fired = "m_nfii"
-    case notificationD0Opened = "m_noi"
-    case notificationD1Opened = "m_noii"
+    case privacyNotificationFired = "m_nfi"
+    case homeRowNotificationFired = "m_nfii"
+    case privacyNotificationOpened = "m_noi"
+    case homeRowNotificationOpened = "m_noii"
     
     case etagStoreOOSWithDisconnectMeFix = "m_d_dcf_oos"
     case etagStoreOOSWithEasylistFix = "m_d_elf_oos"

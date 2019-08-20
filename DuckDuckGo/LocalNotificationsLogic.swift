@@ -40,7 +40,6 @@ protocol LocalNotificationsLogicDelegate: class {
     func displayHomeHowInstructions(for: LocalNotificationsLogic)
 }
 
-// swiftlint:disable nesting
 // swiftlint:disable line_length
 
 class LocalNotificationsLogic {
@@ -77,14 +76,16 @@ class LocalNotificationsLogic {
         case scheduled(Date)
         case fired
         
+        // swiftlint:disable nesting
         private enum CodingKeys: String, CodingKey {
             case first
             case second
         }
         
-        enum CodingError: Error {
+        private enum CodingError: Error {
             case unknownValue
         }
+        // swiftlint:enable nesting
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -141,9 +142,9 @@ class LocalNotificationsLogic {
         if let notification = Notification(rawValue: identifier) {
             switch notification {
             case .privacy:
-                Pixel.fire(pixel: .notificationD0Opened)
+                Pixel.fire(pixel: .privacyNotificationOpened)
             case .homeRow:
-                Pixel.fire(pixel: .notificationD1Opened)
+                Pixel.fire(pixel: .homeRowNotificationOpened)
                 delegate?.displayHomeHowInstructions(for: self)
             }
         }
@@ -159,9 +160,9 @@ class LocalNotificationsLogic {
                 let pixel: PixelName
                 switch notification {
                 case .privacy:
-                    pixel = .notificationD0Fired
+                    pixel = .privacyNotificationFired
                 case .homeRow:
-                    pixel = .notificationD1Fired
+                    pixel = .homeRowNotificationFired
                 }
                 
                 LocalNotifications.shared.checkPermissions { (authorization, alertSettings) in
@@ -198,6 +199,7 @@ class LocalNotificationsLogic {
         
         let title: String
         let body: String
+        //Note: when experiment is done, user-facing strings will be extracted to UserText
         if privacyData.trackersCount < Constants.privacyNotificationInfoTreshold {
             title = "Ready to take back your privacy?"
             body = "Keep browsing with DuckDuckGo to block trackers and encrypt connections."
@@ -213,7 +215,7 @@ class LocalNotificationsLogic {
         store.didSchedule(notification: .privacy, date: Date().addingTimeInterval(Constants.privacyNotificationDelay))
     }
     
-    func fireDateForHomeRowNotification(currentDate: Date = Date()) -> (DateComponents, Date)? {
+    func fireDateForHomeRowNotification(currentDate: Date = Date()) -> Date? {
         var components = Calendar.current.dateComponents(in: .current, from: currentDate)
         
         if let hour = components.hour, hour > 3 {
@@ -229,16 +231,15 @@ class LocalNotificationsLogic {
         guard var date = Calendar.current.date(from: components) else { return nil }
         
         if date < earliestDate {
-            components = Calendar.current.dateComponents(in: .current, from: earliestDate)
             date = earliestDate
         }
         
-        return (components, date)
+        return date
     }
     
     private func scheduleHomeRowNotification() {
         
-        if let (_, date) = fireDateForHomeRowNotification() {
+        if let date = fireDateForHomeRowNotification() {
             let title = "Prioritize your privacy"
             let body = "Move the DuckDuckGo app to your home dock for easy access to private browsing."
             
@@ -253,4 +254,3 @@ class LocalNotificationsLogic {
 }
 
 // swiftlint:enable line_length
-// swiftlint:enable nesting

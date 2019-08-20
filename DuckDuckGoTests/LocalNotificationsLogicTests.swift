@@ -226,7 +226,7 @@ class LocalNotificationsLogicTests: XCTestCase {
         let dateComponents = DateComponents(calendar: calendar, year: year, month: month, day: day, hour: hour, minute: 0, second: 0)
         let date = dateComponents.date!
         
-        let fireDate = logic.fireDateForHomeRowNotification(currentDate: date)!.1
+        let fireDate = logic.fireDateForHomeRowNotification(currentDate: date)!
         let components = calendar.dateComponents(in: calendar.timeZone, from: fireDate)
         
         XCTAssertEqual(components.year, scheduledYear)

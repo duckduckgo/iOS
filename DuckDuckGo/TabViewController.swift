@@ -658,7 +658,7 @@ extension TabViewController: WKScriptMessageHandler {
             return
         }
 
-        let url = URL(string: urlString)
+        let url = URL(string: urlString.trimWhitespace())
         var networkName: String?
         var category: String?
         if let domain = url?.host {

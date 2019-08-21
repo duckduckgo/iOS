@@ -1,1 +1,2 @@
+• Added support for Basic Authentication on websites.  You will now be prompted to enter credentials when websites use this authentication method. Use the Firebutton to forget them!
 • Bug fixes and other improvements.

@@ -44,9 +44,7 @@ public struct AppUrls {
         static let httpsBloomFilter = "\(staticBase)/https/https-mobile-bloom.bin?cache-version=1"
         static let httpsBloomFilterSpec = "\(staticBase)/https/https-mobile-bloom-spec.json?cache-version=1"
         static let httpsWhitelist = "\(staticBase)/https/https-mobile-whitelist.json?cache-version=1"
-        
-        //TODO add real url
-        static let httpsLookupService = "https://0da98bcb.ngrok.io/collect.js"
+        static let httpsLookupService = "\(base)/smarter_encryption.js"
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@_ios_%@"
@@ -58,7 +56,7 @@ public struct AppUrls {
         static let atb = "atb"
         static let setAtb = "set_atb"
         static let activityType = "at"
-        static let partialHost = "partial"
+        static let partialHost = "pv1"
     }
 
     private struct ParamValue {

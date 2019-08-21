@@ -21,6 +21,10 @@ import Foundation
 import Alamofire
 
 public class HTTPSUpgrade {
+
+    public typealias UpgradeCheckCompletion = (Bool) -> Void
+    typealias ServiceCompletion = (ServiceResult) -> Void
+    typealias ServiceResult = (isInList: Bool, isCached: Bool)
     
     private struct Constants {
         static let millisecondsPerSecond = 1000.0
@@ -37,40 +41,44 @@ public class HTTPSUpgrade {
         self.store = store
         self.appUrls = appUrls
     }
-    
-    public func upgrade(url: URL) -> URL? {
+
+    public func isUgradeable(url: URL, completion: @escaping UpgradeCheckCompletion) {
         
         guard url.scheme == "http" else {
             Pixel.fire(pixel: .httpsNoLookup)
-            return nil
+            completion(false)
+            return
         }
         
         guard let host = url.host else {
             Pixel.fire(pixel: .httpsNoLookup)
-            return nil
+            completion(false)
+            return
         }
         
         if store.hasWhitelistedDomain(host) {
             Pixel.fire(pixel: .httpsNoLookup)
-            return nil
+            completion(false)
+            return
         }
-        
+
         let isLocallyUpgradable = !isLocalListReloading() && isInLocalUpgradeList(host: host)
-        Logger.log(text: "\(host) is \(isLocallyUpgradable ? "" : "not") locally upgradable")
+        Logger.log(text: "\(host) \(isLocallyUpgradable ? "is" : "is not") locally upgradable")
         if  isLocallyUpgradable {
             Pixel.fire(pixel: .httpsLocalLookup)
-            return url.upgradeToHttps()
+            completion(true)
+            return
         }
-        
-        let httpsServiceResult = isInServiceUpgradeList(host: host)
-        Pixel.fire(pixel: httpsServiceResult.isCached ? .httpsServiceCacheLookup : .httpsServiceRequestLookup)
-        Logger.log(text: "\(host) is \(httpsServiceResult.isInList ? "" : "not") service upgradable")
-        if httpsServiceResult.isInList {
-            return url.upgradeToHttps()
+
+       isInServiceUpgradeList(host: host) { result in
+            Pixel.fire(pixel: result.isCached ? .httpsServiceCacheLookup : .httpsServiceRequestLookup)
+            Logger.log(text: "\(host) \(result.isInList ? "is" : "is not") service upgradable")
+            if result.isInList {
+                completion(true)
+                return
+            }
+            completion(false)
         }
-        
-        //TODO consider pixel param for hit versus miss
-        return nil
     }
     
     private func isInLocalUpgradeList(host: String) -> Bool {
@@ -78,25 +86,22 @@ public class HTTPSUpgrade {
         return bloomFilter.contains(host)
     }
     
-    private func isInServiceUpgradeList(host: String, completion) -> (isInList: Bool, isCached: Bool) {
-    
+    private func isInServiceUpgradeList(host: String, completion: @escaping ServiceCompletion) {
         let sha1Host = host.sha1
         let partialSha1Host = String(sha1Host.prefix(4))
         var serviceRequest = URLRequest(url: appUrls.httpsLookupServiceUrl(forPartialHost: partialSha1Host))
         serviceRequest.allHTTPHeaderFields = APIHeaders().defaultHeaders
-        
-        var shouldUpgrade = false
+
         let isCached = URLCache.shared.cachedResponse(for: serviceRequest) != nil
-        
         Alamofire.request(serviceRequest).validate(statusCode: 200..<300).response { response in
-            
+            var isInList = false
+
             if let data = response.data {
                 let result = try? JSONDecoder().decode([String].self, from: data)
-                shouldUpgrade = result?.contains(sha1Host) ?? false
+                isInList = result?.contains(sha1Host) ?? false
             }
-            
+            completion((isInList: isInList, isCached: isCached))
         }
-        return (shouldUpgrade, isCached)
     }
     
     private func isLocalListReloading() -> Bool {
@@ -116,12 +121,5 @@ public class HTTPSUpgrade {
         }
         bloomFilter = store.bloomFilter()
         dataReloadLock.unlock()
-    }
-}
-
-extension URL {
-    func upgradeToHttps() -> URL? {
-        let urlString = absoluteString
-        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
     }
 }

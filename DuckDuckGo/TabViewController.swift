@@ -502,7 +502,7 @@ class TabViewController: UIViewController {
 
     private func shouldOpenExternally(url: URL) -> Bool {
         if SupportedExternalURLScheme.isSupported(url: url) {
-           return true
+            return true
         }
         
         if SupportedExternalURLScheme.isProhibited(url: url) {
@@ -817,22 +817,19 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        let decision = decidePolicyFor(navigationAction: navigationAction)
         
-        if let url = navigationAction.request.url,
-            decision == .allow {
-
-            if appUrls.isDuckDuckGoSearch(url: url) {
-                StatisticsLoader.shared.refreshSearchRetentionAtb()
+        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+            if let url = navigationAction.request.url, decision == .allow {
+                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
+                    StatisticsLoader.shared.refreshSearchRetentionAtb()
+                }
+                self?.findInPage?.done()
             }
-
-            findInPage?.done()
+            decisionHandler(decision)
         }
-
-        decisionHandler(decision)
     }
     
-    private func decidePolicyFor(navigationAction: WKNavigationAction) -> WKNavigationActionPolicy {
+    private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let tld = storageCache.tld
         
         if navigationAction.isTargetingMainFrame()
@@ -841,39 +838,53 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard let url = navigationAction.request.url else {
-            return .allow
+            completion(.allow)
+            return
         }
         
         guard !url.absoluteString.hasPrefix("x-apple-data-detectors://") else {
-            return .cancel
+            completion(.cancel)
+            return
         }
         
         guard let documentUrl = navigationAction.request.mainDocumentURL else {
-            return .allow
+            completion(.allow)
+            return
         }
         
         if shouldReissueSearch(for: url) {
             reissueSearchWithStatsParams(for: url)
-            return .cancel
+            completion(.cancel)
+            return
         }
         
-        if !failingUrls.contains(url.host ?? ""),
-            navigationAction.isTargetingMainFrame(),
-            let upgradeUrl = httpsUpgrade.upgrade(url: url),
-            lastUpgradedURL != upgradeUrl {
+        httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
             
-            NetworkLeaderboard.shared.incrementHttpsUpgrades()
-            lastUpgradedURL = upgradeUrl
-            self.load(url: upgradeUrl)
-
-            return .cancel
+            if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
+                NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                self?.lastUpgradedURL = upgradedUrl
+                self?.load(url: upgradedUrl)
+                completion(.cancel)
+                return
+            }
+            
+            if let shouldLoad = self?.shouldLoad(url: url, forDocument: documentUrl), shouldLoad {
+                completion(.allow)
+                return
+            }
+            
+            completion(.cancel)
+        }
+    }
+    
+    private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
+        guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
+        
+        if let upgradedUrl: URL = url.toHttps(), lastUpgradedURL != upgradedUrl {
+            return upgradedUrl
         }
         
-        if shouldLoad(url: url, forDocument: documentUrl) {
-            return .allow
-        }
-        
-        return .cancel
+        return nil
     }
     
     private func showErrorNow() {
@@ -960,6 +971,14 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload(scripts: false)
         }
     }
-
+    
 }
+
+extension URL {
+    func toHttps() -> URL? {
+        let urlString = absoluteString
+        return URL(string: urlString.replacingOccurrences(of: "http", with: "https", options: .caseInsensitive, range: urlString.range(of: "http")))
+    }
+}
+
 // swiftlint:enable file_length

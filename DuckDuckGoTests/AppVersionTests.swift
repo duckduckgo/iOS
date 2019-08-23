@@ -42,7 +42,7 @@ class AppVersionTests: XCTestCase {
         XCTAssertEqual(Constants.name, testee.name)
     }
 
-    func testMAajorNumber() {
+    func testMajorNumber() {
         mockBundle.add(name: AppVersion.Keys.versionNumber, value: Constants.version)
         XCTAssertEqual("2", testee.majorVersionNumber)
     }

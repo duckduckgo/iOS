@@ -41,6 +41,10 @@ public struct AppVersion {
     public var identifier: String {
         return bundle.object(forInfoDictionaryKey: Keys.identifier) as? String ?? ""
     }
+    
+    public var majorVersionNumber: String {
+        return String(versionNumber.split(separator: ".").first ?? "")
+    }
 
     public var versionNumber: String {
         return bundle.object(forInfoDictionaryKey: Keys.versionNumber) as? String ?? ""

@@ -38,6 +38,7 @@ extension WKWebViewConfiguration {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
 
+        configuration.applicationNameForUserAgent = "DuckDuckGo/\(AppVersion().majorVersionNumber)"
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsPictureInPictureMediaPlayback = true
